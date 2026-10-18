@@ -5,8 +5,9 @@
   "description": "Local chess and a foundation for upgradeable pieces.",
   "scripts": {
     "build": "node scripts/build.js",
-    "test": "playwright test",
-    "start": "node scripts/serve.js"
+    "test": "node --test tests-unit/clock.test.js && playwright test",
+    "start": "node scripts/serve.js",
+    "test:unit": "node --test tests-unit/clock.test.js"
   },
   "dependencies": {
     "chess.js": "1.4.0"

@@ -21,14 +21,17 @@
 - [x] Include the upstream GPL license and document binary/source provenance gaps.
 - [x] Playtest the bundled Windows executable through `npm.cmd start` on Windows.
 - [ ] Record the bundled executable's exact upstream release and matching source before redistribution.
-- [ ] Add optional clocks.
+- [x] Add optional clocks with presets, increments, and explicit start/pause/resume.
+- [x] Stop play on timeout; cancel engine searches and export the timed result.
+- [x] Restore clocks with undo and browser saves; load old saves untimed.
+- [ ] Playtest clocks, increments, timeout, and timed saved games on Windows.
 - [x] Add one browser save slot with moves and play settings.
 - [x] Add PGN download, paste import, and file import.
 - [x] Validate imports before replacement; preserve history and special-move rights.
 - [x] Pause the engine after loading and reject obsolete search responses.
-- [x] Pass 29 browser/integration tests, including saved-game and PGN round trips.
-- [ ] Playtest saving/loading and PGN files on the target Windows browser.
-- [ ] Tag `v0.2.0` after Windows engine playtesting and remaining scope review.
+- [x] Pass clock-model unit tests and browser/integration tests, including timed saves and PGN round trips.
+- [x] User playtest confirmed saving/loading and PGN import/export work.
+- [ ] Tag `v0.2.0` after clock playtesting and final scope review.
 
 Linux integration was verified with an upstream Fairy Stockfish source build. The bundled Windows executable was not executed in the cloud environment. Difficulty presets control engine skill and search time; they are not Elo ratings.
 

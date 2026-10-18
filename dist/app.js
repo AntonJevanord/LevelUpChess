@@ -1,4 +1,195 @@
 (() => {
+  var __create = Object.create;
+  var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __getProtoOf = Object.getPrototypeOf;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __commonJS = (cb, mod) => function __require() {
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
+    isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+    mod
+  ));
+
+  // src/clock.js
+  var require_clock = __commonJS({
+    "src/clock.js"(exports, module) {
+      var CLOCK_CONTROLS2 = Object.freeze({
+        none: Object.freeze({ label: "Untimed", initialMs: 0, incrementMs: 0 }),
+        blitz: Object.freeze({ label: "3 + 2", initialMs: 18e4, incrementMs: 2e3 }),
+        five: Object.freeze({ label: "5 + 0", initialMs: 3e5, incrementMs: 0 }),
+        rapid: Object.freeze({ label: "10 + 5", initialMs: 6e5, incrementMs: 5e3 }),
+        classic: Object.freeze({ label: "15 + 10", initialMs: 9e5, incrementMs: 1e4 })
+      });
+      var MAX_HISTORY = 1e4;
+      var isColor = (color) => color === "w" || color === "b";
+      var opposite = (color) => color === "w" ? "b" : "w";
+      var isRecord = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
+      var balances = (value) => ({ w: value.w, b: value.b });
+      var equalBalances = (a, b) => a.w === b.w && a.b === b.b;
+      var validControl = (control) => Object.hasOwn(CLOCK_CONTROLS2, control);
+      var ChessClock3 = class {
+        constructor(control = "none", now = () => performance.now()) {
+          if (typeof now !== "function") throw new TypeError("A clock time source is required.");
+          this._now = now;
+          this.reset(control);
+        }
+        reset(control = this.control, turn = "w") {
+          if (!validControl(control) || !isColor(turn)) throw new Error("Invalid chess clock settings.");
+          this.control = control;
+          const initial = CLOCK_CONTROLS2[control].initialMs;
+          this.remaining = { w: initial, b: initial };
+          this.active = turn;
+          this.running = false;
+          this.started = false;
+          this.expired = null;
+          this.history = [];
+          this.turnStart = balances(this.remaining);
+          this._lastNow = null;
+        }
+        start(turn = this.active) {
+          if (!isColor(turn)) throw new Error("Invalid clock side.");
+          if (this.expired) return false;
+          if (this.started && turn !== this.active) throw new Error("Resume the side whose turn it is.");
+          if (this.running) return true;
+          this.active = turn;
+          this.started = true;
+          if (this.control !== "none") {
+            this._lastNow = this._readNow();
+            this.running = true;
+          }
+          return true;
+        }
+        pause() {
+          this.tick();
+          this.running = false;
+          this._lastNow = null;
+        }
+        tick() {
+          if (!this.running) return this.expired;
+          const now = Math.max(this._lastNow, this._readNow());
+          const elapsed = now - this._lastNow;
+          this._lastNow = now;
+          this.remaining[this.active] = Math.max(0, this.remaining[this.active] - elapsed);
+          if (this.remaining[this.active] === 0) {
+            this.expired = this.active;
+            this.running = false;
+            this._lastNow = null;
+          }
+          return this.expired;
+        }
+        completeMove(color, nextColor, finished = false) {
+          if (!isColor(color) || nextColor !== opposite(color) || color !== this.active || typeof finished !== "boolean" || this.history.length >= MAX_HISTORY) return false;
+          if (this.tick() || this.control !== "none" && !this.running) return false;
+          this.history.push({ remaining: balances(this.turnStart), active: color });
+          this.remaining[color] += CLOCK_CONTROLS2[this.control].incrementMs;
+          this.active = nextColor;
+          this.started = true;
+          this.turnStart = balances(this.remaining);
+          if (finished) {
+            this.running = false;
+            this._lastNow = null;
+          }
+          return true;
+        }
+        undo() {
+          if (!this.history.length) return false;
+          const previous = this.history.pop();
+          this.remaining = balances(previous.remaining);
+          this.active = previous.active;
+          this.turnStart = balances(previous.remaining);
+          this.running = false;
+          this.started = true;
+          this.expired = null;
+          this._lastNow = null;
+          return true;
+        }
+        snapshot() {
+          this.tick();
+          return {
+            version: 1,
+            control: this.control,
+            remaining: balances(this.remaining),
+            active: this.active,
+            started: this.started,
+            expired: this.expired,
+            history: this.history.map((entry) => ({ remaining: balances(entry.remaining), active: entry.active })),
+            turnStart: balances(this.turnStart)
+          };
+        }
+        restore(snapshot, moveCount) {
+          validateSnapshot(snapshot, moveCount);
+          this.control = snapshot.control;
+          this.remaining = balances(snapshot.remaining);
+          this.active = snapshot.active;
+          this.started = snapshot.started;
+          this.expired = snapshot.expired;
+          this.history = snapshot.history.map((entry) => ({ remaining: balances(entry.remaining), active: entry.active }));
+          this.turnStart = balances(snapshot.turnStart);
+          this.running = false;
+          this._lastNow = null;
+        }
+        _readNow() {
+          const value = this._now();
+          if (!Number.isFinite(value)) throw new Error("The clock time source returned an invalid time.");
+          return value;
+        }
+      };
+      function validateSnapshot(data, moveCount) {
+        const invalid = () => {
+          throw new Error("The saved clock is damaged. Import a PGN backup instead.");
+        };
+        if (!isRecord(data) || data.version !== 1 || !validControl(data.control) || !isColor(data.active) || typeof data.started !== "boolean" || data.expired !== null && !isColor(data.expired)) invalid();
+        if (!Number.isInteger(moveCount) || moveCount < 0 || moveCount > MAX_HISTORY || !Array.isArray(data.history) || data.history.length > MAX_HISTORY) invalid();
+        if (data.control === "none" ? data.history.length > moveCount : data.history.length !== moveCount) invalid();
+        const { initialMs, incrementMs } = CLOCK_CONTROLS2[data.control];
+        const maxMs = initialMs + incrementMs * MAX_HISTORY;
+        const validBalances = (value) => isRecord(value) && ["w", "b"].every((color) => Number.isFinite(value[color]) && value[color] >= 0 && value[color] <= maxMs);
+        if (!validBalances(data.remaining) || !validBalances(data.turnStart)) invalid();
+        if (data.history.some((entry) => !isRecord(entry) || !isColor(entry.active) || !validBalances(entry.remaining))) invalid();
+        const checkpoints = [...data.history, { remaining: data.turnStart, active: data.active }];
+        if (!equalBalances(checkpoints[0].remaining, { w: initialMs, b: initialMs })) invalid();
+        for (let i = 1; i < checkpoints.length; i++) {
+          const previous = checkpoints[i - 1];
+          const current = checkpoints[i];
+          const mover = previous.active;
+          const other = opposite(mover);
+          if (current.active !== other || current.remaining[other] !== previous.remaining[other] || current.remaining[mover] > previous.remaining[mover] + incrementMs) invalid();
+          if (data.control !== "none" && current.remaining[mover] <= incrementMs) invalid();
+        }
+        if (data.remaining[opposite(data.active)] !== data.turnStart[opposite(data.active)] || data.remaining[data.active] > data.turnStart[data.active]) invalid();
+        if (!data.started && (data.history.length || data.expired !== null || !equalBalances(data.remaining, data.turnStart))) invalid();
+        if (data.control === "none") {
+          if (data.expired !== null) invalid();
+        } else {
+          if (data.remaining[data.active] === 0 !== (data.expired === data.active)) invalid();
+          if (data.expired !== null && (!data.started || data.expired !== data.active)) invalid();
+          if (data.remaining[opposite(data.active)] === 0 || data.turnStart.w === 0 || data.turnStart.b === 0) invalid();
+        }
+      }
+      function formatClock2(ms) {
+        if (!Number.isFinite(ms)) throw new TypeError("Invalid clock time.");
+        const seconds = Math.ceil(Math.max(0, ms) / 1e3);
+        return `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
+      }
+      module.exports = { CLOCK_CONTROLS: CLOCK_CONTROLS2, ChessClock: ChessClock3, formatClock: formatClock2 };
+    }
+  });
+
   // node_modules/chess.js/dist/esm/chess.js
   function rootNode(comment) {
     return comment !== null ? { comment, variations: [] } : { variations: [] };
@@ -3455,7 +3646,11 @@
     }
   };
 
+  // src/app.js
+  var import_clock2 = __toESM(require_clock());
+
   // src/saved-games.js
+  var import_clock = __toESM(require_clock());
   var SAVE_KEY = "levelupchess.saved-game.v1";
   var MAX_PGN_SIZE = 256 * 1024;
   function parsePgn(text) {
@@ -3478,8 +3673,8 @@
     copy.setHeader("Result", result);
     return copy.pgn({ maxWidth: 80 });
   }
-  function makeSave(game2, settings) {
-    return { version: 1, savedAt: (/* @__PURE__ */ new Date()).toISOString(), pgn: exportPgn(game2), settings };
+  function makeSave(game2, settings, clock2) {
+    return { version: 1, savedAt: (/* @__PURE__ */ new Date()).toISOString(), pgn: exportPgn(game2), settings, ...clock2 ? { clock: clock2 } : {} };
   }
   function parseSave(text) {
     let data;
@@ -3491,7 +3686,19 @@
     if (!data || data.version !== 1 || typeof data.savedAt !== "string" || Number.isNaN(Date.parse(data.savedAt))) throw new Error("The saved game format is not supported.");
     const settings = data.settings;
     if (!settings || !["local", "engine"].includes(settings.opponent) || !["w", "b"].includes(settings.humanSide) || !["easy", "medium", "hard"].includes(settings.difficulty) || typeof settings.flipped !== "boolean") throw new Error("The saved game settings are damaged.");
-    return { game: parsePgn(data.pgn), settings, savedAt: data.savedAt };
+    const game2 = parsePgn(data.pgn);
+    let clock2;
+    if (data.clock !== void 0) {
+      const candidate = new import_clock.ChessClock();
+      try {
+        candidate.restore(data.clock, game2.history().length);
+        if (candidate.active !== game2.turn() || candidate.expired && game2.isGameOver()) throw new Error();
+        clock2 = candidate.snapshot();
+      } catch {
+        throw new Error("The saved clock is damaged. Import a PGN backup instead.");
+      }
+    }
+    return { game: game2, settings, savedAt: data.savedAt, clock: clock2 };
   }
 
   // src/app.js
@@ -3514,9 +3721,83 @@
   var engineController = null;
   var generation = 0;
   var engineName = "Fairy Stockfish";
+  var clock = new import_clock2.ChessClock();
+  var timeControl = document.querySelector("#time-control");
+  var clockTop = document.querySelector("#black-clock");
+  var clockBottom = document.querySelector("#white-clock");
+  var clockToggle = document.querySelector("#clock-toggle");
+  var clockNotice = "";
+  var handledFlag = null;
+  var isTimed = () => clock.control !== "none";
+  var isFinished = () => game.isGameOver() || Boolean(clock.expired);
+  var canPlay = () => !isTimed() || clock.running;
+  function timeoutResult() {
+    if (!clock.expired) return null;
+    const winner = clock.expired === "w" ? "b" : "w";
+    const canMate = game.board().flat().some((piece) => piece?.color === winner && piece.type !== "k");
+    return canMate ? { result: winner === "w" ? "1-0" : "0-1", status: `${side(winner)} wins on time` } : { result: "1/2-1/2", status: "Draw on time: opponent has only a king" };
+  }
+  function updateClocks() {
+    for (const [element, color] of [[clockTop, flipped ? "w" : "b"], [clockBottom, flipped ? "b" : "w"]]) {
+      element.id = `${color === "w" ? "white" : "black"}-clock`;
+      element.hidden = !isTimed();
+      element.textContent = (0, import_clock2.formatClock)(clock.remaining[color]);
+      element.setAttribute("aria-label", `${side(color)} clock`);
+      element.classList.toggle("active", clock.running && clock.active === color);
+      element.classList.toggle("flagged", clock.expired === color);
+    }
+    clockToggle.disabled = !isTimed() || isFinished();
+    clockToggle.textContent = clock.running ? "Pause clock" : clock.started ? "Resume clock" : "Start clock";
+    const message = !isTimed() ? "Untimed. No time limit." : clock.expired ? "Clock finished." : game.isGameOver() ? "Game finished. Clocks stopped." : clock.running ? `${side(clock.active)} clock running (${import_clock2.CLOCK_CONTROLS[clock.control].label}).` : clockNotice || (clock.started ? "Clocks paused. Resume clock to continue." : "Ready. Start clock to begin.");
+    const status = document.querySelector("#clock-status");
+    const text = message + (timeControl.value !== clock.control ? " New selection applies to the next game." : "");
+    if (status.textContent !== text) status.textContent = text;
+  }
+  function settleClock() {
+    clock.tick();
+    if (!clock.expired) handledFlag = null;
+    if (clock.expired && handledFlag !== clock.expired) {
+      handledFlag = clock.expired;
+      cancelEngine();
+      selected = null;
+      pending = null;
+      promotion.close();
+      const outcome = timeoutResult();
+      game.setHeader("Result", outcome.result);
+      game.setHeader("Termination", "time forfeit");
+      if (opponent.value === "engine") engineMessage("Game finished on time.");
+      render();
+    }
+    updateClocks();
+    return !clock.expired;
+  }
+  function pauseClocks(message = "") {
+    settleClock();
+    clock.pause();
+    clockNotice = message;
+    updateClocks();
+  }
   function playMove(move) {
+    if (!settleClock() || !canPlay()) return null;
+    const color = game.turn();
     const result = game.move(move);
+    if (!clock.completeMove(color, game.turn(), game.isGameOver())) {
+      game.undo();
+      cancelEngine();
+      selected = null;
+      pending = null;
+      promotion.close();
+      const outcome = timeoutResult();
+      handledFlag = clock.expired;
+      if (outcome) {
+        game.setHeader("Result", outcome.result);
+        game.setHeader("Termination", "time forfeit");
+      }
+      render();
+      return null;
+    }
     game.setHeader("Result", "*");
+    game.removeHeader("Termination");
     return result;
   }
   function engineMessage(message) {
@@ -3561,11 +3842,12 @@
       if (request !== generation) return;
       engineBusy = false;
       enginePaused = true;
+      pauseClocks("Engine connection failed. Clocks paused.");
       engineMessage(error.message === "Failed to fetch" ? "Cannot reach the engine bridge. Run npm.cmd start and open its printed address." : error.message);
     }
   }
   async function maybeEngineMove() {
-    if (opponent.value !== "engine" || !connected || engineBusy || enginePaused || pending || game.isGameOver() || game.turn() === humanSide.value) return;
+    if (opponent.value !== "engine" || !connected || engineBusy || enginePaused || pending || isFinished() || !canPlay() || game.turn() === humanSide.value) return;
     engineBusy = true;
     engineController = new AbortController();
     const request = generation;
@@ -3579,7 +3861,7 @@
       });
       if (request !== generation || game.fen() !== fen) return;
       if (typeof data.move !== "string" || !/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(data.move)) throw new Error("Engine returned an invalid move.");
-      playMove({ from: data.move.slice(0, 2), to: data.move.slice(2, 4), promotion: data.move[4] });
+      if (!playMove({ from: data.move.slice(0, 2), to: data.move.slice(2, 4), promotion: data.move[4] })) return;
       engineBusy = false;
       engineMessage(`${engineName} connected. Your move.`);
       render();
@@ -3587,6 +3869,7 @@
       if (request !== generation) return;
       engineBusy = false;
       enginePaused = true;
+      pauseClocks("Engine error. Clocks paused.");
       engineMessage(`Engine paused: ${error.message}`);
     }
   }
@@ -3648,8 +3931,9 @@
     else if (game.isThreefoldRepetition()) status = "Draw by repetition";
     else if (game.isDraw()) status = "Draw by fifty-move rule";
     else if (game.isCheck()) status += " \xB7 Check";
+    if (clock.expired) status = timeoutResult().status;
     document.querySelector("#status").textContent = status;
-    document.querySelector("#hint").textContent = game.isGameOver() ? "Start a new game or undo a move to keep playing." : selected ? `${side(game.turn())} ${names[game.get(selected).type]} on ${selected}. Choose a highlighted square.` : "Select a piece to see its legal moves.";
+    document.querySelector("#hint").textContent = isFinished() ? "Start a new game or undo a move to keep playing." : !canPlay() ? "Start or resume the clock to continue playing." : selected ? `${side(game.turn())} ${names[game.get(selected).type]} on ${selected}. Choose a highlighted square.` : "Select a piece to see its legal moves.";
     document.querySelector("#undo").disabled = history.length === 0;
     document.querySelector("#top-player").textContent = flipped ? "White pieces" : "Black pieces";
     document.querySelector("#bottom-player").textContent = flipped ? "Black pieces" : "White pieces";
@@ -3685,10 +3969,12 @@
       document.querySelector("#top-player").textContent = topColor === humanSide.value ? `You \xB7 ${side(topColor)}` : `Fairy Stockfish \xB7 ${side(topColor)}`;
       document.querySelector("#bottom-player").textContent = bottomColor === humanSide.value ? `You \xB7 ${side(bottomColor)}` : `Fairy Stockfish \xB7 ${side(bottomColor)}`;
     }
+    updateClocks();
     void maybeEngineMove();
   }
   function selectSquare(square) {
-    if (game.isGameOver() || pending || opponent.value === "engine" && game.turn() !== humanSide.value) return;
+    settleClock();
+    if (isFinished() || !canPlay() || pending || opponent.value === "engine" && game.turn() !== humanSide.value) return;
     const moves = selected ? game.moves({ square: selected, verbose: true }).filter((move) => move.to === square) : [];
     if (moves.length) {
       if (moves.some((move) => move.promotion)) {
@@ -3724,9 +4010,16 @@
   });
   document.querySelector("#undo").onclick = () => {
     cancelEngine();
+    pauseClocks();
     game.undo();
+    if (!clock.undo()) clock.reset("none", game.turn());
     game.setHeader("Result", "*");
-    if (opponent.value === "engine" && game.turn() !== humanSide.value && game.history().length) game.undo();
+    if (opponent.value === "engine" && game.turn() !== humanSide.value && game.history().length) {
+      game.undo();
+      if (!clock.undo()) clock.reset("none", game.turn());
+    }
+    game.removeHeader("Termination");
+    clockNotice = "Clocks paused after undo. Resume clock when ready.";
     selected = null;
     if (opponent.value === "engine") engineMessage("Engine paused after undo. Resume when ready.");
     render();
@@ -3739,6 +4032,9 @@
     cancelEngine();
     enginePaused = false;
     game.reset();
+    clock.reset(timeControl.value, game.turn());
+    clockNotice = "";
+    handledFlag = null;
     selected = null;
     pending = null;
     promotion.close();
@@ -3747,12 +4043,13 @@
     render();
   }
   document.querySelector("#new-game").onclick = () => {
-    if (game.history().length || engineBusy) restart.showModal();
+    if (game.history().length || engineBusy || clock.started) restart.showModal();
     else newGame();
   };
   document.querySelector("#cancel-restart").onclick = () => restart.close();
   document.querySelector("#confirm-restart").onclick = newGame;
   opponent.onchange = () => {
+    pauseClocks();
     cancelEngine();
     selected = null;
     document.querySelector("#engine-settings").hidden = opponent.value !== "engine";
@@ -3763,6 +4060,7 @@
     render();
   };
   humanSide.onchange = () => {
+    pauseClocks();
     cancelEngine();
     enginePaused = false;
     selected = null;
@@ -3772,6 +4070,7 @@
     render();
   };
   difficulty.onchange = () => {
+    pauseClocks();
     cancelEngine();
     enginePaused = false;
     engineMessage(connected ? `${engineName} connected.` : "Connect the engine to begin.");
@@ -3781,11 +4080,12 @@
     if (!connected) void connectEngine();
     else {
       enginePaused = false;
-      engineMessage(`${engineName} connected.`);
+      engineMessage(isTimed() && !clock.running ? "Engine ready. Start or resume clock to continue." : `${engineName} connected.`);
       render();
     }
   };
   document.querySelector("#engine-cancel").onclick = () => {
+    pauseClocks("Engine paused. Resume clock when ready.");
     cancelEngine();
     engineMessage("Engine paused. Resume when ready.");
   };
@@ -3807,6 +4107,17 @@
   function applyGame(candidate) {
     cancelEngine();
     game.loadPgn(candidate.game.pgn());
+    if (candidate.clock) clock.restore(candidate.clock, game.history().length);
+    else clock.reset("none", game.turn());
+    handledFlag = null;
+    if (clock.expired) {
+      const outcome = timeoutResult();
+      game.setHeader("Result", outcome.result);
+      game.setHeader("Termination", "time forfeit");
+      handledFlag = clock.expired;
+    }
+    timeControl.value = clock.control;
+    clockNotice = "Game loaded. Start or resume clock when ready.";
     selected = null;
     pending = null;
     promotion.close();
@@ -3825,7 +4136,7 @@
     render();
   }
   function proposeGame(candidate) {
-    if (game.history().length || engineBusy || pending || game.fen() !== new Chess().fen()) {
+    if (game.history().length || engineBusy || clock.started || pending || game.fen() !== new Chess().fen()) {
       replacement = candidate;
       importDialog.close();
       replaceDialog.showModal();
@@ -3833,7 +4144,10 @@
   }
   document.querySelector("#save-game").onclick = () => {
     try {
-      const save = makeSave(game, { opponent: opponent.value, humanSide: humanSide.value, difficulty: difficulty.value, flipped });
+      settleClock();
+      const clockState = clock.snapshot();
+      settleClock();
+      const save = makeSave(game, { opponent: opponent.value, humanSide: humanSide.value, difficulty: difficulty.value, flipped }, clockState);
       localStorage.setItem(SAVE_KEY, JSON.stringify(save));
       saveStatus.textContent = `Saved ${game.history().length} half-moves in this browser. Export PGN for a portable backup.`;
       refreshSaveAvailability();
@@ -3851,6 +4165,7 @@
     }
   };
   document.querySelector("#export-pgn").onclick = () => {
+    settleClock();
     const url = URL.createObjectURL(new Blob([exportPgn(game)], { type: "application/x-chess-pgn;charset=utf-8" }));
     const link = document.createElement("a");
     link.href = url;
@@ -3919,6 +4234,28 @@
     replaceDialog.close();
     applyGame(candidate);
   };
+  timeControl.onchange = updateClocks;
+  clockToggle.onclick = () => {
+    settleClock();
+    if (isFinished() || !isTimed()) return;
+    if (clock.running) {
+      pauseClocks();
+      cancelEngine();
+      if (opponent.value === "engine") engineMessage("Engine paused with the clock.");
+    } else {
+      if (opponent.value === "engine" && !connected) {
+        clockNotice = "Connect the engine before starting the clock.";
+        updateClocks();
+        return;
+      }
+      clockNotice = "";
+      clock.start(game.turn());
+      enginePaused = false;
+    }
+    selected = null;
+    render();
+  };
+  setInterval(settleClock, 100);
   refreshSaveAvailability();
   render();
 })();

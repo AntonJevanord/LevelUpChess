@@ -8,12 +8,25 @@ Open `index.html` in a modern browser. The file includes its own styles and Java
 
 Includes legal moves, check/checkmate, automatic draw detection, castling, en passant, promotion choice, move history, undo, board flip, and new game. Unsaved moves reset when the page reloads; use **Save game** or **Export PGN** to keep them. Draws are automatically ended on threefold repetition or the fifty-move rule; claim-based tournament rules are outside this version.
 
+## Optional clocks
+
+Choose **Time control**, then start a **New game** to apply it. Available presets are untimed, 3+2, 5+0, 10+5, and 15+10: minutes per side plus seconds added after each completed move. Untimed remains the default.
+
+- Press **Start clock** when both sides are ready. Timed games require running clocks to move. In engine mode, connect the engine first.
+- **Pause clock** freezes both clocks, blocks moves, and cancels any engine search. **Resume clock** restarts the side to move and requests a fresh engine reply when needed. Engine pause/errors and changes to opponent, side, or difficulty also pause the clocks.
+- Time runs while the tab is in the background and while dialogs are open. Pause before taking a break or importing a game. Promotion choice uses the promoting player's time.
+- Checkmate and rule-based draws stop the clocks. Running out of time ends play and records the result in PGN; it is a draw if the opponent has only a king. Other rare position-specific inability-to-mate cases are not adjudicated.
+- Undo restores the time at the beginning of the undone turn, removes that move's increment, and leaves clocks paused. Against the engine, it undoes a full pair of moves where available.
+- Browser saves keep remaining time, the selected control, and clock undo history. Loads are paused and do not charge time spent away. Older saves load untimed. PGN import starts untimed because these files do not carry the app's clock state.
+
+Changing the time-control dropdown during a game only selects the next game's preset.
+
 ## Saved games and PGN
 
-- **Save game** stores one game in this browser, including move history, opponent, side, difficulty, and board orientation. Saving again replaces that slot.
-- **Load saved** restores that slot; confirm before replacing current moves. Loading leaves the engine paused. Connect or resume when ready.
-- **Export PGN** downloads a portable game file with move history, starting position, comments, and result. It does not include engine or display settings.
-- **Import PGN** accepts pasted notation or a `.pgn` file up to 256 KB. Invalid or unsupported variant games leave the current board unchanged. Import keeps your current play settings and pauses the engine.
+- **Save game** stores one game in this browser, including move history, opponent, side, difficulty, board orientation, and clock state. Saving again replaces that slot.
+- **Load saved** restores that slot; confirm before replacing current moves. Loading leaves the engine and clocks paused. Connect or resume when ready.
+- **Export PGN** downloads a portable game file with move history, starting position, comments, and result. It does not include remaining clock times, engine settings, or display settings.
+- **Import PGN** accepts pasted notation or a `.pgn` file up to 256 KB. Invalid or unsupported variant games leave the current board unchanged. Import keeps your opponent and display settings, switches to untimed play, and pauses the engine.
 
 Saving is manual. New games, imports, and loading do not overwrite the saved slot. Saves belong to this browser and site address; private browsing, clearing site data, switching browsers, or moving between direct-file and server play can make them unavailable. If browser storage is blocked, use PGN export. Downloaded PGNs remain usable independently of browser storage.
 
@@ -30,7 +43,7 @@ npx playwright install chromium
 npm test
 ```
 
-Tests start a temporary local server. Set `TEST_FILE_URL=1` to test direct file loading where browser policy permits it. `npm start` also serves the game locally during development. Set `CHROMIUM_PATH` to use an existing Chromium installation instead of downloading one.
+`npm test` runs clock-model unit tests, then browser tests that start a temporary local server. Set `TEST_FILE_URL=1` to test direct file loading where browser policy permits it. `npm start` also serves the game locally during development. Set `CHROMIUM_PATH` to use an existing Chromium installation instead of downloading one.
 
 Edit `src/app.js`, `styles.css`, or `src/index.html`, then run `npm run build` and reload the page. The build generates self-contained `index.html` and `dist/app.js`; keep both committed. Do not edit the generated HTML directly. Standard chess rules use [chess.js](https://github.com/jhlywa/chess.js); its BSD license is included in `dist/chess.js-LICENSE.txt`.
 
@@ -46,7 +59,7 @@ npm.cmd start
 Open the address printed in the terminal and keep that terminal running. Choose **Fairy Stockfish** under **Opponent**, then select your side and difficulty. The server launches `stockfish/fairy-stockfish-largeboard_x86-64.exe` automatically. The HTML preview and direct file mode support local two-player games; engine play requires this server.
 
 - **Easy / Medium / Hard:** engine skill 0 / 8 / 20, with 150 / 600 / 1500 ms search budgets. These are presets, not Elo ratings.
-- **Pause engine:** cancels its current search. Resume to request a fresh move.
+- **Pause engine:** cancels its current search and pauses timed play. Resume the clock in a timed game, or resume the engine in an untimed game.
 - **Undo move:** takes back your move and the engine reply, then pauses the engine.
 - Changing opponent, side, or difficulty preserves the board and cancels any old search. **New game** resets it.
 - Engine errors leave the board intact. Retry the connection or switch to a local opponent.

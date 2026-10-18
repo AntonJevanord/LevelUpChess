@@ -1,4 +1,5 @@
 import { Chess } from 'chess.js';
+import { ChessClock } from './clock';
 
 export const SAVE_KEY = 'levelupchess.saved-game.v1';
 export const MAX_PGN_SIZE = 256 * 1024;
@@ -21,8 +22,8 @@ export function exportPgn(game) {
   return copy.pgn({ maxWidth: 80 });
 }
 
-export function makeSave(game, settings) {
-  return { version: 1, savedAt: new Date().toISOString(), pgn: exportPgn(game), settings };
+export function makeSave(game, settings, clock) {
+  return { version: 1, savedAt: new Date().toISOString(), pgn: exportPgn(game), settings, ...(clock ? { clock } : {}) };
 }
 
 export function parseSave(text) {
@@ -31,5 +32,15 @@ export function parseSave(text) {
   if (!data || data.version !== 1 || typeof data.savedAt !== 'string' || Number.isNaN(Date.parse(data.savedAt))) throw new Error('The saved game format is not supported.');
   const settings = data.settings;
   if (!settings || !['local', 'engine'].includes(settings.opponent) || !['w', 'b'].includes(settings.humanSide) || !['easy', 'medium', 'hard'].includes(settings.difficulty) || typeof settings.flipped !== 'boolean') throw new Error('The saved game settings are damaged.');
-  return { game: parsePgn(data.pgn), settings, savedAt: data.savedAt };
+  const game = parsePgn(data.pgn);
+  let clock;
+  if (data.clock !== undefined) {
+    const candidate = new ChessClock();
+    try {
+      candidate.restore(data.clock, game.history().length);
+      if (candidate.active !== game.turn() || (candidate.expired && game.isGameOver())) throw new Error();
+      clock = candidate.snapshot();
+    } catch { throw new Error('The saved clock is damaged. Import a PGN backup instead.'); }
+  }
+  return { game, settings, savedAt: data.savedAt, clock };
 }

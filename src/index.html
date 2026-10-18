@@ -13,9 +13,9 @@
     <section class="intro"><span class="eyebrow">EVERY GREAT GAME STARTS HERE</span><h1>Your next move.</h1><p>Classic chess. Two players. One board.</p></section>
     <div class="game-layout">
       <section class="board-area" aria-label="Chess game">
-        <div class="player"><span class="avatar">♟</span><div><strong id="top-player">Black pieces</strong><small>Local player</small></div><span class="level">LEVEL 0</span></div>
+        <div class="player"><span class="avatar">♟</span><div><strong id="top-player">Black pieces</strong><small>Local player</small></div><span class="level">LEVEL 0</span><span id="black-clock" class="clock-display" hidden>00:00</span></div>
         <div id="board" class="board" role="group" aria-label="Chessboard"></div>
-        <div class="player"><span class="avatar white-avatar">♙</span><div><strong id="bottom-player">White pieces</strong><small>Local player</small></div><span class="level">LEVEL 0</span></div>
+        <div class="player"><span class="avatar white-avatar">♙</span><div><strong id="bottom-player">White pieces</strong><small>Local player</small></div><span class="level">LEVEL 0</span><span id="white-clock" class="clock-display" hidden>00:00</span></div>
       </section>
       <aside>
         <section class="panel"><span class="eyebrow">ON THE BOARD</span><h2 id="status" role="status" aria-live="polite"></h2><p id="hint">Select a piece to see its legal moves.</p><div class="actions"><button id="undo" type="button">↶ Undo move</button><button id="flip" type="button">⇅ Flip board</button></div><button id="new-game" class="primary" type="button">New game</button></section>
@@ -28,6 +28,11 @@
             <div class="actions"><button id="engine-retry" type="button">Connect engine</button><button id="engine-cancel" type="button" disabled>Pause engine</button></div>
             <p class="engine-help">Engine play needs the local server. Run <code>npm.cmd start</code> and open its printed address.</p>
           </div>
+          <label for="time-control">Time control</label>
+          <select id="time-control"><option value="none">Untimed</option><option value="blitz">3 min + 2 sec</option><option value="five">5 min + 0 sec</option><option value="rapid">10 min + 5 sec</option><option value="classic">15 min + 10 sec</option></select>
+          <p class="engine-help">Applies to your next new game. Increment is added after each move.</p>
+          <p id="clock-status" role="status" aria-live="polite">No time limit.</p>
+          <button id="clock-toggle" type="button" disabled>Start clock</button>
         </section>
         <section class="panel history-panel"><div class="panel-heading"><h3>Move history</h3><span>SAN</span></div><p id="empty-history">The opening is yours.</p><ol id="history" aria-label="Move history"></ol></section>
         <section class="panel save-panel" aria-labelledby="save-title">
