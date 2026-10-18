@@ -108,7 +108,7 @@ Version 02 cloud integration used a Linux source build; the user playtested its 
 - [x] Pass 135 unit tests with Linux-native and Windows-under-Wine engines, including 56 isolated native/browser move-set comparisons.
 - [x] Pass all 120 existing browser/API tests and six new blue-queen, blue-pawn, and blue-rook regressions.
 - [x] Run all 14 native browser/API cases with the bundled Windows executable under Wine, including legacy rules, mixed armies, pause/resume, and undo.
-- [ ] Confirm the patched bundled engine on the user's Windows computer.
+- [x] User reports the patched bundled engine works on Windows.
 
 The blue queen's draft back-rank teleport remains an optional engine extension. Version 05 uses supported conditional jumps instead. Royal king upgrades remain future work; each side must keep a clear checkmate rule.
 
