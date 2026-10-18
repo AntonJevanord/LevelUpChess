@@ -53,8 +53,9 @@ Linux integration was verified with an upstream Fairy Stockfish source build. Th
 - [x] Support levels 0–3, separate 1–6 point budgets, and mixed armies.
 - [x] Preserve old blue saves; restore all new setup levels from saved games and PGN.
 - [x] Verify jumps, king safety, mixed armies, persistence, and native Stockfish for both new levels.
-- [ ] Playtest orange and purple knights, mixed budgets, and Stockfish on Windows.
-- [ ] Tag `v0.3.0` after the knight-family playtest.
+- [x] User playtest confirmed the knight upgrades work; purple mobility needs improvement.
+- [ ] Finish Windows playtesting of mixed-budget armies.
+- [x] Preserve the knight-family build as `v0.3.0`; improve purple and add other families in version 04.
 - [ ] Resolve remaining draft rules, extra starting pieces, promotions, and upgraded king victory rules.
 
 ## Later versions
