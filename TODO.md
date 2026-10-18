@@ -7,14 +7,25 @@
 - [x] Castling, en passant, and selectable promotion.
 - [x] Move history, undo, board flip, and new game.
 - [x] Responsive layout, keyboard controls, and browser tests.
-- [ ] Playtest on the target Windows computer before tagging `v0.1.0`.
+- [x] User playtest confirmed that basic chess works.
+- [x] Preserve version 01 in a local commit and `v0.1.0` tag; branch to `version_02`.
 
 ## Version 02 — engine play
 
-- Choose a local Windows bridge or browser-compatible Fairy Stockfish build.
-- Verify engine provenance, license, and required redistribution files.
-- Add engine connection status, side selection, difficulty, and cancellation.
-- Add clocks and optional saved games.
+- [x] Add a local Node/UCI bridge for the bundled Windows executable.
+- [x] Add opponent selection, human side, and three difficulty presets.
+- [x] Show connection/search errors with retry and local-play fallback.
+- [x] Add pause/resume, safe cancellation on reset, and full-turn undo.
+- [x] Keep direct HTML local play working without companion files.
+- [x] Test browser controls, stale responses, input validation, and real engine play.
+- [x] Include the upstream GPL license and document binary/source provenance gaps.
+- [ ] Playtest the bundled Windows executable through `npm.cmd start` on Windows.
+- [ ] Record the bundled executable's exact upstream release and matching source before redistribution.
+- [ ] Add optional clocks.
+- [ ] Add saved games and PGN import/export.
+- [ ] Tag `v0.2.0` after Windows engine playtesting and remaining scope review.
+
+Linux integration was verified with an upstream Fairy Stockfish source build. The bundled Windows executable was not executed in the cloud environment. Difficulty presets control engine skill and search time; they are not Elo ratings.
 
 ## Version 03 — first upgrades
 

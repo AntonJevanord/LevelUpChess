@@ -8,7 +8,7 @@
   <script defer src="dist/app.js"></script>
 </head>
 <body>
-  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 01 / LOCAL PLAY</span></header>
+  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 02 / ENGINE PLAY</span></header>
   <main>
     <section class="intro"><span class="eyebrow">EVERY GREAT GAME STARTS HERE</span><h1>Your next move.</h1><p>Classic chess. Two players. One board.</p></section>
     <div class="game-layout">
@@ -19,6 +19,16 @@
       </section>
       <aside>
         <section class="panel"><span class="eyebrow">ON THE BOARD</span><h2 id="status" role="status" aria-live="polite"></h2><p id="hint">Select a piece to see its legal moves.</p><div class="actions"><button id="undo" type="button">↶ Undo move</button><button id="flip" type="button">⇅ Flip board</button></div><button id="new-game" class="primary" type="button">New game</button></section>
+        <section class="panel engine-panel" aria-labelledby="engine-title">
+          <div class="panel-heading"><h3 id="engine-title">Play your way</h3><span>FAIRY STOCKFISH</span></div>
+          <label for="opponent">Opponent</label><select id="opponent"><option value="local">Local player</option><option value="engine">Fairy Stockfish</option></select>
+          <div id="engine-settings" hidden>
+            <div class="settings-row"><div><label for="human-side">Your side</label><select id="human-side"><option value="w">White</option><option value="b">Black</option></select></div><div><label for="difficulty">Difficulty</label><select id="difficulty"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select></div></div>
+            <p id="engine-status" role="status" aria-live="polite">Connect through npm start to play the engine.</p>
+            <div class="actions"><button id="engine-retry" type="button">Connect engine</button><button id="engine-cancel" type="button" disabled>Pause engine</button></div>
+            <p class="engine-help">Engine play needs the local server. Run <code>npm.cmd start</code> and open its printed address.</p>
+          </div>
+        </section>
         <section class="panel history-panel"><div class="panel-heading"><h3>Move history</h3><span>SAN</span></div><p id="empty-history">The opening is yours.</p><ol id="history" aria-label="Move history"></ol></section>
         <div class="coming-next"><span class="eyebrow">THE NEXT LEVEL</span><p>Upgradeable pieces are coming.<br>For now, master the fundamentals.</p><div class="level-dots"><i></i><i></i><i></i></div></div>
       </aside>
