@@ -1,35 +1,36 @@
-Game:
-- create a board.
-- create a playable version of chess with the standard pieces.
-- create functionality to level up the pieces before match start. left click to level up and right click to level down? click for dropdown with options and descriptions?
-- create option to play against fairy stockfish.
-- implement special moves for the special pieces.
-- create a board setup stage before the first move to add an appropriate amount of pieces (some pieces add other pieces before the game as their ability) aka adjust start Fen before game start.
-- create 3 game modes: low level (max level = 3-4), high level (max level = 6-9), random (both players gets a random setup with the same total level on both sides).
-- add options for time restraint.
+# Roadmap
 
-Design:
-- create art for the pieces, standard pieces (lv 0) looks more innocent and higher level pieces (lv 3) look aggressive. lv 1 is blue, lv 2 is orange, lv 3 is purple. (make sure pieces accurately reflect both the level and their side ie. white vs black)
-- create 3 different boards with different levels of contrast with a hue selecting wheel.
-- create 3 slightly more involved board designs.
-- create 3 highly involved board designs with themes (lava, ocean, beach, jungle, halloween, christmas, etc.)
-- create main menu.
-- create settings menu.
+## Version 01 — playable foundation
 
-Chess:
-- implement lv 0 pieces (normal chess gameplay)
-- implement pawn level ups (make sure they can promote to appropriate pieces)
-- implement bishop level ups
-- implement knight level ups
-- implement rook level ups
-- implement queen level ups
-- implement king level ups (make sure the game accepts having the king replaced by another piece, f.eks. make it a capture game mode with the king pieces (lv 0-3) as the pieces to capture)
+- [x] Offline browser board for two local players.
+- [x] Standard legal moves, checkmate, and draw detection.
+- [x] Castling, en passant, and selectable promotion.
+- [x] Move history, undo, board flip, and new game.
+- [x] Responsive layout, keyboard controls, and browser tests.
+- [ ] Playtest on the target Windows computer before tagging `v0.1.0`.
 
-Balance:
-- create a script to play the pieces against each other and evaluate their relative strength.
-- make the script interruptible, one command to interrupt immediately, one to interrupt once the next game/run finnishes.
-- store progress in a file.
-- make a plan to adjust the balance strategy once a piece gets reworked.
+## Version 02 — engine play
 
-Feedback:
-- none
+- Choose a local Windows bridge or browser-compatible Fairy Stockfish build.
+- Verify engine provenance, license, and required redistribution files.
+- Add engine connection status, side selection, difficulty, and cancellation.
+- Add clocks and optional saved games.
+
+## Version 03 — first upgrades
+
+- Resolve unfinished rules in `Example.txt`; validate them with Fairy Stockfish.
+- Add a setup phase with upgrade descriptions and a configurable budget.
+- Implement and test one piece family before expanding to all six.
+- Handle extra starting pieces, promotion choices, and upgraded king victory rules.
+- Distinguish levels by color and visible labels, preserving side contrast.
+
+## Later versions
+
+- Complete all piece upgrades and balance their costs.
+- Add low-budget, high-budget, and equal-budget random modes.
+- Automate engine matches with saved progress and immediate/after-game stopping.
+- Version balance results so rule changes can be compared.
+- Add menus, settings, piece art, board palettes, and optional themes.
+- Consider online casual/ranked play after local rules and balance are stable.
+
+Keep each release playable. Create its branch from the previous tested milestone and tag the finished release.
