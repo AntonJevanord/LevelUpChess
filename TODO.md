@@ -20,7 +20,7 @@
 - [x] Test browser controls, stale responses, input validation, and real engine play.
 - [x] Include the upstream GPL license and document binary/source provenance gaps.
 - [x] Playtest the bundled Windows executable through `npm.cmd start` on Windows.
-- [ ] Record the bundled executable's exact upstream release and matching source before redistribution.
+- [ ] Establish the original executable's exact upstream release and matching source.
 - [x] Add optional clocks with presets, increments, and explicit start/pause/resume.
 - [x] Stop play on timeout; cancel engine searches and export the timed result.
 - [x] Restore clocks with undo and browser saves; load old saves untimed.
@@ -34,7 +34,7 @@
 - [x] User playtest confirmed saving/loading and PGN import/export work.
 - [x] Preserve the tested version 02 as `v0.2.0`; continue upgrades on `version_03`.
 
-Linux integration was verified with an upstream Fairy Stockfish source build. The bundled Windows executable was not executed in the cloud environment. Difficulty presets control engine skill and search time; they are not Elo ratings.
+Version 02 cloud integration used a Linux source build; the user playtested its Windows executable. Difficulty presets control engine skill and search time; they are not Elo ratings.
 
 ## Version 03 — first upgrades
 
@@ -96,6 +96,19 @@ Linux integration was verified with an upstream Fairy Stockfish source build. Th
 - [ ] Playtest home-rank jumps, screen captures, and custom castling with a current Windows engine.
 - [ ] Playtest mixed armies, budgets, saves, undo, and timed games on Windows.
 - [ ] Balance upgrades and their costs after playtesting.
+
+### Patch v0.5.1 — Windows engine compatibility
+
+- [x] Record Windows failures with blue-queen home-rank checks, required pawn promotions, and blue-rook engine exit.
+- [x] Make a matching-source LevelUp Windows executable the default; retain the original executable unchanged.
+- [x] Include matching source, a cross-build script, and a manifest recording the new executable's provenance.
+- [x] Isolate capability checks by piece family and explain engine exits during checks.
+- [x] Keep custom engine-path overrides and document updating or removing stale overrides.
+- [x] Reproduce all three failures with the original Windows executable under Wine.
+- [x] Pass 135 unit tests with Linux-native and Windows-under-Wine engines, including 56 isolated native/browser move-set comparisons.
+- [x] Pass all 120 existing browser/API tests and six new blue-queen, blue-pawn, and blue-rook regressions.
+- [x] Run all 14 native browser/API cases with the bundled Windows executable under Wine, including legacy rules, mixed armies, pause/resume, and undo.
+- [ ] Confirm the patched bundled engine on the user's Windows computer.
 
 The blue queen's draft back-rank teleport remains an optional engine extension. Version 05 uses supported conditional jumps instead. Royal king upgrades remain future work; each side must keep a clear checkmate rule.
 

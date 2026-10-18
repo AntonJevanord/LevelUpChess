@@ -1,71 +1,135 @@
 // A loaded variant name does not prove that an older engine understands all
-// configuration fields. Check the relevant behavior before searching a game.
+// configuration fields. Probe only the upgraded types present in this game:
+// an unrelated piece must not reject or crash an otherwise compatible engine.
 const ROOK = {
-  name: 'upgraded-rook castling and capture jumps',
-  fen: '4k3/8/8/8/8/5p2/6P1/R3K2O w KQ - 0 1',
+  name: 'purple-rook castling and capture jumps',
+  fen: '4k3/8/8/8/8/5p2/6P1/O3K2O w KQ - 0 1',
   required: ['e1g1', 'e1c1', 'h1f3'],
   forbidden: ['h1f2', 'h1g3'],
 };
 
-const PAWNS = [
-  {
-    name: 'mandatory standard promotion for every upgraded pawn',
-    fen: '8/1A1C1D2/7k/8/8/8/8/K7 w - - 0 1',
-    required: ['b7b8', 'd7d8', 'f7f8'].flatMap(move => ['q', 'r', 'b', 'n'].map(piece => move + piece)),
-    forbidden: ['b7b8', 'd7d8', 'f7f8', 'b7b8a', 'd7d8c', 'f7f8d'],
-  },
-  {
-    name: 'upgraded-pawn en passant with multiple targets',
-    fen: '7k/8/5d2/3A4/2a1c3/8/8/7K b - d3d4d5 0 1',
-    required: ['c4d3', 'e4d3', 'f6d4'],
-    forbidden: ['c4d4'],
-  },
-  {
-    name: 'en passant king safety and orange quiet movement',
-    // Removing the blue pawn on d5 would expose the black king to Bb7.
-    // Orange moving quietly to d3 leaves that shield intact.
-    fen: '7K/1B6/5d2/3Aa3/2c5/8/8/7k b - d3d4d5 0 1',
-    required: ['c4d3'],
-    forbidden: ['e5d4', 'f6d4'],
-  },
-];
+function promotion(piece, color) {
+  return {
+    name: `mandatory standard promotion for ${color} pawns`,
+    fen: `8/1${piece}6/7k/8/8/8/8/K7 w - - 0 1`,
+    required: ['q', 'r', 'b', 'n'].map(type => 'b7b8' + type),
+    forbidden: ['b7b8', 'b7b8' + piece.toLowerCase()],
+  };
+}
 
-const HOME_RANKS = [
-  {
-    name: 'blue-piece quiet jumps on the home two ranks',
-    fen: '7k/8/8/8/8/P3p3/LPp5/3S3K w - - 0 1',
-    required: ['a2a4', 'd1c3', 'd1g2', 'd1f4'],
-    forbidden: ['a2c2', 'd1e3'],
-  },
-  {
-    name: 'blue-piece movement outside the home ranks',
-    fen: '8/7k/8/P7/LPpS4/8/8/7K w - - 0 1',
-    required: ['a4a3'],
-    forbidden: ['a4a6', 'd4f5', 'd4g5', 'd4f7'],
-  },
-];
+const PAWNS = {
+  a: [
+    promotion('A', 'blue'),
+    {
+      name: 'blue-pawn standard en passant captures',
+      fen: '7k/8/8/8/2aP4/8/8/7K b - d3 0 1',
+      required: ['c4d3'],
+      forbidden: ['c4d4'],
+    },
+    {
+      name: 'blue-pawn en passant with multiple targets',
+      fen: '7k/8/8/3Ap3/2p5/8/8/7K b - d3d4d5 0 1',
+      required: ['c4d3', 'e5d4'],
+      forbidden: ['c4d4'],
+    },
+    {
+      name: 'blue-pawn en passant king safety',
+      // Removing Ad5 would expose the black king to Bb7.
+      fen: '7K/1B6/8/3Aa3/8/8/8/7k b - d3d4d5 0 1',
+      required: ['e5e4'],
+      forbidden: ['e5d4'],
+    },
+  ],
+  c: [
+    promotion('C', 'orange'),
+    {
+      name: 'orange-pawn vulnerability to en passant',
+      fen: '7k/8/8/8/3Cp3/8/8/7K b - d3 0 1',
+      required: ['e4d3'],
+      forbidden: [],
+    },
+    {
+      name: 'orange-pawn quiet moves onto en passant targets',
+      // Orange's move to d3 leaves Pd4 shielding its king from Ba7.
+      fen: '7K/B7/8/8/3Pc3/8/8/6k1 b - d3 0 1',
+      required: ['e4d3'],
+      forbidden: [],
+    },
+  ],
+  d: [
+    promotion('D', 'purple'),
+    {
+      name: 'purple-pawn diagonal en passant captures',
+      fen: '7k/8/8/5d2/3P4/8/8/7K b - d3 0 1',
+      required: ['f5d3'],
+      forbidden: ['f5e4'],
+    },
+    {
+      name: 'purple-pawn en passant king safety',
+      fen: '7K/B7/8/5d2/3P4/8/8/6k1 b - d3 0 1',
+      required: ['f5f4'],
+      forbidden: ['f5d3'],
+    },
+  ],
+};
+
+const HOME_RANKS = {
+  l: [
+    {
+      name: 'blue-rook quiet jumps on the home two ranks',
+      fen: '7k/8/8/8/8/P3p3/LPp5/7K w - - 0 1',
+      required: ['a2a4'],
+      forbidden: ['a2c2'],
+    },
+    {
+      name: 'blue-rook movement outside the home ranks',
+      fen: '8/7k/8/P7/LPp5/8/8/7K w - - 0 1',
+      required: ['a4a3'],
+      forbidden: ['a4a6'],
+    },
+  ],
+  s: [
+    {
+      name: 'blue-queen quiet jumps on the home two ranks',
+      fen: '7k/8/8/8/8/4p3/1Pp5/3S3K w - - 0 1',
+      required: ['d1c3', 'd1g2', 'd1f4'],
+      forbidden: ['d1e3'],
+    },
+    {
+      name: 'blue-queen movement outside the home ranks',
+      fen: '8/7k/8/8/3S4/8/8/7K w - - 0 1',
+      required: ['d4d3'],
+      forbidden: ['d4f5', 'd4g5', 'd4f7'],
+    },
+  ],
+};
 const ORANGE_ROOK = {
   name: 'orange-rook screen captures',
   fen: 'k7/3n4/8/3P4/n1PMP2n/3P4/8/1K1n4 w - - 0 1',
   required: ['d4d7', 'd4d1', 'd4a4', 'd4h4'],
   forbidden: ['d4d6', 'd4f4'],
 };
-const OTHER_ROOKS = {
-  name: 'blue and orange rook castling',
-  fen: '4k3/8/8/8/7n/8/P6P/L3K2M w KQ - 0 1',
-  required: ['e1g1', 'e1c1', 'a1a3', 'h1h4'],
-  forbidden: ['h1h3'],
-};
+
+function castling(piece, color) {
+  return {
+    name: `${color}-rook castling`,
+    fen: `4k3/8/8/8/8/8/8/${piece}3K2${piece} w KQ - 0 1`,
+    required: ['e1g1', 'e1c1'],
+    forbidden: [],
+  };
+}
 
 function capabilityProbes(fen, variant) {
   if (!['levelup', 'levelup-v5'].includes(variant) || typeof fen !== 'string') return [];
-  const placement = fen.trim().split(/\s+/)[0];
+  const placement = fen.trim().split(/\s+/)[0].toLowerCase();
   const probes = [];
-  if (/o/i.test(placement)) probes.push(ROOK);
-  if (/[acd]/i.test(placement)) probes.push(...PAWNS);
-  if (variant === 'levelup-v5' && /[lm]/i.test(placement)) probes.push(OTHER_ROOKS);
-  if (variant === 'levelup-v5' && /[ls]/i.test(placement)) probes.push(...HOME_RANKS);
-  if (variant === 'levelup-v5' && /m/i.test(placement)) probes.push(ORANGE_ROOK);
+  if (placement.includes('o')) probes.push(ROOK);
+  for (const type of ['a', 'c', 'd']) if (placement.includes(type)) probes.push(...PAWNS[type]);
+  if (variant === 'levelup-v5') {
+    if (placement.includes('l')) probes.push(castling('L', 'blue'), ...HOME_RANKS.l);
+    if (placement.includes('m')) probes.push(castling('M', 'orange'), ORANGE_ROOK);
+    if (placement.includes('s')) probes.push(...HOME_RANKS.s);
+  }
   return probes.map(probe => ({ ...probe, required: [...probe.required], forbidden: [...probe.forbidden] }));
 }
 

@@ -3,7 +3,7 @@ const path = require('node:path');
 const { Chess } = require('chess.js');
 const { capabilityProbes } = require('./engine-capabilities');
 
-const enginePath = () => process.env.FAIRY_STOCKFISH_PATH || path.resolve(__dirname, '../stockfish/fairy-stockfish-largeboard_x86-64.exe');
+const enginePath = () => process.env.FAIRY_STOCKFISH_PATH || path.resolve(__dirname, '../stockfish/fairy-stockfish-levelup_x86-64.exe');
 const variantPath = variant => path.resolve(__dirname, `../variants/${variant}.ini`);
 const variants = ['chess', 'levelup-knight', 'levelup', 'levelup-v5'];
 const levels = {
@@ -51,7 +51,7 @@ async function engineRequest({ fen, difficulty = 'medium', variant = 'chess', si
     };
     const abort = () => finish(new Error('Engine search cancelled.'));
     const timer = setTimeout(() => finish(new Error(phase === 'probe'
-      ? `Fairy Stockfish does not support ${probes[probeIndex].name}. Use a current build through FAIRY_STOCKFISH_PATH, or play locally.`
+      ? `Fairy Stockfish does not support ${probes[probeIndex].name}. Use the bundled LevelUp engine, or update FAIRY_STOCKFISH_PATH.`
       : 'Engine did not respond in time. Check the executable and try again.')), 10000);
     if (signal?.aborted) { abort(); return; }
     signal?.addEventListener('abort', abort, { once: true });
@@ -92,7 +92,7 @@ async function engineRequest({ fen, difficulty = 'medium', variant = 'chess', si
       if (!probeReady || !probeDone) return;
       const probe = probes[probeIndex];
       if (!probe.required.every(move => probeMoves.has(move)) || probe.forbidden.some(move => probeMoves.has(move))) {
-        finish(new Error(`Fairy Stockfish does not support ${probe.name}. Use a current build through FAIRY_STOCKFISH_PATH, or play locally.`));
+        finish(new Error(`Fairy Stockfish does not support ${probe.name}. Use the bundled LevelUp engine, or update FAIRY_STOCKFISH_PATH.`));
         return;
       }
       probeIndex++;
@@ -100,7 +100,9 @@ async function engineRequest({ fen, difficulty = 'medium', variant = 'chess', si
     };
     child.on('error', () => finish(new Error('Cannot launch Fairy Stockfish. Run npm.cmd start on Windows, or set FAIRY_STOCKFISH_PATH to a compatible engine.')));
     child.stdin.on('error', () => finish(new Error('Engine connection closed.')));
-    child.on('exit', () => finish(new Error('Fairy Stockfish exited before completing the request.')));
+    child.on('exit', () => finish(new Error(phase === 'probe'
+      ? `Fairy Stockfish exited while checking ${probes[probeIndex].name}. Use the bundled LevelUp engine, or update FAIRY_STOCKFISH_PATH.`
+      : 'Fairy Stockfish exited before completing the request.')));
     // Drain stderr, but never expose local paths or arbitrary executable output to the client.
     child.stderr.resume();
     child.stdout.on('data', chunk => {

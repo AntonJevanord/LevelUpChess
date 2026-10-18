@@ -1,0 +1,50 @@
+{
+  "file": "fairy-stockfish-levelup_x86-64.exe",
+  "sha256": "ad4d1308a7e9fc64ad73864bf740935bf3872d265b165c21abc026655651b9c5",
+  "bytes": 1924096,
+  "format": "PE32+ x86-64 Windows console executable",
+  "source": {
+    "repository": "https://github.com/fairy-stockfish/Fairy-Stockfish",
+    "commit": "43b66c8abfebfcab893a3a4c349aa790d18df148",
+    "archive": "vendor/ffish-es6-0.7.10-source.tar.gz",
+    "archiveSha256": "52b080d823fd4785a598e4201ab26be2752bdbc093b8c9a9a47b99de13a65a86",
+    "modified": false,
+    "license": "GPL-3.0-or-later",
+    "licenseFile": "stockfish/COPYING.txt"
+  },
+  "build": {
+    "script": "scripts/build-windows-engine.sh",
+    "command": "MINGW_CXX=x86_64-w64-mingw32-g++-posix scripts/build-windows-engine.sh",
+    "makeArguments": [
+      "-j2",
+      "ARCH=x86-64",
+      "COMP=mingw",
+      "COMPCXX=x86_64-w64-mingw32-g++-posix",
+      "nnue=no",
+      "EXTRALDFLAGS=-Wl,--no-insert-timestamp",
+      "build"
+    ],
+    "sourceDateEpoch": 1787486918,
+    "timezone": "UTC",
+    "locale": "C",
+    "stripped": true,
+    "reproducibility": "Two clean builds in separate temporary directories using this script and toolchain produced identical bytes and the recorded SHA-256. Other toolchain versions may differ.",
+    "cpu": "Baseline x86-64 with SSE2; no AVX, BMI2 or POPCNT required",
+    "nnue": false,
+    "staticRuntime": true,
+    "dllImports": ["ADVAPI32.dll", "KERNEL32.dll", "msvcrt.dll"]
+  },
+  "toolchain": {
+    "compiler": "x86_64-w64-mingw32-g++-posix (GCC) 14-posix",
+    "compilerDebianPackage": "g++-mingw-w64-x86-64-posix=14.2.0-19+27+b1",
+    "compilerPackageSha256": "cfa1773c2d0184819050138e587a81606d04a5f92e278b521b72b776d2c256c1",
+    "binutils": "GNU Binutils 2.44",
+    "binutilsDebianPackage": "binutils-mingw-w64-x86-64=2.44-3+12+b1",
+    "mingwHeadersDebianPackage": "mingw-w64-x86-64-dev=12.0.0-5",
+    "host": "Debian 13 (trixie), x86-64 Linux",
+    "runtimeNotices": [
+      "stockfish/licenses/MINGW-w64.txt",
+      "stockfish/licenses/GCC-runtime.txt"
+    ]
+  }
+}

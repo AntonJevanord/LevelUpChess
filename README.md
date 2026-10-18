@@ -31,11 +31,13 @@ npm.cmd ci
 npm.cmd start
 ```
 
-Open the printed address, keep the terminal running, and choose **Fairy Stockfish** under **Opponent**. Select your side and difficulty. The server launches the bundled Windows engine unless another executable is configured; direct-file play supports local players only.
+Open the printed address, keep the terminal running, and choose **Fairy Stockfish** under **Opponent**. Select your side and difficulty. The server launches the bundled LevelUp Windows engine, built from the same source revision as the browser rules. Direct-file play supports local players only.
 
 - Easy / Medium / Hard use skill 0 / 8 / 20 and 150 / 600 / 1500 ms search budgets. These are presets, not Elo ratings.
 - Pause cancels the current search. Undo takes back a full turn where available and pauses play. Changing opponent, side, or difficulty preserves the board and cancels obsolete searches.
-- Engine errors preserve the game. Before searching, the bridge checks the custom abilities needed by the army. If an older engine lacks them, it reports an update error; configure a current build or choose a local player.
+- Engine errors preserve the game. Before searching, the bridge checks the custom abilities needed by the army. An incompatible executable reports the missing ability; choose the bundled engine or a compatible replacement.
+
+For the version 05 engine fix, stop the server, run `git pull --ff-only origin version_05`, and restart with `npm.cmd start`. Dependencies are unchanged, so `npm.cmd ci` is only needed for a fresh installation. No engine download or path setting is required. If an earlier `FAIRY_STOCKFISH_PATH` override still selects an old executable, update it or remove it before restarting; in PowerShell, use `Remove-Item Env:FAIRY_STOCKFISH_PATH -ErrorAction SilentlyContinue`.
 
 The server listens only on your computer and needs no cloud services or keys. Linux/macOS require a compatible native engine. Set `FAIRY_STOCKFISH_PATH` to use another executable; for example, in PowerShell:
 
@@ -44,7 +46,7 @@ $env:FAIRY_STOCKFISH_PATH = 'C:\engines\fairy-stockfish.exe'
 npm.cmd start
 ```
 
-Browser and native engines load the same variant configurations. The bundled executable may lack newer custom-piece rules; version 05 still needs Windows playtesting. See [stockfish/README.md](stockfish/README.md) for compatible-build guidance and validation limits.
+Browser and native engines load the same variant configurations. See [stockfish/README.md](stockfish/README.md) for the bundled engine's source, build instructions, and validation limits.
 
 ## Clocks
 

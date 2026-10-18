@@ -262,7 +262,7 @@ test('native and browser rules agree on home leaps, screened captures, checks, p
     const result = spawnSync(process.env.FAIRY_STOCKFISH_PATH, [], { input, encoding: 'utf8', timeout: 15000 });
     assert.equal(result.error, undefined);
     assert.equal(result.status, 0, result.stderr);
-    const native = [...result.stdout.matchAll(/^([a-h][1-8][a-h][1-8][a-z]*): 1$/gm)].map(match => match[1]).sort();
+    const native = [...result.stdout.matchAll(/^([a-h][1-8][a-h][1-8][a-z]*): 1\r?$/gm)].map(match => match[1]).sort();
     const browser = instance.moves({ verbose: true }).map(move => move.from + move.to + (move.promotion || '')).sort();
     assert.deepEqual(native, browser, fen);
   }
