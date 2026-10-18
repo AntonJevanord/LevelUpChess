@@ -19,10 +19,15 @@
 - [x] Keep direct HTML local play working without companion files.
 - [x] Test browser controls, stale responses, input validation, and real engine play.
 - [x] Include the upstream GPL license and document binary/source provenance gaps.
-- [X] Playtest the bundled Windows executable through `npm.cmd start` on Windows.
+- [x] Playtest the bundled Windows executable through `npm.cmd start` on Windows.
 - [ ] Record the bundled executable's exact upstream release and matching source before redistribution.
 - [ ] Add optional clocks.
-- [ ] Add saved games and PGN import/export.
+- [x] Add one browser save slot with moves and play settings.
+- [x] Add PGN download, paste import, and file import.
+- [x] Validate imports before replacement; preserve history and special-move rights.
+- [x] Pause the engine after loading and reject obsolete search responses.
+- [x] Pass 29 browser/integration tests, including saved-game and PGN round trips.
+- [ ] Playtest saving/loading and PGN files on the target Windows browser.
 - [ ] Tag `v0.2.0` after Windows engine playtesting and remaining scope review.
 
 Linux integration was verified with an upstream Fairy Stockfish source build. The bundled Windows executable was not executed in the cloud environment. Difficulty presets control engine skill and search time; they are not Elo ratings.

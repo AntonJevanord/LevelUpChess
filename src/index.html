@@ -30,12 +30,27 @@
           </div>
         </section>
         <section class="panel history-panel"><div class="panel-heading"><h3>Move history</h3><span>SAN</span></div><p id="empty-history">The opening is yours.</p><ol id="history" aria-label="Move history"></ol></section>
+        <section class="panel save-panel" aria-labelledby="save-title">
+          <h3 id="save-title">Keep your game</h3>
+          <p id="save-status" role="status" aria-live="polite">Save in this browser or take a PGN copy with you.</p>
+          <div class="actions"><button id="save-game" type="button">Save game</button><button id="load-game" type="button" disabled>Load saved</button></div>
+          <div class="actions"><button id="export-pgn" type="button">Export PGN</button><button id="open-import" type="button">Import PGN</button></div>
+          <p class="save-help">One save slot per browser. Saving again replaces it. Download PGN for a portable backup.</p>
+        </section>
         <div class="coming-next"><span class="eyebrow">THE NEXT LEVEL</span><p>Upgradeable pieces are coming.<br>For now, master the fundamentals.</p><div class="level-dots"><i></i><i></i><i></i></div></div>
       </aside>
     </div>
   </main>
   <dialog id="promotion"><h2>Choose your promotion</h2><p>Your pawn has earned a new role.</p><div id="promotion-options"></div></dialog>
   <dialog id="restart"><h2>Start a new game?</h2><p>This will clear the current board and move history.</p><div class="actions"><button id="cancel-restart">Keep playing</button><button id="confirm-restart" class="primary">Start new game</button></div></dialog>
+  <dialog id="import-dialog" aria-labelledby="import-title">
+    <h2 id="import-title">Import a game</h2><p>Paste standard-chess PGN or choose a .pgn file.</p>
+    <label for="pgn-file">PGN file (up to 256 KB)</label><input id="pgn-file" type="file" accept=".pgn,text/plain,application/x-chess-pgn">
+    <label for="pgn-text">Game notation</label><textarea id="pgn-text" rows="8" spellcheck="false" placeholder="1. e4 e5 2. Nf3 Nc6 *"></textarea>
+    <p id="import-error" role="alert"></p>
+    <div class="actions"><button id="cancel-import" type="button">Cancel</button><button id="confirm-import" type="button" class="primary">Import game</button></div>
+  </dialog>
+  <dialog id="replace-dialog" aria-labelledby="replace-title"><h2 id="replace-title">Replace the current game?</h2><p>Unsaved moves will be lost. The browser save slot stays unchanged.</p><div class="actions"><button id="cancel-replace" type="button">Keep current game</button><button id="confirm-replace" type="button" class="primary">Replace game</button></div></dialog>
   <footer>Built for the love of the game. <span>STANDARD CHESS · OFFLINE READY</span></footer>
 </body>
 </html>

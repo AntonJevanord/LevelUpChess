@@ -1,4 +1,5 @@
 import { Chess } from 'chess.js';
+import { SAVE_KEY, MAX_PGN_SIZE, parsePgn, exportPgn, makeSave, parseSave } from './saved-games';
 
 const game = new Chess();
 const board = document.querySelector('#board');
@@ -19,6 +20,12 @@ let enginePaused = false;
 let engineController = null;
 let generation = 0;
 let engineName = 'Fairy Stockfish';
+
+function playMove(move) {
+  const result = game.move(move);
+  game.setHeader('Result', '*');
+  return result;
+}
 
 function engineMessage(message) {
   document.querySelector('#engine-status').textContent = message;
@@ -81,7 +88,7 @@ async function maybeEngineMove() {
     });
     if (request !== generation || game.fen() !== fen) return;
     if (typeof data.move !== 'string' || !/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(data.move)) throw new Error('Engine returned an invalid move.');
-    game.move({ from: data.move.slice(0, 2), to: data.move.slice(2, 4), promotion: data.move[4] });
+    playMove({ from: data.move.slice(0, 2), to: data.move.slice(2, 4), promotion: data.move[4] });
     engineBusy = false;
     engineMessage(`${engineName} connected. Your move.`);
     render();
@@ -161,14 +168,21 @@ function render(focusSquare) {
   avatars[1].textContent = flipped ? '♟' : '♙';
   const list = document.querySelector('#history');
   list.replaceChildren();
-  for (let i = 0; i < history.length; i += 2) {
-    const item = document.createElement('li');
-    for (const move of history.slice(i, i + 2)) {
-      const text = document.createElement('span');
-      text.textContent = move.san;
-      item.append(text);
+  let item;
+  for (const move of history) {
+    if (move.color === 'w' || !item) {
+      item = document.createElement('li');
+      item.value = Number(move.before.split(' ')[5]);
+      if (move.color === 'b') {
+        const placeholder = document.createElement('span');
+        placeholder.textContent = '…';
+        item.append(placeholder);
+      }
+      list.append(item);
     }
-    list.append(item);
+    const text = document.createElement('span');
+    text.textContent = move.san;
+    item.append(text);
   }
   document.querySelector('#empty-history').hidden = history.length > 0;
   list.scrollTop = list.scrollHeight;
@@ -194,13 +208,13 @@ function selectSquare(square) {
         const button = document.createElement('button');
         button.textContent = symbols[game.turn()][type];
         button.setAttribute('aria-label', `Promote to ${names[type]}`);
-        button.onclick = () => { game.move({ ...pending, promotion: type }); pending = null; selected = null; promotion.close(); render(square); };
+        button.onclick = () => { playMove({ ...pending, promotion: type }); pending = null; selected = null; promotion.close(); render(square); };
         options.append(button);
       }
       promotion.showModal();
       return;
     }
-    game.move({ from: selected, to: square });
+    playMove({ from: selected, to: square });
     selected = null;
   } else {
     const piece = game.get(square);
@@ -213,6 +227,7 @@ promotion.addEventListener('cancel', () => { pending = null; });
 document.querySelector('#undo').onclick = () => {
   cancelEngine();
   game.undo();
+  game.setHeader('Result', '*');
   if (opponent.value === 'engine' && game.turn() !== humanSide.value && game.history().length) game.undo();
   selected = null;
   if (opponent.value === 'engine') engineMessage('Engine paused after undo. Resume when ready.');
@@ -263,4 +278,111 @@ document.querySelector('#engine-cancel').onclick = () => {
   cancelEngine();
   engineMessage('Engine paused. Resume when ready.');
 };
+
+const saveStatus = document.querySelector('#save-status');
+const importDialog = document.querySelector('#import-dialog');
+const replaceDialog = document.querySelector('#replace-dialog');
+const pgnText = document.querySelector('#pgn-text');
+const pgnFile = document.querySelector('#pgn-file');
+const importError = document.querySelector('#import-error');
+let replacement = null;
+let fileGeneration = 0;
+
+function refreshSaveAvailability() {
+  try { document.querySelector('#load-game').disabled = !localStorage.getItem(SAVE_KEY); }
+  catch { saveStatus.textContent = 'Browser storage is unavailable. Use PGN export for a backup.'; }
+}
+function applyGame(candidate) {
+  cancelEngine();
+  // Validation happens in a separate Chess instance before this mutates the board.
+  game.loadPgn(candidate.game.pgn());
+  selected = null;
+  pending = null;
+  promotion.close();
+  restart.close();
+  if (candidate.settings) {
+    opponent.value = candidate.settings.opponent;
+    humanSide.value = candidate.settings.humanSide;
+    difficulty.value = candidate.settings.difficulty;
+    flipped = candidate.settings.flipped;
+  }
+  document.querySelector('#engine-settings').hidden = opponent.value !== 'engine';
+  if (opponent.value === 'engine') engineMessage('Game loaded. Engine paused; connect or resume when ready.');
+  importDialog.close();
+  replacement = null;
+  saveStatus.textContent = 'Game loaded. The browser save slot has not changed.';
+  render();
+}
+function proposeGame(candidate) {
+  if (game.history().length || engineBusy || pending || game.fen() !== new Chess().fen()) {
+    replacement = candidate;
+    importDialog.close();
+    replaceDialog.showModal();
+  } else applyGame(candidate);
+}
+document.querySelector('#save-game').onclick = () => {
+  try {
+    const save = makeSave(game, { opponent: opponent.value, humanSide: humanSide.value, difficulty: difficulty.value, flipped });
+    localStorage.setItem(SAVE_KEY, JSON.stringify(save));
+    saveStatus.textContent = `Saved ${game.history().length} half-moves in this browser. Export PGN for a portable backup.`;
+    refreshSaveAvailability();
+  } catch { saveStatus.textContent = 'Could not save in this browser. Use PGN export instead.'; }
+};
+document.querySelector('#load-game').onclick = () => {
+  try {
+    const text = localStorage.getItem(SAVE_KEY);
+    if (!text) throw new Error('No saved game was found in this browser.');
+    proposeGame(parseSave(text));
+  } catch (error) { saveStatus.textContent = error.message; }
+};
+document.querySelector('#export-pgn').onclick = () => {
+  const url = URL.createObjectURL(new Blob([exportPgn(game)], { type: 'application/x-chess-pgn;charset=utf-8' }));
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'levelup-chess.pgn';
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  saveStatus.textContent = 'PGN download requested. It includes the board and move history, not play settings.';
+};
+document.querySelector('#open-import').onclick = () => {
+  fileGeneration++;
+  pgnText.value = '';
+  pgnFile.value = '';
+  importError.textContent = '';
+  importDialog.showModal();
+};
+document.querySelector('#cancel-import').onclick = () => { fileGeneration++; importDialog.close(); };
+importDialog.addEventListener('cancel', () => { fileGeneration++; });
+pgnFile.onchange = async () => {
+  const request = ++fileGeneration;
+  const file = pgnFile.files[0];
+  if (!file) return;
+  pgnText.value = '';
+  if (file.size > MAX_PGN_SIZE) { importError.textContent = 'Choose a PGN file up to 256 KB.'; return; }
+  try {
+    const text = await file.text();
+    if (request !== fileGeneration) return;
+    pgnText.value = text;
+    importError.textContent = '';
+  } catch { if (request === fileGeneration) importError.textContent = 'The file could not be read. Try pasting its PGN instead.'; }
+};
+pgnText.addEventListener('input', () => { fileGeneration++; importError.textContent = ''; });
+document.querySelector('#confirm-import').onclick = () => {
+  try {
+    const candidate = { game: parsePgn(pgnText.value) };
+    fileGeneration++;
+    proposeGame(candidate);
+  } catch (error) { importError.textContent = error.message; }
+};
+document.querySelector('#cancel-replace').onclick = () => { replacement = null; replaceDialog.close(); };
+replaceDialog.addEventListener('cancel', () => { replacement = null; });
+document.querySelector('#confirm-replace').onclick = () => {
+  if (!replacement) return;
+  const candidate = replacement;
+  replaceDialog.close();
+  applyGame(candidate);
+};
+refreshSaveAvailability();
 render();

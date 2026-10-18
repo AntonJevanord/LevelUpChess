@@ -6,7 +6,18 @@ Chess with upgradeable pieces. Pieces start at level 0 (standard chess), then ga
 
 Open `index.html` in a modern browser. The file includes its own styles and JavaScript: download it and open it in Chrome, Edge, or Firefox. No server, npm installation, companion files, or internet connection is needed to play. Chat previews may block interactive content; use your browser if a preview fails. Two people share the board; select a piece, then a highlighted destination. Arrow keys move focus; Enter or Space selects a square.
 
-Includes legal moves, check/checkmate, automatic draw detection, castling, en passant, promotion choice, move history, undo, board flip, and new game. Games are held in memory and reset when the page reloads. Draws are automatically ended on threefold repetition or the fifty-move rule; claim-based tournament rules are outside this version.
+Includes legal moves, check/checkmate, automatic draw detection, castling, en passant, promotion choice, move history, undo, board flip, and new game. Unsaved moves reset when the page reloads; use **Save game** or **Export PGN** to keep them. Draws are automatically ended on threefold repetition or the fifty-move rule; claim-based tournament rules are outside this version.
+
+## Saved games and PGN
+
+- **Save game** stores one game in this browser, including move history, opponent, side, difficulty, and board orientation. Saving again replaces that slot.
+- **Load saved** restores that slot; confirm before replacing current moves. Loading leaves the engine paused. Connect or resume when ready.
+- **Export PGN** downloads a portable game file with move history, starting position, comments, and result. It does not include engine or display settings.
+- **Import PGN** accepts pasted notation or a `.pgn` file up to 256 KB. Invalid or unsupported variant games leave the current board unchanged. Import keeps your current play settings and pauses the engine.
+
+Saving is manual. New games, imports, and loading do not overwrite the saved slot. Saves belong to this browser and site address; private browsing, clearing site data, switching browsers, or moving between direct-file and server play can make them unavailable. If browser storage is blocked, use PGN export. Downloaded PGNs remain usable independently of browser storage.
+
+Imported result headers (including resignation or agreed draws) are preserved on export. You can continue an imported position for analysis; making or undoing a move clears its recorded result, and checkmate or rule-based draws determine the exported result again.
 
 ## Development
 

@@ -3455,6 +3455,45 @@
     }
   };
 
+  // src/saved-games.js
+  var SAVE_KEY = "levelupchess.saved-game.v1";
+  var MAX_PGN_SIZE = 256 * 1024;
+  function parsePgn(text) {
+    if (typeof text !== "string" || !text.trim() || text.length > MAX_PGN_SIZE) throw new Error("Enter a PGN game up to 256 KB.");
+    const candidate = new Chess();
+    try {
+      candidate.loadPgn(text);
+    } catch {
+      throw new Error("This PGN could not be read. Check the moves and starting position.");
+    }
+    const variant = candidate.getHeaders().Variant;
+    if (variant && !["standard", "chess"].includes(variant.toLowerCase())) throw new Error("Only standard-chess PGN games are supported.");
+    return candidate;
+  }
+  function exportPgn(game2) {
+    const copy = new Chess();
+    copy.loadPgn(game2.pgn());
+    const recorded = game2.getHeaders().Result;
+    const result = game2.isCheckmate() ? game2.turn() === "w" ? "0-1" : "1-0" : game2.isDraw() ? "1/2-1/2" : ["1-0", "0-1", "1/2-1/2"].includes(recorded) ? recorded : "*";
+    copy.setHeader("Result", result);
+    return copy.pgn({ maxWidth: 80 });
+  }
+  function makeSave(game2, settings) {
+    return { version: 1, savedAt: (/* @__PURE__ */ new Date()).toISOString(), pgn: exportPgn(game2), settings };
+  }
+  function parseSave(text) {
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      throw new Error("The saved game is damaged. Import a PGN backup instead.");
+    }
+    if (!data || data.version !== 1 || typeof data.savedAt !== "string" || Number.isNaN(Date.parse(data.savedAt))) throw new Error("The saved game format is not supported.");
+    const settings = data.settings;
+    if (!settings || !["local", "engine"].includes(settings.opponent) || !["w", "b"].includes(settings.humanSide) || !["easy", "medium", "hard"].includes(settings.difficulty) || typeof settings.flipped !== "boolean") throw new Error("The saved game settings are damaged.");
+    return { game: parsePgn(data.pgn), settings, savedAt: data.savedAt };
+  }
+
   // src/app.js
   var game = new Chess();
   var board = document.querySelector("#board");
@@ -3475,6 +3514,11 @@
   var engineController = null;
   var generation = 0;
   var engineName = "Fairy Stockfish";
+  function playMove(move) {
+    const result = game.move(move);
+    game.setHeader("Result", "*");
+    return result;
+  }
   function engineMessage(message) {
     document.querySelector("#engine-status").textContent = message;
     document.querySelector("#engine-retry").disabled = engineBusy;
@@ -3535,7 +3579,7 @@
       });
       if (request !== generation || game.fen() !== fen) return;
       if (typeof data.move !== "string" || !/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(data.move)) throw new Error("Engine returned an invalid move.");
-      game.move({ from: data.move.slice(0, 2), to: data.move.slice(2, 4), promotion: data.move[4] });
+      playMove({ from: data.move.slice(0, 2), to: data.move.slice(2, 4), promotion: data.move[4] });
       engineBusy = false;
       engineMessage(`${engineName} connected. Your move.`);
       render();
@@ -3616,14 +3660,21 @@
     avatars[1].textContent = flipped ? "\u265F" : "\u2659";
     const list = document.querySelector("#history");
     list.replaceChildren();
-    for (let i = 0; i < history.length; i += 2) {
-      const item = document.createElement("li");
-      for (const move of history.slice(i, i + 2)) {
-        const text = document.createElement("span");
-        text.textContent = move.san;
-        item.append(text);
+    let item;
+    for (const move of history) {
+      if (move.color === "w" || !item) {
+        item = document.createElement("li");
+        item.value = Number(move.before.split(" ")[5]);
+        if (move.color === "b") {
+          const placeholder = document.createElement("span");
+          placeholder.textContent = "\u2026";
+          item.append(placeholder);
+        }
+        list.append(item);
       }
-      list.append(item);
+      const text = document.createElement("span");
+      text.textContent = move.san;
+      item.append(text);
     }
     document.querySelector("#empty-history").hidden = history.length > 0;
     list.scrollTop = list.scrollHeight;
@@ -3649,7 +3700,7 @@
           button.textContent = symbols[game.turn()][type];
           button.setAttribute("aria-label", `Promote to ${names[type]}`);
           button.onclick = () => {
-            game.move({ ...pending, promotion: type });
+            playMove({ ...pending, promotion: type });
             pending = null;
             selected = null;
             promotion.close();
@@ -3660,7 +3711,7 @@
         promotion.showModal();
         return;
       }
-      game.move({ from: selected, to: square });
+      playMove({ from: selected, to: square });
       selected = null;
     } else {
       const piece = game.get(square);
@@ -3674,6 +3725,7 @@
   document.querySelector("#undo").onclick = () => {
     cancelEngine();
     game.undo();
+    game.setHeader("Result", "*");
     if (opponent.value === "engine" && game.turn() !== humanSide.value && game.history().length) game.undo();
     selected = null;
     if (opponent.value === "engine") engineMessage("Engine paused after undo. Resume when ready.");
@@ -3737,6 +3789,137 @@
     cancelEngine();
     engineMessage("Engine paused. Resume when ready.");
   };
+  var saveStatus = document.querySelector("#save-status");
+  var importDialog = document.querySelector("#import-dialog");
+  var replaceDialog = document.querySelector("#replace-dialog");
+  var pgnText = document.querySelector("#pgn-text");
+  var pgnFile = document.querySelector("#pgn-file");
+  var importError = document.querySelector("#import-error");
+  var replacement = null;
+  var fileGeneration = 0;
+  function refreshSaveAvailability() {
+    try {
+      document.querySelector("#load-game").disabled = !localStorage.getItem(SAVE_KEY);
+    } catch {
+      saveStatus.textContent = "Browser storage is unavailable. Use PGN export for a backup.";
+    }
+  }
+  function applyGame(candidate) {
+    cancelEngine();
+    game.loadPgn(candidate.game.pgn());
+    selected = null;
+    pending = null;
+    promotion.close();
+    restart.close();
+    if (candidate.settings) {
+      opponent.value = candidate.settings.opponent;
+      humanSide.value = candidate.settings.humanSide;
+      difficulty.value = candidate.settings.difficulty;
+      flipped = candidate.settings.flipped;
+    }
+    document.querySelector("#engine-settings").hidden = opponent.value !== "engine";
+    if (opponent.value === "engine") engineMessage("Game loaded. Engine paused; connect or resume when ready.");
+    importDialog.close();
+    replacement = null;
+    saveStatus.textContent = "Game loaded. The browser save slot has not changed.";
+    render();
+  }
+  function proposeGame(candidate) {
+    if (game.history().length || engineBusy || pending || game.fen() !== new Chess().fen()) {
+      replacement = candidate;
+      importDialog.close();
+      replaceDialog.showModal();
+    } else applyGame(candidate);
+  }
+  document.querySelector("#save-game").onclick = () => {
+    try {
+      const save = makeSave(game, { opponent: opponent.value, humanSide: humanSide.value, difficulty: difficulty.value, flipped });
+      localStorage.setItem(SAVE_KEY, JSON.stringify(save));
+      saveStatus.textContent = `Saved ${game.history().length} half-moves in this browser. Export PGN for a portable backup.`;
+      refreshSaveAvailability();
+    } catch {
+      saveStatus.textContent = "Could not save in this browser. Use PGN export instead.";
+    }
+  };
+  document.querySelector("#load-game").onclick = () => {
+    try {
+      const text = localStorage.getItem(SAVE_KEY);
+      if (!text) throw new Error("No saved game was found in this browser.");
+      proposeGame(parseSave(text));
+    } catch (error) {
+      saveStatus.textContent = error.message;
+    }
+  };
+  document.querySelector("#export-pgn").onclick = () => {
+    const url = URL.createObjectURL(new Blob([exportPgn(game)], { type: "application/x-chess-pgn;charset=utf-8" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "levelup-chess.pgn";
+    document.body.append(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1e3);
+    saveStatus.textContent = "PGN download requested. It includes the board and move history, not play settings.";
+  };
+  document.querySelector("#open-import").onclick = () => {
+    fileGeneration++;
+    pgnText.value = "";
+    pgnFile.value = "";
+    importError.textContent = "";
+    importDialog.showModal();
+  };
+  document.querySelector("#cancel-import").onclick = () => {
+    fileGeneration++;
+    importDialog.close();
+  };
+  importDialog.addEventListener("cancel", () => {
+    fileGeneration++;
+  });
+  pgnFile.onchange = async () => {
+    const request = ++fileGeneration;
+    const file2 = pgnFile.files[0];
+    if (!file2) return;
+    pgnText.value = "";
+    if (file2.size > MAX_PGN_SIZE) {
+      importError.textContent = "Choose a PGN file up to 256 KB.";
+      return;
+    }
+    try {
+      const text = await file2.text();
+      if (request !== fileGeneration) return;
+      pgnText.value = text;
+      importError.textContent = "";
+    } catch {
+      if (request === fileGeneration) importError.textContent = "The file could not be read. Try pasting its PGN instead.";
+    }
+  };
+  pgnText.addEventListener("input", () => {
+    fileGeneration++;
+    importError.textContent = "";
+  });
+  document.querySelector("#confirm-import").onclick = () => {
+    try {
+      const candidate = { game: parsePgn(pgnText.value) };
+      fileGeneration++;
+      proposeGame(candidate);
+    } catch (error) {
+      importError.textContent = error.message;
+    }
+  };
+  document.querySelector("#cancel-replace").onclick = () => {
+    replacement = null;
+    replaceDialog.close();
+  };
+  replaceDialog.addEventListener("cancel", () => {
+    replacement = null;
+  });
+  document.querySelector("#confirm-replace").onclick = () => {
+    if (!replacement) return;
+    const candidate = replacement;
+    replaceDialog.close();
+    applyGame(candidate);
+  };
+  refreshSaveAvailability();
   render();
 })();
 /*! Bundled license information:
