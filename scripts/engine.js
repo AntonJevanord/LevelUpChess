@@ -86,10 +86,10 @@ async function engineRequest({ fen, difficulty = 'medium', variant = 'chess', si
             send('uci');
           }
         } else if (line === 'uciok' && phase === 'variant-options') {
-          if (!advertisedVariant) { finish(new Error('Fairy Stockfish could not load the blue-knight rules. Update the engine and try again.')); continue; }
+          if (!advertisedVariant) { finish(new Error('Fairy Stockfish could not load the knight-upgrade rules. Update the engine and try again.')); continue; }
           configure();
         } else if (line === 'readyok' && phase === 'ready') {
-          if (variant !== 'chess' && !selectedVariant) { finish(new Error('Fairy Stockfish did not select the blue-knight rules. Update the engine and try again.')); continue; }
+          if (variant !== 'chess' && !selectedVariant) { finish(new Error('Fairy Stockfish did not select the knight-upgrade rules. Update the engine and try again.')); continue; }
           if (!fen) { finish(null, { name }); continue; }
           phase = 'search';
           send('ucinewgame');

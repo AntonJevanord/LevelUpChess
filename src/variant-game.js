@@ -192,8 +192,10 @@ export class VariantGame {
     if (this._board.isInsufficientMaterial()) return true;
     // Fairy Stockfish conservatively treats custom pieces as mating material.
     // E attacks exactly like N: its extra orthogonal steps cannot capture.
+    // A lone G (Dabbaba) cannot cover the adjacent escapes needed for mate.
+    // F can mate: Kc2/Fc1 against Ka1 is a checkmate position.
     const material = this.board().flat().filter(piece => piece && piece.type !== 'k');
-    return material.length === 1 && material[0].type === 'e';
+    return material.length === 1 && ['e', 'g'].includes(material[0].type);
   }
   isThreefoldRepetition() {
     const current = this._positions.at(-1);

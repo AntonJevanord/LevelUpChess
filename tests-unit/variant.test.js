@@ -10,6 +10,20 @@ function game(t, fen) {
   return instance;
 }
 
+function oppositePosition(fen) {
+  const fields = fen.split(' ');
+  fields[0] = fields[0].split('/').reverse().join('/').replace(/[a-z]/gi, piece => piece === piece.toUpperCase() ? piece.toLowerCase() : piece.toUpperCase());
+  fields[1] = fields[1] === 'w' ? 'b' : 'w';
+  return fields.join(' ');
+}
+
+function mirroredSquare(square) { return square[0] + (9 - Number(square[1])); }
+
+function bothColors(t, fen, check) {
+  check(game(t, fen), square => square, 'w');
+  check(game(t, oppositePosition(fen)), mirroredSquare, 'b');
+}
+
 const upgradeFen = '4k3/8/8/8/3E4/8/8/4K3 w - - 0 1';
 const pgn = (fen, moves, extra = '') => `[Variant "${VARIANT}"]\n[SetUp "1"]\n[FEN "${fen}"]\n${extra}\n${moves}`;
 
@@ -49,6 +63,81 @@ test('the same quiet-step rule applies to black upgrades', t => {
   instance.move({ from: 'd5', to: 'd4' });
   assert.equal(instance.get('d4').color, 'b');
   assert.equal(instance.turn(), 'w');
+});
+
+test('orange knights retain every knight move and add exactly two-square sideways jumps for both colors', t => {
+  bothColors(t, '7k/8/8/8/3F4/8/8/K7 w - - 0 1', (instance, square, color) => {
+    assert.equal(instance.get(square('d4')).type, 'f');
+    assert.equal(instance.get(square('d4')).color, color);
+    const destinations = instance.moves({ square: square('d4'), verbose: true }).map(move => move.to).sort();
+    assert.deepEqual(destinations, ['b3', 'b4', 'b5', 'c2', 'c6', 'e2', 'e6', 'f3', 'f4', 'f5'].map(square).sort());
+  });
+});
+
+test('orange sideways jumps cross friendly and enemy pieces, capture only the landing square, and respect friendly destinations', t => {
+  for (const blockers of ['P', 'p']) {
+    bothColors(t, `7k/8/8/8/1p${blockers}F${blockers}p2/8/8/K7 w - - 0 1`, (instance, square) => {
+      const captures = instance.moves({ square: square('d4'), verbose: true }).filter(move => [square('b4'), square('f4')].includes(move.to));
+      assert.equal(captures.length, 2);
+      assert.ok(captures.every(move => move.captured === 'p'));
+      const before = instance.fen();
+      const captured = instance.move({ from: square('d4'), to: square('f4') });
+      assert.equal(captured.flags, 'c');
+      assert.equal(instance.get(square('e4')).type, 'p');
+      assert.equal(instance.get(square('f4')).type, 'f');
+      instance.undo();
+      assert.equal(instance.fen(), before);
+    });
+  }
+  bothColors(t, '7k/8/8/8/1PPFPP2/8/8/K7 w - - 0 1', (instance, square) => {
+    const destinations = instance.moves({ square: square('d4'), verbose: true }).map(move => move.to);
+    assert.ok(!destinations.includes(square('b4')));
+    assert.ok(!destinations.includes(square('f4')));
+  });
+});
+
+test('purple pieces jump exactly two squares in all four orthogonal directions for both colors', t => {
+  bothColors(t, '7k/8/8/8/3G4/8/8/K7 w - - 0 1', (instance, square, color) => {
+    assert.equal(instance.get(square('d4')).type, 'g');
+    assert.equal(instance.get(square('d4')).color, color);
+    assert.deepEqual(instance.moves({ square: square('d4'), verbose: true }).map(move => move.to).sort(), ['b4', 'd2', 'd6', 'f4'].map(square).sort());
+  });
+});
+
+test('purple jumps cross intermediate pieces and capture landing pieces while friendly landing pieces block', t => {
+  for (const blockers of ['P', 'p']) {
+    bothColors(t, `7k/8/3p4/3${blockers}4/1p${blockers}G${blockers}p2/3${blockers}4/3p4/K7 w - - 0 1`, (instance, square) => {
+      const captures = instance.moves({ square: square('d4'), verbose: true });
+      assert.deepEqual(captures.map(move => move.to).sort(), ['b4', 'd2', 'd6', 'f4'].map(square).sort());
+      assert.ok(captures.every(move => move.captured === 'p'));
+      const before = instance.fen();
+      instance.move({ from: square('d4'), to: square('d6') });
+      assert.equal(instance.get(square('d5')).type, 'p');
+      assert.equal(instance.get(square('d6')).type, 'g');
+      instance.undo();
+      assert.equal(instance.fen(), before);
+    });
+  }
+  bothColors(t, '7k/8/3P4/8/1P1G1P2/8/3P4/K7 w - - 0 1', (instance, square) => {
+    assert.deepEqual(instance.moves({ square: square('d4'), verbose: true }), []);
+  });
+});
+
+test('orange and purple jumps obey pins and deliver checks across occupied intermediate squares for both colors', t => {
+  bothColors(t, 'k3r3/8/8/8/8/8/4F3/4K3 w - - 0 1', (instance, square) => {
+    assert.deepEqual(instance.moves({ square: square('e2'), verbose: true }), []);
+  });
+  bothColors(t, 'k3r3/8/8/8/8/8/4G3/4K3 w - - 0 1', (instance, square) => {
+    assert.deepEqual(instance.moves({ square: square('e2'), verbose: true }).map(move => move.to), [square('e4')]);
+  });
+  for (const fen of [
+    '8/8/8/8/3FPk2/8/8/K7 b - - 0 1',
+    '8/8/3k4/3P4/3G4/8/8/K7 b - - 0 1',
+  ]) bothColors(t, fen, instance => assert.equal(instance.isCheck(), true));
+  for (const fen of [
+    '8/8/8/3k4/3G4/8/8/K7 b - - 0 1',
+    '8/8/8/3k4/3F4/8/8/K7 b - - 0 1',
+  ]) bothColors(t, fen, instance => assert.equal(instance.isCheck(), false));
 });
 
 test('pins and check use the upgraded piece attacks rather than its quiet moves', t => {
@@ -129,6 +218,29 @@ test('a lone blue knight has the same mating-material limit as a normal knight',
   assert.equal(helper.isGameOver(), false);
 });
 
+test('a lone purple piece cannot mate a bare king, while an orange knight can', t => {
+  bothColors(t, '7k/8/8/8/3G4/8/8/K7 w - - 0 1', instance => {
+    assert.equal(instance.isInsufficientMaterial(), true);
+    assert.equal(instance.isDraw(), true);
+    assert.equal(instance.isGameOver(), true);
+  });
+  bothColors(t, '7k/8/8/8/3F4/8/8/K7 w - - 0 1', instance => {
+    assert.equal(instance.isInsufficientMaterial(), false);
+    assert.equal(instance.isDraw(), false);
+    assert.equal(instance.isGameOver(), false);
+  });
+  bothColors(t, '8/8/8/8/8/8/2K5/k1F5 b - - 0 1', instance => {
+    assert.equal(instance.isInsufficientMaterial(), false);
+    assert.equal(instance.isCheckmate(), true);
+    assert.equal(instance.isDraw(), false);
+    assert.equal(instance.isGameOver(), true);
+  });
+  for (const fen of [
+    '7k/p7/8/8/3G4/8/8/K7 w - - 0 1',
+    '7k/8/8/8/3GG3/8/8/K7 w - - 0 1',
+  ]) bothColors(t, fen, instance => assert.equal(instance.isInsufficientMaterial(), false));
+});
+
 test('threefold repetition includes the initial position and is reversed by undo', t => {
   const instance = game(t);
   for (let repeat = 0; repeat < 2; repeat++) {
@@ -191,6 +303,23 @@ test('variant PGN round trips setup, SAN history, escaped headers, and result', 
   restored.undo();
   original.undo();
   assert.equal(restored.fen(), original.fen());
+});
+
+test('orange and purple setup, SAN moves, PGN, and undo round trip with both colors', t => {
+  bothColors(t, '7k/8/8/8/3F4/1G6/8/K7 w - - 0 1', (original, square) => {
+    const initial = original.fen();
+    original.move({ from: square('d4'), to: square('f4') });
+    original.move({ from: square('h8'), to: square('h7') });
+    original.move({ from: square('b3'), to: square('d3') });
+    const restored = game(t);
+    restored.loadPgn(original.pgn());
+    assert.equal(restored.fen(), original.fen());
+    assert.deepEqual(restored.history(), original.history());
+    assert.equal(restored.get(square('f4')).type, 'f');
+    assert.equal(restored.get(square('d3')).type, 'g');
+    for (let move = 0; move < 3; move++) restored.undo();
+    assert.equal(restored.fen(), initial);
+  });
 });
 
 test('PGN main-line comments and annotations are consumed without truncating moves', t => {

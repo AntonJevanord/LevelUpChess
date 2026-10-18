@@ -25,7 +25,7 @@
 - [x] Stop play on timeout; cancel engine searches and export the timed result.
 - [x] Restore clocks with undo and browser saves; load old saves untimed.
 - [x] User playtest confirmed clocks and losing on time work.
-- [ ] Finish Windows playtesting of timed saved games and clock undo.
+- [x] User playtest confirmed timed saves and clock undo work.
 - [x] Add one browser save slot with moves and play settings.
 - [x] Add PGN download, paste import, and file import.
 - [x] Validate imports before replacement; preserve history and special-move rights.
@@ -45,9 +45,16 @@ Linux integration was verified with an upstream Fairy Stockfish source build. Th
 - [x] Support undo, clocks, saved games, and variant PGN import/export.
 - [x] Embed browser rules in the standalone HTML for offline local play.
 - [x] Include the browser rules library's matching source archive and GPL notice.
-- [x] Pass 87 checks: 29 unit tests and 58 browser/integration tests.
-- [ ] Playtest blue knights, setup budgets, and native engine play on Windows.
-- [ ] Complete orange/purple knight rules before expanding to other piece families.
+- [x] Pass 115 checks: 44 unit tests and 71 browser/integration tests.
+- [x] User playtest confirmed blue knights and native engine play work on Windows.
+- [ ] Finish Windows playtesting of setup budget limits.
+- [x] Confirm orange `NsD` and purple `D` movements with the project owner.
+- [x] Add orange knights and extra purple pieces with correct starting placement.
+- [x] Support levels 0–3, separate 1–6 point budgets, and mixed armies.
+- [x] Preserve old blue saves; restore all new setup levels from saved games and PGN.
+- [x] Verify jumps, king safety, mixed armies, persistence, and native Stockfish for both new levels.
+- [ ] Playtest orange and purple knights, mixed budgets, and Stockfish on Windows.
+- [ ] Tag `v0.3.0` after the knight-family playtest.
 - [ ] Resolve remaining draft rules, extra starting pieces, promotions, and upgraded king victory rules.
 
 ## Later versions

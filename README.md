@@ -8,15 +8,19 @@ Open `index.html` in a modern browser. The file includes its own styles and Java
 
 Includes legal moves, check/checkmate, automatic draw detection, castling, en passant, promotion choice, move history, undo, board flip, and new game. Unsaved moves reset when the page reloads; use **Save game** or **Export PGN** to keep them. Draws are automatically ended on threefold repetition or the fifty-move rule; claim-based tournament rules are outside this version.
 
-## Version 03: first piece upgrade
+## Version 03: knight upgrades
 
-Select **Blue knight prototype** under **Rules**, choose which starting knights to upgrade, and press **New game**. White and Black have separate budgets of one or two points; each blue knight costs one. Blue knights show a blue border and an **L1** badge while keeping their side's piece color.
+Select **Knight upgrades** under **Rules**, choose a level for each starting knight, set a budget of one to six points per side, and press **New game**. Each level costs that many points.
 
-A blue knight moves and captures like a normal knight. It can also move one square horizontally or vertically into an **empty** square. That additional step cannot capture or attack. The browser and native engine share the same Fairy Stockfish variant configuration, including king safety and draw rules.
+- **Blue (1):** normal knight movement, plus one orthogonal step into an empty square. The extra step cannot capture or attack.
+- **Orange (2):** normal knight movement, plus an exact two-square horizontal jump, moving or capturing at the destination.
+- **Purple (3):** keep the normal knight and add a separate piece that jumps exactly two squares in any orthogonal direction. White extras start on b3/g3; Black extras start on b6/g6.
 
-Local upgrade games work from the self-contained HTML without internet access. Engine play still requires `npm.cmd start`. Undo, clocks, browser saves, and PGN files also support this mode. An older native engine that cannot load the variant reports an error; it does not silently fall back to standard rules.
+Orange and purple jump over intermediate pieces. Both sides' colors remain visible, with blue/orange/purple accents and L1/L2/L3 badges. New setup choices apply only to your next new game.
 
-This prototype implements level 1 knights only. Promotion choices remain standard. See [variants/README.md](variants/README.md) for exact rules, custom-PGN limits, and later upgrades. The browser rules library and matching source/license notices are documented in [vendor/README.md](vendor/README.md).
+Upgrade games work offline from the self-contained HTML and support clocks, undo, browser saves, and PGN. Engine play requires `npm.cmd start`. The browser and native engine share the same rules; an engine that cannot load them reports an error rather than playing standard chess.
+
+Promotions remain standard; other piece families are planned. See [variants/README.md](variants/README.md) for exact rules, setup, and custom-PGN limits. The browser rules library's source and license notices are in [vendor/README.md](vendor/README.md).
 
 ## Optional clocks
 
@@ -36,7 +40,7 @@ Changing the time-control dropdown during a game only selects the next game's pr
 - **Save game** stores one game in this browser, including move history, opponent, side, difficulty, board orientation, and clock state. Saving again replaces that slot.
 - **Load saved** restores that slot; confirm before replacing current moves. Loading leaves the engine and clocks paused. Connect or resume when ready.
 - **Export PGN** downloads a portable game file with move history, starting position, and result. Standard-chess comments are preserved; prototype PGNs export the main line without comments. It includes the variant and initial setup for upgraded games, but not remaining clock times, engine settings, or display settings.
-- **Import PGN** accepts standard or blue-knight pasted notation or a `.pgn` file up to 256 KB. Invalid or unsupported variant games leave the current board unchanged. Import keeps your opponent and display settings, switches to untimed play, and pauses the engine.
+- **Import PGN** accepts standard or knight-upgrade pasted notation or a `.pgn` file up to 256 KB. Invalid or unsupported variant games leave the current board unchanged. Import keeps your opponent and display settings, switches to untimed play, and pauses the engine.
 
 Saving is manual. New games, imports, and loading do not overwrite the saved slot. Saves belong to this browser and site address; private browsing, clearing site data, switching browsers, or moving between direct-file and server play can make them unavailable. If browser storage is blocked, use PGN export. Downloaded PGNs remain usable independently of browser storage.
 
@@ -83,7 +87,7 @@ npm.cmd start
 
 Linux/macOS require an engine built for that platform. For a Linux source build, follow the upstream build instructions and set `FAIRY_STOCKFISH_PATH` to the resulting `src/stockfish`. Setting that variable during `npm test` also enables the native engine integration test; otherwise that test is explicitly skipped. Tests use mocked engine responses for deterministic UI checks and a real executable for the optional integration check.
 
-The bridge supports standard chess and the blue-knight prototype. `Example.txt` contains draft custom rules, including unresolved pieces and setup details; the full draft is not loaded by the game. The validated blue-knight rule is in `variants/levelup-knight.ini`. See [stockfish/README.md](stockfish/README.md) for engine provenance, licensing, and validation limits.
+The bridge supports standard chess and all three knight upgrades. `Example.txt` contains draft custom rules, including unresolved pieces and setup details; the full draft is not loaded by the game. The validated knight-upgrade rules are in `variants/levelup-knight.ini`. See [stockfish/README.md](stockfish/README.md) for engine provenance, licensing, and validation limits.
 
 ## Version history
 

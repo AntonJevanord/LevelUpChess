@@ -1,6 +1,7 @@
 import { Chess } from 'chess.js';
 import { VariantGame, VARIANT, initVariantRules } from './variant-game';
 import { ChessClock } from './clock';
+import { UPGRADE_BUDGETS } from './piece-catalog';
 
 export const SAVE_KEY = 'levelupchess.saved-game.v1';
 export const MAX_PGN_SIZE = 256 * 1024;
@@ -11,12 +12,12 @@ export async function parsePgn(text) {
     await initVariantRules();
     const candidate = new VariantGame();
     try { candidate.loadPgn(text); return candidate; }
-    catch (error) { candidate.dispose(); throw new Error(`This blue-knight PGN could not be read. ${error.message}`); }
+    catch (error) { candidate.dispose(); throw new Error(`This knight-upgrade PGN could not be read. ${error.message}`); }
   }
   const candidate = new Chess();
   try { candidate.loadPgn(text); } catch { throw new Error('This PGN could not be read. Check the moves and starting position.'); }
   const variant = candidate.getHeaders().Variant;
-  if (variant && !['standard', 'chess'].includes(variant.toLowerCase())) throw new Error('Only standard-chess and blue-knight PGN games are supported.');
+  if (variant && !['standard', 'chess'].includes(variant.toLowerCase())) throw new Error('Only standard-chess and knight-upgrade PGN games are supported.');
   return candidate;
 }
 
@@ -40,7 +41,7 @@ export async function parseSave(text) {
   try { data = JSON.parse(text); } catch { throw new Error('The saved game is damaged. Import a PGN backup instead.'); }
   if (!data || data.version !== 1 || typeof data.savedAt !== 'string' || Number.isNaN(Date.parse(data.savedAt))) throw new Error('The saved game format is not supported.');
   const settings = data.settings;
-  if (!settings || !['local', 'engine'].includes(settings.opponent) || !['w', 'b'].includes(settings.humanSide) || !['easy', 'medium', 'hard'].includes(settings.difficulty) || typeof settings.flipped !== 'boolean' || (settings.upgradeBudget !== undefined && ![1, 2].includes(settings.upgradeBudget))) throw new Error('The saved game settings are damaged.');
+  if (!settings || !['local', 'engine'].includes(settings.opponent) || !['w', 'b'].includes(settings.humanSide) || !['easy', 'medium', 'hard'].includes(settings.difficulty) || typeof settings.flipped !== 'boolean' || (settings.upgradeBudget !== undefined && !UPGRADE_BUDGETS.includes(settings.upgradeBudget))) throw new Error('The saved game settings are damaged.');
   const game = await parsePgn(data.pgn);
   let clock;
   if (data.clock !== undefined) {

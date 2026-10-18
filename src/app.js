@@ -1,5 +1,7 @@
 import { Chess } from 'chess.js';
 import { VariantGame, VARIANT, initVariantRules } from './variant-game';
+import { pieceInfo, KNIGHT_LEVELS, KNIGHT_SLOTS } from './piece-catalog';
+import { setupFromLevels, loadInitialSetup } from './knight-setup';
 import { ChessClock, CLOCK_CONTROLS, formatClock } from './clock';
 import { SAVE_KEY, MAX_PGN_SIZE, parsePgn, exportPgn, makeSave, parseSave } from './saved-games';
 
@@ -7,8 +9,6 @@ let game = new Chess();
 const board = document.querySelector('#board');
 const promotion = document.querySelector('#promotion');
 const restart = document.querySelector('#restart');
-const symbols = { w: { k: '♔', q: '♕', r: '♖', b: '♗', n: '♘', p: '♙', e: '♘' }, b: { k: '♚', q: '♛', r: '♜', b: '♝', n: '♞', p: '♟', e: '♞' } };
-const names = { k: 'king', q: 'queen', r: 'rook', b: 'bishop', n: 'knight', p: 'pawn', e: 'blue knight, level 1' };
 let selected = null;
 let flipped = false;
 let pending = null;
@@ -19,40 +19,24 @@ const difficulty = document.querySelector('#difficulty');
 const gameMode = document.querySelector('#game-mode');
 const upgradeBudget = document.querySelector('#upgrade-budget');
 const upgradeStatus = document.querySelector('#upgrade-status');
-const upgradeSquares = ['b1', 'g1', 'b8', 'g8'];
+const upgradeSquares = KNIGHT_SLOTS.map(slot => slot.square);
 let replacementGeneration = 0;
 let buildingGame = false;
 let activeBudget = 2;
 function setupChoice() {
-  const squares = upgradeSquares.filter(square => document.querySelector(`#upgrade-${square}`).value === '1');
-  const white = squares.filter(square => square[1] === '1').length;
-  const black = squares.length - white;
-  const budget = Number(upgradeBudget.value);
-  return { squares, white, black, budget };
+  const levels = Object.fromEntries(upgradeSquares.map(square => [square, Number(document.querySelector(`#upgrade-${square}`).value)]));
+  const cost = square => pieceInfo(KNIGHT_LEVELS[levels[square]])?.cost || 0;
+  const white = KNIGHT_SLOTS.filter(slot => slot.color === 'w').reduce((total, slot) => total + cost(slot.square), 0);
+  const black = KNIGHT_SLOTS.filter(slot => slot.color === 'b').reduce((total, slot) => total + cost(slot.square), 0);
+  return { levels, white, black, budget: Number(upgradeBudget.value) };
 }
 function updateSetup() {
   document.querySelector('#upgrade-settings').hidden = gameMode.value !== VARIANT;
   const { white, black, budget } = setupChoice();
   const valid = white <= budget && black <= budget;
   upgradeStatus.classList.toggle('error', !valid);
-  upgradeStatus.textContent = valid ? `White ${white}/${budget} · Black ${black}/${budget} upgrade points. Setup applies to your next new game.` : `Budget exceeded: White ${white}/${budget} · Black ${black}/${budget}. Reduce upgrades before starting a new game.`;
+  upgradeStatus.textContent = valid ? `White ${white}/${budget} · Black ${black}/${budget} upgrade points.` : `Budget exceeded: White ${white}/${budget} · Black ${black}/${budget}. Reduce upgrades before starting a new game.`;
   return gameMode.value !== VARIANT || valid;
-}
-function upgradeFen(squares) {
-  const rows = new Chess().board();
-  return rows.map((row, rank) => {
-    let fen = '';
-    let empty = 0;
-    row.forEach((piece, file) => {
-      if (!piece) { empty++; return; }
-      if (empty) { fen += empty; empty = 0; }
-      const square = 'abcdefgh'[file] + (8 - rank);
-      const type = squares.includes(square) ? 'e' : piece.type;
-      fen += piece.color === 'w' ? type.toUpperCase() : type;
-    });
-    if (empty) fen += empty;
-    return fen;
-  }).join('/') + ' w KQkq - 0 1';
 }
 
 let connected = false;
@@ -234,20 +218,21 @@ function render(focusSquare) {
     button.type = 'button';
     button.className = 'square ' + ((file.charCodeAt(0) - 97 + Number(rank)) % 2 === 0 ? 'dark' : 'light');
     button.dataset.square = square;
-    button.setAttribute('aria-label', `${square}${piece ? ` ${side(piece.color)} ${names[piece.type]}` : ' empty'}`);
+    button.setAttribute('aria-label', `${square}${piece ? ` ${side(piece.color)} ${pieceInfo(piece.type).name}` : ' empty'}`);
     button.setAttribute('aria-pressed', String(selected === square));
     if (selected === square) button.classList.add('selected');
     if (last && [last.from, last.to].includes(square)) button.classList.add('last-move');
     if (piece?.type === 'k' && piece.color === game.turn() && game.isCheck()) button.classList.add('check');
     if (piece) {
       const icon = document.createElement('span');
-      icon.className = `piece ${piece.color === 'w' ? 'white-piece' : 'black-piece'}${piece.type === 'e' ? ' upgraded' : ''}`;
-      icon.textContent = symbols[piece.color][piece.type];
+      const info = pieceInfo(piece.type);
+      icon.className = `piece ${piece.color === 'w' ? 'white-piece' : 'black-piece'}${info.level ? ` upgraded ${info.accent}` : ''}`;
+      icon.textContent = info.symbols[piece.color];
       button.append(icon);
-      if (piece.type === 'e') {
+      if (info.level) {
         const badge = document.createElement('span');
-        badge.className = 'piece-level';
-        badge.textContent = 'L1';
+        badge.className = `piece-level ${info.accent}`;
+        badge.textContent = `L${info.level}`;
         button.append(badge);
       }
     }
@@ -282,7 +267,7 @@ function render(focusSquare) {
   else if (game.isCheck()) status += ' · Check';
   if (clock.expired) status = timeoutResult().status;
   document.querySelector('#status').textContent = status;
-  document.querySelector('#hint').textContent = isFinished() ? 'Start a new game or undo a move to keep playing.' : !canPlay() ? 'Start or resume the clock to continue playing.' : selected ? `${side(game.turn())} ${names[game.get(selected).type]} on ${selected}. Choose a highlighted square.` : 'Select a piece to see its legal moves.';
+  document.querySelector('#hint').textContent = isFinished() ? 'Start a new game or undo a move to keep playing.' : !canPlay() ? 'Start or resume the clock to continue playing.' : selected ? `${side(game.turn())} ${pieceInfo(game.get(selected).type).name} on ${selected}. Choose a highlighted square.` : 'Select a piece to see its legal moves.';
   document.querySelector('#undo').disabled = history.length === 0;
   document.querySelector('#top-player').textContent = flipped ? 'White pieces' : 'Black pieces';
   document.querySelector('#bottom-player').textContent = flipped ? 'Black pieces' : 'White pieces';
@@ -320,8 +305,13 @@ function render(focusSquare) {
   }
   document.querySelectorAll('.player .level').forEach((label, index) => {
     const color = index === 0 ? (flipped ? 'w' : 'b') : (flipped ? 'b' : 'w');
-    const count = game.board().flat().filter(piece => piece?.color === color && piece.type === 'e').length;
-    label.textContent = count ? `BLUE ×${count}` : 'LEVEL 0';
+    const counts = new Map();
+    for (const piece of game.board().flat()) {
+      if (piece?.color !== color) continue;
+      const info = pieceInfo(piece.type);
+      if (info.level) counts.set(info.level, (counts.get(info.level) || 0) + 1);
+    }
+    label.textContent = counts.size ? [...counts].sort(([a], [b]) => a - b).map(([level, count]) => `L${level} ×${count}`).join(' · ') : 'LEVEL 0';
   });
   updateClocks();
   void maybeEngineMove();
@@ -338,8 +328,8 @@ function selectSquare(square) {
       options.replaceChildren();
       for (const type of ['q', 'r', 'b', 'n']) {
         const button = document.createElement('button');
-        button.textContent = symbols[game.turn()][type];
-        button.setAttribute('aria-label', `Promote to ${names[type]}`);
+        button.textContent = pieceInfo(type).symbols[game.turn()];
+        button.setAttribute('aria-label', `Promote to ${pieceInfo(type).name}`);
         button.onclick = () => { playMove({ ...pending, promotion: type }); pending = null; selected = null; promotion.close(); render(square); };
         options.append(button);
       }
@@ -375,15 +365,15 @@ async function newGame() {
   const request = ++replacementGeneration;
   const selectedMode = gameMode.value;
   const selectedTime = timeControl.value;
-  const { squares, budget } = setupChoice();
+  const { levels, budget } = setupChoice();
   let next;
   buildingGame = true;
   document.querySelector('#new-game').disabled = true;
   try {
     if (selectedMode === VARIANT) {
-      upgradeStatus.textContent = 'Loading blue-knight rules…';
+      upgradeStatus.textContent = 'Loading knight-upgrade rules…';
       await initVariantRules();
-      next = new VariantGame(upgradeFen(squares));
+      next = new VariantGame(setupFromLevels(levels, budget).fen);
     } else next = new Chess();
     if (request !== replacementGeneration) { next.dispose?.(); return; }
     cancelEngine();
@@ -403,7 +393,7 @@ async function newGame() {
     render();
   } catch (error) {
     if (next !== game) next?.dispose?.();
-    upgradeStatus.textContent = `Could not start the blue-knight game: ${error.message}`;
+    upgradeStatus.textContent = `Could not start the knight-upgrade game: ${error.message}`;
     upgradeStatus.classList.add('error');
     restart.close();
   } finally {
@@ -476,11 +466,8 @@ function applyGame(candidate) {
   activeBudget = candidate.settings?.upgradeBudget || 2;
   if (game.variant === VARIANT) {
     upgradeBudget.value = String(activeBudget);
-    const rows = game.getHeaders().FEN.split(' ')[0].split('/').map(rank => [...rank].flatMap(char => /[1-8]/.test(char) ? Array(Number(char)).fill(null) : [char]));
-    for (const square of upgradeSquares) {
-      const char = rows[8 - Number(square[1])]['abcdefgh'.indexOf(square[0])];
-      document.querySelector(`#upgrade-${square}`).value = char?.toLowerCase() === 'e' ? '1' : '0';
-    }
+    const levels = loadInitialSetup(game.getHeaders().FEN);
+    for (const square of upgradeSquares) document.querySelector(`#upgrade-${square}`).value = String(levels[square]);
   }
   updateSetup();
   if (candidate.clock) clock.restore(candidate.clock, game.history().length);
