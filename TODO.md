@@ -116,8 +116,12 @@ The blue queen's draft back-rank teleport remains an optional engine extension. 
 
 - [x] Draft king design options, engine constraints, and balance candidates in [DESIGN.md](DESIGN.md).
 - [x] Keep costs equal to level (1/2/3) and target increasing strength, allowing distinct or cumulative abilities.
-- [ ] Agree on king versus guard upgrades and minimum mating material.
+- [x] Distinguish fixed upgrade costs from estimated material; record base-plus-level values as provisional targets.
+- [x] Keep royal abilities and 1/2/3-value guard grants open; the extra-piece approach remains provisional.
+- [x] Record playtest impressions: strong orange/purple rooks and purple pawns, weaker blue/orange pawns.
+- [ ] Choose king tier designs and minimum mating material.
 - [ ] Prototype one king design and verify independent setup, checkmate, castling, draws, saves, and PGN.
+- [ ] After kings are implemented, plan concrete balance tests and estimate material values with uncertainty.
 - [ ] Compare selected upgrades at budgets 3 and 6 with colors swapped; record rules, budgets, and conversion results.
 - Complete all piece upgrades and balance their costs.
 - Add low-budget, high-budget, and equal-budget random modes.

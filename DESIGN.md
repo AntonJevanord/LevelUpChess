@@ -12,6 +12,32 @@ The project owner's direction is fixed: blue costs 1, orange 2, and purple 3; st
 
 Measure strength as the added value over the ordinary piece across representative positions. Higher tiers should justify their extra point overall; they need not win every positional comparison. Also compare value per point across families, so one bargain upgrade does not crowd out all the others. Tune abilities to these prices.
 
+## Material values and upgrade points
+
+Upgrade cost is a fixed setup rule. Material value is an estimate of playing strength. If we want one upgrade point to buy roughly one ordinary pawn's worth of extra strength, the following is a useful **design target**, not a measurement of the current pieces:
+
+| Family | Standard | Blue | Orange | Purple |
+| --- | --- | --- | --- | --- |
+| Pawn | 1 | 2 | 3 | 4 |
+| Knight | 3 | 4 | 5 | 6 |
+| Bishop | 3 | 4 | 5 | 6 |
+| Rook | 5 | 6 | 7 | 8 |
+| Queen | 9 | 10 | 11 | 12 |
+
+These use conventional ordinary-chess values as a starting scale. Those base values are themselves averages and may shift in this variant. A purple knight's target of 6 refers to the retained knight plus its extra piece together; it does not make the extra piece alone worth 6.
+
+The target does not establish actual strength. A quiet deployment move, a new checking attack, unlimited range, and a whole extra unit can have very different effects. Synergy also makes combining abilities different from simply adding their separate values. Crowded and open boards, promotion distance, opposing upgrades, and the chosen king rules all matter.
+
+For kings, keep two separate ideas open: changing the royal itself and granting a nonroyal piece. A guard could target material values of 1, 2, and 3 at the corresponding king levels, but its deployment and protection of the king still need evaluation. The royal itself has no ordinary exchange value: its safety defines the checkmate objective. Its upgrade should be assessed through practical winning and mating prospects. The extra-piece approach remains provisional and may be abandoned later.
+
+We do not yet have measured values or justified error bars. Initially, report broad estimates or ranges rather than precise decimals. Later evidence can narrow the average estimate, but positional differences will remain. More games can reduce sampling uncertainty; they cannot establish a universal value valid in every position. Finalize the king rules before planning concrete balance tests, since those rules affect the value of the other pieces.
+
+### Engine estimates are a starting point
+
+In the bundled source, `src/psqt.cpp` estimates custom-piece material from capture and quiet steps, sliding range, and hopper directions, with separate middlegame/endgame weights. This is a movement-based heuristic, not a measured balance result for LevelUp Chess. Its base formula uses ordinary movement tables; initial-region moves are stored separately, so conditional bonuses are not directly counted there, although search can still use them.
+
+The engine supports `pieceValueMg` and `pieceValueEg` overrides. Changing those affects its judgments, not the actual rules or inherent strength of a piece. Centipawn scores use the engine's internal normalization; they do not validate a conventional material chart. No evaluation overrides are proposed yet.
+
 ## Kings: preserve a clear mating objective
 
 Keep exactly one royal per side, with check and checkmate. A second royal would require a separate victory design. Broad quiet leaps or slides risk turning material advantages into draws after other pieces are exchanged. A king design must pass the mating requirements before being assigned a tier.
@@ -23,6 +49,8 @@ Three directions are worth discussing before assigning king abilities to tiers:
 | Standard king plus one capturable guard | Strengthens the king's army and protection; after the guard is captured, the defender can be reduced to an ordinary bare king. The guard is not royal. | Adds material, congestion, and another setup square; overlaps with the purple knight's extra-piece mechanic. Queen-versus-king-plus-guard conversion still needs testing. | Safest first prototype if king upgrades may grant an army benefit. Test a small orthogonal-step, diagonal-step, or nonroyal king-moving guard separately. |
 | Standard quiet king moves plus a small capture-only leap | Makes the king more active without adding empty-square escape destinations. | Can still capture a piece to escape check, changes royal attack distances, and can spoil mating patterns. | First choice if the upgrade must change the king itself. Start with one directional two-square capture, rather than the full 5×5 capture box. |
 | Extra quiet movement limited to the home region | Offers development and defensive repositioning. | An attacked king often starts at home; returning home reactivates regional powers. It can still evade a mating net. | Defer until the first two approaches have been evaluated. |
+
+The project owner is interested in both extra pieces and changes to the royal. Keep both as candidates; a single approach or final tier assignment has not been chosen.
 
 For now, avoid quiet knight moves everywhere, queen-like royal movement, an extra royal, and three increasingly mobile kings introduced together. A small prototype gives us a clearer answer than three speculative tiers.
 
@@ -62,9 +90,11 @@ Before choosing a king, decide what material should reliably win. I suggest reta
 
 These are hypotheses, not measured strength claims. Keep prices at 1/2/3 and change one ability at a time. “Buff” and “nerf” below describe possible directions; none is a decision.
 
+The latest user playtest impression is that orange/purple rooks and purple pawns are very strong, while blue/orange pawns feel much weaker. Treat that as qualitative evidence to investigate, not numerical material values. The purple bishop currently has unlimited vertical rook slides as well as full bishop diagonals; a range cap below is only an alternative design. Finish king implementation before planning concrete balance testing or choosing buffs and nerfs.
+
 | Upgrade | Main question | Buff, nerf, or alternate experiment |
 | --- | --- | --- |
-| Blue pawn | Does repeatable two-square jumping plus an initial triple make promotion races too fast? | Nerf the initial triple to a double, or restrict repeated double jumps. Alternative: ordinary pawn movement with an initial jumping bonus. |
+| Blue pawn | Does its speed translate into enough practical strength for one upgrade point? | Current feedback favors investigating a buff. Preserve forward-only movement; distinguish weak middlegame play from strong promotion races before adding speed or capture reach. An ordinary pawn with an initial jumping bonus remains a simpler alternative. |
 | Orange pawn | Are quiet diagonal moves worth their rules complexity? | Simpler alternative: standard pawn movement plus forward captures, removing quiet diagonals. Buff candidate: retain the current package and add blue's repeatable forward two-square quiet leap. Keep it forward-only. |
 | Purple pawn | Is a reversible rook-mover/bishop-capturer with promotion still serving a pawn role? | First nerf: cap quiet slides at two squares. Alternatives: limit capture range or remove backward quiet moves. Test open-file promotion races explicitly. |
 | Blue knight | Is quiet repositioning sufficiently useful at one point? | Nerf to forward quiet steps; buff to orthogonal captures only if testing shows a need, since that also adds checking power. |
@@ -86,7 +116,9 @@ A simple queen comparison ladder is blue with quiet knight jumps at home, orange
 
 Pawn simplicity deserves a separate decision. Orange can quietly enter an en passant target without taking the pawn. Blue's initial triple creates multiple targets, while its repeatable double creates none. These follow the current engine rules, but functionality alone does not establish that they are good teaching rules. Any simplification needs explicit promotion and en passant verification.
 
-## First balance round
+## Balance ideas to revisit after kings
+
+This is a preliminary outline, not the next implementation task. Choose and implement the king designs first, then make the balance protocol concrete.
 
 1. Freeze version 05 as a comparison baseline when ready; give movement changes a new profile so old saves retain their rules. Keep the agreed level costs at 1/2/3.
 2. Start at budgets 3 and 6: compare one purple purchase with three blue purchases and with blue plus orange. Budget 45 allows every eligible piece to be purple and is a useful stress test, not the only balance target.
@@ -94,4 +126,4 @@ Pawn simplicity deserves a separate decision. Orange can quietly enter an en pas
 4. Record wins, draws, conversion failures, promotion speed, king survival, and player confusion. Keep engine build, search settings, clocks, rules, budgets, and starting positions with results. Raw engine evaluations may be poorly calibrated for unusual pieces.
 5. Tune movement and other abilities to the fixed level costs. Preserve distinctive, understandable roles; redesign abilities that create poor counterplay or unwanted endgames.
 
-The color/cost direction is agreed. The next decisions are whether a king upgrade may grant a guard and the intended minimum mating material. Then prototype one king option and a small number of competing balance changes.
+The color/cost direction is agreed, and both royal abilities and guard grants remain welcome candidates. The next decisions are the king tier designs and intended minimum mating material. Implement kings before choosing concrete balance changes and a testing protocol.
