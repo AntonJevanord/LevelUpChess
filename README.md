@@ -22,6 +22,12 @@ Home ranks mean ranks 1–2 for White and 7–8 for Black. Conditional jumps dep
 
 **Version 04 piece rules** and **Version 03 knight rules** preserve earlier games, budgets, and movement. Offline play, clocks, undo, saves, and PGN support all three profiles. See [variants/README.md](variants/README.md) for exact movement and compatibility rules.
 
+## Version 06: king prototype
+
+Open [prototypes/kings/index.html](prototypes/kings/index.html) to try the capture-only king designs offline, or run `npm.cmd start` and open `http://127.0.0.1:4173/prototypes/kings/index.html`. Blue adds sideways two-square capture jumps, orange adds forward/backward captures, and purple adds diagonal captures. Ordinary quiet king movement remains unchanged.
+
+Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Independent king levels, the other upgrades, engine play, and saves remain integration work. See the [prototype guide](prototypes/kings/README.md).
+
 ## Play Fairy Stockfish
 
 Install Node.js 20+, then run these commands in the repository folder on Windows:
@@ -94,7 +100,8 @@ Standard chess uses [chess.js](https://github.com/jhlywa/chess.js), with its BSD
 | `version_02` | `v0.2.0` | Engine play, saves, PGN, and clocks |
 | `version_03` | `v0.3.0` | Three knight upgrade levels |
 | `version_04` | `v0.4.0` | Improved purple knight, pawns, bishops, and queens |
-| `version_05` | In development | Home-rank abilities, blue queen, and rook upgrades |
+| `version_05` | `v0.5.1` | Home-rank abilities, blue queen, rook upgrades, and compatible Windows engine |
+| `version_06` | In development | Capture-only king prototype |
 
 Create each development branch from the previous tested milestone and tag finished releases. Tags preserve stable checkpoints while branches can evolve. See [TODO.md](TODO.md) for progress and later work.
 

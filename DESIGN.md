@@ -50,9 +50,11 @@ Three directions are worth discussing before assigning king abilities to tiers:
 | Standard quiet king moves plus a small capture-only leap | Makes the king more active without adding empty-square escape destinations. | Can still capture a piece to escape check, changes royal attack distances, and can spoil mating patterns. | First choice if the upgrade must change the king itself. Start with one directional two-square capture, rather than the full 5×5 capture box. |
 | Extra quiet movement limited to the home region | Offers development and defensive repositioning. | An attacked king often starts at home; returning home reactivates regional powers. It can still evade a mating net. | Defer until the first two approaches have been evaluated. |
 
-The project owner is interested in both extra pieces and changes to the royal. Keep both as candidates; a single approach or final tier assignment has not been chosen.
+The project owner is interested in both extra pieces and changes to the royal. Guard grants remain a future alternative; the first prototype explores the royal itself.
 
-For now, avoid quiet knight moves everywhere, queen-like royal movement, an extra royal, and three increasingly mobile kings introduced together. A small prototype gives us a clearer answer than three speculative tiers.
+The first prototype direction is now selected: capture-only bonuses on the royal. Its concrete progression is blue sideways two-square captures (`KcsD`), orange all orthogonal two-square captures (`KcD`), and purple additional diagonal two-square captures (`KcDcA`). All retain ordinary quiet king moves. The [separate playable prototype](prototypes/kings/README.md) applies the chosen level to both colors; independent levels and the other upgrades remain integration work. Guard grants remain a possible future alternative. This is an experimental progression, not a measured 1/2/3-material increase.
+
+For now, avoid quiet knight moves everywhere, queen-like royal movement, and an extra royal. Compare the capture-only tiers in isolation before committing them to the full game.
 
 Capture-only does not mean “unusable in check.” Every landing square must be safe, but capturing on a safe square can escape check. The added attacks also change safe spacing between opposing kings. A rule such as “the bonus is disabled while checked,” a once-per-game escape, or a cooldown requires separate engine support and, for historical abilities, saved state; it does not follow from a movement string. Those are future possibilities, not current configuration promises.
 
@@ -63,6 +65,8 @@ The bundled native engine and browser rules share source revision `43b66c8`. Bot
 Independent royal types can instead use the engine's pseudo-royal extinction rules. Twenty temporary native/browser compatibility probes agreed on movement, captures, safe landings, castling, checkmate, and a nonroyal guard. This would need a new versioned profile and deliberate application changes: exactly one royal per side, king highlighting and validation, castling identities, draw detection, setup, saves, and PGN. Bare pseudo-royals did not automatically produce the ordinary bare-kings draw in the probes.
 
 Each color's castling-king setting accepts one type, not a set. Four independently selected king levels therefore need up to 16 pair-specific profiles to select the correct castling identities; those can share one INI file. Configuring a custom piece as a castling king alone does not make it royal. A normal king plus a nonroyal guard is the simpler per-side implementation.
+
+The capture-only prototype exposed another draw issue even with the actual royal king. White Kf7 and Ng6 checkmate Black Kh8 under all three candidate king rules, although the library's standard insufficient-material heuristic still calls the ending drawn. The prototype checks geometric mate/stalemate first and keeps minor-piece endings playable. It automatically declares a material draw only for bare kings in upgraded profiles, and handles repetition and the fifty-move limit explicitly. This is a conservative prototype policy; full integration needs a deliberate dead-position policy and consistent engine handling. A single mating position does not establish a general forced win.
 
 ### A concrete mating check
 
@@ -126,4 +130,4 @@ This is a preliminary outline, not the next implementation task. Choose and impl
 4. Record wins, draws, conversion failures, promotion speed, king survival, and player confusion. Keep engine build, search settings, clocks, rules, budgets, and starting positions with results. Raw engine evaluations may be poorly calibrated for unusual pieces.
 5. Tune movement and other abilities to the fixed level costs. Preserve distinctive, understandable roles; redesign abilities that create poor counterplay or unwanted endgames.
 
-The color/cost direction is agreed, and both royal abilities and guard grants remain welcome candidates. The next decisions are the king tier designs and intended minimum mating material. Implement kings before choosing concrete balance changes and a testing protocol.
+The color/cost direction is agreed, and the capture-only royal progression is selected for the first prototype. Guard grants remain a future alternative. Review the prototype, establish intended minimum mating material, and integrate king choices before choosing concrete balance changes and a testing protocol.

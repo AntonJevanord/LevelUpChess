@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101922">
+  <title>King workshop · LevelUp Chess</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+</head>
+<body data-level="blue">
+  <main class="workshop">
+    <header class="page-header">
+      <a class="brand" href="../../index.html">♞ LEVELUP <strong>CHESS</strong></a>
+      <span class="eyebrow">KING WORKSHOP · PROTOTYPE</span>
+    </header>
+
+    <section class="intro" aria-labelledby="title">
+      <p class="eyebrow">A SMALL CHANGE TO A ROYAL PIECE</p>
+      <h1 id="title">A king with a little more bite.</h1>
+      <p>Keep ordinary king moves. Add capture-only jumps. Try the same position at each level and see which mating nets survive.</p>
+    </section>
+
+    <div class="workspace">
+      <section class="play-area" aria-label="Chess board and controls">
+        <div class="board-heading">
+          <div>
+            <p class="eyebrow">LOCAL · TWO PLAYERS</p>
+            <h2 id="status" role="status" aria-live="polite">Loading king rules…</h2>
+          </div>
+          <span id="level-badge" class="level-badge">BLUE · +1</span>
+        </div>
+        <div id="board" class="board" role="group" aria-label="Chess board" aria-busy="true"></div>
+        <p id="hint" class="hint">The board will be ready shortly.</p>
+        <div class="legend" aria-label="Move highlight legend">
+          <span><i class="legend-dot"></i>Quiet move</span>
+          <span><i class="legend-ring"></i>Capture</span>
+          <span><i class="legend-ring extra"></i>Added king capture</span>
+        </div>
+        <div class="board-controls">
+          <button id="undo" type="button" aria-label="Undo move" disabled>↶ Undo move</button>
+          <button id="flip" type="button" aria-label="Flip board" disabled>⇅ Flip board</button>
+          <button id="new-game" class="primary" type="button" aria-label="New game" disabled>New game</button>
+        </div>
+      </section>
+
+      <aside class="sidebar" aria-label="Prototype options">
+        <section class="panel">
+          <div class="panel-heading"><h2>Choose the experiment</h2><span class="eyebrow">01</span></div>
+          <label for="level">King level · both sides</label>
+          <select id="level">
+            <option value="chess">Standard · +0 upgrade points</option>
+            <option value="king-blue" selected>Blue · +1 upgrade point</option>
+            <option value="king-orange">Orange · +2 upgrade points</option>
+            <option value="king-purple">Purple · +3 upgrade points</option>
+          </select>
+          <p id="rule-description" class="rule-description">Ordinary king moves, plus capture-only jumps exactly two squares sideways.</p>
+          <p class="fine-print">Jumps may cross occupied squares. Their landing square must contain an enemy piece and be safe for the king. Both kings remain royal: checkmate wins.</p>
+          <label for="position">Example position</label>
+          <select id="position">
+            <option value="start">Starting position</option>
+            <option value="capture-white">White capture jumps</option>
+            <option value="capture-black">Black capture jumps</option>
+            <option value="ladder-mate">Ladder mate · empty escape square</option>
+            <option value="capture-escape">Ladder mate · capture escape</option>
+            <option value="knight-mate">Single knight mate</option>
+            <option value="castle">Castling</option>
+          </select>
+          <p id="position-note" class="fine-print">All other pieces use standard chess rules. Play either side locally.</p>
+          <p class="fine-print">Changing the level or example restarts that example. New game returns to the starting position.</p>
+          <label for="promotion">Pawn promotion</label>
+          <select id="promotion" disabled>
+            <option value="q">Queen</option>
+            <option value="r">Rook</option>
+            <option value="b">Bishop</option>
+            <option value="n">Knight</option>
+          </select>
+          <p class="fine-print">Choose before moving a pawn onto its last rank.</p>
+          <p class="fine-print">Upgraded modes automatically draw bare kings only; other minor-piece endings remain playable. Threefold repetition and the fifty-move rule still apply.</p>
+        </section>
+
+        <section class="panel history-panel">
+          <div class="panel-heading"><h2>Move history</h2><span class="eyebrow">SAN</span></div>
+          <p id="history-empty" class="fine-print">No moves yet.</p>
+          <ol id="history" class="history" aria-label="Move history"></ol>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading"><h2>Try your own position</h2><span class="eyebrow">FEN</span></div>
+          <label for="fen">Current position</label>
+          <textarea id="fen" rows="3" spellcheck="false" autocapitalize="off" autocomplete="off" disabled></textarea>
+          <button id="load-fen" class="wide" type="button" disabled>Load FEN</button>
+          <p id="message" class="message" role="status" aria-live="polite"></p>
+        </section>
+      </aside>
+    </div>
+
+    <footer>Experimental rules · Both kings use the selected level · No engine opponent or saved games</footer>
+  </main>
+</body>
+</html>

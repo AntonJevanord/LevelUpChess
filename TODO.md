@@ -95,7 +95,7 @@ Version 02 cloud integration used a Linux source build; the user playtested its 
 - [x] Pass 250 checks: 130 unit tests and 120 browser/integration tests, including native engine comparisons and play.
 - [ ] Playtest home-rank jumps, screen captures, and custom castling with a current Windows engine.
 - [ ] Playtest mixed armies, budgets, saves, undo, and timed games on Windows.
-- [ ] Balance upgrades and their costs after playtesting.
+- [ ] Balance upgrade abilities within the fixed level costs after playtesting.
 
 ### Patch v0.5.1 — Windows engine compatibility
 
@@ -110,7 +110,19 @@ Version 02 cloud integration used a Linux source build; the user playtested its 
 - [x] Run all 14 native browser/API cases with the bundled Windows executable under Wine, including legacy rules, mixed armies, pause/resume, and undo.
 - [x] User reports the patched bundled engine works on Windows.
 
-The blue queen's draft back-rank teleport remains an optional engine extension. Version 05 uses supported conditional jumps instead. Royal king upgrades remain future work; each side must keep a clear checkmate rule.
+The blue queen's draft back-rank teleport remains an optional engine extension. Version 05 uses supported conditional jumps instead. King experiments continue separately in version 06; each side keeps a clear checkmate rule.
+
+## Version 06 — king prototype
+
+- [x] Preserve version 05 as `v0.5.1` and start `version_06`.
+- [x] Select capture-only royal bonuses for the first prototype: sideways, orthogonal, then orthogonal plus diagonal two-square jumps.
+- [x] Ship a separate offline local-play board with all three tiers, a standard baseline, practice positions, FEN loading, undo, and promotions.
+- [x] Verify 138 positions for both colors against browser/native Linux rules and the Windows executable under Wine, including blockers, safe landings, royal attacks, castling, and mating examples.
+- [x] Identify single-knight mating positions enabled by royal attacks; avoid premature ordinary-material draws in the prototype.
+- [x] Pass 135 unit tests and 160 browser/API cases across the main game and king prototype, including repetition, fifty-move draws, and undo.
+- [ ] Playtest the king prototype and decide whether to keep or revise this progression.
+- [ ] Integrate independent king levels with other upgrades, setup budgets, saves, PGN, and engine play.
+- [ ] Establish the intended mating-material and draw rules before balance testing.
 
 ## Later versions
 
@@ -119,11 +131,12 @@ The blue queen's draft back-rank teleport remains an optional engine extension. 
 - [x] Distinguish fixed upgrade costs from estimated material; record base-plus-level values as provisional targets.
 - [x] Keep royal abilities and 1/2/3-value guard grants open; the extra-piece approach remains provisional.
 - [x] Record playtest impressions: strong orange/purple rooks and purple pawns, weaker blue/orange pawns.
-- [ ] Choose king tier designs and minimum mating material.
+- [x] Choose the capture-only king tier progression for the first prototype.
+- [ ] Agree on minimum mating material and confirm the progression after playtesting.
 - [ ] Prototype one king design and verify independent setup, checkmate, castling, draws, saves, and PGN.
 - [ ] After kings are implemented, plan concrete balance tests and estimate material values with uncertainty.
 - [ ] Compare selected upgrades at budgets 3 and 6 with colors swapped; record rules, budgets, and conversion results.
-- Complete all piece upgrades and balance their costs.
+- Complete all piece upgrades and tune their abilities to the fixed level costs.
 - Add low-budget, high-budget, and equal-budget random modes.
 - Automate engine matches with saved progress and immediate/after-game stopping.
 - Version balance results so rule changes can be compared.

@@ -2,6 +2,7 @@ const { build } = require('esbuild');
 const fs = require('node:fs');
 const path = require('node:path');
 const { rulesBuildOptions } = require('./rules-build');
+const { buildKings } = require('./build-kings');
 
 async function main() {
   const root = path.resolve(__dirname, '..');
@@ -35,5 +36,6 @@ async function main() {
   fs.writeFileSync(path.join(root, 'index.html'), html);
   fs.copyFileSync(path.join(root, 'node_modules/chess.js/LICENSE'), path.join(root, 'dist/chess.js-LICENSE.txt'));
   fs.copyFileSync(path.join(root, 'stockfish/COPYING.txt'), path.join(root, 'dist/ffish-LICENSE.txt'));
+  await buildKings(root);
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

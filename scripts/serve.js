@@ -57,7 +57,11 @@ const server = http.createServer(async (req, res) => {
     return;
   }
   if (req.method !== 'GET' && req.method !== 'HEAD') { res.writeHead(405); res.end(); return; }
-  const routes = { '/': 'index.html', '/index.html': 'index.html', '/styles.css': 'styles.css', '/dist/app.js': 'dist/app.js' };
+  const routes = {
+    '/': 'index.html', '/index.html': 'index.html', '/styles.css': 'styles.css', '/dist/app.js': 'dist/app.js',
+    '/prototypes/kings/': 'prototypes/kings/index.html',
+    '/prototypes/kings/index.html': 'prototypes/kings/index.html',
+  };
   const file = routes[route];
   if (!file) { res.writeHead(404); res.end(); return; }
   fs.readFile(path.join(root, file), (error, content) => {
@@ -66,7 +70,7 @@ const server = http.createServer(async (req, res) => {
   });
 });
 server.on('error', error => { console.error(`Cannot start local server: ${error.message}`); process.exitCode = 1; });
-server.listen(port, '127.0.0.1', () => console.log(`LevelUp Chess: ${origin}\nOpen this address for Fairy Stockfish play. Keep this terminal running.`));
+server.listen(port, '127.0.0.1', () => console.log(`LevelUp Chess: ${origin}\nKing prototype: ${origin}/prototypes/kings/index.html\nOpen the main game for Fairy Stockfish play. Keep this terminal running.`));
 
 for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, () => {
   activeController?.abort();
