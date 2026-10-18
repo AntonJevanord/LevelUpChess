@@ -97,3 +97,5 @@ Standard chess uses [chess.js](https://github.com/jhlywa/chess.js), with its BSD
 | `version_05` | In development | Home-rank abilities, blue queen, and rook upgrades |
 
 Create each development branch from the previous tested milestone and tag finished releases. Tags preserve stable checkpoints while branches can evolve. See [TODO.md](TODO.md) for progress and later work.
+
+King options and proposed balance experiments are discussed in [DESIGN.md](DESIGN.md). They do not change the current rules.

@@ -114,6 +114,11 @@ The blue queen's draft back-rank teleport remains an optional engine extension. 
 
 ## Later versions
 
+- [x] Draft king design options, engine constraints, and balance candidates in [DESIGN.md](DESIGN.md).
+- [x] Keep costs equal to level (1/2/3) and target increasing strength, allowing distinct or cumulative abilities.
+- [ ] Agree on king versus guard upgrades and minimum mating material.
+- [ ] Prototype one king design and verify independent setup, checkmate, castling, draws, saves, and PGN.
+- [ ] Compare selected upgrades at budgets 3 and 6 with colors swapped; record rules, budgets, and conversion results.
 - Complete all piece upgrades and balance their costs.
 - Add low-budget, high-budget, and equal-budget random modes.
 - Automate engine matches with saved progress and immediate/after-game stopping.
