@@ -71,12 +71,13 @@ Linux integration was verified with an upstream Fairy Stockfish source build. Th
 - [x] Share current rules between offline browser play and the native engine bridge.
 - [x] Retain clocks, undo, saves, PGN, and next-game setup recovery across both variant versions.
 - [x] Pass 180 checks: 83 unit tests and 97 browser/integration tests, including native pawn-rule comparisons and engine play.
+- [x] User playtest confirmed version 04 works; blue queen remains deferred.
 - [ ] Playtest current pawn promotions, en passant, mixed armies, and budgets on Windows.
 - [ ] Playtest bishop/queen upgrades and the improved purple knight with the bundled engine.
 - [ ] Confirm balance and settle the blue queen's movement.
 - [ ] Define supported rook upgrades and validate custom castling with the Windows engine.
 - [ ] Design per-side royal king upgrades, retaining checkmate and defining check rules for any extra king.
-- [ ] Tag the tested version 04 milestone.
+- [x] Preserve version 04 as `v0.4.0`; continue remaining upgrades on `version_05`.
 
 ## Later versions
 
