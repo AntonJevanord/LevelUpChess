@@ -1,0 +1,29 @@
+[LevelUp:chess]
+
+CustomPiece1 = a:iHfmDfmWfceF #Blue pawn, can jump two spaces forwards and can jump three spaces on it's first move.
+CustomPiece2 = c:inDfeWfF #Orange pawn, can both move and capture the same directions.
+CustomPiece3 = d:mRceB #Purple pawn, moves like a rook, captures like a bishop.
+CustomPiece4 = e:NmW #Blue knight, adds orthogonal move.
+CustomPiece5 = f:N2F #Orange knight, capture and move 2 squares horizontaly.
+CustomPiece6 = g:2W #Purple knight, is spawned above a regular knight during setup.
+CustomPiece7 = h:BmW #Blue bishop, adds orthogonal move.
+CustomPiece8 = i:BcfN #Orange bishop, can capture forward like a knight.
+CustomPiece9 = j:BfbR #Purple bishop, can move and capture vertically like a rook.
+CustomPiece10 = l:RijR #Blue rook, can jump over pieces when on the back rank.
+CustomPiece11 = m:RfjcR #Orange rook, can capture through pieces forwards.
+CustomPiece12 = o:RcNcj2F #Purple rook, can capture anything in a box shape.
+CustomPiece13 = s:QiNiCiZijQ #Blue queen, can go anywhere from the back rank.
+CustomPiece14 = t:? #Orange queen.
+CustomPiece15 = u:QN #Purple queen, amazon.
+CustomPiece16 = v:KijQ #Blue king, can move like a queen on the back rank.
+CustomPiece17 = w:KcAcNcD #Orange king, captures anything in a box shape.
+CustomPiece18 = x:K #Purple king, spawns in front of another purple king.
+CustomPiece19 = y:?
+CustomPiece20 = z:?
+
+#settup stage: the game has to start with getting set up in such a way that there is an appropriate number of pieces (ie purple bishop in front of normal bishop.
+#Two extra pieces are available, can be used for special pieces (ie. orange queen spawns in front of a y, purple pawn promotes to an z.)
+
+PromotionPawnPieces = acdp
+
+StartFen = rnbkqbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBKQBNR w KQkq - 0 1
