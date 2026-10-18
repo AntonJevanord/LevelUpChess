@@ -58,6 +58,26 @@ Linux integration was verified with an upstream Fairy Stockfish source build. Th
 - [x] Preserve the knight-family build as `v0.3.0`; improve purple and add other families in version 04.
 - [ ] Resolve remaining draft rules, extra starting pieces, promotions, and upgraded king victory rules.
 
+## Version 04 — more piece families
+
+- [x] Improve purple knights to one- or two-square orthogonal moves/captures (`WD`), preserving jumps.
+- [x] Preserve version 03 movement under its original variant ID for old saves and PGNs.
+- [x] Add individual pawn, bishop, and queen choices alongside knight upgrades.
+- [x] Apply one per-side budget of 1–39 points across all 26 upgradeable starting pieces.
+- [x] Add blue, orange, and purple bishops; purple replaces the starting bishop.
+- [x] Add orange quiet-knight-jump queens and purple amazon queens.
+- [x] Add all three pawn levels with standard queen/rook/bishop/knight promotions.
+- [x] Keep kings royal and preserve standard checking and castling rules.
+- [x] Share current rules between offline browser play and the native engine bridge.
+- [x] Retain clocks, undo, saves, PGN, and next-game setup recovery across both variant versions.
+- [x] Pass 180 checks: 83 unit tests and 97 browser/integration tests, including native pawn-rule comparisons and engine play.
+- [ ] Playtest current pawn promotions, en passant, mixed armies, and budgets on Windows.
+- [ ] Playtest bishop/queen upgrades and the improved purple knight with the bundled engine.
+- [ ] Confirm balance and settle the blue queen's movement.
+- [ ] Define supported rook upgrades and validate custom castling with the Windows engine.
+- [ ] Design per-side royal king upgrades, retaining checkmate and defining check rules for any extra king.
+- [ ] Tag the tested version 04 milestone.
+
 ## Later versions
 
 - Complete all piece upgrades and balance their costs.

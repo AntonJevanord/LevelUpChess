@@ -44,7 +44,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('mixed knight levels use per-side costs and purple adds pieces without replacing knights or pawns', async ({ page }) => {
-  await expect(page.locator('#game-mode option[value="levelup-knight"]')).toHaveText('Knight upgrades');
+  await expect(page.locator('#game-mode option[value="levelup-knight"]')).toHaveText('Version 03 knight rules');
   expect(await page.locator('#upgrade-budget option').evaluateAll(options => options.map(option => option.value))).toEqual(['1', '2', '3', '4', '5', '6']);
   await startMixedGame(page);
   await expect(page.locator('#upgrade-status')).toContainText('White 5/5');

@@ -42,7 +42,7 @@ const server = http.createServer(async (req, res) => {
           if (position.isGameOver()) throw new Error();
           options = { fen: position.fen(), difficulty: data.difficulty, variant };
         } finally { position.dispose?.(); }
-      } catch { json(res, 400, { error: 'Expected a playable chess or levelup-knight FEN and easy, medium, or hard difficulty.' }); return; }
+      } catch { json(res, 400, { error: 'Expected a playable standard or supported upgrade FEN and easy, medium, or hard difficulty.' }); return; }
     }
     if (res.destroyed) return;
     // Variant validation initializes WASM asynchronously; another request may finish first.

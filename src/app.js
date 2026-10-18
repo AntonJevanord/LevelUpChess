@@ -1,7 +1,8 @@
 import { Chess } from 'chess.js';
-import { VariantGame, VARIANT, initVariantRules } from './variant-game';
-import { pieceInfo, KNIGHT_LEVELS, KNIGHT_SLOTS } from './piece-catalog';
+import { VariantGame, VARIANT, PIECE_VARIANT, SUPPORTED_VARIANTS, initVariantRules } from './variant-game';
+import { pieceInfo, KNIGHT_LEVELS, KNIGHT_SLOTS, PIECE_LEVELS, PIECE_SLOTS, DEFAULT_PIECE_LEVELS } from './piece-catalog';
 import { setupFromLevels, loadInitialSetup } from './knight-setup';
+import { pieceSetupFromLevels, loadPieceSetup } from './piece-setup';
 import { ChessClock, CLOCK_CONTROLS, formatClock } from './clock';
 import { SAVE_KEY, MAX_PGN_SIZE, parsePgn, exportPgn, makeSave, parseSave } from './saved-games';
 
@@ -20,23 +21,72 @@ const gameMode = document.querySelector('#game-mode');
 const upgradeBudget = document.querySelector('#upgrade-budget');
 const upgradeStatus = document.querySelector('#upgrade-status');
 const upgradeSquares = KNIGHT_SLOTS.map(slot => slot.square);
+const pieceBudget = document.querySelector('#piece-upgrade-budget');
+const pieceStatus = document.querySelector('#piece-upgrade-status');
+const pieceFamily = document.querySelector('#piece-family');
+const familyRules = {
+  pawn: ['Blue: jump 1 or 2 forward, or 3 from the starting rank; capture one diagonal forward.', 'Orange: move or capture one forward or diagonally forward; initial two-step needs a clear path.', 'Purple: move along any clear rook line; capture along any clear bishop line. All pawn levels promote to Q/R/B/N on the last rank.'],
+  knight: ['Blue: knight moves plus one empty orthogonal step.', 'Orange: knight moves plus a two-square sideways jump.', 'Purple: keep the knight and add a piece that moves or captures 1 or 2 orthogonally. Two-square moves jump. Extras start on b3/g3 or b6/g6.'],
+  bishop: ['Blue: bishop moves plus one empty orthogonal step.', 'Orange: bishop moves plus capture-only knight jumps two squares forward and one sideways.', 'Purple: bishop moves plus vertical rook moves. Replaces the starting bishop.'],
+  queen: ['Orange: queen moves plus knight-shaped jumps into empty squares. Captures and attacks still follow queen lines.', 'Purple: queen moves plus knight jumps, including captures. Blue queen is still being designed.'],
+};
+for (const family of Object.keys(PIECE_LEVELS)) {
+  const group = document.createElement('div');
+  group.className = 'settings-row piece-choices';
+  group.dataset.family = family;
+  for (const slot of PIECE_SLOTS.filter(slot => slot.family === family)) {
+    const field = document.createElement('div');
+    const label = document.createElement('label');
+    const select = document.createElement('select');
+    select.id = `piece-upgrade-${slot.square}`;
+    label.htmlFor = select.id;
+    label.textContent = `${side(slot.color)} ${slot.square} ${family}`;
+    PIECE_LEVELS[family].forEach((type, level) => {
+      if (!type) return;
+      const option = document.createElement('option');
+      option.value = String(level);
+      option.textContent = `${level} · ${['Standard', 'Blue', 'Orange', 'Purple'][level]}`;
+      option.selected = level === DEFAULT_PIECE_LEVELS[slot.square];
+      select.append(option);
+    });
+    select.onchange = updateSetup;
+    field.append(label, select);
+    group.append(field);
+  }
+  document.querySelector('#piece-upgrade-choices').append(group);
+}
+function updateFamily() {
+  for (const group of document.querySelectorAll('.piece-choices')) group.hidden = group.dataset.family !== pieceFamily.value;
+  const list = document.querySelector('#piece-upgrade-rules');
+  list.replaceChildren(...familyRules[pieceFamily.value].map(text => {
+    const item = document.createElement('li');
+    item.textContent = text;
+    return item;
+  }));
+}
 let replacementGeneration = 0;
 let buildingGame = false;
 let activeBudget = 2;
 function setupChoice() {
-  const levels = Object.fromEntries(upgradeSquares.map(square => [square, Number(document.querySelector(`#upgrade-${square}`).value)]));
-  const cost = square => pieceInfo(KNIGHT_LEVELS[levels[square]])?.cost || 0;
-  const white = KNIGHT_SLOTS.filter(slot => slot.color === 'w').reduce((total, slot) => total + cost(slot.square), 0);
-  const black = KNIGHT_SLOTS.filter(slot => slot.color === 'b').reduce((total, slot) => total + cost(slot.square), 0);
-  return { levels, white, black, budget: Number(upgradeBudget.value) };
+  const current = gameMode.value === PIECE_VARIANT;
+  const slots = current ? PIECE_SLOTS : KNIGHT_SLOTS;
+  const prefix = current ? 'piece-upgrade' : 'upgrade';
+  const levels = Object.fromEntries(slots.map(slot => [slot.square, Number(document.querySelector(`#${prefix}-${slot.square}`).value)]));
+  const cost = slot => pieceInfo((current ? PIECE_LEVELS[slot.family] : KNIGHT_LEVELS)[levels[slot.square]])?.cost || 0;
+  const white = slots.filter(slot => slot.color === 'w').reduce((total, slot) => total + cost(slot), 0);
+  const black = slots.filter(slot => slot.color === 'b').reduce((total, slot) => total + cost(slot), 0);
+  return { levels, white, black, budget: Number((current ? pieceBudget : upgradeBudget).value) };
 }
 function updateSetup() {
   document.querySelector('#upgrade-settings').hidden = gameMode.value !== VARIANT;
+  document.querySelector('#piece-upgrade-settings').hidden = gameMode.value !== PIECE_VARIANT;
   const { white, black, budget } = setupChoice();
-  const valid = white <= budget && black <= budget;
-  upgradeStatus.classList.toggle('error', !valid);
-  upgradeStatus.textContent = valid ? `White ${white}/${budget} · Black ${black}/${budget} upgrade points.` : `Budget exceeded: White ${white}/${budget} · Black ${black}/${budget}. Reduce upgrades before starting a new game.`;
-  return gameMode.value !== VARIANT || valid;
+  const status = gameMode.value === PIECE_VARIANT ? pieceStatus : upgradeStatus;
+  const validBudget = Number.isInteger(budget) && budget >= 1 && budget <= (gameMode.value === PIECE_VARIANT ? 39 : 6);
+  const valid = validBudget && white <= budget && black <= budget;
+  status.classList.toggle('error', !valid);
+  status.textContent = !validBudget ? 'Choose a whole-number budget from 1 to 39.' : valid ? `White ${white}/${budget} · Black ${black}/${budget} upgrade points.` : `Budget exceeded: White ${white}/${budget} · Black ${black}/${budget}. Reduce upgrades before starting a new game.`;
+  return !SUPPORTED_VARIANTS.includes(gameMode.value) || valid;
 }
 
 let connected = false;
@@ -238,7 +288,7 @@ function render(focusSquare) {
     }
     if (legal.some(move => move.to === square)) {
       const marker = document.createElement('span');
-      marker.className = piece ? 'capture-marker' : 'move-marker';
+      marker.className = legal.some(move => move.to === square && move.captured) ? 'capture-marker' : 'move-marker';
       button.append(marker);
     }
     for (const [show, value, position] of [[col === 0, rank, 'rank'], [row === 7, file, 'file']]) {
@@ -370,10 +420,12 @@ async function newGame() {
   buildingGame = true;
   document.querySelector('#new-game').disabled = true;
   try {
-    if (selectedMode === VARIANT) {
-      upgradeStatus.textContent = 'Loading knight-upgrade rules…';
+    if (SUPPORTED_VARIANTS.includes(selectedMode)) {
+      const status = selectedMode === PIECE_VARIANT ? pieceStatus : upgradeStatus;
+      status.textContent = 'Loading piece-upgrade rules…';
       await initVariantRules();
-      next = new VariantGame(setupFromLevels(levels, budget).fen);
+      const setup = selectedMode === PIECE_VARIANT ? pieceSetupFromLevels : setupFromLevels;
+      next = new VariantGame(setup(levels, budget).fen, selectedMode);
     } else next = new Chess();
     if (request !== replacementGeneration) { next.dispose?.(); return; }
     cancelEngine();
@@ -393,8 +445,9 @@ async function newGame() {
     render();
   } catch (error) {
     if (next !== game) next?.dispose?.();
-    upgradeStatus.textContent = `Could not start the knight-upgrade game: ${error.message}`;
-    upgradeStatus.classList.add('error');
+    const status = selectedMode === PIECE_VARIANT ? pieceStatus : upgradeStatus;
+    status.textContent = `Could not start the upgrade game: ${error.message}`;
+    status.classList.add('error');
     restart.close();
   } finally {
     buildingGame = false;
@@ -463,11 +516,23 @@ function applyGame(candidate) {
   game.dispose?.();
   game = candidate.game;
   gameMode.value = game.variant || 'chess';
-  activeBudget = candidate.settings?.upgradeBudget || 2;
+  activeBudget = candidate.settings?.upgradeBudget || (game.variant === PIECE_VARIANT ? 6 : 2);
   if (game.variant === VARIANT) {
-    upgradeBudget.value = String(activeBudget);
     const levels = loadInitialSetup(game.getHeaders().FEN);
     for (const square of upgradeSquares) document.querySelector(`#upgrade-${square}`).value = String(levels[square]);
+    if (!candidate.settings?.upgradeBudget) {
+      const setup = setupFromLevels(levels, 6);
+      activeBudget = Math.max(2, setup.white, setup.black);
+    }
+    upgradeBudget.value = String(activeBudget);
+  } else if (game.variant === PIECE_VARIANT) {
+    const levels = loadPieceSetup(game.getHeaders().FEN);
+    for (const slot of PIECE_SLOTS) document.querySelector(`#piece-upgrade-${slot.square}`).value = String(levels[slot.square]);
+    if (!candidate.settings?.upgradeBudget) {
+      const setup = pieceSetupFromLevels(levels, 39);
+      activeBudget = Math.max(6, setup.white, setup.black);
+    }
+    pieceBudget.value = String(activeBudget);
   }
   updateSetup();
   if (candidate.clock) clock.restore(candidate.clock, game.history().length);
@@ -510,7 +575,7 @@ document.querySelector('#save-game').onclick = () => {
     settleClock();
     const clockState = clock.snapshot();
     settleClock();
-    const save = makeSave(game, { opponent: opponent.value, humanSide: humanSide.value, difficulty: difficulty.value, flipped, ...(game.variant === VARIANT ? { upgradeBudget: activeBudget } : {}) }, clockState);
+    const save = makeSave(game, { opponent: opponent.value, humanSide: humanSide.value, difficulty: difficulty.value, flipped, ...(SUPPORTED_VARIANTS.includes(game.variant) ? { upgradeBudget: activeBudget } : {}) }, clockState);
     localStorage.setItem(SAVE_KEY, JSON.stringify(save));
     saveStatus.textContent = `Saved ${game.history().length} half-moves in this browser. Export PGN for a portable backup.`;
     refreshSaveAvailability();
@@ -602,7 +667,10 @@ clockToggle.onclick = () => {
 setInterval(settleClock, 100);
 gameMode.onchange = updateSetup;
 upgradeBudget.onchange = updateSetup;
+pieceBudget.oninput = updateSetup;
+pieceFamily.onchange = updateFamily;
 for (const square of upgradeSquares) document.querySelector(`#upgrade-${square}`).onchange = updateSetup;
+updateFamily();
 updateSetup();
 refreshSaveAvailability();
 render();

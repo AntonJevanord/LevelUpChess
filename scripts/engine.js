@@ -3,8 +3,8 @@ const path = require('node:path');
 const { Chess } = require('chess.js');
 
 const enginePath = () => process.env.FAIRY_STOCKFISH_PATH || path.resolve(__dirname, '../stockfish/fairy-stockfish-largeboard_x86-64.exe');
-const variantPath = path.resolve(__dirname, '../variants/levelup-knight.ini');
-const variants = ['chess', 'levelup-knight'];
+const variantPath = variant => path.resolve(__dirname, variant === 'levelup' ? '../variants/levelup.ini' : '../variants/levelup-knight.ini');
+const variants = ['chess', 'levelup-knight', 'levelup'];
 const levels = {
   easy: { skill: 0, time: 150 },
   medium: { skill: 8, time: 600 },
@@ -14,10 +14,10 @@ const levels = {
 // Standard games never need to initialize the optional WebAssembly rules library.
 async function createPosition(fen, variant = 'chess') {
   if (variant === 'chess') return new Chess(fen);
-  if (variant !== 'levelup-knight') throw new Error('Unsupported chess variant.');
+  if (!variants.includes(variant)) throw new Error('Unsupported chess variant.');
   const { initVariantRules, VariantGame } = require('../dist/rules-node.cjs');
   await initVariantRules();
-  return new VariantGame(fen);
+  return new VariantGame(fen, variant);
 }
 
 // Each request owns one process: cancellation cannot leak a move into a later game.
@@ -75,21 +75,21 @@ async function engineRequest({ fen, difficulty = 'medium', variant = 'chess', si
         const line = buffer.slice(0, newline).trim();
         buffer = buffer.slice(newline + 1);
         if (line.startsWith('id name ')) name = line.slice(8).slice(0, 120);
-        if (phase === 'variant-options' && line.startsWith('option name UCI_Variant ') && /(?:^|\s)var levelup-knight(?:\s|$)/.test(line)) advertisedVariant = true;
-        if (phase === 'ready' && line.startsWith('info string variant levelup-knight ')) selectedVariant = true;
+        if (phase === 'variant-options' && line.startsWith('option name UCI_Variant ') && line.split(' var ').slice(1).includes(variant)) advertisedVariant = true;
+        if (phase === 'ready' && line.startsWith(`info string variant ${variant} `)) selectedVariant = true;
         if (line === 'uciok' && phase === 'uci') {
           if (variant === 'chess') configure();
           else {
             phase = 'variant-options';
             // Reload the advertised options after VariantPath has registered the rules.
-            send(`setoption name VariantPath value ${variantPath}`);
+            send(`setoption name VariantPath value ${variantPath(variant)}`);
             send('uci');
           }
         } else if (line === 'uciok' && phase === 'variant-options') {
-          if (!advertisedVariant) { finish(new Error('Fairy Stockfish could not load the knight-upgrade rules. Update the engine and try again.')); continue; }
+          if (!advertisedVariant) { finish(new Error('Fairy Stockfish could not load the piece-upgrade rules. Update the engine and try again.')); continue; }
           configure();
         } else if (line === 'readyok' && phase === 'ready') {
-          if (variant !== 'chess' && !selectedVariant) { finish(new Error('Fairy Stockfish did not select the knight-upgrade rules. Update the engine and try again.')); continue; }
+          if (variant !== 'chess' && !selectedVariant) { finish(new Error('Fairy Stockfish did not select the piece-upgrade rules. Update the engine and try again.')); continue; }
           if (!fen) { finish(null, { name }); continue; }
           phase = 'search';
           send('ucinewgame');

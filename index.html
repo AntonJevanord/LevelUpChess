@@ -19,10 +19,12 @@
 
 .upgrade-rules{font-size:12px;line-height:1.7;color:var(--muted);padding-left:17px}.upgrade-rules li{margin-top:8px}.blue-text{color:#a4d2fa}.orange-text{color:#efbb81}.purple-text{color:#c8abea}.piece.upgraded.orange{filter:drop-shadow(0 0 3px #e29a43);text-shadow:0 1px 2px #553615,1px 0 #896027,-1px 0 #896027}.piece.upgraded.purple{filter:drop-shadow(0 0 3px #af7add);text-shadow:0 1px 2px #3d2352,1px 0 #69448b,-1px 0 #69448b}.piece-level.orange{background:#87531e}.piece-level.purple{background:#704295}.square:has(.upgraded.orange){box-shadow:inset 0 0 0 2px #eab365c0}.square:has(.upgraded.purple){box-shadow:inset 0 0 0 2px #ba8ee2c0}.player .level{max-width:130px;line-height:1.5;text-align:center}
 
+.engine-panel input[type=number]{width:100%;border:1px solid #ffffff26;border-radius:6px;background:#27342c;color:var(--text);padding:10px;font:13px system-ui}#piece-upgrade-status{font-size:12px}#piece-upgrade-status.error{color:#efab9d}.piece-choices{max-height:340px;overflow:auto;align-content:start;padding:0 3px 5px 0}
+
 </style>
 </head>
 <body>
-  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 03 / FIRST UPGRADE</span></header>
+  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 04 / NEW POSSIBILITIES</span></header>
   <main>
     <section class="intro"><span class="eyebrow">EVERY GREAT GAME STARTS HERE</span><h1>Your next move.</h1><p>Classic chess. Two players. One board.</p></section>
     <div class="game-layout">
@@ -35,7 +37,15 @@
         <section class="panel"><span class="eyebrow">ON THE BOARD</span><h2 id="status" role="status" aria-live="polite"></h2><p id="hint">Select a piece to see its legal moves.</p><div class="actions"><button id="undo" type="button">↶ Undo move</button><button id="flip" type="button">⇅ Flip board</button></div><button id="new-game" class="primary" type="button">New game</button></section>
         <section class="panel engine-panel" aria-labelledby="engine-title">
           <div class="panel-heading"><h3 id="engine-title">Play your way</h3><span>FAIRY STOCKFISH</span></div>
-          <label for="game-mode">Rules</label><select id="game-mode"><option value="chess">Standard chess</option><option value="levelup-knight">Knight upgrades</option></select>
+          <label for="game-mode">Rules</label><select id="game-mode"><option value="chess">Standard chess</option><option value="levelup">Piece upgrades</option><option value="levelup-knight">Version 03 knight rules</option></select>
+          <div id="piece-upgrade-settings" hidden>
+            <label for="piece-upgrade-budget">Budget per side (1–39)</label><input id="piece-upgrade-budget" type="number" min="1" max="39" step="1" value="6">
+            <p id="piece-upgrade-status" role="status" aria-live="polite"></p>
+            <label for="piece-family">Choose a piece family</label><select id="piece-family"><option value="pawn">Pawns</option><option value="knight">Knights</option><option value="bishop" selected>Bishops</option><option value="queen">Queens</option></select>
+            <ul id="piece-upgrade-rules" class="upgrade-rules"></ul>
+            <div id="piece-upgrade-choices"></div>
+            <p class="engine-help">Costs equal levels. Both sides share the same budget limit. Choices across all families apply to your next new game. Kings remain royal; rooks and kings use standard rules.</p>
+          </div>
           <div id="upgrade-settings" hidden>
             <ul class="upgrade-rules"><li><strong class="blue-text">1 · Blue</strong> — knight + one empty orthogonal step.</li><li><strong class="orange-text">2 · Orange</strong> — knight + a two-square sideways jump.</li><li><strong class="purple-text">3 · Purple</strong> — extra piece with two-square orthogonal jumps; keep the standard knight.</li></ul>
             <label for="upgrade-budget">Budget per side</label><select id="upgrade-budget"><option value="1">1 point</option><option value="2" selected>2 points</option><option value="3">3 points</option><option value="4">4 points</option><option value="5">5 points</option><option value="6">6 points</option></select>
@@ -65,14 +75,14 @@
           <div class="actions"><button id="export-pgn" type="button">Export PGN</button><button id="open-import" type="button">Import PGN</button></div>
           <p class="save-help">One save slot per browser. Saving again replaces it. Download PGN for a portable backup.</p>
         </section>
-        <div class="coming-next"><span class="eyebrow">THE NEXT LEVEL</span><p>Three knight upgrades to explore.<br>More piece families are on the roadmap.</p><div class="level-dots"><i></i><i></i><i></i></div></div>
+        <div class="coming-next"><span class="eyebrow">THE NEXT LEVEL</span><p>Build an army within your budget.<br>Explore pawn, knight, bishop and queen upgrades.</p><div class="level-dots"><i></i><i></i><i></i></div></div>
       </aside>
     </div>
   </main>
   <dialog id="promotion"><h2>Choose your promotion</h2><p>Your pawn has earned a new role.</p><div id="promotion-options"></div></dialog>
   <dialog id="restart"><h2>Start a new game?</h2><p>This will clear the current board and move history.</p><div class="actions"><button id="cancel-restart">Keep playing</button><button id="confirm-restart" class="primary">Start new game</button></div></dialog>
   <dialog id="import-dialog" aria-labelledby="import-title">
-    <h2 id="import-title">Import a game</h2><p>Paste standard or knight-upgrade PGN, or choose a .pgn file.</p>
+    <h2 id="import-title">Import a game</h2><p>Paste standard or piece-upgrade PGN, or choose a .pgn file.</p>
     <label for="pgn-file">PGN file (up to 256 KB)</label><input id="pgn-file" type="file" accept=".pgn,text/plain,application/x-chess-pgn">
     <label for="pgn-text">Game notation</label><textarea id="pgn-text" rows="8" spellcheck="false" placeholder="1. e4 e5 2. Nf3 Nc6 *"></textarea>
     <p id="import-error" role="alert"></p>
@@ -120,7 +130,15 @@
         { type: "k", name: "king", family: "king", level: 0, cost: 0, symbols: { w: "\u2654", b: "\u265A" } },
         { type: "e", name: "blue knight, level 1", family: "knight", level: 1, cost: 1, accent: "blue", symbols: { w: "\u2658", b: "\u265E" } },
         { type: "f", name: "orange knight, level 2", family: "knight", level: 2, cost: 2, accent: "orange", symbols: { w: "\u2658", b: "\u265E" } },
-        { type: "g", name: "purple knight, level 3", family: "knight", level: 3, cost: 3, accent: "purple", symbols: { w: "\u2658", b: "\u265E" } }
+        { type: "g", name: "purple knight, level 3", family: "knight", level: 3, cost: 3, accent: "purple", symbols: { w: "\u2658", b: "\u265E" } },
+        { type: "a", name: "blue pawn, level 1", family: "pawn", level: 1, cost: 1, accent: "blue", symbols: { w: "\u2659", b: "\u265F" } },
+        { type: "c", name: "orange pawn, level 2", family: "pawn", level: 2, cost: 2, accent: "orange", symbols: { w: "\u2659", b: "\u265F" } },
+        { type: "d", name: "purple pawn, level 3", family: "pawn", level: 3, cost: 3, accent: "purple", symbols: { w: "\u2659", b: "\u265F" } },
+        { type: "h", name: "blue bishop, level 1", family: "bishop", level: 1, cost: 1, accent: "blue", symbols: { w: "\u2657", b: "\u265D" } },
+        { type: "i", name: "orange bishop, level 2", family: "bishop", level: 2, cost: 2, accent: "orange", symbols: { w: "\u2657", b: "\u265D" } },
+        { type: "j", name: "purple bishop, level 3", family: "bishop", level: 3, cost: 3, accent: "purple", symbols: { w: "\u2657", b: "\u265D" } },
+        { type: "t", name: "orange queen, level 2", family: "queen", level: 2, cost: 2, accent: "orange", symbols: { w: "\u2655", b: "\u265B" } },
+        { type: "u", name: "purple queen, level 3", family: "queen", level: 3, cost: 3, accent: "purple", symbols: { w: "\u2655", b: "\u265B" } }
       ].map((piece) => [piece.type, Object.freeze({ ...piece, symbols: Object.freeze(piece.symbols) })])));
       var KNIGHT_LEVELS2 = Object.freeze(["n", "e", "f", "g"]);
       var UPGRADE_BUDGETS2 = Object.freeze([1, 2, 3, 4, 5, 6]);
@@ -130,10 +148,25 @@
         { square: "b8", extraSquare: "b6", color: "b" },
         { square: "g8", extraSquare: "g6", color: "b" }
       ].map((slot) => Object.freeze(slot)));
+      var PIECE_LEVELS2 = Object.freeze({
+        pawn: Object.freeze(["p", "a", "c", "d"]),
+        knight: KNIGHT_LEVELS2,
+        bishop: Object.freeze(["b", "h", "i", "j"]),
+        queen: Object.freeze(["q", null, "t", "u"])
+      });
+      var PIECE_BUDGETS2 = Object.freeze(Array.from({ length: 39 }, (_, index) => index + 1));
+      var PIECE_SLOTS2 = Object.freeze([
+        ...[..."abcdefgh"].map((file2) => ({ square: file2 + "2", color: "w", family: "pawn" })),
+        ...[..."abcdefgh"].map((file2) => ({ square: file2 + "7", color: "b", family: "pawn" })),
+        ...KNIGHT_SLOTS2.map((slot) => ({ ...slot, family: "knight" })),
+        ...["c1", "f1", "c8", "f8"].map((square) => ({ square, color: square[1] === "1" ? "w" : "b", family: "bishop" })),
+        ...["d1", "d8"].map((square) => ({ square, color: square[1] === "1" ? "w" : "b", family: "queen" }))
+      ].map((slot) => Object.freeze(slot)));
+      var DEFAULT_PIECE_LEVELS2 = Object.freeze(Object.fromEntries(PIECE_SLOTS2.map((slot) => [slot.square, ["b1", "b8"].includes(slot.square) ? 1 : 0])));
       function pieceInfo2(type) {
         return typeof type === "string" && Object.hasOwn(PIECES, type) ? PIECES[type] : void 0;
       }
-      module.exports = { PIECES, pieceInfo: pieceInfo2, KNIGHT_LEVELS: KNIGHT_LEVELS2, UPGRADE_BUDGETS: UPGRADE_BUDGETS2, KNIGHT_SLOTS: KNIGHT_SLOTS2 };
+      module.exports = { PIECES, pieceInfo: pieceInfo2, KNIGHT_LEVELS: KNIGHT_LEVELS2, UPGRADE_BUDGETS: UPGRADE_BUDGETS2, KNIGHT_SLOTS: KNIGHT_SLOTS2, PIECE_LEVELS: PIECE_LEVELS2, PIECE_BUDGETS: PIECE_BUDGETS2, PIECE_SLOTS: PIECE_SLOTS2, DEFAULT_PIECE_LEVELS: DEFAULT_PIECE_LEVELS2 };
     }
   });
 
@@ -216,6 +249,88 @@
         }));
       }
       module.exports = { START_FEN, setupFromLevels: setupFromLevels2, loadInitialSetup: loadInitialSetup2 };
+    }
+  });
+
+  // src/piece-setup.js
+  var require_piece_setup = __commonJS({
+    "src/piece-setup.js"(exports, module) {
+      var { PIECES, PIECE_LEVELS: PIECE_LEVELS2, PIECE_SLOTS: PIECE_SLOTS2, PIECE_BUDGETS: PIECE_BUDGETS2 } = require_piece_catalog();
+      var { START_FEN } = require_knight_setup();
+      function placement(fen) {
+        if (typeof fen !== "string") throw new Error("The starting FEN is invalid.");
+        const ranks = fen.trim().split(/\s+/)[0].split("/");
+        if (ranks.length !== 8) throw new Error("The starting FEN is invalid.");
+        return ranks.map((rank2) => {
+          const row = [];
+          for (const character of rank2) {
+            if (/^[1-8]$/.test(character)) row.push(...Array(Number(character)).fill(null));
+            else if (/^[A-Za-z]$/.test(character)) row.push(character);
+            else throw new Error("The starting FEN is invalid.");
+          }
+          if (row.length !== 8) throw new Error("The starting FEN is invalid.");
+          return row;
+        });
+      }
+      var coordinates = (square) => [8 - Number(square[1]), square.charCodeAt(0) - 97];
+      var at = (board2, square) => {
+        const [rank2, file2] = coordinates(square);
+        return board2[rank2][file2];
+      };
+      var put = (board2, square, character) => {
+        const [rank2, file2] = coordinates(square);
+        board2[rank2][file2] = character;
+      };
+      var colored = (type, color) => color === "w" ? type.toUpperCase() : type;
+      function pieceSetupFromLevels2(levels, budget) {
+        if (!PIECE_BUDGETS2.includes(budget)) throw new Error("Choose an upgrade budget from 1 to 39.");
+        if (!levels || typeof levels !== "object" || Array.isArray(levels) || Object.keys(levels).length !== PIECE_SLOTS2.length) throw new Error("Choose a level for each of the 26 upgradeable starting pieces.");
+        const choices = {};
+        const costs = { w: 0, b: 0 };
+        for (const slot of PIECE_SLOTS2) {
+          const level = Object.hasOwn(levels, slot.square) ? levels[slot.square] : void 0;
+          if (!Number.isInteger(level) || level < 0 || level > 3) throw new Error("Piece levels must be whole numbers from 0 to 3.");
+          const type = PIECE_LEVELS2[slot.family][level];
+          if (!type) throw new Error(`Level ${level} is not available for the ${slot.family} on ${slot.square}.`);
+          choices[slot.square] = level;
+          costs[slot.color] += PIECES[type].cost;
+        }
+        if (costs.w > budget || costs.b > budget) throw new Error(`Budget exceeded: White ${costs.w}/${budget} \xB7 Black ${costs.b}/${budget}.`);
+        const board2 = placement(START_FEN);
+        for (const slot of PIECE_SLOTS2) {
+          const level = choices[slot.square];
+          const type = PIECE_LEVELS2[slot.family][level];
+          const square = slot.family === "knight" && level === 3 ? slot.extraSquare : slot.square;
+          put(board2, square, colored(type, slot.color));
+        }
+        const ranks = board2.map((row) => {
+          let result = "";
+          let empty = 0;
+          for (const character of row) {
+            if (!character) {
+              empty++;
+              continue;
+            }
+            if (empty) {
+              result += empty;
+              empty = 0;
+            }
+            result += character;
+          }
+          return result + (empty || "");
+        });
+        return { fen: ranks.join("/") + " w KQkq - 0 1", levels: choices, budget, costs, white: costs.w, black: costs.b };
+      }
+      function loadPieceSetup2(fen) {
+        const board2 = placement(fen);
+        return Object.fromEntries(PIECE_SLOTS2.map((slot) => {
+          if (slot.family === "knight" && at(board2, slot.extraSquare) === colored("g", slot.color)) return [slot.square, 3];
+          const character = at(board2, slot.square);
+          const level = PIECE_LEVELS2[slot.family].findIndex((type) => type && character === colored(type, slot.color));
+          return [slot.square, Math.max(level, 0)];
+        }));
+      }
+      module.exports = { START_FEN, pieceSetupFromLevels: pieceSetupFromLevels2, loadPieceSetup: loadPieceSetup2 };
     }
   });
 
@@ -8441,23 +8556,33 @@
   // variants/levelup-knight.ini
   var levelup_knight_default = "# Blue adds quiet orthogonal steps; orange adds two-square sideways jumps.\n# Purple is an extra piece that jumps exactly two squares orthogonally.\n[levelup-knight:chess]\ncustomPiece1 = e:NmW\ncustomPiece2 = f:NsD\ncustomPiece3 = g:D\npieceToCharTable = PNBRQ.EFG............Kpnbrq.efg............k\npromotionPieceTypes = nbrq\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n";
 
+  // variants/levelup.ini
+  var levelup_default = "# Current piece upgrades. The levelup-knight variant preserves the version 03 rules.\n[levelup:chess]\ncustomPiece1 = e:NmW\ncustomPiece2 = f:NsD\ncustomPiece3 = g:WD\ncustomPiece4 = h:BmW\ncustomPiece5 = i:BcfN\ncustomPiece6 = j:BfbR\ncustomPiece7 = t:QmN\ncustomPiece8 = u:QN\ncustomPiece9 = a:ifmHfmDfmWfceF\ncustomPiece10 = c:ifmnDfeWfF\ncustomPiece11 = d:mRceB\npieceToCharTable = PNBRQ.EFGHIJTUACD....Kpnbrq.efghijtuacd....k\n# All pawn levels keep standard promotions. Irreversible moves reset the\n# fifty-move counter; purple's reversible quiet rook moves count toward it.\n# The e flag opts into native en passant rules. Orange's identical quiet and\n# capture diagonals make an empty en passant target a quiet move, not a capture.\npawnTypes = pacd\npromotionPieceTypes = nbrq\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n";
+
   // src/variant-game.js
   var VARIANT = "levelup-knight";
+  var PIECE_VARIANT = "levelup";
+  var SUPPORTED_VARIANTS = Object.freeze([VARIANT, PIECE_VARIANT]);
   var RESULTS = /* @__PURE__ */ new Set(["*", "1-0", "0-1", "1/2-1/2"]);
   var SQUARE = /^[a-h][1-8]$/;
-  var rules;
+  var ruleModules;
   var initializing;
   function initVariantRules() {
     if (!initializing) {
-      initializing = ffish_default({
-        // Supplying the bytes also works from file://, without fetching a WASM file.
-        wasmBinary: Uint8Array.from(atob(ffish_default2), (character) => character.charCodeAt(0))
-      }).then((loaded) => {
-        loaded.loadVariantConfig(levelup_knight_default);
-        if (!loaded.variants().split(" ").includes(VARIANT)) throw new Error("The upgrade rules could not be loaded.");
-        rules = loaded;
-        return loaded;
+      const configs = { [VARIANT]: levelup_knight_default, [PIECE_VARIANT]: levelup_default };
+      initializing = Promise.all(SUPPORTED_VARIANTS.map(async (variant) => {
+        const loaded = await ffish_default({
+          // Supplying bytes also works from file:// without fetching a WASM file.
+          wasmBinary: Uint8Array.from(atob(ffish_default2), (character) => character.charCodeAt(0))
+        });
+        loaded.loadVariantConfig(configs[variant]);
+        if (!loaded.variants().split(" ").includes(variant)) throw new Error("The upgrade rules could not be loaded.");
+        return [variant, loaded];
+      })).then((entries) => {
+        ruleModules = Object.fromEntries(entries);
+        return ruleModules[VARIANT];
       }).catch((error) => {
+        ruleModules = void 0;
         initializing = void 0;
         throw error;
       });
@@ -8485,13 +8610,75 @@
     const fields = fen.split(" ").slice(0, 4);
     if (fields[3] !== "-") {
       const pieces = boardPieces(fen);
-      const legalCapture = board2.legalMoves().split(" ").filter(Boolean).some((uci) => {
-        if (uci.slice(2, 4) !== fields[3] || uci[0] === uci[2]) return false;
-        return pieces[8 - Number(uci[1])][uci.charCodeAt(0) - 97]?.type === "p";
-      });
-      if (!legalCapture) fields[3] = "-";
+      const targets = new Set(fields[3].match(/[a-h][1-8]/g));
+      const legalTargets = board2.legalMoves().split(" ").filter(Boolean).map((uci) => {
+        const to = uci.slice(2, 4);
+        const occupied = pieces[8 - Number(to[1])][to.charCodeAt(0) - 97];
+        return targets.has(to) && !occupied && board2.isCapture(uci) ? to : void 0;
+      }).filter(Boolean);
+      fields[3] = [...new Set(legalTargets)].sort().join("") || "-";
     }
     return fields.join(" ");
+  }
+  function enPassantVictim(board2, uci, pieces, movingColor) {
+    if (!board2.push(uci)) throw new Error("The upgrade rules rejected that capture.");
+    try {
+      const after = boardPieces(board2.fen());
+      return pieces.flat().find((piece) => piece && piece.color !== movingColor && !after[8 - Number(piece.square[1])][piece.square.charCodeAt(0) - 97]);
+    } finally {
+      board2.pop();
+    }
+  }
+  function validStartingFen(fen, variant, rules) {
+    if (typeof fen !== "string") return false;
+    const fields = fen.trim().split(/\s+/);
+    const ep = fields[3];
+    if (!ep || ep === "-") return rules.validateFen(fen, variant) === 1;
+    if (ep.length <= 2) {
+      if (rules.validateFen(fen, variant) !== 1 || !/^[a-h][1-8]$/.test(ep)) return false;
+      const pieces2 = boardPieces(fen);
+      const file3 = ep.charCodeAt(0) - 97;
+      const rank2 = Number(ep[1]);
+      const movedWhite2 = fields[1] === "b";
+      const movedColor = movedWhite2 ? "w" : "b";
+      const at2 = (squareRank) => pieces2[8 - squareRank][file3];
+      if (at2(rank2) || at2(movedWhite2 ? 2 : 7)) return false;
+      const step = movedWhite2 ? 1 : -1;
+      for (let victimRank = rank2 + step; victimRank >= 1 && victimRank <= 8; victimRank += step) {
+        const victim = at2(victimRank);
+        if (victim?.color !== movedColor) continue;
+        const double = rank2 === (movedWhite2 ? 3 : 6) && victimRank === (movedWhite2 ? 4 : 5) && (victim.type === "p" || variant === PIECE_VARIANT && victim.type === "c");
+        const triple = variant === PIECE_VARIANT && victim.type === "a" && victimRank === (movedWhite2 ? 5 : 4) && (movedWhite2 ? rank2 === 3 || rank2 === 4 : rank2 === 5 || rank2 === 6);
+        return double || triple;
+      }
+      return false;
+    }
+    if (variant !== PIECE_VARIANT || !/^(?:[a-h][1-8]){2,3}$/.test(ep)) return false;
+    const withoutEp = [...fields];
+    withoutEp[3] = "-";
+    if (rules.validateFen(withoutEp.join(" "), variant) !== 1) return false;
+    const file2 = ep[0];
+    const movedWhite = fields[1] === "b";
+    const orangeTargets = movedWhite ? [3, 4] : [5, 6];
+    const blueTargets = movedWhite ? [3, 4, 5] : [4, 5, 6];
+    const blue = ep === blueTargets.map((rank2) => file2 + rank2).join("");
+    if (!blue && ep !== orangeTargets.map((rank2) => file2 + rank2).join("")) return false;
+    const pieces = boardPieces(fen);
+    const at = (rank2) => pieces[8 - rank2][file2.charCodeAt(0) - 97];
+    const landing = movedWhite ? blue ? 5 : 4 : blue ? 4 : 5;
+    const pawn = at(landing);
+    return pawn?.type === (blue ? "a" : "c") && pawn.color === (movedWhite ? "w" : "b") && !at(movedWhite ? 2 : 7) && (blue || !at(movedWhite ? 3 : 6));
+  }
+  function opponentInCheck(fen, variant, rules) {
+    const fields = fen.split(" ");
+    fields[1] = fields[1] === "w" ? "b" : "w";
+    fields[3] = "-";
+    const opponent2 = new rules.Board(variant, fields.join(" "));
+    try {
+      return opponent2.isCheck();
+    } finally {
+      opponent2.delete();
+    }
   }
   var copyMove = (move) => move ? { ...move } : null;
   var escapeHeader = (value) => value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
@@ -8529,18 +8716,23 @@
     return { headers, body };
   }
   var VariantGame = class _VariantGame {
-    constructor(fen) {
-      if (!rules) throw new Error("Call initVariantRules() before creating an upgrade game.");
-      const start = fen === void 0 ? rules.startingFen(VARIANT) : fen;
-      if (typeof start !== "string" || rules.validateFen(start, VARIANT) !== 1) throw new Error("The upgrade starting position is invalid.");
-      this._board = new rules.Board(VARIANT, start);
+    constructor(fen, variant = VARIANT) {
+      if (!ruleModules) throw new Error("Call initVariantRules() before creating an upgrade game.");
+      if (!SUPPORTED_VARIANTS.includes(variant)) throw new Error("The upgrade variant is not supported.");
+      const rules = ruleModules[variant];
+      const supplied = fen === void 0 ? rules.startingFen(variant) : fen;
+      const start = typeof supplied === "string" ? supplied.trim().split(/\s+/).join(" ") : supplied;
+      if (!validStartingFen(start, variant, rules)) throw new Error("The upgrade starting position is invalid.");
+      if (opponentInCheck(start, variant, rules)) throw new Error("The upgrade starting position already checks the inactive king.");
+      this._variant = variant;
+      this._board = new rules.Board(variant, start);
       this._startFen = this._board.fen();
       this._records = [];
       this._positions = [positionKey(this._startFen, this._board)];
-      this._headers = { Variant: VARIANT, SetUp: "1", FEN: this._startFen, Result: "*" };
+      this._headers = { Variant: this.variant, SetUp: "1", FEN: this._startFen, Result: "*" };
     }
     get variant() {
-      return VARIANT;
+      return this._variant;
     }
     fen() {
       return this._board.fen();
@@ -8566,12 +8758,13 @@
         const from = uci.slice(0, 2);
         const to = uci.slice(2, 4);
         const piece = at(from);
-        const captured = at(to);
+        let captured = at(to);
         const promotion2 = uci[4];
-        const enPassant = piece.type === "p" && from[0] !== to[0] && !captured;
+        const enPassant = !captured && this._board.isCapture(uci);
+        if (enPassant) captured = enPassantVictim(this._board, uci, pieces, piece.color);
         let flags = captured ? "c" : "n";
         if (enPassant) flags = "e";
-        else if (piece.type === "k" && Math.abs(from.charCodeAt(0) - to.charCodeAt(0)) === 2) flags = to[0] === "g" ? "k" : "q";
+        else if (/^O-O/.test(san)) flags = /^O-O-O/.test(san) ? "q" : "k";
         else if (piece.type === "p" && Math.abs(Number(from[1]) - Number(to[1])) === 2) flags = "b";
         if (promotion2) flags = flags.replace("n", "") + "p";
         return {
@@ -8583,7 +8776,7 @@
           before,
           flags,
           ...promotion2 ? { promotion: promotion2 } : {},
-          ...captured || enPassant ? { captured: captured?.type || "p" } : {}
+          ...captured ? { captured: captured.type } : {}
         };
       });
     }
@@ -8611,7 +8804,7 @@
       this._board.setFen(this._startFen);
       this._records = [];
       this._positions = [positionKey(this._startFen, this._board)];
-      this._headers = { Variant: VARIANT, SetUp: "1", FEN: this._startFen, Result: "*" };
+      this._headers = { Variant: this.variant, SetUp: "1", FEN: this._startFen, Result: "*" };
     }
     isCheck() {
       return this._board.isCheck();
@@ -8625,7 +8818,7 @@
     isInsufficientMaterial() {
       if (this._board.isInsufficientMaterial()) return true;
       const material = this.board().flat().filter((piece) => piece && piece.type !== "k");
-      return material.length === 1 && ["e", "g"].includes(material[0].type);
+      return material.length === 1 && (material[0].type === "e" || this.variant === PIECE_VARIANT && material[0].type === "h" || this.variant === VARIANT && material[0].type === "g");
     }
     isThreefoldRepetition() {
       const current = this._positions.at(-1);
@@ -8650,7 +8843,7 @@
       delete this._headers[key];
     }
     pgn({ maxWidth = 80 } = {}) {
-      const headers = { ...this._headers, Variant: VARIANT, SetUp: "1", FEN: this._startFen };
+      const headers = { ...this._headers, Variant: this.variant, SetUp: "1", FEN: this._startFen };
       const result = headers.Result || "*";
       const tokens = [];
       this._records.forEach((move, index) => {
@@ -8671,13 +8864,14 @@
     loadPgn(text) {
       if (typeof text !== "string" || !text.trim() || text.length > 256 * 1024) throw new Error("Enter a PGN game up to 256 KB.");
       const { headers, body } = readHeaders(text);
-      if (headers.Variant?.toLowerCase() !== VARIANT) throw new Error(`This game requires the ${VARIANT} PGN variant.`);
+      const variant = headers.Variant?.toLowerCase();
+      if (!SUPPORTED_VARIANTS.includes(variant)) throw new Error(`This game requires a supported upgrade PGN variant: ${SUPPORTED_VARIANTS.join(", ")}.`);
       if (headers.SetUp !== void 0 && !["0", "1"].includes(headers.SetUp)) throw new Error("The PGN setup header is invalid.");
       if (headers.SetUp === "1" && !headers.FEN || headers.SetUp === "0" && headers.FEN) throw new Error("The PGN setup and starting position do not agree.");
       let candidate;
       try {
-        candidate = new _VariantGame(headers.FEN);
-        for (const [key, value] of Object.entries(headers)) candidate.setHeader(key, value);
+        candidate = new _VariantGame(headers.FEN, variant);
+        for (const [key, value] of Object.entries(headers)) candidate.setHeader(key, key === "Variant" ? variant : value);
         let result;
         for (const token of stripComments(body).split(/\s+/).filter(Boolean)) {
           if (/^\$\d+$/.test(token)) continue;
@@ -8699,6 +8893,7 @@
         candidate.setHeader("Result", result || headers.Result || "*");
         this._board.delete();
         this._board = candidate._board;
+        this._variant = candidate.variant;
         this._startFen = candidate._startFen;
         this._records = candidate._records;
         this._positions = candidate._positions;
@@ -8717,6 +8912,7 @@
   // src/app.js
   var import_piece_catalog2 = __toESM(require_piece_catalog());
   var import_knight_setup = __toESM(require_knight_setup());
+  var import_piece_setup = __toESM(require_piece_setup());
   var import_clock2 = __toESM(require_clock());
 
   // src/saved-games.js
@@ -8726,15 +8922,16 @@
   var MAX_PGN_SIZE = 256 * 1024;
   async function parsePgn(text) {
     if (typeof text !== "string" || !text.trim() || text.length > MAX_PGN_SIZE) throw new Error("Enter a PGN game up to 256 KB.");
-    if (/\[Variant\s+"levelup-knight"\s*\]/i.test(text)) {
+    const headerVariant = text.match(/\[Variant\s+"([^"\r\n]+)"\s*\]/)?.[1].toLowerCase();
+    if (SUPPORTED_VARIANTS.includes(headerVariant)) {
       await initVariantRules();
-      const candidate2 = new VariantGame();
+      const candidate2 = new VariantGame(void 0, headerVariant);
       try {
         candidate2.loadPgn(text);
         return candidate2;
       } catch (error) {
         candidate2.dispose();
-        throw new Error(`This knight-upgrade PGN could not be read. ${error.message}`);
+        throw new Error(`This upgrade PGN could not be read. ${error.message}`);
       }
     }
     const candidate = new Chess();
@@ -8744,18 +8941,20 @@
       throw new Error("This PGN could not be read. Check the moves and starting position.");
     }
     const variant = candidate.getHeaders().Variant;
-    if (variant && !["standard", "chess"].includes(variant.toLowerCase())) throw new Error("Only standard-chess and knight-upgrade PGN games are supported.");
+    if (variant && !["standard", "chess"].includes(variant.toLowerCase())) throw new Error("Only standard-chess and upgrade PGN games are supported.");
     return candidate;
   }
   function exportPgn(game2) {
-    const copy = game2.variant === VARIANT ? new VariantGame() : new Chess();
-    copy.loadPgn(game2.pgn());
-    const recorded = game2.getHeaders().Result;
-    const result = game2.isCheckmate() ? game2.turn() === "w" ? "0-1" : "1-0" : game2.isDraw() ? "1/2-1/2" : ["1-0", "0-1", "1/2-1/2"].includes(recorded) ? recorded : "*";
-    copy.setHeader("Result", result);
-    const text = copy.pgn({ maxWidth: 80 });
-    copy.dispose?.();
-    return text;
+    const copy = SUPPORTED_VARIANTS.includes(game2.variant) ? new VariantGame(void 0, game2.variant) : new Chess();
+    try {
+      copy.loadPgn(game2.pgn());
+      const recorded = game2.getHeaders().Result;
+      const result = game2.isCheckmate() ? game2.turn() === "w" ? "0-1" : "1-0" : game2.isDraw() ? "1/2-1/2" : ["1-0", "0-1", "1/2-1/2"].includes(recorded) ? recorded : "*";
+      copy.setHeader("Result", result);
+      return copy.pgn({ maxWidth: 80 });
+    } finally {
+      copy.dispose?.();
+    }
   }
   function makeSave(game2, settings, clock2) {
     return { version: 1, savedAt: (/* @__PURE__ */ new Date()).toISOString(), pgn: exportPgn(game2), settings, ...clock2 ? { clock: clock2 } : {} };
@@ -8769,21 +8968,27 @@
     }
     if (!data || data.version !== 1 || typeof data.savedAt !== "string" || Number.isNaN(Date.parse(data.savedAt))) throw new Error("The saved game format is not supported.");
     const settings = data.settings;
-    if (!settings || !["local", "engine"].includes(settings.opponent) || !["w", "b"].includes(settings.humanSide) || !["easy", "medium", "hard"].includes(settings.difficulty) || typeof settings.flipped !== "boolean" || settings.upgradeBudget !== void 0 && !import_piece_catalog.UPGRADE_BUDGETS.includes(settings.upgradeBudget)) throw new Error("The saved game settings are damaged.");
+    if (!settings || !["local", "engine"].includes(settings.opponent) || !["w", "b"].includes(settings.humanSide) || !["easy", "medium", "hard"].includes(settings.difficulty) || typeof settings.flipped !== "boolean") throw new Error("The saved game settings are damaged.");
     const game2 = await parsePgn(data.pgn);
-    let clock2;
-    if (data.clock !== void 0) {
-      const candidate = new import_clock.ChessClock();
-      try {
-        candidate.restore(data.clock, game2.history().length);
-        if (candidate.active !== game2.turn() || candidate.expired && game2.isGameOver()) throw new Error();
-        clock2 = candidate.snapshot();
-      } catch {
-        game2.dispose?.();
-        throw new Error("The saved clock is damaged. Import a PGN backup instead.");
+    try {
+      const budgets = game2.variant === PIECE_VARIANT ? import_piece_catalog.PIECE_BUDGETS : import_piece_catalog.UPGRADE_BUDGETS;
+      if (settings.upgradeBudget !== void 0 && !budgets.includes(settings.upgradeBudget)) throw new Error("The saved game settings are damaged.");
+      let clock2;
+      if (data.clock !== void 0) {
+        const candidate = new import_clock.ChessClock();
+        try {
+          candidate.restore(data.clock, game2.history().length);
+          if (candidate.active !== game2.turn() || candidate.expired && game2.isGameOver()) throw new Error();
+          clock2 = candidate.snapshot();
+        } catch {
+          throw new Error("The saved clock is damaged. Import a PGN backup instead.");
+        }
       }
+      return { game: game2, settings, savedAt: data.savedAt, clock: clock2 };
+    } catch (error) {
+      game2.dispose?.();
+      throw error;
     }
-    return { game: game2, settings, savedAt: data.savedAt, clock: clock2 };
   }
 
   // src/app.js
@@ -8802,23 +9007,72 @@
   var upgradeBudget = document.querySelector("#upgrade-budget");
   var upgradeStatus = document.querySelector("#upgrade-status");
   var upgradeSquares = import_piece_catalog2.KNIGHT_SLOTS.map((slot) => slot.square);
+  var pieceBudget = document.querySelector("#piece-upgrade-budget");
+  var pieceStatus = document.querySelector("#piece-upgrade-status");
+  var pieceFamily = document.querySelector("#piece-family");
+  var familyRules = {
+    pawn: ["Blue: jump 1 or 2 forward, or 3 from the starting rank; capture one diagonal forward.", "Orange: move or capture one forward or diagonally forward; initial two-step needs a clear path.", "Purple: move along any clear rook line; capture along any clear bishop line. All pawn levels promote to Q/R/B/N on the last rank."],
+    knight: ["Blue: knight moves plus one empty orthogonal step.", "Orange: knight moves plus a two-square sideways jump.", "Purple: keep the knight and add a piece that moves or captures 1 or 2 orthogonally. Two-square moves jump. Extras start on b3/g3 or b6/g6."],
+    bishop: ["Blue: bishop moves plus one empty orthogonal step.", "Orange: bishop moves plus capture-only knight jumps two squares forward and one sideways.", "Purple: bishop moves plus vertical rook moves. Replaces the starting bishop."],
+    queen: ["Orange: queen moves plus knight-shaped jumps into empty squares. Captures and attacks still follow queen lines.", "Purple: queen moves plus knight jumps, including captures. Blue queen is still being designed."]
+  };
+  for (const family of Object.keys(import_piece_catalog2.PIECE_LEVELS)) {
+    const group = document.createElement("div");
+    group.className = "settings-row piece-choices";
+    group.dataset.family = family;
+    for (const slot of import_piece_catalog2.PIECE_SLOTS.filter((slot2) => slot2.family === family)) {
+      const field = document.createElement("div");
+      const label = document.createElement("label");
+      const select = document.createElement("select");
+      select.id = `piece-upgrade-${slot.square}`;
+      label.htmlFor = select.id;
+      label.textContent = `${side(slot.color)} ${slot.square} ${family}`;
+      import_piece_catalog2.PIECE_LEVELS[family].forEach((type, level) => {
+        if (!type) return;
+        const option = document.createElement("option");
+        option.value = String(level);
+        option.textContent = `${level} \xB7 ${["Standard", "Blue", "Orange", "Purple"][level]}`;
+        option.selected = level === import_piece_catalog2.DEFAULT_PIECE_LEVELS[slot.square];
+        select.append(option);
+      });
+      select.onchange = updateSetup;
+      field.append(label, select);
+      group.append(field);
+    }
+    document.querySelector("#piece-upgrade-choices").append(group);
+  }
+  function updateFamily() {
+    for (const group of document.querySelectorAll(".piece-choices")) group.hidden = group.dataset.family !== pieceFamily.value;
+    const list = document.querySelector("#piece-upgrade-rules");
+    list.replaceChildren(...familyRules[pieceFamily.value].map((text) => {
+      const item = document.createElement("li");
+      item.textContent = text;
+      return item;
+    }));
+  }
   var replacementGeneration = 0;
   var buildingGame = false;
   var activeBudget = 2;
   function setupChoice() {
-    const levels = Object.fromEntries(upgradeSquares.map((square) => [square, Number(document.querySelector(`#upgrade-${square}`).value)]));
-    const cost = (square) => (0, import_piece_catalog2.pieceInfo)(import_piece_catalog2.KNIGHT_LEVELS[levels[square]])?.cost || 0;
-    const white = import_piece_catalog2.KNIGHT_SLOTS.filter((slot) => slot.color === "w").reduce((total, slot) => total + cost(slot.square), 0);
-    const black = import_piece_catalog2.KNIGHT_SLOTS.filter((slot) => slot.color === "b").reduce((total, slot) => total + cost(slot.square), 0);
-    return { levels, white, black, budget: Number(upgradeBudget.value) };
+    const current = gameMode.value === PIECE_VARIANT;
+    const slots = current ? import_piece_catalog2.PIECE_SLOTS : import_piece_catalog2.KNIGHT_SLOTS;
+    const prefix = current ? "piece-upgrade" : "upgrade";
+    const levels = Object.fromEntries(slots.map((slot) => [slot.square, Number(document.querySelector(`#${prefix}-${slot.square}`).value)]));
+    const cost = (slot) => (0, import_piece_catalog2.pieceInfo)((current ? import_piece_catalog2.PIECE_LEVELS[slot.family] : import_piece_catalog2.KNIGHT_LEVELS)[levels[slot.square]])?.cost || 0;
+    const white = slots.filter((slot) => slot.color === "w").reduce((total, slot) => total + cost(slot), 0);
+    const black = slots.filter((slot) => slot.color === "b").reduce((total, slot) => total + cost(slot), 0);
+    return { levels, white, black, budget: Number((current ? pieceBudget : upgradeBudget).value) };
   }
   function updateSetup() {
     document.querySelector("#upgrade-settings").hidden = gameMode.value !== VARIANT;
+    document.querySelector("#piece-upgrade-settings").hidden = gameMode.value !== PIECE_VARIANT;
     const { white, black, budget } = setupChoice();
-    const valid = white <= budget && black <= budget;
-    upgradeStatus.classList.toggle("error", !valid);
-    upgradeStatus.textContent = valid ? `White ${white}/${budget} \xB7 Black ${black}/${budget} upgrade points.` : `Budget exceeded: White ${white}/${budget} \xB7 Black ${black}/${budget}. Reduce upgrades before starting a new game.`;
-    return gameMode.value !== VARIANT || valid;
+    const status = gameMode.value === PIECE_VARIANT ? pieceStatus : upgradeStatus;
+    const validBudget = Number.isInteger(budget) && budget >= 1 && budget <= (gameMode.value === PIECE_VARIANT ? 39 : 6);
+    const valid = validBudget && white <= budget && black <= budget;
+    status.classList.toggle("error", !valid);
+    status.textContent = !validBudget ? "Choose a whole-number budget from 1 to 39." : valid ? `White ${white}/${budget} \xB7 Black ${black}/${budget} upgrade points.` : `Budget exceeded: White ${white}/${budget} \xB7 Black ${black}/${budget}. Reduce upgrades before starting a new game.`;
+    return !SUPPORTED_VARIANTS.includes(gameMode.value) || valid;
   }
   var connected = false;
   var engineBusy = false;
@@ -9016,7 +9270,7 @@
       }
       if (legal.some((move) => move.to === square)) {
         const marker = document.createElement("span");
-        marker.className = piece ? "capture-marker" : "move-marker";
+        marker.className = legal.some((move) => move.to === square && move.captured) ? "capture-marker" : "move-marker";
         button.append(marker);
       }
       for (const [show, value, position] of [[col === 0, rank2, "rank"], [row === 7, file2, "file"]]) {
@@ -9160,10 +9414,12 @@
     buildingGame = true;
     document.querySelector("#new-game").disabled = true;
     try {
-      if (selectedMode === VARIANT) {
-        upgradeStatus.textContent = "Loading knight-upgrade rules\u2026";
+      if (SUPPORTED_VARIANTS.includes(selectedMode)) {
+        const status = selectedMode === PIECE_VARIANT ? pieceStatus : upgradeStatus;
+        status.textContent = "Loading piece-upgrade rules\u2026";
         await initVariantRules();
-        next = new VariantGame((0, import_knight_setup.setupFromLevels)(levels, budget).fen);
+        const setup = selectedMode === PIECE_VARIANT ? import_piece_setup.pieceSetupFromLevels : import_knight_setup.setupFromLevels;
+        next = new VariantGame(setup(levels, budget).fen, selectedMode);
       } else next = new Chess();
       if (request !== replacementGeneration) {
         next.dispose?.();
@@ -9186,8 +9442,9 @@
       render();
     } catch (error) {
       if (next !== game) next?.dispose?.();
-      upgradeStatus.textContent = `Could not start the knight-upgrade game: ${error.message}`;
-      upgradeStatus.classList.add("error");
+      const status = selectedMode === PIECE_VARIANT ? pieceStatus : upgradeStatus;
+      status.textContent = `Could not start the upgrade game: ${error.message}`;
+      status.classList.add("error");
       restart.close();
     } finally {
       buildingGame = false;
@@ -9271,11 +9528,23 @@
     game.dispose?.();
     game = candidate.game;
     gameMode.value = game.variant || "chess";
-    activeBudget = candidate.settings?.upgradeBudget || 2;
+    activeBudget = candidate.settings?.upgradeBudget || (game.variant === PIECE_VARIANT ? 6 : 2);
     if (game.variant === VARIANT) {
-      upgradeBudget.value = String(activeBudget);
       const levels = (0, import_knight_setup.loadInitialSetup)(game.getHeaders().FEN);
       for (const square of upgradeSquares) document.querySelector(`#upgrade-${square}`).value = String(levels[square]);
+      if (!candidate.settings?.upgradeBudget) {
+        const setup = (0, import_knight_setup.setupFromLevels)(levels, 6);
+        activeBudget = Math.max(2, setup.white, setup.black);
+      }
+      upgradeBudget.value = String(activeBudget);
+    } else if (game.variant === PIECE_VARIANT) {
+      const levels = (0, import_piece_setup.loadPieceSetup)(game.getHeaders().FEN);
+      for (const slot of import_piece_catalog2.PIECE_SLOTS) document.querySelector(`#piece-upgrade-${slot.square}`).value = String(levels[slot.square]);
+      if (!candidate.settings?.upgradeBudget) {
+        const setup = (0, import_piece_setup.pieceSetupFromLevels)(levels, 39);
+        activeBudget = Math.max(6, setup.white, setup.black);
+      }
+      pieceBudget.value = String(activeBudget);
     }
     updateSetup();
     if (candidate.clock) clock.restore(candidate.clock, game.history().length);
@@ -9318,7 +9587,7 @@
       settleClock();
       const clockState = clock.snapshot();
       settleClock();
-      const save = makeSave(game, { opponent: opponent.value, humanSide: humanSide.value, difficulty: difficulty.value, flipped, ...game.variant === VARIANT ? { upgradeBudget: activeBudget } : {} }, clockState);
+      const save = makeSave(game, { opponent: opponent.value, humanSide: humanSide.value, difficulty: difficulty.value, flipped, ...SUPPORTED_VARIANTS.includes(game.variant) ? { upgradeBudget: activeBudget } : {} }, clockState);
       localStorage.setItem(SAVE_KEY, JSON.stringify(save));
       saveStatus.textContent = `Saved ${game.history().length} half-moves in this browser. Export PGN for a portable backup.`;
       refreshSaveAvailability();
@@ -9442,7 +9711,10 @@
   setInterval(settleClock, 100);
   gameMode.onchange = updateSetup;
   upgradeBudget.onchange = updateSetup;
+  pieceBudget.oninput = updateSetup;
+  pieceFamily.onchange = updateFamily;
   for (const square of upgradeSquares) document.querySelector(`#upgrade-${square}`).onchange = updateSetup;
+  updateFamily();
   updateSetup();
   refreshSaveAvailability();
   render();

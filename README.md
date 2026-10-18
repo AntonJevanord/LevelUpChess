@@ -1,54 +1,74 @@
 # LevelUp Chess
 
-Chess with upgradeable pieces. Pieces start at level 0 (standard chess), then gain abilities at levels 1 (blue), 2 (orange), and 3 (purple). Each game mode will limit the total upgrade budget.
+Chess with upgradeable pieces: standard (level 0), blue (1), orange (2), and purple (3). Build an army within a shared per-side budget, then play locally or against Fairy Stockfish.
 
-## Local chess
+## Play locally
 
-Open `index.html` in a modern browser. The file includes its own styles and JavaScript: download it and open it in Chrome, Edge, or Firefox. No server, npm installation, companion files, or internet connection is needed to play. Chat previews may block interactive content; use your browser if a preview fails. Two people share the board; select a piece, then a highlighted destination. Arrow keys move focus; Enter or Space selects a square.
+Download `index.html` and open it in Chrome, Edge, or Firefox. It includes the board, styles, and rules; local two-player games need no server, npm, companion files, or internet connection. Chat previews may restrict interactive content, so open the downloaded file directly.
 
-Includes legal moves, check/checkmate, automatic draw detection, castling, en passant, promotion choice, move history, undo, board flip, and new game. Unsaved moves reset when the page reloads; use **Save game** or **Export PGN** to keep them. Draws are automatically ended on threefold repetition or the fifty-move rule; claim-based tournament rules are outside this version.
+Select a piece and a highlighted destination. Arrow keys move focus; Enter or Space selects. Includes legal moves, checkmate, draw detection, castling, en passant, selectable promotion, history, undo, and board flip. Threefold repetition and the fifty-move rule end games automatically.
 
-## Version 03: knight upgrades
+## Version 04: piece upgrades
 
-Select **Knight upgrades** under **Rules**, choose a level for each starting knight, set a budget of one to six points per side, and press **New game**. Each level costs that many points.
+Choose **Piece upgrades** under **Rules**, select each piece's level, and press **New game**. Switch the family selector to configure pawns, knights, bishops, and queens; choices across all families are kept. Each level costs that many points, with the same chosen limit of 1–39 points for each side.
 
-- **Blue (1):** normal knight movement, plus one orthogonal step into an empty square. The extra step cannot capture or attack.
-- **Orange (2):** normal knight movement, plus an exact two-square horizontal jump, moving or capturing at the destination.
-- **Purple (3):** keep the normal knight and add a separate piece that jumps exactly two squares in any orthogonal direction. White extras start on b3/g3; Black extras start on b6/g6.
+- **Knights:** blue adds a quiet orthogonal step; orange adds a two-square sideways jump; purple keeps the normal knight and adds a piece that moves or captures one or two squares orthogonally. Two-square moves jump over blockers.
+- **Pawns:** blue gains forward jumps; orange moves and captures forward or diagonally forward; purple moves along clear rook lines and captures along clear bishop lines. All pawn levels promote to a standard queen, rook, bishop, or knight.
+- **Bishops:** blue adds a quiet orthogonal step; orange adds capture-only jumps two squares forward and one sideways; purple adds vertical rook movement and replaces the starting bishop.
+- **Queens:** orange adds quiet knight jumps; purple adds full knight moves and captures. Blue is deferred.
 
-Orange and purple jump over intermediate pieces. Both sides' colors remain visible, with blue/orange/purple accents and L1/L2/L3 badges. New setup choices apply only to your next new game.
+Rooks and royal kings keep standard rules, including castling and check. Upgrade choices apply to the next new game. Existing games retain their rules: **Version 03 knight rules** preserves the old purple piece's exact two-square jumps and 1–6 point budget.
 
-Upgrade games work offline from the self-contained HTML and support clocks, undo, browser saves, and PGN. Engine play requires `npm.cmd start`. The browser and native engine share the same rules; an engine that cannot load them reports an error rather than playing standard chess.
+Offline play, clocks, undo, browser saves, and PGN support both upgrade versions. See [variants/README.md](variants/README.md) for exact movement, en passant, setup, and compatibility rules.
 
-Promotions remain standard; other piece families are planned. See [variants/README.md](variants/README.md) for exact rules, setup, and custom-PGN limits. The browser rules library's source and license notices are in [vendor/README.md](vendor/README.md).
+## Play Fairy Stockfish
 
-## Optional clocks
+Install Node.js 20+, then run these commands in the repository folder on Windows:
 
-Choose **Time control**, then start a **New game** to apply it. Available presets are untimed, 3+2, 5+0, 10+5, and 15+10: minutes per side plus seconds added after each completed move. Untimed remains the default.
+```bat
+npm.cmd ci
+npm.cmd start
+```
 
-- Press **Start clock** when both sides are ready. Timed games require running clocks to move. In engine mode, connect the engine first.
-- **Pause clock** freezes both clocks, blocks moves, and cancels any engine search. **Resume clock** restarts the side to move and requests a fresh engine reply when needed. Engine pause/errors and changes to opponent, side, or difficulty also pause the clocks.
-- Time runs while the tab is in the background and while dialogs are open. Pause before taking a break or importing a game. Promotion choice uses the promoting player's time.
-- Checkmate and rule-based draws stop the clocks. Running out of time ends play and records the result in PGN; it is a draw if the opponent has only a king. Other rare position-specific inability-to-mate cases are not adjudicated.
-- Undo restores the time at the beginning of the undone turn, removes that move's increment, and leaves clocks paused. Against the engine, it undoes a full pair of moves where available.
-- Browser saves keep remaining time, the selected control, and clock undo history. Loads are paused and do not charge time spent away. Older saves load untimed. PGN import starts untimed because these files do not carry the app's clock state.
+Open the printed address, keep the terminal running, and choose **Fairy Stockfish** under **Opponent**. Select your side and difficulty. The server launches the bundled Windows engine; direct-file play supports local players only.
 
-Changing the time-control dropdown during a game only selects the next game's preset.
+- Easy / Medium / Hard use skill 0 / 8 / 20 and 150 / 600 / 1500 ms search budgets. These are presets, not Elo ratings.
+- Pause cancels the current search. Undo takes back a full turn where available and pauses play. Changing opponent, side, or difficulty preserves the board and cancels obsolete searches.
+- Engine errors preserve the game. Retry or choose a local player. An engine that cannot load the selected rules reports an error.
 
-## Saved games and PGN
+The server listens only on your computer and needs no cloud services or keys. Linux/macOS require a compatible native engine. Set `FAIRY_STOCKFISH_PATH` to use another executable; for example, in PowerShell:
 
-- **Save game** stores one game in this browser, including move history, opponent, side, difficulty, board orientation, and clock state. Saving again replaces that slot.
-- **Load saved** restores that slot; confirm before replacing current moves. Loading leaves the engine and clocks paused. Connect or resume when ready.
-- **Export PGN** downloads a portable game file with move history, starting position, and result. Standard-chess comments are preserved; prototype PGNs export the main line without comments. It includes the variant and initial setup for upgraded games, but not remaining clock times, engine settings, or display settings.
-- **Import PGN** accepts standard or knight-upgrade pasted notation or a `.pgn` file up to 256 KB. Invalid or unsupported variant games leave the current board unchanged. Import keeps your opponent and display settings, switches to untimed play, and pauses the engine.
+```powershell
+$env:FAIRY_STOCKFISH_PATH = 'C:\engines\fairy-stockfish.exe'
+npm.cmd start
+```
 
-Saving is manual. New games, imports, and loading do not overwrite the saved slot. Saves belong to this browser and site address; private browsing, clearing site data, switching browsers, or moving between direct-file and server play can make them unavailable. If browser storage is blocked, use PGN export. Downloaded PGNs remain usable independently of browser storage.
+Browser and native engines load the same variant configurations. New version 04 rules still require Windows playtesting. See [stockfish/README.md](stockfish/README.md) for the bundled engine's provenance and validation limits.
 
-Imported result headers (including resignation or agreed draws) are preserved on export. You can continue an imported position for analysis; making or undoing a move clears its recorded result, and checkmate or rule-based draws determine the exported result again.
+## Clocks
+
+Choose untimed, 3+2, 5+0, 10+5, or 15+10, then start a **New game**. Numbers mean minutes per side plus seconds added after a move. Untimed is the default.
+
+- **Start clock** begins play; timed games require running clocks to move. Connect the engine first in engine mode.
+- Pause stops both clocks, blocks moves, and cancels the search. Resume restarts the side to move. Engine errors and play-setting changes also pause clocks.
+- Time continues in background tabs and dialogs, including promotion choice. Pause before taking a break.
+- Checkmate and rule-based draws stop clocks. Timeout ends play; it is a draw if the opponent has only a king. Other position-specific inability-to-mate cases are not adjudicated.
+- Undo restores time from the beginning of the undone turn and leaves clocks paused. Saves preserve remaining time and clock history; loads stay paused. PGN imports start untimed.
+
+## Save and share
+
+- **Save game** manually replaces one browser slot with the game, rules, setup, play settings, and clocks.
+- **Load saved** confirms before replacing current moves, then leaves the engine and clocks paused.
+- **Export PGN** downloads moves, starting position, rules, and result. It excludes clock and display settings. Upgrade games export the main line without comments.
+- **Import PGN** accepts pasted text or a `.pgn` file up to 256 KB. Invalid or unsupported games leave the board intact. Imports keep opponent/display settings, start untimed, and pause the engine.
+
+New games, imports, and loads do not overwrite the saved slot. Browser saves belong to the current browser and site address; moving between direct-file and server play may hide them. Use PGN to transfer games or when storage is unavailable.
+
+Imported results are preserved on export. Making or undoing a move clears a recorded result for analysis; checkmate and rule-based draws determine it again.
 
 ## Development
 
-Use Node.js 20 or newer. On Windows, use `npm.cmd` wherever `npm` appears below.
+Use Node.js 20+. On Windows, replace `npm` with `npm.cmd`.
 
 ```sh
 npm ci
@@ -57,40 +77,19 @@ npx playwright install chromium
 npm test
 ```
 
-`npm test` runs clock and variant-rule unit tests, then browser tests that start a temporary local server. Set `TEST_FILE_URL=1` to test direct file loading where browser policy permits it. `npm start` also serves the game locally during development. Set `CHROMIUM_PATH` to use an existing Chromium installation instead of downloading one.
+Edit `src/`, `styles.css`, or validated files in `variants/`, then build and reload. Commit generated `index.html` and `dist/app.js`; do not edit generated HTML. `npm start` serves the game locally.
 
-Edit `src/app.js`, `styles.css`, or `src/index.html`, then run `npm run build` and reload the page. The build generates self-contained `index.html` and `dist/app.js`; keep both committed. Do not edit the generated HTML directly. Standard chess rules use [chess.js](https://github.com/jhlywa/chess.js); its BSD license is included in `dist/chess.js-LICENSE.txt`.
+`npm test` runs unit and browser tests using a temporary server. Set `FAIRY_STOCKFISH_PATH` to enable native integration checks, `CHROMIUM_PATH` to use an installed browser, or `TEST_FILE_URL=1` to test direct-file loading where browser policy permits.
 
-## Version 02: play Fairy Stockfish
+Standard chess uses [chess.js](https://github.com/jhlywa/chess.js), with its BSD license in `dist/chess.js-LICENSE.txt`. Browser upgrade rules use Fairy Stockfish; matching source and GPL notices are documented in [vendor/README.md](vendor/README.md). `Example.txt` is a design draft, not the active rules configuration.
 
-On Windows, open a terminal in the repository folder:
+## Versions
 
-```bat
-npm.cmd ci
-npm.cmd start
-```
+| Branch | Stable tag | Milestone |
+| --- | --- | --- |
+| `version_01` | `v0.1.0` | Local standard chess |
+| `version_02` | `v0.2.0` | Engine play, saves, PGN, and clocks |
+| `version_03` | `v0.3.0` | Three knight upgrade levels |
+| `version_04` | In development | Improved purple knight and more piece families |
 
-Open the address printed in the terminal and keep that terminal running. Choose **Fairy Stockfish** under **Opponent**, then select your side and difficulty. The server launches `stockfish/fairy-stockfish-largeboard_x86-64.exe` automatically. The HTML preview and direct file mode support local two-player games; engine play requires this server.
-
-- **Easy / Medium / Hard:** engine skill 0 / 8 / 20, with 150 / 600 / 1500 ms search budgets. These are presets, not Elo ratings.
-- **Pause engine:** cancels its current search and pauses timed play. Resume the clock in a timed game, or resume the engine in an untimed game.
-- **Undo move:** takes back your move and the engine reply, then pauses the engine.
-- Changing opponent, side, or difficulty preserves the board and cancels any old search. **New game** resets it.
-- Engine errors leave the board intact. Retry the connection or switch to a local opponent.
-
-Node.js 20+ is required. The server binds only to the local computer and requires no cloud services or keys. If the default engine cannot run, use `FAIRY_STOCKFISH_PATH` to select a compatible native executable. For example, in PowerShell:
-
-```powershell
-$env:FAIRY_STOCKFISH_PATH = 'C:\engines\fairy-stockfish.exe'
-npm.cmd start
-```
-
-Linux/macOS require an engine built for that platform. For a Linux source build, follow the upstream build instructions and set `FAIRY_STOCKFISH_PATH` to the resulting `src/stockfish`. Setting that variable during `npm test` also enables the native engine integration test; otherwise that test is explicitly skipped. Tests use mocked engine responses for deterministic UI checks and a real executable for the optional integration check.
-
-The bridge supports standard chess and all three knight upgrades. `Example.txt` contains draft custom rules, including unresolved pieces and setup details; the full draft is not loaded by the game. The validated knight-upgrade rules are in `variants/levelup-knight.ini`. See [stockfish/README.md](stockfish/README.md) for engine provenance, licensing, and validation limits.
-
-## Version history
-
-`v0.1.0` preserves local chess on `version_01`; `v0.2.0` preserves engine play, saved games, and clocks on `version_02`. Development continues on `version_03`. Use `version_01`, `version_02`, etc. as development branches. Tag finished milestones (`v0.1.0`, `v0.2.0`) for stable checkpoints; branches can continue changing. Merge a tested milestone into `main`, then create the next branch from that commit. Avoid maintaining separate implementations for old versions.
-
-See [TODO.md](TODO.md) for scope and later milestones.
+Create each development branch from the previous tested milestone and tag finished releases. Tags preserve stable checkpoints while branches can evolve. See [TODO.md](TODO.md) for progress and later work.

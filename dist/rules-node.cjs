@@ -19,6 +19,8 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/variant-game.js
 var variant_game_exports = {};
 __export(variant_game_exports, {
+  PIECE_VARIANT: () => PIECE_VARIANT,
+  SUPPORTED_VARIANTS: () => SUPPORTED_VARIANTS,
   VARIANT: () => VARIANT,
   VariantGame: () => VariantGame,
   initVariantRules: () => initVariantRules
@@ -4626,23 +4628,33 @@ var ffish_default2 = "AGFzbQEAAAABsQRGYAF/AGABfwF/YAJ/fwF/YAJ/fwBgA39/fwF/YAN/f3
 // variants/levelup-knight.ini
 var levelup_knight_default = "# Blue adds quiet orthogonal steps; orange adds two-square sideways jumps.\n# Purple is an extra piece that jumps exactly two squares orthogonally.\n[levelup-knight:chess]\ncustomPiece1 = e:NmW\ncustomPiece2 = f:NsD\ncustomPiece3 = g:D\npieceToCharTable = PNBRQ.EFG............Kpnbrq.efg............k\npromotionPieceTypes = nbrq\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n";
 
+// variants/levelup.ini
+var levelup_default = "# Current piece upgrades. The levelup-knight variant preserves the version 03 rules.\n[levelup:chess]\ncustomPiece1 = e:NmW\ncustomPiece2 = f:NsD\ncustomPiece3 = g:WD\ncustomPiece4 = h:BmW\ncustomPiece5 = i:BcfN\ncustomPiece6 = j:BfbR\ncustomPiece7 = t:QmN\ncustomPiece8 = u:QN\ncustomPiece9 = a:ifmHfmDfmWfceF\ncustomPiece10 = c:ifmnDfeWfF\ncustomPiece11 = d:mRceB\npieceToCharTable = PNBRQ.EFGHIJTUACD....Kpnbrq.efghijtuacd....k\n# All pawn levels keep standard promotions. Irreversible moves reset the\n# fifty-move counter; purple's reversible quiet rook moves count toward it.\n# The e flag opts into native en passant rules. Orange's identical quiet and\n# capture diagonals make an empty en passant target a quiet move, not a capture.\npawnTypes = pacd\npromotionPieceTypes = nbrq\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n";
+
 // src/variant-game.js
 var VARIANT = "levelup-knight";
+var PIECE_VARIANT = "levelup";
+var SUPPORTED_VARIANTS = Object.freeze([VARIANT, PIECE_VARIANT]);
 var RESULTS = /* @__PURE__ */ new Set(["*", "1-0", "0-1", "1/2-1/2"]);
 var SQUARE = /^[a-h][1-8]$/;
-var rules;
+var ruleModules;
 var initializing;
 function initVariantRules() {
   if (!initializing) {
-    initializing = ffish_default({
-      // Supplying the bytes also works from file://, without fetching a WASM file.
-      wasmBinary: Uint8Array.from(atob(ffish_default2), (character) => character.charCodeAt(0))
-    }).then((loaded) => {
-      loaded.loadVariantConfig(levelup_knight_default);
-      if (!loaded.variants().split(" ").includes(VARIANT)) throw new Error("The upgrade rules could not be loaded.");
-      rules = loaded;
-      return loaded;
+    const configs = { [VARIANT]: levelup_knight_default, [PIECE_VARIANT]: levelup_default };
+    initializing = Promise.all(SUPPORTED_VARIANTS.map(async (variant) => {
+      const loaded = await ffish_default({
+        // Supplying bytes also works from file:// without fetching a WASM file.
+        wasmBinary: Uint8Array.from(atob(ffish_default2), (character) => character.charCodeAt(0))
+      });
+      loaded.loadVariantConfig(configs[variant]);
+      if (!loaded.variants().split(" ").includes(variant)) throw new Error("The upgrade rules could not be loaded.");
+      return [variant, loaded];
+    })).then((entries) => {
+      ruleModules = Object.fromEntries(entries);
+      return ruleModules[VARIANT];
     }).catch((error) => {
+      ruleModules = void 0;
       initializing = void 0;
       throw error;
     });
@@ -4670,13 +4682,75 @@ function positionKey(fen, board) {
   const fields = fen.split(" ").slice(0, 4);
   if (fields[3] !== "-") {
     const pieces = boardPieces(fen);
-    const legalCapture = board.legalMoves().split(" ").filter(Boolean).some((uci) => {
-      if (uci.slice(2, 4) !== fields[3] || uci[0] === uci[2]) return false;
-      return pieces[8 - Number(uci[1])][uci.charCodeAt(0) - 97]?.type === "p";
-    });
-    if (!legalCapture) fields[3] = "-";
+    const targets = new Set(fields[3].match(/[a-h][1-8]/g));
+    const legalTargets = board.legalMoves().split(" ").filter(Boolean).map((uci) => {
+      const to = uci.slice(2, 4);
+      const occupied = pieces[8 - Number(to[1])][to.charCodeAt(0) - 97];
+      return targets.has(to) && !occupied && board.isCapture(uci) ? to : void 0;
+    }).filter(Boolean);
+    fields[3] = [...new Set(legalTargets)].sort().join("") || "-";
   }
   return fields.join(" ");
+}
+function enPassantVictim(board, uci, pieces, movingColor) {
+  if (!board.push(uci)) throw new Error("The upgrade rules rejected that capture.");
+  try {
+    const after = boardPieces(board.fen());
+    return pieces.flat().find((piece) => piece && piece.color !== movingColor && !after[8 - Number(piece.square[1])][piece.square.charCodeAt(0) - 97]);
+  } finally {
+    board.pop();
+  }
+}
+function validStartingFen(fen, variant, rules) {
+  if (typeof fen !== "string") return false;
+  const fields = fen.trim().split(/\s+/);
+  const ep = fields[3];
+  if (!ep || ep === "-") return rules.validateFen(fen, variant) === 1;
+  if (ep.length <= 2) {
+    if (rules.validateFen(fen, variant) !== 1 || !/^[a-h][1-8]$/.test(ep)) return false;
+    const pieces2 = boardPieces(fen);
+    const file2 = ep.charCodeAt(0) - 97;
+    const rank = Number(ep[1]);
+    const movedWhite2 = fields[1] === "b";
+    const movedColor = movedWhite2 ? "w" : "b";
+    const at2 = (squareRank) => pieces2[8 - squareRank][file2];
+    if (at2(rank) || at2(movedWhite2 ? 2 : 7)) return false;
+    const step = movedWhite2 ? 1 : -1;
+    for (let victimRank = rank + step; victimRank >= 1 && victimRank <= 8; victimRank += step) {
+      const victim = at2(victimRank);
+      if (victim?.color !== movedColor) continue;
+      const double = rank === (movedWhite2 ? 3 : 6) && victimRank === (movedWhite2 ? 4 : 5) && (victim.type === "p" || variant === PIECE_VARIANT && victim.type === "c");
+      const triple = variant === PIECE_VARIANT && victim.type === "a" && victimRank === (movedWhite2 ? 5 : 4) && (movedWhite2 ? rank === 3 || rank === 4 : rank === 5 || rank === 6);
+      return double || triple;
+    }
+    return false;
+  }
+  if (variant !== PIECE_VARIANT || !/^(?:[a-h][1-8]){2,3}$/.test(ep)) return false;
+  const withoutEp = [...fields];
+  withoutEp[3] = "-";
+  if (rules.validateFen(withoutEp.join(" "), variant) !== 1) return false;
+  const file = ep[0];
+  const movedWhite = fields[1] === "b";
+  const orangeTargets = movedWhite ? [3, 4] : [5, 6];
+  const blueTargets = movedWhite ? [3, 4, 5] : [4, 5, 6];
+  const blue = ep === blueTargets.map((rank) => file + rank).join("");
+  if (!blue && ep !== orangeTargets.map((rank) => file + rank).join("")) return false;
+  const pieces = boardPieces(fen);
+  const at = (rank) => pieces[8 - rank][file.charCodeAt(0) - 97];
+  const landing = movedWhite ? blue ? 5 : 4 : blue ? 4 : 5;
+  const pawn = at(landing);
+  return pawn?.type === (blue ? "a" : "c") && pawn.color === (movedWhite ? "w" : "b") && !at(movedWhite ? 2 : 7) && (blue || !at(movedWhite ? 3 : 6));
+}
+function opponentInCheck(fen, variant, rules) {
+  const fields = fen.split(" ");
+  fields[1] = fields[1] === "w" ? "b" : "w";
+  fields[3] = "-";
+  const opponent = new rules.Board(variant, fields.join(" "));
+  try {
+    return opponent.isCheck();
+  } finally {
+    opponent.delete();
+  }
 }
 var copyMove = (move) => move ? { ...move } : null;
 var escapeHeader = (value) => value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
@@ -4714,18 +4788,23 @@ function readHeaders(text) {
   return { headers, body };
 }
 var VariantGame = class _VariantGame {
-  constructor(fen) {
-    if (!rules) throw new Error("Call initVariantRules() before creating an upgrade game.");
-    const start = fen === void 0 ? rules.startingFen(VARIANT) : fen;
-    if (typeof start !== "string" || rules.validateFen(start, VARIANT) !== 1) throw new Error("The upgrade starting position is invalid.");
-    this._board = new rules.Board(VARIANT, start);
+  constructor(fen, variant = VARIANT) {
+    if (!ruleModules) throw new Error("Call initVariantRules() before creating an upgrade game.");
+    if (!SUPPORTED_VARIANTS.includes(variant)) throw new Error("The upgrade variant is not supported.");
+    const rules = ruleModules[variant];
+    const supplied = fen === void 0 ? rules.startingFen(variant) : fen;
+    const start = typeof supplied === "string" ? supplied.trim().split(/\s+/).join(" ") : supplied;
+    if (!validStartingFen(start, variant, rules)) throw new Error("The upgrade starting position is invalid.");
+    if (opponentInCheck(start, variant, rules)) throw new Error("The upgrade starting position already checks the inactive king.");
+    this._variant = variant;
+    this._board = new rules.Board(variant, start);
     this._startFen = this._board.fen();
     this._records = [];
     this._positions = [positionKey(this._startFen, this._board)];
-    this._headers = { Variant: VARIANT, SetUp: "1", FEN: this._startFen, Result: "*" };
+    this._headers = { Variant: this.variant, SetUp: "1", FEN: this._startFen, Result: "*" };
   }
   get variant() {
-    return VARIANT;
+    return this._variant;
   }
   fen() {
     return this._board.fen();
@@ -4751,12 +4830,13 @@ var VariantGame = class _VariantGame {
       const from = uci.slice(0, 2);
       const to = uci.slice(2, 4);
       const piece = at(from);
-      const captured = at(to);
+      let captured = at(to);
       const promotion = uci[4];
-      const enPassant = piece.type === "p" && from[0] !== to[0] && !captured;
+      const enPassant = !captured && this._board.isCapture(uci);
+      if (enPassant) captured = enPassantVictim(this._board, uci, pieces, piece.color);
       let flags = captured ? "c" : "n";
       if (enPassant) flags = "e";
-      else if (piece.type === "k" && Math.abs(from.charCodeAt(0) - to.charCodeAt(0)) === 2) flags = to[0] === "g" ? "k" : "q";
+      else if (/^O-O/.test(san)) flags = /^O-O-O/.test(san) ? "q" : "k";
       else if (piece.type === "p" && Math.abs(Number(from[1]) - Number(to[1])) === 2) flags = "b";
       if (promotion) flags = flags.replace("n", "") + "p";
       return {
@@ -4768,7 +4848,7 @@ var VariantGame = class _VariantGame {
         before,
         flags,
         ...promotion ? { promotion } : {},
-        ...captured || enPassant ? { captured: captured?.type || "p" } : {}
+        ...captured ? { captured: captured.type } : {}
       };
     });
   }
@@ -4796,7 +4876,7 @@ var VariantGame = class _VariantGame {
     this._board.setFen(this._startFen);
     this._records = [];
     this._positions = [positionKey(this._startFen, this._board)];
-    this._headers = { Variant: VARIANT, SetUp: "1", FEN: this._startFen, Result: "*" };
+    this._headers = { Variant: this.variant, SetUp: "1", FEN: this._startFen, Result: "*" };
   }
   isCheck() {
     return this._board.isCheck();
@@ -4810,7 +4890,7 @@ var VariantGame = class _VariantGame {
   isInsufficientMaterial() {
     if (this._board.isInsufficientMaterial()) return true;
     const material = this.board().flat().filter((piece) => piece && piece.type !== "k");
-    return material.length === 1 && ["e", "g"].includes(material[0].type);
+    return material.length === 1 && (material[0].type === "e" || this.variant === PIECE_VARIANT && material[0].type === "h" || this.variant === VARIANT && material[0].type === "g");
   }
   isThreefoldRepetition() {
     const current = this._positions.at(-1);
@@ -4835,7 +4915,7 @@ var VariantGame = class _VariantGame {
     delete this._headers[key];
   }
   pgn({ maxWidth = 80 } = {}) {
-    const headers = { ...this._headers, Variant: VARIANT, SetUp: "1", FEN: this._startFen };
+    const headers = { ...this._headers, Variant: this.variant, SetUp: "1", FEN: this._startFen };
     const result = headers.Result || "*";
     const tokens = [];
     this._records.forEach((move, index) => {
@@ -4856,13 +4936,14 @@ var VariantGame = class _VariantGame {
   loadPgn(text) {
     if (typeof text !== "string" || !text.trim() || text.length > 256 * 1024) throw new Error("Enter a PGN game up to 256 KB.");
     const { headers, body } = readHeaders(text);
-    if (headers.Variant?.toLowerCase() !== VARIANT) throw new Error(`This game requires the ${VARIANT} PGN variant.`);
+    const variant = headers.Variant?.toLowerCase();
+    if (!SUPPORTED_VARIANTS.includes(variant)) throw new Error(`This game requires a supported upgrade PGN variant: ${SUPPORTED_VARIANTS.join(", ")}.`);
     if (headers.SetUp !== void 0 && !["0", "1"].includes(headers.SetUp)) throw new Error("The PGN setup header is invalid.");
     if (headers.SetUp === "1" && !headers.FEN || headers.SetUp === "0" && headers.FEN) throw new Error("The PGN setup and starting position do not agree.");
     let candidate;
     try {
-      candidate = new _VariantGame(headers.FEN);
-      for (const [key, value] of Object.entries(headers)) candidate.setHeader(key, value);
+      candidate = new _VariantGame(headers.FEN, variant);
+      for (const [key, value] of Object.entries(headers)) candidate.setHeader(key, key === "Variant" ? variant : value);
       let result;
       for (const token of stripComments(body).split(/\s+/).filter(Boolean)) {
         if (/^\$\d+$/.test(token)) continue;
@@ -4884,6 +4965,7 @@ var VariantGame = class _VariantGame {
       candidate.setHeader("Result", result || headers.Result || "*");
       this._board.delete();
       this._board = candidate._board;
+      this._variant = candidate.variant;
       this._startFen = candidate._startFen;
       this._records = candidate._records;
       this._positions = candidate._positions;
@@ -4900,6 +4982,8 @@ var VariantGame = class _VariantGame {
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  PIECE_VARIANT,
+  SUPPORTED_VARIANTS,
   VARIANT,
   VariantGame,
   initVariantRules
