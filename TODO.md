@@ -24,14 +24,15 @@
 - [x] Add optional clocks with presets, increments, and explicit start/pause/resume.
 - [x] Stop play on timeout; cancel engine searches and export the timed result.
 - [x] Restore clocks with undo and browser saves; load old saves untimed.
-- [ ] Playtest clocks, increments, timeout, and timed saved games on Windows.
+- [x] User playtest confirmed clocks and losing on time work.
+- [ ] Finish Windows playtesting of timed saved games and clock undo.
 - [x] Add one browser save slot with moves and play settings.
 - [x] Add PGN download, paste import, and file import.
 - [x] Validate imports before replacement; preserve history and special-move rights.
 - [x] Pause the engine after loading and reject obsolete search responses.
 - [x] Pass clock-model unit tests and browser/integration tests, including timed saves and PGN round trips.
 - [x] User playtest confirmed saving/loading and PGN import/export work.
-- [ ] Tag `v0.2.0` after clock playtesting and final scope review.
+- [x] Preserve the tested version 02 as `v0.2.0`; continue upgrades on `version_03`.
 
 Linux integration was verified with an upstream Fairy Stockfish source build. The bundled Windows executable was not executed in the cloud environment. Difficulty presets control engine skill and search time; they are not Elo ratings.
 

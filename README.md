@@ -77,6 +77,6 @@ The bridge currently supports standard chess only. `Example.txt` contains draft 
 
 ## Version history
 
-The local `v0.1.0` tag preserves the playable foundation on `version_01`; development continues on `version_02`. These references have not been pushed. Use `version_01`, `version_02`, etc. as development branches. Tag finished milestones (`v0.1.0`, `v0.2.0`) for stable checkpoints; branches can continue changing. Merge a tested milestone into `main`, then create the next branch from that commit. Avoid maintaining separate implementations for old versions.
+`v0.1.0` preserves local chess on `version_01`; `v0.2.0` preserves engine play, saved games, and clocks on `version_02`. Use `version_01`, `version_02`, etc. as development branches. Tag finished milestones (`v0.1.0`, `v0.2.0`) for stable checkpoints; branches can continue changing. Merge a tested milestone into `main`, then create the next branch from that commit. Avoid maintaining separate implementations for old versions.
 
 See [TODO.md](TODO.md) for scope and later milestones.
