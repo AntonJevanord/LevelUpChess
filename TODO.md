@@ -19,7 +19,7 @@
 - [x] Keep direct HTML local play working without companion files.
 - [x] Test browser controls, stale responses, input validation, and real engine play.
 - [x] Include the upstream GPL license and document binary/source provenance gaps.
-- [ ] Playtest the bundled Windows executable through `npm.cmd start` on Windows.
+- [X] Playtest the bundled Windows executable through `npm.cmd start` on Windows.
 - [ ] Record the bundled executable's exact upstream release and matching source before redistribution.
 - [ ] Add optional clocks.
 - [ ] Add saved games and PGN import/export.
