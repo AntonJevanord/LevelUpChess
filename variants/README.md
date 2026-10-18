@@ -1,8 +1,8 @@
 # Upgrade rules
 
-Browser and native Fairy Stockfish load the same configuration. Current games use `levelup.ini` (`levelup`); version 03 games use the unchanged `levelup-knight.ini` (`levelup-knight`). Rules are stored with saves and PGNs so older games retain their original movement.
+Browser and native Fairy Stockfish load the same configuration. Current games use `levelup-v5.ini` (`levelup-v5`). Earlier games retain `levelup.ini` (`levelup`, version 04) or `levelup-knight.ini` (`levelup-knight`, version 03). Saves and PGNs identify the rules, so opening an older game preserves its movement.
 
-## Version 04 movement
+## Version 05 movement
 
 Unlisted standard abilities remain unchanged. A **quiet** move must land on an empty square. Quiet-only movement adds no capture or attack directions; the piece can still give check after landing through its ordinary attacks. Jumps ignore intermediate pieces; friendly pieces always block the destination. Sliding moves need a clear path.
 
@@ -11,11 +11,22 @@ Unlisted standard abilities remain unchanged. A **quiet** move must land on an e
 | Knight | Knight + quiet one-square orthogonal step (`NmW`). | Knight + exact two-square horizontal jump (`NsD`). | Extra piece with one- or two-square orthogonal moves/captures (`WD`); two-square moves jump. Keep the normal knight. |
 | Pawn | Quiet forward jumps of one or two squares; three from the starting rank. Capture one square diagonally forward (`ifmHfmDfmWfceF`). | Move or capture one square forward or diagonally forward. Initial quiet two-square advance needs a clear path (`ifmnDfeWfF`). | Quiet rook slides; bishop captures in any direction (`mRceB`). |
 | Bishop | Bishop + quiet one-square orthogonal step (`BmW`). | Bishop + capture-only jump two squares forward and one sideways (`BcfN`). | Bishop + vertical rook slides (`BfbR`). |
-| Queen | Deferred. | Queen + quiet knight jumps (`QmN`). | Queen + full knight moves/captures: amazon (`QN`). |
+| Rook | Rook + quiet two-square orthogonal jumps on the home two ranks (`RimD`). | Rook + capture across exactly one intervening piece in any rook direction (`RcpR`). | Rook + jump-captures anywhere within two squares horizontally and vertically (`RcFcAcNcD`). |
+| Queen | Queen + quiet (1,2), (1,3), and (2,3) jumps on the home two ranks (`QimNimCimZ`). | Queen + quiet knight jumps (`QmN`). | Queen + full knight moves/captures: amazon (`QN`). |
 
-Forward is toward the opponent's back rank for each color. The blue pawn's two- and three-square advances jump; the orange pawn's initial double advance does not. Blue's three-square advance is available while on its starting rank, not tracked as a historical first-move flag.
+Forward is toward the opponent's back rank for each color. The blue pawn's two- and three-square advances jump; the orange pawn's initial double advance does not.
 
-All pawn levels promote to a standard queen, rook, bishop, or knight on the far rank. Blue and orange forward moves reset the fifty-move counter; purple's reversible quiet rook moves count toward it. Captures and promotions reset it. This follows the native engine's reversibility rules. Rooks and royal kings remain standard; legal checking and castling rules apply.
+All pawn levels promote to a standard queen, rook, bishop, or knight on the far rank. Blue and orange forward moves reset the fifty-move counter; purple's reversible quiet rook moves count toward it. Captures and promotions reset it. This follows the native engine's reversibility rules.
+
+## Conditional moves and rook captures
+
+Version 05 sets the initial-move region to ranks 1–2 for White and 7–8 for Black. The `i` modifier enables these extra quiet moves while a piece occupies that region; it is not a record of whether the piece has moved. Returning home restores blue rook and queen jumps. Outside the region, those pieces have ordinary rook or queen movement.
+
+This shared region also permits initial pawn advances from a pawn's own back rank in imported analysis positions. Pawns in ordinary starting armies have the same abilities as version 04. Version 04 keeps its original initial region, rank 2/7.
+
+Orange rook screen captures require exactly one intervening piece of either color and an enemy at the destination. They may cross friendly or enemy screens, but cannot jump quietly or capture through two screens. Ordinary rook moves and captures remain available. Purple rook jumps require an enemy destination; its quiet movement remains ordinary rook movement. Both kinds of capture add attacks and can give check.
+
+All rook levels can castle with the standard royal king. Normal path, check, and castling-right restrictions apply. Moving a king or rook consumes the appropriate rights; returning home does not restore them. Pawn promotion grants neither upgraded pieces nor fresh castling rights. Kings retain standard movement, check, and checkmate.
 
 ## En passant
 
@@ -29,22 +40,26 @@ The board, undo, repetition detection, saved games, and PGN use these engine res
 
 ## Setup and budgets
 
-Choose levels for 26 starting pieces: sixteen pawns, four knights, four bishops, and two queens. The same selected budget of 1–39 applies independently to each side. Cost equals level; unspent points are allowed.
+Choose levels for 30 starting pieces: sixteen pawns, four knights, four bishops, four rooks, and two queens. The same selected budget of 1–45 applies independently to each side. Cost equals level; unspent points are allowed.
 
 Every upgrade replaces its starting piece except purple knights. Those keep the standard knight and add a piece on b3/g3 for White or b6/g6 for Black. Purple bishops replace c1/f1/c8/f8; they do not add pieces. Kings start on e1/e8 and queens on d1/d8.
 
 Choices across all families apply to the next **New game**. Browser saves retain the selected budget. PGN retains the initial army and rules, but not budgets or clocks. Imported analysis positions are validated independently of new-game budgets.
 
-## Version 03 compatibility
+## Earlier versions
+
+Choose **Version 04 piece rules** for its unchanged 26 upgradeable starting pieces and 1–39 point budget. It includes the pawn, knight, bishop, orange queen, and purple queen rules above, but has no blue queen or rook upgrades. Its original pawn initial region remains rank 2/7.
 
 Choose **Version 03 knight rules** for the original mode. Blue and orange knights retain the movement above; purple extras use `D`, exact two-square orthogonal jumps only. Budgets remain 1–6 per side. Existing saves and `[Variant "levelup-knight"]` PGNs keep these rules rather than receiving the new `WD` movement.
 
-A lone blue knight or version 03 purple extra versus a bare king is insufficient mating material. This does not describe version 04's stronger purple piece.
+A lone blue knight or version 03 purple extra versus a bare king is insufficient mating material. Version 04 and 05 use the stronger purple `WD` piece, which has mating potential.
 
 ## PGN and draft rules
 
-Upgrade PGNs contain `[Variant "levelup"]` or `[Variant "levelup-knight"]` and a starting FEN. The main line is validated move by move. Brace/semicolon comments and numeric annotations can be read but are omitted on export; side variations are rejected. Standard-chess PGN behavior is unchanged.
+Upgrade PGNs contain `[Variant "levelup-v5"]`, `[Variant "levelup"]`, or `[Variant "levelup-knight"]` and a starting FEN. The main line is validated move by move. Brace/semicolon comments and numeric annotations can be read but are omitted on export; side variations are rejected. Standard-chess PGN behavior is unchanged.
 
-`Example.txt` is a design draft. The engine ignores its `j` modifier, so its jump-slider and back-rank rook/queen/king descriptions do not follow from those Betza strings. Blue queens, rook upgrades, and king upgrades remain deferred pending supported movement and royal/castling rules. Custom castling is possible in modern Fairy Stockfish, but compatibility with the bundled Windows engine has not been established.
+`Example.txt` is a design draft. The engine ignores its `j` modifier, so those jump-slider descriptions do not follow from the strings. Version 05 uses supported movement rather than reproducing each example. The draft blue queen's unrestricted back-rank teleport remains a possible future engine extension.
 
-For future castling rules, modern builds support `castlingRookPieces` and a Betza definition for the actual royal `king`. Assigning `castlingKingPiece` to a custom piece alone does not make it royal. King movement currently applies to both colors, so independent king upgrades need a separate design.
+Current configuration uses `castlingRookPiece = rlmo`, accepted as a set by modern builds. Older engines may accept the variant name while silently dropping configuration abilities. The server checks relevant legal moves before searching, including castling, promotions, en passant, conditional jumps, and screen captures. An incompatible engine produces an update error; offline local play remains available. See [engine guidance](../stockfish/README.md).
+
+King upgrades remain future work. Modern builds can define Betza movement for the actual royal `king`; assigning `castlingKingPiece` to a custom piece alone does not make it royal. The king definition currently applies to both colors, so independent upgrades need a separate design.

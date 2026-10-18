@@ -16,7 +16,7 @@ const purpleFen = '7k/8/8/8/3G4/8/8/K7 w - - 0 1';
 const destinations = (instance, square) => instance.moves({ square, verbose: true }).map(move => move.to).sort();
 
 test('both rule versions initialize while the constructor keeps its legacy default', t => {
-  assert.deepEqual(SUPPORTED_VARIANTS, ['levelup-knight', 'levelup']);
+  assert.deepEqual(SUPPORTED_VARIANTS, ['levelup-knight', 'levelup', 'levelup-v5']);
   assert.equal(Object.isFrozen(SUPPORTED_VARIANTS), true);
   const legacy = new VariantGame();
   t.after(() => legacy.dispose());

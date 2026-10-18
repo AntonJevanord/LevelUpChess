@@ -2,7 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const path = require('node:path');
 const { spawnSync } = require('node:child_process');
-const { initVariantRules, VariantGame, PIECE_VARIANT } = require('../dist/rules-node.cjs');
+const { initVariantRules, VariantGame, PIECE_VARIANT, CURRENT_VARIANT } = require('../dist/rules-node.cjs');
 
 test.before(async () => { await initVariantRules(); });
 
@@ -317,5 +317,32 @@ test('native and browser rules agree on upgraded pawn movement, checks, promotio
     const native = [...result.stdout.matchAll(/^([a-h][1-8][a-h][1-8][a-z]*): 1$/gm)].map(match => match[1]).sort();
     const browser = instance.moves({ verbose: true }).map(move => move.from + move.to + (move.promotion || '')).sort();
     assert.deepEqual(native, browser, fen);
+  }
+});
+
+test('home-two-rank pawn advances retain en passant through undo and PGN without changing older rules', t => {
+  for (const [piece, to, capturer, target] of [['A', 'd4', 'e4', 'd3'], ['A', 'd4', 'e3', 'd2'], ['C', 'd3', 'e3', 'd2'], ['P', 'd3', 'e3', 'd2']]) {
+    const initial = position({ a8: 'k', h1: 'K', d1: piece, [capturer]: 'p' });
+    for (const black of [false, true]) {
+      const fen = black ? opposite(initial) : initial;
+      const square = value => black ? value[0] + (9 - Number(value[1])) : value;
+      const current = new VariantGame(fen, CURRENT_VARIANT);
+      const old = new VariantGame(fen, PIECE_VARIANT);
+      t.after(() => { current.dispose(); old.dispose(); });
+      assert.throws(() => old.move({ from: square('d1'), to: square(to) }), /not legal/);
+      current.move({ from: square('d1'), to: square(to) });
+      const before = current.fen();
+      const loaded = new VariantGame(before, CURRENT_VARIANT);
+      t.after(() => loaded.dispose());
+      const capture = loaded.move({ from: square(capturer), to: square(target) });
+      assert.equal(capture.flags, 'e');
+      assert.equal(capture.captured, piece.toLowerCase());
+      assert.equal(loaded.get(square(to)), undefined);
+      loaded.undo();
+      assert.equal(loaded.fen(), before);
+      loaded.loadPgn(current.pgn());
+      assert.equal(loaded.fen(), before);
+      assert.equal(loaded.variant, CURRENT_VARIANT);
+    }
   }
 });

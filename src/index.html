@@ -8,7 +8,7 @@
   <script defer src="dist/app.js"></script>
 </head>
 <body>
-  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 04 / NEW POSSIBILITIES</span></header>
+  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 05 / ROOK POWER</span></header>
   <main>
     <section class="intro"><span class="eyebrow">EVERY GREAT GAME STARTS HERE</span><h1>Your next move.</h1><p>Classic chess. Two players. One board.</p></section>
     <div class="game-layout">
@@ -21,14 +21,14 @@
         <section class="panel"><span class="eyebrow">ON THE BOARD</span><h2 id="status" role="status" aria-live="polite"></h2><p id="hint">Select a piece to see its legal moves.</p><div class="actions"><button id="undo" type="button">↶ Undo move</button><button id="flip" type="button">⇅ Flip board</button></div><button id="new-game" class="primary" type="button">New game</button></section>
         <section class="panel engine-panel" aria-labelledby="engine-title">
           <div class="panel-heading"><h3 id="engine-title">Play your way</h3><span>FAIRY STOCKFISH</span></div>
-          <label for="game-mode">Rules</label><select id="game-mode"><option value="chess">Standard chess</option><option value="levelup">Piece upgrades</option><option value="levelup-knight">Version 03 knight rules</option></select>
+          <label for="game-mode">Rules</label><select id="game-mode"><option value="chess">Standard chess</option><option value="levelup-v5">Piece upgrades</option><option value="levelup">Version 04 piece rules</option><option value="levelup-knight">Version 03 knight rules</option></select>
           <div id="piece-upgrade-settings" hidden>
-            <label for="piece-upgrade-budget">Budget per side (1–39)</label><input id="piece-upgrade-budget" type="number" min="1" max="39" step="1" value="6">
+            <label for="piece-upgrade-budget">Budget per side (1–45)</label><input id="piece-upgrade-budget" type="number" min="1" max="45" step="1" value="6">
             <p id="piece-upgrade-status" role="status" aria-live="polite"></p>
-            <label for="piece-family">Choose a piece family</label><select id="piece-family"><option value="pawn">Pawns</option><option value="knight">Knights</option><option value="bishop" selected>Bishops</option><option value="queen">Queens</option></select>
+            <label for="piece-family">Choose a piece family</label><select id="piece-family"><option value="pawn">Pawns</option><option value="knight">Knights</option><option value="bishop" selected>Bishops</option><option value="queen">Queens</option><option value="rook">Rooks</option></select>
             <ul id="piece-upgrade-rules" class="upgrade-rules"></ul>
             <div id="piece-upgrade-choices"></div>
-            <p class="engine-help">Costs equal levels. Both sides share the same budget limit. Choices across all families apply to your next new game. Kings remain royal; rooks and kings use standard rules.</p>
+            <p class="engine-help">Costs equal levels. Both sides share the same budget limit. Choices across all families apply to your next new game. Kings remain royal. Engine play checks support for upgraded pieces before searching.</p>
           </div>
           <div id="upgrade-settings" hidden>
             <ul class="upgrade-rules"><li><strong class="blue-text">1 · Blue</strong> — knight + one empty orthogonal step.</li><li><strong class="orange-text">2 · Orange</strong> — knight + a two-square sideways jump.</li><li><strong class="purple-text">3 · Purple</strong> — extra piece with two-square orthogonal jumps; keep the standard knight.</li></ul>
@@ -59,7 +59,7 @@
           <div class="actions"><button id="export-pgn" type="button">Export PGN</button><button id="open-import" type="button">Import PGN</button></div>
           <p class="save-help">One save slot per browser. Saving again replaces it. Download PGN for a portable backup.</p>
         </section>
-        <div class="coming-next"><span class="eyebrow">THE NEXT LEVEL</span><p>Build an army within your budget.<br>Explore pawn, knight, bishop and queen upgrades.</p><div class="level-dots"><i></i><i></i><i></i></div></div>
+        <div class="coming-next"><span class="eyebrow">THE NEXT LEVEL</span><p>Build an army within your budget.<br>Explore pawn, knight, bishop, queen and rook upgrades.</p><div class="level-dots"><i></i><i></i><i></i></div></div>
       </aside>
     </div>
   </main>

@@ -242,6 +242,45 @@ test('saved timeouts stay finished after reload and an expired engine search can
   await expect(page.locator('#status')).toHaveText('White to move');
 });
 
+test('saving across the flag deadline keeps the saved clock and result consistent', async ({ page }) => {
+  await timedGame(page, 'five');
+  await page.getByRole('button', { name: 'Start clock', exact: true }).click();
+  const saved = await page.evaluate(() => {
+    const start = performance.now();
+    const original = Object.getOwnPropertyDescriptor(performance, 'now');
+    let reads = 0;
+    // The initial snapshot occurs just before flag fall, while the final clock
+    // settlement observes the deadline. Both must describe the same saved game.
+    Object.defineProperty(performance, 'now', {
+      configurable: true,
+      value: () => start + (++reads < 3 ? 299999.75 : 300000.25),
+    });
+    try {
+      document.querySelector('#save-game').click();
+      return JSON.parse(localStorage.getItem('levelupchess.saved-game.v1'));
+    } finally {
+      if (original) Object.defineProperty(performance, 'now', original);
+      else delete performance.now;
+    }
+  });
+  await expect(page.locator('#save-status')).toContainText('Saved 0 half-moves');
+  await expect(page.locator('#status')).toHaveText('Black wins on time');
+  expect(saved.clock.expired).toBe('w');
+  expect(saved.clock.remaining.w).toBe(0);
+  const game = new Chess();
+  game.loadPgn(saved.pgn);
+  expect(game.getHeaders().Result).toBe('0-1');
+  expect(game.getHeaders().Termination).toBe('time forfeit');
+
+  await page.reload();
+  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await expect(page.locator('#status')).toHaveText('Black wins on time');
+  await expect(page.getByRole('button', { name: 'Resume clock', exact: true })).toBeDisabled();
+  await move(page, 'e2', 'e4');
+  await expect(square(page, 'e2')).toHaveAttribute('aria-label', 'e2 White pawn');
+  await expect(page.locator('#history li')).toHaveCount(0);
+});
+
 test('old browser saves without clock metadata still load and undo normally', async ({ page }) => {
   await page.evaluate(() => localStorage.setItem('levelupchess.saved-game.v1', JSON.stringify({
     version: 1, savedAt: '2026-10-18T12:00:00Z', pgn: '1. e4 e5 *',

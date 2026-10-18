@@ -8,18 +8,19 @@ Download `index.html` and open it in Chrome, Edge, or Firefox. It includes the b
 
 Select a piece and a highlighted destination. Arrow keys move focus; Enter or Space selects. Includes legal moves, checkmate, draw detection, castling, en passant, selectable promotion, history, undo, and board flip. Threefold repetition and the fifty-move rule end games automatically.
 
-## Version 04: piece upgrades
+## Version 05: piece upgrades
 
-Choose **Piece upgrades** under **Rules**, select each piece's level, and press **New game**. Switch the family selector to configure pawns, knights, bishops, and queens; choices across all families are kept. Each level costs that many points, with the same chosen limit of 1–39 points for each side.
+Choose **Piece upgrades** under **Rules**, select each piece's level, and press **New game**. Configure pawns, knights, bishops, rooks, and queens with the family selector; choices across families are kept. Each level costs that many points, with the same chosen limit of 1–45 points for each side.
 
 - **Knights:** blue adds a quiet orthogonal step; orange adds a two-square sideways jump; purple keeps the normal knight and adds a piece that moves or captures one or two squares orthogonally. Two-square moves jump over blockers.
 - **Pawns:** blue gains forward jumps; orange moves and captures forward or diagonally forward; purple moves along clear rook lines and captures along clear bishop lines. All pawn levels promote to a standard queen, rook, bishop, or knight.
 - **Bishops:** blue adds a quiet orthogonal step; orange adds capture-only jumps two squares forward and one sideways; purple adds vertical rook movement and replaces the starting bishop.
-- **Queens:** orange adds quiet knight jumps; purple adds full knight moves and captures. Blue is deferred.
+- **Rooks:** blue adds quiet two-square orthogonal jumps on the home two ranks; orange can capture across exactly one intervening piece; purple adds jump-captures anywhere within two squares horizontally and vertically. All levels retain ordinary rook moves and castling.
+- **Queens:** blue adds quiet (1,2), (1,3), and (2,3) jumps on the home two ranks; orange adds quiet knight jumps everywhere; purple adds full knight moves and captures.
 
-Rooks and royal kings keep standard rules, including castling and check. Upgrade choices apply to the next new game. Existing games retain their rules: **Version 03 knight rules** preserves the old purple piece's exact two-square jumps and 1–6 point budget.
+Home ranks mean ranks 1–2 for White and 7–8 for Black. Conditional jumps depend on the piece's current square, so returning home restores them. Kings remain royal, with standard movement, check, and checkmate. Upgrade choices apply to the next new game.
 
-Offline play, clocks, undo, browser saves, and PGN support both upgrade versions. See [variants/README.md](variants/README.md) for exact movement, en passant, setup, and compatibility rules.
+**Version 04 piece rules** and **Version 03 knight rules** preserve earlier games, budgets, and movement. Offline play, clocks, undo, saves, and PGN support all three profiles. See [variants/README.md](variants/README.md) for exact movement and compatibility rules.
 
 ## Play Fairy Stockfish
 
@@ -30,11 +31,11 @@ npm.cmd ci
 npm.cmd start
 ```
 
-Open the printed address, keep the terminal running, and choose **Fairy Stockfish** under **Opponent**. Select your side and difficulty. The server launches the bundled Windows engine; direct-file play supports local players only.
+Open the printed address, keep the terminal running, and choose **Fairy Stockfish** under **Opponent**. Select your side and difficulty. The server launches the bundled Windows engine unless another executable is configured; direct-file play supports local players only.
 
 - Easy / Medium / Hard use skill 0 / 8 / 20 and 150 / 600 / 1500 ms search budgets. These are presets, not Elo ratings.
 - Pause cancels the current search. Undo takes back a full turn where available and pauses play. Changing opponent, side, or difficulty preserves the board and cancels obsolete searches.
-- Engine errors preserve the game. Retry or choose a local player. An engine that cannot load the selected rules reports an error.
+- Engine errors preserve the game. Before searching, the bridge checks the custom abilities needed by the army. If an older engine lacks them, it reports an update error; configure a current build or choose a local player.
 
 The server listens only on your computer and needs no cloud services or keys. Linux/macOS require a compatible native engine. Set `FAIRY_STOCKFISH_PATH` to use another executable; for example, in PowerShell:
 
@@ -43,7 +44,7 @@ $env:FAIRY_STOCKFISH_PATH = 'C:\engines\fairy-stockfish.exe'
 npm.cmd start
 ```
 
-Browser and native engines load the same variant configurations. New version 04 rules still require Windows playtesting. See [stockfish/README.md](stockfish/README.md) for the bundled engine's provenance and validation limits.
+Browser and native engines load the same variant configurations. The bundled executable may lack newer custom-piece rules; version 05 still needs Windows playtesting. See [stockfish/README.md](stockfish/README.md) for compatible-build guidance and validation limits.
 
 ## Clocks
 
@@ -90,6 +91,7 @@ Standard chess uses [chess.js](https://github.com/jhlywa/chess.js), with its BSD
 | `version_01` | `v0.1.0` | Local standard chess |
 | `version_02` | `v0.2.0` | Engine play, saves, PGN, and clocks |
 | `version_03` | `v0.3.0` | Three knight upgrade levels |
-| `version_04` | In development | Improved purple knight and more piece families |
+| `version_04` | `v0.4.0` | Improved purple knight, pawns, bishops, and queens |
+| `version_05` | In development | Home-rank abilities, blue queen, and rook upgrades |
 
 Create each development branch from the previous tested milestone and tag finished releases. Tags preserve stable checkpoints while branches can evolve. See [TODO.md](TODO.md) for progress and later work.

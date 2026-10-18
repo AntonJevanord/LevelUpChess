@@ -52,7 +52,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('mixed piece upgrades share per-side budgets and purple bishops replace their starting pieces', async ({ page }) => {
-  await expect(page.locator('#game-mode option[value="levelup"]')).toHaveText('Piece upgrades');
+  await expect(page.locator('#game-mode option[value="levelup"]')).toHaveText('Version 04 piece rules');
   await page.selectOption('#game-mode', 'levelup');
   await expect(page.locator('#piece-upgrade-budget')).toHaveValue('6');
   await expect(page.locator('#piece-upgrade-budget')).toHaveAttribute('min', '1');

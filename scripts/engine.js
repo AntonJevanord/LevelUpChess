@@ -1,10 +1,11 @@
 const { spawn } = require('node:child_process');
 const path = require('node:path');
 const { Chess } = require('chess.js');
+const { capabilityProbes } = require('./engine-capabilities');
 
 const enginePath = () => process.env.FAIRY_STOCKFISH_PATH || path.resolve(__dirname, '../stockfish/fairy-stockfish-largeboard_x86-64.exe');
-const variantPath = variant => path.resolve(__dirname, variant === 'levelup' ? '../variants/levelup.ini' : '../variants/levelup-knight.ini');
-const variants = ['chess', 'levelup-knight', 'levelup'];
+const variantPath = variant => path.resolve(__dirname, `../variants/${variant}.ini`);
+const variants = ['chess', 'levelup-knight', 'levelup', 'levelup-v5'];
 const levels = {
   easy: { skill: 0, time: 150 },
   medium: { skill: 8, time: 600 },
@@ -26,6 +27,7 @@ async function engineRequest({ fen, difficulty = 'medium', variant = 'chess', si
     throw new Error('Invalid engine request.');
   }
   const position = fen ? await createPosition(fen, variant) : null;
+  const probes = capabilityProbes(fen, variant);
   return new Promise((resolve, reject) => {
     let child;
     let buffer = '';
@@ -34,6 +36,10 @@ async function engineRequest({ fen, difficulty = 'medium', variant = 'chess', si
     let advertisedVariant = false;
     let selectedVariant = false;
     let settled = false;
+    let probeIndex = 0;
+    let probeMoves = new Set();
+    let probeReady = false;
+    let probeDone = false;
     const finish = (error, result) => {
       if (settled) return;
       settled = true;
@@ -44,7 +50,9 @@ async function engineRequest({ fen, difficulty = 'medium', variant = 'chess', si
       error ? reject(error) : resolve(result);
     };
     const abort = () => finish(new Error('Engine search cancelled.'));
-    const timer = setTimeout(() => finish(new Error('Engine did not respond in time. Check the executable and try again.')), 10000);
+    const timer = setTimeout(() => finish(new Error(phase === 'probe'
+      ? `Fairy Stockfish does not support ${probes[probeIndex].name}. Use a current build through FAIRY_STOCKFISH_PATH, or play locally.`
+      : 'Engine did not respond in time. Check the executable and try again.')), 10000);
     if (signal?.aborted) { abort(); return; }
     signal?.addEventListener('abort', abort, { once: true });
     try {
@@ -62,6 +70,34 @@ async function engineRequest({ fen, difficulty = 'medium', variant = 'chess', si
       send(`setoption name Skill Level value ${levels[difficulty].skill}`);
       send('isready');
     };
+    const advance = () => {
+      const probe = probes[probeIndex];
+      if (probe) {
+        phase = 'probe';
+        probeMoves = new Set();
+        probeReady = false;
+        probeDone = false;
+        send(`position fen ${probe.fen}`);
+        send('go perft 1');
+        send('isready');
+      } else {
+        phase = 'search';
+        send('ucinewgame');
+        send(`position fen ${fen}`);
+        send(`go movetime ${levels[difficulty].time}`);
+      }
+    };
+    const completeProbe = () => {
+      // Perft runs on a worker: readyok can arrive before its move list.
+      if (!probeReady || !probeDone) return;
+      const probe = probes[probeIndex];
+      if (!probe.required.every(move => probeMoves.has(move)) || probe.forbidden.some(move => probeMoves.has(move))) {
+        finish(new Error(`Fairy Stockfish does not support ${probe.name}. Use a current build through FAIRY_STOCKFISH_PATH, or play locally.`));
+        return;
+      }
+      probeIndex++;
+      advance();
+    };
     child.on('error', () => finish(new Error('Cannot launch Fairy Stockfish. Run npm.cmd start on Windows, or set FAIRY_STOCKFISH_PATH to a compatible engine.')));
     child.stdin.on('error', () => finish(new Error('Engine connection closed.')));
     child.on('exit', () => finish(new Error('Fairy Stockfish exited before completing the request.')));
@@ -77,6 +113,11 @@ async function engineRequest({ fen, difficulty = 'medium', variant = 'chess', si
         if (line.startsWith('id name ')) name = line.slice(8).slice(0, 120);
         if (phase === 'variant-options' && line.startsWith('option name UCI_Variant ') && line.split(' var ').slice(1).includes(variant)) advertisedVariant = true;
         if (phase === 'ready' && line.startsWith(`info string variant ${variant} `)) selectedVariant = true;
+        if (phase === 'probe') {
+          const move = line.match(/^([a-h][1-8][a-h][1-8][a-z]*):\s+1$/);
+          if (move) probeMoves.add(move[1]);
+          if (/^Nodes searched:\s*\d+$/.test(line)) { probeDone = true; completeProbe(); continue; }
+        }
         if (line === 'uciok' && phase === 'uci') {
           if (variant === 'chess') configure();
           else {
@@ -91,10 +132,10 @@ async function engineRequest({ fen, difficulty = 'medium', variant = 'chess', si
         } else if (line === 'readyok' && phase === 'ready') {
           if (variant !== 'chess' && !selectedVariant) { finish(new Error('Fairy Stockfish did not select the piece-upgrade rules. Update the engine and try again.')); continue; }
           if (!fen) { finish(null, { name }); continue; }
-          phase = 'search';
-          send('ucinewgame');
-          send(`position fen ${fen}`);
-          send(`go movetime ${levels[difficulty].time}`);
+          advance();
+        } else if (line === 'readyok' && phase === 'probe') {
+          probeReady = true;
+          completeProbe();
         } else if (line.startsWith('bestmove ') && phase === 'search') {
           const move = line.split(/\s+/)[1];
           if (!/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(move || '')) { finish(new Error('Engine returned no playable move.')); continue; }

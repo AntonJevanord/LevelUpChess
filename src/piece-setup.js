@@ -1,4 +1,4 @@
-const { PIECES, PIECE_LEVELS, PIECE_SLOTS, PIECE_BUDGETS } = require('./piece-catalog');
+const { PIECES, PIECE_LEVELS, PIECE_SLOTS, PIECE_BUDGETS, MAX_PIECE_BUDGET } = require('./piece-catalog');
 const { START_FEN } = require('./knight-setup');
 
 // Only the placement is needed here; game rules validate the complete FEN.
@@ -31,12 +31,12 @@ const colored = (type, color) => color === 'w' ? type.toUpperCase() : type;
 
 /**
  * Build a new game from an object with exactly one integer level per PIECE_SLOT.
- * The same 1–39 point budget applies independently to each side.
+ * The same 1–45 point budget applies independently to each side.
  * Returns { fen, levels, budget, costs: { w, b }, white, black }.
  */
 function pieceSetupFromLevels(levels, budget) {
-  if (!PIECE_BUDGETS.includes(budget)) throw new Error('Choose an upgrade budget from 1 to 39.');
-  if (!levels || typeof levels !== 'object' || Array.isArray(levels) || Object.keys(levels).length !== PIECE_SLOTS.length) throw new Error('Choose a level for each of the 26 upgradeable starting pieces.');
+  if (!PIECE_BUDGETS.includes(budget)) throw new Error(`Choose an upgrade budget from 1 to ${MAX_PIECE_BUDGET}.`);
+  if (!levels || typeof levels !== 'object' || Array.isArray(levels) || Object.keys(levels).length !== PIECE_SLOTS.length) throw new Error(`Choose a level for each of the ${PIECE_SLOTS.length} upgradeable starting pieces.`);
   const choices = {};
   const costs = { w: 0, b: 0 };
   for (const slot of PIECE_SLOTS) {

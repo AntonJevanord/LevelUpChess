@@ -1,5 +1,5 @@
 import { Chess } from 'chess.js';
-import { VariantGame, PIECE_VARIANT, SUPPORTED_VARIANTS, initVariantRules } from './variant-game';
+import { VariantGame, CURRENT_VARIANT, PIECE_VARIANT, SUPPORTED_VARIANTS, initVariantRules } from './variant-game';
 import { ChessClock } from './clock';
 import { UPGRADE_BUDGETS, PIECE_BUDGETS } from './piece-catalog';
 
@@ -47,7 +47,7 @@ export async function parseSave(text) {
   if (!settings || !['local', 'engine'].includes(settings.opponent) || !['w', 'b'].includes(settings.humanSide) || !['easy', 'medium', 'hard'].includes(settings.difficulty) || typeof settings.flipped !== 'boolean') throw new Error('The saved game settings are damaged.');
   const game = await parsePgn(data.pgn);
   try {
-    const budgets = game.variant === PIECE_VARIANT ? PIECE_BUDGETS : UPGRADE_BUDGETS;
+    const budgets = game.variant === CURRENT_VARIANT ? PIECE_BUDGETS : game.variant === PIECE_VARIANT ? PIECE_BUDGETS.filter(budget => budget <= 39) : UPGRADE_BUDGETS;
     if (settings.upgradeBudget !== undefined && !budgets.includes(settings.upgradeBudget)) throw new Error('The saved game settings are damaged.');
     let clock;
     if (data.clock !== undefined) {

@@ -24,7 +24,7 @@
 </style>
 </head>
 <body>
-  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 04 / NEW POSSIBILITIES</span></header>
+  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 05 / ROOK POWER</span></header>
   <main>
     <section class="intro"><span class="eyebrow">EVERY GREAT GAME STARTS HERE</span><h1>Your next move.</h1><p>Classic chess. Two players. One board.</p></section>
     <div class="game-layout">
@@ -37,14 +37,14 @@
         <section class="panel"><span class="eyebrow">ON THE BOARD</span><h2 id="status" role="status" aria-live="polite"></h2><p id="hint">Select a piece to see its legal moves.</p><div class="actions"><button id="undo" type="button">↶ Undo move</button><button id="flip" type="button">⇅ Flip board</button></div><button id="new-game" class="primary" type="button">New game</button></section>
         <section class="panel engine-panel" aria-labelledby="engine-title">
           <div class="panel-heading"><h3 id="engine-title">Play your way</h3><span>FAIRY STOCKFISH</span></div>
-          <label for="game-mode">Rules</label><select id="game-mode"><option value="chess">Standard chess</option><option value="levelup">Piece upgrades</option><option value="levelup-knight">Version 03 knight rules</option></select>
+          <label for="game-mode">Rules</label><select id="game-mode"><option value="chess">Standard chess</option><option value="levelup-v5">Piece upgrades</option><option value="levelup">Version 04 piece rules</option><option value="levelup-knight">Version 03 knight rules</option></select>
           <div id="piece-upgrade-settings" hidden>
-            <label for="piece-upgrade-budget">Budget per side (1–39)</label><input id="piece-upgrade-budget" type="number" min="1" max="39" step="1" value="6">
+            <label for="piece-upgrade-budget">Budget per side (1–45)</label><input id="piece-upgrade-budget" type="number" min="1" max="45" step="1" value="6">
             <p id="piece-upgrade-status" role="status" aria-live="polite"></p>
-            <label for="piece-family">Choose a piece family</label><select id="piece-family"><option value="pawn">Pawns</option><option value="knight">Knights</option><option value="bishop" selected>Bishops</option><option value="queen">Queens</option></select>
+            <label for="piece-family">Choose a piece family</label><select id="piece-family"><option value="pawn">Pawns</option><option value="knight">Knights</option><option value="bishop" selected>Bishops</option><option value="queen">Queens</option><option value="rook">Rooks</option></select>
             <ul id="piece-upgrade-rules" class="upgrade-rules"></ul>
             <div id="piece-upgrade-choices"></div>
-            <p class="engine-help">Costs equal levels. Both sides share the same budget limit. Choices across all families apply to your next new game. Kings remain royal; rooks and kings use standard rules.</p>
+            <p class="engine-help">Costs equal levels. Both sides share the same budget limit. Choices across all families apply to your next new game. Kings remain royal. Engine play checks support for upgraded pieces before searching.</p>
           </div>
           <div id="upgrade-settings" hidden>
             <ul class="upgrade-rules"><li><strong class="blue-text">1 · Blue</strong> — knight + one empty orthogonal step.</li><li><strong class="orange-text">2 · Orange</strong> — knight + a two-square sideways jump.</li><li><strong class="purple-text">3 · Purple</strong> — extra piece with two-square orthogonal jumps; keep the standard knight.</li></ul>
@@ -75,7 +75,7 @@
           <div class="actions"><button id="export-pgn" type="button">Export PGN</button><button id="open-import" type="button">Import PGN</button></div>
           <p class="save-help">One save slot per browser. Saving again replaces it. Download PGN for a portable backup.</p>
         </section>
-        <div class="coming-next"><span class="eyebrow">THE NEXT LEVEL</span><p>Build an army within your budget.<br>Explore pawn, knight, bishop and queen upgrades.</p><div class="level-dots"><i></i><i></i><i></i></div></div>
+        <div class="coming-next"><span class="eyebrow">THE NEXT LEVEL</span><p>Build an army within your budget.<br>Explore pawn, knight, bishop, queen and rook upgrades.</p><div class="level-dots"><i></i><i></i><i></i></div></div>
       </aside>
     </div>
   </main>
@@ -138,7 +138,11 @@
         { type: "i", name: "orange bishop, level 2", family: "bishop", level: 2, cost: 2, accent: "orange", symbols: { w: "\u2657", b: "\u265D" } },
         { type: "j", name: "purple bishop, level 3", family: "bishop", level: 3, cost: 3, accent: "purple", symbols: { w: "\u2657", b: "\u265D" } },
         { type: "t", name: "orange queen, level 2", family: "queen", level: 2, cost: 2, accent: "orange", symbols: { w: "\u2655", b: "\u265B" } },
-        { type: "u", name: "purple queen, level 3", family: "queen", level: 3, cost: 3, accent: "purple", symbols: { w: "\u2655", b: "\u265B" } }
+        { type: "u", name: "purple queen, level 3", family: "queen", level: 3, cost: 3, accent: "purple", symbols: { w: "\u2655", b: "\u265B" } },
+        { type: "o", name: "purple rook, level 3", family: "rook", level: 3, cost: 3, accent: "purple", symbols: { w: "\u2656", b: "\u265C" } },
+        { type: "l", name: "blue rook, level 1", family: "rook", level: 1, cost: 1, accent: "blue", symbols: { w: "\u2656", b: "\u265C" } },
+        { type: "m", name: "orange rook, level 2", family: "rook", level: 2, cost: 2, accent: "orange", symbols: { w: "\u2656", b: "\u265C" } },
+        { type: "s", name: "blue queen, level 1", family: "queen", level: 1, cost: 1, accent: "blue", symbols: { w: "\u2655", b: "\u265B" } }
       ].map((piece) => [piece.type, Object.freeze({ ...piece, symbols: Object.freeze(piece.symbols) })])));
       var KNIGHT_LEVELS2 = Object.freeze(["n", "e", "f", "g"]);
       var UPGRADE_BUDGETS2 = Object.freeze([1, 2, 3, 4, 5, 6]);
@@ -152,21 +156,24 @@
         pawn: Object.freeze(["p", "a", "c", "d"]),
         knight: KNIGHT_LEVELS2,
         bishop: Object.freeze(["b", "h", "i", "j"]),
-        queen: Object.freeze(["q", null, "t", "u"])
+        queen: Object.freeze(["q", "s", "t", "u"]),
+        rook: Object.freeze(["r", "l", "m", "o"])
       });
-      var PIECE_BUDGETS2 = Object.freeze(Array.from({ length: 39 }, (_, index) => index + 1));
+      var MAX_PIECE_BUDGET2 = 45;
+      var PIECE_BUDGETS2 = Object.freeze(Array.from({ length: MAX_PIECE_BUDGET2 }, (_, index) => index + 1));
       var PIECE_SLOTS2 = Object.freeze([
         ...[..."abcdefgh"].map((file2) => ({ square: file2 + "2", color: "w", family: "pawn" })),
         ...[..."abcdefgh"].map((file2) => ({ square: file2 + "7", color: "b", family: "pawn" })),
         ...KNIGHT_SLOTS2.map((slot) => ({ ...slot, family: "knight" })),
         ...["c1", "f1", "c8", "f8"].map((square) => ({ square, color: square[1] === "1" ? "w" : "b", family: "bishop" })),
-        ...["d1", "d8"].map((square) => ({ square, color: square[1] === "1" ? "w" : "b", family: "queen" }))
+        ...["d1", "d8"].map((square) => ({ square, color: square[1] === "1" ? "w" : "b", family: "queen" })),
+        ...["a1", "h1", "a8", "h8"].map((square) => ({ square, color: square[1] === "1" ? "w" : "b", family: "rook" }))
       ].map((slot) => Object.freeze(slot)));
       var DEFAULT_PIECE_LEVELS2 = Object.freeze(Object.fromEntries(PIECE_SLOTS2.map((slot) => [slot.square, ["b1", "b8"].includes(slot.square) ? 1 : 0])));
       function pieceInfo2(type) {
         return typeof type === "string" && Object.hasOwn(PIECES, type) ? PIECES[type] : void 0;
       }
-      module.exports = { PIECES, pieceInfo: pieceInfo2, KNIGHT_LEVELS: KNIGHT_LEVELS2, UPGRADE_BUDGETS: UPGRADE_BUDGETS2, KNIGHT_SLOTS: KNIGHT_SLOTS2, PIECE_LEVELS: PIECE_LEVELS2, PIECE_BUDGETS: PIECE_BUDGETS2, PIECE_SLOTS: PIECE_SLOTS2, DEFAULT_PIECE_LEVELS: DEFAULT_PIECE_LEVELS2 };
+      module.exports = { PIECES, pieceInfo: pieceInfo2, KNIGHT_LEVELS: KNIGHT_LEVELS2, UPGRADE_BUDGETS: UPGRADE_BUDGETS2, KNIGHT_SLOTS: KNIGHT_SLOTS2, PIECE_LEVELS: PIECE_LEVELS2, PIECE_BUDGETS: PIECE_BUDGETS2, MAX_PIECE_BUDGET: MAX_PIECE_BUDGET2, PIECE_SLOTS: PIECE_SLOTS2, DEFAULT_PIECE_LEVELS: DEFAULT_PIECE_LEVELS2 };
     }
   });
 
@@ -255,7 +262,7 @@
   // src/piece-setup.js
   var require_piece_setup = __commonJS({
     "src/piece-setup.js"(exports, module) {
-      var { PIECES, PIECE_LEVELS: PIECE_LEVELS2, PIECE_SLOTS: PIECE_SLOTS2, PIECE_BUDGETS: PIECE_BUDGETS2 } = require_piece_catalog();
+      var { PIECES, PIECE_LEVELS: PIECE_LEVELS2, PIECE_SLOTS: PIECE_SLOTS2, PIECE_BUDGETS: PIECE_BUDGETS2, MAX_PIECE_BUDGET: MAX_PIECE_BUDGET2 } = require_piece_catalog();
       var { START_FEN } = require_knight_setup();
       function placement(fen) {
         if (typeof fen !== "string") throw new Error("The starting FEN is invalid.");
@@ -283,8 +290,8 @@
       };
       var colored = (type, color) => color === "w" ? type.toUpperCase() : type;
       function pieceSetupFromLevels2(levels, budget) {
-        if (!PIECE_BUDGETS2.includes(budget)) throw new Error("Choose an upgrade budget from 1 to 39.");
-        if (!levels || typeof levels !== "object" || Array.isArray(levels) || Object.keys(levels).length !== PIECE_SLOTS2.length) throw new Error("Choose a level for each of the 26 upgradeable starting pieces.");
+        if (!PIECE_BUDGETS2.includes(budget)) throw new Error(`Choose an upgrade budget from 1 to ${MAX_PIECE_BUDGET2}.`);
+        if (!levels || typeof levels !== "object" || Array.isArray(levels) || Object.keys(levels).length !== PIECE_SLOTS2.length) throw new Error(`Choose a level for each of the ${PIECE_SLOTS2.length} upgradeable starting pieces.`);
         const choices = {};
         const costs = { w: 0, b: 0 };
         for (const slot of PIECE_SLOTS2) {
@@ -8559,17 +8566,22 @@
   // variants/levelup.ini
   var levelup_default = "# Current piece upgrades. The levelup-knight variant preserves the version 03 rules.\n[levelup:chess]\ncustomPiece1 = e:NmW\ncustomPiece2 = f:NsD\ncustomPiece3 = g:WD\ncustomPiece4 = h:BmW\ncustomPiece5 = i:BcfN\ncustomPiece6 = j:BfbR\ncustomPiece7 = t:QmN\ncustomPiece8 = u:QN\ncustomPiece9 = a:ifmHfmDfmWfceF\ncustomPiece10 = c:ifmnDfeWfF\ncustomPiece11 = d:mRceB\npieceToCharTable = PNBRQ.EFGHIJTUACD....Kpnbrq.efghijtuacd....k\n# All pawn levels keep standard promotions. Irreversible moves reset the\n# fifty-move counter; purple's reversible quiet rook moves count toward it.\n# The e flag opts into native en passant rules. Orange's identical quiet and\n# capture diagonals make an empty en passant target a quiet move, not a capture.\npawnTypes = pacd\npromotionPieceTypes = nbrq\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n";
 
+  // variants/levelup-v5.ini
+  var levelup_v5_default = "# Current piece upgrades. The levelup-knight variant preserves the version 03 rules.\n[levelup-v5:chess]\ncustomPiece1 = e:NmW\ncustomPiece2 = f:NsD\ncustomPiece3 = g:WD\ncustomPiece4 = h:BmW\ncustomPiece5 = i:BcfN\ncustomPiece6 = j:BfbR\ncustomPiece7 = t:QmN\ncustomPiece8 = u:QN\ncustomPiece9 = a:ifmHfmDfmWfceF\ncustomPiece10 = c:ifmnDfeWfF\ncustomPiece11 = d:mRceB\ncustomPiece12 = o:RcFcAcNcD\ncustomPiece13 = l:RimD\ncustomPiece14 = m:RcpR\ncustomPiece15 = s:QimNimCimZ\npieceToCharTable = PNBRQ.EFGHIJTUACDOLMSKpnbrq.efghijtuacdolmsk\n# Standard and purple rooks retain their original castling rights. Modern\n# engines accept this legacy spelling as a set; older single-type engines\n# need the server's capability check before playing upgraded-rook games.\ncastlingRookPiece = rlmo\n# Initial-only moves are available while a piece occupies its home two ranks.\ndoubleStepRegionWhite = *1 *2\ndoubleStepRegionBlack = *7 *8\n# All pawn levels keep standard promotions. Irreversible moves reset the\n# fifty-move counter; purple's reversible quiet rook moves count toward it.\n# The e flag opts into native en passant rules. Orange's identical quiet and\n# capture diagonals make an empty en passant target a quiet move, not a capture.\npawnTypes = pacd\npromotionPieceTypes = nbrq\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n";
+
   // src/variant-game.js
   var VARIANT = "levelup-knight";
   var PIECE_VARIANT = "levelup";
-  var SUPPORTED_VARIANTS = Object.freeze([VARIANT, PIECE_VARIANT]);
+  var CURRENT_VARIANT = "levelup-v5";
+  var SUPPORTED_VARIANTS = Object.freeze([VARIANT, PIECE_VARIANT, CURRENT_VARIANT]);
+  var isPieceVariant = (variant) => variant === PIECE_VARIANT || variant === CURRENT_VARIANT;
   var RESULTS = /* @__PURE__ */ new Set(["*", "1-0", "0-1", "1/2-1/2"]);
   var SQUARE = /^[a-h][1-8]$/;
   var ruleModules;
   var initializing;
   function initVariantRules() {
     if (!initializing) {
-      const configs = { [VARIANT]: levelup_knight_default, [PIECE_VARIANT]: levelup_default };
+      const configs = { [VARIANT]: levelup_knight_default, [PIECE_VARIANT]: levelup_default, [CURRENT_VARIANT]: levelup_v5_default };
       initializing = Promise.all(SUPPORTED_VARIANTS.map(async (variant) => {
         const loaded = await ffish_default({
           // Supplying bytes also works from file:// without fetching a WASM file.
@@ -8631,43 +8643,52 @@
   }
   function validStartingFen(fen, variant, rules) {
     if (typeof fen !== "string") return false;
-    const fields = fen.trim().split(/\s+/);
+    const fields = fen.split(" ");
     const ep = fields[3];
     if (!ep || ep === "-") return rules.validateFen(fen, variant) === 1;
-    if (ep.length <= 2) {
-      if (rules.validateFen(fen, variant) !== 1 || !/^[a-h][1-8]$/.test(ep)) return false;
-      const pieces2 = boardPieces(fen);
-      const file3 = ep.charCodeAt(0) - 97;
-      const rank2 = Number(ep[1]);
-      const movedWhite2 = fields[1] === "b";
-      const movedColor = movedWhite2 ? "w" : "b";
-      const at2 = (squareRank) => pieces2[8 - squareRank][file3];
-      if (at2(rank2) || at2(movedWhite2 ? 2 : 7)) return false;
-      const step = movedWhite2 ? 1 : -1;
-      for (let victimRank = rank2 + step; victimRank >= 1 && victimRank <= 8; victimRank += step) {
-        const victim = at2(victimRank);
-        if (victim?.color !== movedColor) continue;
-        const double = rank2 === (movedWhite2 ? 3 : 6) && victimRank === (movedWhite2 ? 4 : 5) && (victim.type === "p" || variant === PIECE_VARIANT && victim.type === "c");
-        const triple = variant === PIECE_VARIANT && victim.type === "a" && victimRank === (movedWhite2 ? 5 : 4) && (movedWhite2 ? rank2 === 3 || rank2 === 4 : rank2 === 5 || rank2 === 6);
-        return double || triple;
-      }
-      return false;
-    }
-    if (variant !== PIECE_VARIANT || !/^(?:[a-h][1-8]){2,3}$/.test(ep)) return false;
+    const targets = ep.match(/[a-h][1-8]/g);
+    if (!targets || targets.join("") !== ep || targets.length > 3) return false;
     const withoutEp = [...fields];
     withoutEp[3] = "-";
     if (rules.validateFen(withoutEp.join(" "), variant) !== 1) return false;
     const file2 = ep[0];
     const movedWhite = fields[1] === "b";
-    const orangeTargets = movedWhite ? [3, 4] : [5, 6];
-    const blueTargets = movedWhite ? [3, 4, 5] : [4, 5, 6];
-    const blue = ep === blueTargets.map((rank2) => file2 + rank2).join("");
-    if (!blue && ep !== orangeTargets.map((rank2) => file2 + rank2).join("")) return false;
+    const movedColor = movedWhite ? "w" : "b";
+    const step = movedWhite ? 1 : -1;
     const pieces = boardPieces(fen);
     const at = (rank2) => pieces[8 - rank2][file2.charCodeAt(0) - 97];
-    const landing = movedWhite ? blue ? 5 : 4 : blue ? 4 : 5;
+    const validSource = (rank2) => movedWhite ? rank2 === 2 || variant === CURRENT_VARIANT && rank2 === 1 : rank2 === 7 || variant === CURRENT_VARIANT && rank2 === 8;
+    if (targets.length === 1) {
+      const rank2 = Number(ep[1]);
+      const marker = at(rank2);
+      if (marker) {
+        if (variant !== CURRENT_VARIANT || marker.type !== "s" || marker.color !== movedColor) return false;
+        const landingFile = file2.charCodeAt(0) - 97;
+        const homeRanks = movedWhite ? [1, 2] : [7, 8];
+        return homeRanks.some((sourceRank) => pieces[8 - sourceRank].some((piece, sourceFile) => {
+          const files = Math.abs(landingFile - sourceFile);
+          const ranks2 = Math.abs(rank2 - sourceRank);
+          const jump = Math.min(files, ranks2) * 10 + Math.max(files, ranks2);
+          return !piece && [12, 13, 23].includes(jump);
+        }));
+      }
+      for (let landing2 = rank2 + step; landing2 >= 1 && landing2 <= 8; landing2 += step) {
+        const victim = at(landing2);
+        if (victim?.color !== movedColor) continue;
+        const distance2 = isPieceVariant(variant) && victim.type === "a" ? 3 : victim.type === "p" || isPieceVariant(variant) && victim.type === "c" ? 2 : 0;
+        const source2 = landing2 - step * distance2;
+        return distance2 > 0 && validSource(source2) && !at(source2) && (rank2 - source2) * step > 0 && (landing2 - rank2) * step > 0;
+      }
+      return false;
+    }
+    if (!isPieceVariant(variant)) return false;
+    const ranks = targets.map((target) => Number(target[1]));
+    if (targets.some((target) => target[0] !== file2) || ranks.some((rank2, i) => i && rank2 !== ranks[i - 1] + 1)) return false;
+    const distance = targets.length;
+    const landing = movedWhite ? ranks.at(-1) : ranks[0];
+    const source = landing - step * distance;
     const pawn = at(landing);
-    return pawn?.type === (blue ? "a" : "c") && pawn.color === (movedWhite ? "w" : "b") && !at(movedWhite ? 2 : 7) && (blue || !at(movedWhite ? 3 : 6));
+    return validSource(source) && !at(source) && pawn?.color === movedColor && pawn.type === (distance === 3 ? "a" : "c") && (distance === 3 || !at(source + step));
   }
   function opponentInCheck(fen, variant, rules) {
     const fields = fen.split(" ");
@@ -8818,7 +8839,7 @@
     isInsufficientMaterial() {
       if (this._board.isInsufficientMaterial()) return true;
       const material = this.board().flat().filter((piece) => piece && piece.type !== "k");
-      return material.length === 1 && (material[0].type === "e" || this.variant === PIECE_VARIANT && material[0].type === "h" || this.variant === VARIANT && material[0].type === "g");
+      return material.length === 1 && (material[0].type === "e" || isPieceVariant(this.variant) && material[0].type === "h" || this.variant === VARIANT && material[0].type === "g");
     }
     isThreefoldRepetition() {
       const current = this._positions.at(-1);
@@ -8971,7 +8992,7 @@
     if (!settings || !["local", "engine"].includes(settings.opponent) || !["w", "b"].includes(settings.humanSide) || !["easy", "medium", "hard"].includes(settings.difficulty) || typeof settings.flipped !== "boolean") throw new Error("The saved game settings are damaged.");
     const game2 = await parsePgn(data.pgn);
     try {
-      const budgets = game2.variant === PIECE_VARIANT ? import_piece_catalog.PIECE_BUDGETS : import_piece_catalog.UPGRADE_BUDGETS;
+      const budgets = game2.variant === CURRENT_VARIANT ? import_piece_catalog.PIECE_BUDGETS : game2.variant === PIECE_VARIANT ? import_piece_catalog.PIECE_BUDGETS.filter((budget) => budget <= 39) : import_piece_catalog.UPGRADE_BUDGETS;
       if (settings.upgradeBudget !== void 0 && !budgets.includes(settings.upgradeBudget)) throw new Error("The saved game settings are damaged.");
       let clock2;
       if (data.clock !== void 0) {
@@ -9011,10 +9032,11 @@
   var pieceStatus = document.querySelector("#piece-upgrade-status");
   var pieceFamily = document.querySelector("#piece-family");
   var familyRules = {
-    pawn: ["Blue: jump 1 or 2 forward, or 3 from the starting rank; capture one diagonal forward.", "Orange: move or capture one forward or diagonally forward; initial two-step needs a clear path.", "Purple: move along any clear rook line; capture along any clear bishop line. All pawn levels promote to Q/R/B/N on the last rank."],
+    pawn: ["Blue: jump 1 or 2 forward, or 3 from the initial region; capture one diagonal forward.", "Orange: move or capture one forward or diagonally forward; initial two-step needs a clear path.", "Purple: move along any clear rook line; capture along any clear bishop line. All pawn levels promote to Q/R/B/N on the last rank."],
     knight: ["Blue: knight moves plus one empty orthogonal step.", "Orange: knight moves plus a two-square sideways jump.", "Purple: keep the knight and add a piece that moves or captures 1 or 2 orthogonally. Two-square moves jump. Extras start on b3/g3 or b6/g6."],
     bishop: ["Blue: bishop moves plus one empty orthogonal step.", "Orange: bishop moves plus capture-only knight jumps two squares forward and one sideways.", "Purple: bishop moves plus vertical rook moves. Replaces the starting bishop."],
-    queen: ["Orange: queen moves plus knight-shaped jumps into empty squares. Captures and attacks still follow queen lines.", "Purple: queen moves plus knight jumps, including captures. Blue queen is still being designed."]
+    queen: ["Blue: normal queen moves plus quiet knight (1,2), camel (1,3), and zebra (2,3) jumps while on your home two ranks.", "Orange: queen moves plus knight-shaped jumps into empty squares. Captures and attacks still follow queen lines.", "Purple: queen moves plus knight jumps, including captures."],
+    rook: ["Blue: normal rook moves plus quiet two-square orthogonal jumps while on your home two ranks.", "Orange: normal rook moves plus captures across exactly one intervening piece, in any rook direction.", "Purple: normal rook moves plus jump-captures anywhere within two squares, including diagonals. These extra jumps require an enemy on the destination.", "Upgraded rooks can castle with their royal king under the usual rules."]
   };
   for (const family of Object.keys(import_piece_catalog2.PIECE_LEVELS)) {
     const group = document.createElement("div");
@@ -9054,7 +9076,7 @@
   var buildingGame = false;
   var activeBudget = 2;
   function setupChoice() {
-    const current = gameMode.value === PIECE_VARIANT;
+    const current = isPieceVariant(gameMode.value);
     const slots = current ? import_piece_catalog2.PIECE_SLOTS : import_piece_catalog2.KNIGHT_SLOTS;
     const prefix = current ? "piece-upgrade" : "upgrade";
     const levels = Object.fromEntries(slots.map((slot) => [slot.square, Number(document.querySelector(`#${prefix}-${slot.square}`).value)]));
@@ -9065,13 +9087,26 @@
   }
   function updateSetup() {
     document.querySelector("#upgrade-settings").hidden = gameMode.value !== VARIANT;
-    document.querySelector("#piece-upgrade-settings").hidden = gameMode.value !== PIECE_VARIANT;
+    document.querySelector("#piece-upgrade-settings").hidden = !isPieceVariant(gameMode.value);
+    const oldRules = gameMode.value === PIECE_VARIANT;
+    const maxBudget = oldRules ? 39 : import_piece_catalog2.MAX_PIECE_BUDGET;
+    pieceBudget.max = String(maxBudget);
+    document.querySelector("label[for=piece-upgrade-budget]").textContent = `Budget per side (1\u2013${maxBudget})`;
+    for (const slot of import_piece_catalog2.PIECE_SLOTS) {
+      const select = document.querySelector(`#piece-upgrade-${slot.square}`);
+      select.disabled = oldRules && slot.family === "rook";
+      for (const option of select.options) option.disabled = oldRules && slot.family === "queen" && option.value === "1";
+      if (select.disabled || select.selectedOptions[0]?.disabled) select.value = "0";
+    }
+    pieceFamily.querySelector("option[value=rook]").disabled = oldRules;
+    if (oldRules && pieceFamily.value === "rook") pieceFamily.value = "bishop";
+    updateFamily();
     const { white, black, budget } = setupChoice();
-    const status = gameMode.value === PIECE_VARIANT ? pieceStatus : upgradeStatus;
-    const validBudget = Number.isInteger(budget) && budget >= 1 && budget <= (gameMode.value === PIECE_VARIANT ? 39 : 6);
+    const status = isPieceVariant(gameMode.value) ? pieceStatus : upgradeStatus;
+    const validBudget = Number.isInteger(budget) && budget >= 1 && budget <= (isPieceVariant(gameMode.value) ? maxBudget : 6);
     const valid = validBudget && white <= budget && black <= budget;
     status.classList.toggle("error", !valid);
-    status.textContent = !validBudget ? "Choose a whole-number budget from 1 to 39." : valid ? `White ${white}/${budget} \xB7 Black ${black}/${budget} upgrade points.` : `Budget exceeded: White ${white}/${budget} \xB7 Black ${black}/${budget}. Reduce upgrades before starting a new game.`;
+    status.textContent = !validBudget ? `Choose a whole-number budget from 1 to ${maxBudget}.` : valid ? `White ${white}/${budget} \xB7 Black ${black}/${budget} upgrade points.` : `Budget exceeded: White ${white}/${budget} \xB7 Black ${black}/${budget}. Reduce upgrades before starting a new game.`;
     return !SUPPORTED_VARIANTS.includes(gameMode.value) || valid;
   }
   var connected = false;
@@ -9415,10 +9450,10 @@
     document.querySelector("#new-game").disabled = true;
     try {
       if (SUPPORTED_VARIANTS.includes(selectedMode)) {
-        const status = selectedMode === PIECE_VARIANT ? pieceStatus : upgradeStatus;
+        const status = isPieceVariant(selectedMode) ? pieceStatus : upgradeStatus;
         status.textContent = "Loading piece-upgrade rules\u2026";
         await initVariantRules();
-        const setup = selectedMode === PIECE_VARIANT ? import_piece_setup.pieceSetupFromLevels : import_knight_setup.setupFromLevels;
+        const setup = isPieceVariant(selectedMode) ? import_piece_setup.pieceSetupFromLevels : import_knight_setup.setupFromLevels;
         next = new VariantGame(setup(levels, budget).fen, selectedMode);
       } else next = new Chess();
       if (request !== replacementGeneration) {
@@ -9442,7 +9477,7 @@
       render();
     } catch (error) {
       if (next !== game) next?.dispose?.();
-      const status = selectedMode === PIECE_VARIANT ? pieceStatus : upgradeStatus;
+      const status = isPieceVariant(selectedMode) ? pieceStatus : upgradeStatus;
       status.textContent = `Could not start the upgrade game: ${error.message}`;
       status.classList.add("error");
       restart.close();
@@ -9528,7 +9563,7 @@
     game.dispose?.();
     game = candidate.game;
     gameMode.value = game.variant || "chess";
-    activeBudget = candidate.settings?.upgradeBudget || (game.variant === PIECE_VARIANT ? 6 : 2);
+    activeBudget = candidate.settings?.upgradeBudget || (isPieceVariant(game.variant) ? 6 : 2);
     if (game.variant === VARIANT) {
       const levels = (0, import_knight_setup.loadInitialSetup)(game.getHeaders().FEN);
       for (const square of upgradeSquares) document.querySelector(`#upgrade-${square}`).value = String(levels[square]);
@@ -9537,11 +9572,11 @@
         activeBudget = Math.max(2, setup.white, setup.black);
       }
       upgradeBudget.value = String(activeBudget);
-    } else if (game.variant === PIECE_VARIANT) {
+    } else if (isPieceVariant(game.variant)) {
       const levels = (0, import_piece_setup.loadPieceSetup)(game.getHeaders().FEN);
       for (const slot of import_piece_catalog2.PIECE_SLOTS) document.querySelector(`#piece-upgrade-${slot.square}`).value = String(levels[slot.square]);
       if (!candidate.settings?.upgradeBudget) {
-        const setup = (0, import_piece_setup.pieceSetupFromLevels)(levels, 39);
+        const setup = (0, import_piece_setup.pieceSetupFromLevels)(levels, import_piece_catalog2.MAX_PIECE_BUDGET);
         activeBudget = Math.max(6, setup.white, setup.black);
       }
       pieceBudget.value = String(activeBudget);
@@ -9585,8 +9620,9 @@
   document.querySelector("#save-game").onclick = () => {
     try {
       settleClock();
-      const clockState = clock.snapshot();
+      let clockState = clock.snapshot();
       settleClock();
+      if (clock.expired && !clockState.expired) clockState = clock.snapshot();
       const save = makeSave(game, { opponent: opponent.value, humanSide: humanSide.value, difficulty: difficulty.value, flipped, ...SUPPORTED_VARIANTS.includes(game.variant) ? { upgradeBudget: activeBudget } : {} }, clockState);
       localStorage.setItem(SAVE_KEY, JSON.stringify(save));
       saveStatus.textContent = `Saved ${game.history().length} half-moves in this browser. Export PGN for a portable backup.`;

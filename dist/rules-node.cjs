@@ -19,11 +19,13 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/variant-game.js
 var variant_game_exports = {};
 __export(variant_game_exports, {
+  CURRENT_VARIANT: () => CURRENT_VARIANT,
   PIECE_VARIANT: () => PIECE_VARIANT,
   SUPPORTED_VARIANTS: () => SUPPORTED_VARIANTS,
   VARIANT: () => VARIANT,
   VariantGame: () => VariantGame,
-  initVariantRules: () => initVariantRules
+  initVariantRules: () => initVariantRules,
+  isPieceVariant: () => isPieceVariant
 });
 module.exports = __toCommonJS(variant_game_exports);
 
@@ -4631,17 +4633,22 @@ var levelup_knight_default = "# Blue adds quiet orthogonal steps; orange adds tw
 // variants/levelup.ini
 var levelup_default = "# Current piece upgrades. The levelup-knight variant preserves the version 03 rules.\n[levelup:chess]\ncustomPiece1 = e:NmW\ncustomPiece2 = f:NsD\ncustomPiece3 = g:WD\ncustomPiece4 = h:BmW\ncustomPiece5 = i:BcfN\ncustomPiece6 = j:BfbR\ncustomPiece7 = t:QmN\ncustomPiece8 = u:QN\ncustomPiece9 = a:ifmHfmDfmWfceF\ncustomPiece10 = c:ifmnDfeWfF\ncustomPiece11 = d:mRceB\npieceToCharTable = PNBRQ.EFGHIJTUACD....Kpnbrq.efghijtuacd....k\n# All pawn levels keep standard promotions. Irreversible moves reset the\n# fifty-move counter; purple's reversible quiet rook moves count toward it.\n# The e flag opts into native en passant rules. Orange's identical quiet and\n# capture diagonals make an empty en passant target a quiet move, not a capture.\npawnTypes = pacd\npromotionPieceTypes = nbrq\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n";
 
+// variants/levelup-v5.ini
+var levelup_v5_default = "# Current piece upgrades. The levelup-knight variant preserves the version 03 rules.\n[levelup-v5:chess]\ncustomPiece1 = e:NmW\ncustomPiece2 = f:NsD\ncustomPiece3 = g:WD\ncustomPiece4 = h:BmW\ncustomPiece5 = i:BcfN\ncustomPiece6 = j:BfbR\ncustomPiece7 = t:QmN\ncustomPiece8 = u:QN\ncustomPiece9 = a:ifmHfmDfmWfceF\ncustomPiece10 = c:ifmnDfeWfF\ncustomPiece11 = d:mRceB\ncustomPiece12 = o:RcFcAcNcD\ncustomPiece13 = l:RimD\ncustomPiece14 = m:RcpR\ncustomPiece15 = s:QimNimCimZ\npieceToCharTable = PNBRQ.EFGHIJTUACDOLMSKpnbrq.efghijtuacdolmsk\n# Standard and purple rooks retain their original castling rights. Modern\n# engines accept this legacy spelling as a set; older single-type engines\n# need the server's capability check before playing upgraded-rook games.\ncastlingRookPiece = rlmo\n# Initial-only moves are available while a piece occupies its home two ranks.\ndoubleStepRegionWhite = *1 *2\ndoubleStepRegionBlack = *7 *8\n# All pawn levels keep standard promotions. Irreversible moves reset the\n# fifty-move counter; purple's reversible quiet rook moves count toward it.\n# The e flag opts into native en passant rules. Orange's identical quiet and\n# capture diagonals make an empty en passant target a quiet move, not a capture.\npawnTypes = pacd\npromotionPieceTypes = nbrq\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n";
+
 // src/variant-game.js
 var VARIANT = "levelup-knight";
 var PIECE_VARIANT = "levelup";
-var SUPPORTED_VARIANTS = Object.freeze([VARIANT, PIECE_VARIANT]);
+var CURRENT_VARIANT = "levelup-v5";
+var SUPPORTED_VARIANTS = Object.freeze([VARIANT, PIECE_VARIANT, CURRENT_VARIANT]);
+var isPieceVariant = (variant) => variant === PIECE_VARIANT || variant === CURRENT_VARIANT;
 var RESULTS = /* @__PURE__ */ new Set(["*", "1-0", "0-1", "1/2-1/2"]);
 var SQUARE = /^[a-h][1-8]$/;
 var ruleModules;
 var initializing;
 function initVariantRules() {
   if (!initializing) {
-    const configs = { [VARIANT]: levelup_knight_default, [PIECE_VARIANT]: levelup_default };
+    const configs = { [VARIANT]: levelup_knight_default, [PIECE_VARIANT]: levelup_default, [CURRENT_VARIANT]: levelup_v5_default };
     initializing = Promise.all(SUPPORTED_VARIANTS.map(async (variant) => {
       const loaded = await ffish_default({
         // Supplying bytes also works from file:// without fetching a WASM file.
@@ -4703,43 +4710,52 @@ function enPassantVictim(board, uci, pieces, movingColor) {
 }
 function validStartingFen(fen, variant, rules) {
   if (typeof fen !== "string") return false;
-  const fields = fen.trim().split(/\s+/);
+  const fields = fen.split(" ");
   const ep = fields[3];
   if (!ep || ep === "-") return rules.validateFen(fen, variant) === 1;
-  if (ep.length <= 2) {
-    if (rules.validateFen(fen, variant) !== 1 || !/^[a-h][1-8]$/.test(ep)) return false;
-    const pieces2 = boardPieces(fen);
-    const file2 = ep.charCodeAt(0) - 97;
-    const rank = Number(ep[1]);
-    const movedWhite2 = fields[1] === "b";
-    const movedColor = movedWhite2 ? "w" : "b";
-    const at2 = (squareRank) => pieces2[8 - squareRank][file2];
-    if (at2(rank) || at2(movedWhite2 ? 2 : 7)) return false;
-    const step = movedWhite2 ? 1 : -1;
-    for (let victimRank = rank + step; victimRank >= 1 && victimRank <= 8; victimRank += step) {
-      const victim = at2(victimRank);
-      if (victim?.color !== movedColor) continue;
-      const double = rank === (movedWhite2 ? 3 : 6) && victimRank === (movedWhite2 ? 4 : 5) && (victim.type === "p" || variant === PIECE_VARIANT && victim.type === "c");
-      const triple = variant === PIECE_VARIANT && victim.type === "a" && victimRank === (movedWhite2 ? 5 : 4) && (movedWhite2 ? rank === 3 || rank === 4 : rank === 5 || rank === 6);
-      return double || triple;
-    }
-    return false;
-  }
-  if (variant !== PIECE_VARIANT || !/^(?:[a-h][1-8]){2,3}$/.test(ep)) return false;
+  const targets = ep.match(/[a-h][1-8]/g);
+  if (!targets || targets.join("") !== ep || targets.length > 3) return false;
   const withoutEp = [...fields];
   withoutEp[3] = "-";
   if (rules.validateFen(withoutEp.join(" "), variant) !== 1) return false;
   const file = ep[0];
   const movedWhite = fields[1] === "b";
-  const orangeTargets = movedWhite ? [3, 4] : [5, 6];
-  const blueTargets = movedWhite ? [3, 4, 5] : [4, 5, 6];
-  const blue = ep === blueTargets.map((rank) => file + rank).join("");
-  if (!blue && ep !== orangeTargets.map((rank) => file + rank).join("")) return false;
+  const movedColor = movedWhite ? "w" : "b";
+  const step = movedWhite ? 1 : -1;
   const pieces = boardPieces(fen);
   const at = (rank) => pieces[8 - rank][file.charCodeAt(0) - 97];
-  const landing = movedWhite ? blue ? 5 : 4 : blue ? 4 : 5;
+  const validSource = (rank) => movedWhite ? rank === 2 || variant === CURRENT_VARIANT && rank === 1 : rank === 7 || variant === CURRENT_VARIANT && rank === 8;
+  if (targets.length === 1) {
+    const rank = Number(ep[1]);
+    const marker = at(rank);
+    if (marker) {
+      if (variant !== CURRENT_VARIANT || marker.type !== "s" || marker.color !== movedColor) return false;
+      const landingFile = file.charCodeAt(0) - 97;
+      const homeRanks = movedWhite ? [1, 2] : [7, 8];
+      return homeRanks.some((sourceRank) => pieces[8 - sourceRank].some((piece, sourceFile) => {
+        const files = Math.abs(landingFile - sourceFile);
+        const ranks2 = Math.abs(rank - sourceRank);
+        const jump = Math.min(files, ranks2) * 10 + Math.max(files, ranks2);
+        return !piece && [12, 13, 23].includes(jump);
+      }));
+    }
+    for (let landing2 = rank + step; landing2 >= 1 && landing2 <= 8; landing2 += step) {
+      const victim = at(landing2);
+      if (victim?.color !== movedColor) continue;
+      const distance2 = isPieceVariant(variant) && victim.type === "a" ? 3 : victim.type === "p" || isPieceVariant(variant) && victim.type === "c" ? 2 : 0;
+      const source2 = landing2 - step * distance2;
+      return distance2 > 0 && validSource(source2) && !at(source2) && (rank - source2) * step > 0 && (landing2 - rank) * step > 0;
+    }
+    return false;
+  }
+  if (!isPieceVariant(variant)) return false;
+  const ranks = targets.map((target) => Number(target[1]));
+  if (targets.some((target) => target[0] !== file) || ranks.some((rank, i) => i && rank !== ranks[i - 1] + 1)) return false;
+  const distance = targets.length;
+  const landing = movedWhite ? ranks.at(-1) : ranks[0];
+  const source = landing - step * distance;
   const pawn = at(landing);
-  return pawn?.type === (blue ? "a" : "c") && pawn.color === (movedWhite ? "w" : "b") && !at(movedWhite ? 2 : 7) && (blue || !at(movedWhite ? 3 : 6));
+  return validSource(source) && !at(source) && pawn?.color === movedColor && pawn.type === (distance === 3 ? "a" : "c") && (distance === 3 || !at(source + step));
 }
 function opponentInCheck(fen, variant, rules) {
   const fields = fen.split(" ");
@@ -4890,7 +4906,7 @@ var VariantGame = class _VariantGame {
   isInsufficientMaterial() {
     if (this._board.isInsufficientMaterial()) return true;
     const material = this.board().flat().filter((piece) => piece && piece.type !== "k");
-    return material.length === 1 && (material[0].type === "e" || this.variant === PIECE_VARIANT && material[0].type === "h" || this.variant === VARIANT && material[0].type === "g");
+    return material.length === 1 && (material[0].type === "e" || isPieceVariant(this.variant) && material[0].type === "h" || this.variant === VARIANT && material[0].type === "g");
   }
   isThreefoldRepetition() {
     const current = this._positions.at(-1);
@@ -4982,11 +4998,13 @@ var VariantGame = class _VariantGame {
 };
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  CURRENT_VARIANT,
   PIECE_VARIANT,
   SUPPORTED_VARIANTS,
   VARIANT,
   VariantGame,
-  initVariantRules
+  initVariantRules,
+  isPieceVariant
 });
 /*! ffish-es6 0.7.10 is GPL-3.0. License: dist/ffish-LICENSE.txt.
  * Corresponding source: vendor/ffish-es6-0.7.10-source.tar.gz.

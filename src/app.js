@@ -1,6 +1,6 @@
 import { Chess } from 'chess.js';
-import { VariantGame, VARIANT, PIECE_VARIANT, SUPPORTED_VARIANTS, initVariantRules } from './variant-game';
-import { pieceInfo, KNIGHT_LEVELS, KNIGHT_SLOTS, PIECE_LEVELS, PIECE_SLOTS, DEFAULT_PIECE_LEVELS } from './piece-catalog';
+import { VariantGame, VARIANT, PIECE_VARIANT, CURRENT_VARIANT, isPieceVariant, SUPPORTED_VARIANTS, initVariantRules } from './variant-game';
+import { pieceInfo, KNIGHT_LEVELS, KNIGHT_SLOTS, PIECE_LEVELS, PIECE_SLOTS, DEFAULT_PIECE_LEVELS, MAX_PIECE_BUDGET } from './piece-catalog';
 import { setupFromLevels, loadInitialSetup } from './knight-setup';
 import { pieceSetupFromLevels, loadPieceSetup } from './piece-setup';
 import { ChessClock, CLOCK_CONTROLS, formatClock } from './clock';
@@ -25,10 +25,11 @@ const pieceBudget = document.querySelector('#piece-upgrade-budget');
 const pieceStatus = document.querySelector('#piece-upgrade-status');
 const pieceFamily = document.querySelector('#piece-family');
 const familyRules = {
-  pawn: ['Blue: jump 1 or 2 forward, or 3 from the starting rank; capture one diagonal forward.', 'Orange: move or capture one forward or diagonally forward; initial two-step needs a clear path.', 'Purple: move along any clear rook line; capture along any clear bishop line. All pawn levels promote to Q/R/B/N on the last rank.'],
+  pawn: ['Blue: jump 1 or 2 forward, or 3 from the initial region; capture one diagonal forward.', 'Orange: move or capture one forward or diagonally forward; initial two-step needs a clear path.', 'Purple: move along any clear rook line; capture along any clear bishop line. All pawn levels promote to Q/R/B/N on the last rank.'],
   knight: ['Blue: knight moves plus one empty orthogonal step.', 'Orange: knight moves plus a two-square sideways jump.', 'Purple: keep the knight and add a piece that moves or captures 1 or 2 orthogonally. Two-square moves jump. Extras start on b3/g3 or b6/g6.'],
   bishop: ['Blue: bishop moves plus one empty orthogonal step.', 'Orange: bishop moves plus capture-only knight jumps two squares forward and one sideways.', 'Purple: bishop moves plus vertical rook moves. Replaces the starting bishop.'],
-  queen: ['Orange: queen moves plus knight-shaped jumps into empty squares. Captures and attacks still follow queen lines.', 'Purple: queen moves plus knight jumps, including captures. Blue queen is still being designed.'],
+  queen: ['Blue: normal queen moves plus quiet knight (1,2), camel (1,3), and zebra (2,3) jumps while on your home two ranks.', 'Orange: queen moves plus knight-shaped jumps into empty squares. Captures and attacks still follow queen lines.', 'Purple: queen moves plus knight jumps, including captures.'],
+  rook: ['Blue: normal rook moves plus quiet two-square orthogonal jumps while on your home two ranks.', 'Orange: normal rook moves plus captures across exactly one intervening piece, in any rook direction.', 'Purple: normal rook moves plus jump-captures anywhere within two squares, including diagonals. These extra jumps require an enemy on the destination.', 'Upgraded rooks can castle with their royal king under the usual rules.'],
 };
 for (const family of Object.keys(PIECE_LEVELS)) {
   const group = document.createElement('div');
@@ -68,7 +69,7 @@ let replacementGeneration = 0;
 let buildingGame = false;
 let activeBudget = 2;
 function setupChoice() {
-  const current = gameMode.value === PIECE_VARIANT;
+  const current = isPieceVariant(gameMode.value);
   const slots = current ? PIECE_SLOTS : KNIGHT_SLOTS;
   const prefix = current ? 'piece-upgrade' : 'upgrade';
   const levels = Object.fromEntries(slots.map(slot => [slot.square, Number(document.querySelector(`#${prefix}-${slot.square}`).value)]));
@@ -79,13 +80,26 @@ function setupChoice() {
 }
 function updateSetup() {
   document.querySelector('#upgrade-settings').hidden = gameMode.value !== VARIANT;
-  document.querySelector('#piece-upgrade-settings').hidden = gameMode.value !== PIECE_VARIANT;
+  document.querySelector('#piece-upgrade-settings').hidden = !isPieceVariant(gameMode.value);
+  const oldRules = gameMode.value === PIECE_VARIANT;
+  const maxBudget = oldRules ? 39 : MAX_PIECE_BUDGET;
+  pieceBudget.max = String(maxBudget);
+  document.querySelector('label[for=piece-upgrade-budget]').textContent = `Budget per side (1–${maxBudget})`;
+  for (const slot of PIECE_SLOTS) {
+    const select = document.querySelector(`#piece-upgrade-${slot.square}`);
+    select.disabled = oldRules && slot.family === 'rook';
+    for (const option of select.options) option.disabled = oldRules && slot.family === 'queen' && option.value === '1';
+    if (select.disabled || select.selectedOptions[0]?.disabled) select.value = '0';
+  }
+  pieceFamily.querySelector('option[value=rook]').disabled = oldRules;
+  if (oldRules && pieceFamily.value === 'rook') pieceFamily.value = 'bishop';
+  updateFamily();
   const { white, black, budget } = setupChoice();
-  const status = gameMode.value === PIECE_VARIANT ? pieceStatus : upgradeStatus;
-  const validBudget = Number.isInteger(budget) && budget >= 1 && budget <= (gameMode.value === PIECE_VARIANT ? 39 : 6);
+  const status = isPieceVariant(gameMode.value) ? pieceStatus : upgradeStatus;
+  const validBudget = Number.isInteger(budget) && budget >= 1 && budget <= (isPieceVariant(gameMode.value) ? maxBudget : 6);
   const valid = validBudget && white <= budget && black <= budget;
   status.classList.toggle('error', !valid);
-  status.textContent = !validBudget ? 'Choose a whole-number budget from 1 to 39.' : valid ? `White ${white}/${budget} · Black ${black}/${budget} upgrade points.` : `Budget exceeded: White ${white}/${budget} · Black ${black}/${budget}. Reduce upgrades before starting a new game.`;
+  status.textContent = !validBudget ? `Choose a whole-number budget from 1 to ${maxBudget}.` : valid ? `White ${white}/${budget} · Black ${black}/${budget} upgrade points.` : `Budget exceeded: White ${white}/${budget} · Black ${black}/${budget}. Reduce upgrades before starting a new game.`;
   return !SUPPORTED_VARIANTS.includes(gameMode.value) || valid;
 }
 
@@ -421,10 +435,10 @@ async function newGame() {
   document.querySelector('#new-game').disabled = true;
   try {
     if (SUPPORTED_VARIANTS.includes(selectedMode)) {
-      const status = selectedMode === PIECE_VARIANT ? pieceStatus : upgradeStatus;
+      const status = isPieceVariant(selectedMode) ? pieceStatus : upgradeStatus;
       status.textContent = 'Loading piece-upgrade rules…';
       await initVariantRules();
-      const setup = selectedMode === PIECE_VARIANT ? pieceSetupFromLevels : setupFromLevels;
+      const setup = isPieceVariant(selectedMode) ? pieceSetupFromLevels : setupFromLevels;
       next = new VariantGame(setup(levels, budget).fen, selectedMode);
     } else next = new Chess();
     if (request !== replacementGeneration) { next.dispose?.(); return; }
@@ -445,7 +459,7 @@ async function newGame() {
     render();
   } catch (error) {
     if (next !== game) next?.dispose?.();
-    const status = selectedMode === PIECE_VARIANT ? pieceStatus : upgradeStatus;
+    const status = isPieceVariant(selectedMode) ? pieceStatus : upgradeStatus;
     status.textContent = `Could not start the upgrade game: ${error.message}`;
     status.classList.add('error');
     restart.close();
@@ -516,7 +530,7 @@ function applyGame(candidate) {
   game.dispose?.();
   game = candidate.game;
   gameMode.value = game.variant || 'chess';
-  activeBudget = candidate.settings?.upgradeBudget || (game.variant === PIECE_VARIANT ? 6 : 2);
+  activeBudget = candidate.settings?.upgradeBudget || (isPieceVariant(game.variant) ? 6 : 2);
   if (game.variant === VARIANT) {
     const levels = loadInitialSetup(game.getHeaders().FEN);
     for (const square of upgradeSquares) document.querySelector(`#upgrade-${square}`).value = String(levels[square]);
@@ -525,11 +539,11 @@ function applyGame(candidate) {
       activeBudget = Math.max(2, setup.white, setup.black);
     }
     upgradeBudget.value = String(activeBudget);
-  } else if (game.variant === PIECE_VARIANT) {
+  } else if (isPieceVariant(game.variant)) {
     const levels = loadPieceSetup(game.getHeaders().FEN);
     for (const slot of PIECE_SLOTS) document.querySelector(`#piece-upgrade-${slot.square}`).value = String(levels[slot.square]);
     if (!candidate.settings?.upgradeBudget) {
-      const setup = pieceSetupFromLevels(levels, 39);
+      const setup = pieceSetupFromLevels(levels, MAX_PIECE_BUDGET);
       activeBudget = Math.max(6, setup.white, setup.black);
     }
     pieceBudget.value = String(activeBudget);
@@ -573,8 +587,9 @@ function proposeGame(candidate) {
 document.querySelector('#save-game').onclick = () => {
   try {
     settleClock();
-    const clockState = clock.snapshot();
+    let clockState = clock.snapshot();
     settleClock();
+    if (clock.expired && !clockState.expired) clockState = clock.snapshot();
     const save = makeSave(game, { opponent: opponent.value, humanSide: humanSide.value, difficulty: difficulty.value, flipped, ...(SUPPORTED_VARIANTS.includes(game.variant) ? { upgradeBudget: activeBudget } : {}) }, clockState);
     localStorage.setItem(SAVE_KEY, JSON.stringify(save));
     saveStatus.textContent = `Saved ${game.history().length} half-moves in this browser. Export PGN for a portable backup.`;

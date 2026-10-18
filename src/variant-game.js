@@ -6,10 +6,13 @@ import Module from 'ffish-es6';
 import wasmBase64 from 'variant-wasm';
 import variantConfig from '../variants/levelup-knight.ini';
 import pieceVariantConfig from '../variants/levelup.ini';
+import currentVariantConfig from '../variants/levelup-v5.ini';
 
 export const VARIANT = 'levelup-knight';
 export const PIECE_VARIANT = 'levelup';
-export const SUPPORTED_VARIANTS = Object.freeze([VARIANT, PIECE_VARIANT]);
+export const CURRENT_VARIANT = 'levelup-v5';
+export const SUPPORTED_VARIANTS = Object.freeze([VARIANT, PIECE_VARIANT, CURRENT_VARIANT]);
+export const isPieceVariant = variant => variant === PIECE_VARIANT || variant === CURRENT_VARIANT;
 
 const RESULTS = new Set(['*', '1-0', '0-1', '1/2-1/2']);
 const SQUARE = /^[a-h][1-8]$/;
@@ -18,7 +21,7 @@ let initializing;
 
 export function initVariantRules() {
   if (!initializing) {
-    const configs = { [VARIANT]: variantConfig, [PIECE_VARIANT]: pieceVariantConfig };
+    const configs = { [VARIANT]: variantConfig, [PIECE_VARIANT]: pieceVariantConfig, [CURRENT_VARIANT]: currentVariantConfig };
     // Fairy Stockfish shares movement tables across boards inside one module.
     // Isolate rule versions so opening an old game cannot change a current one.
     initializing = Promise.all(SUPPORTED_VARIANTS.map(async variant => {
@@ -92,54 +95,65 @@ function enPassantVictim(board, uci, pieces, movingColor) {
 
 function validStartingFen(fen, variant, rules) {
   if (typeof fen !== 'string') return false;
-  const fields = fen.trim().split(/\s+/);
+  const fields = fen.split(' ');
   const ep = fields[3];
   if (!ep || ep === '-') return rules.validateFen(fen, variant) === 1;
-  if (ep.length <= 2) {
-    if (rules.validateFen(fen, variant) !== 1 || !/^[a-h][1-8]$/.test(ep)) return false;
-    const pieces = boardPieces(fen);
-    const file = ep.charCodeAt(0) - 97;
-    const rank = Number(ep[1]);
-    const movedWhite = fields[1] === 'b';
-    const movedColor = movedWhite ? 'w' : 'b';
-    const at = squareRank => pieces[8 - squareRank][file];
-    if (at(rank) || at(movedWhite ? 2 : 7)) return false;
-    // Single-target native FEN takes the nearest opposing piece behind the
-    // target as its victim. A forged target must never let it capture a king
-    // or another non-pawn. Preserve ordinary and custom pawn target subsets.
-    const step = movedWhite ? 1 : -1;
-    for (let victimRank = rank + step; victimRank >= 1 && victimRank <= 8; victimRank += step) {
-      const victim = at(victimRank);
-      if (victim?.color !== movedColor) continue;
-      const double = rank === (movedWhite ? 3 : 6) && victimRank === (movedWhite ? 4 : 5)
-        && (victim.type === 'p' || variant === PIECE_VARIANT && victim.type === 'c');
-      const triple = variant === PIECE_VARIANT && victim.type === 'a'
-        && victimRank === (movedWhite ? 5 : 4)
-        && (movedWhite ? rank === 3 || rank === 4 : rank === 5 || rank === 6);
-      return double || triple;
-    }
-    return false;
-  }
-  // The library rejects its own multi-target FEN syntax in its generic
-  // validator. Validate every other field, then check these exact native rights.
-  if (variant !== PIECE_VARIANT || !/^(?:[a-h][1-8]){2,3}$/.test(ep)) return false;
+  const targets = ep.match(/[a-h][1-8]/g);
+  if (!targets || targets.join('') !== ep || targets.length > 3) return false;
   const withoutEp = [...fields];
   withoutEp[3] = '-';
   if (rules.validateFen(withoutEp.join(' '), variant) !== 1) return false;
   const file = ep[0];
   const movedWhite = fields[1] === 'b';
-  const orangeTargets = movedWhite ? [3, 4] : [5, 6];
-  const blueTargets = movedWhite ? [3, 4, 5] : [4, 5, 6];
-  const blue = ep === blueTargets.map(rank => file + rank).join('');
-  if (!blue && ep !== orangeTargets.map(rank => file + rank).join('')) return false;
+  const movedColor = movedWhite ? 'w' : 'b';
+  const step = movedWhite ? 1 : -1;
   const pieces = boardPieces(fen);
   const at = rank => pieces[8 - rank][file.charCodeAt(0) - 97];
-  const landing = movedWhite ? blue ? 5 : 4 : blue ? 4 : 5;
+  const validSource = rank => movedWhite
+    ? rank === 2 || variant === CURRENT_VARIANT && rank === 1
+    : rank === 7 || variant === CURRENT_VARIANT && rank === 8;
+  if (targets.length === 1) {
+    const rank = Number(ep[1]);
+    const marker = at(rank);
+    if (marker) {
+      // An initial non-ray jump marks its occupied landing square in native
+      // FEN. For S this is inert: en passant can only target an empty square.
+      // Accept only the current blue queen and a plausible quiet home jump.
+      if (variant !== CURRENT_VARIANT || marker.type !== 's' || marker.color !== movedColor) return false;
+      const landingFile = file.charCodeAt(0) - 97;
+      const homeRanks = movedWhite ? [1, 2] : [7, 8];
+      return homeRanks.some(sourceRank => pieces[8 - sourceRank].some((piece, sourceFile) => {
+        const files = Math.abs(landingFile - sourceFile);
+        const ranks = Math.abs(rank - sourceRank);
+        const jump = Math.min(files, ranks) * 10 + Math.max(files, ranks);
+        return !piece && [12, 13, 23].includes(jump);
+      }));
+    }
+    // Native single-target FEN captures the nearest opposing piece behind it.
+    // Reject invented rights that would remove a royal king or another piece.
+    for (let landing = rank + step; landing >= 1 && landing <= 8; landing += step) {
+      const victim = at(landing);
+      if (victim?.color !== movedColor) continue;
+      const distance = isPieceVariant(variant) && victim.type === 'a' ? 3
+        : victim.type === 'p' || isPieceVariant(variant) && victim.type === 'c' ? 2 : 0;
+      const source = landing - step * distance;
+      return distance > 0 && validSource(source) && !at(source)
+        && (rank - source) * step > 0 && (landing - rank) * step > 0;
+    }
+    return false;
+  }
+  // The generic validator rejects native multi-target notation. Its complete
+  // path includes the landing square, so verify the exact initial pawn leap.
+  if (!isPieceVariant(variant)) return false;
+  const ranks = targets.map(target => Number(target[1]));
+  if (targets.some(target => target[0] !== file) || ranks.some((rank, i) => i && rank !== ranks[i - 1] + 1)) return false;
+  const distance = targets.length;
+  const landing = movedWhite ? ranks.at(-1) : ranks[0];
+  const source = landing - step * distance;
   const pawn = at(landing);
-  return pawn?.type === (blue ? 'a' : 'c')
-    && pawn.color === (movedWhite ? 'w' : 'b')
-    && !at(movedWhite ? 2 : 7)
-    && (blue || !at(movedWhite ? 3 : 6));
+  return validSource(source) && !at(source)
+    && pawn?.color === movedColor && pawn.type === (distance === 3 ? 'a' : 'c')
+    && (distance === 3 || !at(source + step));
 }
 
 function opponentInCheck(fen, variant, rules) {
@@ -292,7 +306,7 @@ export class VariantGame {
     // F can mate: Kc2/Fc1 against Ka1 is a checkmate position.
     const material = this.board().flat().filter(piece => piece && piece.type !== 'k');
     return material.length === 1 && (material[0].type === 'e'
-      || this.variant === PIECE_VARIANT && material[0].type === 'h'
+      || isPieceVariant(this.variant) && material[0].type === 'h'
       || this.variant === VARIANT && material[0].type === 'g');
   }
   isThreefoldRepetition() {

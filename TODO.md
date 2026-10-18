@@ -74,10 +74,30 @@ Linux integration was verified with an upstream Fairy Stockfish source build. Th
 - [x] User playtest confirmed version 04 works; blue queen remains deferred.
 - [ ] Playtest current pawn promotions, en passant, mixed armies, and budgets on Windows.
 - [ ] Playtest bishop/queen upgrades and the improved purple knight with the bundled engine.
-- [ ] Confirm balance and settle the blue queen's movement.
-- [ ] Define supported rook upgrades and validate custom castling with the Windows engine.
+- [x] Choose supported blue-queen home-rank jumps for version 05 with the project owner.
+- [x] Define supported rook upgrades and implement custom castling in version 05.
 - [ ] Design per-side royal king upgrades, retaining checkmate and defining check rules for any extra king.
 - [x] Preserve version 04 as `v0.4.0`; continue remaining upgrades on `version_05`.
+
+## Version 05 — home-rank abilities and rooks
+
+- [x] Add blue queens: normal queen plus quiet (1,2), (1,3), and (2,3) jumps on the home two ranks.
+- [x] Add blue rooks: normal rook plus quiet two-square orthogonal jumps on the home two ranks.
+- [x] Add orange rooks: normal rook plus captures across exactly one intervening piece.
+- [x] Add purple rooks: normal rook plus jump-captures throughout the surrounding 5×5 area.
+- [x] Let all upgraded rooks castle with the royal king under normal safety and castling-right rules.
+- [x] Add all rook and queen levels to setup, with 30 starting choices and a 1–45 point budget per side.
+- [x] Preserve version 04 and version 03 profiles, saves, PGNs, and original budgets.
+- [x] Keep standard pawn promotions and shared browser/native configurations.
+- [x] Check required engine abilities before searching; explain incompatible engines and retain local play.
+- [x] Keep saved clock state and time-forfeit results consistent when saving at the deadline.
+- [x] Preserve blue-queen jumps through FEN, PGN, saves, and engine replies.
+- [x] Pass 250 checks: 130 unit tests and 120 browser/integration tests, including native engine comparisons and play.
+- [ ] Playtest home-rank jumps, screen captures, and custom castling with a current Windows engine.
+- [ ] Playtest mixed armies, budgets, saves, undo, and timed games on Windows.
+- [ ] Balance upgrades and their costs after playtesting.
+
+The blue queen's draft back-rank teleport remains an optional engine extension. Version 05 uses supported conditional jumps instead. Royal king upgrades remain future work; each side must keep a clear checkmate rule.
 
 ## Later versions
 
