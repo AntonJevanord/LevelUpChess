@@ -1,13 +1,14 @@
 import { Chess } from 'chess.js';
+import { VariantGame, VARIANT, initVariantRules } from './variant-game';
 import { ChessClock, CLOCK_CONTROLS, formatClock } from './clock';
 import { SAVE_KEY, MAX_PGN_SIZE, parsePgn, exportPgn, makeSave, parseSave } from './saved-games';
 
-const game = new Chess();
+let game = new Chess();
 const board = document.querySelector('#board');
 const promotion = document.querySelector('#promotion');
 const restart = document.querySelector('#restart');
-const symbols = { w: { k: '♔', q: '♕', r: '♖', b: '♗', n: '♘', p: '♙' }, b: { k: '♚', q: '♛', r: '♜', b: '♝', n: '♞', p: '♟' } };
-const names = { k: 'king', q: 'queen', r: 'rook', b: 'bishop', n: 'knight', p: 'pawn' };
+const symbols = { w: { k: '♔', q: '♕', r: '♖', b: '♗', n: '♘', p: '♙', e: '♘' }, b: { k: '♚', q: '♛', r: '♜', b: '♝', n: '♞', p: '♟', e: '♞' } };
+const names = { k: 'king', q: 'queen', r: 'rook', b: 'bishop', n: 'knight', p: 'pawn', e: 'blue knight, level 1' };
 let selected = null;
 let flipped = false;
 let pending = null;
@@ -15,6 +16,45 @@ const side = color => color === 'w' ? 'White' : 'Black';
 const opponent = document.querySelector('#opponent');
 const humanSide = document.querySelector('#human-side');
 const difficulty = document.querySelector('#difficulty');
+const gameMode = document.querySelector('#game-mode');
+const upgradeBudget = document.querySelector('#upgrade-budget');
+const upgradeStatus = document.querySelector('#upgrade-status');
+const upgradeSquares = ['b1', 'g1', 'b8', 'g8'];
+let replacementGeneration = 0;
+let buildingGame = false;
+let activeBudget = 2;
+function setupChoice() {
+  const squares = upgradeSquares.filter(square => document.querySelector(`#upgrade-${square}`).value === '1');
+  const white = squares.filter(square => square[1] === '1').length;
+  const black = squares.length - white;
+  const budget = Number(upgradeBudget.value);
+  return { squares, white, black, budget };
+}
+function updateSetup() {
+  document.querySelector('#upgrade-settings').hidden = gameMode.value !== VARIANT;
+  const { white, black, budget } = setupChoice();
+  const valid = white <= budget && black <= budget;
+  upgradeStatus.classList.toggle('error', !valid);
+  upgradeStatus.textContent = valid ? `White ${white}/${budget} · Black ${black}/${budget} upgrade points. Setup applies to your next new game.` : `Budget exceeded: White ${white}/${budget} · Black ${black}/${budget}. Reduce upgrades before starting a new game.`;
+  return gameMode.value !== VARIANT || valid;
+}
+function upgradeFen(squares) {
+  const rows = new Chess().board();
+  return rows.map((row, rank) => {
+    let fen = '';
+    let empty = 0;
+    row.forEach((piece, file) => {
+      if (!piece) { empty++; return; }
+      if (empty) { fen += empty; empty = 0; }
+      const square = 'abcdefgh'[file] + (8 - rank);
+      const type = squares.includes(square) ? 'e' : piece.type;
+      fen += piece.color === 'w' ? type.toUpperCase() : type;
+    });
+    if (empty) fen += empty;
+    return fen;
+  }).join('/') + ' w KQkq - 0 1';
+}
+
 let connected = false;
 let engineBusy = false;
 let enginePaused = false;
@@ -161,7 +201,7 @@ async function maybeEngineMove() {
   try {
     const data = await engineFetch('/api/engine/move', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ fen, difficulty: difficulty.value }),
+      body: JSON.stringify({ fen, difficulty: difficulty.value, variant: game.variant || 'chess' }),
     });
     if (request !== generation || game.fen() !== fen) return;
     if (typeof data.move !== 'string' || !/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(data.move)) throw new Error('Engine returned an invalid move.');
@@ -201,9 +241,15 @@ function render(focusSquare) {
     if (piece?.type === 'k' && piece.color === game.turn() && game.isCheck()) button.classList.add('check');
     if (piece) {
       const icon = document.createElement('span');
-      icon.className = `piece ${piece.color === 'w' ? 'white-piece' : 'black-piece'}`;
+      icon.className = `piece ${piece.color === 'w' ? 'white-piece' : 'black-piece'}${piece.type === 'e' ? ' upgraded' : ''}`;
       icon.textContent = symbols[piece.color][piece.type];
       button.append(icon);
+      if (piece.type === 'e') {
+        const badge = document.createElement('span');
+        badge.className = 'piece-level';
+        badge.textContent = 'L1';
+        button.append(badge);
+      }
     }
     if (legal.some(move => move.to === square)) {
       const marker = document.createElement('span');
@@ -272,13 +318,18 @@ function render(focusSquare) {
     document.querySelector('#top-player').textContent = topColor === humanSide.value ? `You · ${side(topColor)}` : `Fairy Stockfish · ${side(topColor)}`;
     document.querySelector('#bottom-player').textContent = bottomColor === humanSide.value ? `You · ${side(bottomColor)}` : `Fairy Stockfish · ${side(bottomColor)}`;
   }
+  document.querySelectorAll('.player .level').forEach((label, index) => {
+    const color = index === 0 ? (flipped ? 'w' : 'b') : (flipped ? 'b' : 'w');
+    const count = game.board().flat().filter(piece => piece?.color === color && piece.type === 'e').length;
+    label.textContent = count ? `BLUE ×${count}` : 'LEVEL 0';
+  });
   updateClocks();
   void maybeEngineMove();
 }
 
 function selectSquare(square) {
   settleClock();
-  if (isFinished() || !canPlay() || pending || (opponent.value === 'engine' && game.turn() !== humanSide.value)) return;
+  if (buildingGame || isFinished() || !canPlay() || pending || (opponent.value === 'engine' && game.turn() !== humanSide.value)) return;
   const moves = selected ? game.moves({ square: selected, verbose: true }).filter(move => move.to === square) : [];
   if (moves.length) {
     if (moves.some(move => move.promotion)) {
@@ -319,22 +370,53 @@ document.querySelector('#undo').onclick = () => {
   render();
 };
 document.querySelector('#flip').onclick = () => { flipped = !flipped; render(); };
-function newGame() {
-  cancelEngine();
-  enginePaused = false;
-  game.reset();
-  clock.reset(timeControl.value, game.turn());
-  clockNotice = '';
-  handledFlag = null;
-  selected = null;
-  pending = null;
-  promotion.close();
-  restart.close();
-  if (opponent.value === 'engine') engineMessage(connected ? `${engineName} connected.` : 'Connect the engine to begin.');
-  render();
+async function newGame() {
+  if (buildingGame || !updateSetup()) return;
+  const request = ++replacementGeneration;
+  const selectedMode = gameMode.value;
+  const selectedTime = timeControl.value;
+  const { squares, budget } = setupChoice();
+  let next;
+  buildingGame = true;
+  document.querySelector('#new-game').disabled = true;
+  try {
+    if (selectedMode === VARIANT) {
+      upgradeStatus.textContent = 'Loading blue-knight rules…';
+      await initVariantRules();
+      next = new VariantGame(upgradeFen(squares));
+    } else next = new Chess();
+    if (request !== replacementGeneration) { next.dispose?.(); return; }
+    cancelEngine();
+    enginePaused = false;
+    game.dispose?.();
+    game = next;
+    activeBudget = budget;
+    clock.reset(selectedTime, game.turn());
+    clockNotice = '';
+    handledFlag = null;
+    selected = null;
+    pending = null;
+    promotion.close();
+    restart.close();
+    updateSetup();
+    if (opponent.value === 'engine') engineMessage(connected ? `${engineName} connected.` : 'Connect the engine to begin.');
+    render();
+  } catch (error) {
+    if (next !== game) next?.dispose?.();
+    upgradeStatus.textContent = `Could not start the blue-knight game: ${error.message}`;
+    upgradeStatus.classList.add('error');
+    restart.close();
+  } finally {
+    buildingGame = false;
+    document.querySelector('#new-game').disabled = false;
+  }
 }
-document.querySelector('#new-game').onclick = () => { if (game.history().length || engineBusy || clock.started) restart.showModal(); else newGame(); };
-document.querySelector('#cancel-restart').onclick = () => restart.close();
+document.querySelector('#new-game').onclick = () => {
+  if (!updateSetup()) return;
+  if (game.history().length || engineBusy || clock.started) restart.showModal(); else void newGame();
+};
+document.querySelector('#cancel-restart').onclick = () => { replacementGeneration++; restart.close(); updateSetup(); };
+restart.addEventListener('cancel', () => { replacementGeneration++; updateSetup(); });
 document.querySelector('#confirm-restart').onclick = newGame;
 opponent.onchange = () => {
   pauseClocks();
@@ -387,7 +469,20 @@ function refreshSaveAvailability() {
 function applyGame(candidate) {
   cancelEngine();
   // Validation happens in a separate Chess instance before this mutates the board.
-  game.loadPgn(candidate.game.pgn());
+  replacementGeneration++;
+  game.dispose?.();
+  game = candidate.game;
+  gameMode.value = game.variant || 'chess';
+  activeBudget = candidate.settings?.upgradeBudget || 2;
+  if (game.variant === VARIANT) {
+    upgradeBudget.value = String(activeBudget);
+    const rows = game.getHeaders().FEN.split(' ')[0].split('/').map(rank => [...rank].flatMap(char => /[1-8]/.test(char) ? Array(Number(char)).fill(null) : [char]));
+    for (const square of upgradeSquares) {
+      const char = rows[8 - Number(square[1])]['abcdefgh'.indexOf(square[0])];
+      document.querySelector(`#upgrade-${square}`).value = char?.toLowerCase() === 'e' ? '1' : '0';
+    }
+  }
+  updateSetup();
   if (candidate.clock) clock.restore(candidate.clock, game.history().length);
   else clock.reset('none', game.turn());
   handledFlag = null;
@@ -428,17 +523,20 @@ document.querySelector('#save-game').onclick = () => {
     settleClock();
     const clockState = clock.snapshot();
     settleClock();
-    const save = makeSave(game, { opponent: opponent.value, humanSide: humanSide.value, difficulty: difficulty.value, flipped }, clockState);
+    const save = makeSave(game, { opponent: opponent.value, humanSide: humanSide.value, difficulty: difficulty.value, flipped, ...(game.variant === VARIANT ? { upgradeBudget: activeBudget } : {}) }, clockState);
     localStorage.setItem(SAVE_KEY, JSON.stringify(save));
     saveStatus.textContent = `Saved ${game.history().length} half-moves in this browser. Export PGN for a portable backup.`;
     refreshSaveAvailability();
   } catch { saveStatus.textContent = 'Could not save in this browser. Use PGN export instead.'; }
 };
-document.querySelector('#load-game').onclick = () => {
+document.querySelector('#load-game').onclick = async () => {
   try {
     const text = localStorage.getItem(SAVE_KEY);
     if (!text) throw new Error('No saved game was found in this browser.');
-    proposeGame(parseSave(text));
+    const request = ++replacementGeneration;
+    const candidate = await parseSave(text);
+    if (request !== replacementGeneration) { candidate.game.dispose?.(); return; }
+    proposeGame(candidate);
   } catch (error) { saveStatus.textContent = error.message; }
 };
 document.querySelector('#export-pgn').onclick = () => {
@@ -476,15 +574,17 @@ pgnFile.onchange = async () => {
   } catch { if (request === fileGeneration) importError.textContent = 'The file could not be read. Try pasting its PGN instead.'; }
 };
 pgnText.addEventListener('input', () => { fileGeneration++; importError.textContent = ''; });
-document.querySelector('#confirm-import').onclick = () => {
+document.querySelector('#confirm-import').onclick = async () => {
   try {
-    const candidate = { game: parsePgn(pgnText.value) };
-    fileGeneration++;
+    const request = ++fileGeneration;
+    const boardRequest = ++replacementGeneration;
+    const candidate = { game: await parsePgn(pgnText.value) };
+    if (request !== fileGeneration || boardRequest !== replacementGeneration) { candidate.game.dispose?.(); return; }
     proposeGame(candidate);
   } catch (error) { importError.textContent = error.message; }
 };
-document.querySelector('#cancel-replace').onclick = () => { replacement = null; replaceDialog.close(); };
-replaceDialog.addEventListener('cancel', () => { replacement = null; });
+document.querySelector('#cancel-replace').onclick = () => { replacement?.game.dispose?.(); replacement = null; replaceDialog.close(); };
+replaceDialog.addEventListener('cancel', () => { replacement?.game.dispose?.(); replacement = null; });
 document.querySelector('#confirm-replace').onclick = () => {
   if (!replacement) return;
   const candidate = replacement;
@@ -513,5 +613,9 @@ clockToggle.onclick = () => {
   render();
 };
 setInterval(settleClock, 100);
+gameMode.onchange = updateSetup;
+upgradeBudget.onchange = updateSetup;
+for (const square of upgradeSquares) document.querySelector(`#upgrade-${square}`).onchange = updateSetup;
+updateSetup();
 refreshSaveAvailability();
 render();

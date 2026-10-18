@@ -38,11 +38,17 @@ Linux integration was verified with an upstream Fairy Stockfish source build. Th
 
 ## Version 03 — first upgrades
 
-- Resolve unfinished rules in `Example.txt`; validate them with Fairy Stockfish.
-- Add a setup phase with upgrade descriptions and a configurable budget.
-- Implement and test one piece family before expanding to all six.
-- Handle extra starting pieces, promotion choices, and upgraded king victory rules.
-- Distinguish levels by color and visible labels, preserving side contrast.
+- [x] Extract and validate the blue-knight `NmW` rule from `Example.txt`.
+- [x] Add individual starting-knight selection and a per-side upgrade budget.
+- [x] Implement level 1 knights using Fairy Stockfish rules in the browser and engine.
+- [x] Show a blue accent and L1 badge while preserving White/Black contrast.
+- [x] Support undo, clocks, saved games, and variant PGN import/export.
+- [x] Embed browser rules in the standalone HTML for offline local play.
+- [x] Include the browser rules library's matching source archive and GPL notice.
+- [x] Pass 87 checks: 29 unit tests and 58 browser/integration tests.
+- [ ] Playtest blue knights, setup budgets, and native engine play on Windows.
+- [ ] Complete orange/purple knight rules before expanding to other piece families.
+- [ ] Resolve remaining draft rules, extra starting pieces, promotions, and upgraded king victory rules.
 
 ## Later versions
 

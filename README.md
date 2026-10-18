@@ -8,6 +8,16 @@ Open `index.html` in a modern browser. The file includes its own styles and Java
 
 Includes legal moves, check/checkmate, automatic draw detection, castling, en passant, promotion choice, move history, undo, board flip, and new game. Unsaved moves reset when the page reloads; use **Save game** or **Export PGN** to keep them. Draws are automatically ended on threefold repetition or the fifty-move rule; claim-based tournament rules are outside this version.
 
+## Version 03: first piece upgrade
+
+Select **Blue knight prototype** under **Rules**, choose which starting knights to upgrade, and press **New game**. White and Black have separate budgets of one or two points; each blue knight costs one. Blue knights show a blue border and an **L1** badge while keeping their side's piece color.
+
+A blue knight moves and captures like a normal knight. It can also move one square horizontally or vertically into an **empty** square. That additional step cannot capture or attack. The browser and native engine share the same Fairy Stockfish variant configuration, including king safety and draw rules.
+
+Local upgrade games work from the self-contained HTML without internet access. Engine play still requires `npm.cmd start`. Undo, clocks, browser saves, and PGN files also support this mode. An older native engine that cannot load the variant reports an error; it does not silently fall back to standard rules.
+
+This prototype implements level 1 knights only. Promotion choices remain standard. See [variants/README.md](variants/README.md) for exact rules, custom-PGN limits, and later upgrades. The browser rules library and matching source/license notices are documented in [vendor/README.md](vendor/README.md).
+
 ## Optional clocks
 
 Choose **Time control**, then start a **New game** to apply it. Available presets are untimed, 3+2, 5+0, 10+5, and 15+10: minutes per side plus seconds added after each completed move. Untimed remains the default.
@@ -25,8 +35,8 @@ Changing the time-control dropdown during a game only selects the next game's pr
 
 - **Save game** stores one game in this browser, including move history, opponent, side, difficulty, board orientation, and clock state. Saving again replaces that slot.
 - **Load saved** restores that slot; confirm before replacing current moves. Loading leaves the engine and clocks paused. Connect or resume when ready.
-- **Export PGN** downloads a portable game file with move history, starting position, comments, and result. It does not include remaining clock times, engine settings, or display settings.
-- **Import PGN** accepts pasted notation or a `.pgn` file up to 256 KB. Invalid or unsupported variant games leave the current board unchanged. Import keeps your opponent and display settings, switches to untimed play, and pauses the engine.
+- **Export PGN** downloads a portable game file with move history, starting position, and result. Standard-chess comments are preserved; prototype PGNs export the main line without comments. It includes the variant and initial setup for upgraded games, but not remaining clock times, engine settings, or display settings.
+- **Import PGN** accepts standard or blue-knight pasted notation or a `.pgn` file up to 256 KB. Invalid or unsupported variant games leave the current board unchanged. Import keeps your opponent and display settings, switches to untimed play, and pauses the engine.
 
 Saving is manual. New games, imports, and loading do not overwrite the saved slot. Saves belong to this browser and site address; private browsing, clearing site data, switching browsers, or moving between direct-file and server play can make them unavailable. If browser storage is blocked, use PGN export. Downloaded PGNs remain usable independently of browser storage.
 
@@ -43,7 +53,7 @@ npx playwright install chromium
 npm test
 ```
 
-`npm test` runs clock-model unit tests, then browser tests that start a temporary local server. Set `TEST_FILE_URL=1` to test direct file loading where browser policy permits it. `npm start` also serves the game locally during development. Set `CHROMIUM_PATH` to use an existing Chromium installation instead of downloading one.
+`npm test` runs clock and variant-rule unit tests, then browser tests that start a temporary local server. Set `TEST_FILE_URL=1` to test direct file loading where browser policy permits it. `npm start` also serves the game locally during development. Set `CHROMIUM_PATH` to use an existing Chromium installation instead of downloading one.
 
 Edit `src/app.js`, `styles.css`, or `src/index.html`, then run `npm run build` and reload the page. The build generates self-contained `index.html` and `dist/app.js`; keep both committed. Do not edit the generated HTML directly. Standard chess rules use [chess.js](https://github.com/jhlywa/chess.js); its BSD license is included in `dist/chess.js-LICENSE.txt`.
 
@@ -73,10 +83,10 @@ npm.cmd start
 
 Linux/macOS require an engine built for that platform. For a Linux source build, follow the upstream build instructions and set `FAIRY_STOCKFISH_PATH` to the resulting `src/stockfish`. Setting that variable during `npm test` also enables the native engine integration test; otherwise that test is explicitly skipped. Tests use mocked engine responses for deterministic UI checks and a real executable for the optional integration check.
 
-The bridge currently supports standard chess only. `Example.txt` contains draft custom rules, including unresolved pieces and setup details; these rules are not loaded by the game. See [stockfish/README.md](stockfish/README.md) for engine provenance, licensing, and validation limits.
+The bridge supports standard chess and the blue-knight prototype. `Example.txt` contains draft custom rules, including unresolved pieces and setup details; the full draft is not loaded by the game. The validated blue-knight rule is in `variants/levelup-knight.ini`. See [stockfish/README.md](stockfish/README.md) for engine provenance, licensing, and validation limits.
 
 ## Version history
 
-`v0.1.0` preserves local chess on `version_01`; `v0.2.0` preserves engine play, saved games, and clocks on `version_02`. Use `version_01`, `version_02`, etc. as development branches. Tag finished milestones (`v0.1.0`, `v0.2.0`) for stable checkpoints; branches can continue changing. Merge a tested milestone into `main`, then create the next branch from that commit. Avoid maintaining separate implementations for old versions.
+`v0.1.0` preserves local chess on `version_01`; `v0.2.0` preserves engine play, saved games, and clocks on `version_02`. Development continues on `version_03`. Use `version_01`, `version_02`, etc. as development branches. Tag finished milestones (`v0.1.0`, `v0.2.0`) for stable checkpoints; branches can continue changing. Merge a tested milestone into `main`, then create the next branch from that commit. Avoid maintaining separate implementations for old versions.
 
 See [TODO.md](TODO.md) for scope and later milestones.

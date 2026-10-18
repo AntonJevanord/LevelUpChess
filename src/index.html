@@ -8,7 +8,7 @@
   <script defer src="dist/app.js"></script>
 </head>
 <body>
-  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 02 / ENGINE PLAY</span></header>
+  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 03 / FIRST UPGRADE</span></header>
   <main>
     <section class="intro"><span class="eyebrow">EVERY GREAT GAME STARTS HERE</span><h1>Your next move.</h1><p>Classic chess. Two players. One board.</p></section>
     <div class="game-layout">
@@ -21,6 +21,15 @@
         <section class="panel"><span class="eyebrow">ON THE BOARD</span><h2 id="status" role="status" aria-live="polite"></h2><p id="hint">Select a piece to see its legal moves.</p><div class="actions"><button id="undo" type="button">↶ Undo move</button><button id="flip" type="button">⇅ Flip board</button></div><button id="new-game" class="primary" type="button">New game</button></section>
         <section class="panel engine-panel" aria-labelledby="engine-title">
           <div class="panel-heading"><h3 id="engine-title">Play your way</h3><span>FAIRY STOCKFISH</span></div>
+          <label for="game-mode">Rules</label><select id="game-mode"><option value="chess">Standard chess</option><option value="levelup-knight">Blue knight prototype</option></select>
+          <div id="upgrade-settings" hidden>
+            <p class="upgrade-description"><strong>Blue knight · Level 1</strong><br>Normal knight moves and captures, plus one square orthogonally into an empty square. Costs 1 upgrade point.</p>
+            <label for="upgrade-budget">Budget per side</label><select id="upgrade-budget"><option value="1">1 point</option><option value="2" selected>2 points</option></select>
+            <div class="settings-row"><div><label for="upgrade-b1">White b1 knight</label><select id="upgrade-b1"><option value="0">0 · Standard</option><option value="1" selected>1 · Blue</option></select></div><div><label for="upgrade-g1">White g1 knight</label><select id="upgrade-g1"><option value="0">0 · Standard</option><option value="1">1 · Blue</option></select></div></div>
+            <div class="settings-row"><div><label for="upgrade-b8">Black b8 knight</label><select id="upgrade-b8"><option value="0">0 · Standard</option><option value="1" selected>1 · Blue</option></select></div><div><label for="upgrade-g8">Black g8 knight</label><select id="upgrade-g8"><option value="0">0 · Standard</option><option value="1">1 · Blue</option></select></div></div>
+            <p id="upgrade-status" role="status" aria-live="polite">White 1/2 · Black 1/2 upgrade points.</p>
+            <p class="engine-help">Setup changes apply to your next new game. Other piece upgrades are planned for later.</p>
+          </div>
           <label for="opponent">Opponent</label><select id="opponent"><option value="local">Local player</option><option value="engine">Fairy Stockfish</option></select>
           <div id="engine-settings" hidden>
             <div class="settings-row"><div><label for="human-side">Your side</label><select id="human-side"><option value="w">White</option><option value="b">Black</option></select></div><div><label for="difficulty">Difficulty</label><select id="difficulty"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select></div></div>
@@ -42,20 +51,20 @@
           <div class="actions"><button id="export-pgn" type="button">Export PGN</button><button id="open-import" type="button">Import PGN</button></div>
           <p class="save-help">One save slot per browser. Saving again replaces it. Download PGN for a portable backup.</p>
         </section>
-        <div class="coming-next"><span class="eyebrow">THE NEXT LEVEL</span><p>Upgradeable pieces are coming.<br>For now, master the fundamentals.</p><div class="level-dots"><i></i><i></i><i></i></div></div>
+        <div class="coming-next"><span class="eyebrow">THE NEXT LEVEL</span><p>Try the blue knight prototype.<br>More piece upgrades are on the roadmap.</p><div class="level-dots"><i></i><i></i><i></i></div></div>
       </aside>
     </div>
   </main>
   <dialog id="promotion"><h2>Choose your promotion</h2><p>Your pawn has earned a new role.</p><div id="promotion-options"></div></dialog>
   <dialog id="restart"><h2>Start a new game?</h2><p>This will clear the current board and move history.</p><div class="actions"><button id="cancel-restart">Keep playing</button><button id="confirm-restart" class="primary">Start new game</button></div></dialog>
   <dialog id="import-dialog" aria-labelledby="import-title">
-    <h2 id="import-title">Import a game</h2><p>Paste standard-chess PGN or choose a .pgn file.</p>
+    <h2 id="import-title">Import a game</h2><p>Paste standard or blue-knight PGN, or choose a .pgn file.</p>
     <label for="pgn-file">PGN file (up to 256 KB)</label><input id="pgn-file" type="file" accept=".pgn,text/plain,application/x-chess-pgn">
     <label for="pgn-text">Game notation</label><textarea id="pgn-text" rows="8" spellcheck="false" placeholder="1. e4 e5 2. Nf3 Nc6 *"></textarea>
     <p id="import-error" role="alert"></p>
     <div class="actions"><button id="cancel-import" type="button">Cancel</button><button id="confirm-import" type="button" class="primary">Import game</button></div>
   </dialog>
   <dialog id="replace-dialog" aria-labelledby="replace-title"><h2 id="replace-title">Replace the current game?</h2><p>Unsaved moves will be lost. The browser save slot stays unchanged.</p><div class="actions"><button id="cancel-replace" type="button">Keep current game</button><button id="confirm-replace" type="button" class="primary">Replace game</button></div></dialog>
-  <footer>Built for the love of the game. <span>STANDARD CHESS · OFFLINE READY</span></footer>
+  <footer>Built for the love of the game. <span>LOCAL PLAY · OFFLINE READY</span></footer>
 </body>
 </html>

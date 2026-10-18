@@ -1,16 +1,17 @@
 {
   "name": "levelupchess",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "Local chess and a foundation for upgradeable pieces.",
   "scripts": {
     "build": "node scripts/build.js",
-    "test": "node --test tests-unit/clock.test.js && playwright test",
+    "test": "node --test tests-unit/clock.test.js tests-unit/variant.test.js && playwright test",
     "start": "node scripts/serve.js",
-    "test:unit": "node --test tests-unit/clock.test.js"
+    "test:unit": "node --test tests-unit/clock.test.js tests-unit/variant.test.js"
   },
   "dependencies": {
-    "chess.js": "1.4.0"
+    "chess.js": "1.4.0",
+    "ffish-es6": "0.7.10"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",

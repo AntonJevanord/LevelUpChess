@@ -2,8 +2,7 @@
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
-const { Chess } = require('chess.js');
-const { engineRequest, levels } = require('./engine');
+const { engineRequest, createPosition, levels, variants } = require('./engine');
 const root = path.resolve(__dirname, '..');
 const port = 4173;
 const origin = `http://127.0.0.1:${port}`;
@@ -36,12 +35,18 @@ const server = http.createServer(async (req, res) => {
           if (body.length > 4096) throw new Error('Request too large.');
         }
         const data = JSON.parse(body);
-        if (typeof data.fen !== 'string' || /[\r\n]/.test(data.fen) || !Object.hasOwn(levels, data.difficulty)) throw new Error();
-        const position = new Chess(data.fen);
-        if (position.isGameOver()) throw new Error();
-        options = { fen: position.fen(), difficulty: data.difficulty };
-      } catch { json(res, 400, { error: 'Expected a playable standard-chess FEN and easy, medium, or hard difficulty.' }); return; }
+        const variant = data.variant === undefined ? 'chess' : data.variant;
+        if (typeof data.fen !== 'string' || /[\r\n]/.test(data.fen) || !Object.hasOwn(levels, data.difficulty) || !variants.includes(variant)) throw new Error();
+        const position = await createPosition(data.fen, variant);
+        try {
+          if (position.isGameOver()) throw new Error();
+          options = { fen: position.fen(), difficulty: data.difficulty, variant };
+        } finally { position.dispose?.(); }
+      } catch { json(res, 400, { error: 'Expected a playable chess or levelup-knight FEN and easy, medium, or hard difficulty.' }); return; }
     }
+    if (res.destroyed) return;
+    // Variant validation initializes WASM asynchronously; another request may finish first.
+    if (busy) { json(res, 429, { error: 'Engine is busy. Please try again.' }); return; }
     busy = true;
     const controller = new AbortController();
     activeController = controller;
