@@ -42,7 +42,7 @@ There are still only 20 short, related opening prefixes per comparison. The summ
 
 Recommended next steps:
 
-1. Finish the currently running [blue-rook confirmation](../blue-rook-confirmation.json): **80 games at 100,000 nodes**, ordinary control plus the same blue-rook comparison, with other settings/openings held fixed. Compare it with the [original game audit](outlier-effects-001.games-audit.md). This checks search sensitivity, not the cause of an evaluation bias.
+1. The **80-game blue-rook confirmation is complete**: its point score rises to **52.5%**, while ordinary control remains 50%. See the [confirmation report](blue-rook-confirmation-001.md) for the matched-opening comparison and provenance limits. The intended tenfold search increase checks search sensitivity, not the cause of an evaluation bias.
 2. Run the already prepared [budget-3 confirmation](../budget-3-confirmation.json): **200 games at 100,000 nodes** for the earlier rook/pawn/knight findings and the blue-pawn interaction. These repeated prefixes are controlled comparisons, not new opening independence.
 3. Add a representation-control profile with ordinary rook movement under a custom piece identity, alongside ordinary R and actual blue L, to isolate evaluator effects. This profile is not implemented yet. Keep evaluation tuning as a separate experiment from movement changes.
 4. Use direct tier matchups or material handicaps to separate the near-ceiling orange/purple rook and purple knight results, then expand legal opening families and targeted positions before tuning abilities to the fixed 1/2/3 prices.

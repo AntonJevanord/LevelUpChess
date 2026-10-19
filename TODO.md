@@ -152,7 +152,9 @@ The blue queen's draft back-rank teleport remains an optional engine extension. 
 - [x] Prepare an 80-game blue-rook/control confirmation at ten times the search budget.
 - [x] Verify the uploaded outlier manifest and journal against the bundled Windows engine, rules, schedule, and summary; replay all 440 games and 56,644 plies without mismatches.
 - [x] Audit blue-rook jumps, original-rook activity/trades, and actual castling; archive the 40 relevant games and selected deeper position probes in the [game audit](experiments/balance/results/outlier-effects-001.games-audit.md).
-- [ ] Review the running 80-game `blue-rook-confirmation.json` check and pending `budget-3-confirmation.json` results before changing abilities.
+- [x] Analyze and archive the completed 80-game blue-rook confirmation: blue rook scores 52.5% versus 28.75% initially, with 14 improved opening pairs; ordinary control remains 50%. Preserve [results and limits](experiments/balance/results/blue-rook-confirmation-001.md).
+- [ ] Verify the confirmation manifest and game histories before attributing changed scores to specific behavior.
+- [ ] Review the pending 200-game `budget-3-confirmation.json` results before changing abilities.
 - [ ] Add ordinary-movement custom-piece controls to distinguish evaluation representation effects from extra-move strength.
 - [ ] Collect broad paired-opening results at several search budgets before assigning material ranges.
 - [ ] Investigate completion rates, opening sensitivity, king evaluation limits, and outlier games before changing movement.
