@@ -147,7 +147,11 @@ The blue queen's draft back-rank teleport remains an optional engine extension. 
 - [x] Analyze and archive the uploaded full budget-3 summary: 480 completed games, 240 pairs, no errors/truncations, and a 50% ordinary control.
 - [x] Identify purple rook/pawn/knight outliers against the tested blue-minor package; preserve results and inference limits in [report 001](experiments/balance/results/budget-3-001.md).
 - [x] Prepare individual-effect and tenfold-search follow-ups, preserving central pawn placement and the original openings for controlled comparisons.
-- [ ] Collect and review `outlier-effects.json` and `budget-3-confirmation.json` results before changing abilities.
+- [x] Analyze and archive all 440 individual-effect games: clean completion, tier scores, blue-rook anomaly, and near-ceiling purple-knight/orange-rook/purple-rook results.
+- [x] Verify bundled-source ordinary/custom-rook evaluation differences and retained blue-rook castling; preserve diagnostic evidence without attributing the observed score to a proven cause.
+- [x] Prepare an 80-game blue-rook/control confirmation at ten times the search budget.
+- [ ] Review `blue-rook-confirmation.json`, game histories, and the pending `budget-3-confirmation.json` results before changing abilities.
+- [ ] Add ordinary-movement custom-piece controls to distinguish evaluation representation effects from extra-move strength.
 - [ ] Collect broad paired-opening results at several search budgets before assigning material ranges.
 - [ ] Investigate completion rates, opening sensitivity, king evaluation limits, and outlier games before changing movement.
 - [ ] Add per-piece behavior revisions and an evidence ledger; preserve old results and prioritize changed pieces by coverage and uncertainty.

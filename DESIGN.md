@@ -38,6 +38,8 @@ In the bundled source, `src/psqt.cpp` estimates custom-piece material from captu
 
 The engine supports `pieceValueMg` and `pieceValueEg` overrides. Changing those affects its judgments, not the actual rules or inherent strength of a piece. Centipawn scores use the engine's internal normalization; they do not validate a conventional material chart. No evaluation overrides are proposed yet.
 
+The first individual-effect run exposed a concrete diagnostic concern: blue rook scored below ordinary play despite retaining rook movement and adding quiet home jumps. A temporary build of the bundled source confirmed that custom rooks use generic values and positional treatment, including missing ordinary-rook-specific file terms. Material overrides alone would not restore all those terms. Preserve this distinction between engine handling and movement strength, inspect the games, and compare an ordinary-movement custom rook with both ordinary R and the actual blue rook before drawing causal conclusions. See [the result and source audit](experiments/balance/results/outlier-effects-001.md).
+
 ## Kings: preserve a clear mating objective
 
 Keep exactly one royal per side, with check and checkmate. A second royal would require a separate victory design. Broad quiet leaps or slides risk turning material advantages into draws after other pieces are exchanged. A king design must pass the mating requirements before being assigned a tier.

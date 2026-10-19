@@ -1,0 +1,11 @@
+--- a/src/psqt.cpp
++++ b/src/psqt.cpp
+@@ -22,0 +23 @@
++#include <iostream>
+@@ -303,0 +305,6 @@
++      if (v->pieceToChar[pt] == 'R' || v->pieceToChar[pt] == 'L')
++          std::cerr << "RESEARCH " << v->pieceToChar[pt] << " type=" << int(pt)
++                    << " base=" << int(PieceValue[MG][pt]) << "," << int(PieceValue[EG][pt])
++                    << " eval=" << int(EvalPieceValue[MG][pt]) << "," << int(EvalPieceValue[EG][pt])
++                    << " stepsRegular=" << pi->steps[0][MODALITY_QUIET].size()
++                    << " stepsInitial=" << pi->steps[1][MODALITY_QUIET].size() << std::endl;

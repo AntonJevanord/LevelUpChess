@@ -1,0 +1,32 @@
+Blue-rook evaluation diagnostic 001
+Source: vendor/ffish-es6-0.7.10-source.tar.gz
+Commit: 43b66c8abfebfcab893a3a4c349aa790d18df148
+Archive SHA-256: 52b080d823fd4785a598e4201ab26be2752bdbc093b8c9a9a47b99de13a65a86
+Build: temporary extracted source with blue-rook-evaluation-001.patch (logging only)
+Command: make -j2 ARCH=x86-64 COMP=gcc nnue=no build
+Variant: generated levelup-balance-0-0 with customPiece13 = l:RimD
+
+RESEARCH R type=4 base=1276,1380 eval=1276,1380 stepsRegular=0 stepsInitial=0
+RESEARCH R type=4 base=1276,1380 eval=1276,1380 stepsRegular=0 stepsInitial=0
+RESEARCH R type=4 base=1276,1380 eval=1276,1380 stepsRegular=0 stepsInitial=0
+RESEARCH L type=49 base=1277,1327 eval=1277,1327 stepsRegular=0 stepsInitial=4
+
+Native/WASM castling probe records:
+[
+  {"fen":"r3k2r/8/8/8/8/8/8/L3K2R w KQkq - 0 1","wasmCastling":["e1c1","e1g1"],"nativeCastling":["e1c1","e1g1"]},
+  {"fen":"l3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1","wasmCastling":["e8c8","e8g8"],"nativeCastling":["e8c8","e8g8"]}
+]
+
+Pristine archive source references:
+src/types.h:368 tuned ordinary-rook material constants
+src/psqt.cpp:167 generic material estimator reads index 0
+src/psqt.cpp:200 assigns generic material to custom types
+src/psqt.cpp:289 variant piece-value overrides
+src/psqt.cpp:322 tuned orthodox PSQT; :327 generic slider PSQT
+src/piece.cpp:83 recognizes initial-only flag; :145 stores initial-only moves separately
+src/evaluate.cpp:460 rook x-rays; :482 rook king-ring terms
+src/evaluate.cpp:491 orthodox/generic mobility; :582 rook file/trapped-rook terms
+src/material.cpp:309 orthodox-type imbalance counts
+
+These are internal evaluation units and source-level representation differences.
+They do not establish the cause of the uploaded 40-game blue-rook score.
