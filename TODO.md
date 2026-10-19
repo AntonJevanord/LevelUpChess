@@ -143,6 +143,7 @@ The blue queen's draft back-rank teleport remains an optional engine extension. 
 - [x] Recover the latest interrupted history from the journal and permit the exact reviewed recovery patch to resume version 0.7.0 runs.
 - [x] Pass 247 unit/integration checks with injected file-sharing failures; resume an actual pre-patch run without changing its manifest or journal.
 - [x] User confirmed version 0.7.1 resumed and finished all eight smoke games on Windows, preserving prior records and the original failed attempt.
+- [x] User completed the four-game Windows budget-3 pilot with no errors or truncations: blue-plus-orange scored 0% and three-blue scored 50% against purple-rook armies, each from one opening; broader evidence is still required.
 - [ ] Collect broad paired-opening results at several search budgets before assigning material ranges.
 - [ ] Investigate completion rates, opening sensitivity, king evaluation limits, and outlier games before changing movement.
 - [ ] Add per-piece behavior revisions and an evidence ledger; preserve old results and prioritize changed pieces by coverage and uncertainty.
