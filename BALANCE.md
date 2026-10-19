@@ -53,6 +53,10 @@ npm run balance -- --resume balance-results/budget-3
 
 Progress is checkpointed after moves. An aborted or errored attempt remains in the log; resuming continues the saved game without turning the interruption into a loss or draw. Resume uses the original manifest settings and checks engine/rules identities. Change the node budget, move limit, engine, or rules in a new run directory. Only one writer may use a run directory at a time.
 
+Version 0.7.1 retries brief Windows file-sharing failures while atomically replacing checkpoints and reports. An approved recovery patch can resume a 0.7.0 run with identical engine, rules, and settings; the original manifest stays unchanged and `storage-upgrade.json` records the patch. Resume uses validated journal history if it is newer than the checkpoint, and skips games already completed or truncated.
+
+After updating a failed 0.7.0 smoke run, use `npm.cmd run balance -- --resume balance-results/smoke`. Keep the existing folder. If OneDrive or another application holds a file beyond the retry window, stop the run, let that application release the file, and resume. You can also move the entire stopped run folder to a location outside OneDrive and pass its new path to `--resume`.
+
 If you stop during initial rules preflight before `run.json` exists, no games have started; repeat the original command. External stop commands apply once the run directory has an active lock.
 
 ## Choose armies and search settings
@@ -98,6 +102,8 @@ Use varied development patterns and also test sparse endgames separately. Repeat
 | `checkpoint.json` | Latest move-level state for interruption recovery. |
 | `summary.json` | Attempt counts, completed pairs, opening-level scores, and uncertainty estimates. |
 | `games.pgn` | Games for replay and review. |
+
+`balance-results/` is ignored by Git, so generated games do not appear in `git status`. Keep or back up these folders separately; Git pulls leave them in place.
 
 These experimental PGNs require the accompanying `rules/*.ini` in a compatible viewer or engine. The current game's PGN importer does not yet accept the balance profiles.
 

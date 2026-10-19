@@ -3,9 +3,25 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+const { createHash } = require('node:crypto');
 const { normalizeConfig, makeSchedule } = require('../scripts/balance/plan');
 
 const nativeOptions = { skip: !process.env.FAIRY_STOCKFISH_PATH, timeout: 30000 };
+
+test('recovery uses newer durable history while keeping attempts and branches separate', () => {
+  const { recoverHistory } = require('../scripts/balance/run');
+  const game = { id: 'recover-me' };
+  const checkpoint = { id: game.id, startFen: 'initial', attempt: 1, moves: ['e2e4'] };
+  const journal = { ...checkpoint, status: 'error', moves: ['e2e4', 'e7e5'] };
+  assert.equal(recoverHistory(game, 'initial', checkpoint, [journal]), journal);
+  assert.equal(recoverHistory(game, 'initial', null, [journal]), journal);
+  const newerAttempt = { ...checkpoint, attempt: 2, moves: ['d2d4'] };
+  assert.equal(recoverHistory(game, 'initial', newerAttempt, [journal]), newerAttempt);
+  assert.throws(() => recoverHistory(game, 'initial', { ...checkpoint, moves: ['d2d4'] }, [journal]), /conflicting histories/);
+  assert.throws(() => recoverHistory(game, 'different-position', checkpoint, [journal]), /does not match/);
+  assert.throws(() => recoverHistory(game, 'initial', { ...checkpoint, attempt: 0 }, []), /does not match/);
+  assert.equal(recoverHistory(game, 'initial', null, [{ ...journal, id: 'other-game' }]), null);
+});
 
 function temporary(t) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'levelup-balance-runner-'));
@@ -212,4 +228,58 @@ test('immediate cancellation interrupts an active native search and retains a re
   assert.deepEqual(checkpoint(directory).current.moves, []);
   assert.equal(result.summary.statusCounts.completed, 0);
   assert.equal(fs.existsSync(path.join(directory, 'run.lock')), false);
+});
+
+test('a persistent checkpoint sharing failure recovers v0.7.0 journal history without replaying finished games', nativeOptions, async t => {
+  const directory = temporary(t);
+  const config = configuration({ repetitions: 2 });
+  const rename = fs.renameSync;
+  t.mock.method(Atomics, 'wait', () => 'timed-out');
+  const injected = t.mock.method(fs, 'renameSync', (from, to) => {
+    if (path.basename(to) === 'checkpoint.json') {
+      const saved = JSON.parse(fs.readFileSync(from, 'utf8'));
+      if (saved.nextIndex === 2 && saved.current?.moves.length === 1) {
+        const error = new Error('Simulated Windows sharing violation');
+        error.code = 'EPERM';
+        throw error;
+      }
+    }
+    return rename(from, to);
+  });
+  await assert.rejects(run(config, directory), error => error.code === 'EPERM');
+  injected.mock.restore();
+  const attempts = records(directory);
+  assert.equal(attempts.length, 3);
+  assert.deepEqual(attempts.map(attempt => attempt.status), ['truncated', 'truncated', 'error']);
+  const saved = attempts[2];
+  assert.equal(saved.moves.length, 1);
+  assert.deepEqual(checkpoint(directory).current.moves, []);
+  assert.equal(fs.existsSync(path.join(directory, 'run.lock')), false);
+
+  // Reconstruct the exact original source identity, as found in a pre-patch
+  // run. Settings, native engine, movement profiles and played games stay put.
+  const patch = require('../scripts/balance/storage-patch.json');
+  const fingerprint = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
+  const original = json(directory, 'run.json');
+  original.runnerSources = patch.originalRunnerSources;
+  original.runnerSha256 = fingerprint(original.runnerSources);
+  const profiles = original.rulesProfiles.map(profile => ({ variant: profile.variant, config: read(directory, profile.file) }));
+  original.rulesHash = fingerprint({ bundleHash: original.rulesBundleSha256, runnerSha256: original.runnerSha256, profiles });
+  const manifestBytes = JSON.stringify(original, null, 2) + '\n';
+  fs.writeFileSync(path.join(directory, 'run.json'), manifestBytes);
+  assert.ok(patch.fromRunnerSha256.includes(original.runnerSha256));
+  assert.ok(patch.fromRunnerSha256.includes('c6e4aea9c046842048ae0f7057bf3639937713638fb3846afe96fe0a23e55899'));
+
+  const resumed = await run(config, directory, { resume: true });
+  const recovered = records(directory);
+  assert.equal(resumed.nextIndex, 4);
+  assert.equal(recovered.length, 5);
+  assert.deepEqual(recovered.slice(0, 3), attempts);
+  const retry = recovered.find(attempt => attempt.id === saved.id && attempt.attempt === 2);
+  assert.ok(retry);
+  assert.deepEqual(retry.moves.slice(0, 1), saved.moves);
+  assert.equal(retry.status, 'truncated');
+  assert.equal(read(directory, 'run.json'), manifestBytes);
+  assert.equal(json(directory, 'storage-upgrade.json').currentRunnerSha256, patch.toRunnerSha256);
+  assert.equal(json(directory, 'storage-upgrade.json').originalRunnerSha256, original.runnerSha256);
 });

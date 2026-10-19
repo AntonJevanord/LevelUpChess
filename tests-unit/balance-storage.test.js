@@ -237,3 +237,99 @@ test('orphaned output files cannot be silently adopted by a new run', t => {
   assert.equal(fs.existsSync(path.join(directory, 'run.json')), false);
   assert.equal(fs.existsSync(path.join(directory, 'run.lock')), false);
 });
+
+test('transient sharing failures retry the same checkpoint rename without removing its destination', t => {
+  const directory = temporary(t);
+  const store = open(t, directory);
+  store.saveCheckpoint({ ply: 1 });
+  const rename = fs.renameSync;
+  const unlink = fs.unlinkSync;
+  const sources = [];
+  const delays = [];
+  const codes = ['EPERM', 'EACCES', 'EBUSY'];
+  t.mock.method(Atomics, 'wait', (_array, _index, _value, delay) => { delays.push(delay); });
+  t.mock.method(fs, 'unlinkSync', file => {
+    assert.notEqual(file, path.join(directory, 'checkpoint.json'));
+    return unlink(file);
+  });
+  t.mock.method(fs, 'renameSync', (from, to) => {
+    sources.push(from);
+    assert.equal(json(directory, 'checkpoint.json').ply, 1);
+    assert.equal(JSON.parse(fs.readFileSync(from, 'utf8')).ply, 2);
+    if (codes.length) throw Object.assign(new Error('temporary sharing violation'), { code: codes.shift() });
+    return rename(from, to);
+  });
+  store.saveCheckpoint({ ply: 2 });
+  assert.equal(sources.length, 4);
+  assert.equal(new Set(sources).size, 1);
+  assert.equal(delays.length, 3);
+  assert.deepEqual(store.checkpoint, { ply: 2 });
+  assert.deepEqual(json(directory, 'checkpoint.json'), { ply: 2 });
+  assert.deepEqual(fs.readdirSync(directory).filter(name => name.endsWith('.tmp')), []);
+});
+
+test('persistent sharing failure is bounded and leaves the prior checkpoint and journal resumable', t => {
+  const directory = temporary(t);
+  const store = open(t, directory);
+  store.append(completed);
+  store.saveCheckpoint({ ply: 1 });
+  const journal = read(directory, 'games.jsonl');
+  const cause = Object.assign(new Error('sharing violation'), { code: 'EPERM' });
+  let attempts = 0;
+  let delayTotal = 0;
+  t.mock.method(Atomics, 'wait', (_array, _index, _value, delay) => { delayTotal += delay; });
+  t.mock.method(fs, 'renameSync', () => { attempts++; throw cause; });
+  assert.throws(() => store.saveCheckpoint({ ply: 2 }), error => {
+    assert.equal(error.code, 'EPERM');
+    assert.equal(error.cause, cause);
+    assert.match(error.message, /checkpoint\.json.*attempts/);
+    return true;
+  });
+  assert.ok(attempts > 1 && attempts <= 10);
+  assert.ok(delayTotal >= 1000 && delayTotal <= 2000);
+  assert.deepEqual(store.checkpoint, { ply: 1 });
+  assert.deepEqual(json(directory, 'checkpoint.json'), { ply: 1 });
+  assert.equal(read(directory, 'games.jsonl'), journal);
+  assert.deepEqual(fs.readdirSync(directory).filter(name => name.endsWith('.tmp')), []);
+  store.close();
+  const resumed = open(t, directory, { resume: true });
+  assert.deepEqual(resumed.records, [completed]);
+  assert.deepEqual(resumed.checkpoint, { ply: 1 });
+});
+
+test('failed temporary cleanup preserves the primary write failure and reports its secondary error', t => {
+  const directory = temporary(t);
+  const store = open(t, directory);
+  store.saveCheckpoint({ ply: 1 });
+  const primary = new Error('primary rename failure');
+  const unlink = fs.unlinkSync;
+  t.mock.method(Atomics, 'wait', () => {});
+  t.mock.method(fs, 'renameSync', () => { throw primary; });
+  t.mock.method(fs, 'unlinkSync', file => {
+    if (file.endsWith('.tmp')) throw Object.assign(new Error('cleanup sharing violation'), { code: 'EBUSY' });
+    return unlink(file);
+  });
+  assert.throws(() => store.saveCheckpoint({ ply: 2 }), error => error === primary);
+  assert.equal(primary.cleanupErrors.length, 1);
+  assert.equal(primary.cleanupErrors[0].code, 'EBUSY');
+  assert.deepEqual(json(directory, 'checkpoint.json'), { ply: 1 });
+  for (const file of fs.readdirSync(directory).filter(name => name.endsWith('.tmp'))) unlink(path.join(directory, file));
+});
+
+test('lock cleanup retries sharing failures and rechecks its owner before each attempt', t => {
+  const directory = temporary(t);
+  const store = open(t, directory);
+  const lock = path.join(directory, 'run.lock');
+  const unlink = fs.unlinkSync;
+  let attempts = 0;
+  t.mock.method(fs, 'unlinkSync', file => {
+    if (file === lock && attempts++ === 0) throw Object.assign(new Error('lock busy'), { code: 'EACCES' });
+    return unlink(file);
+  });
+  t.mock.method(Atomics, 'wait', () => {
+    fs.writeFileSync(lock, JSON.stringify({ pid: process.pid, token: 'replacement-owner', runId: 'other-run' }));
+  });
+  store.close();
+  assert.equal(attempts, 1);
+  assert.equal(json(directory, 'run.lock').token, 'replacement-owner');
+});

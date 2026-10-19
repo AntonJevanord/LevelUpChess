@@ -138,7 +138,11 @@ The blue queen's draft back-rank teleport remains an optional engine extension. 
 - [x] Pass 231 unit/integration checks with the native engine, including cancellation, resume, and all upgrade capabilities.
 - [x] Finish an eight-game smoke run and four full native pilot games; retain these as workflow validation, not balance evidence.
 - [x] Pass all 160 existing browser/API cases after adding the harness build.
-- [ ] Run the harness on Windows with the bundled executable.
+- [x] User ran the harness on Windows; engine preflight and four games worked before a OneDrive checkpoint replacement failure.
+- [x] Add bounded retries for transient Windows sharing errors while preserving atomic checkpoints and primary errors.
+- [x] Recover the latest interrupted history from the journal and permit the exact reviewed recovery patch to resume version 0.7.0 runs.
+- [x] Pass 247 unit/integration checks with injected file-sharing failures; resume an actual pre-patch run without changing its manifest or journal.
+- [ ] Confirm checkpoint retries and resumed smoke completion on Windows after the patch.
 - [ ] Collect broad paired-opening results at several search budgets before assigning material ranges.
 - [ ] Investigate completion rates, opening sensitivity, king evaluation limits, and outlier games before changing movement.
 - [ ] Add per-piece behavior revisions and an evidence ledger; preserve old results and prioritize changed pieces by coverage and uncertainty.

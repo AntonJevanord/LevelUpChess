@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { randomUUID } = require('node:crypto');
+const { renameWithRetrySync, unlinkWithRetrySync } = require('./files');
 
 const STATUSES = new Set(['completed', 'truncated', 'aborted', 'error']);
 const IDENTITY_FIELDS = ['configHash', 'rulesHash', 'engineSha256'];
@@ -23,21 +24,34 @@ function syncDirectory(directory) {
   }
 }
 
+function cleanup(primary, ...operations) {
+  for (const operation of operations) {
+    try { operation(); }
+    catch (error) {
+      if (primary) (primary.cleanupErrors ||= []).push(error);
+      else primary = error;
+    }
+  }
+  return primary;
+}
+
 function atomicWrite(directory, name, content) {
   const temporary = path.join(directory, `.${name}.${randomUUID()}.tmp`);
   let fd;
+  let created = false;
+  let failure;
   try {
     fd = fs.openSync(temporary, 'wx');
+    created = true;
     fs.writeFileSync(fd, content, 'utf8');
     fs.fsyncSync(fd);
     fs.closeSync(fd);
     fd = undefined;
-    fs.renameSync(temporary, path.join(directory, name));
+    renameWithRetrySync(temporary, path.join(directory, name));
     syncDirectory(directory);
-  } finally {
-    if (fd !== undefined) fs.closeSync(fd);
-    try { fs.unlinkSync(temporary); } catch (error) { if (error.code !== 'ENOENT') throw error; }
-  }
+  } catch (error) { failure = error; }
+  failure = cleanup(failure, () => { if (fd !== undefined) fs.closeSync(fd); }, () => { if (created) unlinkWithRetrySync(temporary); });
+  if (failure) throw failure;
 }
 
 function lockOwner(file) {
@@ -59,8 +73,7 @@ function definitelyDead(pid) {
 }
 
 function removeOwnedLock(file, token) {
-  const owner = lockOwner(file);
-  if (owner?.token === token) fs.unlinkSync(file);
+  unlinkWithRetrySync(file, () => lockOwner(file)?.token === token);
 }
 
 function createLock(file, owner) {
@@ -69,9 +82,7 @@ function createLock(file, owner) {
     fs.writeFileSync(fd, JSON.stringify(owner) + '\n', 'utf8');
     fs.fsyncSync(fd);
   } catch (error) {
-    fs.closeSync(fd);
-    try { fs.unlinkSync(file); } catch { /* Preserve the original write failure. */ }
-    throw error;
+    throw cleanup(error, () => fs.closeSync(fd), () => unlinkWithRetrySync(file));
   }
   fs.closeSync(fd);
 }
@@ -79,6 +90,8 @@ function createLock(file, owner) {
 function acquireLock(directory, runId) {
   const file = path.join(directory, 'run.lock');
   const owner = { pid: process.pid, token: randomUUID(), runId, createdAt: new Date().toISOString() };
+  let failure;
+  let acquired = false;
   try {
     createLock(file, owner);
     return () => removeOwnedLock(file, owner.token);
@@ -99,14 +112,21 @@ function acquireLock(directory, runId) {
     const current = lockOwner(file);
     if (current) {
       if (!definitelyDead(current.pid)) throw new Error(`Run is locked by process ${current.pid}.`);
-      fs.unlinkSync(file);
+      unlinkWithRetrySync(file);
     }
-    try { createLock(file, owner); }
+    try { createLock(file, owner); acquired = true; }
     catch (error) {
       if (error.code === 'EEXIST') throw new Error('Another process acquired the run lock.');
       throw error;
     }
-  } finally { removeOwnedLock(reclaim, owner.token); }
+  } catch (error) { failure = error; throw error; }
+  finally {
+    const cleanupFailure = cleanup(failure, () => removeOwnedLock(reclaim, owner.token));
+    if (!failure && cleanupFailure) {
+      if (acquired) cleanup(cleanupFailure, () => removeOwnedLock(file, owner.token));
+      throw cleanupFailure;
+    }
+  }
   return () => removeOwnedLock(file, owner.token);
 }
 
@@ -216,6 +236,7 @@ function openStore({ outDir, resume = false, manifest: requestedManifest } = {})
       },
       saveCheckpoint(state) { assertOpen(); checkpoint = saveJson('checkpoint.json', state); },
       saveSummary(summary) { assertOpen(); saveJson('summary.json', summary); },
+      saveResumeAudit(audit) { assertOpen(); saveJson('storage-upgrade.json', audit); },
       savePgn(text) {
         assertOpen();
         if (typeof text !== 'string') throw new Error('PGN must be a string.');
@@ -224,14 +245,12 @@ function openStore({ outDir, resume = false, manifest: requestedManifest } = {})
       close() {
         if (closed) return;
         closed = true;
-        try { fs.closeSync(recordsFd); }
-        finally { unlock(); }
+        const failure = cleanup(null, () => fs.closeSync(recordsFd), unlock);
+        if (failure) throw failure;
       },
     };
   } catch (error) {
-    if (recordsFd !== undefined) fs.closeSync(recordsFd);
-    unlock();
-    throw error;
+    throw cleanup(error, () => { if (recordsFd !== undefined) fs.closeSync(recordsFd); }, unlock);
   }
 }
 

@@ -6,6 +6,7 @@ const path = require('node:path');
 const { randomUUID } = require('node:crypto');
 const { normalizeConfig, makeSchedule } = require('./balance/plan');
 const { summarize } = require('./balance/stats');
+const { renameWithRetrySync, unlinkWithRetrySync } = require('./balance/files');
 
 const HELP = `Paired Fairy Stockfish balance experiments
 
@@ -63,10 +64,15 @@ function requestStop(directory, action) {
   }
   const request = { action, runId: owner.runId, token: owner.token, requestedAt: new Date().toISOString() };
   const temporary = path.join(outDir, `.control-${randomUUID()}.tmp`);
+  let failure;
   try {
     fs.writeFileSync(temporary, JSON.stringify(request) + '\n', { flag: 'wx' });
-    fs.renameSync(temporary, path.join(outDir, 'control.json'));
-  } finally { try { fs.unlinkSync(temporary); } catch (error) { if (error.code !== 'ENOENT') throw error; } }
+    renameWithRetrySync(temporary, path.join(outDir, 'control.json'));
+  } catch (error) { failure = error; throw error; }
+  finally {
+    try { unlinkWithRetrySync(temporary); }
+    catch (error) { if (failure) failure.cleanupError = error; else throw error; }
+  }
   console.log(`Stop requested (${action}). The runner will save its progress.`);
 }
 

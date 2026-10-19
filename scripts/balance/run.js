@@ -6,6 +6,7 @@ const { UciEngine } = require('./uci');
 const { openStore } = require('./storage');
 const { summarize } = require('./stats');
 const { checkCapabilities } = require('./capabilities');
+const { storageCompatibleManifest } = require('./resume-compatibility');
 
 const FINAL = new Set(['completed', 'truncated']);
 const sha256 = value => createHash('sha256').update(value).digest('hex');
@@ -40,6 +41,25 @@ function replay(board, moves, { rejectTerminal = false } = {}) {
     if (rejectTerminal && board.outcome()) throw new Error('Opening prefix reaches a terminal position.');
   }
   return sans;
+}
+
+function recoverHistory(game, startFen, checkpoint, records) {
+  const candidates = records.filter(record => record.id === game.id && ['aborted', 'error'].includes(record.status));
+  if (checkpoint?.id === game.id) candidates.push(checkpoint);
+  let saved = null;
+  for (const candidate of candidates) {
+    if (candidate.startFen !== startFen || !Array.isArray(candidate.moves) || !Number.isSafeInteger(candidate.attempt) || candidate.attempt < 1) {
+      throw new Error('Saved game history does not match the planned game.');
+    }
+    if (!saved || candidate.attempt > saved.attempt) saved = candidate;
+    else if (candidate.attempt === saved.attempt) {
+      const shorter = candidate.moves.length < saved.moves.length ? candidate : saved;
+      const longer = shorter === candidate ? saved : candidate;
+      if (shorter.moves.some((move, index) => move !== longer.moves[index])) throw new Error('Checkpoint and journal contain conflicting histories for the same attempt.');
+      saved = longer;
+    }
+  }
+  return saved;
 }
 
 function pgnEscape(value) {
@@ -100,8 +120,8 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
   catch (error) { throw new Error('Balance rules are not built. Run npm.cmd run build first.', { cause: error }); }
   const bundleHash = sha256(fs.readFileSync(rulesFile));
   const engineSha256 = sha256(fs.readFileSync(enginePath));
-  const runnerSources = ['run.js', 'plan.js', 'stats.js', 'storage.js', 'uci.js', 'capabilities.js', '../engine-capabilities.js']
-    .map(file => ({ file, sha256: sha256(fs.readFileSync(path.resolve(__dirname, file))) }));
+  const runnerSources = ['run.js', 'plan.js', 'stats.js', 'storage.js', 'uci.js', 'capabilities.js', '../engine-capabilities.js', 'files.js', 'resume-compatibility.js']
+    .map(file => ({ file, sha256: sha256(fs.readFileSync(path.resolve(__dirname, file), 'utf8').replace(/\r\n/g, '\n')) }));
   const runnerSha256 = fingerprint(runnerSources);
   const profiles = new Map();
 
@@ -176,7 +196,24 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
         royalMode: profile.royalMode, evaluationCaveat: profile.evaluationCaveat,
       })),
     };
-    store = openStore({ outDir: directory, resume, manifest });
+    let acceptedManifest = manifest;
+    if (resume) {
+      const original = JSON.parse(fs.readFileSync(path.join(directory, 'run.json'), 'utf8'));
+      // Exact source fingerprints approve this recovery-only patch. Keeping
+      // the allowlist outside its own fingerprint avoids a circular hash.
+      const patch = require('./storage-patch.json');
+      acceptedManifest = storageCompatibleManifest({
+        original, requested: manifest, profiles: orderedProfiles,
+        approvals: patch.fromRunnerSha256.map(fromRunnerSha256 => ({ fromRunnerSha256, toRunnerSha256: patch.toRunnerSha256 })),
+      });
+    }
+    store = openStore({ outDir: directory, resume, manifest: acceptedManifest });
+    if (acceptedManifest !== manifest) {
+      store.saveResumeAudit({ schemaVersion: 1, resumedAt: new Date().toISOString(), runId: store.manifest.runId,
+        originalRunnerSha256: store.manifest.runnerSha256, currentRunnerSha256: runnerSha256,
+        reason: 'Reviewed Windows storage retry and interrupted-history recovery patch; engine, movement rules, and experiment settings are unchanged.' });
+      onProgress('Resuming with the compatible storage patch; original run identity and results are preserved.');
+    }
     for (const profile of orderedProfiles) {
       if (profile.evaluationCaveat) onProgress(`Warning: ${profile.variant}: ${profile.evaluationCaveat}`);
     }
@@ -230,18 +267,17 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
       const rules = await createMatchRules(pair);
       checkAbort(signal);
       const startFen = rules.startingFen(sides.white.army, sides.black.army);
-      const prior = store.checkpoint?.current;
-      const saved = resume && prior?.id === game.id ? prior : null;
-      if (saved && (saved.startFen !== startFen || !Array.isArray(saved.moves) || !Number.isSafeInteger(saved.attempt) || saved.attempt < 1)) {
-        throw new Error('Current game checkpoint does not match the planned game.');
-      }
+      const saved = resume ? recoverHistory(game, startFen, store.checkpoint?.current, store.records) : null;
       const priorAttempts = store.records.filter(record => record.id === game.id).map(record => record.attempt);
       const attempt = Math.max(0, saved?.attempt || 0, ...priorAttempts) + 1;
       const moves = saved ? [...saved.moves] : [...game.openingMoves];
       if (moves.length < game.openingMoves.length || game.openingMoves.some((move, i) => moves[i] !== move)) throw new Error('Checkpoint does not preserve the forced opening prefix.');
       const board = rules.createBoard(startFen);
       let sans;
-      try { sans = replay(board, moves); }
+      try {
+        sans = replay(board, moves);
+        if (saved?.finalFen && saved.finalFen !== board.fen()) throw new Error('Journal final position does not match its move history.');
+      }
       catch (error) { board.dispose(); throw new Error(`Cannot replay checkpoint for ${game.id}: ${error.message}`, { cause: error }); }
       const startedAt = new Date().toISOString();
       const engines = [];
@@ -309,9 +345,15 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
         // not invent a second attempt outcome or replace its checkpoint.
         if (finalized) throw error;
         const aborted = signal?.aborted || error.name === 'AbortError';
-        store.append(record(aborted ? 'aborted' : 'error', { reason: aborted ? 'cancelled' : error.message }));
-        persistCurrent();
-        const summary = saveReports();
+        let summary;
+        try {
+          store.append(record(aborted ? 'aborted' : 'error', { reason: aborted ? 'cancelled' : error.message }));
+          persistCurrent();
+          summary = saveReports();
+        } catch (recoveryError) {
+          error.recoveryError = recoveryError;
+          throw error;
+        }
         if (aborted) return response(true, summary);
         throw error;
       } finally {
@@ -330,4 +372,4 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
   } finally { store?.close(); }
 }
 
-module.exports = { runMatches };
+module.exports = { runMatches, recoverHistory };
