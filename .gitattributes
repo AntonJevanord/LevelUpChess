@@ -1,0 +1,2 @@
+# Keep archived experiment data identical to its recorded upload checksum.
+experiments/balance/results/*.summary.json -text

@@ -20,6 +20,8 @@ The smoke run checks the workflow. Its small search budget and move limit do not
 | --- | --- |
 | `experiments/balance/smoke.json` | Short control and three-blue-versus-purple-knight checks. |
 | `experiments/balance/budget-3.json` | Equal-cost armies, including three blue upgrades versus one purple and blue-plus-orange versus purple. |
+| `experiments/balance/outlier-effects.json` | Follow-up: each knight/pawn/rook tier and the blue bishop against ordinary armies; pawns start on d2. |
+| `experiments/balance/budget-3-confirmation.json` | Follow-up: five selected budget-3 matchups at ten times the node budget, holding the same openings fixed. |
 | `experiments/balance/upgrade-effects.json` | Each upgrade against an ordinary army, to estimate its added benefit; asymmetric king cases are exploratory. |
 | `experiments/balance/skill-sweep.json` | Compare a purple-queen army at several uncalibrated skill settings against an ordinary army. |
 | `experiments/balance/material-anchors.json` | Ordinary-army controls and pawn, knight, bishop, rook, or queen handicaps. |
@@ -31,6 +33,8 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 ```
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
+
+The first completed 480-game budget-3 analysis and uploaded summary are preserved in [results 001](experiments/balance/results/budget-3-001.md). Purple rook, pawn, and knight armies outperformed the tested three-blue-minor package. Run `outlier-effects.json` first to investigate individual bonuses, then `budget-3-confirmation.json` to check search sensitivity. These follow-ups retain the original opening suite; wider opening coverage is a separate experiment.
 
 ## Stop, inspect, and resume
 

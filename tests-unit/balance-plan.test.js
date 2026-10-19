@@ -176,12 +176,12 @@ test('schedule shuffles pair order and first color reproducibly from the uint32 
 test('checked-in experiments validate and budget-three cases have equal point costs', () => {
   const directory = path.join(__dirname, '../experiments/balance');
   const names = fs.readdirSync(directory).filter(name => name.endsWith('.json'));
-  assert.deepEqual(names.sort(), ['budget-3.json', 'material-anchors.json', 'skill-sweep.json', 'smoke.json', 'upgrade-effects.json']);
+  assert.deepEqual(names.sort(), ['budget-3-confirmation.json', 'budget-3.json', 'material-anchors.json', 'outlier-effects.json', 'skill-sweep.json', 'smoke.json', 'upgrade-effects.json']);
   for (const name of names) {
     const config = normalizeConfig(JSON.parse(fs.readFileSync(path.join(directory, name), 'utf8')));
     const schedule = makeSchedule(config);
     assert.equal(schedule.length, 2 * config.openings.length * config.comparisons.length * config.repetitions);
-    if (name === 'budget-3.json') {
+    if (name === 'budget-3.json' || name === 'budget-3-confirmation.json') {
       assert.equal(config.openings.length, 20);
       for (const comparison of config.comparisons) {
         const costs = ['armyA', 'armyB'].map(army => Object.values(comparison[army].upgrades).reduce((sum, level) => sum + level, 0));

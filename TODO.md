@@ -144,6 +144,10 @@ The blue queen's draft back-rank teleport remains an optional engine extension. 
 - [x] Pass 247 unit/integration checks with injected file-sharing failures; resume an actual pre-patch run without changing its manifest or journal.
 - [x] User confirmed version 0.7.1 resumed and finished all eight smoke games on Windows, preserving prior records and the original failed attempt.
 - [x] User completed the four-game Windows budget-3 pilot with no errors or truncations: blue-plus-orange scored 0% and three-blue scored 50% against purple-rook armies, each from one opening; broader evidence is still required.
+- [x] Analyze and archive the uploaded full budget-3 summary: 480 completed games, 240 pairs, no errors/truncations, and a 50% ordinary control.
+- [x] Identify purple rook/pawn/knight outliers against the tested blue-minor package; preserve results and inference limits in [report 001](experiments/balance/results/budget-3-001.md).
+- [x] Prepare individual-effect and tenfold-search follow-ups, preserving central pawn placement and the original openings for controlled comparisons.
+- [ ] Collect and review `outlier-effects.json` and `budget-3-confirmation.json` results before changing abilities.
 - [ ] Collect broad paired-opening results at several search budgets before assigning material ranges.
 - [ ] Investigate completion rates, opening sensitivity, king evaluation limits, and outlier games before changing movement.
 - [ ] Add per-piece behavior revisions and an evidence ledger; preserve old results and prioritize changed pieces by coverage and uncertainty.
