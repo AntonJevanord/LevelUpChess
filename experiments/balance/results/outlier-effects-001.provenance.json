@@ -1,0 +1,467 @@
+{
+  "schemaVersion": 1,
+  "runId": "a1441826-831e-44a3-93ae-9cb5804e9a1a",
+  "sourceUploadSha256": {
+    "manifest": "d245d843083707314ef5849125628a6a71bac7e7f2c697a8799e2a97c3eb011a",
+    "journal": "e6b1cd66e00b700a9b98c0ad5652febe1343d95b6e2bae36441e3fa2195bf03d"
+  },
+  "configHash": "5b468ee539c39b9b9cd9b0f4fc71ca7f793b987a85a19e219e827a5562920b94",
+  "rulesHash": "0768990ac84e6d102970b7f2ec9568ee096c22e8aba79d66945a83fb00c47b37",
+  "engine": {
+    "file": "fairy-stockfish-levelup_x86-64.exe",
+    "sha256": "ad4d1308a7e9fc64ad73864bf740935bf3872d265b165c21abc026655651b9c5",
+    "sourceCommit": "43b66c8abfebfcab893a3a4c349aa790d18df148",
+    "observedNames": [
+      "Fairy-Stockfish 230826"
+    ]
+  },
+  "rulesBundleSha256": "0bc2927de03ec9d2dac3e608fcb7c95752a6045530a6e18746b71f9beba2b229",
+  "runnerSha256": "535dcc32507392d22a130a94970a31002de9bc537a72d1a03861554e85849828",
+  "runnerSources": [
+    {
+      "file": "run.js",
+      "sha256": "df5a5300acf37eb895c3b7f79f8f082060e5bcfcec8d393e595325d6eeddfcd5"
+    },
+    {
+      "file": "plan.js",
+      "sha256": "fcbbc296869feed0bae62dc1a291598a533250001a7c28b5b9d25adc1b2f1583"
+    },
+    {
+      "file": "stats.js",
+      "sha256": "dd55139112cc8fa89ae1ebcc7c1f81631e3aca44a6e01e3ad756f4b52766c5fc"
+    },
+    {
+      "file": "storage.js",
+      "sha256": "5a1f747422e2132ba40b5004adb0e2915655f3aa2352a334b9f13b0f5001e019"
+    },
+    {
+      "file": "uci.js",
+      "sha256": "48240374844738ff7b3f9309a95edfbac6e4b8642f3955effe52e3ffca77d601"
+    },
+    {
+      "file": "capabilities.js",
+      "sha256": "b2ef162224e8e7e487efeaf3d84f943c91bd7fac8c3c742d1adbdacd86a3faf8"
+    },
+    {
+      "file": "../engine-capabilities.js",
+      "sha256": "640389c60255577db149ba87acccd323fa4209d907fd2eaa8521a1805dbfd6d9"
+    },
+    {
+      "file": "files.js",
+      "sha256": "25cd2624c6e08fb674bf06c0a71614606d7d414fc0bacec881e69719f42feedc"
+    },
+    {
+      "file": "resume-compatibility.js",
+      "sha256": "d3034c734b56665a529632aa777fe30eb6679d339463481cbfe8bf22daa4c579"
+    }
+  ],
+  "rulesProfiles": [
+    {
+      "variant": "levelup-balance-0-0",
+      "whiteKing": 0,
+      "blackKing": 0,
+      "configSha256": "e8fb3a581f43a1b24cee7281ebd2502c2d13a442bd85c33a668cbbb9ff90ed6d",
+      "file": "rules/levelup-balance-0-0.ini",
+      "royalMode": "king",
+      "evaluationCaveat": null
+    }
+  ],
+  "config": {
+    "schemaVersion": 1,
+    "name": "Outlier effects: individual upgrades versus ordinary armies; same exploratory opening suite",
+    "seed": 42,
+    "repetitions": 1,
+    "engine": {
+      "nodes": 10000,
+      "threads": 1,
+      "hashMb": 32,
+      "maxPlies": 400
+    },
+    "openings": [
+      {
+        "id": "start",
+        "moves": []
+      },
+      {
+        "id": "open-e-pawns",
+        "moves": [
+          "e2e4",
+          "e7e5"
+        ]
+      },
+      {
+        "id": "sicilian-prefix",
+        "moves": [
+          "e2e4",
+          "c7c5"
+        ]
+      },
+      {
+        "id": "french-prefix",
+        "moves": [
+          "e2e4",
+          "e7e6"
+        ]
+      },
+      {
+        "id": "caro-prefix",
+        "moves": [
+          "e2e4",
+          "c7c6"
+        ]
+      },
+      {
+        "id": "scandinavian-prefix",
+        "moves": [
+          "e2e4",
+          "d7d5"
+        ]
+      },
+      {
+        "id": "modern-prefix",
+        "moves": [
+          "e2e4",
+          "g7g6"
+        ]
+      },
+      {
+        "id": "queen-pawns",
+        "moves": [
+          "d2d4",
+          "d7d5"
+        ]
+      },
+      {
+        "id": "indian-prefix",
+        "moves": [
+          "d2d4",
+          "g8f6"
+        ]
+      },
+      {
+        "id": "queen-french-prefix",
+        "moves": [
+          "d2d4",
+          "e7e6"
+        ]
+      },
+      {
+        "id": "dutch-prefix",
+        "moves": [
+          "d2d4",
+          "f7f5"
+        ]
+      },
+      {
+        "id": "queen-modern-prefix",
+        "moves": [
+          "d2d4",
+          "g7g6"
+        ]
+      },
+      {
+        "id": "reversed-sicilian-prefix",
+        "moves": [
+          "c2c4",
+          "e7e5"
+        ]
+      },
+      {
+        "id": "symmetrical-english-prefix",
+        "moves": [
+          "c2c4",
+          "c7c5"
+        ]
+      },
+      {
+        "id": "anglo-indian-prefix",
+        "moves": [
+          "c2c4",
+          "g8f6"
+        ]
+      },
+      {
+        "id": "reti-prefix",
+        "moves": [
+          "g1f3",
+          "d7d5"
+        ]
+      },
+      {
+        "id": "reti-indian-prefix",
+        "moves": [
+          "g1f3",
+          "g8f6"
+        ]
+      },
+      {
+        "id": "reti-sicilian-prefix",
+        "moves": [
+          "g1f3",
+          "c7c5"
+        ]
+      },
+      {
+        "id": "king-fianchetto-prefix",
+        "moves": [
+          "g2g3",
+          "d7d5"
+        ]
+      },
+      {
+        "id": "king-pawn-step-prefix",
+        "moves": [
+          "h2h3",
+          "e7e5"
+        ]
+      }
+    ],
+    "comparisons": [
+      {
+        "id": "standard-control",
+        "label": "Ordinary pieces, equal search: harness and first-move control",
+        "armyA": {
+          "upgrades": {},
+          "remove": []
+        },
+        "armyB": {
+          "upgrades": {},
+          "remove": []
+        },
+        "strengthA": {
+          "skill": 20
+        },
+        "strengthB": {
+          "skill": 20
+        }
+      },
+      {
+        "id": "blue-knight-effect",
+        "label": "Blue knight on b1 versus an ordinary army",
+        "armyA": {
+          "upgrades": {
+            "b1": 1
+          },
+          "remove": []
+        },
+        "armyB": {
+          "upgrades": {},
+          "remove": []
+        },
+        "strengthA": {
+          "skill": 20
+        },
+        "strengthB": {
+          "skill": 20
+        }
+      },
+      {
+        "id": "orange-knight-effect",
+        "label": "Orange knight on b1 versus an ordinary army",
+        "armyA": {
+          "upgrades": {
+            "b1": 2
+          },
+          "remove": []
+        },
+        "armyB": {
+          "upgrades": {},
+          "remove": []
+        },
+        "strengthA": {
+          "skill": 20
+        },
+        "strengthB": {
+          "skill": 20
+        }
+      },
+      {
+        "id": "purple-knight-effect",
+        "label": "Purple knight on b1 versus an ordinary army",
+        "armyA": {
+          "upgrades": {
+            "b1": 3
+          },
+          "remove": []
+        },
+        "armyB": {
+          "upgrades": {},
+          "remove": []
+        },
+        "strengthA": {
+          "skill": 20
+        },
+        "strengthB": {
+          "skill": 20
+        }
+      },
+      {
+        "id": "blue-bishop-effect",
+        "label": "Blue bishop on c1 versus an ordinary army",
+        "armyA": {
+          "upgrades": {
+            "c1": 1
+          },
+          "remove": []
+        },
+        "armyB": {
+          "upgrades": {},
+          "remove": []
+        },
+        "strengthA": {
+          "skill": 20
+        },
+        "strengthB": {
+          "skill": 20
+        }
+      },
+      {
+        "id": "blue-pawn-effect",
+        "label": "Blue pawn on d2 versus an ordinary army",
+        "armyA": {
+          "upgrades": {
+            "d2": 1
+          },
+          "remove": []
+        },
+        "armyB": {
+          "upgrades": {},
+          "remove": []
+        },
+        "strengthA": {
+          "skill": 20
+        },
+        "strengthB": {
+          "skill": 20
+        }
+      },
+      {
+        "id": "orange-pawn-effect",
+        "label": "Orange pawn on d2 versus an ordinary army",
+        "armyA": {
+          "upgrades": {
+            "d2": 2
+          },
+          "remove": []
+        },
+        "armyB": {
+          "upgrades": {},
+          "remove": []
+        },
+        "strengthA": {
+          "skill": 20
+        },
+        "strengthB": {
+          "skill": 20
+        }
+      },
+      {
+        "id": "purple-pawn-effect",
+        "label": "Purple pawn on d2 versus an ordinary army",
+        "armyA": {
+          "upgrades": {
+            "d2": 3
+          },
+          "remove": []
+        },
+        "armyB": {
+          "upgrades": {},
+          "remove": []
+        },
+        "strengthA": {
+          "skill": 20
+        },
+        "strengthB": {
+          "skill": 20
+        }
+      },
+      {
+        "id": "blue-rook-effect",
+        "label": "Blue rook on a1 versus an ordinary army",
+        "armyA": {
+          "upgrades": {
+            "a1": 1
+          },
+          "remove": []
+        },
+        "armyB": {
+          "upgrades": {},
+          "remove": []
+        },
+        "strengthA": {
+          "skill": 20
+        },
+        "strengthB": {
+          "skill": 20
+        }
+      },
+      {
+        "id": "orange-rook-effect",
+        "label": "Orange rook on a1 versus an ordinary army",
+        "armyA": {
+          "upgrades": {
+            "a1": 2
+          },
+          "remove": []
+        },
+        "armyB": {
+          "upgrades": {},
+          "remove": []
+        },
+        "strengthA": {
+          "skill": 20
+        },
+        "strengthB": {
+          "skill": 20
+        }
+      },
+      {
+        "id": "purple-rook-effect",
+        "label": "Purple rook on a1 versus an ordinary army",
+        "armyA": {
+          "upgrades": {
+            "a1": 3
+          },
+          "remove": []
+        },
+        "armyB": {
+          "upgrades": {},
+          "remove": []
+        },
+        "strengthA": {
+          "skill": 20
+        },
+        "strengthB": {
+          "skill": 20
+        }
+      }
+    ]
+  },
+  "scheduledGames": 440,
+  "checks": {
+    "bundledWindowsEngineHashMatches": true,
+    "normalizedConfigMatches": true,
+    "seededScheduleMatches": true,
+    "configFingerprintMatches": true,
+    "journalSummaryMatches": true,
+    "bundleMatchesWindowsCRLFCheckout": true,
+    "replayedGames": 440,
+    "replayedPlies": 56644,
+    "legalReplayAndFinalOutcomeMismatches": 0,
+    "blueRookFullSanReplayMismatches": 0
+  },
+  "publishedBlueRookJournal": {
+    "file": "outlier-effects-001.blue-rook.games.jsonl",
+    "records": 40,
+    "sha256": "bbdedf27fcd317ff742fdbb02893cc0083539053cb19487a83dbf80d497c059a",
+    "omittedFields": [
+      "startedAt",
+      "finishedAt"
+    ]
+  },
+  "privacyNotes": [
+    "Full personal executable path and wall-clock timestamps are omitted.",
+    "The full schedule is reconstructible from the normalized configuration and seed.",
+    "Only the 40 blue-rook games are archived here; all 440 uploaded games were audited."
+  ]
+}

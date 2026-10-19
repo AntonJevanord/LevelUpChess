@@ -150,7 +150,9 @@ The blue queen's draft back-rank teleport remains an optional engine extension. 
 - [x] Analyze and archive all 440 individual-effect games: clean completion, tier scores, blue-rook anomaly, and near-ceiling purple-knight/orange-rook/purple-rook results.
 - [x] Verify bundled-source ordinary/custom-rook evaluation differences and retained blue-rook castling; preserve diagnostic evidence without attributing the observed score to a proven cause.
 - [x] Prepare an 80-game blue-rook/control confirmation at ten times the search budget.
-- [ ] Review `blue-rook-confirmation.json`, game histories, and the pending `budget-3-confirmation.json` results before changing abilities.
+- [x] Verify the uploaded outlier manifest and journal against the bundled Windows engine, rules, schedule, and summary; replay all 440 games and 56,644 plies without mismatches.
+- [x] Audit blue-rook jumps, original-rook activity/trades, and actual castling; archive the 40 relevant games and selected deeper position probes in the [game audit](experiments/balance/results/outlier-effects-001.games-audit.md).
+- [ ] Review the running 80-game `blue-rook-confirmation.json` check and pending `budget-3-confirmation.json` results before changing abilities.
 - [ ] Add ordinary-movement custom-piece controls to distinguish evaluation representation effects from extra-move strength.
 - [ ] Collect broad paired-opening results at several search budgets before assigning material ranges.
 - [ ] Investigate completion rates, opening sensitivity, king evaluation limits, and outlier games before changing movement.

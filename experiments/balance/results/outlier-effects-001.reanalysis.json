@@ -1,0 +1,475 @@
+{
+  "schemaVersion": 1,
+  "sourceRunId": "a1441826-831e-44a3-93ae-9cb5804e9a1a",
+  "engine": {
+    "platform": "Linux",
+    "sha256": "51ba74246d04d83791a7cd845e3928e99c9c3df62005c29954bb240c0af29e45",
+    "sourceCommit": "43b66c8abfebfcab893a3a4c349aa790d18df148",
+    "instrumented": false
+  },
+  "settings": {
+    "threads": 1,
+    "hashMb": 32,
+    "skill": 20,
+    "limitStrength": false,
+    "freshProcessForEachPositionAndBudget": true,
+    "clearedHashBeforeSearch": true,
+    "fullRecordedMovePrefix": true
+  },
+  "rulesProfile": {
+    "variant": "levelup-balance-0-0",
+    "whiteKing": 0,
+    "blackKing": 0,
+    "configSha256": "e8fb3a581f43a1b24cee7281ebd2502c2d13a442bd85c33a668cbbb9ff90ed6d",
+    "file": "rules/levelup-balance-0-0.ini",
+    "royalMode": "king",
+    "evaluationCaveat": null
+  },
+  "caveats": [
+    "This is a source-compatible Linux engine, not the recorded Windows executable.",
+    "The original games retained transposition tables between moves; these position probes start with empty tables.",
+    "Changed moves in these probes do not establish the cause of the full-game result."
+  ],
+  "positions": [
+    {
+      "id": "c16_blue-rook-effect_o11_caro-prefix_r1_w",
+      "openingId": "caro-prefix",
+      "priorPlies": 26,
+      "side": "w",
+      "fen": "r1b1k1nr/p4pp1/4p2p/q1npP3/8/2P1BN2/P4PPP/L2QKB1R w KQkq - 1 14",
+      "actual": {
+        "move": "d1d4",
+        "san": "Qd4"
+      },
+      "analyses": [
+        {
+          "requestedNodes": 10000,
+          "move": "d1c1",
+          "san": "Qc1",
+          "depth": 8,
+          "reportedNodes": 10001,
+          "score": {
+            "type": "cp",
+            "value": 22
+          },
+          "pv": [
+            "d1c1",
+            "g8e7",
+            "c1b2",
+            "e8g8",
+            "b2b4",
+            "a5b4",
+            "c3b4",
+            "c5e4",
+            "f3d4"
+          ]
+        },
+        {
+          "requestedNodes": 100000,
+          "move": "d1b1",
+          "san": "Qb1",
+          "depth": 13,
+          "reportedNodes": 100035,
+          "score": {
+            "type": "cp",
+            "value": 45
+          },
+          "pv": [
+            "d1b1",
+            "c5d7",
+            "b1b4",
+            "a5b4",
+            "c3b4",
+            "g8e7",
+            "a1a3",
+            "c8b7",
+            "a3a7",
+            "a8a7",
+            "e3a7",
+            "e7c6",
+            "a7c5",
+            "d7c5",
+            "b4c5",
+            "e8g8",
+            "h2h4"
+          ]
+        },
+        {
+          "requestedNodes": 1000000,
+          "move": "d1b1",
+          "san": "Qb1",
+          "depth": 17,
+          "reportedNodes": 1000239,
+          "score": {
+            "type": "cp",
+            "value": 14
+          },
+          "pv": [
+            "d1b1",
+            "g8e7"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c16_blue-rook-effect_o5_start_r1_w",
+      "openingId": "start",
+      "priorPlies": 26,
+      "side": "w",
+      "fen": "2rq1rk1/pp1bbpp1/2n1pn1p/1B1p4/P4B2/2N2N2/1PPQ1PPP/L3R1K1 w - - 2 14",
+      "actual": {
+        "move": "f4h6",
+        "san": "Bxh6"
+      },
+      "analyses": [
+        {
+          "requestedNodes": 10000,
+          "move": "f4h6",
+          "san": "Bxh6",
+          "depth": 9,
+          "reportedNodes": 10005,
+          "score": {
+            "type": "cp",
+            "value": -14
+          },
+          "pv": [
+            "f4h6",
+            "g7h6"
+          ]
+        },
+        {
+          "requestedNodes": 100000,
+          "move": "f4h6",
+          "san": "Bxh6",
+          "depth": 12,
+          "reportedNodes": 100043,
+          "score": {
+            "type": "cp",
+            "value": -85
+          },
+          "pv": [
+            "f4h6",
+            "d5d4"
+          ]
+        },
+        {
+          "requestedNodes": 1000000,
+          "move": "b5d3",
+          "san": "Bd3",
+          "depth": 16,
+          "reportedNodes": 1000820,
+          "score": {
+            "type": "cp",
+            "value": -107
+          },
+          "pv": [
+            "b5d3",
+            "c6b4",
+            "h2h3",
+            "a7a6",
+            "a1b1",
+            "b4d3",
+            "d2d3",
+            "f6e4",
+            "f3e5",
+            "e4c3",
+            "b2c3",
+            "d7a4",
+            "b1b7"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c16_blue-rook-effect_o19_queen-french-prefix_r1_w",
+      "openingId": "queen-french-prefix",
+      "priorPlies": 54,
+      "side": "w",
+      "fen": "1k1r2r1/1ppbn3/p3p2q/P2pP3/2PPpN2/4Q1Pp/1P1N3R/5LK1 w - - 0 28",
+      "actual": {
+        "move": "f4d5",
+        "san": "Nxd5"
+      },
+      "analyses": [
+        {
+          "requestedNodes": 10000,
+          "move": "h2h3",
+          "san": "Rxh3",
+          "depth": 9,
+          "reportedNodes": 10012,
+          "score": {
+            "type": "cp",
+            "value": -232,
+            "bound": "upperbound"
+          },
+          "pv": [
+            "h2h3",
+            "e7f5"
+          ]
+        },
+        {
+          "requestedNodes": 100000,
+          "move": "f4d5",
+          "san": "Nxd5",
+          "depth": 12,
+          "reportedNodes": 100083,
+          "score": {
+            "type": "cp",
+            "value": -356,
+            "bound": "upperbound"
+          },
+          "pv": [
+            "f4d5",
+            "g8g3"
+          ]
+        },
+        {
+          "requestedNodes": 1000000,
+          "move": "f4d5",
+          "san": "Nxd5",
+          "depth": 18,
+          "reportedNodes": 1000563,
+          "score": {
+            "type": "cp",
+            "value": -249
+          },
+          "pv": [
+            "f4d5",
+            "g8g3"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c16_blue-rook-effect_o11_caro-prefix_r1_w",
+      "openingId": "caro-prefix",
+      "priorPlies": 27,
+      "side": "b",
+      "fen": "r1b1k1nr/p4pp1/4p2p/q1npP3/3Q4/2P1BN2/P4PPP/L3KB1R b KQkq - 2 14",
+      "actual": {
+        "move": "c5b3",
+        "san": "Nb3"
+      },
+      "analyses": [
+        {
+          "requestedNodes": 100000,
+          "move": "c5b3",
+          "san": "Nb3",
+          "depth": 14,
+          "reportedNodes": 100081,
+          "score": {
+            "type": "cp",
+            "value": 167
+          },
+          "pv": [
+            "c5b3",
+            "a2b3",
+            "a5a1",
+            "d4d1",
+            "a1c3",
+            "e3d2",
+            "c3b2",
+            "f1b5",
+            "c8d7",
+            "b5d7",
+            "e8d7",
+            "e1g1",
+            "g8e7",
+            "b3b4",
+            "b2a2",
+            "d2e3",
+            "h8b8",
+            "e3c5",
+            "a7a5",
+            "b4a5"
+          ]
+        },
+        {
+          "requestedNodes": 1000000,
+          "move": "c5b3",
+          "san": "Nb3",
+          "depth": 19,
+          "reportedNodes": 1001349,
+          "score": {
+            "type": "cp",
+            "value": 98
+          },
+          "pv": [
+            "c5b3",
+            "d4b4",
+            "a5b4",
+            "c3b4",
+            "b3a1",
+            "e1d2",
+            "a8b8",
+            "b4b5",
+            "b8b7",
+            "f1d3",
+            "c8d7",
+            "h1a1",
+            "d7b5",
+            "a1b1",
+            "b5a6",
+            "b1b7",
+            "a6b7",
+            "d3b5",
+            "e8d8",
+            "e3a7",
+            "g8e7",
+            "f3d4"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c16_blue-rook-effect_o5_start_r1_w",
+      "openingId": "start",
+      "priorPlies": 27,
+      "side": "b",
+      "fen": "2rq1rk1/pp1bbpp1/2n1pn1B/1B1p4/P7/2N2N2/1PPQ1PPP/L3R1K1 b - - 0 14",
+      "actual": {
+        "move": "g7h6",
+        "san": "gxh6"
+      },
+      "analyses": [
+        {
+          "requestedNodes": 100000,
+          "move": "g7h6",
+          "san": "gxh6",
+          "depth": 15,
+          "reportedNodes": 100065,
+          "score": {
+            "type": "cp",
+            "value": 259
+          },
+          "pv": [
+            "g7h6"
+          ]
+        },
+        {
+          "requestedNodes": 1000000,
+          "move": "g7h6",
+          "san": "gxh6",
+          "depth": 18,
+          "reportedNodes": 1000342,
+          "score": {
+            "type": "cp",
+            "value": 284
+          },
+          "pv": [
+            "g7h6",
+            "b5c6"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c16_blue-rook-effect_o12_dutch-prefix_r1_b",
+      "openingId": "dutch-prefix",
+      "priorPlies": 17,
+      "side": "b",
+      "fen": "1nlq1rk1/pbppb1pp/1p2Pn2/5p2/2B5/P1N1PN2/1PP2PPP/R1BQK2R b KQ - 0 9",
+      "actual": {
+        "move": "c8c6",
+        "san": "Lc6"
+      },
+      "analyses": [
+        {
+          "requestedNodes": 100000,
+          "move": "d7d5",
+          "san": "d5",
+          "depth": 12,
+          "reportedNodes": 100118,
+          "score": {
+            "type": "cp",
+            "value": -30
+          },
+          "pv": [
+            "d7d5",
+            "c4a2"
+          ]
+        },
+        {
+          "requestedNodes": 1000000,
+          "move": "d7d5",
+          "san": "d5",
+          "depth": 19,
+          "reportedNodes": 1000948,
+          "score": {
+            "type": "cp",
+            "value": 0
+          },
+          "pv": [
+            "d7d5",
+            "c4b3",
+            "c7c5",
+            "b3a2",
+            "b8a6",
+            "f3g5",
+            "a6c7",
+            "d1d3",
+            "d8d6",
+            "d3f5",
+            "h7h6",
+            "g5f7",
+            "d6e6",
+            "f5e6",
+            "c7e6",
+            "f7e5",
+            "c5c4",
+            "e5g6",
+            "f8f7",
+            "e1g1",
+            "e6c5",
+            "g6f4",
+            "f7f8"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c16_blue-rook-effect_o12_dutch-prefix_r1_b",
+      "openingId": "dutch-prefix",
+      "priorPlies": 19,
+      "side": "b",
+      "fen": "1n1q1rk1/pbppb1pp/1pl1Pn2/5p2/2B5/P1N1PN2/1PP1QPPP/R1B1K2R b KQ - 2 10",
+      "actual": {
+        "move": "c6e6",
+        "san": "Lxe6"
+      },
+      "analyses": [
+        {
+          "requestedNodes": 100000,
+          "move": "d7d5",
+          "san": "d5",
+          "depth": 13,
+          "reportedNodes": 100010,
+          "score": {
+            "type": "cp",
+            "value": -31,
+            "bound": "upperbound"
+          },
+          "pv": [
+            "d7d5",
+            "c4d3"
+          ]
+        },
+        {
+          "requestedNodes": 1000000,
+          "move": "d7d5",
+          "san": "d5",
+          "depth": 17,
+          "reportedNodes": 1000635,
+          "score": {
+            "type": "cp",
+            "value": -46
+          },
+          "pv": [
+            "d7d5",
+            "c4a2"
+          ]
+        }
+      ]
+    }
+  ]
+}
