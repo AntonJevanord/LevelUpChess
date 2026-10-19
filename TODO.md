@@ -142,7 +142,7 @@ The blue queen's draft back-rank teleport remains an optional engine extension. 
 - [x] Add bounded retries for transient Windows sharing errors while preserving atomic checkpoints and primary errors.
 - [x] Recover the latest interrupted history from the journal and permit the exact reviewed recovery patch to resume version 0.7.0 runs.
 - [x] Pass 247 unit/integration checks with injected file-sharing failures; resume an actual pre-patch run without changing its manifest or journal.
-- [ ] Confirm checkpoint retries and resumed smoke completion on Windows after the patch.
+- [x] User confirmed version 0.7.1 resumed and finished all eight smoke games on Windows, preserving prior records and the original failed attempt.
 - [ ] Collect broad paired-opening results at several search budgets before assigning material ranges.
 - [ ] Investigate completion rates, opening sensitivity, king evaluation limits, and outlier games before changing movement.
 - [ ] Add per-piece behavior revisions and an evidence ledger; preserve old results and prioritize changed pieces by coverage and uncertainty.
