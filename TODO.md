@@ -120,9 +120,29 @@ The blue queen's draft back-rank teleport remains an optional engine extension. 
 - [x] Verify 138 positions for both colors against browser/native Linux rules and the Windows executable under Wine, including blockers, safe landings, royal attacks, castling, and mating examples.
 - [x] Identify single-knight mating positions enabled by royal attacks; avoid premature ordinary-material draws in the prototype.
 - [x] Pass 135 unit tests and 160 browser/API cases across the main game and king prototype, including repetition, fifty-move draws, and undo.
-- [ ] Playtest the king prototype and decide whether to keep or revise this progression.
+- [x] User playtest approved the capture-only king prototype for initial balance experiments.
 - [ ] Integrate independent king levels with other upgrades, setup budgets, saves, PGN, and engine play.
-- [ ] Establish the intended mating-material and draw rules before balance testing.
+- [x] Use explicit mate, stalemate, repetition, and fifty-move rules in experiments; avoid premature minor-material draws.
+- [x] Preserve the confirmed prototype as `v0.6.0`; continue on `version_07`.
+
+## Version 07 — balance testing
+
+- [x] Add configurable paired self-play with colors swapped and seeded opening order.
+- [x] Support every current upgrade, independent king levels, and ordinary material handicaps in the harness.
+- [x] Preflight opening legality for every scheduled army/color assignment and validate native move sets.
+- [x] Save run identities, full games, move checkpoints, summaries, and PGN.
+- [x] Add immediate, after-game, and after-pair stopping, plus interrupted-game resume.
+- [x] Keep engine failures, cancellation, and move-limit truncations unscored.
+- [x] Report complete-pair scores, opening coverage, and conditional uncertainty without assigning intrinsic piece Elo.
+- [x] Supply smoke, three-point-budget, individual-upgrade, strength-sweep, and ordinary-material anchor configurations.
+- [x] Pass 231 unit/integration checks with the native engine, including cancellation, resume, and all upgrade capabilities.
+- [x] Finish an eight-game smoke run and four full native pilot games; retain these as workflow validation, not balance evidence.
+- [x] Pass all 160 existing browser/API cases after adding the harness build.
+- [ ] Run the harness on Windows with the bundled executable.
+- [ ] Collect broad paired-opening results at several search budgets before assigning material ranges.
+- [ ] Investigate completion rates, opening sensitivity, king evaluation limits, and outlier games before changing movement.
+- [ ] Add per-piece behavior revisions and an evidence ledger; preserve old results and prioritize changed pieces by coverage and uncertainty.
+- [ ] Add targeted starting positions and special-ability usage counts alongside full-game comparisons.
 
 ## Later versions
 
@@ -134,11 +154,12 @@ The blue queen's draft back-rank teleport remains an optional engine extension. 
 - [x] Choose the capture-only king tier progression for the first prototype.
 - [ ] Agree on minimum mating material and confirm the progression after playtesting.
 - [ ] Prototype one king design and verify independent setup, checkmate, castling, draws, saves, and PGN.
-- [ ] After kings are implemented, plan concrete balance tests and estimate material values with uncertainty.
+- [x] Plan concrete balance tests with separate army scores, engine-strength compensation, and material anchors.
+- [ ] Estimate material ranges from collected results, including uncertainty and interactions.
 - [ ] Compare selected upgrades at budgets 3 and 6 with colors swapped; record rules, budgets, and conversion results.
 - Complete all piece upgrades and tune their abilities to the fixed level costs.
 - Add low-budget, high-budget, and equal-budget random modes.
-- Automate engine matches with saved progress and immediate/after-game stopping.
+- [x] Automate engine matches with saved progress and immediate/after-game stopping.
 - Version balance results so rule changes can be compared.
 - Add menus, settings, piece art, board palettes, and optional themes.
 - Consider online casual/ranked play after local rules and balance are stable.

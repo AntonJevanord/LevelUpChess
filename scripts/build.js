@@ -25,6 +25,16 @@ async function main() {
     outfile: 'dist/rules-node.cjs',
     legalComments: 'eof',
   });
+  await build({
+    ...rulesBuildOptions(),
+    absWorkingDir: root,
+    entryPoints: ['src/balance-rules.js'],
+    bundle: true,
+    platform: 'node',
+    format: 'cjs',
+    outfile: 'dist/balance-rules.cjs',
+    legalComments: 'eof',
+  });
   const template = fs.readFileSync(path.join(root, 'src/index.html'), 'utf8');
   const css = fs.readFileSync(path.join(root, 'styles.css'), 'utf8');
   const js = fs.readFileSync(path.join(root, 'dist/app.js'), 'utf8');

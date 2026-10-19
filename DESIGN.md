@@ -30,7 +30,7 @@ The target does not establish actual strength. A quiet deployment move, a new ch
 
 For kings, keep two separate ideas open: changing the royal itself and granting a nonroyal piece. A guard could target material values of 1, 2, and 3 at the corresponding king levels, but its deployment and protection of the king still need evaluation. The royal itself has no ordinary exchange value: its safety defines the checkmate objective. Its upgrade should be assessed through practical winning and mating prospects. The extra-piece approach remains provisional and may be abandoned later.
 
-We do not yet have measured values or justified error bars. Initially, report broad estimates or ranges rather than precise decimals. Later evidence can narrow the average estimate, but positional differences will remain. More games can reduce sampling uncertainty; they cannot establish a universal value valid in every position. Finalize the king rules before planning concrete balance tests, since those rules affect the value of the other pieces.
+We do not yet have measured values or justified error bars. Initially, report broad estimates or ranges rather than precise decimals. Later evidence can narrow the average estimate, but positional differences will remain. More games can reduce sampling uncertainty; they cannot establish a universal value valid in every position. The capture-only king prototype is approved for initial experiments; changing its rules requires a separate run identity.
 
 ### Engine estimates are a starting point
 
@@ -94,7 +94,7 @@ Before choosing a king, decide what material should reliably win. I suggest reta
 
 These are hypotheses, not measured strength claims. Keep prices at 1/2/3 and change one ability at a time. “Buff” and “nerf” below describe possible directions; none is a decision.
 
-The latest user playtest impression is that orange/purple rooks and purple pawns are very strong, while blue/orange pawns feel much weaker. Treat that as qualitative evidence to investigate, not numerical material values. The purple bishop currently has unlimited vertical rook slides as well as full bishop diagonals; a range cap below is only an alternative design. Finish king implementation before planning concrete balance testing or choosing buffs and nerfs.
+The latest user playtest impression is that orange/purple rooks and purple pawns are very strong, while blue/orange pawns feel much weaker. Treat that as qualitative evidence to investigate, not numerical material values. The purple bishop currently has unlimited vertical rook slides as well as full bishop diagonals; a range cap below is only an alternative design. Test the current rules before choosing buffs and nerfs.
 
 | Upgrade | Main question | Buff, nerf, or alternate experiment |
 | --- | --- | --- |
@@ -120,9 +120,9 @@ A simple queen comparison ladder is blue with quiet knight jumps at home, orange
 
 Pawn simplicity deserves a separate decision. Orange can quietly enter an en passant target without taking the pawn. Blue's initial triple creates multiple targets, while its repeatable double creates none. These follow the current engine rules, but functionality alone does not establish that they are good teaching rules. Any simplification needs explicit promotion and en passant verification.
 
-## Balance ideas to revisit after kings
+## Balance testing
 
-This is a preliminary outline, not the next implementation task. Choose and implement the king designs first, then make the balance protocol concrete.
+Version 07 implements the initial match protocol in [BALANCE.md](BALANCE.md). The following goals guide the experiments; no engine-match strength conclusions have been established.
 
 1. Freeze version 05 as a comparison baseline when ready; give movement changes a new profile so old saves retain their rules. Keep the agreed level costs at 1/2/3.
 2. Start at budgets 3 and 6: compare one purple purchase with three blue purchases and with blue plus orange. Budget 45 allows every eligible piece to be purple and is a useful stress test, not the only balance target.
@@ -130,4 +130,4 @@ This is a preliminary outline, not the next implementation task. Choose and impl
 4. Record wins, draws, conversion failures, promotion speed, king survival, and player confusion. Keep engine build, search settings, clocks, rules, budgets, and starting positions with results. Raw engine evaluations may be poorly calibrated for unusual pieces.
 5. Tune movement and other abilities to the fixed level costs. Preserve distinctive, understandable roles; redesign abilities that create poor counterplay or unwanted endgames.
 
-The color/cost direction is agreed, and the capture-only royal progression is selected for the first prototype. Guard grants remain a future alternative. Review the prototype, establish intended minimum mating material, and integrate king choices before choosing concrete balance changes and a testing protocol.
+The color/cost direction is agreed, and the capture-only royal progression is approved for initial testing. Guard grants remain a future alternative. The harness combines independent king choices with the other upgrades; browser integration and a final dead-position policy remain separate work. Choose concrete balance changes after reviewing completion rates, opening sensitivity, and engine-evaluation limitations.

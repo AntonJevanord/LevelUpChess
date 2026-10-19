@@ -26,7 +26,18 @@ Home ranks mean ranks 1–2 for White and 7–8 for Black. Conditional jumps dep
 
 Open [prototypes/kings/index.html](prototypes/kings/index.html) to try the capture-only king designs offline, or run `npm.cmd start` and open `http://127.0.0.1:4173/prototypes/kings/index.html`. Blue adds sideways two-square capture jumps, orange adds forward/backward captures, and purple adds diagonal captures. Ordinary quiet king movement remains unchanged.
 
-Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Independent king levels, the other upgrades, engine play, and saves remain integration work. See the [prototype guide](prototypes/kings/README.md).
+Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Bringing king choices into the main board's setup, engine play, and saves remains integration work. See the [prototype guide](prototypes/kings/README.md).
+
+## Version 07: balance experiments
+
+The command-line match runner combines all upgrades, including independent king levels, for paired Fairy Stockfish self-play. It records moves, results, engine/rules identities, and checkpoints. The browser boards keep their existing setup rules.
+
+```bat
+npm.cmd ci
+npm.cmd run balance -- --config experiments/balance/smoke.json --out balance-results/smoke
+```
+
+Press **q** or Ctrl+C to stop now, **g** after the current game, or **p** after its color-swapped pair. Resume with `npm.cmd run balance -- --resume balance-results/smoke`. Start with the smoke check, then choose equal-budget, strength-handicap, or ordinary-material experiments in the [balance guide](BALANCE.md). No measured piece values have been established yet.
 
 ## Play Fairy Stockfish
 
@@ -43,7 +54,7 @@ Open the printed address, keep the terminal running, and choose **Fairy Stockfis
 - Pause cancels the current search. Undo takes back a full turn where available and pauses play. Changing opponent, side, or difficulty preserves the board and cancels obsolete searches.
 - Engine errors preserve the game. Before searching, the bridge checks the custom abilities needed by the army. An incompatible executable reports the missing ability; choose the bundled engine or a compatible replacement.
 
-For the version 05 engine fix, stop the server, run `git pull --ff-only origin version_05`, and restart with `npm.cmd start`. Dependencies are unchanged, so `npm.cmd ci` is only needed for a fresh installation. No engine download or path setting is required. If an earlier `FAIRY_STOCKFISH_PATH` override still selects an old executable, update it or remove it before restarting; in PowerShell, use `Remove-Item Env:FAIRY_STOCKFISH_PATH -ErrorAction SilentlyContinue`.
+The current branches include the version 05 engine fix. Stop the server before updating your branch, then restart with `npm.cmd start`. No engine download or path setting is required on Windows. If an earlier `FAIRY_STOCKFISH_PATH` override still selects an old executable, update it or remove it before restarting; in PowerShell, use `Remove-Item Env:FAIRY_STOCKFISH_PATH -ErrorAction SilentlyContinue`.
 
 The server listens only on your computer and needs no cloud services or keys. Linux/macOS require a compatible native engine. Set `FAIRY_STOCKFISH_PATH` to use another executable; for example, in PowerShell:
 
@@ -101,8 +112,9 @@ Standard chess uses [chess.js](https://github.com/jhlywa/chess.js), with its BSD
 | `version_03` | `v0.3.0` | Three knight upgrade levels |
 | `version_04` | `v0.4.0` | Improved purple knight, pawns, bishops, and queens |
 | `version_05` | `v0.5.1` | Home-rank abilities, blue queen, rook upgrades, and compatible Windows engine |
-| `version_06` | In development | Capture-only king prototype |
+| `version_06` | `v0.6.0` | Capture-only king prototype |
+| `version_07` | In development | Automated balance experiments, checkpoints, and paired results |
 
 Create each development branch from the previous tested milestone and tag finished releases. Tags preserve stable checkpoints while branches can evolve. See [TODO.md](TODO.md) for progress and later work.
 
-King options and proposed balance experiments are discussed in [DESIGN.md](DESIGN.md). They do not change the current rules.
+Piece design candidates are discussed in [DESIGN.md](DESIGN.md). See [BALANCE.md](BALANCE.md) for the implemented testing protocol.

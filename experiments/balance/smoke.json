@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "seed": 42,
+  "repetitions": 1,
+  "name": "Smoke check only; short games are not balance evidence",
+  "engine": {
+    "nodes": 500,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 40
+  },
+  "openings": [
+    {
+      "id": "start",
+      "moves": []
+    },
+    {
+      "id": "open-e-pawns",
+      "moves": [
+        "e2e4",
+        "e7e5"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "standard-control",
+      "label": "Ordinary pieces, equal search: harness and first-move control",
+      "armyA": {
+        "upgrades": {}
+      },
+      "armyB": {
+        "upgrades": {}
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "three-blue-v-purple-knight",
+      "label": "Three blue minor upgrades versus purple knight and its extra piece",
+      "armyA": {
+        "upgrades": {
+          "b1": 1,
+          "g1": 1,
+          "c1": 1
+        }
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": 3
+        }
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    }
+  ]
+}
