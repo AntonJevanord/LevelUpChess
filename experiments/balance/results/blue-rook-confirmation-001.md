@@ -31,6 +31,6 @@ There are still only **20 short, related opening prefixes**. The summary's condi
 
 ## Next experiments
 
-Keep the current blue-rook movement. The next prepared run is [budget-3 confirmation](../budget-3-confirmation.json): **200 games at 100,000 nodes**, checking selected earlier three-point-budget results under the larger search budget. The blue-rook result shows why the near-ceiling rook/pawn/knight findings should also be checked before redesigning abilities.
+Keep the current blue-rook movement. The subsequent [200-game budget-3 confirmation](budget-3-confirmation-001.md) is complete: the selected purple rook/pawn/knight advantages persist under the intended larger search budget. The [first balance revision plan](../revision-plan.md) starts with purple-pawn and purple-rook changes under a capped test budget; it does not change this blue-rook design.
 
 An ordinary-movement rook under a custom piece identity remains a separate planned control for evaluation representation effects; it is not implemented yet. Broader opening families, material handicaps, and targeted positions are still needed before assigning material ranges. The 40 blue-rook confirmation game histories would allow a later comparison of actual jumps, trades, and tactical mistakes; no such behavior change is claimed from this summary.

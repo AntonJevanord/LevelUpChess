@@ -4,6 +4,8 @@ Run paired engine games to compare upgrade armies, strength handicaps, and ordin
 
 These tools collect results; they do not assign measured values to pieces or change the game's movement rules.
 
+The [first balance revision plan](experiments/balance/revision-plan.md) starts piece changes now. It caps the first two-piece batch at 200 scheduled games and ends with a keep/revert/park decision. Existing experiment files are options, not a queue that must be exhausted before development continues.
+
 ## Start a run
 
 Install dependencies with `npm ci`. On Windows, use `npm.cmd` in place of `npm`. No browser or running game server is needed. The harness uses the bundled Windows engine, or the executable selected by `FAIRY_STOCKFISH_PATH`; Linux/macOS need a compatible native executable.
@@ -26,6 +28,7 @@ The smoke run checks the workflow. Its small search budget and move limit do not
 | `experiments/balance/upgrade-effects.json` | Each upgrade against an ordinary army, to estimate its added benefit; asymmetric king cases are exploratory. |
 | `experiments/balance/skill-sweep.json` | Compare a purple-queen army at several uncalibrated skill settings against an ordinary army. |
 | `experiments/balance/material-anchors.json` | Ordinary-army controls and pawn, knight, bishop, rook, or queen handicaps. |
+| `experiments/balance/purple-material-handicaps.json` | Optional 320-game material research at 100,000 nodes; not required before piece changes. |
 
 For example:
 
@@ -35,11 +38,15 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The first completed 480-game budget-3 analysis and uploaded summary are preserved in [results 001](experiments/balance/results/budget-3-001.md). Purple rook, pawn, and knight armies outperformed the tested three-blue-minor package. Run `outlier-effects.json` first to investigate individual bonuses, then `budget-3-confirmation.json` to check search sensitivity. These follow-ups retain the original opening suite; wider opening coverage is a separate experiment.
+The first completed 480-game budget-3 analysis and uploaded summary are preserved in [results 001](experiments/balance/results/budget-3-001.md). Purple rook, pawn, and knight armies outperformed the tested three-blue-minor package. The individual-effect and search follow-ups below retain the original opening suite; wider opening coverage is a separate experiment.
 
 The completed 440-game [individual-effects analysis](experiments/balance/results/outlier-effects-001.md) found near-ceiling scores for orange/purple rooks and purple knight, plus unexpectedly poor blue-rook performance. The [manifest and game audit](experiments/balance/results/outlier-effects-001.games-audit.md) verifies the expected engine/rules, all 56,644 legal plies, actual bonus jumps, and castling. Source diagnostics confirm different evaluation treatment for ordinary and custom rooks; neither those differences nor the game patterns establish the cause of the poor score.
 
-The completed 80-game [blue-rook confirmation](experiments/balance/results/blue-rook-confirmation-001.md), intended at 100,000 nodes per move, raises its point score from 28.75% to **52.5%**, with 14 opening pairs improving, four tied, and two worse. Ordinary control remains 50%. Keep the current movement while checking the other selected results with `budget-3-confirmation.json`; this result does not yet establish material value or isolate the cause of the earlier losses.
+The completed 80-game [blue-rook confirmation](experiments/balance/results/blue-rook-confirmation-001.md), intended at 100,000 nodes per move, raises its point score from 28.75% to **52.5%**, with 14 opening pairs improving, four tied, and two worse. Ordinary control remains 50%. This result does not yet establish material value or isolate the cause of the earlier losses.
+
+The completed 200-game [budget-3 confirmation](experiments/balance/results/budget-3-confirmation-001.md) retains the selected purple advantages: purple rook, pawn, and knight score **98.75%, 96.25%, and 92.5%** against the blue-minor package; purple pawn scores **80%** against three blue pawns. These are complete-army results, not measured piece values. The next development step is to implement the [first candidate changes](experiments/balance/revision-plan.md). Further material research is optional.
+
+In the material-compensation run, Army A has the upgrade **and loses its own ordinary piece**; Army B is a full ordinary army. A score near 50% suggests compensation for that specific handicap, including its positional effects. It measures the added bonus, not the upgraded piece's whole value. The purple knight retains its starting knight and extra unit. All choices use relative White-side squares; a missing h1 rook also removes kingside castling. This run is distinct from `material-anchors.json`, which uses only ordinary pieces and the original 10,000-node budget.
 
 ## Stop, inspect, and resume
 

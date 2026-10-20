@@ -1,0 +1,315 @@
+{
+  "schemaVersion": 1,
+  "seed": 42,
+  "repetitions": 1,
+  "name": "Purple upgrade material handicaps: bishop and rook compensation; fixed exploratory openings",
+  "engine": {
+    "nodes": 100000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400
+  },
+  "openings": [
+    {
+      "id": "start",
+      "moves": []
+    },
+    {
+      "id": "open-e-pawns",
+      "moves": [
+        "e2e4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "sicilian-prefix",
+      "moves": [
+        "e2e4",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "french-prefix",
+      "moves": [
+        "e2e4",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "caro-prefix",
+      "moves": [
+        "e2e4",
+        "c7c6"
+      ]
+    },
+    {
+      "id": "scandinavian-prefix",
+      "moves": [
+        "e2e4",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "modern-prefix",
+      "moves": [
+        "e2e4",
+        "g7g6"
+      ]
+    },
+    {
+      "id": "queen-pawns",
+      "moves": [
+        "d2d4",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "indian-prefix",
+      "moves": [
+        "d2d4",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "queen-french-prefix",
+      "moves": [
+        "d2d4",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "dutch-prefix",
+      "moves": [
+        "d2d4",
+        "f7f5"
+      ]
+    },
+    {
+      "id": "queen-modern-prefix",
+      "moves": [
+        "d2d4",
+        "g7g6"
+      ]
+    },
+    {
+      "id": "reversed-sicilian-prefix",
+      "moves": [
+        "c2c4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "symmetrical-english-prefix",
+      "moves": [
+        "c2c4",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "anglo-indian-prefix",
+      "moves": [
+        "c2c4",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "reti-prefix",
+      "moves": [
+        "g1f3",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "reti-indian-prefix",
+      "moves": [
+        "g1f3",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "reti-sicilian-prefix",
+      "moves": [
+        "g1f3",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "king-fianchetto-prefix",
+      "moves": [
+        "g2g3",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "king-pawn-step-prefix",
+      "moves": [
+        "h2h3",
+        "e7e5"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "standard-control",
+      "label": "Ordinary pieces, equal search: harness and first-move control",
+      "armyA": {
+        "upgrades": {}
+      },
+      "armyB": {
+        "upgrades": {}
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "blue-minor-package-v-standard",
+      "label": "Three blue minor upgrades versus a full ordinary army",
+      "armyA": {
+        "upgrades": {
+          "b1": 1,
+          "g1": 1,
+          "c1": 1
+        }
+      },
+      "armyB": {
+        "upgrades": {}
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "purple-rook-minus-bishop",
+      "label": "Purple rook army missing its ordinary c1 bishop versus a full ordinary army",
+      "armyA": {
+        "upgrades": {
+          "a1": 3
+        },
+        "remove": [
+          "c1"
+        ]
+      },
+      "armyB": {
+        "upgrades": {}
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "purple-rook-minus-rook",
+      "label": "Purple rook army missing its ordinary h1 rook versus a full ordinary army",
+      "armyA": {
+        "upgrades": {
+          "a1": 3
+        },
+        "remove": [
+          "h1"
+        ]
+      },
+      "armyB": {
+        "upgrades": {}
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "purple-pawn-minus-bishop",
+      "label": "Purple pawn army missing its ordinary c1 bishop versus a full ordinary army",
+      "armyA": {
+        "upgrades": {
+          "d2": 3
+        },
+        "remove": [
+          "c1"
+        ]
+      },
+      "armyB": {
+        "upgrades": {}
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "purple-pawn-minus-rook",
+      "label": "Purple pawn army missing its ordinary h1 rook versus a full ordinary army",
+      "armyA": {
+        "upgrades": {
+          "d2": 3
+        },
+        "remove": [
+          "h1"
+        ]
+      },
+      "armyB": {
+        "upgrades": {}
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "purple-knight-minus-bishop",
+      "label": "Purple knight army missing its ordinary c1 bishop versus a full ordinary army",
+      "armyA": {
+        "upgrades": {
+          "b1": 3
+        },
+        "remove": [
+          "c1"
+        ]
+      },
+      "armyB": {
+        "upgrades": {}
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "purple-knight-minus-rook",
+      "label": "Purple knight army missing its ordinary h1 rook versus a full ordinary army",
+      "armyA": {
+        "upgrades": {
+          "b1": 3
+        },
+        "remove": [
+          "h1"
+        ]
+      },
+      "armyB": {
+        "upgrades": {}
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    }
+  ]
+}

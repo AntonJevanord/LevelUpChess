@@ -50,9 +50,9 @@ All comparison scores below use the original summary's **Army A** perspective, m
 | Two blue knights + blue bishop vs purple queen | 14 / 5 / 21 | 41.25% |
 | Two blue knights + blue bishop vs purple rook | 2 / 3 / 35 | 8.75% |
 
-Two focused follow-ups are prepared; no follow-up results are included in this report.
+The two focused follow-ups are now complete; their results are preserved separately.
 
-1. [Outlier effects](../outlier-effects.json): 440 games at the original sample's 10,000-node budget, comparing each knight/pawn/rook tier and the blue bishop against an ordinary army. Pawn effects use **d2**, matching the central purple pawn in this run; the broader existing effect template uses a2. These experiments separate tier effects from the fixed three-blue package. Run this first.
-2. [Search confirmation](../budget-3-confirmation.json): 200 games at **100,000 nodes**, with the same five chosen comparisons, opening prefixes, and other settings. This isolates search effort. It does not supply new independent opening evidence. Broader legal opening families and targeted endgames remain a later step.
+1. [Outlier-effects results](outlier-effects-001.md): 440 games at the original sample's 10,000-node budget, comparing each knight/pawn/rook tier and the blue bishop against an ordinary army. Pawn effects use **d2**, matching the central purple pawn in this run; the broader existing effect template uses a2. These experiments separate tier effects from the fixed three-blue package.
+2. [Search-confirmation results](budget-3-confirmation-001.md): 200 games under the intended **100,000-node** protocol, with the same five chosen comparisons and opening prefixes. Purple rook/pawn/knight advantages persist and rise in point score. This does not supply new independent opening evidence or measured material values.
 
 If an individual upgrade scores close to 100% against the ordinary baseline, use material handicaps or stronger opposition to separate its strength from other strong upgrades. After reviewing these follow-ups, compare the relevant effects with ordinary-material handicaps and inspect game histories for use of the special abilities. Save changed movements as new revisions so these results remain an identifiable baseline.

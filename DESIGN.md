@@ -124,7 +124,9 @@ Pawn simplicity deserves a separate decision. Orange can quietly enter an en pas
 
 ## Balance testing
 
-Version 07 implements the initial match protocol in [BALANCE.md](BALANCE.md). The following goals guide the experiments; no engine-match strength conclusions have been established.
+Version 07 implements the match protocol in [BALANCE.md](BALANCE.md). The [budget-3 confirmation](experiments/balance/results/budget-3-confirmation-001.md) retains large purple rook/pawn/knight advantages against the tested blue-minor package. These results prioritize balance work but do not establish whole-piece material values or the right movement changes. The following goals guide further experiments.
+
+The [bounded first revision](experiments/balance/revision-plan.md) begins changes on `version_08`: cap the purple pawn's quiet slides at two clear squares and simplify the purple rook's added captures to knight jumps. These are proposed candidates. Preserve other pieces for the first batch, cap its full-game schedule at 200, and make a keep/revert/park decision. Precise material calibration is not a prerequisite, and optional experiment templates are not a mandatory queue.
 
 1. Freeze version 05 as a comparison baseline when ready; give movement changes a new profile so old saves retain their rules. Keep the agreed level costs at 1/2/3.
 2. Start at budgets 3 and 6: compare one purple purchase with three blue purchases and with blue plus orange. Budget 45 allows every eligible piece to be purple and is a useful stress test, not the only balance target.
