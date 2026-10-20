@@ -2,11 +2,13 @@
 
 // Plans describe an experiment, not an estimate of the pieces' material values.
 const { PIECE_SLOTS } = require('../../src/piece-catalog');
+const { getDesign } = require('../../src/design-catalog');
 
 const WHITE_SLOTS = new Set([
   ...PIECE_SLOTS.filter(slot => slot.color === 'w').map(slot => slot.square),
   'e1', // Independent royal upgrade, supplied by the balance rules profile.
 ]);
+const SLOT_FAMILIES = Object.fromEntries(PIECE_SLOTS.filter(slot => slot.color === 'w').map(slot => [slot.square, slot.family]));
 const MAX_GAMES = 100000;
 const DEFAULT_ENGINE = Object.freeze({ nodes: 10000, threads: 1, hashMb: 32, maxPlies: 400 });
 const defaulted = (value, fallback) => value === undefined ? fallback : value;
@@ -57,12 +59,23 @@ function uniqueId(entries, path) {
   }
 }
 
-function normalizeArmy(input, path) {
+function normalizeArmy(input, path, schemaVersion) {
   object(input, path, ['upgrades', 'remove']);
   const upgrades = defaulted(input.upgrades, {});
   object(upgrades, `${path}.upgrades`, [...WHITE_SLOTS]);
   const entries = Object.entries(upgrades).sort(([a], [b]) => a.localeCompare(b));
-  for (const [square, level] of entries) integer(level, `${path}.upgrades.${square}`, 0, 3);
+  let cost = 0;
+  for (const [square, choice] of entries) {
+    if (schemaVersion === 1) integer(choice, `${path}.upgrades.${square}`, 0, 3);
+    else {
+      if (square === 'e1') throw new Error(`${path}.upgrades.e1: dynamic king designs are not supported; use schemaVersion 1 for legacy kings.`);
+      const design = typeof choice === 'string' ? getDesign(choice) : undefined;
+      if (!design) throw new Error(`${path}.upgrades.${square} must select a known stable design ID.`);
+      if (design.family !== SLOT_FAMILIES[square]) throw new Error(`${path}.upgrades.${square} requires a ${SLOT_FAMILIES[square]} design.`);
+      cost += design.level;
+    }
+  }
+  if (schemaVersion === 2 && cost > 6) throw new Error(`${path} may spend at most 6 upgrade points.`);
   const remove = defaulted(input.remove, []);
   if (!Array.isArray(remove) || remove.some(square => !WHITE_SLOTS.has(square) || square === 'e1')) {
     throw new Error(`${path}.remove must list ordinary starting squares other than the king.`);
@@ -100,7 +113,7 @@ function normalizeEngine(input = {}) {
 
 function normalizeConfig(input) {
   object(input, 'config', ['schemaVersion', 'name', 'seed', 'repetitions', 'engine', 'openings', 'comparisons']);
-  if (input.schemaVersion !== 1) throw new Error('schemaVersion must be 1.');
+  if (![1, 2].includes(input.schemaVersion)) throw new Error('schemaVersion must be 1 or 2.');
   const openings = list(defaulted(input.openings, [{ id: 'start', moves: [] }]), 'openings', 100).map((opening, index) => {
     const path = `openings[${index}]`;
     object(opening, path, ['id', 'moves']);
@@ -127,15 +140,15 @@ function normalizeConfig(input) {
     return {
       id,
       label: comparison.label === undefined ? id : label(comparison.label, `${path}.label`),
-      armyA: normalizeArmy(comparison.armyA, `${path}.armyA`),
-      armyB: normalizeArmy(comparison.armyB, `${path}.armyB`),
+      armyA: normalizeArmy(comparison.armyA, `${path}.armyA`, input.schemaVersion),
+      armyB: normalizeArmy(comparison.armyB, `${path}.armyB`, input.schemaVersion),
       strengthA: normalizeStrength(comparison.strengthA, `${path}.strengthA`),
       strengthB: normalizeStrength(comparison.strengthB, `${path}.strengthB`),
     };
   });
   uniqueId(comparisons, 'comparisons');
   const config = {
-    schemaVersion: 1,
+    schemaVersion: input.schemaVersion,
     name: label(input.name, 'name'),
     seed: integer(defaulted(input.seed, 42), 'seed', 0, 0xffffffff),
     repetitions: integer(defaulted(input.repetitions, 1), 'repetitions', 1, MAX_GAMES),

@@ -230,7 +230,7 @@ test('immediate cancellation interrupts an active native search and retains a re
   assert.equal(fs.existsSync(path.join(directory, 'run.lock')), false);
 });
 
-test('a persistent checkpoint sharing failure recovers v0.7.0 journal history without replaying finished games', nativeOptions, async t => {
+test('version 08 rejects historical runners and still recovers its own interrupted journal history', nativeOptions, async t => {
   const directory = temporary(t);
   const config = configuration({ repetitions: 2 });
   const rename = fs.renameSync;
@@ -260,6 +260,9 @@ test('a persistent checkpoint sharing failure recovers v0.7.0 journal history wi
   // run. Settings, native engine, movement profiles and played games stay put.
   const patch = require('../scripts/balance/storage-patch.json');
   const fingerprint = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
+  const currentManifest = read(directory, 'run.json');
+  const currentCheckpoint = read(directory, 'checkpoint.json');
+  const currentJournal = read(directory, 'games.jsonl');
   const original = json(directory, 'run.json');
   original.runnerSources = patch.originalRunnerSources;
   original.runnerSha256 = fingerprint(original.runnerSources);
@@ -270,6 +273,13 @@ test('a persistent checkpoint sharing failure recovers v0.7.0 journal history wi
   assert.ok(patch.fromRunnerSha256.includes(original.runnerSha256));
   assert.ok(patch.fromRunnerSha256.includes('c6e4aea9c046842048ae0f7057bf3639937713638fb3846afe96fe0a23e55899'));
 
+  await assert.rejects(run(config, directory, { resume: true }), /Use version_07/);
+  assert.equal(read(directory, 'run.json'), manifestBytes);
+  assert.equal(read(directory, 'games.jsonl'), currentJournal);
+  assert.equal(read(directory, 'checkpoint.json'), currentCheckpoint);
+  assert.equal(fs.existsSync(path.join(directory, 'run.lock')), false);
+  fs.writeFileSync(path.join(directory, 'run.json'), currentManifest);
+
   const resumed = await run(config, directory, { resume: true });
   const recovered = records(directory);
   assert.equal(resumed.nextIndex, 4);
@@ -279,7 +289,6 @@ test('a persistent checkpoint sharing failure recovers v0.7.0 journal history wi
   assert.ok(retry);
   assert.deepEqual(retry.moves.slice(0, 1), saved.moves);
   assert.equal(retry.status, 'truncated');
-  assert.equal(read(directory, 'run.json'), manifestBytes);
-  assert.equal(json(directory, 'storage-upgrade.json').currentRunnerSha256, patch.toRunnerSha256);
-  assert.equal(json(directory, 'storage-upgrade.json').originalRunnerSha256, original.runnerSha256);
+  assert.equal(read(directory, 'run.json'), currentManifest);
+  assert.equal(fs.existsSync(path.join(directory, 'storage-upgrade.json')), false);
 });

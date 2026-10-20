@@ -39,6 +39,19 @@ npm.cmd run balance -- --config experiments/balance/smoke.json --out balance-res
 
 Press **q** or Ctrl+C to stop now, **g** after the current game, or **p** after its color-swapped pair. Resume with `npm.cmd run balance -- --resume balance-results/smoke`. Start with the smoke check, then choose equal-budget, strength-handicap, or ordinary-material experiments in the [balance guide](BALANCE.md). No measured piece values have been established yet.
 
+## Version 08: design-registry experiments
+
+The balance runner can select immutable design revisions and assign their engine letters once for the whole run. The original purple pawn/rook and their proposed replacements remain separate definitions. This development step keeps the browser board on its existing rules; the alternate-design picker and second palette are later work.
+
+After switching to `version_08`, build and check the short workflow example:
+
+```bat
+npm.cmd run build
+npm.cmd run balance -- --config experiments/balance/designs-smoke.json --out balance-results/designs-smoke
+```
+
+This six-game smoke has a deliberately short move limit and produces unscored truncations. It checks allocation, native rules, storage, and resume; it is not balance evidence. The first revision has separate 100-game screening and confirmation configurations, with a combined cap of 200. See [the ordered TODO](TODO.md) and [design experiment guide](BALANCE.md#design-revisions-and-run-level-registries).
+
 ## Play Fairy Stockfish
 
 Install Node.js 20+, then run these commands in the repository folder on Windows:
@@ -113,7 +126,8 @@ Standard chess uses [chess.js](https://github.com/jhlywa/chess.js), with its BSD
 | `version_04` | `v0.4.0` | Improved purple knight, pawns, bishops, and queens |
 | `version_05` | `v0.5.1` | Home-rank abilities, blue queen, rook upgrades, and compatible Windows engine |
 | `version_06` | `v0.6.0` | Capture-only king prototype |
-| `version_07` | In development | Automated balance experiments, checkpoints, and paired results |
+| `version_07` | Preserved baseline | Automated balance experiments and recorded first results |
+| `version_08` | In development | Design registries and the first bounded balance revision |
 
 Create each development branch from the previous tested milestone and tag finished releases. Tags preserve stable checkpoints while branches can evolve. See [TODO.md](TODO.md) for progress and later work.
 

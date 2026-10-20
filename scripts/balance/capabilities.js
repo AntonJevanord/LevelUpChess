@@ -31,10 +31,16 @@ async function checkCapabilities({ engine, rules, startFens, whiteKing, blackKin
   if (!Array.isArray(startFens) || !startFens.length || startFens.some(fen => typeof fen !== 'string')) throw new Error('Capability checks require the profile starting FENs.');
   if (![whiteKing, blackKing].every(level => Number.isInteger(level) && level >= 0 && level <= 3)) throw new Error('Capability checks require valid king levels.');
   const probes = new Map();
-  for (const fen of startFens) {
-    for (const probe of capabilityProbes(fen, 'levelup-v5')) {
-      const adapted = royalFen(probe.fen, rules, whiteKing, blackKing);
-      if (!probes.has(adapted)) probes.set(adapted, probe.name);
+  if (Array.isArray(rules.capabilityProbes)) {
+    // Dynamic profiles supply fixtures bound to their own design IDs/letters.
+    // The legacy probe table deliberately retains the old revision semantics.
+    for (const probe of rules.capabilityProbes) probes.set(probe.fen, probe.name);
+  } else {
+    for (const fen of startFens) {
+      for (const probe of capabilityProbes(fen, 'levelup-v5')) {
+        const adapted = royalFen(probe.fen, rules, whiteKing, blackKing);
+        if (!probes.has(adapted)) probes.set(adapted, probe.name);
+      }
     }
   }
   for (const probe of KING_PROBES) probes.set(royalFen(probe.fen, rules, whiteKing, blackKing), probe.name);

@@ -92,7 +92,7 @@ var require_piece_catalog = __commonJS({
 var require_knight_setup = __commonJS({
   "src/knight-setup.js"(exports2, module2) {
     var { PIECES, KNIGHT_LEVELS, KNIGHT_SLOTS, UPGRADE_BUDGETS } = require_piece_catalog();
-    var START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    var START_FEN2 = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
     function placement(fen) {
       if (typeof fen !== "string") throw new Error("The starting FEN is invalid.");
       const ranks = fen.trim().split(/\s+/)[0].split("/");
@@ -132,7 +132,7 @@ var require_knight_setup = __commonJS({
         costs[slot.color] += PIECES[KNIGHT_LEVELS[level]].cost;
       }
       if (costs.w > budget || costs.b > budget) throw new Error(`Budget exceeded: White ${costs.w}/${budget} \xB7 Black ${costs.b}/${budget}.`);
-      const board = placement(START_FEN);
+      const board = placement(START_FEN2);
       for (const slot of KNIGHT_SLOTS) {
         const level = choices[slot.square];
         const type = KNIGHT_LEVELS[level];
@@ -166,7 +166,7 @@ var require_knight_setup = __commonJS({
         return [slot.square, level];
       }));
     }
-    module2.exports = { START_FEN, setupFromLevels, loadInitialSetup };
+    module2.exports = { START_FEN: START_FEN2, setupFromLevels, loadInitialSetup };
   }
 });
 
@@ -174,7 +174,7 @@ var require_knight_setup = __commonJS({
 var require_piece_setup = __commonJS({
   "src/piece-setup.js"(exports2, module2) {
     var { PIECES, PIECE_LEVELS, PIECE_SLOTS: PIECE_SLOTS2, PIECE_BUDGETS, MAX_PIECE_BUDGET } = require_piece_catalog();
-    var { START_FEN } = require_knight_setup();
+    var { START_FEN: START_FEN2 } = require_knight_setup();
     function placement(fen) {
       if (typeof fen !== "string") throw new Error("The starting FEN is invalid.");
       const ranks = fen.trim().split(/\s+/)[0].split("/");
@@ -214,7 +214,7 @@ var require_piece_setup = __commonJS({
         costs[slot.color] += PIECES[type].cost;
       }
       if (costs.w > budget || costs.b > budget) throw new Error(`Budget exceeded: White ${costs.w}/${budget} \xB7 Black ${costs.b}/${budget}.`);
-      const board = placement(START_FEN);
+      const board = placement(START_FEN2);
       for (const slot of PIECE_SLOTS2) {
         const level = choices[slot.square];
         const type = PIECE_LEVELS[slot.family][level];
@@ -248,7 +248,7 @@ var require_piece_setup = __commonJS({
         return [slot.square, Math.max(level, 0)];
       }));
     }
-    module2.exports = { START_FEN, pieceSetupFromLevels: pieceSetupFromLevels2, loadPieceSetup };
+    module2.exports = { START_FEN: START_FEN2, pieceSetupFromLevels: pieceSetupFromLevels2, loadPieceSetup };
   }
 });
 
@@ -4864,7 +4864,7 @@ var levelup_v5_default = "# Current piece upgrades. The levelup-knight variant p
 // src/balance-rules.js
 var import_piece_setup = __toESM(require_piece_setup());
 var import_piece_catalog = __toESM(require_piece_catalog());
-var { pieceSetupFromLevels } = import_piece_setup.default;
+var { pieceSetupFromLevels, START_FEN } = import_piece_setup.default;
 var { PIECE_SLOTS } = import_piece_catalog.default;
 var ARMY_SQUARES = /* @__PURE__ */ new Set([...PIECE_SLOTS.filter((slot) => slot.color === "w").map((slot) => slot.square), "e1"]);
 var ROYALS = ["v", "w", "x", "y"];
@@ -4938,7 +4938,7 @@ function placementFromMap(pieces) {
     return result + (empty || "");
   }).join("/");
 }
-function validEp(fen, pieces) {
+function validEp(fen, pieces, roles) {
   const fields = fen.split(" ");
   const ep = fields[3];
   if (ep === "-") return true;
@@ -4950,21 +4950,24 @@ function validEp(fen, pieces) {
   const colored = (type) => movedWhite ? type.toUpperCase() : type;
   const validSource = (rank) => movedWhite ? rank === 1 || rank === 2 : rank === 7 || rank === 8;
   const at = (rank) => pieces.get(file + rank);
+  const initialLeap = (type) => roles ? roles.initialPawnLeaps[type] || 0 : type === "a" ? 3 : ["p", "c"].includes(type) ? 2 : 0;
   if (targets.length === 1) {
     const rank = Number(ep[1]);
     if (at(rank)) {
-      if (at(rank) !== colored("s")) return false;
+      const marker2 = at(rank);
+      const leaps = roles ? roles.initialLandingLeaps[marker2.toLowerCase()] || [] : marker2 === colored("s") ? [12, 13, 23] : [];
+      if (!leaps.length || marker2 === marker2.toUpperCase() !== movedWhite) return false;
       return (movedWhite ? [1, 2] : [7, 8]).some((sourceRank) => [..."abcdefgh"].some((sourceFile) => {
         const files = Math.abs(file.charCodeAt(0) - sourceFile.charCodeAt(0));
         const ranks2 = Math.abs(rank - sourceRank);
         const leap = Math.min(files, ranks2) * 10 + Math.max(files, ranks2);
-        return !pieces.has(sourceFile + sourceRank) && [12, 13, 23].includes(leap);
+        return !pieces.has(sourceFile + sourceRank) && leaps.includes(leap);
       }));
     }
     for (let landing2 = rank + step; landing2 >= 1 && landing2 <= 8; landing2 += step) {
       const victim = at(landing2);
       if (!victim || victim === victim.toUpperCase() !== movedWhite) continue;
-      const distance2 = victim.toLowerCase() === "a" ? 3 : ["p", "c"].includes(victim.toLowerCase()) ? 2 : 0;
+      const distance2 = initialLeap(victim.toLowerCase());
       const source2 = landing2 - step * distance2;
       return distance2 > 0 && validSource(source2) && !at(source2) && (rank - source2) * step > 0 && (landing2 - rank) * step > 0;
     }
@@ -4975,20 +4978,22 @@ function validEp(fen, pieces) {
   const distance = targets.length;
   const landing = movedWhite ? ranks.at(-1) : ranks[0];
   const source = landing - step * distance;
-  return validSource(source) && !at(source) && at(landing) === colored(distance === 3 ? "a" : "c") && (distance === 3 || !at(source + step));
+  const marker = at(landing);
+  const correctPawn = roles ? marker && marker === colored(marker.toLowerCase()) && marker.toLowerCase() !== "p" && initialLeap(marker.toLowerCase()) === distance : marker === colored(distance === 3 ? "a" : "c");
+  return validSource(source) && !at(source) && correctPawn && (distance === 3 || !at(source + step));
 }
-function checkedBoard(module2, variant, input, whiteKing, blackKing) {
+function checkedBoard(module2, variant, input, whiteKing, blackKing, roles) {
   if (typeof input !== "string") throw new Error("Invalid balance starting FEN.");
   const fen = input.trim().split(/\s+/).join(" ");
   const fields = fen.split(" ");
   if (fields.length !== 6 || !["w", "b"].includes(fields[1]) || !/^\d+$/.test(fields[4]) || !/^[1-9]\d*$/.test(fields[5])) throw new Error("Invalid balance starting FEN.");
   const pieces = pieceMap(fen);
-  const royals = [...pieces.values()].filter((piece) => /[kvwxy]/i.test(piece));
+  const royals = [...pieces.values()].filter((piece) => roles ? roles.royalTypes.includes(piece.toLowerCase()) : /[kvwxy]/i.test(piece));
   const symmetric = whiteKing === blackKing;
   if (royals.length !== 2 || !royals.includes(symmetric ? "K" : ROYALS[whiteKing].toUpperCase()) || !royals.includes(symmetric ? "k" : ROYALS[blackKing])) throw new Error("A balance position must contain exactly one selected royal king per side.");
   const noEp = [...fields];
   noEp[3] = "-";
-  if (module2.validateFen(noEp.join(" "), variant) !== 1 || !validEp(fen, pieces)) throw new Error("Invalid balance starting FEN.");
+  if (module2.validateFen(noEp.join(" "), variant) !== 1 || !validEp(fen, pieces, roles)) throw new Error("Invalid balance starting FEN.");
   const inactiveFields = [...noEp];
   inactiveFields[1] = fields[1] === "w" ? "b" : "w";
   const inactive = new module2.Board(variant, inactiveFields.join(" "));
@@ -5060,27 +5065,98 @@ function wrapBoard(raw, whiteKing, blackKing) {
     }
   };
 }
-async function createMatchRules({ whiteKing = 0, blackKing = 0 } = {}) {
+async function loadProfileModule(variant, config, cacheKey) {
+  let pending = profileCache.get(cacheKey);
+  if (!pending) {
+    pending = ffish_default({ wasmBinary: Uint8Array.from(atob(ffish_default2), (character) => character.charCodeAt(0)) }).then((module2) => {
+      module2.loadVariantConfig(config);
+      if (!module2.variants().split(" ").includes(variant)) throw new Error("The balance rules could not be loaded.");
+      return module2;
+    });
+    profileCache.set(cacheKey, pending);
+    while (profileCache.size > 2) profileCache.delete(profileCache.keys().next().value);
+    pending.catch(() => {
+      if (profileCache.get(cacheKey) === pending) profileCache.delete(cacheKey);
+    });
+  } else {
+    profileCache.delete(cacheKey);
+    profileCache.set(cacheKey, pending);
+  }
+  return pending;
+}
+function designArmyChoices(input, definitions) {
+  const army = input && Object.hasOwn(input, "upgrades") ? input : { upgrades: input };
+  const upgrades = army.upgrades === void 0 ? {} : army.upgrades;
+  if (!upgrades || typeof upgrades !== "object" || Array.isArray(upgrades)) throw new Error("A design army must map starting squares to design IDs.");
+  const choices = [];
+  let cost = 0;
+  for (const [square, id] of Object.entries(upgrades).sort(([a], [b]) => a.localeCompare(b))) {
+    const slot = PIECE_SLOTS.find((candidate) => candidate.color === "w" && candidate.square === square);
+    const definition = definitions.get(id)?.definition;
+    if (square === "e1") throw new Error("Dynamic design experiments use ordinary kings.");
+    if (!slot || !definition || definition.family !== slot.family) throw new Error(`Choose a registered ${slot?.family || "piece"} design for ${square}.`);
+    choices.push({ square, ...definitions.get(id) });
+    cost += definition.level;
+  }
+  if (cost > 6) throw new Error("A dynamic design army may spend at most 6 upgrade points.");
+  const remove = army.remove === void 0 ? [] : army.remove;
+  if (!Array.isArray(remove) || remove.some((square) => !ARMY_SQUARES.has(square) || square === "e1") || new Set(remove).size !== remove.length) throw new Error("Removed material must list distinct non-king starting squares.");
+  if (remove.some((square) => Object.hasOwn(upgrades, square))) throw new Error("A removed starting piece cannot also be upgraded.");
+  return { choices, remove };
+}
+async function designMatchRules(input) {
+  if (!input || typeof input !== "object" || typeof input.config !== "string" || !/^[a-z0-9][a-z0-9_-]*$/.test(input.variant) || !Array.isArray(input.registry?.allocations) || !input.roles || !input.definitionsByLetter) throw new Error("A compiled dynamic design profile is required.");
+  const cacheKey = JSON.stringify(input);
+  const profile = JSON.parse(cacheKey);
+  const { variant, config, registry, roles } = profile;
+  const module2 = await loadProfileModule(variant, config, cacheKey);
+  const definitions = new Map(registry.allocations.map((allocation) => [allocation.id, {
+    definition: profile.definitionsByLetter[allocation.letter],
+    letter: allocation.letter
+  }]));
+  return {
+    variant,
+    config,
+    profile,
+    profileHash: profile.hash,
+    registryHash: profile.registryHash,
+    roles,
+    capabilityProbes: profile.capabilityProbes,
+    royalMode: "king",
+    evaluationCaveat: null,
+    startingFen(whiteArmy = {}, blackArmy = {}) {
+      const white = designArmyChoices(whiteArmy, definitions);
+      const black = designArmyChoices(blackArmy, definitions);
+      const pieces = pieceMap(START_FEN);
+      const absolute = (square, color) => color === "w" ? square : square[0] + (9 - Number(square[1]));
+      for (const [color, army] of [["w", white], ["b", black]]) {
+        for (const { square, definition, letter } of army.choices) {
+          const target = definition.placement === "extra" ? definition.extraSquare[square] : square;
+          if (!target) throw new Error(`The extra piece cannot be placed for ${square}.`);
+          const destination = absolute(target, color);
+          if (definition.placement === "extra" && pieces.has(destination)) throw new Error(`The extra-piece square ${destination} is occupied.`);
+          pieces.set(destination, color === "w" ? letter.toUpperCase() : letter);
+        }
+        for (const square of army.remove) pieces.delete(absolute(square, color));
+      }
+      const castleRook = (square) => roles.castlingRooks.includes(pieces.get(square)?.toLowerCase());
+      const rights = [["K", "h1"], ["Q", "a1"], ["k", "h8"], ["q", "a8"]].filter(([, square]) => castleRook(square)).map(([right]) => right).join("") || "-";
+      return placementFromMap(pieces) + ` w ${rights} - 0 1`;
+    },
+    createBoard(fen) {
+      return wrapBoard(checkedBoard(module2, variant, fen, 0, 0, roles), 0, 0);
+    }
+  };
+}
+async function createMatchRules({ whiteKing = 0, blackKing = 0, profile } = {}) {
+  if (profile !== void 0) {
+    if (whiteKing !== 0 || blackKing !== 0) throw new Error("Dynamic design experiments use ordinary kings.");
+    return designMatchRules(profile);
+  }
   if (![whiteKing, blackKing].every((level) => Number.isInteger(level) && level >= 0 && level <= 3)) throw new Error("King levels must be whole numbers from 0 to 3.");
   const variant = `levelup-balance-${whiteKing}-${blackKing}`;
   const config = profileConfig(variant, whiteKing, blackKing);
-  let pending = profileCache.get(variant);
-  if (!pending) {
-    pending = ffish_default({ wasmBinary: Uint8Array.from(atob(ffish_default2), (character) => character.charCodeAt(0)) }).then((module3) => {
-      module3.loadVariantConfig(config);
-      if (!module3.variants().split(" ").includes(variant)) throw new Error("The balance rules could not be loaded.");
-      return module3;
-    });
-    profileCache.set(variant, pending);
-    while (profileCache.size > 2) profileCache.delete(profileCache.keys().next().value);
-    pending.catch(() => {
-      if (profileCache.get(variant) === pending) profileCache.delete(variant);
-    });
-  } else {
-    profileCache.delete(variant);
-    profileCache.set(variant, pending);
-  }
-  const module2 = await pending;
+  const module2 = await loadProfileModule(variant, config, variant + "\n" + config);
   return {
     variant,
     config,

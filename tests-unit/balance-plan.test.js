@@ -176,7 +176,7 @@ test('schedule shuffles pair order and first color reproducibly from the uint32 
 test('checked-in experiments validate and budget-three cases have equal point costs', () => {
   const directory = path.join(__dirname, '../experiments/balance');
   const names = fs.readdirSync(directory).filter(name => name.endsWith('.json'));
-  assert.deepEqual(names.sort(), ['blue-rook-confirmation.json', 'budget-3-confirmation.json', 'budget-3.json', 'material-anchors.json', 'outlier-effects.json', 'purple-material-handicaps.json', 'skill-sweep.json', 'smoke.json', 'upgrade-effects.json']);
+  assert.deepEqual(names.sort(), ['blue-rook-confirmation.json', 'budget-3-confirmation.json', 'budget-3.json', 'designs-smoke.json', 'material-anchors.json', 'outlier-effects.json', 'purple-material-handicaps.json', 'revision-1-confirmation.json', 'revision-1-screen.json', 'skill-sweep.json', 'smoke.json', 'upgrade-effects.json']);
   for (const name of names) {
     const config = normalizeConfig(JSON.parse(fs.readFileSync(path.join(directory, name), 'utf8')));
     const schedule = makeSchedule(config);

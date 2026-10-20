@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 2,
+  "name": "Design registry workflow smoke; not balance evidence",
+  "seed": 42,
+  "repetitions": 1,
+  "engine": {
+    "nodes": 500,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 4
+  },
+  "openings": [
+    {
+      "id": "start",
+      "moves": []
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "pawn-revisions",
+      "label": "Original versus candidate purple pawn; workflow only",
+      "armyA": {
+        "upgrades": {
+          "d2": "pawn.purple@1"
+        }
+      },
+      "armyB": {
+        "upgrades": {
+          "d2": "pawn.purple@2"
+        }
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rook-revisions",
+      "label": "Original versus candidate purple rook; workflow only",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@1"
+        }
+      },
+      "armyB": {
+        "upgrades": {
+          "a1": "rook.purple@2"
+        }
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "standard-control",
+      "label": "Ordinary pieces; workflow only",
+      "armyA": {
+        "upgrades": {}
+      },
+      "armyB": {
+        "upgrades": {}
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    }
+  ]
+}

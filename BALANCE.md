@@ -29,6 +29,9 @@ The smoke run checks the workflow. Its small search budget and move limit do not
 | `experiments/balance/skill-sweep.json` | Compare a purple-queen army at several uncalibrated skill settings against an ordinary army. |
 | `experiments/balance/material-anchors.json` | Ordinary-army controls and pawn, knight, bishop, rook, or queen handicaps. |
 | `experiments/balance/purple-material-handicaps.json` | Optional 320-game material research at 100,000 nodes; not required before piece changes. |
+| `experiments/balance/designs-smoke.json` | Six-game schema-2 workflow check: original and candidate pawn/rook definitions coexist under one registry. |
+| `experiments/balance/revision-1-screen.json` | First candidate batch: 100 games over the ten predeclared screening prefixes. |
+| `experiments/balance/revision-1-confirmation.json` | Reserved confirmation half: at most 100 games after the screening decision. |
 
 For example:
 
@@ -69,9 +72,9 @@ npm run balance -- --resume balance-results/budget-3
 
 Progress is checkpointed after moves. An aborted or errored attempt remains in the log; resuming continues the saved game without turning the interruption into a loss or draw. Resume uses the original manifest settings and checks engine/rules identities. Change the node budget, move limit, engine, or rules in a new run directory. Only one writer may use a run directory at a time.
 
-Version 0.7.1 retries brief Windows file-sharing failures while atomically replacing checkpoints and reports. An approved recovery patch can resume a 0.7.0 run with identical engine, rules, and settings; the original manifest stays unchanged and `storage-upgrade.json` records the patch. Resume uses validated journal history if it is newer than the checkpoint, and skips games already completed or truncated.
+Version 0.7.1 retries brief Windows file-sharing failures while atomically replacing checkpoints and reports. On the preserved `version_07` branch, an approved recovery patch can resume a 0.7.0 run with identical engine, rules, and settings; the original manifest stays unchanged and `storage-upgrade.json` records the patch. Resume uses validated journal history if it is newer than the checkpoint, and skips games already completed or truncated.
 
-After updating a failed 0.7.0 smoke run, use `npm.cmd run balance -- --resume balance-results/smoke`. Keep the existing folder. If OneDrive or another application holds a file beyond the retry window, stop the run, let that application release the file, and resume. You can also move the entire stopped run folder to a location outside OneDrive and pass its new path to `--resume`.
+Use the matching original branch and engine to resume an old run. Version 08 changes the runner/rules identity and does not migrate version-07 experiments. Keep existing result folders. If OneDrive or another application holds a file beyond the retry window, stop the run, let that application release the file, and resume. You can also move the entire stopped run folder to a location outside OneDrive and pass its new path to `--resume`.
 
 If you stop during initial rules preflight before `run.json` exists, no games have started; repeat the original command. External stop commands apply once the run directory has an active lock.
 
@@ -100,6 +103,34 @@ For ordinary material odds, an army can include `"remove": ["a2"]` to remove its
 Default search uses a fixed node budget, `threads: 1`, equal hash, and equal skill. This is a useful baseline for comparing armies at similar search effort. The configuration selects either `engine.nodes` or `engine.movetimeMs`; use one, and record changes as a new experiment. Fixed nodes do not guarantee identical play across engines or platforms.
 
 Each side selects exactly one of `{"skill": 0}` through `{"skill": 20}`, or `{"elo": ...}` within the engine's advertised UCI range. The harness rejects unsupported strength settings. Skill values are not Elo ratings. `UCI_Elo` is an engine's ordinary-chess calibration for particular conditions; it is not a validated rating for these variants or arbitrary node budgets.
+
+## Design revisions and run-level registries
+
+Schema-1 files keep their numeric upgrade levels and historical profiles. Schema-2 files instead choose permanent design IDs from [the catalog](src/design-catalog.js):
+
+```json
+{
+  "id": "pawn-revisions",
+  "armyA": { "upgrades": { "d2": "pawn.purple@1" } },
+  "armyB": { "upgrades": { "d2": "pawn.purple@2" } },
+  "strengthA": { "skill": 20 },
+  "strengthB": { "skill": 20 }
+}
+```
+
+The file's top-level `schemaVersion` must be `2`. Choices must match their starting-piece family. Current dynamic profiles allow at most six upgrade points per army and support nonking designs with ordinary royal kings; independent upgraded kings and the larger historical sandbox remain available through schema 1. Definitions are curated catalog entries in this milestone, rather than arbitrary movement text supplied in experiment JSON.
+
+Before games start, the runner resolves the union of designs in every comparison and freezes one deterministic letter/custom-slot allocation. PNBRQK stay reserved for ordinary pieces and promotions. Identical design revisions share their allocation across both armies; different definitions keep distinct types. Existing assignments are preferred when available. A run that exceeds engine capacity is rejected before collecting results; split a larger catalog into declared batches.
+
+The run archives exact definition snapshots, allocations, generated profile rules, and their hashes. Fresh engine processes are still used for each game. Resume validates the same registry and source/rules identities before writing; it does not silently use a design's latest revision. The initial implementation also verifies archived definitions against the immutable bundled catalog, so keep the original checkout with archived results. Loading retired definitions independently of that checkout belongs to the future portable save/export work.
+
+The revised `pawn.purple@2` has quiet orthogonal slides of one or two clear squares, with the original diagonal captures and standard promotion. `rook.purple@2` keeps ordinary rook movement/captures and adds capture-only knight jumps. Their `@1` predecessors remain unchanged. All other current nonking designs are also available as `family.color@1`; IDs identify behavior and must not be renamed when display colors change.
+
+Use `designs-smoke.json` to verify workflow. Its four-ply limit intentionally truncates games; these are unscored. The first actual candidate batch has **100 screening games** in `revision-1-screen.json`, followed by **at most 100 reserved confirmation games** in `revision-1-confirmation.json`. Their opening sets are disjoint and retain the same fixed suite. Follow the [decision plan](experiments/balance/revision-plan.md); confirmation is not automatically queued, and neither file authorizes additional runs beyond the cap.
+
+Schema-2 results use a new protocol identity. Preserve the mapping when comparing or reproducing results; finite-search play can depend on internal type allocation. Evidence follows stable design revisions and the engine/rules context, never a temporary letter alone. No long-term engine training is performed.
+
+The browser picker, save slot, and PGN importer still use their existing profiles. Dynamic experimental PGNs need their run directory and exact rules in a compatible viewer; they cannot yet be imported into the browser board. The playable second set and its palette follow in version 09.
 
 ## Openings and fair comparisons
 

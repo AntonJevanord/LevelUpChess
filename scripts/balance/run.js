@@ -6,7 +6,8 @@ const { UciEngine } = require('./uci');
 const { openStore } = require('./storage');
 const { summarize } = require('./stats');
 const { checkCapabilities } = require('./capabilities');
-const { storageCompatibleManifest } = require('./resume-compatibility');
+const { createDesignRegistry, restoreDesignRegistry } = require('./design-registry');
+const { compileDesignProfile } = require('./design-profile');
 
 const FINAL = new Set(['completed', 'truncated']);
 const sha256 = value => createHash('sha256').update(value).digest('hex');
@@ -62,6 +63,26 @@ function recoverHistory(game, startFen, checkpoint, records) {
   return saved;
 }
 
+function validateDesignHistory(directory, expected) {
+  const verify = (entry, label) => {
+    for (const [field, value] of Object.entries(expected)) {
+      if (entry[field] !== value) throw new Error(`Cannot resume: ${label} ${field} does not match the frozen design profile.`);
+    }
+  };
+  const checkpointFile = path.join(directory, 'checkpoint.json');
+  if (fs.existsSync(checkpointFile)) {
+    const checkpoint = JSON.parse(fs.readFileSync(checkpointFile, 'utf8'));
+    if (checkpoint.current) verify(checkpoint.current, 'checkpoint');
+  }
+  const journalFile = path.join(directory, 'games.jsonl');
+  if (fs.existsSync(journalFile)) {
+    const journal = fs.readFileSync(journalFile, 'utf8');
+    // Leave a torn final line to the store's backed-up recovery procedure.
+    const complete = journal.slice(0, journal.lastIndexOf('\n') + 1);
+    for (const line of complete.split('\n').filter(Boolean)) verify(JSON.parse(line), 'journal record');
+  }
+}
+
 function pgnEscape(value) {
   return String(value ?? '').replace(/[\r\n\u0000-\u001f\u007f]/g, ' ').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 }
@@ -83,6 +104,11 @@ function renderPgn(records, name) {
       GameId: record.id, PairId: record.pairId, Attempt: record.attempt,
       Status: record.status, Termination: record.reason,
     };
+    if (record.profileHash) {
+      tags.LevelUpProfileHash = record.profileHash;
+      tags.LevelUpRegistryHash = record.registryHash;
+      tags.LevelUpRegistryRef = record.registryReference;
+    }
     const tokens = [];
     const fields = (record.startFen || '').split(' ');
     let number = Number(fields[5]) || 1;
@@ -120,9 +146,20 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
   catch (error) { throw new Error('Balance rules are not built. Run npm.cmd run build first.', { cause: error }); }
   const bundleHash = sha256(fs.readFileSync(rulesFile));
   const engineSha256 = sha256(fs.readFileSync(enginePath));
-  const runnerSources = ['run.js', 'plan.js', 'stats.js', 'storage.js', 'uci.js', 'capabilities.js', '../engine-capabilities.js', 'files.js', 'resume-compatibility.js']
+  const runnerSources = ['run.js', 'plan.js', 'stats.js', 'storage.js', 'uci.js', 'capabilities.js', '../engine-capabilities.js', 'files.js', 'resume-compatibility.js', 'design-registry.js', 'design-profile.js', '../../src/design-catalog.js']
     .map(file => ({ file, sha256: sha256(fs.readFileSync(path.resolve(__dirname, file), 'utf8').replace(/\r\n/g, '\n')) }));
   const runnerSha256 = fingerprint(runnerSources);
+  const dynamic = config.schemaVersion === 2;
+  // Freeze one allocation for every declared comparison, including both
+  // colors. A limited workflow run therefore keeps the full campaign letters.
+  const registry = dynamic ? createDesignRegistry(config) : null;
+  const designProfile = dynamic ? compileDesignProfile(registry) : null;
+  const designSnapshot = dynamic ? {
+    variant: designProfile.variant, config: designProfile.config,
+    hash: designProfile.hash, registryHash: designProfile.registryHash,
+  } : null;
+  const matchOptions = sides => dynamic ? { profile: designProfile } : kingPair(sides);
+  const profileKey = sides => dynamic ? designProfile.hash : `${kingPair(sides).whiteKing}-${kingPair(sides).blackKing}`;
   const profiles = new Map();
 
   const saveReports = () => {
@@ -148,8 +185,9 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
     const profileGames = new Map();
     for (const game of schedule) {
       checkAbort(signal);
-      const pair = kingPair(gameSides(game));
-      const key = `${pair.whiteKing}-${pair.blackKing}`;
+      const sides = gameSides(game);
+      const pair = matchOptions(sides);
+      const key = profileKey(sides);
       if (!profileGames.has(key)) profileGames.set(key, { pair, games: [] });
       profileGames.get(key).games.push(game);
     }
@@ -178,8 +216,10 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
         proofs.add(proofKey);
       }
       profiles.set(key, {
-        ...pair, variant: rules.variant, config: rules.config, royalMode: rules.royalMode,
+        ...pair, whiteKing: dynamic ? 0 : pair.whiteKing, blackKing: dynamic ? 0 : pair.blackKing,
+        variant: rules.variant, config: rules.config, royalMode: rules.royalMode,
         evaluationCaveat: rules.evaluationCaveat, startFens: [...startFens],
+        ...(dynamic ? { profileHash: designProfile.hash, registryHash: registry.hash } : {}),
       });
     }
     checkAbort(signal);
@@ -190,30 +230,37 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
       schemaVersion: 1, runId: randomUUID(), createdAt: new Date().toISOString(), configHash, rulesHash, engineSha256,
       config, schedule, enginePath: path.resolve(enginePath), rulesBundleSha256: bundleHash, runnerSha256, runnerSources,
       plyLimitBasis: 'total plies, including forced opening prefix',
+      ...(dynamic ? { designRegistry: registry, designProfile: designSnapshot } : {}),
       rulesProfiles: orderedProfiles.map(profile => ({
         variant: profile.variant, whiteKing: profile.whiteKing, blackKing: profile.blackKing,
         configSha256: sha256(profile.config), file: `rules/${profile.variant}.ini`,
         royalMode: profile.royalMode, evaluationCaveat: profile.evaluationCaveat,
+        ...(dynamic ? { profileHash: profile.profileHash, registryHash: profile.registryHash } : {}),
       })),
     };
-    let acceptedManifest = manifest;
     if (resume) {
       const original = JSON.parse(fs.readFileSync(path.join(directory, 'run.json'), 'utf8'));
-      // Exact source fingerprints approve this recovery-only patch. Keeping
-      // the allowlist outside its own fingerprint avoids a circular hash.
-      const patch = require('./storage-patch.json');
-      acceptedManifest = storageCompatibleManifest({
-        original, requested: manifest, profiles: orderedProfiles,
-        approvals: patch.fromRunnerSha256.map(fromRunnerSha256 => ({ fromRunnerSha256, toRunnerSha256: patch.toRunnerSha256 })),
-      });
+      if (original.runnerSha256 !== runnerSha256) throw new Error('Cannot resume with a different runner version. Use version_07 for historical version 07 runs, or start a new run directory for version 08.');
+      for (const field of ['configHash', 'rulesHash', 'engineSha256']) {
+        if (original[field] !== manifest[field]) throw new Error(`Cannot resume: ${field} does not match the original run.`);
+      }
+      if (dynamic) {
+        restoreDesignRegistry(original.designRegistry);
+        if (fingerprint(original.designRegistry) !== fingerprint(registry)) throw new Error('Cannot resume: the design registry snapshot or letter mapping changed.');
+        if (fingerprint(original.designProfile) !== fingerprint(designSnapshot)
+          || fingerprint(original.rulesProfiles) !== fingerprint(manifest.rulesProfiles)) throw new Error('Cannot resume: the compiled design profile snapshot changed.');
+        validateDesignHistory(directory, {
+          profileHash: designProfile.hash, registryHash: registry.hash, registryReference: 'run.json#designRegistry',
+        });
+      }
+      // Validate immutable artifacts before openStore can create a lock or
+      // repair an interrupted journal. A changed rules file is never reused.
+      for (const profile of orderedProfiles) {
+        const file = path.join(directory, 'rules', `${profile.variant}.ini`);
+        if (fs.existsSync(file) && sha256(fs.readFileSync(file)) !== sha256(profile.config)) throw new Error(`Cannot resume: saved rules differ for ${profile.variant}.`);
+      }
     }
-    store = openStore({ outDir: directory, resume, manifest: acceptedManifest });
-    if (acceptedManifest !== manifest) {
-      store.saveResumeAudit({ schemaVersion: 1, resumedAt: new Date().toISOString(), runId: store.manifest.runId,
-        originalRunnerSha256: store.manifest.runnerSha256, currentRunnerSha256: runnerSha256,
-        reason: 'Reviewed Windows storage retry and interrupted-history recovery patch; engine, movement rules, and experiment settings are unchanged.' });
-      onProgress('Resuming with the compatible storage patch; original run identity and results are preserved.');
-    }
+    store = openStore({ outDir: directory, resume, manifest });
     for (const profile of orderedProfiles) {
       if (profile.evaluationCaveat) onProgress(`Warning: ${profile.variant}: ${profile.evaluationCaveat}`);
     }
@@ -245,7 +292,7 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
     for (const profile of orderedProfiles) {
       checkAbort(signal);
       onProgress(`Preflight: checking native movement capabilities for ${profile.variant}.`);
-      const rules = await createMatchRules({ whiteKing: profile.whiteKing, blackKing: profile.blackKing });
+      const rules = await createMatchRules(dynamic ? { profile: designProfile } : { whiteKing: profile.whiteKing, blackKing: profile.blackKing });
       const engine = newEngine(profile, { skill: 20 });
       try {
         await engine.start({ signal });
@@ -262,9 +309,8 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
       const index = nextIndex;
       const game = schedule[index];
       const sides = gameSides(game);
-      const pair = kingPair(sides);
-      const profile = profiles.get(`${pair.whiteKing}-${pair.blackKing}`);
-      const rules = await createMatchRules(pair);
+      const profile = profiles.get(profileKey(sides));
+      const rules = await createMatchRules(matchOptions(sides));
       checkAbort(signal);
       const startFen = rules.startingFen(sides.white.army, sides.black.army);
       const saved = resume ? recoverHistory(game, startFen, store.checkpoint?.current, store.records) : null;
@@ -284,7 +330,8 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
       const names = {};
       const lastInfo = {};
       let finalized = false;
-      const persistCurrent = () => store.saveCheckpoint({ schemaVersion: 1, nextIndex, current: { id: game.id, startFen, moves, sans, attempt } });
+      const designRefs = dynamic ? { profileHash: designProfile.hash, registryHash: registry.hash, registryReference: 'run.json#designRegistry' } : {};
+      const persistCurrent = () => store.saveCheckpoint({ schemaVersion: 1, nextIndex, current: { id: game.id, startFen, moves, sans, attempt, ...designRefs } });
       const record = (status, outcome) => ({
         schemaVersion: 1, id: game.id, pairId: game.pairId, comparisonId: game.comparisonId,
         comparisonLabel: game.comparison.label, openingId: game.openingId, repetition: game.repetition,
@@ -296,6 +343,7 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
         whiteStrength: sides.white.strength, blackStrength: sides.black.strength,
         engineNames: names, lastInfo, engine: config.engine,
         royalMode: profile.royalMode, evaluationCaveat: profile.evaluationCaveat,
+        ...designRefs,
       });
       try {
         persistCurrent();

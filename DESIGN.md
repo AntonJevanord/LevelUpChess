@@ -124,6 +124,16 @@ Pawn simplicity deserves a separate decision. Orange can quietly enter an en pas
 
 ## Balance testing
 
+### Design identity and dynamic allocation
+
+Version 08 introduces the runner foundation: permanent design IDs with immutable behavior revisions, plus one deterministic registry of letters and custom slots for all designs selected by a run. Both armies share that registry. Keep the standard PNBRQK types reserved, including promotion choices, and allocate by complete rule identity rather than movement text alone. Pawn, castling-rook, royal, and extra-unit roles matter.
+
+Archive the definitions, allocations, generated INI, and hashes with the run. Cosmetic colors do not define behavior revisions. Results follow permanent IDs and their rules/search context; a reused letter does not carry learned strength. Fresh native processes prevent profile-dependent caches from leaking between games.
+
+Start with the current definitions and the proposed purple pawn/rook revisions. The full alternate-design picker, portable dynamic-profile saves, and a second palette are version-09 work, after the first balance decision. Browser-save compatibility across releases is not required; a new format may require fresh games. Experiment snapshots and run identities remain reproducible. Larger catalogs can use grouped runs that preserve shared benchmark assignments; letter capacity and game count are separate limits. Ten candidates against five opponents and twenty color-swapped opening pairs would mean 2,000 games, so an experiment still needs a declared screening/confirmation cap.
+
+### Current evidence and next revision
+
 Version 07 implements the match protocol in [BALANCE.md](BALANCE.md). The [budget-3 confirmation](experiments/balance/results/budget-3-confirmation-001.md) retains large purple rook/pawn/knight advantages against the tested blue-minor package. These results prioritize balance work but do not establish whole-piece material values or the right movement changes. The following goals guide further experiments.
 
 The [bounded first revision](experiments/balance/revision-plan.md) begins changes on `version_08`: cap the purple pawn's quiet slides at two clear squares and simplify the purple rook's added captures to knight jumps. These are proposed candidates. Preserve other pieces for the first batch, cap its full-game schedule at 200, and make a keep/revert/park decision. Precise material calibration is not a prerequisite, and optional experiment templates are not a mandatory queue.

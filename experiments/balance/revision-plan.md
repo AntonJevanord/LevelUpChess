@@ -6,6 +6,8 @@ Recorded 2026-10-20 to begin piece changes with a finite test budget. The [200-g
 
 Implement the first candidate on `version_08`, preserving `version_07` and its existing rules/results as the baseline. These are proposed candidates, not measured improvements or changes already made to the game.
 
+Version 08 first gives the balance runner stable design IDs and a frozen run-level letter/slot registry. Original and candidate definitions can coexist without rewriting the historical rules. The second playable set, alternate-color picker, and dynamic browser save/export formats belong to version 09; they do not block this first revision. See the ordered milestones in [TODO](../../TODO.md).
+
 | Piece | First candidate | Purpose |
 | --- | --- | --- |
 | Purple pawn | Limit quiet orthogonal slides to one or two clear squares in any direction. Keep diagonal bishop captures, standard promotion, and the existing capture/en passant rules. Quiet movement does not jump blockers. | Reduce rapid board traversal and promotion races while keeping its reversible move/capture identity. |
@@ -13,7 +15,7 @@ Implement the first candidate on `version_08`, preserving `version_07` and its e
 
 Keep prices at 1/2/3. Keep the purple knight's retained knight and extra `WD` unit for this first batch; its new unit was explicitly improved for usability, and these results do not identify which blue purchases need buffs. Do not combine changes to blue minors, orange rooks, kings, and engine evaluation with this batch. Those can become separate, bounded revisions after this decision.
 
-Before engine matches, verify legal moves and blockers in both colors, native/browser agreement, check handling, castling, promotions/en passant, save/load, and historical-rule compatibility as applicable. These are correctness checks, not an additional balance campaign. Use a new versioned profile and behavior revision for each changed piece; preserve existing INIs and old saves. Link the new behavior revisions to their run hashes in an evidence ledger, retaining old coverage separately.
+Before engine matches, verify legal moves and blockers in both colors, native/browser agreement, check handling, castling, and promotions/en passant. Verify save/load for the current playable profile when integrating a candidate into the board. These are correctness checks, not an additional balance campaign. Use a behavior revision for each changed piece and archive its experiment rules. Backward compatibility for browser saves is not required; a release may require fresh games. Link behavior revisions to run hashes in an evidence ledger, retaining old coverage separately.
 
 Make capability fixtures and application/engine variant routing revision-aware. The existing purple-rook probe intentionally requires an attack this candidate removes, so preserve that probe for v5 and add new positive/negative cases for the revised rules. Start new run directories for changed behavior; old runs retain their recorded rules, checkout, and identities.
 

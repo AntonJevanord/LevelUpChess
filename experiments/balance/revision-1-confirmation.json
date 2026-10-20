@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 2,
+  "name": "Revision 1 confirmation: capped purple pawn and rook candidates",
+  "seed": 42,
+  "repetitions": 1,
+  "engine": {
+    "nodes": 100000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400
+  },
+  "openings": [
+    {
+      "id": "open-e-pawns",
+      "moves": [
+        "e2e4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "french-prefix",
+      "moves": [
+        "e2e4",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "scandinavian-prefix",
+      "moves": [
+        "e2e4",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "queen-pawns",
+      "moves": [
+        "d2d4",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "queen-french-prefix",
+      "moves": [
+        "d2d4",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "queen-modern-prefix",
+      "moves": [
+        "d2d4",
+        "g7g6"
+      ]
+    },
+    {
+      "id": "symmetrical-english-prefix",
+      "moves": [
+        "c2c4",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "reti-prefix",
+      "moves": [
+        "g1f3",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "reti-sicilian-prefix",
+      "moves": [
+        "g1f3",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "king-pawn-step-prefix",
+      "moves": [
+        "h2h3",
+        "e7e5"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "purple-pawn-v-blue-minors",
+      "label": "Revised purple pawn versus three blue minor upgrades",
+      "armyA": {
+        "upgrades": {
+          "d2": "pawn.purple@2"
+        }
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.blue@1",
+          "g1": "knight.blue@1",
+          "c1": "bishop.blue@1"
+        }
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "purple-pawn-v-blue-pawns",
+      "label": "Revised purple pawn versus three blue pawns",
+      "armyA": {
+        "upgrades": {
+          "d2": "pawn.purple@2"
+        }
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@1",
+          "d2": "pawn.blue@1",
+          "e2": "pawn.blue@1"
+        }
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "purple-rook-v-blue-minors",
+      "label": "Revised purple rook versus three blue minor upgrades",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@2"
+        }
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.blue@1",
+          "g1": "knight.blue@1",
+          "c1": "bishop.blue@1"
+        }
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "purple-rook-v-blue-orange",
+      "label": "Revised purple rook versus blue knight plus orange rook",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@2"
+        }
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.blue@1",
+          "a1": "rook.orange@1"
+        }
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "standard-control",
+      "label": "Ordinary armies under the same frozen run profile",
+      "armyA": {
+        "upgrades": {}
+      },
+      "armyB": {
+        "upgrades": {}
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    }
+  ]
+}

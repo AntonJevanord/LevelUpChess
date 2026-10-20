@@ -157,13 +157,55 @@ The blue queen's draft back-rank teleport remains an optional engine extension. 
 - [x] Analyze and archive the completed 200-game budget confirmation: purple rook/pawn/knight advantages persist at the intended larger search budget; preserve [scores, opening comparisons, and limits](experiments/balance/results/budget-3-confirmation-001.md).
 - [x] Prepare and validate optional 320-game material-compensation tests; these do not block piece changes and are not automatically queued.
 - [x] Set a [bounded first revision plan](experiments/balance/revision-plan.md): start changes now, one candidate per piece, at most 200 scheduled games, then keep/revert/park.
-- [ ] Begin `version_08` with purple-pawn quiet range limited to two clear squares and purple rook retaining only knight jumps as added captures; preserve historical rules and saves.
-- [ ] Run the first batch's capped screening/confirmation comparisons and record decisions; keep material calibration optional.
-- [ ] Add ordinary-movement custom-piece controls to distinguish evaluation representation effects from extra-move strength.
-- [ ] Collect broad paired-opening results at several search budgets before assigning material ranges.
-- [ ] Investigate completion, opening, or evaluation issues when they affect a concrete candidate decision; no further baseline campaign is required before the first changes.
-- [ ] Add per-piece behavior revisions and an evidence ledger; preserve old results and prioritize changed pieces by coverage and uncertainty.
-- [ ] Add targeted starting positions and special-ability usage counts alongside full-game comparisons.
+- [ ] Verify additional manifests/game histories only when a specific behavior claim depends on them; further baseline campaigns are optional.
+
+## Version 08 — design registry and first balance revision
+
+Implement in this order. The runner comes first so candidate rules can be compared before changing the board's selected release rules. Keep the [200-game revision cap](experiments/balance/revision-plan.md). Backward compatibility for browser saves is not required; experiment identity and reproducibility still are.
+
+### 1. Foundations — now
+
+- [x] Branch `version_08` from the tested `version_07` baseline.
+- [x] Give current designs permanent IDs, immutable behavior revisions, and rule roles independent of their display colors and temporary letters.
+- [x] Add the proposed purple pawn (quiet slides up to two clear squares) and purple rook (ordinary rook plus capture-only knight jumps) as new definitions; retain the originals.
+- [x] Allocate letters and internal custom slots once per run from the union of all scheduled designs. Reserve standard pieces, reuse compatible assignments, and reject capacity overflow.
+- [x] Freeze and hash the registry, exact generated rules, and selections in the run manifest; results must remain attached to design revisions and protocol context.
+
+### 2. Runner integration — before candidate matches
+
+- [x] Let experiments select design IDs while retaining existing numeric-level configurations.
+- [x] Generate role-aware pawn promotion/en passant, extra-unit placement, and rook castling rules; validate native/browser movement against each selected revision.
+- [x] Keep each fresh engine process on the run's frozen registry; clear all profile-specific state by starting a new process for each game.
+- [x] Validate archived definitions/mappings and rule hashes on resume; preserve the original `version_07` checkout for its unfinished runs.
+- [x] Supply a short workflow smoke test and separate 100-game screening/100-game confirmation configurations. Do not start a larger research campaign automatically.
+- [x] Verify the current board still works and document that dynamic experimental PGNs require their archived run rules and are not yet browser imports. Cross-version save compatibility is not a release requirement.
+- [x] Pass 275 unit/integration and 160 browser/API checks, finish and resume the six-game smoke, and validate all 200 candidate opening assignments without starting the balance batch.
+
+### 3. First balance decision — after correctness checks
+
+- [ ] Run the declared screening/confirmation batch and record keep/revert/park for each candidate, within the 200-game maximum.
+- [ ] Track evidence by design revision and engine/rules context; retain old coverage separately and distinguish co-occurrence from measured individual value.
+- [ ] Integrate retained candidates into the browser rules, setup descriptions, engine bridge, saves, and PGN. A new version may require fresh games; backward save compatibility is optional.
+- [ ] Finish a playable version 08 with its known limitations; do not wait for exact material values.
+
+## Version 09 — alternate designs in the playable game
+
+Start after the runner/profile foundation and the first version-08 balance decision. The full second set does not block version 08.
+
+- [ ] Make board display, setup reconstruction, and move labels resolve permanent designs through the active profile instead of hardcoded letters.
+- [ ] Add a new save/export format with immutable definitions, allocation, starting choices, and exact rule snapshots. Supporting older browser saves is optional.
+- [ ] Add validated dynamic-profile handoff to the browser/native bridge, including revision-aware capability checks and profile cache keys.
+- [ ] Support dynamic king definitions only after royal identity, castling, and the existing asymmetric-king evaluation caveat are handled explicitly.
+- [ ] Offer a second design choice per level in the development picker; keep tier/cost, design, behavior revision, and display color separate.
+- [ ] Try a green/cyan/red second palette with level numbers and design badges; check contrast before adopting it.
+- [ ] Expose only tested choices in release builds. Preserve archived experiment definitions/results when retiring designs; old browser saves need not remain loadable.
+- [ ] Group larger experiments into capacity-bounded registries with stable shared benchmarks; declare candidate/opponent counts and game caps before each run.
+
+## Optional research — when it answers a design decision
+
+- [ ] Use ordinary-movement custom-piece controls to investigate representation effects.
+- [ ] Use material handicaps or wider paired openings to refine material ranges; neither blocks the first piece changes.
+- [ ] Add targeted positions and special-ability usage counts when a concrete question needs them.
 
 ## Later versions
 
