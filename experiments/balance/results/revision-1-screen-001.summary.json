@@ -1,0 +1,574 @@
+{
+  "schemaVersion": 1,
+  "totalAttempts": 100,
+  "invalidRecords": 0,
+  "statusCounts": {
+    "completed": 100,
+    "truncated": 0,
+    "aborted": 0,
+    "error": 0,
+    "unknown": 0
+  },
+  "comparisons": [
+    {
+      "comparisonId": "purple-pawn-v-blue-minors",
+      "attempts": 20,
+      "statusCounts": {
+        "completed": 20,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "insufficient-material": 5,
+        "checkmate": 13,
+        "fifty-move-rule": 1,
+        "threefold-repetition": 1
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 20,
+        "wins": 13,
+        "draws": 7,
+        "losses": 0,
+        "score": 0.825
+      },
+      "paired": {
+        "games": 20,
+        "wins": 13,
+        "draws": 7,
+        "losses": 0,
+        "score": 0.825,
+        "completePairs": 10,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 9,
+        "pairDraws": 1,
+        "pairLosses": 0
+      },
+      "openingClusters": [
+        {
+          "openingId": "anglo-indian-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "caro-prefix",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "dutch-prefix",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "indian-prefix",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "king-fianchetto-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "modern-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "reti-indian-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "reversed-sicilian-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "sicilian-prefix",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 0.75
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.825,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 10,
+        "insufficientData": false,
+        "eloDifference": 269.3663599454522,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.3955305916532624,
+          "upper": 1,
+          "eloLower": -73.67769903413273,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "purple-pawn-v-blue-pawns",
+      "attempts": 20,
+      "statusCounts": {
+        "completed": 20,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 17,
+        "threefold-repetition": 1,
+        "insufficient-material": 2
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 20,
+        "wins": 16,
+        "draws": 3,
+        "losses": 1,
+        "score": 0.875
+      },
+      "paired": {
+        "games": 20,
+        "wins": 16,
+        "draws": 3,
+        "losses": 1,
+        "score": 0.875,
+        "completePairs": 10,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 9,
+        "pairDraws": 0,
+        "pairLosses": 1
+      },
+      "openingClusters": [
+        {
+          "openingId": "anglo-indian-prefix",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "caro-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "dutch-prefix",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "indian-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "king-fianchetto-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "modern-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "reti-indian-prefix",
+          "completePairs": 1,
+          "score": 0.25
+        },
+        {
+          "openingId": "reversed-sicilian-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "sicilian-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 1
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.875,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 10,
+        "insufficientData": false,
+        "eloDifference": 338.0392160057027,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.4455305916532624,
+          "upper": 1,
+          "eloLower": -38.000024137956764,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "purple-rook-v-blue-minors",
+      "attempts": 20,
+      "statusCounts": {
+        "completed": 20,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 18,
+        "stalemate": 1,
+        "fifty-move-rule": 1
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 20,
+        "wins": 15,
+        "draws": 2,
+        "losses": 3,
+        "score": 0.8
+      },
+      "paired": {
+        "games": 20,
+        "wins": 15,
+        "draws": 2,
+        "losses": 3,
+        "score": 0.8,
+        "completePairs": 10,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 7,
+        "pairDraws": 3,
+        "pairLosses": 0
+      },
+      "openingClusters": [
+        {
+          "openingId": "anglo-indian-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "caro-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "dutch-prefix",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "indian-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "king-fianchetto-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "modern-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "reti-indian-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "reversed-sicilian-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "sicilian-prefix",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 1
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.8,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 10,
+        "insufficientData": false,
+        "eloDifference": 240.823996531185,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.37053059165326246,
+          "upper": 1,
+          "eloLower": -92.0602234896734,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "purple-rook-v-blue-orange",
+      "attempts": 20,
+      "statusCounts": {
+        "completed": 20,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 16,
+        "threefold-repetition": 3,
+        "fifty-move-rule": 1
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 20,
+        "wins": 12,
+        "draws": 4,
+        "losses": 4,
+        "score": 0.7
+      },
+      "paired": {
+        "games": 20,
+        "wins": 12,
+        "draws": 4,
+        "losses": 4,
+        "score": 0.7,
+        "completePairs": 10,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 6,
+        "pairDraws": 2,
+        "pairLosses": 2
+      },
+      "openingClusters": [
+        {
+          "openingId": "anglo-indian-prefix",
+          "completePairs": 1,
+          "score": 0.25
+        },
+        {
+          "openingId": "caro-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "dutch-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "indian-prefix",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "king-fianchetto-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "modern-prefix",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "reti-indian-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "reversed-sicilian-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "sicilian-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 0.25
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.7,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 10,
+        "insufficientData": false,
+        "eloDifference": 147.19071411783773,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.2705305916532624,
+          "upper": 1,
+          "eloLower": -172.3162805360985,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "standard-control",
+      "attempts": 20,
+      "statusCounts": {
+        "completed": 20,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "fifty-move-rule": 6,
+        "threefold-repetition": 2,
+        "checkmate": 10,
+        "insufficient-material": 2
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 20,
+        "wins": 5,
+        "draws": 10,
+        "losses": 5,
+        "score": 0.5
+      },
+      "paired": {
+        "games": 20,
+        "wins": 5,
+        "draws": 10,
+        "losses": 5,
+        "score": 0.5,
+        "completePairs": 10,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 0,
+        "pairDraws": 10,
+        "pairLosses": 0
+      },
+      "openingClusters": [
+        {
+          "openingId": "anglo-indian-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "caro-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "dutch-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "indian-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "king-fianchetto-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "modern-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "reti-indian-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "reversed-sicilian-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "sicilian-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 0.5
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.5,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 10,
+        "insufficientData": false,
+        "eloDifference": 0,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.07053059165326242,
+          "upper": 0.9294694083467376,
+          "eloLower": -447.94302936469705,
+          "eloUpper": 447.94302936469717,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "finite",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    }
+  ],
+  "runId": "96cf5d5a-0e37-437a-9976-6c4c0d3f44bf",
+  "scheduledGames": 100,
+  "nextIndex": 100
+}

@@ -1,147 +1,95 @@
-# Piece design discussion
+# Piece design
 
-Proposals for discussion after version 05. No movement, prices, or victory rules change in this draft. The implemented rules remain in [variants/README.md](variants/README.md).
+Current movement rules are documented in [variants/README.md](variants/README.md). This document records design goals, experimental decisions, and ideas that have not been adopted.
 
-## What should an upgrade buy?
+## Design goals
 
-An upgrade should create a useful choice while leaving the opponent understandable counterplay. Evaluate opening development, tactics, endgame conversion, and ease of understanding separately. More legal moves do not by themselves make a better design.
+Upgrades should be easy to describe, useful to play, and understandable to defend against. Assess tactics, development, endgame conversion, and counterplay separately. A high win rate alone does not make an ability enjoyable.
 
-The current colors are not cumulative. Orange bishops lose blue's quiet color-switching step; orange and purple rooks lose blue's home jumps; the amazon lacks blue queen camel/zebra jumps. Purple knights uniquely buy another unit rather than replace one.
+Costs stay fixed at blue 1, orange 2, and purple 3. Higher tiers should provide greater overall benefit, while distinct abilities support different strategies. They need not retain every move from earlier tiers or win every positional comparison. Colors are presentation; permanent design IDs identify behavior.
 
-The project owner's direction is fixed: blue costs 1, orange 2, and purple 3; strength should rise with the level. Distinct abilities should support different strategies, and some levels may build directly on earlier abilities. Keeping every earlier move is not required.
+Measure an upgrade's added benefit over its ordinary piece, then compare that benefit across families and purchase combinations. The purple knight's benefit includes its extra `WD` unit; its original knight remains on the board. A royal king has no ordinary exchange value, so its upgrades need winning and mating tests.
 
-Measure strength as the added value over the ordinary piece across representative positions. Higher tiers should justify their extra point overall; they need not win every positional comparison. Also compare value per point across families, so one bargain upgrade does not crowd out all the others. Tune abilities to these prices.
+## Material estimates and the Amazon reference
 
-## Material values and upgrade points
+Ordinary pawn ≈1, knight/bishop ≈3, rook ≈5, and queen ≈9 are starting references. “Ordinary value + level” is a design target, not a measurement or a guarantee that one upgrade point equals exactly one pawn.
 
-Upgrade cost is a fixed setup rule. Material value is an estimate of playing strength. If we want one upgrade point to buy roughly one ordinary pawn's worth of extra strength, the following is a useful **design target**, not a measurement of the current pieces:
+Use the existing Amazon, `queen.purple@1` (`QN`), as the first reference upgrade. An estimated whole-piece value of 12–13 versus an ordinary queen's 9 suggests an added benefit of roughly **3–4**. Blue and orange can target one-third and two-thirds of that benefit. Keep this reference unchanged within a design batch; its estimated material value remains contextual.
 
-| Family | Standard | Blue | Orange | Purple |
-| --- | --- | --- | --- | --- |
-| Pawn | 1 | 2 | 3 | 4 |
-| Knight | 3 | 4 | 5 | 6 |
-| Bishop | 3 | 4 | 5 | 6 |
-| Rook | 5 | 6 | 7 | 8 |
-| Queen | 9 | 10 | 11 | 12 |
+The simplest direct comparison uses ordinary starting armies: one receives a candidate purple upgrade, the other receives the Amazon upgrade, and colors swap between paired games. The underlying standard material is identical. This compares upgrade packages without requiring several queens or pretending that a whole pawn and a whole queen have equal value.
 
-These use conventional ordinary-chess values as a starting scale. Those base values are themselves averages and may shift in this variant. A purple knight's target of 6 refers to the retained knight plus its extra piece together; it does not make the extra piece alone worth 6.
+Multi-copy benchmarks can later test three blue upgrades against one purple, or three orange against two purple. For example, three orange queens versus two Amazons plus an ordinary queen preserves three underlying queens per side. Such setups change congestion, cooperation, and exchange opportunities; their results apply to those positions. Arbitrary family replacements and custom starting positions still need explicit harness support. No new benchmark campaign is automatically queued.
 
-The target does not establish actual strength. A quiet deployment move, a new checking attack, unlimited range, and a whole extra unit can have very different effects. Synergy also makes combining abilities different from simply adding their separate values. Crowded and open boards, promotion distance, opposing upgrades, and the chosen king rules all matter.
+For short-range, nonroyal leapers, `V ≈ 33N + 0.7N²` centipawns is a rough initial estimate, with `N` the number of destinations away from board edges. Eight destinations gives about 309 centipawns. This is a useful sanity check, not a formula for sliders, promotion, regional powers, or royal safety. Reachability, pawn interactions, and the interaction of capture and quiet moves can substantially change value; component values cannot simply be added.
 
-For kings, keep two separate ideas open: changing the royal itself and granting a nonroyal piece. A guard could target material values of 1, 2, and 3 at the corresponding king levels, but its deployment and protection of the king still need evaluation. The royal itself has no ordinary exchange value: its safety defines the checkmate objective. Its upgrade should be assessed through practical winning and mating prospects. The extra-piece approach remains provisional and may be abandoned later.
+The engine's movement-based estimates and `pieceValueMg`/`pieceValueEg` overrides affect its judgments. They do not establish inherent piece strength. Ordinary and custom rooks also receive different evaluation treatment; see the [source and game audit](experiments/balance/results/outlier-effects-001.games-audit.md). Keep evaluation tuning separate from movement experiments.
 
-We do not yet have measured values or justified error bars. Initially, report broad estimates or ranges rather than precise decimals. Later evidence can narrow the average estimate, but positional differences will remain. More games can reduce sampling uncertainty; they cannot establish a universal value valid in every position. The capture-only king prototype is approved for initial experiments; changing its rules requires a separate run identity.
+## First revision decision
 
-### Engine estimates are a starting point
+The [bounded revision plan](experiments/balance/revision-plan.md) spent 160 of at most 200 games. See the [results and decisions](experiments/balance/results/revision-1-rook-confirmation-001.md) for the complete context.
 
-In the bundled source, `src/psqt.cpp` estimates custom-piece material from capture and quiet steps, sliding range, and hopper directions, with separate middlegame/endgame weights. This is a movement-based heuristic, not a measured balance result for LevelUp Chess. Its base formula uses ordinary movement tables; initial-region moves are stored separately, so conditional bonuses are not directly counted there, although search can still use them.
+- `pawn.purple@2`, limiting quiet orthogonal slides to two clear squares, is parked after screening. It retained a large advantage against the tested equal-cost armies.
+- `rook.purple@2`, ordinary rook movement plus capture-only knight jumps, is retained experimentally. Combined scores are 85% against three blue minor upgrades and 61.25% against blue knight plus orange rook. It is simpler, but these results do not establish balance.
+- Other designs remain unchanged. The main browser board still uses version 05 rules; experimental retention does not silently replace its pieces.
 
-The engine supports `pieceValueMg` and `pieceValueEg` overrides. Changing those affects its judgments, not the actual rules or inherent strength of a piece. Centipawn scores use the engine's internal normalization; they do not validate a conventional material chart. No evaluation overrides are proposed yet.
-
-The first individual-effect run exposed a concrete diagnostic concern: blue rook scored below ordinary play despite retaining rook movement and adding quiet home jumps. A temporary build of the bundled source confirmed that custom rooks use generic values and positional treatment, including missing ordinary-rook-specific file terms. Material overrides alone would not restore all those terms. Preserve this distinction between engine handling and movement strength, inspect the games, and compare an ordinary-movement custom rook with both ordinary R and the actual blue rook before drawing causal conclusions. See [the result and source audit](experiments/balance/results/outlier-effects-001.md).
+The batch is closed. Further tests require a specific design question, chosen revisions, and a declared game cap.
 
 ## Kings: preserve a clear mating objective
 
-Keep exactly one royal per side, with check and checkmate. A second royal would require a separate victory design. Broad quiet leaps or slides risk turning material advantages into draws after other pieces are exchanged. A king design must pass the mating requirements before being assigned a tier.
+Keep exactly one royal per side, with check and checkmate. The selected prototype retains ordinary quiet king moves and adds capture-only two-square jumps:
 
-Three directions are worth discussing before assigning king abilities to tiers:
-
-| Direction | Benefit | Concern | Recommendation |
-| --- | --- | --- | --- |
-| Standard king plus one capturable guard | Strengthens the king's army and protection; after the guard is captured, the defender can be reduced to an ordinary bare king. The guard is not royal. | Adds material, congestion, and another setup square; overlaps with the purple knight's extra-piece mechanic. Queen-versus-king-plus-guard conversion still needs testing. | Safest first prototype if king upgrades may grant an army benefit. Test a small orthogonal-step, diagonal-step, or nonroyal king-moving guard separately. |
-| Standard quiet king moves plus a small capture-only leap | Makes the king more active without adding empty-square escape destinations. | Can still capture a piece to escape check, changes royal attack distances, and can spoil mating patterns. | First choice if the upgrade must change the king itself. Start with one directional two-square capture, rather than the full 5×5 capture box. |
-| Extra quiet movement limited to the home region | Offers development and defensive repositioning. | An attacked king often starts at home; returning home reactivates regional powers. It can still evade a mating net. | Defer until the first two approaches have been evaluated. |
-
-The project owner is interested in both extra pieces and changes to the royal. Guard grants remain a future alternative; the first prototype explores the royal itself.
-
-The first prototype direction is now selected: capture-only bonuses on the royal. Its concrete progression is blue sideways two-square captures (`KcsD`), orange all orthogonal two-square captures (`KcD`), and purple additional diagonal two-square captures (`KcDcA`). All retain ordinary quiet king moves. The [separate playable prototype](prototypes/kings/README.md) applies the chosen level to both colors; independent levels and the other upgrades remain integration work. Guard grants remain a possible future alternative. This is an experimental progression, not a measured 1/2/3-material increase.
-
-For now, avoid quiet knight moves everywhere, queen-like royal movement, and an extra royal. Compare the capture-only tiers in isolation before committing them to the full game.
-
-Capture-only does not mean “unusable in check.” Every landing square must be safe, but capturing on a safe square can escape check. The added attacks also change safe spacing between opposing kings. A rule such as “the bonus is disabled while checked,” a once-per-game escape, or a cooldown requires separate engine support and, for historical abilities, saved state; it does not follow from a movement string. Those are future possibilities, not current configuration promises.
-
-### What the engine actually supports
-
-The bundled native engine and browser rules share source revision `43b66c8`. Both support modifying the actual royal king, for example `king = k:KcD` for ordinary king moves plus capture-only two-square orthogonal jumps. That definition changes both colors' kings, so it is useful for isolated experiments but does not provide independent setup choices by itself.
-
-Independent royal types can instead use the engine's pseudo-royal extinction rules. Twenty temporary native/browser compatibility probes agreed on movement, captures, safe landings, castling, checkmate, and a nonroyal guard. This would need a new versioned profile and deliberate application changes: exactly one royal per side, king highlighting and validation, castling identities, draw detection, setup, saves, and PGN. Bare pseudo-royals did not automatically produce the ordinary bare-kings draw in the probes.
-
-Each color's castling-king setting accepts one type, not a set. Four independently selected king levels therefore need up to 16 pair-specific profiles to select the correct castling identities; those can share one INI file. Configuring a custom piece as a castling king alone does not make it royal. A normal king plus a nonroyal guard is the simpler per-side implementation.
-
-The capture-only prototype exposed another draw issue even with the actual royal king. White Kf7 and Ng6 checkmate Black Kh8 under all three candidate king rules, although the library's standard insufficient-material heuristic still calls the ending drawn. The prototype checks geometric mate/stalemate first and keeps minor-piece endings playable. It automatically declares a material draw only for bare kings in upgraded profiles, and handles repetition and the fifty-move limit explicitly. This is a conservative prototype policy; full integration needs a deliberate dead-position policy and consistent engine handling. A single mating position does not establish a general forced win.
-
-### A concrete mating check
-
-These three positions were checked in both the browser rules and native engine, with Black to move. The movement definitions apply to both kings in each experiment.
-
-| White material and placement; Black Kh8 | Ordinary king | King + quiet knight jumps | King + capture-only two-square orthogonal jumps |
-| --- | --- | --- | --- |
-| Ka1, Qd4, Ra8, Ra7 | Mate | Escapes h8–g6 across the rook barriers | Mate |
-| Same position, plus Nh6 | Mate | Escapes h8–g6 | Escapes h8×h6 |
-| Kf6, Qg7 | Mate | Mate | Mate |
-
-Reproducible FENs:
-
-```text
-R6k/R7/8/8/3Q4/8/8/K7 b - - 0 1
-R6k/R7/7N/8/3Q4/8/8/K7 b - - 0 1
-7k/6Q1/5K2/8/8/8/8/8 b - - 0 1
-```
-
-The tested definitions were `K`, `KmN`, and `KcD`: nine positions per engine. These examples explain how mating patterns change. They do not prove general forced mates, theoretical draws, or a balance ranking.
-
-Before choosing a king, decide what material should reliably win. I suggest retaining queen-and-king conversion as a minimum goal and explicitly deciding whether rook-and-king should also remain a standard win. Test varied center, edge, and corner positions, then two rooks, two bishops, bishop-and-knight, and upgraded attacking pieces. Include asymmetric king choices, captures that escape check, repetitions, stalemates, castling safety, and the fifty-move limit. A failed engine conversion needs investigation; it is not a proof that mate is impossible.
-
-## Other pieces: candidates to test
-
-These are hypotheses, not measured strength claims. Keep prices at 1/2/3 and change one ability at a time. “Buff” and “nerf” below describe possible directions; none is a decision.
-
-The latest user playtest impression is that orange/purple rooks and purple pawns are very strong, while blue/orange pawns feel much weaker. Treat that as qualitative evidence to investigate, not numerical material values. The purple bishop currently has unlimited vertical rook slides as well as full bishop diagonals; a range cap below is only an alternative design. Test the current rules before choosing buffs and nerfs.
-
-| Upgrade | Main question | Buff, nerf, or alternate experiment |
+| Level | Added captures | Definition |
 | --- | --- | --- |
-| Blue pawn | Does its speed translate into enough practical strength for one upgrade point? | Current feedback favors investigating a buff. Preserve forward-only movement; distinguish weak middlegame play from strong promotion races before adding speed or capture reach. An ordinary pawn with an initial jumping bonus remains a simpler alternative. |
-| Orange pawn | Are quiet diagonal moves worth their rules complexity? | Simpler alternative: standard pawn movement plus forward captures, removing quiet diagonals. Buff candidate: retain the current package and add blue's repeatable forward two-square quiet leap. Keep it forward-only. |
-| Purple pawn | Is a reversible rook-mover/bishop-capturer with promotion still serving a pawn role? | First nerf: cap quiet slides at two squares. Alternatives: limit capture range or remove backward quiet moves. Test open-file promotion races explicitly. |
-| Blue knight | Is quiet repositioning sufficiently useful at one point? | Nerf to forward quiet steps; buff to orthogonal captures only if testing shows a need, since that also adds checking power. |
-| Orange knight | Are sideways jumps useful often enough to justify the extra cost? | Buff with forward/backward two-square jumps; nerf by making sideways jumps quiet-only. |
-| Purple knight | Is an additional independently movable unit appropriate for three points? | Keep the improved `WD` mobility for usability. Compare the extra unit with an alternative that replaces the knight with one combined knight-plus-`WD` piece; measure coordination and congestion as well as material. |
-| Blue bishop | Is cheap, quiet color switching stronger than the orange upgrade? | Nerf the orthogonal step to forward/backward only; this still changes square color. Compare sparse endgames with orange. |
-| Orange bishop | Does a forward capture-only leap compensate for losing blue's free color switch? | Buff with backward knight captures or blue's quiet step. Alternative: quiet knight jumps for repositioning rather than new captures. |
-| Purple bishop | Do unlimited vertical slides make it too close to a major piece? | Nerf vertical range to one or two squares. Alternative: horizontal extra slides, testing the different opening geometry. |
-| Blue rook | Is a two-rank, reusable home ability clear and appropriately limited? | Nerf activation to the back rank; buff to quiet two-square jumps anywhere only if it remains appropriate at one point. |
-| Orange rook | Are screen attacks too hard to defend against or read? | Nerf added screen captures to forward only or limit their range. Retain ordinary rook captures; replacing them with cannon-only captures could make this weaker than an ordinary rook in open positions. |
-| Purple rook | Does the 5×5 capture box overwhelm local defense? | First nerf: remove the two-by-two diagonal jumps. Alternatives: retain only added knight captures or only diagonal capture jumps. |
-| Blue queen | Is one point buying too much early deployment and escape mobility? | Nerf to one jump family, or to the back rank. Keep regional mobility as its identity. |
-| Orange queen | Are quiet knight jumps worth two points beside the other options? | Buff candidate: add quiet camel jumps. Alternative: replace the knight jumps with quiet camel/zebra jumps for a distinct identity; verify the new profile before adopting it. |
-| Purple queen | Does the amazon crowd out other uses of three points? | Nerf candidate: queen plus capture-only knight jumps, retaining new attacks but reducing quiet escape mobility. Keep the amazon as a useful three-point benchmark. |
+| Blue | Sideways | `KcsD` |
+| Orange | All orthogonal directions | `KcD` |
+| Purple | Orthogonal and diagonal directions | `KcDcA` |
 
-The highest-priority comparisons are blue versus orange bishop, purple pawn versus other three-point purchases, extra purple knight versus a replacement-only upgrade, and all three queen packages. Orange/purple rook attacks also need clear board feedback; confusion is a usability cost even if their win rates are reasonable.
+Landing squares must be safe. Captures can escape check, and added attacks change safe spacing between opposing kings. Capture-only movement limits extra escape squares but does not guarantee familiar mating conversions.
 
-A simple queen comparison ladder is blue with quiet knight jumps at home, orange with quiet knight jumps anywhere, and purple with full knight moves/captures. This keeps a visible strength progression; the current camel/zebra home jumps and more distinctive alternatives can be measured against it.
+The [local prototype](prototypes/kings/README.md) applies one level to both kings. The balance harness already combines independent king levels with other upgrades; main-board setup, engine play, saves, and PGN integration remain future work. Unequal king levels use pseudo-royals and omit the native engine's ordinary king-safety evaluation, so those comparisons remain exploratory. Dynamic schema-2 design profiles currently use ordinary kings only.
 
-Pawn simplicity deserves a separate decision. Orange can quietly enter an en passant target without taking the pawn. Blue's initial triple creates multiple targets, while its repeatable double creates none. These follow the current engine rules, but functionality alone does not establish that they are good teaching rules. Any simplification needs explicit promotion and en passant verification.
+Before adopting king designs, settle the intended queen-and-king and rook-and-king conversion goals and a consistent dead-position policy. Verify check handling, safe captures, castling, repetition, and mating examples. A failed engine conversion is not proof that mate is impossible. Historical probes and reproducible FENs are in [king design notes](docs/king-design-notes.md).
 
-## Balance testing
+A capturable nonroyal guard remains a future alternative, potentially targeting 1/2/3 material units. Broad quiet leaps, extra royals, cooldowns, or powers disabled in check need separate design and engine work; none is currently promised.
 
-### Design identity and dynamic allocation
+## Candidate ideas
 
-Version 08 introduces the runner foundation: permanent design IDs with immutable behavior revisions, plus one deterministic registry of letters and custom slots for all designs selected by a run. Both armies share that registry. Keep the standard PNBRQK types reserved, including promotion choices, and allocate by complete rule identity rather than movement text alone. Pawn, castling-rook, royal, and extra-unit roles matter.
+These are an idea pool, not implementation commitments or a testing queue. Retain simple descriptions, distinctive uses, and understandable counterplay. Check legality and native/browser agreement before exposing a candidate.
 
-Archive the definitions, allocations, generated INI, and hashes with the run. Cosmetic colors do not define behavior revisions. Results follow permanent IDs and their rules/search context; a reused letter does not carry learned strength. Fresh native processes prevent profile-dependent caches from leaking between games.
+| Upgrade | Possible experiment or question |
+| --- | --- |
+| Blue pawn | A simpler initial-jump bonus; distinguish promotion speed from middlegame weakness before adding moves. Keep forward-only movement. |
+| Orange pawn | Remove quiet diagonal moves for simplicity, or add a repeatable forward quiet jump. Keep forward-only movement. |
+| Purple pawn | Limit quiet range, capture range, or backward movement separately. The two-square quiet-range revision is parked, not a measured solution. |
+| Blue knight | Compare directional quiet steps with the current orthogonal step. Capturing steps would add checking power. |
+| Orange knight | Add forward/backward two-square jumps, or make the sideways jumps quiet-only. |
+| Purple knight | Compare the extra `WD` unit with a single replacement knight-plus-`WD`; assess congestion and coordination. |
+| Blue bishop | Limit the quiet orthogonal step to forward/backward movement while retaining color switching. |
+| Orange bishop | Add backward knight captures, or try quiet knight jumps instead of extra captures. |
+| Purple bishop | Limit added vertical slides to one or two squares, or try horizontal slides. Current vertical slides have unlimited range. |
+| Blue rook | Change home-region activation or allow quiet two-square jumps elsewhere. Keep ordinary rook movement and castling. |
+| Orange rook | Limit added screen captures by direction or range. Keep ordinary captures so open positions remain usable. |
+| Purple rook | Playtest the original capture box and retained capture-only-knight revision for readability and counterplay. |
+| Blue queen | Restrict regional powers to one jump family or the back rank. |
+| Orange queen | Try quiet camel jumps, alone or alongside quiet knight jumps. |
+| Purple queen | Keep the Amazon fixed as this batch's reference. Capture-only knight additions remain a later alternative. |
 
-Start with the current definitions and the proposed purple pawn/rook revisions. The full alternate-design picker, portable dynamic-profile saves, and a second palette are version-09 work, after the first balance decision. Browser-save compatibility across releases is not required; a new format may require fresh games. Experiment snapshots and run identities remain reproducible. Larger catalogs can use grouped runs that preserve shared benchmark assignments; letter capacity and game count are separate limits. Ten candidates against five opponents and twenty color-swapped opening pairs would mean 2,000 games, so an experiment still needs a declared screening/confirmation cap.
+Pawn alternatives must preserve explicit promotion and en passant rules. Rook alternatives need castling and attack checks. King alternatives need royal safety and mating checks. Special abilities deserve clear board feedback as well as correct move generation.
 
-### Current evidence and next revision
+## Playtesting and implementation order
 
-Version 07 implements the match protocol in [BALANCE.md](BALANCE.md). The [budget-3 confirmation](experiments/balance/results/budget-3-confirmation-001.md) retains large purple rook/pawn/knight advantages against the tested blue-minor package. These results prioritize balance work but do not establish whole-piece material values or the right movement changes. The following goals guide further experiments.
+Do not wait for tightly balanced purple pieces before human playtesting. Start version 09 with two alternatives in selected pawn and rook categories, using short names, movement descriptions, tier numbers, and clear experimental labels.
 
-The [bounded first revision](experiments/balance/revision-plan.md) begins changes on `version_08`: cap the purple pawn's quiet slides at two clear squares and simplify the purple rook's added captures to knight jumps. These are proposed candidates. Preserve other pieces for the first batch, cap its full-game schedule at 200, and make a keep/revert/park decision. Precise material calibration is not a prerequisite, and optional experiment templates are not a mandatory queue.
+1. Make browser display, setup, and the native bridge consume the same permanent design definitions and active profile.
+2. Add profile-aware saves/export and capability checks. New releases may require fresh browser games; backward save compatibility is not required.
+3. Expose the first validated choices in a small development picker. Keep costs, design choices, behavior revisions, and display colors separate.
+4. Gather feedback on readability, useful decisions, enjoyment, frustrating situations, and available counterplay. Discard poor ideas before precise tuning.
+5. Screen surviving designs against the fixed reference and selected equal-cost purchases, with a declared game cap and keep/revise/park decision.
 
-1. Freeze version 05 as a comparison baseline when ready; give movement changes a new profile so old saves retain their rules. Keep the agreed level costs at 1/2/3.
-2. Start at budgets 3 and 6: compare one purple purchase with three blue purchases and with blue plus orange. Budget 45 allows every eligible piece to be purple and is a useful stress test, not the only balance target.
-3. Repeat setups with colors swapped and several openings. Also use crowded middlegames and sparse endgames so jumping, range, and promotion are tested in different conditions.
-4. Record wins, draws, conversion failures, promotion speed, king survival, and player confusion. Keep engine build, search settings, clocks, rules, budgets, and starting positions with results. Raw engine evaluations may be poorly calibrated for unusual pieces.
-5. Tune movement and other abilities to the fixed level costs. Preserve distinctive, understandable roles; redesign abilities that create poor counterplay or unwanted endgames.
+Two to six alternatives for every family at every tier would mean **36–108 upgraded designs**. Treat that as an eventual idea pool, expanding only when playtesting identifies a useful question. A full second set does not block the first playable picker.
 
-The color/cost direction is agreed, and the capture-only royal progression is approved for initial testing. Guard grants remain a future alternative. The harness combines independent king choices with the other upgrades; browser integration and a final dead-position policy remain separate work. Choose concrete balance changes after reviewing completion rates, opening sensitivity, and engine-evaluation limitations.
+## Experiment identity
+
+Behavior revisions cover movement, captures, regional conditions, placement, promotion, and special roles. A change creates a new revision; cosmetic recoloring does not. Archive definitions, allocations, generated rules, engine identities, and search settings with results. Evidence follows those identities, not temporary letters or a count of engine evaluation calls.
+
+The registry includes all declared comparisons even when a run selects only part of the schedule. Fresh engine processes prevent profile-dependent state from carrying between games; there is no long-term learning associated with a reused letter. Keep completed-pair counts, opening coverage, opponents, and decisions in the evidence record, while retaining earlier revisions separately. See [BALANCE.md](BALANCE.md) for the protocol and [TODO.md](TODO.md) for active work.

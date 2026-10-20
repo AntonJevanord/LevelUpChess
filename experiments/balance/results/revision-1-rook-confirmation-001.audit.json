@@ -1,0 +1,177 @@
+{
+  "checksums": {
+    "summary": "463d69877a750f78c53ebc23f7447f8de0c6f0445090e449df180efe8b2d85fb",
+    "journal": "f2c4f937548b57b2f74e65690da8dea7577cef833a34a01a406acb2fca370721",
+    "screen": "7c792c495279d70f33e2246781280990765df2e611fb902fe69a6aa2171a1f72"
+  },
+  "runId": "2f25fb97-c31c-4cb9-942b-8279809653e9",
+  "summaryRecomputesExactly": true,
+  "scheduleMatchesExactly": true,
+  "records": 60,
+  "playedPlies": 8858,
+  "totalPlies": 8978,
+  "uniquePositionsCheckedNative": 7130,
+  "wasmMovesChecked": 8978,
+  "wasmSANsChecked": 8978,
+  "profileHash": "0f1c54a72c46fd1bcc0489ea549184bddd7314da341aa3be7171ac7d2fcd158c",
+  "registryHash": "df74a99dfdf041abcaf82c29c560389b813f5c94fbb70d945c39d0cd2bfed40e",
+  "variant": "levelup-design-3ea43a76e6bb8c874bc1",
+  "engine": {
+    "nodes": 100000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400
+  },
+  "engineNames": [
+    "Fairy-Stockfish 230826"
+  ],
+  "checkmateGames": 39,
+  "drawReasons": {
+    "insufficient-material": 9,
+    "threefold-repetition": 4,
+    "fifty-move-rule": 8
+  },
+  "castles": 113,
+  "promotions": 60,
+  "revisedRookKnightCaptures": 41,
+  "allControlPairsHaveIdenticalMoveSequences": true,
+  "combined": [
+    {
+      "comparisonId": "purple-rook-v-blue-minors",
+      "screen": {
+        "games": 20,
+        "wins": 15,
+        "draws": 2,
+        "losses": 3,
+        "score": 0.8,
+        "completePairs": 10,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 7,
+        "pairDraws": 3,
+        "pairLosses": 0
+      },
+      "confirmation": {
+        "games": 20,
+        "wins": 17,
+        "draws": 2,
+        "losses": 1,
+        "score": 0.9,
+        "completePairs": 10,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 9,
+        "pairDraws": 1,
+        "pairLosses": 0
+      },
+      "combined": {
+        "games": 40,
+        "wins": 32,
+        "draws": 4,
+        "losses": 4,
+        "score": 0.85
+      }
+    },
+    {
+      "comparisonId": "purple-rook-v-blue-orange",
+      "screen": {
+        "games": 20,
+        "wins": 12,
+        "draws": 4,
+        "losses": 4,
+        "score": 0.7,
+        "completePairs": 10,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 6,
+        "pairDraws": 2,
+        "pairLosses": 2
+      },
+      "confirmation": {
+        "games": 20,
+        "wins": 8,
+        "draws": 5,
+        "losses": 7,
+        "score": 0.525,
+        "completePairs": 10,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 4,
+        "pairDraws": 1,
+        "pairLosses": 5
+      },
+      "combined": {
+        "games": 40,
+        "wins": 20,
+        "draws": 9,
+        "losses": 11,
+        "score": 0.6125
+      }
+    },
+    {
+      "comparisonId": "standard-control",
+      "screen": {
+        "games": 20,
+        "wins": 5,
+        "draws": 10,
+        "losses": 5,
+        "score": 0.5,
+        "completePairs": 10,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 0,
+        "pairDraws": 10,
+        "pairLosses": 0
+      },
+      "confirmation": {
+        "games": 20,
+        "wins": 3,
+        "draws": 14,
+        "losses": 3,
+        "score": 0.5,
+        "completePairs": 10,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 0,
+        "pairDraws": 10,
+        "pairLosses": 0
+      },
+      "combined": {
+        "games": 40,
+        "wins": 8,
+        "draws": 24,
+        "losses": 8,
+        "score": 0.5
+      }
+    }
+  ],
+  "limits": [
+    "The uploaded run.json is absent; actual executable checksum, source fingerprints, archived registry/config bytes, and UCI option acknowledgments cannot be authenticated independently from journal declarations.",
+    "Screen cohort has only summary.json: combined results are descriptive arithmetic; screen game histories/protocol identity cannot be independently replayed.",
+    "The 20 fixed opening prefixes include related lines; intervals are not general population precision."
+  ],
+  "auditEngine": {
+    "idname": "Fairy-Stockfish 181026",
+    "sha256": "51ba74246d04d83791a7cd845e3928e99c9c3df62005c29954bb240c0af29e45",
+    "platform": "Linux",
+    "role": "Legal-move replay only; not the executable identity of the uploaded Windows run."
+  },
+  "gameLengthPlies": {
+    "min": 64,
+    "median": 147,
+    "max": 265,
+    "mean": 149.63333333333333
+  },
+  "recordedDate": "2026-10-21",
+  "rulesCheckout": "7529a2ec8c537071927715970a2a8e06ff882258",
+  "archive": {
+    "file": "revision-1-rook-confirmation-001.games.jsonl",
+    "sha256": "acbb31bb80b174f23c6d88f246a15adf7d1ee0e01f11b285ae509d3eb636bbf1",
+    "records": 60,
+    "removedFields": [
+      "startedAt",
+      "finishedAt"
+    ],
+    "allOtherFieldsPreserved": true
+  }
+}

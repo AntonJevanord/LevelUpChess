@@ -41,15 +41,31 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The first completed 480-game budget-3 analysis and uploaded summary are preserved in [results 001](experiments/balance/results/budget-3-001.md). Purple rook, pawn, and knight armies outperformed the tested three-blue-minor package. The individual-effect and search follow-ups below retain the original opening suite; wider opening coverage is a separate experiment.
+These configurations are templates and historical protocols, not a queue. The first revision batch is closed; the next milestone is the playable experimental picker.
 
-The completed 440-game [individual-effects analysis](experiments/balance/results/outlier-effects-001.md) found near-ceiling scores for orange/purple rooks and purple knight, plus unexpectedly poor blue-rook performance. The [manifest and game audit](experiments/balance/results/outlier-effects-001.games-audit.md) verifies the expected engine/rules, all 56,644 legal plies, actual bonus jumps, and castling. Source diagnostics confirm different evaluation treatment for ordinary and custom rooks; neither those differences nor the game patterns establish the cause of the poor score.
+| Completed experiment | Main finding | Evidence |
+| --- | --- | --- |
+| Budget-3 baseline, 480 games | Selected purple rook/pawn/knight armies outperform the blue-minor allocation. | [Report](experiments/balance/results/budget-3-001.md) |
+| Individual effects, 440 games | Large tier differences and an anomalous blue-rook score; all games replayed. | [Report](experiments/balance/results/outlier-effects-001.md), [audit](experiments/balance/results/outlier-effects-001.games-audit.md) |
+| Blue-rook confirmation, 80 games | Intended larger search raises its score from 28.75% to 52.5%; control remains 50%. | [Report](experiments/balance/results/blue-rook-confirmation-001.md) |
+| Budget-3 confirmation, 200 games | Selected purple advantages persist at the intended larger search budget. | [Report](experiments/balance/results/budget-3-confirmation-001.md) |
+| First revision, 100 screen + 60 confirmation games | Park pawn@2; keep rook@2 experimentally: 85% vs blue minors, 61.25% vs blue-plus-orange; control 50%. | [Decision and game audit](experiments/balance/results/revision-1-rook-confirmation-001.md), [revision ledger](experiments/balance/results/revision-1-evidence.csv) |
 
-The completed 80-game [blue-rook confirmation](experiments/balance/results/blue-rook-confirmation-001.md), intended at 100,000 nodes per move, raises its point score from 28.75% to **52.5%**, with 14 opening pairs improving, four tied, and two worse. Ordinary control remains 50%. This result does not yet establish material value or isolate the cause of the earlier losses.
+These are contextual army scores, not measured whole-piece material values. Reports distinguish summary-only evidence from audited manifests and games. The first revision spent 160 of its capped 200 games; the remaining 40 are unused, with no automatic extension.
 
-The completed 200-game [budget-3 confirmation](experiments/balance/results/budget-3-confirmation-001.md) retains the selected purple advantages: purple rook, pawn, and knight score **98.75%, 96.25%, and 92.5%** against the blue-minor package; purple pawn scores **80%** against three blue pawns. These are complete-army results, not measured piece values. The next development step is to implement the [first candidate changes](experiments/balance/revision-plan.md). Further material research is optional.
+Material-compensation templates remove an ordinary piece from the upgraded army. A score near 50% suggests compensation for that specific handicap, including its positional effects. This measures the upgrade bonus; the underlying ordinary piece still contributes. Such research remains optional.
 
-In the material-compensation run, Army A has the upgrade **and loses its own ordinary piece**; Army B is a full ordinary army. A score near 50% suggests compensation for that specific handicap, including its positional effects. It measures the added bonus, not the upgraded piece's whole value. The purple knight retains its starting knight and extra unit. All choices use relative White-side squares; a missing h1 rook also removes kingside castling. This run is distinct from `material-anchors.json`, which uses only ordinary pieces and the original 10,000-node budget.
+### Select comparisons for a new run
+
+Use `--comparisons ID,ID` to select comparisons without changing the full declared configuration or design allocation. Selection preserves seeded order and color pairs, and happens before `--limit-pairs`. Unknown, empty, and repeated IDs are rejected. For a short workflow example:
+
+```sh
+npm run balance -- --config experiments/balance/designs-smoke.json --out balance-results/selected-smoke --comparisons rook-revisions,standard-control --limit-pairs 1
+```
+
+This deliberately short smoke produces unscored truncations. It is not a balance experiment. Normal `--resume DIRECTORY` uses the exact recorded schedule; selection flags apply only to a new run. The official selector reproduces the earlier rook-only schedule without the temporary Node override.
+
+Registry allocation and strength validation still use every declared comparison. An unsupported strength setting in an excluded comparison can therefore fail preflight; keep declared settings compatible with the chosen engine. The original configuration and registry remain part of the run identity.
 
 ## Stop, inspect, and resume
 
@@ -126,7 +142,7 @@ The run archives exact definition snapshots, allocations, generated profile rule
 
 The revised `pawn.purple@2` has quiet orthogonal slides of one or two clear squares, with the original diagonal captures and standard promotion. `rook.purple@2` keeps ordinary rook movement/captures and adds capture-only knight jumps. Their `@1` predecessors remain unchanged. All other current nonking designs are also available as `family.color@1`; IDs identify behavior and must not be renamed when display colors change.
 
-Use `designs-smoke.json` to verify workflow. Its four-ply limit intentionally truncates games; these are unscored. The first actual candidate batch has **100 screening games** in `revision-1-screen.json`, followed by **at most 100 reserved confirmation games** in `revision-1-confirmation.json`. Their opening sets are disjoint and retain the same fixed suite. Follow the [decision plan](experiments/balance/revision-plan.md); confirmation is not automatically queued, and neither file authorizes additional runs beyond the cap.
+Use `designs-smoke.json` to verify workflow. Its four-ply limit intentionally truncates games; these are unscored. The first actual candidate batch has **100 screening games** in `revision-1-screen.json`, followed by **at most 100 reserved confirmation games** in `revision-1-confirmation.json`. Their opening sets are disjoint and retain the same fixed suite. The [decision plan](experiments/balance/revision-plan.md) is now closed after 100 screening and 60 selected rook/control confirmation games. These files preserve the protocol; they do not queue another run.
 
 Schema-2 results use a new protocol identity. Preserve the mapping when comparing or reproducing results; finite-search play can depend on internal type allocation. Evidence follows stable design revisions and the engine/rules context, never a temporary letter alone. No long-term engine training is performed.
 
@@ -172,15 +188,17 @@ To estimate a strength handicap, compare an upgraded army against an ordinary on
 
 Keep ordinary material values separate from upgrade prices. Pawn ≈1, knight/bishop ≈3, rook ≈5, and queen ≈9 are familiar starting references. A target of “ordinary piece value + level” is a design hypothesis: a blue bishop might aim to add about one pawn of value, but its price of 1 does not prove that it does. A royal king has no ordinary exchange value.
 
-Use the material-odds runs as anchors, then compare upgrade advantages with those handicap scores under matching conditions. Fit any pawn-equivalent estimates across several anchors, armies, openings, and search budgets; do not convert one score or an engine's centipawn evaluation directly into a material price. Extra units, promotion, and royal safety can make advantages nonlinear.
+The Amazon (`queen.purple@1`, `QN`) is the reference upgrade for the next design batch: ordinary queen ≈9 and Amazon ≈12–13 suggests an added benefit of ≈3–4, not an exact LevelUp measurement. Compare a candidate purple purchase against that queen purchase on otherwise ordinary armies first. Multiple-copy layouts need explicit shared setup support and measure their own context. See [the design rationale](DESIGN.md#material-estimates-and-the-amazon-reference).
+
+Material-odds runs can later provide additional anchors under matching conditions. Fit any pawn-equivalent estimates across several anchors, armies, openings, and search budgets; do not convert one score or an engine's centipawn evaluation directly into a material price. Extra units, promotion, and royal safety can make advantages nonlinear.
 
 Start with equal-strength, equal-cost comparisons; inspect completion rates and opening sensitivity before tuning abilities. Keep the agreed 1/2/3 prices and increasing overall strength as design goals, and preserve old profiles when movement changes.
 
 ## After changing a piece
 
-The current harness fingerprints the full rules bundle, runner, and engine. A change requires a new run directory; old games remain available under their original identities. There is no automatic per-piece evidence counter or adaptive scheduler yet. To focus a run now, copy a configuration and keep the relevant comparisons.
+The current harness fingerprints the full rules bundle, runner, and engine. A change requires a new run directory; old games remain available under their original identities. There is no automatic per-piece evidence counter or adaptive scheduler. Use `--comparisons` to focus a new run while preserving its full declared registry; changing a configuration can change that registry.
 
-The next step is an evidence ledger keyed by each piece's behavior revision and the complete experiment context. A revision should cover movement, captures, regional conditions, extra units, starting placement, promotion, and special rules. Changing behavior creates a new revision; keep its predecessor and start a separate evidence record rather than erase its counter. Opponent changes also change the matchup, even when the tested piece stays the same.
+The first batch has a curated [evidence ledger](experiments/balance/results/revision-1-evidence.csv), keyed by design revision, cohort, opponent, and protocol context. Future aggregation should retain that context. A revision should cover movement, captures, regional conditions, extra units, starting placement, promotion, and special rules. Changing behavior creates a new revision; keep its predecessor and start a separate evidence record rather than erase its counter. Opponent changes also change the matchup, even when the tested piece stays the same.
 
 Track completed color-swapped pairs, distinct opening families, opponent coverage, unfinished rates, and uncertainty. Count special-ability use separately: merely appearing in an army does not establish that the ability was tested. Repeating the same opening or counting engine evaluation calls should not make a revision look well understood.
 

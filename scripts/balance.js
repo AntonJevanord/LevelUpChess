@@ -10,7 +10,7 @@ const { renameWithRetrySync, unlinkWithRetrySync } = require('./balance/files');
 
 const HELP = `Paired Fairy Stockfish balance experiments
 
-  npm run balance -- --config FILE --out DIRECTORY [--limit-pairs N]
+  npm run balance -- --config FILE --out DIRECTORY [--comparisons ID,ID] [--limit-pairs N]
   npm run balance -- --resume DIRECTORY
   npm run balance -- --status DIRECTORY
   npm run balance -- --stop-now DIRECTORY
@@ -18,12 +18,14 @@ const HELP = `Paired Fairy Stockfish balance experiments
   npm run balance -- --stop-after-pair DIRECTORY
 
 During a run: q / Ctrl+C stops now; g finishes the game; p finishes the pair.
+--comparisons selects complete comparison pairs for a new run, before --limit-pairs.
+The full configuration and its design letter allocation remain unchanged.
 On Linux/macOS, set FAIRY_STOCKFISH_PATH to a compatible native executable.
 See BALANCE.md for configuration, results, and interpretation.
 `;
 
 function parseArgs(args) {
-  const allowed = new Set(['config', 'out', 'limit-pairs', 'resume', 'status', 'stop-now', 'stop-after-game', 'stop-after-pair']);
+  const allowed = new Set(['config', 'out', 'comparisons', 'limit-pairs', 'resume', 'status', 'stop-now', 'stop-after-game', 'stop-after-pair']);
   const values = {};
   if (args.length === 1 && ['--help', '-h'].includes(args[0])) return { help: true };
   for (let index = 0; index < args.length; index++) {
@@ -37,7 +39,8 @@ function parseArgs(args) {
   }
   const modes = ['config', 'resume', 'status', 'stop-now', 'stop-after-game', 'stop-after-pair'].filter(name => Object.hasOwn(values, name));
   if (modes.length !== 1) throw new Error('Select exactly one of --config, --resume, --status, or a stop command.');
-  if ((values.out || values['limit-pairs']) && modes[0] !== 'config') throw new Error('--out and --limit-pairs apply only to a new --config run.');
+  if ((values.out || values['limit-pairs'] || values.comparisons !== undefined) && modes[0] !== 'config') throw new Error('--out, --limit-pairs, and --comparisons apply only to a new --config run.');
+  if (values.comparisons !== undefined) values.comparisons = comparisonIds(values.comparisons.split(',').map(id => id.trim()));
   if (values['limit-pairs'] !== undefined) {
     if (!/^[1-9]\d*$/.test(values['limit-pairs']) || !Number.isSafeInteger(Number(values['limit-pairs']))) {
       throw new Error('--limit-pairs must be a positive integer.');
@@ -45,6 +48,23 @@ function parseArgs(args) {
     values['limit-pairs'] = Number(values['limit-pairs']);
   }
   return values;
+}
+
+function comparisonIds(ids) {
+  if (!Array.isArray(ids) || !ids.length || ids.some(id => typeof id !== 'string' || !/^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$/.test(id))) {
+    throw new Error('--comparisons requires a comma-separated list of nonempty comparison IDs.');
+  }
+  if (new Set(ids).size !== ids.length) throw new Error('--comparisons must not repeat an ID.');
+  return ids;
+}
+
+/** Filter a schedule, retaining its paired order and the full declared config. */
+function selectComparisons(config, schedule, ids) {
+  if (ids === undefined) return schedule;
+  const selected = new Set(comparisonIds(ids));
+  const declared = new Set(config.comparisons.map(comparison => comparison.id));
+  for (const id of selected) if (!declared.has(id)) throw new Error(`Unknown comparison ID: ${id}.`);
+  return schedule.filter(game => selected.has(game.comparisonId));
 }
 
 function readJson(file) { return JSON.parse(fs.readFileSync(file, 'utf8')); }
@@ -172,7 +192,7 @@ async function main(args = process.argv.slice(2)) {
     if (!Array.isArray(schedule) || !schedule.length) throw new Error('The run manifest has no schedule.');
   } else {
     config = normalizeConfig(readJson(path.resolve(options.config)));
-    schedule = makeSchedule(config);
+    schedule = selectComparisons(config, makeSchedule(config), options.comparisons);
     if (options['limit-pairs']) schedule = schedule.slice(0, options['limit-pairs'] * 2);
     const stamp = new Date().toISOString().replace(/[:.]/g, '-');
     outDir = path.resolve(options.out || path.join('balance-results', `run-${stamp}`));
@@ -199,4 +219,4 @@ async function main(args = process.argv.slice(2)) {
 }
 
 if (require.main === module) main().catch(error => { console.error(`Balance run failed: ${error.message}`); process.exitCode = 1; });
-module.exports = { parseArgs, requestStop, showStatus, main };
+module.exports = { parseArgs, selectComparisons, requestStop, showStatus, main };

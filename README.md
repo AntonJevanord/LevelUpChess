@@ -28,29 +28,23 @@ Open [prototypes/kings/index.html](prototypes/kings/index.html) to try the captu
 
 Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Bringing king choices into the main board's setup, engine play, and saves remains integration work. See the [prototype guide](prototypes/kings/README.md).
 
-## Version 07: balance experiments
+## Balance experiments — version 08
 
-The command-line match runner combines all upgrades, including independent king levels, for paired Fairy Stockfish self-play. It records moves, results, engine/rules identities, and checkpoints. The browser boards keep their existing setup rules.
+The command-line runner plays paired Fairy Stockfish games and records moves, results, engine/rules identities, and checkpoints. It supports independent king levels through the legacy profiles, or immutable nonking design revisions under a frozen run-level letter registry. The main browser board keeps its version 05 rules.
+
+After switching to `version_08`, build and check the short registry workflow:
 
 ```bat
 npm.cmd ci
-npm.cmd run balance -- --config experiments/balance/smoke.json --out balance-results/smoke
-```
-
-Press **q** or Ctrl+C to stop now, **g** after the current game, or **p** after its color-swapped pair. Resume with `npm.cmd run balance -- --resume balance-results/smoke`. Start with the smoke check, then choose equal-budget, strength-handicap, or ordinary-material experiments in the [balance guide](BALANCE.md). No measured piece values have been established yet.
-
-## Version 08: design-registry experiments
-
-The balance runner can select immutable design revisions and assign their engine letters once for the whole run. The original purple pawn/rook and their proposed replacements remain separate definitions. This development step keeps the browser board on its existing rules; the alternate-design picker and second palette are later work.
-
-After switching to `version_08`, build and check the short workflow example:
-
-```bat
 npm.cmd run build
 npm.cmd run balance -- --config experiments/balance/designs-smoke.json --out balance-results/designs-smoke
 ```
 
-This six-game smoke has a deliberately short move limit and produces unscored truncations. It checks allocation, native rules, storage, and resume; it is not balance evidence. The first revision has separate 100-game screening and confirmation configurations, with a combined cap of 200. See [the ordered TODO](TODO.md) and [design experiment guide](BALANCE.md#design-revisions-and-run-level-registries).
+This six-game smoke intentionally stops after four plies per game and produces unscored truncations. Press **q** or Ctrl+C to stop now, **g** after the current game, or **p** after its color-swapped pair. Resume with `npm.cmd run balance -- --resume balance-results/designs-smoke`. See [BALANCE.md](BALANCE.md) for configurations, comparison selection, and interpretation.
+
+The first revision used 160 games within its 200-game cap. The revised purple pawn is parked; the simpler purple rook is retained experimentally. Across screening and confirmation, that rook scored **85%** against three blue minor upgrades and **61.25%** against blue knight plus orange rook; ordinary control scored 50%. These are whole-army results, not established material values. See the [results and decisions](experiments/balance/results/revision-1-rook-confirmation-001.md).
+
+Original and revised designs remain separate definitions. Version 09 will add a small experimental picker to the playable board; see [TODO.md](TODO.md).
 
 ## Play Fairy Stockfish
 

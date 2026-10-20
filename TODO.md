@@ -1,230 +1,61 @@
 # Roadmap
 
-## Version 01 — playable foundation
+Version 08 closes the first design-registry experiment. The main browser board still uses the version-05 rules; experimental selections become playable in version 09. Historical milestones are in [development history](docs/development-history.md).
 
-- [x] Offline browser board for two local players.
-- [x] Standard legal moves, checkmate, and draw detection.
-- [x] Castling, en passant, and selectable promotion.
-- [x] Move history, undo, board flip, and new game.
-- [x] Responsive layout, keyboard controls, and browser tests.
-- [x] User playtest confirmed that basic chess works.
-- [x] Preserve version 01 in a local commit and `v0.1.0` tag; branch to `version_02`.
+Browser-save compatibility across releases is optional. Experiment definitions, identities, and results must remain reproducible.
 
-## Version 02 — engine play
+## Version 08 — registry and first balance decision
 
-- [x] Add a local Node/UCI bridge for the bundled Windows executable.
-- [x] Add opponent selection, human side, and three difficulty presets.
-- [x] Show connection/search errors with retry and local-play fallback.
-- [x] Add pause/resume, safe cancellation on reset, and full-turn undo.
-- [x] Keep direct HTML local play working without companion files.
-- [x] Test browser controls, stale responses, input validation, and real engine play.
-- [x] Include the upstream GPL license and document binary/source provenance gaps.
-- [x] Playtest the bundled Windows executable through `npm.cmd start` on Windows.
-- [ ] Establish the original executable's exact upstream release and matching source.
-- [x] Add optional clocks with presets, increments, and explicit start/pause/resume.
-- [x] Stop play on timeout; cancel engine searches and export the timed result.
-- [x] Restore clocks with undo and browser saves; load old saves untimed.
-- [x] User playtest confirmed clocks and losing on time work.
-- [x] User playtest confirmed timed saves and clock undo work.
-- [x] Add one browser save slot with moves and play settings.
-- [x] Add PGN download, paste import, and file import.
-- [x] Validate imports before replacement; preserve history and special-move rights.
-- [x] Pause the engine after loading and reject obsolete search responses.
-- [x] Pass clock-model unit tests and browser/integration tests, including timed saves and PGN round trips.
-- [x] User playtest confirmed saving/loading and PGN import/export work.
-- [x] Preserve the tested version 02 as `v0.2.0`; continue upgrades on `version_03`.
+- [x] Preserve version 07 and branch to `version_08`.
+- [x] Add immutable design IDs and revisions, independent of colors and temporary engine letters.
+- [x] Allocate letters/custom slots from all declared comparisons, including those excluded by a schedule filter; reserve ordinary pieces and promotions.
+- [x] Compile role-aware rules for movement, pawn promotion/en passant, extra units, and rook castling.
+- [x] Freeze definitions, allocations, generated rules, and hashes; validate them before resume.
+- [x] Verify the existing browser boards and native/browser rule agreement; complete and resume the short workflow smoke.
+- [x] Complete the 100-game screen and selected 60-game rook confirmation within the [200-game cap](experiments/balance/revision-plan.md).
+- [x] Park `pawn.purple@2`; retain `rook.purple@2` for experimental playtesting, without changing browser defaults or calling it balanced. See the [batch decision](experiments/balance/results/revision-1-rook-confirmation-001.md).
+- [x] Archive summaries, replayed confirmation games, audit limits, and a [revision evidence ledger](experiments/balance/results/revision-1-evidence.csv). Close the batch at 160 games; its remaining 40 games are unused.
+- [x] Add supported `--comparisons` selection while preserving the full registry and complete color pairs.
+- [x] Condense active documentation and move historical checklists/probe details into linked archives.
+- [x] Pass all 279 unit/integration checks with two test workers; verify native comparison selection and byte-preserving resume with the short CLI smoke.
 
-Version 02 cloud integration used a Linux source build; the user playtested its Windows executable. Difficulty presets control engine skill and search time; they are not Elo ratings.
+## Version 09 — playable design experiments
 
-## Version 03 — first upgrades
+Implement in this order. Start human playtesting before requiring tight numerical balance or a complete second set.
 
-- [x] Extract and validate the blue-knight `NmW` rule from `Example.txt`.
-- [x] Add individual starting-knight selection and a per-side upgrade budget.
-- [x] Implement level 1 knights using Fairy Stockfish rules in the browser and engine.
-- [x] Show a blue accent and L1 badge while preserving White/Black contrast.
-- [x] Support undo, clocks, saved games, and variant PGN import/export.
-- [x] Embed browser rules in the standalone HTML for offline local play.
-- [x] Include the browser rules library's matching source archive and GPL notice.
-- [x] Pass 115 checks: 44 unit tests and 71 browser/integration tests.
-- [x] User playtest confirmed blue knights and native engine play work on Windows.
-- [ ] Finish Windows playtesting of setup budget limits.
-- [x] Confirm orange `NsD` and purple `D` movements with the project owner.
-- [x] Add orange knights and extra purple pieces with correct starting placement.
-- [x] Support levels 0–3, separate 1–6 point budgets, and mixed armies.
-- [x] Preserve old blue saves; restore all new setup levels from saved games and PGN.
-- [x] Verify jumps, king safety, mixed armies, persistence, and native Stockfish for both new levels.
-- [x] User playtest confirmed the knight upgrades work; purple mobility needs improvement.
-- [ ] Finish Windows playtesting of mixed-budget armies.
-- [x] Preserve the knight-family build as `v0.3.0`; improve purple and add other families in version 04.
-- [ ] Resolve remaining draft rules, extra starting pieces, promotions, and upgraded king victory rules.
+### 1. Share profile handling
 
-## Version 04 — more piece families
+- [ ] Make board display, setup reconstruction, and move labels resolve stable design IDs through the active profile rather than hardcoded letters.
+- [ ] Share the catalog and compiled profile rules with the native bridge; validate selections and revision-aware capabilities before engine play.
+- [ ] Add a save/export format containing selections, definitions, allocation, and exact rule identity. A release may require fresh games.
+- [ ] Verify offline play, engine replies, undo/clocks, round trips, and both-color promotion/en passant/castling for the selected profiles.
 
-- [x] Improve purple knights to one- or two-square orthogonal moves/captures (`WD`), preserving jumps.
-- [x] Preserve version 03 movement under its original variant ID for old saves and PGNs.
-- [x] Add individual pawn, bishop, and queen choices alongside knight upgrades.
-- [x] Apply one per-side budget of 1–39 points across all 26 upgradeable starting pieces.
-- [x] Add blue, orange, and purple bishops; purple replaces the starting bishop.
-- [x] Add orange quiet-knight-jump queens and purple amazon queens.
-- [x] Add all three pawn levels with standard queen/rook/bishop/knight promotions.
-- [x] Keep kings royal and preserve standard checking and castling rules.
-- [x] Share current rules between offline browser play and the native engine bridge.
-- [x] Retain clocks, undo, saves, PGN, and next-game setup recovery across both variant versions.
-- [x] Pass 180 checks: 83 unit tests and 97 browser/integration tests, including native pawn-rule comparisons and engine play.
-- [x] User playtest confirmed version 04 works; blue queen remains deferred.
-- [ ] Playtest current pawn promotions, en passant, mixed armies, and budgets on Windows.
-- [ ] Playtest bishop/queen upgrades and the improved purple knight with the bundled engine.
-- [x] Choose supported blue-queen home-rank jumps for version 05 with the project owner.
-- [x] Define supported rook upgrades and implement custom castling in version 05.
-- [ ] Design per-side royal king upgrades, retaining checkmate and defining check rules for any extra king.
-- [x] Preserve version 04 as `v0.4.0`; continue remaining upgrades on `version_05`.
+### 2. Expose a small development picker
 
-## Version 05 — home-rank abilities and rooks
+- [ ] Begin with original/revised rook choices and a small set of pawn alternatives; label experimental and parked references explicitly.
+- [ ] Keep tier/cost separate from design name, behavior revision, and color. Show a short movement description and useful movement examples.
+- [ ] Review green for level 1, red for level 3, and a contrasting level-2 color; keep level numbers and White/Black contrast readable.
+- [ ] Consolidate Windows playtesting: setup budgets, mixed armies, special moves, engine play, timed undo, and save/export recovery.
+- [ ] Record feedback by design revision: readability, useful choices, enjoyment, counterplay, and frustrating positions. Retire poor ideas before spending balance games on them.
 
-- [x] Add blue queens: normal queen plus quiet (1,2), (1,3), and (2,3) jumps on the home two ranks.
-- [x] Add blue rooks: normal rook plus quiet two-square orthogonal jumps on the home two ranks.
-- [x] Add orange rooks: normal rook plus captures across exactly one intervening piece.
-- [x] Add purple rooks: normal rook plus jump-captures throughout the surrounding 5×5 area.
-- [x] Let all upgraded rooks castle with the royal king under normal safety and castling-right rules.
-- [x] Add all rook and queen levels to setup, with 30 starting choices and a 1–45 point budget per side.
-- [x] Preserve version 04 and version 03 profiles, saves, PGNs, and original budgets.
-- [x] Keep standard pawn promotions and shared browser/native configurations.
-- [x] Check required engine abilities before searching; explain incompatible engines and retain local play.
-- [x] Keep saved clock state and time-forfeit results consistent when saving at the deadline.
-- [x] Preserve blue-queen jumps through FEN, PGN, saves, and engine replies.
-- [x] Pass 250 checks: 130 unit tests and 120 browser/integration tests, including native engine comparisons and play.
-- [ ] Playtest home-rank jumps, screen captures, and custom castling with a current Windows engine.
-- [ ] Playtest mixed armies, budgets, saves, undo, and timed games on Windows.
-- [ ] Balance upgrade abilities within the fixed level costs after playtesting.
+### 3. Test the surviving ideas
 
-### Patch v0.5.1 — Windows engine compatibility
+- [ ] Keep `queen.purple@1` (Amazon, `QN`) fixed as the reference upgrade for the next design batch. Its estimated 12–13 total material is a contextual prior, not a measured LevelUp value.
+- [ ] First compare surviving purple purchases against the Amazon purchase on ordinary armies. All sides retain the same underlying standard material.
+- [ ] Use existing legal armies for tier-ratio comparisons. Add explicit shared custom starting setups only when several copies of one family answer a specific pending question.
+- [ ] Declare candidates, opponents, opening cohorts, search settings, decision criteria, and a game cap before starting a new batch. Confirmation is reserved for shortlisted designs.
+- [ ] Extend evidence aggregation from the curated ledger when repeated batches justify it; distinguish co-occurrence, actual ability use, and individual-effect evidence.
 
-- [x] Record Windows failures with blue-queen home-rank checks, required pawn promotions, and blue-rook engine exit.
-- [x] Make a matching-source LevelUp Windows executable the default; retain the original executable unchanged.
-- [x] Include matching source, a cross-build script, and a manifest recording the new executable's provenance.
-- [x] Isolate capability checks by piece family and explain engine exits during checks.
-- [x] Keep custom engine-path overrides and document updating or removing stale overrides.
-- [x] Reproduce all three failures with the original Windows executable under Wine.
-- [x] Pass 135 unit tests with Linux-native and Windows-under-Wine engines, including 56 isolated native/browser move-set comparisons.
-- [x] Pass all 120 existing browser/API tests and six new blue-queen, blue-pawn, and blue-rook regressions.
-- [x] Run all 14 native browser/API cases with the bundled Windows executable under Wine, including legacy rules, mixed armies, pause/resume, and undo.
-- [x] User reports the patched bundled engine works on Windows.
+Two to six ideas per family per tier means 36–108 upgraded designs. Keep that as an idea pool and implement selected alternatives gradually. A full second set does not block the first playable picker.
 
-The blue queen's draft back-rank teleport remains an optional engine extension. Version 05 uses supported conditional jumps instead. King experiments continue separately in version 06; each side keeps a clear checkmate rule.
+## Deferred work
 
-## Version 06 — king prototype
+- [ ] Integrate independent capture-only king choices into the main browser board after royal identity, castling, mating tests, and asymmetric-king evaluation limits are handled. Keep one royal per side.
+- [ ] Agree on queen/rook conversion goals and a consistent dead-position policy; guard grants remain an alternative design.
+- [ ] Add grouped capacity-bounded registries and custom setup support when a declared experiment needs them.
+- [ ] Investigate ordinary/custom representation effects, material handicaps, wider openings, or evaluation overrides only for a concrete decision. Existing templates are optional research.
+- [ ] Consider random armies, additional art/themes, and online play after the local design workflow is useful.
 
-- [x] Preserve version 05 as `v0.5.1` and start `version_06`.
-- [x] Select capture-only royal bonuses for the first prototype: sideways, orthogonal, then orthogonal plus diagonal two-square jumps.
-- [x] Ship a separate offline local-play board with all three tiers, a standard baseline, practice positions, FEN loading, undo, and promotions.
-- [x] Verify 138 positions for both colors against browser/native Linux rules and the Windows executable under Wine, including blockers, safe landings, royal attacks, castling, and mating examples.
-- [x] Identify single-knight mating positions enabled by royal attacks; avoid premature ordinary-material draws in the prototype.
-- [x] Pass 135 unit tests and 160 browser/API cases across the main game and king prototype, including repetition, fifty-move draws, and undo.
-- [x] User playtest approved the capture-only king prototype for initial balance experiments.
-- [ ] Integrate independent king levels with other upgrades, setup budgets, saves, PGN, and engine play.
-- [x] Use explicit mate, stalemate, repetition, and fifty-move rules in experiments; avoid premature minor-material draws.
-- [x] Preserve the confirmed prototype as `v0.6.0`; continue on `version_07`.
+The original legacy executable's matching source remains unresolved; the current bundled LevelUp engine has recorded matching-source provenance in [stockfish/README.md](stockfish/README.md).
 
-## Version 07 — balance testing
-
-- [x] Add configurable paired self-play with colors swapped and seeded opening order.
-- [x] Support every current upgrade, independent king levels, and ordinary material handicaps in the harness.
-- [x] Preflight opening legality for every scheduled army/color assignment and validate native move sets.
-- [x] Save run identities, full games, move checkpoints, summaries, and PGN.
-- [x] Add immediate, after-game, and after-pair stopping, plus interrupted-game resume.
-- [x] Keep engine failures, cancellation, and move-limit truncations unscored.
-- [x] Report complete-pair scores, opening coverage, and conditional uncertainty without assigning intrinsic piece Elo.
-- [x] Supply smoke, three-point-budget, individual-upgrade, strength-sweep, and ordinary-material anchor configurations.
-- [x] Pass 231 unit/integration checks with the native engine, including cancellation, resume, and all upgrade capabilities.
-- [x] Finish an eight-game smoke run and four full native pilot games; retain these as workflow validation, not balance evidence.
-- [x] Pass all 160 existing browser/API cases after adding the harness build.
-- [x] User ran the harness on Windows; engine preflight and four games worked before a OneDrive checkpoint replacement failure.
-- [x] Add bounded retries for transient Windows sharing errors while preserving atomic checkpoints and primary errors.
-- [x] Recover the latest interrupted history from the journal and permit the exact reviewed recovery patch to resume version 0.7.0 runs.
-- [x] Pass 247 unit/integration checks with injected file-sharing failures; resume an actual pre-patch run without changing its manifest or journal.
-- [x] User confirmed version 0.7.1 resumed and finished all eight smoke games on Windows, preserving prior records and the original failed attempt.
-- [x] User completed the four-game Windows budget-3 pilot with no errors or truncations: blue-plus-orange scored 0% and three-blue scored 50% against purple-rook armies, each from one opening; broader evidence is still required.
-- [x] Analyze and archive the uploaded full budget-3 summary: 480 completed games, 240 pairs, no errors/truncations, and a 50% ordinary control.
-- [x] Identify purple rook/pawn/knight outliers against the tested blue-minor package; preserve results and inference limits in [report 001](experiments/balance/results/budget-3-001.md).
-- [x] Prepare individual-effect and tenfold-search follow-ups, preserving central pawn placement and the original openings for controlled comparisons.
-- [x] Analyze and archive all 440 individual-effect games: clean completion, tier scores, blue-rook anomaly, and near-ceiling purple-knight/orange-rook/purple-rook results.
-- [x] Verify bundled-source ordinary/custom-rook evaluation differences and retained blue-rook castling; preserve diagnostic evidence without attributing the observed score to a proven cause.
-- [x] Prepare an 80-game blue-rook/control confirmation at ten times the search budget.
-- [x] Verify the uploaded outlier manifest and journal against the bundled Windows engine, rules, schedule, and summary; replay all 440 games and 56,644 plies without mismatches.
-- [x] Audit blue-rook jumps, original-rook activity/trades, and actual castling; archive the 40 relevant games and selected deeper position probes in the [game audit](experiments/balance/results/outlier-effects-001.games-audit.md).
-- [x] Analyze and archive the completed 80-game blue-rook confirmation: blue rook scores 52.5% versus 28.75% initially, with 14 improved opening pairs; ordinary control remains 50%. Preserve [results and limits](experiments/balance/results/blue-rook-confirmation-001.md).
-- [ ] Verify the confirmation manifest and game histories before attributing changed scores to specific behavior.
-- [x] Analyze and archive the completed 200-game budget confirmation: purple rook/pawn/knight advantages persist at the intended larger search budget; preserve [scores, opening comparisons, and limits](experiments/balance/results/budget-3-confirmation-001.md).
-- [x] Prepare and validate optional 320-game material-compensation tests; these do not block piece changes and are not automatically queued.
-- [x] Set a [bounded first revision plan](experiments/balance/revision-plan.md): start changes now, one candidate per piece, at most 200 scheduled games, then keep/revert/park.
-- [ ] Verify additional manifests/game histories only when a specific behavior claim depends on them; further baseline campaigns are optional.
-
-## Version 08 — design registry and first balance revision
-
-Implement in this order. The runner comes first so candidate rules can be compared before changing the board's selected release rules. Keep the [200-game revision cap](experiments/balance/revision-plan.md). Backward compatibility for browser saves is not required; experiment identity and reproducibility still are.
-
-### 1. Foundations — now
-
-- [x] Branch `version_08` from the tested `version_07` baseline.
-- [x] Give current designs permanent IDs, immutable behavior revisions, and rule roles independent of their display colors and temporary letters.
-- [x] Add the proposed purple pawn (quiet slides up to two clear squares) and purple rook (ordinary rook plus capture-only knight jumps) as new definitions; retain the originals.
-- [x] Allocate letters and internal custom slots once per run from the union of all scheduled designs. Reserve standard pieces, reuse compatible assignments, and reject capacity overflow.
-- [x] Freeze and hash the registry, exact generated rules, and selections in the run manifest; results must remain attached to design revisions and protocol context.
-
-### 2. Runner integration — before candidate matches
-
-- [x] Let experiments select design IDs while retaining existing numeric-level configurations.
-- [x] Generate role-aware pawn promotion/en passant, extra-unit placement, and rook castling rules; validate native/browser movement against each selected revision.
-- [x] Keep each fresh engine process on the run's frozen registry; clear all profile-specific state by starting a new process for each game.
-- [x] Validate archived definitions/mappings and rule hashes on resume; preserve the original `version_07` checkout for its unfinished runs.
-- [x] Supply a short workflow smoke test and separate 100-game screening/100-game confirmation configurations. Do not start a larger research campaign automatically.
-- [x] Verify the current board still works and document that dynamic experimental PGNs require their archived run rules and are not yet browser imports. Cross-version save compatibility is not a release requirement.
-- [x] Pass 275 unit/integration and 160 browser/API checks, finish and resume the six-game smoke, and validate all 200 candidate opening assignments without starting the balance batch.
-
-### 3. First balance decision — after correctness checks
-
-- [ ] Run the declared screening/confirmation batch and record keep/revert/park for each candidate, within the 200-game maximum.
-- [ ] Track evidence by design revision and engine/rules context; retain old coverage separately and distinguish co-occurrence from measured individual value.
-- [ ] Integrate retained candidates into the browser rules, setup descriptions, engine bridge, saves, and PGN. A new version may require fresh games; backward save compatibility is optional.
-- [ ] Finish a playable version 08 with its known limitations; do not wait for exact material values.
-
-## Version 09 — alternate designs in the playable game
-
-Start after the runner/profile foundation and the first version-08 balance decision. The full second set does not block version 08.
-
-- [ ] Make board display, setup reconstruction, and move labels resolve permanent designs through the active profile instead of hardcoded letters.
-- [ ] Add a new save/export format with immutable definitions, allocation, starting choices, and exact rule snapshots. Supporting older browser saves is optional.
-- [ ] Add validated dynamic-profile handoff to the browser/native bridge, including revision-aware capability checks and profile cache keys.
-- [ ] Support dynamic king definitions only after royal identity, castling, and the existing asymmetric-king evaluation caveat are handled explicitly.
-- [ ] Offer a second design choice per level in the development picker; keep tier/cost, design, behavior revision, and display color separate.
-- [ ] Try a green/cyan/red second palette with level numbers and design badges; check contrast before adopting it.
-- [ ] Expose only tested choices in release builds. Preserve archived experiment definitions/results when retiring designs; old browser saves need not remain loadable.
-- [ ] Group larger experiments into capacity-bounded registries with stable shared benchmarks; declare candidate/opponent counts and game caps before each run.
-
-## Optional research — when it answers a design decision
-
-- [ ] Use ordinary-movement custom-piece controls to investigate representation effects.
-- [ ] Use material handicaps or wider paired openings to refine material ranges; neither blocks the first piece changes.
-- [ ] Add targeted positions and special-ability usage counts when a concrete question needs them.
-
-## Later versions
-
-- [x] Draft king design options, engine constraints, and balance candidates in [DESIGN.md](DESIGN.md).
-- [x] Keep costs equal to level (1/2/3) and target increasing strength, allowing distinct or cumulative abilities.
-- [x] Distinguish fixed upgrade costs from estimated material; record base-plus-level values as provisional targets.
-- [x] Keep royal abilities and 1/2/3-value guard grants open; the extra-piece approach remains provisional.
-- [x] Record playtest impressions: strong orange/purple rooks and purple pawns, weaker blue/orange pawns.
-- [x] Choose the capture-only king tier progression for the first prototype.
-- [ ] Agree on minimum mating material and confirm the progression after playtesting.
-- [ ] Prototype one king design and verify independent setup, checkmate, castling, draws, saves, and PGN.
-- [x] Plan concrete balance tests with separate army scores, engine-strength compensation, and material anchors.
-- [ ] Estimate material ranges from collected results, including uncertainty and interactions.
-- [ ] Compare selected upgrades at budgets 3 and 6 with colors swapped; record rules, budgets, and conversion results.
-- Complete all piece upgrades and tune their abilities to the fixed level costs.
-- Add low-budget, high-budget, and equal-budget random modes.
-- [x] Automate engine matches with saved progress and immediate/after-game stopping.
-- Version balance results so rule changes can be compared.
-- Add menus, settings, piece art, board palettes, and optional themes.
-- Consider online casual/ranked play after local rules and balance are stable.
-
-Keep each release playable. Create its branch from the previous tested milestone and tag the finished release.
+Keep releases playable, branch from tested milestones, and tag finished releases. Further tests are not an automatic queue.

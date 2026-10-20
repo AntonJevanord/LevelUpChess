@@ -2,6 +2,16 @@
 
 Recorded 2026-10-20 to begin piece changes with a finite test budget. The [200-game confirmation](results/budget-3-confirmation-001.md) provides enough practical evidence to prototype changes. Exact material values are not a prerequisite.
 
+## Outcome — 2026-10-21
+
+**Batch closed: 160 of at most 200 games used.** The original protocol below is retained as declared before the matches.
+
+- [Screening](results/revision-1-screen-001.md): all 100 games completed. Park `pawn.purple@2` after its 87.5% score against blue pawns reached the predeclared early-stop threshold; its 40 reserved confirmation games remain unused.
+- [Selected rook confirmation](results/revision-1-rook-confirmation-001.md): all 60 rook/control games completed. Across both cohorts, `rook.purple@2` scores 85% against blue minors and 61.25% against blue knight plus orange rook; ordinary control scores 50%.
+- **Keep the rook candidate experimentally**, without declaring it balanced or changing browser defaults. Record the conflicting matchup results and move to human playtesting through the version-09 picker.
+
+The [revision ledger](results/revision-1-evidence.csv) keeps cohort/opponent coverage and verification limits separate. No third run, replacement candidate, or optional material-handicap campaign is queued. Version 08 closes with the registry, supported comparison filtering, and this decision; browser integration follows in version 09. The earlier instruction to finish a playable revision does not require waiting for a fully balanced catalog or silently replacing the current browser rules.
+
 ## Start with two changes
 
 Implement the first candidate on `version_08`, preserving `version_07` and its existing rules/results as the baseline. These are proposed candidates, not measured improvements or changes already made to the game.
