@@ -1,7 +1,10 @@
 const { test, expect } = require('@playwright/test');
 const fs = require('node:fs/promises');
 const { initVariantRules, VariantGame } = require('../dist/rules-node.cjs');
-const { PLAYABLE_PROFILE, EXPERIMENTAL_VARIANT, DESIGN_OPTIONS } = require('../src/design-options');
+const { PLAYABLE_PROFILES, DESIGN_OPTIONS } = require('../src/design-options');
+// These regression scenarios exercise the original 20-design library.
+const PLAYABLE_PROFILE = PLAYABLE_PROFILES[1];
+const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
 
 const square = (page, name) => page.locator(`[data-square="${name}"]`);
 const marker = (page, name) => square(page, name).locator('.move-marker, .capture-marker');

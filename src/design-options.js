@@ -1,6 +1,8 @@
 'use strict';
 
 const compiled = require('./playable-profile.json');
+const reference = require('./playable-reference-profile.json');
+const { PLAYABLE_LIBRARIES: libraries } = require('./playable-library');
 const { STANDARD_TYPES } = require('./design-catalog');
 const { pieceInfo } = require('./piece-catalog');
 
@@ -13,7 +15,12 @@ function freeze(value) {
 }
 
 const PLAYABLE_PROFILE = freeze(compiled);
+const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference]);
 const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
+const EXPERIMENTAL_VARIANTS = freeze(PLAYABLE_PROFILES.map(profile => profile.variant));
+const PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES[index].variant })));
+function getPlayableProfile(variant = EXPERIMENTAL_VARIANT) { return PLAYABLE_PROFILES.find(profile => profile.variant === variant); }
+function isExperimentalVariant(variant) { return EXPERIMENTAL_VARIANTS.includes(variant); }
 const metadata = {
   'pawn.blue@1': ['Leaping pawn', 'Jump one or two squares forward, or three from the home ranks. Capture one square diagonally forward.'],
   'pawn.orange@1': ['Forward pawn', 'Move or capture one square forward or diagonally forward. The initial two-step needs a clear path.'],
@@ -37,9 +44,16 @@ const metadata = {
   'queen.blue@1': ['Home-jump queen', 'Normal queen moves plus quiet knight, camel (1,3), and zebra (2,3) jumps while on your home two ranks.'],
   'queen.orange@1': ['Quiet-jump queen', 'Normal queen moves plus knight jumps into empty squares.'],
   'queen.purple@1': ['Amazon', 'Normal queen moves plus knight jumps, including captures.'],
+  'pawn.orange@2': ['Twin pawns', 'Replace one pawn with two pawns on its file for one two-point purchase. Each moves one square forward or jumps two forward, and captures one square diagonally forward.'],
+  'knight.orange@2': ['Camel knight', 'Normal knight jumps plus camel jumps: three squares in one direction and one at right angles. All jumps can capture.'],
+  'bishop.purple@2': ['Sideways bishop', 'Normal bishop moves plus quiet horizontal slides of one or two clear squares, and knight jumps two files sideways and one rank forward or backward, including captures.'],
+  'rook.purple@3': ['Blink rook', 'Normal rook moves and captures. Without capturing, also jump to any empty square within three squares horizontally and vertically, crossing intervening pieces.'],
+  'queen.purple@2': ['Twin short queens', 'Replace your queen with two short queens for one three-point purchase. Each moves or captures up to two clear squares in any queen direction. The second starts on your second rank, pushing your own pawn stack forward within your half.'],
+  'queen.purple@3': ['Queen and companion', 'Keep your ordinary queen and add a capturable companion on your second rank, pushing your own pawn stack forward within your half. The companion moves or captures one square in any direction. It is not royal; only the ordinary king must avoid check.'],
 };
 
-const DESIGN_OPTIONS = freeze(PLAYABLE_PROFILE.registry.definitions.map(definition => {
+const definitions = [...new Map(PLAYABLE_PROFILES.flatMap(profile => profile.registry.definitions).map(definition => [definition.id, definition])).values()];
+const DESIGN_OPTIONS = freeze(definitions.map(definition => {
   const [name, movement] = metadata[definition.id];
   const suffix = definition.family === 'pawn' ? ' Promotes to a standard queen, rook, bishop, or knight.'
     : definition.family === 'rook' ? ' Can castle under the usual rules.' : '';
@@ -53,6 +67,11 @@ const DESIGN_OPTIONS = freeze(PLAYABLE_PROFILE.registry.definitions.map(definiti
   };
 }));
 const optionsById = Object.fromEntries(DESIGN_OPTIONS.map(option => [option.id, option]));
+function getDesignOptions(variant = EXPERIMENTAL_VARIANT) {
+  const profile = getPlayableProfile(variant);
+  if (!profile) return [];
+  return profile.registry.definitions.map(definition => optionsById[definition.id]);
+}
 
 /** Resolve glyphs and labels through the actual profile, never legacy letters. */
 function pieceInfoForProfile(profile, type) {
@@ -79,14 +98,14 @@ function pieceInfoForProfile(profile, type) {
   };
 }
 
-const PROFILE_SNAPSHOT = freeze({
+const PROFILE_SNAPSHOTS = freeze(PLAYABLE_PROFILES.map(profile => ({
   schemaVersion: 1,
-  variant: PLAYABLE_PROFILE.variant,
-  hash: PLAYABLE_PROFILE.hash,
-  registryHash: PLAYABLE_PROFILE.registryHash,
-  registry: PLAYABLE_PROFILE.registry,
-  config: PLAYABLE_PROFILE.config,
-});
+  variant: profile.variant,
+  hash: profile.hash,
+  registryHash: profile.registryHash,
+  registry: profile.registry,
+  config: profile.config,
+})));
 
 function sameValue(left, right) {
   if (left === right) return true;
@@ -96,15 +115,16 @@ function sameValue(left, right) {
   return Object.keys(left).length === keys.length && keys.every(key => Object.hasOwn(left, key) && sameValue(left[key], right[key]));
 }
 
-function getProfileSnapshot() { return PROFILE_SNAPSHOT; }
+function getProfileSnapshot(variant = EXPERIMENTAL_VARIANT) { return PROFILE_SNAPSHOTS.find(snapshot => snapshot.variant === variant); }
 
 /** Current portable games accept the bundled immutable library, not raw rules. */
-function validateProfileSnapshot(snapshot) {
-  if (!sameValue(snapshot, PROFILE_SNAPSHOT)) throw new Error('This experimental game needs its original design profile. Use the matching build; modified rules or allocations are not supported.');
-  return PROFILE_SNAPSHOT;
+function validateProfileSnapshot(snapshot, variant = snapshot?.variant) {
+  const expected = getProfileSnapshot(variant);
+  if (!expected || !sameValue(snapshot, expected)) throw new Error('This experimental game needs its original design profile. Use the matching build; modified rules or allocations are not supported.');
+  return expected;
 }
 
-function encodeProfileSnapshot(snapshot = PROFILE_SNAPSHOT) {
+function encodeProfileSnapshot(snapshot = getProfileSnapshot()) {
   const bytes = new TextEncoder().encode(JSON.stringify(validateProfileSnapshot(snapshot)));
   return btoa(Array.from(bytes, value => String.fromCharCode(value)).join(''));
 }
@@ -118,4 +138,4 @@ function decodeProfileSnapshot(encoded) {
   } catch { throw new Error('The experimental game profile is damaged or does not match this build.'); }
 }
 
-module.exports = { PLAYABLE_PROFILE, EXPERIMENTAL_VARIANT, DESIGN_OPTIONS, pieceInfoForProfile, getProfileSnapshot, validateProfileSnapshot, encodeProfileSnapshot, decodeProfileSnapshot };
+module.exports = { PLAYABLE_PROFILE, PLAYABLE_PROFILES, PLAYABLE_LIBRARIES, EXPERIMENTAL_VARIANT, EXPERIMENTAL_VARIANTS, DESIGN_OPTIONS, getPlayableProfile, getDesignOptions, isExperimentalVariant, pieceInfoForProfile, getProfileSnapshot, validateProfileSnapshot, encodeProfileSnapshot, decodeProfileSnapshot };

@@ -134,13 +134,13 @@ test('valid PGN FEN spacing cannot make a subsequent save lose its starting choi
 
 test('paired pawns and inserted guards retain their purchases and deployment through saves, PGN, and undo', async t => {
   const selected = Object.fromEntries(PIECE_SLOTS.map(slot => [slot.square,
-    ['b1', 'g8'].includes(slot.square) ? 'knight.purple@2' : ['b2', 'g7'].includes(slot.square) ? 'pawn.purple@6' : '',
+    ['b1', 'g8'].includes(slot.square) ? 'knight.purple@2' : ['b2', 'g7'].includes(slot.square) ? 'pawn.orange@2' : '',
   ]));
   const setup = designSetupFromChoices(selected, 6);
-  assert.deepEqual(setup.costs, { w: 6, b: 6 });
+  assert.deepEqual(setup.costs, { w: 5, b: 5 });
   const original = game(t, setup.fen);
   const type = id => PLAYABLE_PROFILE.registry.allocations.find(item => item.id === id).letter;
-  for (const square of ['b3', 'b4', 'g5', 'g6']) assert.equal(original.get(square).type, type('pawn.purple@6'));
+  for (const square of ['b3', 'b4', 'g5', 'g6']) assert.equal(original.get(square).type, type('pawn.orange@2'));
   for (const square of ['b2', 'g7']) assert.equal(original.get(square).type, type('knight.purple@2'));
   assert.equal(original.get('b1').type, 'n');
   assert.equal(original.get('g8').type, 'n');

@@ -88,8 +88,36 @@ function definitionProbes(definition, letter) {
       { name: 'repeatable quiet jump cannot capture forward', fen: position({ a1: 'K', h7: 'k', d4: type, d5: 'P', d6: 'p', c5: 'p', e5: 'p' }) },
     );
   }
+  // Add fixtures by immutable ID so archived registries keep their exact probes.
+  if (definition.id === 'pawn.orange@2') frames.push(
+    { name: 'lower-cost twin en passant', fen: position({ h1: 'K', h8: 'k', c5: type, d5: 'p' }, 'w', '-', 'd6') },
+    { name: 'repeatable quiet twin jump crosses a friendly blocker', fen: position({ a1: 'K', h7: 'k', d4: type, d5: 'P', c5: 'p', e5: 'p' }) },
+    { name: 'quiet twin jump cannot capture forward', fen: position({ a1: 'K', h7: 'k', d4: type, d5: 'P', d6: 'p' }) },
+  );
+  if (definition.id === 'knight.orange@2') frames.push({
+    name: 'camel captures across blockers',
+    fen: position({ a1: 'K', h7: 'k', d4: type, d5: 'P', e4: 'P', e7: 'p', g5: 'p', c1: 'p', a3: 'p' }),
+  });
+  if (definition.id === 'bishop.purple@2') frames.push({
+    name: 'sideways quiet slides and wide knight captures',
+    fen: position({ a1: 'K', h7: 'k', d4: type, c4: 'p', f4: 'p', b3: 'p', b5: 'p', f3: 'p', f5: 'p' }),
+  });
+  if (definition.id === 'rook.purple@3') frames.push({
+    name: 'quiet blink jumps cannot capture diagonally',
+    fen: position({ a1: 'K', h7: 'k', d4: type, c4: 'P', d3: 'P', d5: 'P', e4: 'P', b2: 'p', f6: 'p', g7: 'p', b5: 'p', g5: 'p' }),
+  });
+  if (definition.id === 'queen.purple@2') frames.push({
+    name: 'short queen range and blocked rays',
+    fen: position({ a1: 'K', h7: 'k', d4: type, e4: 'P', d5: 'P', b6: 'p', d7: 'p', g4: 'p' }),
+  });
+  if (definition.id === 'queen.purple@3') frames.push({
+    name: 'companion is capturable and may move through attacked squares',
+    fen: position({ a1: 'K', h8: 'k', d4: type, e8: 'r', b3: 'b' }),
+  });
   if (definition.roles.castlingRook) frames.push({ name: 'both castling sides', fen: position({ e8: 'k', a1: type, e1: 'K', h1: type }, 'w', 'KQ') });
   for (const legacy of legacyCapabilityProbes(definition.legacyType, 'levelup-v5')) {
+    // Repeatable Twin jumps do not create initial-double en passant rights.
+    if (definition.id === 'pawn.orange@2' && legacy.name === 'orange-pawn vulnerability to en passant') continue;
     frames.push({ name: legacy.name, fen: remap(legacy.fen, definition.legacyType, letter) });
   }
   return frames.flatMap(frame => [

@@ -4,12 +4,13 @@ const path = require('node:path');
 const { isDeepStrictEqual } = require('node:util');
 const { Chess } = require('chess.js');
 const { capabilityProbes } = require('./engine-capabilities');
-const { getPlayableProfile } = require('./playable-profile');
+const { getPlayableProfile, getPlayableProfiles, getPlayableArtifacts } = require('./playable-profile');
 
 const enginePath = () => process.env.FAIRY_STOCKFISH_PATH || path.resolve(__dirname, '../stockfish/fairy-stockfish-levelup_x86-64.exe');
 const playableProfile = getPlayableProfile();
-const variantPath = variant => path.resolve(__dirname, variant === playableProfile.variant ? '../variants/levelup-playable.ini' : `../variants/${variant}.ini`);
-const variants = ['chess', 'levelup-knight', 'levelup', 'levelup-v5', playableProfile.variant];
+const playableProfiles = new Map(getPlayableProfiles().map(profile => [profile.variant, profile]));
+const variantPath = variant => path.resolve(__dirname, '..', playableProfiles.has(variant) ? getPlayableArtifacts(variant).ini : `variants/${variant}.ini`);
+const variants = ['chess', 'levelup-knight', 'levelup', 'levelup-v5', ...playableProfiles.keys()];
 const profileProbes = new Map();
 const PROFILE_RELOAD = 'Experimental rules changed. Run npm.cmd run build, restart npm.cmd start, and reload the game.';
 const levels = {
@@ -23,12 +24,13 @@ function profileError(code) {
 }
 
 function validateProfileIdentity(variant, { profileHash, registryHash } = {}) {
-  if (typeof variant === 'string' && /^levelup-design-[a-f0-9]{20}$/.test(variant) && variant !== playableProfile.variant) throw profileError('PROFILE_MISMATCH');
-  if (variant === playableProfile.variant) {
-    if (profileHash !== playableProfile.hash || registryHash !== playableProfile.registryHash) throw profileError('PROFILE_MISMATCH');
+  const profile = playableProfiles.get(variant);
+  if (typeof variant === 'string' && /^levelup-design-[a-f0-9]{20}$/.test(variant) && !profile) throw profileError('PROFILE_MISMATCH');
+  if (profile) {
+    if (profileHash !== profile.hash || registryHash !== profile.registryHash) throw profileError('PROFILE_MISMATCH');
     try {
-      const artifact = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../src/playable-profile.json'), 'utf8'));
-      if (!isDeepStrictEqual(artifact, playableProfile) || fs.readFileSync(variantPath(variant), 'utf8') !== playableProfile.config) throw new Error();
+      const artifact = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', getPlayableArtifacts(variant).json), 'utf8'));
+      if (!isDeepStrictEqual(artifact, profile) || fs.readFileSync(variantPath(variant), 'utf8') !== profile.config) throw new Error();
     } catch { throw profileError('PROFILE_BUILD_REQUIRED'); }
   } else if (profileHash !== undefined || registryHash !== undefined) {
     throw new Error('Profile hashes require the matching experimental variant.');
@@ -41,23 +43,25 @@ async function createPosition(fen, variant = 'chess', metadata) {
   if (!variants.includes(variant)) throw new Error('Unsupported chess variant.');
   if (variant === 'chess') return new Chess(fen);
   const { initVariantRules, VariantGame, SUPPORTED_VARIANTS } = require('../dist/rules-node.cjs');
-  if (variant === playableProfile.variant && !SUPPORTED_VARIANTS.includes(variant)) throw profileError('PROFILE_BUILD_REQUIRED');
+  if (playableProfiles.has(variant) && !SUPPORTED_VARIANTS.includes(variant)) throw profileError('PROFILE_BUILD_REQUIRED');
   await initVariantRules(variant);
   return new VariantGame(fen, variant);
 }
 
 /** Expected legal sets come from the same compiled rules as the board. */
-async function experimentalCapabilityProbes(fen) {
+async function experimentalCapabilityProbes(fen, variant = playableProfile.variant) {
+  const profile = playableProfiles.get(variant);
+  if (!profile) throw new Error('Unsupported experimental profile.');
   const present = new Set(fen.split(' ')[0].toLowerCase());
-  const ids = playableProfile.registry.allocations.filter(({ letter }) => present.has(letter)).map(({ id }) => id).sort();
-  const key = `${playableProfile.hash}:${ids.join(',')}`;
+  const ids = profile.registry.allocations.filter(({ letter }) => present.has(letter)).map(({ id }) => id).sort();
+  const key = `${profile.hash}:${ids.join(',')}`;
   let pending = profileProbes.get(key);
   if (!pending) {
     pending = (async () => {
       const { initVariantRules, VariantGame } = require('../dist/rules-node.cjs');
-      await initVariantRules(playableProfile.variant);
-      return playableProfile.capabilityProbes.filter(probe => ids.some(id => probe.name.startsWith(`${id}:`)) || probe.name.startsWith('ordinary ')).map(probe => {
-        const board = new VariantGame(probe.fen, playableProfile.variant);
+      await initVariantRules(profile.variant);
+      return profile.capabilityProbes.filter(probe => ids.some(id => probe.name.startsWith(`${id}:`)) || probe.name.startsWith('ordinary ')).map(probe => {
+        const board = new VariantGame(probe.fen, profile.variant);
         try {
           return { ...probe, required: board.moves({ verbose: true }).map(move => move.from + move.to + (move.promotion || '')).sort(), forbidden: [], exact: true };
         } finally { board.dispose(); }
@@ -83,7 +87,7 @@ async function engineRequest(input = {}) {
   const position = fen ? await createPosition(fen, variant, { profileHash, registryHash }) : null;
   let probes;
   try {
-    probes = fen && variant === playableProfile.variant ? await experimentalCapabilityProbes(fen) : capabilityProbes(fen, variant);
+    probes = fen && playableProfiles.has(variant) ? await experimentalCapabilityProbes(fen, variant) : capabilityProbes(fen, variant);
     if (signal?.aborted) throw new Error('Engine search cancelled.');
   } catch (error) { position?.dispose?.(); throw error; }
   return new Promise((resolve, reject) => {

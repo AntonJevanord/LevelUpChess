@@ -12,7 +12,7 @@ function freeze(value) {
   return value;
 }
 
-function definition(family, color, level, movement, legacyType, legacySlot, revision = 1, placement = 'replace') {
+function definition(family, color, level, movement, legacyType, legacySlot, revision = 1, placement = 'replace', extraSquare) {
   return freeze({
     id: `${family}.${color}@${revision}`,
     family,
@@ -25,6 +25,7 @@ function definition(family, color, level, movement, legacyType, legacySlot, revi
     roles: { pawn: family === 'pawn', castlingRook: family === 'rook', enPassant: family === 'pawn' },
     ...(placement === 'extra' ? { extraSquare: { b1: 'b3', g1: 'g3' } } : {}),
     ...(placement === 'insert' ? { extraSquare: { b1: 'b2', g1: 'g2' } } : {}),
+    ...(extraSquare ? { extraSquare } : {}),
   });
 }
 
@@ -53,6 +54,13 @@ const definitions = [
   definition('pawn', 'purple', 3, 'fQ2mbQ2', 'd', 11, 5),
   definition('pawn', 'purple', 3, 'fmWfmDfceF', 'd', 11, 6, 'pair'),
   definition('knight', 'purple', 3, 'WD', 'g', 3, 2, 'insert'),
+  // Version 11 alternatives and repricing keep every previous ID immutable.
+  definition('pawn', 'orange', 2, 'fmWfmDfceF', 'c', 10, 2, 'pair'),
+  definition('knight', 'orange', 2, 'NC', 'f', 2, 2),
+  definition('bishop', 'purple', 3, 'BmsR2sN', 'j', 6, 2),
+  definition('rook', 'purple', 3, 'RmFmDmNmAmHmCmZmG', 'o', 12, 3),
+  definition('queen', 'purple', 3, 'Q2', 'u', 8, 2, 'split', { d1: 'd2' }),
+  definition('queen', 'purple', 3, 'K', 'u', 8, 3, 'insert', { d1: 'd2' }),
 ];
 
 const DESIGNS = Object.freeze(Object.fromEntries(definitions.map(design => [design.id, design])));

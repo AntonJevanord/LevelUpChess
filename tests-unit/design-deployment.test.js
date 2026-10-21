@@ -1,17 +1,16 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { getPlayableProfile } = require('../scripts/playable-profile');
 const { getDesign } = require('../src/design-catalog');
 const { createDesignRegistry } = require('../scripts/balance/design-registry');
 const { compileDesignProfile } = require('../scripts/balance/design-profile');
 const { designSetupFromChoices, loadDesignSetup, DEFAULT_DESIGN_CHOICES } = require('../src/design-setup');
-const { deployDesignArmies } = require('../src/design-deployment');
+const { deployDesignArmies, recoverDesignChoices } = require('../src/design-deployment');
 const { pieceMap } = require('../src/profile-fen');
 const { START_FEN } = require('../src/knight-setup');
 
-const profile = getPlayableProfile();
 const pairId = 'pawn.purple@6';
 const guardId = 'knight.purple@2';
+const profile = smallProfile([pairId, guardId]);
 const typeFor = (id, color = 'w', library = profile) => {
   const letter = library.registry.allocations.find(allocation => allocation.id === id).letter;
   return color === 'w' ? letter.toUpperCase() : letter;
@@ -19,8 +18,9 @@ const typeFor = (id, color = 'w', library = profile) => {
 const choiceFor = (square, id, library = profile) => ({ square, definition: getDesign(id), letter: typeFor(id, 'b', library) });
 const armyFor = upgrades => ({ choices: Object.entries(upgrades).map(([square, id]) => choiceFor(square, id)) });
 function smallProfile(ids) {
+  const squareFor = { pawn: 'a2', knight: 'b1', bishop: 'c1', rook: 'a1', queen: 'd1' };
   return compileDesignProfile(createDesignRegistry({ schemaVersion: 2, comparisons: ids.map(id => ({
-    armyA: { upgrades: { [getDesign(id).family === 'pawn' ? 'a2' : 'b1']: id } }, armyB: {},
+    armyA: { upgrades: { [squareFor[getDesign(id).family]]: id } }, armyB: {},
   })) }));
 }
 
@@ -146,4 +146,93 @@ test('browser and balance rules generate the same paired and inserted starting a
   const board = rules.createBoard(fen);
   try { assert.ok(board.moves().length > 0); }
   finally { board.dispose(); }
+});
+
+test('split queens replace the original and insert a second unit for one three-point purchase', () => {
+  const id = 'queen.purple@2';
+  const library = smallProfile([id]);
+  const choices = { ...DEFAULT_DESIGN_CHOICES, d1: id, d8: id };
+  const setup = designSetupFromChoices(choices, 3, library);
+  const pieces = pieceMap(setup.fen);
+  assert.deepEqual(setup.costs, { w: 3, b: 3 });
+  assert.equal(pieces.size, 34);
+  for (const square of ['d1', 'd2']) assert.equal(pieces.get(square), typeFor(id, 'w', library), square);
+  for (const square of ['d8', 'd7']) assert.equal(pieces.get(square), typeFor(id, 'b', library), square);
+  for (const [square, piece] of [['d3', 'P'], ['d6', 'p'], ['e1', 'K'], ['e8', 'k'], ['c2', 'P'], ['e7', 'p']]) {
+    assert.equal(pieces.get(square), piece, square);
+  }
+  assert.match(setup.fen, / w KQkq - 0 1$/);
+  assert.deepEqual(loadDesignSetup(setup.fen, library), choices);
+  assert.equal(designSetupFromChoices(loadDesignSetup(setup.fen, library), 3, library).fen, setup.fen);
+});
+
+test('queen and companion keeps the ordinary queen and grants a capturable nonroyal unit', () => {
+  const id = 'queen.purple@3';
+  const library = smallProfile([id]);
+  const choices = { ...DEFAULT_DESIGN_CHOICES, d1: id, d8: id };
+  const setup = designSetupFromChoices(choices, 3, library);
+  const pieces = pieceMap(setup.fen);
+  assert.deepEqual(setup.costs, { w: 3, b: 3 });
+  assert.equal(pieces.size, 34);
+  for (const [square, piece] of [['d1', 'Q'], ['d8', 'q'], ['d3', 'P'], ['d6', 'p']]) assert.equal(pieces.get(square), piece, square);
+  assert.equal(pieces.get('d2'), typeFor(id, 'w', library));
+  assert.equal(pieces.get('d7'), typeFor(id, 'b', library));
+  assert.deepEqual(library.roles.royalTypes, ['k']);
+  assert.deepEqual(loadDesignSetup(setup.fen, library), choices);
+  assert.equal(designSetupFromChoices(loadDesignSetup(setup.fen, library), 3, library).fen, setup.fen);
+});
+
+test('either queen package advances paired pawns within its own half and recovers all purchases', () => {
+  for (const id of ['queen.purple@2', 'queen.purple@3']) {
+    const library = smallProfile([id, pairId]);
+    const choices = { ...DEFAULT_DESIGN_CHOICES, d1: id, d2: pairId, d8: id, d7: pairId };
+    const setup = designSetupFromChoices(choices, 6, library);
+    const pieces = pieceMap(setup.fen);
+    assert.deepEqual(setup.costs, { w: 6, b: 6 });
+    assert.equal(pieces.size, 36);
+    for (const square of ['d3', 'd4']) assert.equal(pieces.get(square), typeFor(pairId, 'w', library), square);
+    for (const square of ['d6', 'd5']) assert.equal(pieces.get(square), typeFor(pairId, 'b', library), square);
+    assert.deepEqual(loadDesignSetup(setup.fen, library), choices);
+    assert.equal(designSetupFromChoices(loadDesignSetup(setup.fen, library), 6, library).fen, setup.fen);
+    const reversed = Object.fromEntries(Object.entries(choices).reverse());
+    assert.equal(designSetupFromChoices(reversed, 6, library).fen, setup.fen);
+  }
+});
+
+test('queen recovery requires both same-color split units or the unchanged base queen', () => {
+  for (const id of ['queen.purple@2', 'queen.purple@3']) {
+    const library = smallProfile([id]);
+    const setup = designSetupFromChoices({ ...DEFAULT_DESIGN_CHOICES, d1: id, d8: id }, 3, library);
+    for (const [square, replacement, purchase] of [
+      ['d2', undefined, 'd1'], ['d2', typeFor(id, 'b', library), 'd1'],
+      ['d1', 'Q', 'd1'], ['d7', typeFor(id, 'w', library), 'd8'], ['d8', 'K', 'd8'],
+    ]) {
+      if (id === 'queen.purple@3' && square === 'd1' && replacement === 'Q') continue;
+      const pieces = pieceMap(setup.fen);
+      if (replacement) pieces.set(square, replacement); else pieces.delete(square);
+      assert.equal(recoverDesignChoices(pieces, library)[purchase], '', `${id}: ${square}`);
+    }
+  }
+});
+
+test('queen insertion rejects blocked or overflowing files transactionally for either color', () => {
+  for (const id of ['queen.purple@2', 'queen.purple@3']) {
+    const library = smallProfile([id]);
+    const army = { choices: [choiceFor('d1', id, library)] };
+    for (const [color, edits] of [
+      ['w', [['d2', 'p']]], ['w', [['d3', 'R']]], ['w', [['d3', 'P'], ['d4', 'P']]],
+      ['b', [['d7', 'P']]], ['b', [['d6', 'r']]], ['b', [['d6', 'p'], ['d5', 'p']]],
+    ]) {
+      const pieces = pieceMap(START_FEN);
+      for (const [square, piece] of edits) pieces.set(square, piece);
+      const before = new Map(pieces);
+      assert.throws(() => deployDesignArmies(library, color === 'w' ? army : {}, color === 'b' ? army : {}, pieces), /pawns|space/);
+      assert.deepEqual(pieces, before);
+    }
+    const pieces = deployDesignArmies(library, { ...army, remove: ['d2'] });
+    assert.equal(pieces.get('d2'), typeFor(id, 'w', library));
+    assert.equal(pieces.has('d3'), false);
+    assert.equal(pieces.size, 32);
+    assert.equal(pieces.get('d7'), 'p');
+  }
 });

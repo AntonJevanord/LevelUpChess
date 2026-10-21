@@ -3,19 +3,21 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const { EventEmitter } = require('node:events');
 const childProcess = require('node:child_process');
-const { getPlayableProfile } = require('../scripts/playable-profile');
+const { getPlayableProfile, getPlayableProfiles, getPlayableArtifacts } = require('../scripts/playable-profile');
 const { DEFAULT_DESIGN_CHOICES, designSetupFromChoices } = require('../src/design-setup');
 const { engineRequest, createPosition, validateProfileIdentity, experimentalCapabilityProbes } = require('../scripts/engine');
 
 const profile = getPlayableProfile();
+const profiles = getPlayableProfiles();
 const identity = { variant: profile.variant, profileHash: profile.hash, registryHash: profile.registryHash };
-const letter = id => profile.registry.allocations.find(allocation => allocation.id === id).letter.toUpperCase();
+const identityFor = value => ({ variant: value.variant, profileHash: value.hash, registryHash: value.registryHash });
+const letter = (id, value = profile) => value.registry.allocations.find(allocation => allocation.id === id).letter.toUpperCase();
 const rookFen = `7k/8/8/5n2/3${letter('rook.purple@2')}4/8/8/7K w - - 0 1`;
 const pawnFen = `7k/8/8/8/8/4${letter('pawn.purple@5')}3/8/7K w - - 0 1`;
 const pairedArmyFen = () => designSetupFromChoices({
   ...DEFAULT_DESIGN_CHOICES,
-  b1: 'knight.purple@2', b2: 'pawn.purple@6',
-  g8: 'knight.purple@2', g7: 'pawn.purple@6',
+  b1: 'knight.purple@2', b2: 'pawn.orange@2',
+  g8: 'knight.purple@2', g7: 'pawn.orange@2',
 }, 6).fen;
 
 test('experimental engine requests require matching profile and registry identities before launch', async t => {
@@ -29,15 +31,26 @@ test('experimental engine requests require matching profile and registry identit
   await assert.rejects(engineRequest({ ...identity, fen: rookFen, config: '[injected:chess]' }), /Invalid engine request/);
   await assert.rejects(engineRequest({ ...identity, fen: rookFen, variant: 'levelup-design-00000000000000000000' }), /Experimental rules changed/);
   await assert.rejects(createPosition(rookFen, 'chess', identity), /matching experimental variant/);
+  for (const other of profiles.filter(value => value.variant !== profile.variant)) {
+    assert.doesNotThrow(() => validateProfileIdentity(other.variant, identityFor(other)));
+    await assert.rejects(engineRequest({ ...identityFor(other), profileHash: profile.hash, fen: rookFen }), /Experimental rules changed/);
+    await assert.rejects(engineRequest({ ...identityFor(other), registryHash: profile.registryHash, fen: rookFen }), /Experimental rules changed/);
+  }
 });
 
-test('generated native rules must match the trusted catalog before experimental search', t => {
+test('every generated native library must match its trusted catalog before experimental search', t => {
   const original = fs.readFileSync;
+  let target;
   t.mock.method(fs, 'readFileSync', function(file, ...args) {
-    if (String(file).replace(/\\/g, '/').endsWith('/variants/levelup-playable.ini')) return '[changed:chess]\n';
+    if (String(file).replace(/\\/g, '/').endsWith('/' + target)) return target.endsWith('.json') ? '{}' : '[changed:chess]\n';
     return original.call(this, file, ...args);
   });
-  assert.throws(() => validateProfileIdentity(profile.variant, identity), /Run npm.cmd run build/);
+  for (const value of profiles) {
+    for (const artifact of Object.values(getPlayableArtifacts(value.variant))) {
+      target = artifact;
+      assert.throws(() => validateProfileIdentity(value.variant, identityFor(value)), /Run npm.cmd run build/);
+    }
+  }
 });
 
 test('experimental capability selection follows active immutable IDs and requires exact moves', async () => {
@@ -51,9 +64,26 @@ test('experimental capability selection follows active immutable IDs and require
   assert.ok(pawnProbes.some(probe => probe.name.startsWith('pawn.purple@5:')));
   assert.ok(pawnProbes.every(probe => !probe.name.startsWith('rook.')));
   const pairProbes = await experimentalCapabilityProbes(pairedArmyFen());
-  assert.ok(pairProbes.some(probe => probe.name.startsWith('pawn.purple@6:')));
+  assert.ok(pairProbes.some(probe => probe.name.startsWith('pawn.orange@2:')));
   assert.ok(pairProbes.some(probe => probe.name.startsWith('knight.purple@2:')));
-  assert.ok(pairProbes.every(probe => /^(pawn\.purple@6:|knight\.purple@2:|ordinary )/.test(probe.name)));
+  assert.ok(pairProbes.every(probe => /^(pawn\.orange@2:|knight\.purple@2:|ordinary )/.test(probe.name)));
+  for (const other of profiles.filter(value => value.variant !== profile.variant)) {
+    const otherFen = `7k/8/8/5n2/3${letter('rook.purple@2', other)}4/8/8/7K w - - 0 1`;
+    const otherProbes = await experimentalCapabilityProbes(otherFen, other.variant);
+    assert.notEqual(otherProbes, probes, 'each library owns its cached expected moves');
+    assert.equal(await experimentalCapabilityProbes(otherFen, other.variant), otherProbes);
+    assert.ok(otherProbes.every(probe => probe.name.startsWith('rook.purple@2:') || probe.name.startsWith('ordinary ')));
+    const guard = profile.registry.allocations.find(allocation => allocation.id === 'queen.purple@3');
+    const reassigned = other.registry.allocations.find(allocation => allocation.letter === guard.letter);
+    assert.notEqual(reassigned.id, guard.id, 'the libraries deliberately reuse letters for different designs');
+    const sharedFen = `7k/8/8/8/8/4${guard.letter.toUpperCase()}3/8/7K w - - 0 1`;
+    const guardProbes = await experimentalCapabilityProbes(sharedFen, profile.variant);
+    const reassignedProbes = await experimentalCapabilityProbes(sharedFen, other.variant);
+    assert.notEqual(guardProbes, reassignedProbes, 'identical FEN text cannot share probes across profiles');
+    assert.ok(guardProbes.some(probe => probe.name.startsWith(`${guard.id}:`)));
+    assert.ok(reassignedProbes.some(probe => probe.name.startsWith(`${reassigned.id}:`)));
+  }
+  await assert.rejects(experimentalCapabilityProbes(rookFen, 'levelup-design-00000000000000000000'), /Unsupported experimental profile/);
 });
 
 async function fakeExperimentalEngine(t, { unexpectedMove } = {}) {
@@ -104,20 +134,38 @@ test('experimental preflight loads the pinned INI and validates the resulting mo
   assert.equal(child.killed, true);
 });
 
-test('the native engine can reply legally to revised pieces and paired pawn armies', {
+test('the native engine can reply legally in both libraries, including pairs and nonroyal queens', {
   skip: !process.env.FAIRY_STOCKFISH_PATH,
   timeout: 60000,
 }, async () => {
-  // Exercise every new pawn under the full library's actual letter/slot map,
-  // including V/W letters that older profiles used for pseudo-royal kings.
-  const pawns = ['pawn.purple@3', 'pawn.purple@4', 'pawn.purple@5', 'pawn.purple@6']
+  // Test the generated allocations, especially letters which another library
+  // gives a different family or older rules used for pseudo-royal kings.
+  const pieces = ['pawn.purple@3', 'pawn.purple@4', 'pawn.purple@5', 'pawn.orange@2',
+    'knight.orange@2', 'bishop.purple@2', 'rook.purple@3', 'queen.purple@2', 'queen.purple@3']
     .map(id => `7k/8/8/8/8/4${letter(id)}3/8/7K w - - 0 1`);
-  for (const fen of [rookFen, ...pawns, pairedArmyFen()]) {
-    const board = await createPosition(fen, profile.variant, identity);
+  const positions = [rookFen, ...pieces, pairedArmyFen()].map(fen => ({ fen, profile }));
+  for (const other of profiles.filter(value => value.variant !== profile.variant)) {
+    positions.push({ profile: other, fen: `7k/8/8/8/8/4${letter('pawn.purple@6', other)}3/8/7K w - - 0 1` });
+  }
+  for (const { fen, profile: value } of positions) {
+    const metadata = identityFor(value);
+    const board = await createPosition(fen, value.variant, metadata);
     try {
       const legal = board.moves({ verbose: true }).map(move => move.from + move.to + (move.promotion || ''));
-      const result = await engineRequest({ ...identity, fen, difficulty: 'easy' });
+      const result = await engineRequest({ ...metadata, fen, difficulty: 'easy' });
       assert.ok(legal.includes(result.move), result.move);
     } finally { board.dispose(); }
   }
+});
+
+test('custom king-moving queens are capturable and do not create extra royal pieces', async () => {
+  const guard = letter('queen.purple@3');
+  const white = await createPosition(`7k/8/8/4r3/4${guard}3/8/8/K7 b - - 0 1`, profile.variant, identity);
+  const black = await createPosition(`7k/8/8/8/4${guard.toLowerCase()}3/4R3/8/K7 w - - 0 1`, profile.variant, identity);
+  try {
+    assert.ok(white.move({ from: 'e5', to: 'e4' }), 'an enemy rook may capture the White guard');
+    assert.ok(black.move({ from: 'e3', to: 'e4' }), 'an enemy rook may capture the Black guard');
+    assert.equal(white.isGameOver(), false);
+    assert.equal(black.isGameOver(), false);
+  } finally { white.dispose(); black.dispose(); }
 });

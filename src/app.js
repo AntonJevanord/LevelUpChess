@@ -3,7 +3,7 @@ import { VariantGame, VARIANT, PIECE_VARIANT, CURRENT_VARIANT, isPieceVariant, S
 import { pieceInfo, KNIGHT_LEVELS, KNIGHT_SLOTS, PIECE_LEVELS, PIECE_SLOTS, DEFAULT_PIECE_LEVELS, MAX_PIECE_BUDGET } from './piece-catalog';
 import { setupFromLevels, loadInitialSetup } from './knight-setup';
 import { pieceSetupFromLevels, loadPieceSetup } from './piece-setup';
-import { EXPERIMENTAL_VARIANT, DESIGN_OPTIONS, pieceInfoForProfile } from './design-options';
+import { PLAYABLE_LIBRARIES, DESIGN_OPTIONS, getDesignOptions, getPlayableProfile, isExperimentalVariant, pieceInfoForProfile } from './design-options';
 import { designSetupFromChoices, loadDesignSetup } from './design-setup';
 import { ChessClock, CLOCK_CONTROLS, formatClock } from './clock';
 import { SAVE_KEY, MAX_PGN_SIZE, parsePgn, exportPgn, makeSave, parseSave } from './saved-games';
@@ -32,9 +32,14 @@ const experimentalFamily = document.querySelector('#experimental-family');
 const armyResetSettings = document.querySelector('#army-reset-settings');
 const armyResetStatus = document.querySelector('#army-reset-status');
 const experimentalOption = gameMode.querySelector('option[value=levelup-experimental]');
-experimentalOption.value = EXPERIMENTAL_VARIANT;
+experimentalOption.replaceWith(...PLAYABLE_LIBRARIES.map(library => {
+  const option = document.createElement('option');
+  option.value = library.variant;
+  option.textContent = `Experiments · ${library.name}`;
+  return option;
+}));
 const designOptions = new Map(DESIGN_OPTIONS.map(option => [option.id, option]));
-const isExperimental = variant => variant === EXPERIMENTAL_VARIANT;
+const isExperimental = isExperimentalVariant;
 const infoFor = type => game.profile ? pieceInfoForProfile(game.profile, type) : pieceInfo(type);
 const designFor = type => game.profile?.definitionsByLetter[type];
 function designCosts(choices) {
@@ -78,6 +83,27 @@ for (const family of Object.keys(PIECE_LEVELS)) {
     group.append(field);
   }
   document.querySelector('#experimental-choices').append(group);
+}
+let selectedLibrary;
+function refreshExperimentalOptions() {
+  if (!isExperimental(gameMode.value) || selectedLibrary === gameMode.value) return;
+  selectedLibrary = gameMode.value;
+  const options = getDesignOptions(selectedLibrary);
+  for (const slot of PIECE_SLOTS) {
+    const select = document.querySelector(`#experimental-upgrade-${slot.square}`);
+    const previous = select.value;
+    const standard = document.createElement('option');
+    standard.value = '';
+    standard.textContent = '0 · Standard';
+    const candidates = options.filter(option => option.family === slot.family).map(design => {
+      const option = document.createElement('option');
+      option.value = design.id;
+      option.textContent = `L${design.level} · ${design.name} · ${design.status === 'parked' ? 'parked reference' : design.status}`;
+      return option;
+    });
+    select.replaceChildren(standard, ...candidates);
+    select.value = candidates.some(option => option.value === previous) ? previous : '';
+  }
 }
 function updateExperimentalFamily() {
   for (const group of document.querySelectorAll('.experimental-choices')) group.hidden = group.dataset.family !== experimentalFamily.value;
@@ -147,6 +173,7 @@ function setupChoice() {
   return { levels, white, black, budget: Number((current ? pieceBudget : upgradeBudget).value) };
 }
 function updateSetup() {
+  refreshExperimentalOptions();
   document.querySelector('#upgrade-settings').hidden = gameMode.value !== VARIANT;
   document.querySelector('#piece-upgrade-settings').hidden = !isPieceVariant(gameMode.value);
   document.querySelector('#experimental-settings').hidden = !isExperimental(gameMode.value);
@@ -546,7 +573,7 @@ async function newGame() {
       status.textContent = 'Loading piece-upgrade rules…';
       await initVariantRules(selectedMode);
       const setup = isExperimental(selectedMode) ? designSetupFromChoices : isPieceVariant(selectedMode) ? pieceSetupFromLevels : setupFromLevels;
-      next = new VariantGame(setup(levels, budget).fen, selectedMode);
+      next = new VariantGame(setup(levels, budget, isExperimental(selectedMode) ? getPlayableProfile(selectedMode) : undefined).fen, selectedMode);
     } else next = new Chess();
     if (request !== replacementGeneration) { next.dispose?.(); return; }
     cancelEngine();
@@ -639,7 +666,8 @@ function applyGame(candidate) {
   gameMode.value = game.variant || 'chess';
   activeBudget = candidate.settings?.upgradeBudget || (isPieceVariant(game.variant) || isExperimental(game.variant) ? 6 : 2);
   if (isExperimental(game.variant)) {
-    const choices = loadDesignSetup(game.getHeaders().FEN);
+    refreshExperimentalOptions();
+    const choices = loadDesignSetup(game.getHeaders().FEN, game.profile);
     for (const slot of PIECE_SLOTS) document.querySelector(`#experimental-upgrade-${slot.square}`).value = choices[slot.square];
     if (!candidate.settings?.upgradeBudget) {
       // Study positions may exceed setup budgets. Keep them playable; the

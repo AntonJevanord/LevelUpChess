@@ -9,7 +9,7 @@ const { build } = require('esbuild');
 test('an explicit profile loads alone, reuses its module, and stays isolated when others load', { timeout: 30000 }, () => {
   const source = `
     const assert = require('node:assert/strict');
-    const { PLAYABLE_PROFILE } = require(${JSON.stringify(require.resolve('../src/design-options'))});
+    const { PLAYABLE_PROFILE, PLAYABLE_PROFILES, getProfileSnapshot } = require(${JSON.stringify(require.resolve('../src/design-options'))});
     const { initVariantRules, VariantGame, VARIANT, CURRENT_VARIANT, EXPERIMENTAL_VARIANT, SUPPORTED_VARIANTS } = require(process.argv[1]);
     (async () => {
       const first = initVariantRules(EXPERIMENTAL_VARIANT);
@@ -23,6 +23,19 @@ test('an explicit profile loads alone, reuses its module, and stays isolated whe
       const targets = game => game.moves({ square: 'd4', verbose: true }).map(move => move.to);
       assert.ok(targets(experimental).includes('d6'));
       assert.ok(!targets(experimental).includes('d7'));
+      const secondProfile = PLAYABLE_PROFILES.find(profile => profile.variant !== EXPERIMENTAL_VARIANT);
+      assert.ok(secondProfile, 'the original library stays available');
+      const secondModule = await initVariantRules(secondProfile.variant);
+      assert.notEqual(secondModule, experimentalModule);
+      const second = new VariantGame(undefined, secondProfile.variant);
+      assert.equal(second.profile.hash, secondProfile.hash);
+      assert.equal(second.profile.variant, secondProfile.variant);
+      const otherSnapshot = Buffer.from(JSON.stringify(getProfileSnapshot(EXPERIMENTAL_VARIANT))).toString('base64');
+      assert.throws(() => second.setHeader('LevelUpProfile', otherSnapshot), /does not match/);
+      assert.throws(() => second.loadPgn(second.pgn().replace(second.getHeaders().LevelUpProfile, otherSnapshot)), /does not match/);
+      second.reset();
+      assert.equal(JSON.parse(Buffer.from(second.getHeaders().LevelUpProfile, 'base64').toString()).variant, secondProfile.variant);
+      second.dispose();
       const currentModule = await initVariantRules(CURRENT_VARIANT);
       assert.notEqual(currentModule, experimentalModule);
       const current = new VariantGame('7k/8/8/8/3G4/8/8/K7 w - - 0 1', CURRENT_VARIANT);
@@ -52,7 +65,7 @@ test('failed module and all-profile promises are shared, evicted, and retried', 
   const directory = mkdtempSync(path.join(os.tmpdir(), 'levelup-profile-loading-'));
   t.after(() => rmSync(directory, { recursive: true, force: true }));
   const output = path.join(directory, 'rules.cjs');
-  const variants = ['levelup-knight', 'levelup', 'levelup-v5', require('../src/design-options').EXPERIMENTAL_VARIANT].join(' ');
+  const variants = ['levelup-knight', 'levelup', 'levelup-v5', ...require('../src/design-options').EXPERIMENTAL_VARIANTS].join(' ');
   const trace = { attempts: 0, configs: [], failNext: true };
   globalThis.__levelupProfileLoadingTest = trace;
   t.after(() => { delete globalThis.__levelupProfileLoadingTest; });
@@ -100,5 +113,5 @@ test('failed module and all-profile promises are shared, evicted, and retried', 
   assert.equal(initVariantRules(), allRetry);
   assert.equal(await allRetry, await initVariantRules('levelup-knight'));
   assert.equal(trace.attempts, attemptsBeforeRetry + 1, 'retry only the failed profile, keeping successful siblings');
-  assert.equal(trace.configs.length, 4);
+  assert.equal(trace.configs.length, 3 + require('../src/design-options').EXPERIMENTAL_VARIANTS.length);
 });

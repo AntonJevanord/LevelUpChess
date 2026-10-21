@@ -10,14 +10,14 @@ import currentVariantConfig from '../variants/levelup-v5.ini';
 import designOptions from './design-options.js';
 import profileFen from './profile-fen.js';
 
-const { PLAYABLE_PROFILE, pieceInfoForProfile, encodeProfileSnapshot, decodeProfileSnapshot } = designOptions;
+const { PLAYABLE_PROFILE, PLAYABLE_PROFILES, EXPERIMENTAL_VARIANTS, getPlayableProfile, isExperimentalVariant, getProfileSnapshot, pieceInfoForProfile, encodeProfileSnapshot, decodeProfileSnapshot } = designOptions;
 const { checkedBoard } = profileFen;
 
 export const VARIANT = 'levelup-knight';
 export const PIECE_VARIANT = 'levelup';
 export const CURRENT_VARIANT = 'levelup-v5';
 export const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
-export const SUPPORTED_VARIANTS = Object.freeze([VARIANT, PIECE_VARIANT, CURRENT_VARIANT, EXPERIMENTAL_VARIANT]);
+export const SUPPORTED_VARIANTS = Object.freeze([VARIANT, PIECE_VARIANT, CURRENT_VARIANT, ...EXPERIMENTAL_VARIANTS]);
 export const isPieceVariant = variant => variant === PIECE_VARIANT || variant === CURRENT_VARIANT;
 
 const RESULTS = new Set(['*', '1-0', '0-1', '1/2-1/2']);
@@ -25,7 +25,7 @@ const SQUARE = /^[a-h][1-8]$/;
 const ruleModules = new Map();
 const initializing = new Map();
 let initializingAll;
-const configs = { [VARIANT]: variantConfig, [PIECE_VARIANT]: pieceVariantConfig, [CURRENT_VARIANT]: currentVariantConfig, [EXPERIMENTAL_VARIANT]: PLAYABLE_PROFILE.config };
+const configs = { [VARIANT]: variantConfig, [PIECE_VARIANT]: pieceVariantConfig, [CURRENT_VARIANT]: currentVariantConfig, ...Object.fromEntries(PLAYABLE_PROFILES.map(profile => [profile.variant, profile.config])) };
 
 export function initVariantRules(variant) {
   // Preserve the original all-profile API for callers that explicitly need it.
@@ -227,20 +227,20 @@ export class VariantGame {
     if (!rules) throw new Error('Call initVariantRules() for this variant before creating an upgrade game.');
     const supplied = fen === undefined ? rules.startingFen(variant) : fen;
     const start = typeof supplied === 'string' ? supplied.trim().split(/\s+/).join(' ') : supplied;
-    const experimental = variant === EXPERIMENTAL_VARIANT;
+    const experimental = isExperimentalVariant(variant);
     if (!experimental && !validStartingFen(start, variant, rules)) throw new Error('The upgrade starting position is invalid.');
     if (!experimental && opponentInCheck(start, variant, rules)) throw new Error('The upgrade starting position already checks the inactive king.');
     this._variant = variant;
-    this._board = experimental ? checkedBoard(rules, variant, start, 0, 0, PLAYABLE_PROFILE.roles) : new rules.Board(variant, start);
+    this._board = experimental ? checkedBoard(rules, variant, start, 0, 0, getPlayableProfile(variant).roles) : new rules.Board(variant, start);
     this._startFen = this._board.fen();
     this._records = [];
     this._positions = [positionKey(this._startFen, this._board)];
     this._headers = { Variant: this.variant, SetUp: '1', FEN: this._startFen, Result: '*' };
-    if (experimental) this._headers.LevelUpProfile = encodeProfileSnapshot();
+    if (experimental) this._headers.LevelUpProfile = encodeProfileSnapshot(getProfileSnapshot(variant));
   }
 
   get variant() { return this._variant; }
-  get profile() { return this.variant === EXPERIMENTAL_VARIANT ? PLAYABLE_PROFILE : undefined; }
+  get profile() { return isExperimentalVariant(this.variant) ? getPlayableProfile(this.variant) : undefined; }
   pieceInfo(type) { return pieceInfoForProfile(this.profile, type); }
   fen() { return this._board.fen(); }
   turn() { return this._board.turn() ? 'w' : 'b'; }
@@ -311,7 +311,7 @@ export class VariantGame {
     this._records = [];
     this._positions = [positionKey(this._startFen, this._board)];
     this._headers = { Variant: this.variant, SetUp: '1', FEN: this._startFen, Result: '*' };
-    if (this.profile) this._headers.LevelUpProfile = encodeProfileSnapshot();
+    if (this.profile) this._headers.LevelUpProfile = encodeProfileSnapshot(getProfileSnapshot(this.variant));
   }
 
   isCheck() { return this._board.isCheck(); }
@@ -342,13 +342,13 @@ export class VariantGame {
   }
   isGameOver() { return this.profile ? this.isCheckmate() || this.isDraw() : this.isInsufficientMaterial() || this.isThreefoldRepetition() || this._board.isGameOver(true); }
 
-  getHeaders() { return { ...this._headers, ...(this.profile ? { LevelUpProfile: encodeProfileSnapshot() } : {}) }; }
+  getHeaders() { return { ...this._headers, ...(this.profile ? { LevelUpProfile: encodeProfileSnapshot(getProfileSnapshot(this.variant)) } : {}) }; }
   setHeader(key, value) {
     if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(key) || typeof value !== 'string' || /[\r\n\x00-\x1f]/.test(value)) throw new Error('The PGN header is invalid.');
     if (key === 'Result' && !RESULTS.has(value)) throw new Error('The PGN result is invalid.');
     if (key === 'LevelUpProfile') {
       if (!this.profile) throw new Error('A design profile requires its experimental variant.');
-      decodeProfileSnapshot(value);
+      if (decodeProfileSnapshot(value).variant !== this.variant) throw new Error('The design profile does not match the PGN variant.');
     }
     this._headers[key] = value;
     return this.getHeaders();
@@ -380,9 +380,9 @@ export class VariantGame {
     const { headers, body } = readHeaders(text);
     const variant = headers.Variant?.toLowerCase();
     if (!SUPPORTED_VARIANTS.includes(variant)) throw new Error(`This game requires a supported upgrade PGN variant: ${SUPPORTED_VARIANTS.join(', ')}.`);
-    if (variant === EXPERIMENTAL_VARIANT) {
+    if (isExperimentalVariant(variant)) {
       if (!headers.LevelUpProfile) throw new Error('The experimental PGN is missing its design profile.');
-      decodeProfileSnapshot(headers.LevelUpProfile);
+      if (decodeProfileSnapshot(headers.LevelUpProfile).variant !== variant) throw new Error('The design profile does not match the PGN variant.');
     } else if (headers.LevelUpProfile) throw new Error('A design profile requires its experimental variant.');
     if (headers.SetUp !== undefined && !['0', '1'].includes(headers.SetUp)) throw new Error('The PGN setup header is invalid.');
     if (headers.SetUp === '1' && !headers.FEN || headers.SetUp === '0' && headers.FEN) throw new Error('The PGN setup and starting position do not agree.');

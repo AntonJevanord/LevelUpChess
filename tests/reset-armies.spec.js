@@ -1,5 +1,6 @@
 const { test, expect } = require('@playwright/test');
-const { EXPERIMENTAL_VARIANT } = require('../src/design-options');
+const { PLAYABLE_PROFILES } = require('../src/design-options');
+const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILES[1].variant;
 
 const square = (page, name) => page.locator(`[data-square="${name}"]`);
 async function choose(page, family, name, id) {

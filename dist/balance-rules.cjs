@@ -372,7 +372,7 @@ var require_design_catalog = __commonJS({
       }
       return value;
     }
-    function definition(family, color, level, movement, legacyType, legacySlot, revision = 1, placement = "replace") {
+    function definition(family, color, level, movement, legacyType, legacySlot, revision = 1, placement = "replace", extraSquare) {
       return freeze({
         id: `${family}.${color}@${revision}`,
         family,
@@ -384,7 +384,8 @@ var require_design_catalog = __commonJS({
         placement,
         roles: { pawn: family === "pawn", castlingRook: family === "rook", enPassant: family === "pawn" },
         ...placement === "extra" ? { extraSquare: { b1: "b3", g1: "g3" } } : {},
-        ...placement === "insert" ? { extraSquare: { b1: "b2", g1: "g2" } } : {}
+        ...placement === "insert" ? { extraSquare: { b1: "b2", g1: "g2" } } : {},
+        ...extraSquare ? { extraSquare } : {}
       });
     }
     var definitions = [
@@ -411,7 +412,14 @@ var require_design_catalog = __commonJS({
       definition("pawn", "purple", 3, "ifmnDfmWfceFsR", "d", 11, 4),
       definition("pawn", "purple", 3, "fQ2mbQ2", "d", 11, 5),
       definition("pawn", "purple", 3, "fmWfmDfceF", "d", 11, 6, "pair"),
-      definition("knight", "purple", 3, "WD", "g", 3, 2, "insert")
+      definition("knight", "purple", 3, "WD", "g", 3, 2, "insert"),
+      // Version 11 alternatives and repricing keep every previous ID immutable.
+      definition("pawn", "orange", 2, "fmWfmDfceF", "c", 10, 2, "pair"),
+      definition("knight", "orange", 2, "NC", "f", 2, 2),
+      definition("bishop", "purple", 3, "BmsR2sN", "j", 6, 2),
+      definition("rook", "purple", 3, "RmFmDmNmAmHmCmZmG", "o", 12, 3),
+      definition("queen", "purple", 3, "Q2", "u", 8, 2, "split", { d1: "d2" }),
+      definition("queen", "purple", 3, "K", "u", 8, 3, "insert", { d1: "d2" })
     ];
     var DESIGNS = Object.freeze(Object.fromEntries(definitions.map((design) => [design.id, design])));
     var LEGACY_DESIGN_IDS = Object.freeze(Object.fromEntries(definitions.filter((design) => design.revision === 1).map((design) => [design.legacyType, design.id])));
@@ -475,7 +483,7 @@ var require_design_deployment = __commonJS({
         const extras = [];
         for (const { square, definition, letter } of ordered) {
           sourceFor(pieces, square, definition, color);
-          if (definition.placement === "extra" || definition.placement === "insert") {
+          if (["extra", "insert", "split"].includes(definition.placement)) {
             extras.push({ square, definition, letter });
             continue;
           }
@@ -490,8 +498,10 @@ var require_design_deployment = __commonJS({
         for (const { square, definition, letter } of extras) {
           const target = definition.extraSquare?.[square];
           if (!/^[a-h][234]$/.test(target || "") || target[0] !== square[0]) throw new Error(`The extra piece cannot be placed for ${relativeSquare(square, color)}.`);
-          if (definition.placement === "insert") insertPawnStack(pieces, target, letter, color, pawnTypes);
-          else {
+          if (definition.placement === "insert" || definition.placement === "split") {
+            insertPawnStack(pieces, target, letter, color, pawnTypes);
+            if (definition.placement === "split") pieces.set(relativeSquare(square, color), colored(letter, color));
+          } else {
             const destination = relativeSquare(target, color);
             if (pieces.has(destination)) throw new Error(`The extra-piece square ${destination} is occupied.`);
             pieces.set(destination, colored(letter, color));
@@ -507,10 +517,10 @@ var require_design_deployment = __commonJS({
       const pawnTypes = new Set(profile.roles.pawnTypes.filter((type) => !profile.roles.royalTypes.includes(type)));
       for (const slot of PIECE_SLOTS2.filter((slot2) => slot2.family !== "pawn")) {
         const square = relativeSquare(slot.square, slot.color);
-        if (pieces.get(slot.square) !== colored(STANDARD_TYPES[slot.family], slot.color)) continue;
         const inserted = definitions.find(({ definition, letter }) => {
           const target = definition.extraSquare?.[square];
-          return definition.family === slot.family && definition.placement === "insert" && /^[a-h]2$/.test(target || "") && target[0] === square[0] && pieces.get(relativeSquare(target, slot.color)) === colored(letter, slot.color);
+          const sourceType = definition.placement === "split" ? letter : STANDARD_TYPES[slot.family];
+          return definition.family === slot.family && ["insert", "split"].includes(definition.placement) && /^[a-h]2$/.test(target || "") && pieces.get(slot.square) === colored(sourceType, slot.color) && target[0] === square[0] && pieces.get(relativeSquare(target, slot.color)) === colored(letter, slot.color);
         });
         if (!inserted) continue;
         result[slot.square] = inserted.id;

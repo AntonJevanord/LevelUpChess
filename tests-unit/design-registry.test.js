@@ -6,7 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { createHash } = require('node:crypto');
 const { DESIGNS, STANDARD_TYPES, LEGACY_DESIGN_IDS, getDesign } = require('../src/design-catalog');
-const { PLAYABLE_DESIGN_IDS } = require('../src/playable-library');
+const { PLAYABLE_DESIGN_IDS, PLAYABLE_LIBRARIES } = require('../src/playable-library');
 const { createDesignRegistry, restoreDesignRegistry, allocateDesigns } = require('../scripts/balance/design-registry');
 
 const designIds = Object.keys(DESIGNS);
@@ -34,7 +34,7 @@ test('the catalog preserves all 15 legacy definitions and retains explicit place
   const legacy = [...config.matchAll(/^customPiece(\d+) = ([a-z]):([^\r\n]+)$/gm)];
   assert.equal(legacy.length, 15);
   assert.equal(Object.keys(LEGACY_DESIGN_IDS).length, 15);
-  assert.equal(designIds.length, 22);
+  assert.equal(designIds.length, 28);
   for (const [, slot, type, movement] of legacy) {
     const design = DESIGNS[LEGACY_DESIGN_IDS[type]];
     assert.equal(design.movement, movement);
@@ -103,9 +103,13 @@ test('a curated 20-design library fits while the complete catalog exceeds letter
   assert.ok(Object.isFrozen(PLAYABLE_DESIGN_IDS));
   assert.ok(!PLAYABLE_DESIGN_IDS.includes('pawn.purple@2'));
   assert.ok(!PLAYABLE_DESIGN_IDS.includes('knight.purple@1'));
-  for (const id of ['pawn.purple@3', 'pawn.purple@4', 'pawn.purple@5', 'pawn.purple@6', 'knight.purple@2']) assert.ok(PLAYABLE_DESIGN_IDS.includes(id));
-  assert.throws(() => allocateDesigns(designIds), /need 22 custom letters; only 20 are available/);
-  assert.throws(() => registry(designIds), /need 22 custom letters; only 20 are available/);
+  for (const id of ['pawn.purple@3', 'pawn.purple@4', 'pawn.purple@5', 'pawn.orange@2', 'knight.purple@2']) assert.ok(PLAYABLE_DESIGN_IDS.includes(id));
+  for (const library of PLAYABLE_LIBRARIES) {
+    assert.equal(allocateDesigns(library.designIds).length, 20);
+    assert.deepEqual(restoreDesignRegistry(clone(registry(library.designIds))), registry(library.designIds));
+  }
+  assert.throws(() => allocateDesigns(designIds), /need 28 custom letters; only 20 are available/);
+  assert.throws(() => registry(designIds), /need 28 custom letters; only 20 are available/);
 });
 
 test('standard promotion types remain reserved alongside additional helper letters', () => {

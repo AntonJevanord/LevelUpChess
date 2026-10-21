@@ -2,9 +2,9 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');
 const { createHash } = require('node:crypto');
-const { getPlayableProfile } = require('../scripts/playable-profile');
+const { getPlayableProfile, getPlayableProfiles, getPlayableArtifacts } = require('../scripts/playable-profile');
 const {
-  PLAYABLE_PROFILE, EXPERIMENTAL_VARIANT, DESIGN_OPTIONS, pieceInfoForProfile,
+  PLAYABLE_PROFILE, PLAYABLE_PROFILES, EXPERIMENTAL_VARIANT, DESIGN_OPTIONS, getDesignOptions, pieceInfoForProfile,
   getProfileSnapshot, validateProfileSnapshot, encodeProfileSnapshot, decodeProfileSnapshot,
 } = require('../src/design-options');
 const { designSetupFromChoices, loadDesignSetup, DEFAULT_DESIGN_CHOICES } = require('../src/design-setup');
@@ -41,7 +41,17 @@ test('the embedded profile and native INI reproduce the trusted current catalog'
   assert.deepEqual(PLAYABLE_PROFILE, compiled);
   assert.equal(readFileSync(require.resolve('../variants/levelup-playable.ini'), 'utf8'), compiled.config);
   assert.equal(compiled.registry.definitions.length, 20);
-  assert.equal(new Set(DESIGN_OPTIONS.map(option => option.id)).size, 20);
+  assert.equal(new Set(DESIGN_OPTIONS.map(option => option.id)).size, 26);
+  assert.equal(getDesignOptions().length, 20);
+  assert.deepEqual(PLAYABLE_PROFILES, getPlayableProfiles());
+  for (const profile of PLAYABLE_PROFILES) {
+    const files = getPlayableArtifacts(profile.variant);
+    assert.deepEqual(JSON.parse(readFileSync(require.resolve('../' + files.json), 'utf8')), profile);
+    assert.equal(readFileSync(require.resolve('../' + files.ini), 'utf8'), profile.config);
+    assert.equal(getDesignOptions(profile.variant).length, 20);
+    assert.equal(decodeProfileSnapshot(encodeProfileSnapshot(getProfileSnapshot(profile.variant))).hash, profile.hash);
+  }
+  assert.equal(PLAYABLE_PROFILES[1].hash, '3f4a34e0852be20501f6e9091332aa92f90a81ad1705f384627e499f5e3fd90a');
   assert.equal(compiled.hash, createHash('sha256').update(JSON.stringify({ config: compiled.config, registry: compiled.registry })).digest('hex'));
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'pawn.purple@2'), undefined);
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'knight.purple@1'), undefined);
@@ -52,7 +62,7 @@ test('the embedded profile and native INI reproduce the trusted current catalog'
 });
 
 test('full starting choices resolve IDs for both armies, budgets, and extra units', () => {
-  const choices = { ...DEFAULT_DESIGN_CHOICES, a1: 'rook.purple@2', b1: 'knight.purple@2', a7: 'pawn.purple@5', h8: 'rook.purple@1' };
+  const choices = { ...DEFAULT_DESIGN_CHOICES, a1: 'rook.purple@2', b1: 'knight.purple@2', a7: 'pawn.purple@5', h8: 'rook.purple@3' };
   const setup = designSetupFromChoices(choices, 6);
   assert.deepEqual(setup.costs, { w: 6, b: 6 });
   assert.deepEqual(setup.choices, choices);
@@ -140,7 +150,7 @@ test('multi-target en passant and queen landing markers reload under assigned ro
 });
 
 test('PGN snapshots preserve both revisions, reject tampering, and leave failed imports unchanged', t => {
-  const choices = { ...DEFAULT_DESIGN_CHOICES, a1: 'rook.purple@2', h1: 'rook.purple@1', a7: 'pawn.purple@5' };
+  const choices = { ...DEFAULT_DESIGN_CHOICES, a1: 'rook.purple@2', h1: 'rook.purple@3', a7: 'pawn.purple@5' };
   const original = game(t, designSetupFromChoices(choices, 6).fen);
   original.move('e4'); original.move('e5');
   const pgn = original.pgn();

@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 10 adds army reset controls, four pawn candidates, and own-file deployment. Version 09 preserves the first playable picker; version 08 preserves the first design-registry experiment. The reference Piece upgrades mode keeps its version-05 rules. Historical milestones are in [development history](docs/development-history.md).
+Version 11 adds selectable libraries, mobility alternatives, and queen pairs. Version 10 preserves the pawn workshop, version 09 the first playable picker, and version 08 the first design-registry experiment. The reference Piece upgrades mode keeps its version-05 rules. Historical milestones are in [development history](docs/development-history.md).
 
 Browser-save compatibility across releases is optional. Experiment definitions, identities, and results must remain reproducible.
 
@@ -60,6 +60,21 @@ Two to six ideas per family per tier means 36–108 upgraded designs. Keep that 
 - [x] Verify new moves, promotion, en passant, fifty-move counters, mirrored deployment, draft reset, engine play, timed undo, and save/PGN round trips: 324 unit/integration cases, 19 focused browser cases, and an offline/mobile smoke. Combined-run timeouts passed focused rechecks.
 - [ ] Consolidate Windows playtesting, including direct-file loading. Managed Chromium blocks `file://` in the cloud; offline checks supply the complete HTML from memory.
 - [ ] Record feedback by revision: promotion pressure, sideways control, retreat loops, Twin-pawn congestion, readability, enjoyment, and counterplay. Shortlist ideas before declaring another capped balance batch.
+
+## Version 11 — mobility and pairs
+
+- [x] Preserve version 10 and develop on `version_11`.
+- [x] Add two frozen 20-design libraries, **Mobility and pairs** and **First prototypes**, retaining immutable earlier definitions and the original library profile.
+- [x] Switch draft libraries while retaining shared choices, clearing unavailable choices, and preserving the current game until **New game**.
+- [x] Add the `NC` Camel knight, Sideways bishop, and quiet-jumping Blink rook with short movement descriptions.
+- [x] Try Twin pawns at level 2 under a new ID; keep the original level-3 purchase in First prototypes.
+- [x] Add Twin short queens and Queen and companion; insert the extra unit on its own second rank and advance only its own pawn stack within its half. Keep one royal king per side.
+- [x] Resolve display, rules, native-engine checks, saves, and PGNs through the selected trusted profile.
+- [x] Record [provisional costs and material priors](DESIGN.md#version-11-mobility-and-pairs); keep the Amazon reference unchanged.
+- [x] Verify movement, royal safety, castling, deployment, engine play, library switching, and save/PGN round trips: 341 unit/integration cases and 22 focused browser cases. One combined-run native timeout passed its focused recheck.
+- [x] Check the complete HTML offline and at mobile width, including both libraries and queen packages, Twin-pawn displacement, moves, saves, imports, and reset. No external requests, page errors, or horizontal overflow; managed Chromium still blocks direct `file://` navigation.
+- [ ] Playtest both queen packages, camel reach, sideways bishop development, Blink rook escapes, and lower-cost Twins on Windows.
+- [ ] Shortlist enjoyable designs and revise any unclear descriptions before declaring the next capped balance batch.
 
 ## Deferred work
 

@@ -2,7 +2,7 @@ import { Chess } from 'chess.js';
 import { VariantGame, CURRENT_VARIANT, PIECE_VARIANT, SUPPORTED_VARIANTS, initVariantRules } from './variant-game';
 import { ChessClock } from './clock';
 import { UPGRADE_BUDGETS, PIECE_BUDGETS } from './piece-catalog';
-import { EXPERIMENTAL_VARIANT, getProfileSnapshot, validateProfileSnapshot } from './design-options';
+import { isExperimentalVariant, getProfileSnapshot, validateProfileSnapshot } from './design-options';
 import { designSetupFromChoices, loadDesignSetup } from './design-setup';
 
 export const SAVE_KEY = 'levelupchess.saved-game.v1';
@@ -38,7 +38,7 @@ export function exportPgn(game) {
 }
 
 export function makeSave(game, settings, clock) {
-  const experimental = game.variant === EXPERIMENTAL_VARIANT;
+  const experimental = isExperimentalVariant(game.variant);
   const budget = settings.upgradeBudget ?? 6;
   if (experimental && !UPGRADE_BUDGETS.includes(budget)) throw new Error('Choose an experimental budget from 1 to 6.');
   return {
@@ -46,7 +46,7 @@ export function makeSave(game, settings, clock) {
     savedAt: new Date().toISOString(),
     pgn: exportPgn(game),
     settings: experimental ? { ...settings, upgradeBudget: budget } : settings,
-    ...(experimental ? { profile: getProfileSnapshot(), setup: startingDesignSetup(game, budget) } : {}),
+    ...(experimental ? { profile: getProfileSnapshot(game.variant), setup: startingDesignSetup(game, budget) } : {}),
     ...(clock ? { clock } : {}),
   };
 }
@@ -55,12 +55,12 @@ function startingDesignSetup(game, budget) {
   const fen = game.getHeaders().FEN.trim().split(/\s+/).join(' ');
   let setup;
   try {
-    const choices = loadDesignSetup(fen);
-    setup = designSetupFromChoices(choices, 6);
+    const choices = loadDesignSetup(fen, game.profile);
+    setup = designSetupFromChoices(choices, 6, game.profile);
   } catch { return null; }
   // Imported study positions need not describe a standard starting army.
   if (setup.fen !== fen) return null;
-  designSetupFromChoices(setup.choices, budget);
+  designSetupFromChoices(setup.choices, budget, game.profile);
   return { choices: setup.choices, budget };
 }
 
@@ -73,18 +73,19 @@ export async function parseSave(text) {
   if (!settings || !['local', 'engine'].includes(settings.opponent) || !['w', 'b'].includes(settings.humanSide) || !['easy', 'medium', 'hard'].includes(settings.difficulty) || typeof settings.flipped !== 'boolean') throw new Error('The saved game settings are damaged.');
   const game = await parsePgn(data.pgn);
   try {
-    const experimental = game.variant === EXPERIMENTAL_VARIANT;
+    const experimental = isExperimentalVariant(game.variant);
     if (experimental !== (data.version === 2)) throw new Error('The saved game rules do not match its format.');
     const budgets = game.variant === CURRENT_VARIANT ? PIECE_BUDGETS : game.variant === PIECE_VARIANT ? PIECE_BUDGETS.filter(budget => budget <= 39) : UPGRADE_BUDGETS;
     if (settings.upgradeBudget !== undefined && !budgets.includes(settings.upgradeBudget)) throw new Error('The saved game settings are damaged.');
     if (experimental) {
+      validateProfileSnapshot(data.profile, game.variant);
       if (!UPGRADE_BUDGETS.includes(settings.upgradeBudget)) throw new Error('The saved game budget is damaged.');
       const expected = startingDesignSetup(game, settings.upgradeBudget);
       if (expected === null) {
         if (data.setup !== null) throw new Error('The saved starting choices do not match the game.');
       } else {
         if (!data.setup || data.setup.budget !== expected.budget || Object.keys(data.setup).sort().join(',') !== 'budget,choices') throw new Error('The saved starting choices do not match the game.');
-        const setup = designSetupFromChoices(data.setup.choices, data.setup.budget);
+        const setup = designSetupFromChoices(data.setup.choices, data.setup.budget, game.profile);
         if (setup.fen !== game.getHeaders().FEN) throw new Error('The saved starting choices do not match the game.');
       }
     }

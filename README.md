@@ -8,26 +8,30 @@ Download `index.html` and open it in Chrome, Edge, or Firefox. It includes the b
 
 Select a piece and a highlighted destination. Arrow keys move focus; Enter or Space selects. Includes legal moves, checkmate, draw detection, castling, en passant, selectable promotion, history, undo, and board flip. Threefold repetition and the fifty-move rule end games automatically.
 
-## Version 10: reset armies and pawn experiments
+## Version 11: mobility and pairs
 
-Choose **Experimental designs** under **Rules**, choose a family and each starting piece's design, then press **New game**. Each side has its own budget of 1–6 points. Levels use green, cyan, and red accents, with level numbers and separate White/Black piece colors.
+Under **Rules**, choose **Experiments · Mobility and pairs**, select each starting piece's design, then press **New game**. Each side has a 1–6 point budget. Levels use green, cyan, and red accents, with level numbers and separate White/Black piece colors.
 
-Use **Clear White**, **Clear Black**, or **Clear both** to reset that mode's army choices across all families. These controls are available in every upgrade mode. Choose your next army, then press **New game** to reset the board.
+New alternatives:
 
-Four new pawn purchases each cost three points:
+| Purchase | Cost | Movement |
+| --- | --- | --- |
+| Twin pawns | 2 | Two pawns for one purchase. Each moves one square forward or jumps two, and captures diagonally forward. |
+| Camel knight | 2 | Knight moves plus camel jumps: three squares in one direction and one at right angles. |
+| Sideways bishop | 3 | Bishop moves, quiet horizontal slides up to two squares, and jumps two files sideways and one rank forward or backward. |
+| Blink rook | 3 | Rook moves and captures; also jumps quietly to any empty square within three squares horizontally and vertically. |
+| Twin short queens | 3 | Replace the queen with two queens, each limited to two clear squares in any queen direction. |
+| Queen and companion | 3 | Keep the normal queen and add a capturable companion with one-square king movement. Only the ordinary king is royal. |
 
-- **Courier pawn:** quiet slides any distance forward or sideways; captures one or two squares diagonally forward.
-- **Rank pawn:** sideways rook moves and captures, with ordinary forward pawn moves and captures.
-- **Returning pawn:** slides one or two squares straight or diagonally forward, including captures; backward moves are quiet-only. It has no sideways moves.
-- **Twin pawns:** replace one pawn with two. Each moves one square forward or jumps two, and captures diagonally forward. The pair costs three points in total.
+Extra queens start on their own second rank and push that file's own pawns forward within their half. The **Knight and guard** uses the same insertion rule. Purchase cost is counted once for a pair; the board summary counts surviving units. Pawn units promote to standard Q/R/B/N, and upgraded rooks can castle normally.
 
-The experimental **Knight and guard** keeps its starting knight and inserts its guard on the second rank, advancing that file's own pawns within its own half. Combining it with Twin pawns gives knight / guard / pawn / pawn on the first four ranks, mirrored for Black. All pawns promote to standard Q/R/B/N. The **Knight-capture rook** remains available alongside the original designs; kings remain ordinary.
+**Experiments · First prototypes** keeps the previous 20-design library, including the original three-point Twins. Each library fits the engine's 20 custom-type limit. Switching libraries keeps shared draft choices and clears unavailable choices; the current board changes only through **New game**. Use **Clear White**, **Clear Black**, or **Clear both** to reset draft armies across all families.
 
-Play offline or against the local engine. Save/load, PGN export/import, clocks, and undo carry the experimental rules and move history. Experimental files include the exact design snapshot and require the matching catalog build; arbitrary edited rules are rejected. Feedback on clarity, useful choices, and counterplay comes before another balance campaign.
+Both libraries support offline play, the local engine, clocks, undo, saves, and PGN. Saves and exports identify their exact library; imports validate the bundled snapshot and every move. New releases may require fresh games.
 
-Experimental games draw bare kings, stalemate, repetition, and the fifty-move rule. Other low-material endings stay playable, with checkmate taking priority.
+Experimental games draw bare kings, stalemate, repetition, and the fifty-move rule. Other low-material endings stay playable, with checkmate taking priority. Reversible quiet pawn moves count toward the fifty-move limit; see [exact pawn rules](variants/README.md#experimental-pawn-special-rules).
 
-Reversible quiet pawn moves count toward the fifty-move limit. See [experimental pawn rules](variants/README.md#experimental-pawn-special-rules) for the counter and en passant behavior. The [design notes](DESIGN.md#version-10-pawn-experiments) explain the rough material targets; these candidates have no balance-match results yet.
+The [design notes](DESIGN.md#version-11-mobility-and-pairs) record rough material targets. These prices are provisional; playtesting clarity, enjoyment, and counterplay comes before another capped balance batch.
 
 ## Reference piece upgrades
 
@@ -65,7 +69,7 @@ This six-game smoke intentionally stops after four plies per game and produces u
 
 The first revision used 160 games within its 200-game cap. The revised purple pawn is parked; the simpler purple rook is retained experimentally. Across screening and confirmation, that rook scored **85%** against three blue minor upgrades and **61.25%** against blue knight plus orange rook; ordinary control scored 50%. These are whole-army results, not established material values. See the [results and decisions](experiments/balance/results/revision-1-rook-confirmation-001.md).
 
-Original and revised designs remain separate definitions. Version 09 preserves the first playable picker; version 10 adds the pawn experiments above. See [TODO.md](TODO.md) for remaining playtests and design work.
+Original and revised designs remain separate definitions. Version 09 preserves the first playable picker, version 10 the pawn workshop, and version 11 adds selectable libraries. See [TODO.md](TODO.md) for remaining playtests and design work.
 
 ## Play Fairy Stockfish
 
@@ -127,7 +131,7 @@ npm test
 
 Edit `src/`, `styles.css`, or validated files in `variants/`, then build and reload. Commit generated `index.html` and `dist/app.js`; do not edit generated HTML. `npm start` serves the game locally.
 
-Experimental behavior lives in immutable revisions in `src/design-catalog.js`. The explicit selection in `src/playable-library.js` freezes 20 of its 22 designs for the current picker. The build uses the same compiler as balance experiments to generate `src/playable-profile.json` and `variants/levelup-playable.ini`; commit these outputs and do not edit them directly. Larger catalogs need separate capacity-bounded selections.
+Experimental behavior lives in immutable revisions in `src/design-catalog.js`. The explicit groups in `src/playable-library.js` select two 20-design libraries from 28 catalog entries. The build uses the balance compiler to generate `src/playable-profile.json`, `src/playable-reference-profile.json`, and their matching INIs in `variants/`; commit these outputs and do not edit them directly. Letters are fixed within each profile and may mean different designs in different libraries.
 
 `npm test` runs unit and browser tests using a temporary server. Set `FAIRY_STOCKFISH_PATH` to enable native integration checks, `CHROMIUM_PATH` to use an installed browser, or `TEST_FILE_URL=1` to test direct-file loading where browser policy permits.
 
@@ -146,7 +150,8 @@ Standard chess uses [chess.js](https://github.com/jhlywa/chess.js), with its BSD
 | `version_07` | Preserved baseline | Automated balance experiments and recorded first results |
 | `version_08` | Preserved checkpoint | Design registries and the first bounded balance revision |
 | `version_09` | Preserved checkpoint | Shared playable profiles and the first 17-design picker |
-| `version_10` | In development | Army reset controls, pawn candidates, and own-file deployment |
+| `version_10` | Preserved checkpoint | Army reset controls, pawn candidates, and own-file deployment |
+| `version_11` | In development | Selectable libraries, mobility alternatives, and queen pairs |
 
 Create each development branch from the previous tested milestone and tag finished releases. Tags preserve stable checkpoints while branches can evolve. See [TODO.md](TODO.md) for progress and later work.
 

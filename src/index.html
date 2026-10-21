@@ -8,7 +8,7 @@
   <script defer src="dist/app.js"></script>
 </head>
 <body>
-  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 10 / PAWN WORKSHOP</span></header>
+  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 11 / PIECE WORKSHOP</span></header>
   <main>
     <section class="intro"><span class="eyebrow">EVERY GREAT GAME STARTS HERE</span><h1>Your next move.</h1><p>Classic chess. Two players. One board.</p></section>
     <div class="game-layout">
@@ -23,13 +23,13 @@
           <div class="panel-heading"><h3 id="engine-title">Play your way</h3><span>FAIRY STOCKFISH</span></div>
           <label for="game-mode">Rules</label><select id="game-mode"><option value="chess">Standard chess</option><option value="levelup-experimental">Experimental designs</option><option value="levelup-v5">Piece upgrades</option><option value="levelup">Version 04 piece rules</option><option value="levelup-knight">Version 03 knight rules</option></select>
           <div id="experimental-settings" hidden>
-            <p class="engine-help">Try named alternatives at the same level and cost. These choices are for playtesting; their balance is provisional.</p>
+            <p class="engine-help">Choose a library, then try named alternatives. Shared selections carry between libraries; unavailable choices reset. Balance and prices are provisional.</p>
             <div class="experimental-legend" aria-label="Upgrade levels"><span class="green-text">L1 · 1 point</span><span class="cyan-text">L2 · 2 points</span><span class="red-text">L3 · 3 points</span></div>
             <label for="experimental-budget">Budget per side (1–6)</label><input id="experimental-budget" type="number" min="1" max="6" step="1" value="6">
             <p id="experimental-status" role="status" aria-live="polite"></p>
             <label for="experimental-family">Choose a piece family</label><select id="experimental-family"><option value="pawn">Pawns</option><option value="knight">Knights</option><option value="bishop">Bishops</option><option value="queen">Queens</option><option value="rook" selected>Rooks</option></select>
             <div id="experimental-choices"></div>
-            <p class="engine-help">Choices across all families apply to your next new game. Twin pawns cost three points once for both units. Added guards push your pawns forward on their file within your half. Kings remain ordinary and royal. Bare kings draw; other low-material endings stay playable.</p>
+            <p class="engine-help">Choices across all families apply to your next new game. Pair purchases cost their level once for both units. Added guards and queens push your pawns forward on their file within your half. Kings remain ordinary and royal. Bare kings draw; other low-material endings stay playable.</p>
           </div>
           <div id="piece-upgrade-settings" hidden>
             <label for="piece-upgrade-budget">Budget per side (1–45)</label><input id="piece-upgrade-budget" type="number" min="1" max="45" step="1" value="6">

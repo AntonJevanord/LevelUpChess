@@ -55,6 +55,27 @@ All four pawn candidates use standard Q/R/B/N promotion. Quiet Returning moves, 
 
 Playtest promotion pressure, rank control, retreat loops, readability, and Twin/guard congestion first. Retire uninteresting ideas before declaring another capped comparison against the fixed Amazon and selected equal-cost purchases. No balance campaign has been run for these four candidates.
 
+## Version 11 mobility and pairs
+
+The **Mobility and pairs** library adds six alternatives. Prices are provisional playtest choices. The broad material ranges below describe whole pieces or packages, not measured values, confidence intervals, or upgrade points. The target is ordinary material plus roughly one point per level, with the unchanged Amazon as the level-3 reference.
+
+| Purchase | Cost | Rough whole-piece/package value | Design question |
+| --- | --- | --- | --- |
+| Twin pawns, `pawn.orange@2` | 2 | 3–5 combined | Does the existing pair feel worthwhile at a lower price? Movement and deployment match the previous Twins; their level-3 ID stays unchanged. |
+| Camel knight, `knight.orange@2` | 2 | 5–7 | `NC` adds full (1,3) jumps to the knight. Level 2 may underprice its reach; test whether it belongs at level 3. |
+| Sideways bishop, `bishop.purple@2` | 3 | 5½–7½ | `BmsR2sN`: bishop movement, quiet horizontal slides up to two clear squares, and full wide knight jumps (two files, one rank). Contrasts with the unlimited vertical bishop. |
+| Blink rook, `rook.purple@3` | 3 | 7–10 | Rook captures plus quiet jumps to any empty square within three squares horizontally and vertically. Start without diagonal captures; test development, escapes, and rook-ending conversion first. |
+| Twin short queens, `queen.purple@2` | 3 | 10–13 combined | `Q2` replaces one queen with two weaker units. Splitting material may improve coverage but exposes two targets and limits long-range conversion. |
+| Queen and companion, `queen.purple@3` | 3 | 11½–13 combined | Keep the ordinary queen and grant a capturable `K` companion. Test coordination without giving the royal king additional escapes. |
+
+These ranges are judgments for choosing prototypes. The leaper formula gives about 707 centipawns for 16 unrestricted destinations, but board edges reduce camel mobility substantially. It cannot reliably price quiet-only relocation, sliders, paired units, or their starting deployment. The Camel knight's level-2 price may be too low; it does not establish that camel moves add exactly two material points to a knight.
+
+Blink uses supported quiet leapers (`RmFmDmNmAmHmCmZmG`), crossing blockers within its three-square radius. Ordinary clear rook lines still extend farther. Its quiet jumps add no attacks, so they do not forbid an opposing king's movement or castling through those squares. Extra diagonal captures are held back until playtesting shows a need.
+
+Both queen purchases insert an extra unit on d2 for White or d7 for Black, advancing their own pawn stack within their half. Twin short queens also replace the original queen on d1/d8. Queen and companion keeps that original queen ordinary; the companion may move into attack and be captured. Only the ordinary king is royal. This deliberately tests whether a stronger purchase needs every individual unit to be stronger than its predecessor.
+
+Playtest readability, useful moves, frustrating escapes, unit coordination, and counterplay before precise tuning. Record feedback against these revision IDs. No balance campaign is automatically queued.
+
 ## Kings: preserve a clear mating objective
 
 Keep exactly one royal per side, with check and checkmate. The selected prototype retains ordinary quiet king moves and adds capture-only two-square jumps:
@@ -99,7 +120,7 @@ Pawn alternatives must preserve explicit promotion and en passant rules. Rook al
 
 ## Playtesting and implementation order
 
-Version 10 uses a frozen 20-design playable library selected from 22 immutable catalog entries. The parked pawn revision and earlier guard placement remain available in version 09 and historical balance profiles. The browser and native bridge share the experiment compiler; games do not reassign letters during play. Save/PGN snapshots require the matching catalog build. Larger selectable libraries and importing retired definitions independently remain later work.
+Version 11 uses two frozen 20-design libraries selected from 28 immutable catalog entries. **Mobility and pairs** offers the new alternatives alongside shared references; **First prototypes** preserves the version-10 selection and exact profile. The parked pawn and earlier guard placement remain available in historical balance profiles. The browser and native bridge share the experiment compiler. Letters may differ between libraries but remain fixed throughout a game, and saves/PGNs select their matching bundled profile. Automatic grouping and independently importing retired definitions remain later work.
 
 Do not wait for tightly balanced purple pieces before human playtesting. Gather feedback on readability, useful decisions, enjoyment, frustrating situations, and available counterplay. Discard poor ideas before precise tuning. Then screen surviving designs against the fixed reference and selected equal-cost purchases, with a declared game cap and keep/revise/park decision. New releases may require fresh browser games; backward save compatibility is not required.
 

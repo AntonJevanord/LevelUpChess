@@ -36,7 +36,7 @@ function insertPawnStack(pieces, target, letter, color, pawnTypes) {
 }
 
 /** Deploy both armies transactionally. Squares in each descriptor are relative
- * White-side starting squares; only inserted guards may advance pawn stacks. */
+ * White-side starting squares; inserted pieces may advance pawn stacks. */
 function deployDesignArmies(profile, white = {}, black = {}, initialPieces = pieceMap(START_FEN)) {
   if (!(initialPieces instanceof Map)) throw new Error('Deployment needs a starting piece map.');
   const pieces = new Map(initialPieces);
@@ -51,12 +51,12 @@ function deployDesignArmies(profile, white = {}, black = {}, initialPieces = pie
       if (!relativeSlots.has(square) || choices.some(choice => choice.square === square) || (piece && !own(piece, color))) throw new Error(`The starting piece on ${target} cannot be removed.`);
       pieces.delete(target);
     }
-    // Pawns are settled first, so adding a guard never overwrites a pawn choice.
+    // Pawns are settled first, so an insertion never overwrites a pawn choice.
     const ordered = [...choices].sort((a, b) => Number(a.definition.family !== 'pawn') - Number(b.definition.family !== 'pawn') || a.square.localeCompare(b.square));
     const extras = [];
     for (const { square, definition, letter } of ordered) {
       sourceFor(pieces, square, definition, color);
-      if (definition.placement === 'extra' || definition.placement === 'insert') {
+      if (['extra', 'insert', 'split'].includes(definition.placement)) {
         extras.push({ square, definition, letter });
         continue;
       }
@@ -71,7 +71,10 @@ function deployDesignArmies(profile, white = {}, black = {}, initialPieces = pie
     for (const { square, definition, letter } of extras) {
       const target = definition.extraSquare?.[square];
       if (!/^[a-h][234]$/.test(target || '') || target[0] !== square[0]) throw new Error(`The extra piece cannot be placed for ${relativeSquare(square, color)}.`);
-      if (definition.placement === 'insert') insertPawnStack(pieces, target, letter, color, pawnTypes);
+      if (definition.placement === 'insert' || definition.placement === 'split') {
+        insertPawnStack(pieces, target, letter, color, pawnTypes);
+        if (definition.placement === 'split') pieces.set(relativeSquare(square, color), colored(letter, color));
+      }
       else {
         const destination = relativeSquare(target, color);
         if (pieces.has(destination)) throw new Error(`The extra-piece square ${destination} is occupied.`);
@@ -89,13 +92,15 @@ function recoverDesignChoices(initialPieces, profile) {
   const result = Object.fromEntries(PIECE_SLOTS.map(slot => [slot.square, '']));
   const definitions = profile.registry.allocations.map(allocation => ({ ...allocation, definition: profile.definitionsByLetter[allocation.letter] }));
   const pawnTypes = new Set(profile.roles.pawnTypes.filter(type => !profile.roles.royalTypes.includes(type)));
-  // Undo guard insertion before inspecting the pawns' canonical second rank.
+  // Undo insertion before inspecting the pawns' canonical second rank. A split
+  // purchase must retain both of its units, while an insert keeps its base piece.
   for (const slot of PIECE_SLOTS.filter(slot => slot.family !== 'pawn')) {
     const square = relativeSquare(slot.square, slot.color);
-    if (pieces.get(slot.square) !== colored(STANDARD_TYPES[slot.family], slot.color)) continue;
     const inserted = definitions.find(({ definition, letter }) => {
       const target = definition.extraSquare?.[square];
-      return definition.family === slot.family && definition.placement === 'insert' && /^[a-h]2$/.test(target || '')
+      const sourceType = definition.placement === 'split' ? letter : STANDARD_TYPES[slot.family];
+      return definition.family === slot.family && ['insert', 'split'].includes(definition.placement) && /^[a-h]2$/.test(target || '')
+        && pieces.get(slot.square) === colored(sourceType, slot.color)
         && target[0] === square[0] && pieces.get(relativeSquare(target, slot.color)) === colored(letter, slot.color);
     });
     if (!inserted) continue;
