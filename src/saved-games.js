@@ -2,6 +2,8 @@ import { Chess } from 'chess.js';
 import { VariantGame, CURRENT_VARIANT, PIECE_VARIANT, SUPPORTED_VARIANTS, initVariantRules } from './variant-game';
 import { ChessClock } from './clock';
 import { UPGRADE_BUDGETS, PIECE_BUDGETS } from './piece-catalog';
+import { EXPERIMENTAL_VARIANT, getProfileSnapshot, validateProfileSnapshot } from './design-options';
+import { designSetupFromChoices, loadDesignSetup } from './design-setup';
 
 export const SAVE_KEY = 'levelupchess.saved-game.v1';
 export const MAX_PGN_SIZE = 256 * 1024;
@@ -10,7 +12,7 @@ export async function parsePgn(text) {
   if (typeof text !== 'string' || !text.trim() || text.length > MAX_PGN_SIZE) throw new Error('Enter a PGN game up to 256 KB.');
   const headerVariant = text.match(/\[Variant\s+"([^"\r\n]+)"\s*\]/)?.[1].toLowerCase();
   if (SUPPORTED_VARIANTS.includes(headerVariant)) {
-    await initVariantRules();
+    await initVariantRules(headerVariant);
     const candidate = new VariantGame(undefined, headerVariant);
     try { candidate.loadPgn(text); return candidate; }
     catch (error) { candidate.dispose(); throw new Error(`This upgrade PGN could not be read. ${error.message}`); }
@@ -36,19 +38,56 @@ export function exportPgn(game) {
 }
 
 export function makeSave(game, settings, clock) {
-  return { version: 1, savedAt: new Date().toISOString(), pgn: exportPgn(game), settings, ...(clock ? { clock } : {}) };
+  const experimental = game.variant === EXPERIMENTAL_VARIANT;
+  const budget = settings.upgradeBudget ?? 6;
+  if (experimental && !UPGRADE_BUDGETS.includes(budget)) throw new Error('Choose an experimental budget from 1 to 6.');
+  return {
+    version: experimental ? 2 : 1,
+    savedAt: new Date().toISOString(),
+    pgn: exportPgn(game),
+    settings: experimental ? { ...settings, upgradeBudget: budget } : settings,
+    ...(experimental ? { profile: getProfileSnapshot(), setup: startingDesignSetup(game, budget) } : {}),
+    ...(clock ? { clock } : {}),
+  };
+}
+
+function startingDesignSetup(game, budget) {
+  const fen = game.getHeaders().FEN.trim().split(/\s+/).join(' ');
+  let setup;
+  try {
+    const choices = loadDesignSetup(fen);
+    setup = designSetupFromChoices(choices, 6);
+  } catch { return null; }
+  // Imported study positions need not describe a standard starting army.
+  if (setup.fen !== fen) return null;
+  designSetupFromChoices(setup.choices, budget);
+  return { choices: setup.choices, budget };
 }
 
 export async function parseSave(text) {
   let data;
   try { data = JSON.parse(text); } catch { throw new Error('The saved game is damaged. Import a PGN backup instead.'); }
-  if (!data || data.version !== 1 || typeof data.savedAt !== 'string' || Number.isNaN(Date.parse(data.savedAt))) throw new Error('The saved game format is not supported.');
+  if (!data || ![1, 2].includes(data.version) || typeof data.savedAt !== 'string' || Number.isNaN(Date.parse(data.savedAt))) throw new Error('The saved game format is not supported.');
+  if (data.version === 2) validateProfileSnapshot(data.profile);
   const settings = data.settings;
   if (!settings || !['local', 'engine'].includes(settings.opponent) || !['w', 'b'].includes(settings.humanSide) || !['easy', 'medium', 'hard'].includes(settings.difficulty) || typeof settings.flipped !== 'boolean') throw new Error('The saved game settings are damaged.');
   const game = await parsePgn(data.pgn);
   try {
+    const experimental = game.variant === EXPERIMENTAL_VARIANT;
+    if (experimental !== (data.version === 2)) throw new Error('The saved game rules do not match its format.');
     const budgets = game.variant === CURRENT_VARIANT ? PIECE_BUDGETS : game.variant === PIECE_VARIANT ? PIECE_BUDGETS.filter(budget => budget <= 39) : UPGRADE_BUDGETS;
     if (settings.upgradeBudget !== undefined && !budgets.includes(settings.upgradeBudget)) throw new Error('The saved game settings are damaged.');
+    if (experimental) {
+      if (!UPGRADE_BUDGETS.includes(settings.upgradeBudget)) throw new Error('The saved game budget is damaged.');
+      const expected = startingDesignSetup(game, settings.upgradeBudget);
+      if (expected === null) {
+        if (data.setup !== null) throw new Error('The saved starting choices do not match the game.');
+      } else {
+        if (!data.setup || data.setup.budget !== expected.budget || Object.keys(data.setup).sort().join(',') !== 'budget,choices') throw new Error('The saved starting choices do not match the game.');
+        const setup = designSetupFromChoices(data.setup.choices, data.setup.budget);
+        if (setup.fen !== game.getHeaders().FEN) throw new Error('The saved starting choices do not match the game.');
+      }
+    }
     let clock;
     if (data.clock !== undefined) {
       const candidate = new ChessClock();

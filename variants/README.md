@@ -1,6 +1,16 @@
 # Upgrade rules
 
-Browser and native Fairy Stockfish load the same configuration. Current games use `levelup-v5.ini` (`levelup-v5`). Earlier games retain `levelup.ini` (`levelup`, version 04) or `levelup-knight.ini` (`levelup-knight`, version 03). Saves and PGNs identify the rules, so opening an older game preserves its movement.
+Browser and native Fairy Stockfish load the same configuration. Reference Piece upgrades uses `levelup-v5.ini` (`levelup-v5`); Experimental designs uses the generated profile described below. Earlier modes retain `levelup.ini` (`levelup`, version 04) or `levelup-knight.ini` (`levelup-knight`, version 03). Saves and PGNs identify their rules.
+
+## Experimental designs — version 09
+
+The picker uses one frozen library of 17 immutable design revisions from [the catalog](../src/design-catalog.js). The build compiles [levelup-playable.ini](levelup-playable.ini) and [the matching profile](../src/playable-profile.json) through the same registry/compiler as balance experiments. These are generated files. Display names, descriptions, and tier colors live separately in [design options](../src/design-options.js).
+
+All original designs below remain selectable. `rook.purple@2` adds only capture-only knight jumps to an ordinary rook (`RcN`); `pawn.purple@2` limits quiet orthogonal slides to two clear squares while keeping full bishop captures (`mR2ceB`). Both cost three points. The pawn is labeled parked reference; the rook is experimental. Each side's new-game budget is 1–6.
+
+The active mapping determines pawn roles, promotions/en passant, extra-unit placement, and castling rooks. It also determines board glyphs and labels; a temporary letter alone never identifies a family. Kings remain ordinary. Experimental games draw bare kings, repetition, stalemate, and the fifty-move rule; other material endings continue conservatively, with checkmate taking priority.
+
+Experimental PGNs include the hashed variant, starting FEN, and a `LevelUpProfile` snapshot containing definitions, allocation, and exact INI. Browser saves also store starting choices where the position describes a standard starting army. Imports require the matching bundled profile and validate every move; arbitrary edited definitions are rejected. Imported study positions are independent of new-game budgets.
 
 ## Version 05 movement
 
@@ -62,4 +72,4 @@ Upgrade PGNs contain `[Variant "levelup-v5"]`, `[Variant "levelup"]`, or `[Varia
 
 Current configuration uses `castlingRookPiece = rlmo`, accepted as a set by modern builds. Older engines may accept the variant name while silently dropping configuration abilities. The server checks relevant legal moves before searching, including castling, promotions, en passant, conditional jumps, and screen captures. An incompatible engine produces an update error; offline local play remains available. See [engine guidance](../stockfish/README.md).
 
-King upgrades remain future work. Modern builds can define Betza movement for the actual royal `king`; assigning `castlingKingPiece` to a custom piece alone does not make it royal. The king definition currently applies to both colors, so independent upgrades need a separate design. See [DESIGN.md](../DESIGN.md) for royal and guard options, engine constraints, and balance proposals.
+King upgrades are available in the separate prototype and balance harness; integration with the main board remains future work. Modern builds can define Betza movement for the actual royal `king`; assigning `castlingKingPiece` to a custom piece alone does not make it royal. See [DESIGN.md](../DESIGN.md) for current royal constraints and integration limits.

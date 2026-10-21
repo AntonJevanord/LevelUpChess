@@ -2,7 +2,7 @@
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
-const { engineRequest, createPosition, levels, variants } = require('./engine');
+const { engineRequest, createPosition, levels } = require('./engine');
 const root = path.resolve(__dirname, '..');
 const port = 4173;
 const origin = `http://127.0.0.1:${port}`;
@@ -35,14 +35,21 @@ const server = http.createServer(async (req, res) => {
           if (body.length > 4096) throw new Error('Request too large.');
         }
         const data = JSON.parse(body);
+        if (!data || typeof data !== 'object' || Array.isArray(data)
+          || Object.keys(data).some(key => !['fen', 'difficulty', 'variant', 'profileHash', 'registryHash'].includes(key))) throw new Error();
         const variant = data.variant === undefined ? 'chess' : data.variant;
-        if (typeof data.fen !== 'string' || /[\r\n]/.test(data.fen) || !Object.hasOwn(levels, data.difficulty) || !variants.includes(variant)) throw new Error();
-        const position = await createPosition(data.fen, variant);
+        if (typeof data.fen !== 'string' || /[\r\n]/.test(data.fen) || !Object.hasOwn(levels, data.difficulty)) throw new Error();
+        const metadata = { profileHash: data.profileHash, registryHash: data.registryHash };
+        const position = await createPosition(data.fen, variant, metadata);
         try {
           if (position.isGameOver()) throw new Error();
-          options = { fen: position.fen(), difficulty: data.difficulty, variant };
+          options = { fen: position.fen(), difficulty: data.difficulty, variant, ...metadata };
         } finally { position.dispose?.(); }
-      } catch { json(res, 400, { error: 'Expected a playable standard or supported upgrade FEN and easy, medium, or hard difficulty.' }); return; }
+      } catch (error) {
+        const message = ['PROFILE_MISMATCH', 'PROFILE_BUILD_REQUIRED'].includes(error.code)
+          ? error.message : 'Expected a playable standard or supported upgrade FEN and easy, medium, or hard difficulty.';
+        json(res, 400, { error: message }); return;
+      }
     }
     if (res.destroyed) return;
     // Variant validation initializes WASM asynchronously; another request may finish first.

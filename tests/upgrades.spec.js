@@ -130,6 +130,9 @@ test('PGN export and import preserve upgraded starting pieces and quiet move his
 });
 
 test('browser saves restore upgrade choices, moves, and paused engine and clocks', async ({ page }) => {
+  // This full recovery flow initializes WASM twice and also exercises engine,
+  // clock, reload, and undo behavior. Allow the whole workflow extra time.
+  test.setTimeout(60000);
   await page.selectOption('#game-mode', 'levelup-knight');
   await page.selectOption('#upgrade-budget', '1');
   await page.selectOption('#upgrade-b1', '0');

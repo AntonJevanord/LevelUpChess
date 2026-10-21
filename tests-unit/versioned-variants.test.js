@@ -1,7 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const {
-  initVariantRules, VariantGame, VARIANT, PIECE_VARIANT, SUPPORTED_VARIANTS,
+  initVariantRules, VariantGame, VARIANT, PIECE_VARIANT, SUPPORTED_VARIANTS, EXPERIMENTAL_VARIANT,
 } = require('../dist/rules-node.cjs');
 
 test.before(async () => { await initVariantRules(); });
@@ -15,8 +15,8 @@ function game(t, fen, variant = PIECE_VARIANT) {
 const purpleFen = '7k/8/8/8/3G4/8/8/K7 w - - 0 1';
 const destinations = (instance, square) => instance.moves({ square, verbose: true }).map(move => move.to).sort();
 
-test('both rule versions initialize while the constructor keeps its legacy default', t => {
-  assert.deepEqual(SUPPORTED_VARIANTS, ['levelup-knight', 'levelup', 'levelup-v5']);
+test('all rule versions initialize while the constructor keeps its legacy default', t => {
+  assert.deepEqual(SUPPORTED_VARIANTS, ['levelup-knight', 'levelup', 'levelup-v5', EXPERIMENTAL_VARIANT]);
   assert.equal(Object.isFrozen(SUPPORTED_VARIANTS), true);
   const legacy = new VariantGame();
   t.after(() => legacy.dispose());

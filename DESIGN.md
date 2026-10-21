@@ -30,7 +30,7 @@ The [bounded revision plan](experiments/balance/revision-plan.md) spent 160 of a
 
 - `pawn.purple@2`, limiting quiet orthogonal slides to two clear squares, is parked after screening. It retained a large advantage against the tested equal-cost armies.
 - `rook.purple@2`, ordinary rook movement plus capture-only knight jumps, is retained experimentally. Combined scores are 85% against three blue minor upgrades and 61.25% against blue knight plus orange rook. It is simpler, but these results do not establish balance.
-- Other designs remain unchanged. The main browser board still uses version 05 rules; experimental retention does not silently replace its pieces.
+- Other designs remain unchanged. The reference Piece upgrades mode keeps version 05 rules; version 09's Experimental designs mode offers the candidate revisions separately.
 
 The batch is closed. Further tests require a specific design question, chosen revisions, and a declared game cap.
 
@@ -78,13 +78,9 @@ Pawn alternatives must preserve explicit promotion and en passant rules. Rook al
 
 ## Playtesting and implementation order
 
-Do not wait for tightly balanced purple pieces before human playtesting. Start version 09 with two alternatives in selected pawn and rook categories, using short names, movement descriptions, tier numbers, and clear experimental labels.
+Version 09 exposes the original and revised pawn/rook designs alongside the other reference designs. The browser and native bridge use one frozen 17-design library, compiled by the experiment compiler; games do not reassign letters during play. Names, descriptions, tier numbers, and experimental labels make choices readable. Save/PGN snapshots retain the exact rules and require the matching catalog build. Larger selectable libraries and importing retired definitions independently remain later work.
 
-1. Make browser display, setup, and the native bridge consume the same permanent design definitions and active profile.
-2. Add profile-aware saves/export and capability checks. New releases may require fresh browser games; backward save compatibility is not required.
-3. Expose the first validated choices in a small development picker. Keep costs, design choices, behavior revisions, and display colors separate.
-4. Gather feedback on readability, useful decisions, enjoyment, frustrating situations, and available counterplay. Discard poor ideas before precise tuning.
-5. Screen surviving designs against the fixed reference and selected equal-cost purchases, with a declared game cap and keep/revise/park decision.
+Do not wait for tightly balanced purple pieces before human playtesting. Gather feedback on readability, useful decisions, enjoyment, frustrating situations, and available counterplay. Discard poor ideas before precise tuning. Then screen surviving designs against the fixed reference and selected equal-cost purchases, with a declared game cap and keep/revise/park decision. New releases may require fresh browser games; backward save compatibility is not required.
 
 Two to six alternatives for every family at every tier would mean **36–108 upgraded designs**. Treat that as an eventual idea pool, expanding only when playtesting identifies a useful question. A full second set does not block the first playable picker.
 

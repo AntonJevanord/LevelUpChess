@@ -1,6 +1,6 @@
 # LevelUp Chess
 
-Chess with upgradeable pieces: standard (level 0), blue (1), orange (2), and purple (3). Build an army within a shared per-side budget, then play locally or against Fairy Stockfish.
+Chess with upgradeable pieces. Build an army within a shared per-side budget, then play locally or against Fairy Stockfish. Levels 1, 2, and 3 cost that many upgrade points.
 
 ## Play locally
 
@@ -8,7 +8,19 @@ Download `index.html` and open it in Chrome, Edge, or Firefox. It includes the b
 
 Select a piece and a highlighted destination. Arrow keys move focus; Enter or Space selects. Includes legal moves, checkmate, draw detection, castling, en passant, selectable promotion, history, undo, and board flip. Threefold repetition and the fifty-move rule end games automatically.
 
-## Version 05: piece upgrades
+## Version 09: experimental designs
+
+Choose **Experimental designs** under **Rules**, choose a family and each starting piece's design, then press **New game**. Each side has its own budget of 1–6 points. Levels use green, cyan, and red accents, with level numbers and separate White/Black piece colors.
+
+- **Knight-capture rook:** ordinary rook movement plus capture-only knight jumps. Compare it with the original **Capture-box rook** at the same three-point cost.
+- **Short-slide pawn:** quiet orthogonal slides of one or two clear squares, plus full bishop-line captures and standard promotion. It is labeled **parked reference** because its balance screening was unsuccessful; it remains available for playtesting beside the original **Ranging pawn**.
+- Other existing designs have names and short movement descriptions. Knights' extra guards, pawn promotions/en passant, and upgraded-rook castling retain their defined rules. Kings remain ordinary in this picker.
+
+Play offline or against the local engine. Save/load, PGN export/import, clocks, and undo carry the experimental rules and move history. Experimental files include the exact design snapshot and require the matching catalog build; arbitrary edited rules are rejected. Feedback on clarity, useful choices, and counterplay comes before another balance campaign.
+
+Experimental games draw bare kings, stalemate, repetition, and the fifty-move rule. Other low-material endings stay playable, with checkmate taking priority.
+
+## Reference piece upgrades
 
 Choose **Piece upgrades** under **Rules**, select each piece's level, and press **New game**. Configure pawns, knights, bishops, rooks, and queens with the family selector; choices across families are kept. Each level costs that many points, with the same chosen limit of 1–45 points for each side.
 
@@ -30,7 +42,7 @@ Both kings use the selected level, and other pieces use standard chess rules. Th
 
 ## Balance experiments — version 08
 
-The command-line runner plays paired Fairy Stockfish games and records moves, results, engine/rules identities, and checkpoints. It supports independent king levels through the legacy profiles, or immutable nonking design revisions under a frozen run-level letter registry. The main browser board keeps its version 05 rules.
+The command-line runner plays paired Fairy Stockfish games and records moves, results, engine/rules identities, and checkpoints. It supports independent king levels through the legacy profiles, or immutable nonking design revisions under a frozen run-level letter registry. The reference Piece upgrades mode keeps its version 05 rules.
 
 After switching to `version_08`, build and check the short registry workflow:
 
@@ -44,7 +56,7 @@ This six-game smoke intentionally stops after four plies per game and produces u
 
 The first revision used 160 games within its 200-game cap. The revised purple pawn is parked; the simpler purple rook is retained experimentally. Across screening and confirmation, that rook scored **85%** against three blue minor upgrades and **61.25%** against blue knight plus orange rook; ordinary control scored 50%. These are whole-army results, not established material values. See the [results and decisions](experiments/balance/results/revision-1-rook-confirmation-001.md).
 
-Original and revised designs remain separate definitions. Version 09 will add a small experimental picker to the playable board; see [TODO.md](TODO.md).
+Original and revised designs remain separate definitions. Version 09 exposes the small experimental picker described above; see [TODO.md](TODO.md) for remaining playtests and design work.
 
 ## Play Fairy Stockfish
 
@@ -106,6 +118,8 @@ npm test
 
 Edit `src/`, `styles.css`, or validated files in `variants/`, then build and reload. Commit generated `index.html` and `dist/app.js`; do not edit generated HTML. `npm start` serves the game locally.
 
+Experimental behavior lives in immutable revisions in `src/design-catalog.js`. The build uses the same compiler as balance experiments to generate `src/playable-profile.json` and `variants/levelup-playable.ini`; commit these outputs and do not edit them directly. The first picker freezes its 17-design library for every game. Larger selectable libraries remain later work.
+
 `npm test` runs unit and browser tests using a temporary server. Set `FAIRY_STOCKFISH_PATH` to enable native integration checks, `CHROMIUM_PATH` to use an installed browser, or `TEST_FILE_URL=1` to test direct-file loading where browser policy permits.
 
 Standard chess uses [chess.js](https://github.com/jhlywa/chess.js), with its BSD license in `dist/chess.js-LICENSE.txt`. Browser upgrade rules use Fairy Stockfish; matching source and GPL notices are documented in [vendor/README.md](vendor/README.md). `Example.txt` is a design draft, not the active rules configuration.
@@ -121,7 +135,8 @@ Standard chess uses [chess.js](https://github.com/jhlywa/chess.js), with its BSD
 | `version_05` | `v0.5.1` | Home-rank abilities, blue queen, rook upgrades, and compatible Windows engine |
 | `version_06` | `v0.6.0` | Capture-only king prototype |
 | `version_07` | Preserved baseline | Automated balance experiments and recorded first results |
-| `version_08` | In development | Design registries and the first bounded balance revision |
+| `version_08` | Preserved checkpoint | Design registries and the first bounded balance revision |
+| `version_09` | In development | Shared playable profiles and experimental design picker |
 
 Create each development branch from the previous tested milestone and tag finished releases. Tags preserve stable checkpoints while branches can evolve. See [TODO.md](TODO.md) for progress and later work.
 

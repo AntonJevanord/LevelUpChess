@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 08 closes the first design-registry experiment. The main browser board still uses the version-05 rules; experimental selections become playable in version 09. Historical milestones are in [development history](docs/development-history.md).
+Version 09 adds the playable experimental picker. The reference Piece upgrades mode keeps its version-05 rules. Version 08 preserves the first design-registry experiment; historical milestones are in [development history](docs/development-history.md).
 
 Browser-save compatibility across releases is optional. Experiment definitions, identities, and results must remain reproducible.
 
@@ -25,22 +25,24 @@ Implement in this order. Start human playtesting before requiring tight numerica
 
 ### 1. Share profile handling
 
-- [ ] Make board display, setup reconstruction, and move labels resolve stable design IDs through the active profile rather than hardcoded letters.
-- [ ] Share the catalog and compiled profile rules with the native bridge; validate selections and revision-aware capabilities before engine play.
-- [ ] Add a save/export format containing selections, definitions, allocation, and exact rule identity. A release may require fresh games.
-- [ ] Verify offline play, engine replies, undo/clocks, round trips, and both-color promotion/en passant/castling for the selected profiles.
+- [x] Make board display, setup reconstruction, and move labels resolve stable design IDs through the active profile rather than hardcoded letters.
+- [x] Share the catalog and compiled profile rules with the native bridge; validate selections and revision-aware capabilities before engine play.
+- [x] Add a save/export format containing selections, definitions, allocation, and exact rule identity. A release may require fresh games.
+- [x] Load only the selected rules profile, preserving profile isolation and retrying failed initialization.
+- [x] Verify the self-contained HTML with networking disabled, engine replies, undo/clocks, round trips, and both-color promotion/en passant/castling for the selected profiles.
+- [x] Verify 301 unit/integration cases and 174 browser cases. Recheck the multi-stage legacy-save test with a 60-second overall budget after its full-run timeout.
 
 ### 2. Expose a small development picker
 
-- [ ] Begin with original/revised rook choices and a small set of pawn alternatives; label experimental and parked references explicitly.
-- [ ] Keep tier/cost separate from design name, behavior revision, and color. Show a short movement description and useful movement examples.
-- [ ] Review green for level 1, red for level 3, and a contrasting level-2 color; keep level numbers and White/Black contrast readable.
-- [ ] Consolidate Windows playtesting: setup budgets, mixed armies, special moves, engine play, timed undo, and save/export recovery.
+- [x] Begin with original/revised rook choices and a small set of pawn alternatives; label experimental and parked references explicitly.
+- [x] Keep tier/cost separate from design name, behavior revision, and color. Show a short movement description and highlight legal moves; name designs in board/history tooltips.
+- [x] Use green/cyan/red for levels 1/2/3; review desktop/mobile layouts, level numbers, and White/Black contrast.
+- [ ] Consolidate Windows playtesting: direct-file loading, setup budgets, mixed armies, special moves, engine play, timed undo, and save/export recovery. Managed Chromium blocks `file://` in the cloud; the offline HTML check supplies the artifact from memory.
 - [ ] Record feedback by design revision: readability, useful choices, enjoyment, counterplay, and frustrating positions. Retire poor ideas before spending balance games on them.
 
 ### 3. Test the surviving ideas
 
-- [ ] Keep `queen.purple@1` (Amazon, `QN`) fixed as the reference upgrade for the next design batch. Its estimated 12–13 total material is a contextual prior, not a measured LevelUp value.
+- [x] Keep `queen.purple@1` (Amazon, `QN`) fixed as the reference upgrade for the next design batch. Its estimated 12–13 total material is a contextual prior, not a measured LevelUp value.
 - [ ] First compare surviving purple purchases against the Amazon purchase on ordinary armies. All sides retain the same underlying standard material.
 - [ ] Use existing legal armies for tier-ratio comparisons. Add explicit shared custom starting setups only when several copies of one family answer a specific pending question.
 - [ ] Declare candidates, opponents, opening cohorts, search settings, decision criteria, and a game cap before starting a new batch. Confirmation is reserved for shortlisted designs.

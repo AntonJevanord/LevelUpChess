@@ -1,10 +1,10 @@
 # Balance experiments
 
-Run paired engine games to compare upgrade armies, strength handicaps, and ordinary material odds. Upgrade prices stay fixed at blue 1, orange 2, and purple 3. The aim is to measure whether their abilities justify those prices, including whether three blue upgrades compete with one purple upgrade.
+Run paired engine games to compare upgrade armies, strength handicaps, and ordinary material odds. Upgrade prices stay fixed at level 1/2/3; historical IDs use blue/orange/purple, while the experimental picker uses green/cyan/red. The aim is to measure whether their abilities justify those prices, including whether three blue upgrades compete with one purple upgrade.
 
 These tools collect results; they do not assign measured values to pieces or change the game's movement rules.
 
-The [first balance revision plan](experiments/balance/revision-plan.md) starts piece changes now. It caps the first two-piece batch at 200 scheduled games and ends with a keep/revert/park decision. Existing experiment files are options, not a queue that must be exhausted before development continues.
+The [first balance revision plan](experiments/balance/revision-plan.md) closed at 160 of at most 200 games with explicit candidate decisions. Existing experiment files are options, not a queue that must be exhausted before development continues.
 
 ## Start a run
 
@@ -41,7 +41,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-These configurations are templates and historical protocols, not a queue. The first revision batch is closed; the next milestone is the playable experimental picker.
+These configurations are templates and historical protocols, not a queue. The first revision batch is closed; the version-09 picker is ready for human playtesting before another capped batch is chosen.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |
@@ -90,7 +90,7 @@ Progress is checkpointed after moves. An aborted or errored attempt remains in t
 
 Version 0.7.1 retries brief Windows file-sharing failures while atomically replacing checkpoints and reports. On the preserved `version_07` branch, an approved recovery patch can resume a 0.7.0 run with identical engine, rules, and settings; the original manifest stays unchanged and `storage-upgrade.json` records the patch. Resume uses validated journal history if it is newer than the checkpoint, and skips games already completed or truncated.
 
-Use the matching original branch and engine to resume an old run. Version 08 changes the runner/rules identity and does not migrate version-07 experiments. Keep existing result folders. If OneDrive or another application holds a file beyond the retry window, stop the run, let that application release the file, and resume. You can also move the entire stopped run folder to a location outside OneDrive and pass its new path to `--resume`.
+Use the matching original branch and engine to resume an old run. Version 08 does not migrate version-07 experiments; version 09 also changes the rules bundle by sharing its role-aware validator with the playable board. Preserve the original checkout for unfinished runs. Keep existing result folders. If OneDrive or another application holds a file beyond the retry window, stop the run, let that application release the file, and resume. You can also move the entire stopped run folder to a location outside OneDrive and pass its new path to `--resume`.
 
 If you stop during initial rules preflight before `run.json` exists, no games have started; repeat the original command. External stop commands apply once the run directory has an active lock.
 
@@ -146,7 +146,7 @@ Use `designs-smoke.json` to verify workflow. Its four-ply limit intentionally tr
 
 Schema-2 results use a new protocol identity. Preserve the mapping when comparing or reproducing results; finite-search play can depend on internal type allocation. Evidence follows stable design revisions and the engine/rules context, never a temporary letter alone. No long-term engine training is performed.
 
-The browser picker, save slot, and PGN importer still use their existing profiles. Dynamic experimental PGNs need their run directory and exact rules in a compatible viewer; they cannot yet be imported into the browser board. The playable second set and its palette follow in version 09.
+Version 09's browser picker uses a frozen 17-design profile compiled through this same registry/compiler. Its saves and PGNs include a validated profile snapshot. Raw balance PGNs reference their run registry/rules instead of embedding that browser snapshot, so they still need the archived run and a compatible viewer. Larger selectable browser libraries remain later work.
 
 ## Openings and fair comparisons
 
@@ -168,7 +168,7 @@ Use varied development patterns and also test sparse endgames separately. Repeat
 
 `balance-results/` is ignored by Git, so generated games do not appear in `git status`. Keep or back up these folders separately; Git pulls leave them in place.
 
-These experimental PGNs require the accompanying `rules/*.ini` in a compatible viewer or engine. The current game's PGN importer does not yet accept the balance profiles.
+These balance PGNs require the accompanying `rules/*.ini` and registry in a compatible viewer or engine. They do not carry the self-contained snapshot required by the experimental browser importer.
 
 Statuses distinguish `completed`, `truncated`, `aborted`, and `error`. Reaching `maxPlies` is an unscored truncation, not a draw: the schedule advances, and resume does not replay that truncated game with a higher limit. Cancellation and engine errors are also unscored. There is no resignation or draw adjudication from engine evaluation alone. Inspect unfinished and failed attempts alongside the scores: excluding many hard-to-finish games can distort a comparison.
 

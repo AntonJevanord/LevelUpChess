@@ -3,9 +3,11 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { rulesBuildOptions } = require('./rules-build');
 const { buildKings } = require('./build-kings');
+const { writePlayableProfile } = require('./playable-profile');
 
 async function main() {
   const root = path.resolve(__dirname, '..');
+  writePlayableProfile(root);
   await build({
     ...rulesBuildOptions(),
     absWorkingDir: root,

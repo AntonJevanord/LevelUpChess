@@ -7,41 +7,56 @@ import wasmBase64 from 'variant-wasm';
 import variantConfig from '../variants/levelup-knight.ini';
 import pieceVariantConfig from '../variants/levelup.ini';
 import currentVariantConfig from '../variants/levelup-v5.ini';
+import designOptions from './design-options.js';
+import profileFen from './profile-fen.js';
+
+const { PLAYABLE_PROFILE, pieceInfoForProfile, encodeProfileSnapshot, decodeProfileSnapshot } = designOptions;
+const { checkedBoard } = profileFen;
 
 export const VARIANT = 'levelup-knight';
 export const PIECE_VARIANT = 'levelup';
 export const CURRENT_VARIANT = 'levelup-v5';
-export const SUPPORTED_VARIANTS = Object.freeze([VARIANT, PIECE_VARIANT, CURRENT_VARIANT]);
+export const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
+export const SUPPORTED_VARIANTS = Object.freeze([VARIANT, PIECE_VARIANT, CURRENT_VARIANT, EXPERIMENTAL_VARIANT]);
 export const isPieceVariant = variant => variant === PIECE_VARIANT || variant === CURRENT_VARIANT;
 
 const RESULTS = new Set(['*', '1-0', '0-1', '1/2-1/2']);
 const SQUARE = /^[a-h][1-8]$/;
-let ruleModules;
-let initializing;
+const ruleModules = new Map();
+const initializing = new Map();
+let initializingAll;
+const configs = { [VARIANT]: variantConfig, [PIECE_VARIANT]: pieceVariantConfig, [CURRENT_VARIANT]: currentVariantConfig, [EXPERIMENTAL_VARIANT]: PLAYABLE_PROFILE.config };
 
-export function initVariantRules() {
-  if (!initializing) {
-    const configs = { [VARIANT]: variantConfig, [PIECE_VARIANT]: pieceVariantConfig, [CURRENT_VARIANT]: currentVariantConfig };
-    // Fairy Stockfish shares movement tables across boards inside one module.
-    // Isolate rule versions so opening an old game cannot change a current one.
-    initializing = Promise.all(SUPPORTED_VARIANTS.map(async variant => {
-      const loaded = await Module({
-        // Supplying bytes also works from file:// without fetching a WASM file.
-        wasmBinary: Uint8Array.from(atob(wasmBase64), character => character.charCodeAt(0)),
+export function initVariantRules(variant) {
+  // Preserve the original all-profile API for callers that explicitly need it.
+  if (variant === undefined) {
+    if (!initializingAll) {
+      const pending = Promise.all(SUPPORTED_VARIANTS.map(initVariantRules)).then(() => ruleModules.get(VARIANT)).catch(error => {
+        if (initializingAll === pending) initializingAll = undefined;
+        throw error;
       });
-      loaded.loadVariantConfig(configs[variant]);
-      if (!loaded.variants().split(' ').includes(variant)) throw new Error('The upgrade rules could not be loaded.');
-      return [variant, loaded];
-    })).then(entries => {
-      ruleModules = Object.fromEntries(entries);
-      return ruleModules[VARIANT];
-    }).catch(error => {
-      ruleModules = undefined;
-      initializing = undefined;
-      throw error;
-    });
+      initializingAll = pending;
+    }
+    return initializingAll;
   }
-  return initializing;
+  if (!SUPPORTED_VARIANTS.includes(variant)) return Promise.reject(new Error('The upgrade variant is not supported.'));
+  if (initializing.has(variant)) return initializing.get(variant);
+  // Fairy Stockfish shares movement tables inside each module. Initialize only
+  // the requested profile, retaining a separate module and promise for each.
+  const pending = Promise.resolve().then(() => Module({
+    // Supplying bytes also works from file:// without fetching a WASM file.
+    wasmBinary: Uint8Array.from(atob(wasmBase64), character => character.charCodeAt(0)),
+  })).then(loaded => {
+    loaded.loadVariantConfig(configs[variant]);
+    if (!loaded.variants().split(' ').includes(variant)) throw new Error('The upgrade rules could not be loaded.');
+    ruleModules.set(variant, loaded);
+    return loaded;
+  }).catch(error => {
+    if (initializing.get(variant) === pending) initializing.delete(variant);
+    throw error;
+  });
+  initializing.set(variant, pending);
+  return pending;
 }
 
 function boardPieces(fen) {
@@ -207,22 +222,26 @@ function readHeaders(text) {
 /** A small chess.js-shaped facade over the same rules used by the native engine. */
 export class VariantGame {
   constructor(fen, variant = VARIANT) {
-    if (!ruleModules) throw new Error('Call initVariantRules() before creating an upgrade game.');
     if (!SUPPORTED_VARIANTS.includes(variant)) throw new Error('The upgrade variant is not supported.');
-    const rules = ruleModules[variant];
+    const rules = ruleModules.get(variant);
+    if (!rules) throw new Error('Call initVariantRules() for this variant before creating an upgrade game.');
     const supplied = fen === undefined ? rules.startingFen(variant) : fen;
     const start = typeof supplied === 'string' ? supplied.trim().split(/\s+/).join(' ') : supplied;
-    if (!validStartingFen(start, variant, rules)) throw new Error('The upgrade starting position is invalid.');
-    if (opponentInCheck(start, variant, rules)) throw new Error('The upgrade starting position already checks the inactive king.');
+    const experimental = variant === EXPERIMENTAL_VARIANT;
+    if (!experimental && !validStartingFen(start, variant, rules)) throw new Error('The upgrade starting position is invalid.');
+    if (!experimental && opponentInCheck(start, variant, rules)) throw new Error('The upgrade starting position already checks the inactive king.');
     this._variant = variant;
-    this._board = new rules.Board(variant, start);
+    this._board = experimental ? checkedBoard(rules, variant, start, 0, 0, PLAYABLE_PROFILE.roles) : new rules.Board(variant, start);
     this._startFen = this._board.fen();
     this._records = [];
     this._positions = [positionKey(this._startFen, this._board)];
     this._headers = { Variant: this.variant, SetUp: '1', FEN: this._startFen, Result: '*' };
+    if (experimental) this._headers.LevelUpProfile = encodeProfileSnapshot();
   }
 
   get variant() { return this._variant; }
+  get profile() { return this.variant === EXPERIMENTAL_VARIANT ? PLAYABLE_PROFILE : undefined; }
+  pieceInfo(type) { return pieceInfoForProfile(this.profile, type); }
   fen() { return this._board.fen(); }
   turn() { return this._board.turn() ? 'w' : 'b'; }
   board() { return boardPieces(this.fen()); }
@@ -292,12 +311,16 @@ export class VariantGame {
     this._records = [];
     this._positions = [positionKey(this._startFen, this._board)];
     this._headers = { Variant: this.variant, SetUp: '1', FEN: this._startFen, Result: '*' };
+    if (this.profile) this._headers.LevelUpProfile = encodeProfileSnapshot();
   }
 
   isCheck() { return this._board.isCheck(); }
   isCheckmate() { return this.isCheck() && this._board.numberLegalMoves() === 0; }
   isStalemate() { return !this.isCheck() && this._board.numberLegalMoves() === 0; }
   isInsufficientMaterial() {
+    // The experiment profile deliberately keeps uncommon minor-piece endings
+    // playable: ordinary material heuristics can miss new mating attacks.
+    if (this.profile) return !this.isCheckmate() && this.board().flat().filter(Boolean).length === 2;
     if (this._board.isInsufficientMaterial()) return true;
     // Fairy Stockfish conservatively treats custom pieces as mating material.
     // E attacks exactly like N, and H like B: their extra steps cannot capture.
@@ -313,20 +336,27 @@ export class VariantGame {
     const current = this._positions.at(-1);
     return this._positions.filter(key => key === current).length >= 3;
   }
-  isDraw() { return this.isInsufficientMaterial() || this.isThreefoldRepetition() || this._board.result(true) === '1/2-1/2'; }
-  isGameOver() { return this.isInsufficientMaterial() || this.isThreefoldRepetition() || this._board.isGameOver(true); }
+  isDraw() {
+    if (this.profile) return !this.isCheckmate() && (this.isStalemate() || this.isInsufficientMaterial() || this.isThreefoldRepetition() || this._board.halfmoveClock() >= 100);
+    return this.isInsufficientMaterial() || this.isThreefoldRepetition() || this._board.result(true) === '1/2-1/2';
+  }
+  isGameOver() { return this.profile ? this.isCheckmate() || this.isDraw() : this.isInsufficientMaterial() || this.isThreefoldRepetition() || this._board.isGameOver(true); }
 
-  getHeaders() { return { ...this._headers }; }
+  getHeaders() { return { ...this._headers, ...(this.profile ? { LevelUpProfile: encodeProfileSnapshot() } : {}) }; }
   setHeader(key, value) {
     if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(key) || typeof value !== 'string' || /[\r\n\x00-\x1f]/.test(value)) throw new Error('The PGN header is invalid.');
     if (key === 'Result' && !RESULTS.has(value)) throw new Error('The PGN result is invalid.');
+    if (key === 'LevelUpProfile') {
+      if (!this.profile) throw new Error('A design profile requires its experimental variant.');
+      decodeProfileSnapshot(value);
+    }
     this._headers[key] = value;
     return this.getHeaders();
   }
   removeHeader(key) { delete this._headers[key]; }
 
   pgn({ maxWidth = 80 } = {}) {
-    const headers = { ...this._headers, Variant: this.variant, SetUp: '1', FEN: this._startFen };
+    const headers = { ...this.getHeaders(), Variant: this.variant, SetUp: '1', FEN: this._startFen };
     const result = headers.Result || '*';
     const tokens = [];
     this._records.forEach((move, index) => {
@@ -350,6 +380,10 @@ export class VariantGame {
     const { headers, body } = readHeaders(text);
     const variant = headers.Variant?.toLowerCase();
     if (!SUPPORTED_VARIANTS.includes(variant)) throw new Error(`This game requires a supported upgrade PGN variant: ${SUPPORTED_VARIANTS.join(', ')}.`);
+    if (variant === EXPERIMENTAL_VARIANT) {
+      if (!headers.LevelUpProfile) throw new Error('The experimental PGN is missing its design profile.');
+      decodeProfileSnapshot(headers.LevelUpProfile);
+    } else if (headers.LevelUpProfile) throw new Error('A design profile requires its experimental variant.');
     if (headers.SetUp !== undefined && !['0', '1'].includes(headers.SetUp)) throw new Error('The PGN setup header is invalid.');
     if (headers.SetUp === '1' && !headers.FEN || headers.SetUp === '0' && headers.FEN) throw new Error('The PGN setup and starting position do not agree.');
     let candidate;

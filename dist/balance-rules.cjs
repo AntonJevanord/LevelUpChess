@@ -252,6 +252,114 @@ var require_piece_setup = __commonJS({
   }
 });
 
+// src/profile-fen.js
+var require_profile_fen = __commonJS({
+  "src/profile-fen.js"(exports2, module2) {
+    "use strict";
+    var ROYALS2 = ["v", "w", "x", "y"];
+    function pieceMap2(fen) {
+      const placement = fen.split(" ")[0].split("/");
+      if (placement.length !== 8) throw new Error("Invalid balance starting FEN.");
+      const pieces = /* @__PURE__ */ new Map();
+      placement.forEach((row, index) => {
+        let file = 0;
+        for (const character of row) {
+          if (/^[1-8]$/.test(character)) file += Number(character);
+          else if (/^[a-z]$/i.test(character)) {
+            if (file >= 8) throw new Error("Invalid balance starting FEN.");
+            pieces.set("abcdefgh"[file++] + (8 - index), character);
+          } else throw new Error("Invalid balance starting FEN.");
+        }
+        if (file !== 8) throw new Error("Invalid balance starting FEN.");
+      });
+      return pieces;
+    }
+    function placementFromMap2(pieces) {
+      return Array.from({ length: 8 }, (_, row) => {
+        let result = "", empty = 0;
+        for (const file of "abcdefgh") {
+          const piece = pieces.get(file + (8 - row));
+          if (!piece) {
+            empty++;
+            continue;
+          }
+          if (empty) result += empty;
+          empty = 0;
+          result += piece;
+        }
+        return result + (empty || "");
+      }).join("/");
+    }
+    function validEp(fen, pieces, roles) {
+      const fields = fen.split(" ");
+      const ep = fields[3];
+      if (ep === "-") return true;
+      const targets = ep.match(/[a-h][1-8]/g);
+      if (!targets || targets.join("") !== ep || targets.length > 3) return false;
+      const file = ep[0];
+      const movedWhite = fields[1] === "b";
+      const step = movedWhite ? 1 : -1;
+      const colored = (type) => movedWhite ? type.toUpperCase() : type;
+      const validSource = (rank) => movedWhite ? rank === 1 || rank === 2 : rank === 7 || rank === 8;
+      const at = (rank) => pieces.get(file + rank);
+      const initialLeap = (type) => roles ? roles.initialPawnLeaps[type] || 0 : type === "a" ? 3 : ["p", "c"].includes(type) ? 2 : 0;
+      if (targets.length === 1) {
+        const rank = Number(ep[1]);
+        if (at(rank)) {
+          const marker2 = at(rank);
+          const leaps = roles ? roles.initialLandingLeaps[marker2.toLowerCase()] || [] : marker2 === colored("s") ? [12, 13, 23] : [];
+          if (!leaps.length || marker2 === marker2.toUpperCase() !== movedWhite) return false;
+          return (movedWhite ? [1, 2] : [7, 8]).some((sourceRank) => [..."abcdefgh"].some((sourceFile) => {
+            const files = Math.abs(file.charCodeAt(0) - sourceFile.charCodeAt(0));
+            const ranks2 = Math.abs(rank - sourceRank);
+            const leap = Math.min(files, ranks2) * 10 + Math.max(files, ranks2);
+            return !pieces.has(sourceFile + sourceRank) && leaps.includes(leap);
+          }));
+        }
+        for (let landing2 = rank + step; landing2 >= 1 && landing2 <= 8; landing2 += step) {
+          const victim = at(landing2);
+          if (!victim || victim === victim.toUpperCase() !== movedWhite) continue;
+          const distance2 = initialLeap(victim.toLowerCase());
+          const source2 = landing2 - step * distance2;
+          return distance2 > 0 && validSource(source2) && !at(source2) && (rank - source2) * step > 0 && (landing2 - rank) * step > 0;
+        }
+        return false;
+      }
+      const ranks = targets.map((target) => Number(target[1]));
+      if (targets.some((target) => target[0] !== file) || ranks.some((rank, i) => i && rank !== ranks[i - 1] + 1)) return false;
+      const distance = targets.length;
+      const landing = movedWhite ? ranks.at(-1) : ranks[0];
+      const source = landing - step * distance;
+      const marker = at(landing);
+      const correctPawn = roles ? marker && marker === colored(marker.toLowerCase()) && marker.toLowerCase() !== "p" && initialLeap(marker.toLowerCase()) === distance : marker === colored(distance === 3 ? "a" : "c");
+      return validSource(source) && !at(source) && correctPawn && (distance === 3 || !at(source + step));
+    }
+    function checkedBoard2(module3, variant, input, whiteKing, blackKing, roles) {
+      if (typeof input !== "string") throw new Error("Invalid balance starting FEN.");
+      const fen = input.trim().split(/\s+/).join(" ");
+      const fields = fen.split(" ");
+      if (fields.length !== 6 || !["w", "b"].includes(fields[1]) || !/^\d+$/.test(fields[4]) || !/^[1-9]\d*$/.test(fields[5])) throw new Error("Invalid balance starting FEN.");
+      const pieces = pieceMap2(fen);
+      const royals = [...pieces.values()].filter((piece) => roles ? roles.royalTypes.includes(piece.toLowerCase()) : /[kvwxy]/i.test(piece));
+      const symmetric = whiteKing === blackKing;
+      if (royals.length !== 2 || !royals.includes(symmetric ? "K" : ROYALS2[whiteKing].toUpperCase()) || !royals.includes(symmetric ? "k" : ROYALS2[blackKing])) throw new Error("A balance position must contain exactly one selected royal king per side.");
+      const noEp = [...fields];
+      noEp[3] = "-";
+      if (module3.validateFen(noEp.join(" "), variant) !== 1 || !validEp(fen, pieces, roles)) throw new Error("Invalid balance starting FEN.");
+      const inactiveFields = [...noEp];
+      inactiveFields[1] = fields[1] === "w" ? "b" : "w";
+      const inactive = new module3.Board(variant, inactiveFields.join(" "));
+      try {
+        if (inactive.isCheck()) throw new Error("The balance starting position already checks the inactive king.");
+      } finally {
+        inactive.delete();
+      }
+      return new module3.Board(variant, fen);
+    }
+    module2.exports = { ROYALS: ROYALS2, pieceMap: pieceMap2, placementFromMap: placementFromMap2, checkedBoard: checkedBoard2 };
+  }
+});
+
 // src/balance-rules.js
 var balance_rules_exports = {};
 __export(balance_rules_exports, {
@@ -4864,10 +4972,11 @@ var levelup_v5_default = "# Current piece upgrades. The levelup-knight variant p
 // src/balance-rules.js
 var import_piece_setup = __toESM(require_piece_setup());
 var import_piece_catalog = __toESM(require_piece_catalog());
+var import_profile_fen = __toESM(require_profile_fen());
 var { pieceSetupFromLevels, START_FEN } = import_piece_setup.default;
 var { PIECE_SLOTS } = import_piece_catalog.default;
 var ARMY_SQUARES = /* @__PURE__ */ new Set([...PIECE_SLOTS.filter((slot) => slot.color === "w").map((slot) => slot.square), "e1"]);
-var ROYALS = ["v", "w", "x", "y"];
+var { ROYALS, pieceMap, placementFromMap, checkedBoard } = import_profile_fen.default;
 var ROYAL_MOVES = ["K", "KcsD", "KcD", "KcDcA"];
 var profileCache = /* @__PURE__ */ new Map();
 function normalizeArmy(map = {}) {
@@ -4904,105 +5013,6 @@ extinctionValue = loss
 castlingKingPieceWhite = ${ROYALS[whiteKing]}
 castlingKingPieceBlack = ${ROYALS[blackKing]}
 `;
-}
-function pieceMap(fen) {
-  const placement = fen.split(" ")[0].split("/");
-  if (placement.length !== 8) throw new Error("Invalid balance starting FEN.");
-  const pieces = /* @__PURE__ */ new Map();
-  placement.forEach((row, index) => {
-    let file = 0;
-    for (const character of row) {
-      if (/^[1-8]$/.test(character)) file += Number(character);
-      else if (/^[a-z]$/i.test(character)) {
-        if (file >= 8) throw new Error("Invalid balance starting FEN.");
-        pieces.set("abcdefgh"[file++] + (8 - index), character);
-      } else throw new Error("Invalid balance starting FEN.");
-    }
-    if (file !== 8) throw new Error("Invalid balance starting FEN.");
-  });
-  return pieces;
-}
-function placementFromMap(pieces) {
-  return Array.from({ length: 8 }, (_, row) => {
-    let result = "", empty = 0;
-    for (const file of "abcdefgh") {
-      const piece = pieces.get(file + (8 - row));
-      if (!piece) {
-        empty++;
-        continue;
-      }
-      if (empty) result += empty;
-      empty = 0;
-      result += piece;
-    }
-    return result + (empty || "");
-  }).join("/");
-}
-function validEp(fen, pieces, roles) {
-  const fields = fen.split(" ");
-  const ep = fields[3];
-  if (ep === "-") return true;
-  const targets = ep.match(/[a-h][1-8]/g);
-  if (!targets || targets.join("") !== ep || targets.length > 3) return false;
-  const file = ep[0];
-  const movedWhite = fields[1] === "b";
-  const step = movedWhite ? 1 : -1;
-  const colored = (type) => movedWhite ? type.toUpperCase() : type;
-  const validSource = (rank) => movedWhite ? rank === 1 || rank === 2 : rank === 7 || rank === 8;
-  const at = (rank) => pieces.get(file + rank);
-  const initialLeap = (type) => roles ? roles.initialPawnLeaps[type] || 0 : type === "a" ? 3 : ["p", "c"].includes(type) ? 2 : 0;
-  if (targets.length === 1) {
-    const rank = Number(ep[1]);
-    if (at(rank)) {
-      const marker2 = at(rank);
-      const leaps = roles ? roles.initialLandingLeaps[marker2.toLowerCase()] || [] : marker2 === colored("s") ? [12, 13, 23] : [];
-      if (!leaps.length || marker2 === marker2.toUpperCase() !== movedWhite) return false;
-      return (movedWhite ? [1, 2] : [7, 8]).some((sourceRank) => [..."abcdefgh"].some((sourceFile) => {
-        const files = Math.abs(file.charCodeAt(0) - sourceFile.charCodeAt(0));
-        const ranks2 = Math.abs(rank - sourceRank);
-        const leap = Math.min(files, ranks2) * 10 + Math.max(files, ranks2);
-        return !pieces.has(sourceFile + sourceRank) && leaps.includes(leap);
-      }));
-    }
-    for (let landing2 = rank + step; landing2 >= 1 && landing2 <= 8; landing2 += step) {
-      const victim = at(landing2);
-      if (!victim || victim === victim.toUpperCase() !== movedWhite) continue;
-      const distance2 = initialLeap(victim.toLowerCase());
-      const source2 = landing2 - step * distance2;
-      return distance2 > 0 && validSource(source2) && !at(source2) && (rank - source2) * step > 0 && (landing2 - rank) * step > 0;
-    }
-    return false;
-  }
-  const ranks = targets.map((target) => Number(target[1]));
-  if (targets.some((target) => target[0] !== file) || ranks.some((rank, i) => i && rank !== ranks[i - 1] + 1)) return false;
-  const distance = targets.length;
-  const landing = movedWhite ? ranks.at(-1) : ranks[0];
-  const source = landing - step * distance;
-  const marker = at(landing);
-  const correctPawn = roles ? marker && marker === colored(marker.toLowerCase()) && marker.toLowerCase() !== "p" && initialLeap(marker.toLowerCase()) === distance : marker === colored(distance === 3 ? "a" : "c");
-  return validSource(source) && !at(source) && correctPawn && (distance === 3 || !at(source + step));
-}
-function checkedBoard(module2, variant, input, whiteKing, blackKing, roles) {
-  if (typeof input !== "string") throw new Error("Invalid balance starting FEN.");
-  const fen = input.trim().split(/\s+/).join(" ");
-  const fields = fen.split(" ");
-  if (fields.length !== 6 || !["w", "b"].includes(fields[1]) || !/^\d+$/.test(fields[4]) || !/^[1-9]\d*$/.test(fields[5])) throw new Error("Invalid balance starting FEN.");
-  const pieces = pieceMap(fen);
-  const royals = [...pieces.values()].filter((piece) => roles ? roles.royalTypes.includes(piece.toLowerCase()) : /[kvwxy]/i.test(piece));
-  const symmetric = whiteKing === blackKing;
-  if (royals.length !== 2 || !royals.includes(symmetric ? "K" : ROYALS[whiteKing].toUpperCase()) || !royals.includes(symmetric ? "k" : ROYALS[blackKing])) throw new Error("A balance position must contain exactly one selected royal king per side.");
-  const noEp = [...fields];
-  noEp[3] = "-";
-  if (module2.validateFen(noEp.join(" "), variant) !== 1 || !validEp(fen, pieces, roles)) throw new Error("Invalid balance starting FEN.");
-  const inactiveFields = [...noEp];
-  inactiveFields[1] = fields[1] === "w" ? "b" : "w";
-  const inactive = new module2.Board(variant, inactiveFields.join(" "));
-  try {
-    if (inactive.isCheck()) throw new Error("The balance starting position already checks the inactive king.");
-  } finally {
-    inactive.delete();
-  }
-  return new module2.Board(variant, fen);
 }
 function positionKey(board) {
   const fields = board.fen().split(" ").slice(0, 4);

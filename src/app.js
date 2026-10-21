@@ -3,6 +3,8 @@ import { VariantGame, VARIANT, PIECE_VARIANT, CURRENT_VARIANT, isPieceVariant, S
 import { pieceInfo, KNIGHT_LEVELS, KNIGHT_SLOTS, PIECE_LEVELS, PIECE_SLOTS, DEFAULT_PIECE_LEVELS, MAX_PIECE_BUDGET } from './piece-catalog';
 import { setupFromLevels, loadInitialSetup } from './knight-setup';
 import { pieceSetupFromLevels, loadPieceSetup } from './piece-setup';
+import { EXPERIMENTAL_VARIANT, DESIGN_OPTIONS, pieceInfoForProfile } from './design-options';
+import { designSetupFromChoices, loadDesignSetup } from './design-setup';
 import { ChessClock, CLOCK_CONTROLS, formatClock } from './clock';
 import { SAVE_KEY, MAX_PGN_SIZE, parsePgn, exportPgn, makeSave, parseSave } from './saved-games';
 
@@ -24,6 +26,66 @@ const upgradeSquares = KNIGHT_SLOTS.map(slot => slot.square);
 const pieceBudget = document.querySelector('#piece-upgrade-budget');
 const pieceStatus = document.querySelector('#piece-upgrade-status');
 const pieceFamily = document.querySelector('#piece-family');
+const experimentalBudget = document.querySelector('#experimental-budget');
+const experimentalStatus = document.querySelector('#experimental-status');
+const experimentalFamily = document.querySelector('#experimental-family');
+const experimentalOption = gameMode.querySelector('option[value=levelup-experimental]');
+experimentalOption.value = EXPERIMENTAL_VARIANT;
+const designOptions = new Map(DESIGN_OPTIONS.map(option => [option.id, option]));
+const isExperimental = variant => variant === EXPERIMENTAL_VARIANT;
+const infoFor = type => game.profile ? pieceInfoForProfile(game.profile, type) : pieceInfo(type);
+const designFor = type => game.profile?.definitionsByLetter[type];
+function designCosts(choices) {
+  const spent = color => PIECE_SLOTS.filter(slot => slot.color === color).reduce((total, slot) => total + (designOptions.get(choices[slot.square])?.level || 0), 0);
+  return { white: spent('w'), black: spent('b') };
+}
+function displaySan(san) {
+  if (!game.profile || !/^[A-Z]/.test(san) || /^O-O/.test(san)) return san;
+  const definition = designFor(san[0]?.toLowerCase());
+  if (!definition) return san;
+  return `${({ pawn: 'P', knight: 'N', bishop: 'B', rook: 'R', queen: 'Q' })[definition.family]}${definition.level}${san.slice(1)}`;
+}
+for (const family of Object.keys(PIECE_LEVELS)) {
+  const group = document.createElement('div');
+  group.className = 'experimental-choices';
+  group.dataset.family = family;
+  for (const slot of PIECE_SLOTS.filter(slot => slot.family === family)) {
+    const field = document.createElement('div');
+    const label = document.createElement('label');
+    const select = document.createElement('select');
+    const description = document.createElement('p');
+    select.id = `experimental-upgrade-${slot.square}`;
+    label.htmlFor = select.id;
+    label.textContent = `${side(slot.color)} ${slot.square} ${family}`;
+    description.id = `experimental-description-${slot.square}`;
+    description.className = 'design-description';
+    select.setAttribute('aria-describedby', description.id);
+    const standard = document.createElement('option');
+    standard.value = '';
+    standard.textContent = '0 · Standard';
+    select.append(standard);
+    for (const design of DESIGN_OPTIONS.filter(option => option.family === family)) {
+      const option = document.createElement('option');
+      option.value = design.id;
+      const status = design.status === 'parked' ? 'parked reference' : design.status;
+      option.textContent = `L${design.level} · ${design.name} · ${status}`;
+      select.append(option);
+    }
+    select.onchange = updateSetup;
+    field.append(label, select, description);
+    group.append(field);
+  }
+  document.querySelector('#experimental-choices').append(group);
+}
+function updateExperimentalFamily() {
+  for (const group of document.querySelectorAll('.experimental-choices')) group.hidden = group.dataset.family !== experimentalFamily.value;
+  for (const slot of PIECE_SLOTS) {
+    const design = designOptions.get(document.querySelector(`#experimental-upgrade-${slot.square}`).value);
+    const description = document.querySelector(`#experimental-description-${slot.square}`);
+    description.textContent = design ? `${design.description}${design.status === 'parked' ? ' Parked after balance screening; available as a playtest reference.' : ''}` : `Ordinary ${slot.family} movement.`;
+    description.classList.toggle('parked-design', design?.status === 'parked');
+  }
+}
 const familyRules = {
   pawn: ['Blue: jump 1 or 2 forward, or 3 from the initial region; capture one diagonal forward.', 'Orange: move or capture one forward or diagonally forward; initial two-step needs a clear path.', 'Purple: move along any clear rook line; capture along any clear bishop line. All pawn levels promote to Q/R/B/N on the last rank.'],
   knight: ['Blue: knight moves plus one empty orthogonal step.', 'Orange: knight moves plus a two-square sideways jump.', 'Purple: keep the knight and add a piece that moves or captures 1 or 2 orthogonally. Two-square moves jump. Extras start on b3/g3 or b6/g6.'],
@@ -69,6 +131,10 @@ let replacementGeneration = 0;
 let buildingGame = false;
 let activeBudget = 2;
 function setupChoice() {
+  if (isExperimental(gameMode.value)) {
+    const choices = Object.fromEntries(PIECE_SLOTS.map(slot => [slot.square, document.querySelector(`#experimental-upgrade-${slot.square}`).value]));
+    return { choices, levels: choices, ...designCosts(choices), budget: Number(experimentalBudget.value) };
+  }
   const current = isPieceVariant(gameMode.value);
   const slots = current ? PIECE_SLOTS : KNIGHT_SLOTS;
   const prefix = current ? 'piece-upgrade' : 'upgrade';
@@ -81,6 +147,7 @@ function setupChoice() {
 function updateSetup() {
   document.querySelector('#upgrade-settings').hidden = gameMode.value !== VARIANT;
   document.querySelector('#piece-upgrade-settings').hidden = !isPieceVariant(gameMode.value);
+  document.querySelector('#experimental-settings').hidden = !isExperimental(gameMode.value);
   const oldRules = gameMode.value === PIECE_VARIANT;
   const maxBudget = oldRules ? 39 : MAX_PIECE_BUDGET;
   pieceBudget.max = String(maxBudget);
@@ -94,12 +161,14 @@ function updateSetup() {
   pieceFamily.querySelector('option[value=rook]').disabled = oldRules;
   if (oldRules && pieceFamily.value === 'rook') pieceFamily.value = 'bishop';
   updateFamily();
+  updateExperimentalFamily();
   const { white, black, budget } = setupChoice();
-  const status = isPieceVariant(gameMode.value) ? pieceStatus : upgradeStatus;
-  const validBudget = Number.isInteger(budget) && budget >= 1 && budget <= (isPieceVariant(gameMode.value) ? maxBudget : 6);
+  const status = isExperimental(gameMode.value) ? experimentalStatus : isPieceVariant(gameMode.value) ? pieceStatus : upgradeStatus;
+  const budgetLimit = isPieceVariant(gameMode.value) ? maxBudget : 6;
+  const validBudget = Number.isInteger(budget) && budget >= 1 && budget <= budgetLimit;
   const valid = validBudget && white <= budget && black <= budget;
   status.classList.toggle('error', !valid);
-  status.textContent = !validBudget ? `Choose a whole-number budget from 1 to ${maxBudget}.` : valid ? `White ${white}/${budget} · Black ${black}/${budget} upgrade points.` : `Budget exceeded: White ${white}/${budget} · Black ${black}/${budget}. Reduce upgrades before starting a new game.`;
+  status.textContent = !validBudget ? `Choose a whole-number budget from 1 to ${budgetLimit}.` : valid ? `White ${white}/${budget} · Black ${black}/${budget} upgrade points.` : `Budget exceeded: White ${white}/${budget} · Black ${black}/${budget}. Reduce upgrades before starting a new game.`;
   return !SUPPORTED_VARIANTS.includes(gameMode.value) || valid;
 }
 
@@ -249,7 +318,7 @@ async function maybeEngineMove() {
   try {
     const data = await engineFetch('/api/engine/move', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ fen, difficulty: difficulty.value, variant: game.variant || 'chess' }),
+      body: JSON.stringify({ fen, difficulty: difficulty.value, variant: game.variant || 'chess', ...(game.profile ? { profileHash: game.profile.hash, registryHash: game.profile.registryHash } : {}) }),
     });
     if (request !== generation || game.fen() !== fen) return;
     if (typeof data.move !== 'string' || !/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(data.move)) throw new Error('Engine returned an invalid move.');
@@ -274,6 +343,8 @@ function render(focusSquare) {
   const legal = selected ? game.moves({ square: selected, verbose: true }) : [];
   const history = game.history({ verbose: true });
   const last = history.at(-1);
+  board.classList.toggle('experimental-board', Boolean(game.profile));
+  document.querySelector('.history-panel .panel-heading > span').textContent = game.profile ? 'PIECE · LEVEL' : 'SAN';
   board.replaceChildren();
   ranks.forEach((rank, row) => files.forEach((file, col) => {
     const square = file + rank;
@@ -282,14 +353,19 @@ function render(focusSquare) {
     button.type = 'button';
     button.className = 'square ' + ((file.charCodeAt(0) - 97 + Number(rank)) % 2 === 0 ? 'dark' : 'light');
     button.dataset.square = square;
-    button.setAttribute('aria-label', `${square}${piece ? ` ${side(piece.color)} ${pieceInfo(piece.type).name}` : ' empty'}`);
+    button.setAttribute('aria-label', `${square}${piece ? ` ${side(piece.color)} ${infoFor(piece.type).name}` : ' empty'}`);
     button.setAttribute('aria-pressed', String(selected === square));
     if (selected === square) button.classList.add('selected');
     if (last && [last.from, last.to].includes(square)) button.classList.add('last-move');
     if (piece?.type === 'k' && piece.color === game.turn() && game.isCheck()) button.classList.add('check');
     if (piece) {
       const icon = document.createElement('span');
-      const info = pieceInfo(piece.type);
+      const info = infoFor(piece.type);
+      const definition = designFor(piece.type);
+      if (definition) {
+        button.dataset.designId = definition.id;
+        button.title = `${info.name}. ${designOptions.get(definition.id)?.description || ''}`;
+      }
       icon.className = `piece ${piece.color === 'w' ? 'white-piece' : 'black-piece'}${info.level ? ` upgraded ${info.accent}` : ''}`;
       icon.textContent = info.symbols[piece.color];
       button.append(icon);
@@ -331,7 +407,10 @@ function render(focusSquare) {
   else if (game.isCheck()) status += ' · Check';
   if (clock.expired) status = timeoutResult().status;
   document.querySelector('#status').textContent = status;
-  document.querySelector('#hint').textContent = isFinished() ? 'Start a new game or undo a move to keep playing.' : !canPlay() ? 'Start or resume the clock to continue playing.' : selected ? `${side(game.turn())} ${pieceInfo(game.get(selected).type).name} on ${selected}. Choose a highlighted square.` : 'Select a piece to see its legal moves.';
+  const selectedPiece = selected ? game.get(selected) : null;
+  const selectedDesign = selectedPiece ? designFor(selectedPiece.type) : null;
+  const description = selectedDesign ? ` ${designOptions.get(selectedDesign.id)?.description || ''}` : '';
+  document.querySelector('#hint').textContent = isFinished() ? 'Start a new game or undo a move to keep playing.' : !canPlay() ? 'Start or resume the clock to continue playing.' : selected ? `${side(game.turn())} ${infoFor(selectedPiece.type).name} on ${selected}. Choose a highlighted square.${description}` : 'Select a piece to see its legal moves.';
   document.querySelector('#undo').disabled = history.length === 0;
   document.querySelector('#top-player').textContent = flipped ? 'White pieces' : 'Black pieces';
   document.querySelector('#bottom-player').textContent = flipped ? 'Black pieces' : 'White pieces';
@@ -355,7 +434,13 @@ function render(focusSquare) {
       list.append(item);
     }
     const text = document.createElement('span');
-    text.textContent = move.san;
+    text.textContent = displaySan(move.san);
+    if (game.profile) {
+      const info = infoFor(move.piece);
+      const description = `${side(move.color)} ${info.name} from ${move.from} ${move.captured ? 'captures on' : 'to'} ${move.to}`;
+      text.title = description;
+      text.setAttribute('aria-label', description);
+    }
     item.append(text);
   }
   document.querySelector('#empty-history').hidden = history.length > 0;
@@ -372,7 +457,7 @@ function render(focusSquare) {
     const counts = new Map();
     for (const piece of game.board().flat()) {
       if (piece?.color !== color) continue;
-      const info = pieceInfo(piece.type);
+      const info = infoFor(piece.type);
       if (info.level) counts.set(info.level, (counts.get(info.level) || 0) + 1);
     }
     label.textContent = counts.size ? [...counts].sort(([a], [b]) => a - b).map(([level, count]) => `L${level} ×${count}`).join(' · ') : 'LEVEL 0';
@@ -435,10 +520,10 @@ async function newGame() {
   document.querySelector('#new-game').disabled = true;
   try {
     if (SUPPORTED_VARIANTS.includes(selectedMode)) {
-      const status = isPieceVariant(selectedMode) ? pieceStatus : upgradeStatus;
+      const status = isExperimental(selectedMode) ? experimentalStatus : isPieceVariant(selectedMode) ? pieceStatus : upgradeStatus;
       status.textContent = 'Loading piece-upgrade rules…';
-      await initVariantRules();
-      const setup = isPieceVariant(selectedMode) ? pieceSetupFromLevels : setupFromLevels;
+      await initVariantRules(selectedMode);
+      const setup = isExperimental(selectedMode) ? designSetupFromChoices : isPieceVariant(selectedMode) ? pieceSetupFromLevels : setupFromLevels;
       next = new VariantGame(setup(levels, budget).fen, selectedMode);
     } else next = new Chess();
     if (request !== replacementGeneration) { next.dispose?.(); return; }
@@ -459,7 +544,7 @@ async function newGame() {
     render();
   } catch (error) {
     if (next !== game) next?.dispose?.();
-    const status = isPieceVariant(selectedMode) ? pieceStatus : upgradeStatus;
+    const status = isExperimental(selectedMode) ? experimentalStatus : isPieceVariant(selectedMode) ? pieceStatus : upgradeStatus;
     status.textContent = `Could not start the upgrade game: ${error.message}`;
     status.classList.add('error');
     restart.close();
@@ -530,8 +615,18 @@ function applyGame(candidate) {
   game.dispose?.();
   game = candidate.game;
   gameMode.value = game.variant || 'chess';
-  activeBudget = candidate.settings?.upgradeBudget || (isPieceVariant(game.variant) ? 6 : 2);
-  if (game.variant === VARIANT) {
+  activeBudget = candidate.settings?.upgradeBudget || (isPieceVariant(game.variant) || isExperimental(game.variant) ? 6 : 2);
+  if (isExperimental(game.variant)) {
+    const choices = loadDesignSetup(game.getHeaders().FEN);
+    for (const slot of PIECE_SLOTS) document.querySelector(`#experimental-upgrade-${slot.square}`).value = choices[slot.square];
+    if (!candidate.settings?.upgradeBudget) {
+      // Study positions may exceed setup budgets. Keep them playable; the
+      // pending next-game choices report their cost without rejecting import.
+      const costs = designCosts(choices);
+      activeBudget = Math.max(1, Math.min(6, Math.max(costs.white, costs.black)));
+    }
+    experimentalBudget.value = String(activeBudget);
+  } else if (game.variant === VARIANT) {
     const levels = loadInitialSetup(game.getHeaders().FEN);
     for (const square of upgradeSquares) document.querySelector(`#upgrade-${square}`).value = String(levels[square]);
     if (!candidate.settings?.upgradeBudget) {
@@ -684,6 +779,8 @@ gameMode.onchange = updateSetup;
 upgradeBudget.onchange = updateSetup;
 pieceBudget.oninput = updateSetup;
 pieceFamily.onchange = updateFamily;
+experimentalBudget.oninput = updateSetup;
+experimentalFamily.onchange = updateExperimentalFamily;
 for (const square of upgradeSquares) document.querySelector(`#upgrade-${square}`).onchange = updateSetup;
 updateFamily();
 updateSetup();
