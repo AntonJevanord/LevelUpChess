@@ -24,6 +24,7 @@ function definition(family, color, level, movement, legacyType, legacySlot, revi
     placement,
     roles: { pawn: family === 'pawn', castlingRook: family === 'rook', enPassant: family === 'pawn' },
     ...(placement === 'extra' ? { extraSquare: { b1: 'b3', g1: 'g3' } } : {}),
+    ...(placement === 'insert' ? { extraSquare: { b1: 'b2', g1: 'g2' } } : {}),
   });
 }
 
@@ -46,6 +47,12 @@ const definitions = [
   // New behavior gets a new ID. The predecessor stays unchanged above.
   definition('pawn', 'purple', 3, 'mR2ceB', 'd', 11, 2),
   definition('rook', 'purple', 3, 'RcN', 'o', 12, 2),
+  // Version 10 candidates preserve their predecessors for archived profiles.
+  definition('pawn', 'purple', 3, 'mfRmsRcfB2', 'd', 11, 3),
+  definition('pawn', 'purple', 3, 'ifmnDfmWfceFsR', 'd', 11, 4),
+  definition('pawn', 'purple', 3, 'fQ2mbQ2', 'd', 11, 5),
+  definition('pawn', 'purple', 3, 'fmWfmDfceF', 'd', 11, 6, 'pair'),
+  definition('knight', 'purple', 3, 'WD', 'g', 3, 2, 'insert'),
 ];
 
 const DESIGNS = Object.freeze(Object.fromEntries(definitions.map(design => [design.id, design])));

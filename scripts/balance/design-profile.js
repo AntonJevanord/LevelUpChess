@@ -16,7 +16,7 @@ function freeze(value) {
   return value;
 }
 
-function position(pieces, turn = 'w', castling = '-') {
+function position(pieces, turn = 'w', castling = '-', ep = '-') {
   const placement = Array.from({ length: 8 }, (_, row) => {
     let rank = '', empty = 0;
     for (const file of 'abcdefgh') {
@@ -28,7 +28,7 @@ function position(pieces, turn = 'w', castling = '-') {
     }
     return rank + (empty || '');
   }).join('/');
-  return `${placement} ${turn} ${castling} - 0 1`;
+  return `${placement} ${turn} ${castling} ${ep} 0 1`;
 }
 
 function opposite(fen) {
@@ -61,6 +61,33 @@ function definitionProbes(definition, letter) {
       : position({ h1: 'K', h7: 'k', d1: type, d2: 'P', c1: 'P', e1: 'P', e3: 'p' }),
   });
   if (definition.roles.pawn) frames.push({ name: 'mandatory standard promotion', fen: position({ a1: 'K', h6: 'k', b7: type }) });
+  // New pawn candidates need fixtures for the abilities that distinguish them;
+  // keep earlier registries' probe lists unchanged for archived experiments.
+  if (definition.family === 'pawn' && definition.revision >= 3) {
+    frames.push({ name: definition.revision === 5 ? 'quiet forward visit to an en passant target' : 'standard en passant capture', fen: position({ h1: 'K', h8: 'k', c5: type, d5: 'p' }, 'w', '-', 'd6') });
+    if (definition.revision === 3) frames.push({
+      name: 'forward capture range and forbidden backward captures',
+      fen: position({ a1: 'K', h7: 'k', d4: type, b6: 'p', g7: 'p', c3: 'p', e3: 'p' }),
+    });
+    if (definition.revision === 4) frames.push({
+      name: 'rank captures and forbidden forward capture',
+      fen: position({ a1: 'K', h7: 'k', d4: type, a4: 'p', h4: 'p', d5: 'p', c5: 'p', e5: 'p' }),
+    });
+    if (definition.revision === 5) frames.push(
+      {
+        name: 'forward captures and quiet-only backward rays',
+        fen: position({ h1: 'K', h7: 'k', d4: type, b6: 'p', d6: 'p', f6: 'p', b2: 'p', d2: 'p', f2: 'p', a4: 'p', h4: 'p' }),
+      },
+      {
+        name: 'quiet backward visit to an en passant target',
+        fen: position({ h1: 'K', h8: 'k', c7: type, d5: 'p' }, 'w', '-', 'd6'),
+      },
+    );
+    if (definition.revision === 6) frames.push(
+      { name: 'repeatable quiet jump crosses a friendly blocker', fen: position({ a1: 'K', h7: 'k', d4: type, d5: 'P', c5: 'p', e5: 'p' }) },
+      { name: 'repeatable quiet jump cannot capture forward', fen: position({ a1: 'K', h7: 'k', d4: type, d5: 'P', d6: 'p', c5: 'p', e5: 'p' }) },
+    );
+  }
   if (definition.roles.castlingRook) frames.push({ name: 'both castling sides', fen: position({ e8: 'k', a1: type, e1: 'K', h1: type }, 'w', 'KQ') });
   for (const legacy of legacyCapabilityProbes(definition.legacyType, 'levelup-v5')) {
     frames.push({ name: legacy.name, fen: remap(legacy.fen, definition.legacyType, letter) });

@@ -2,20 +2,25 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
-const { DESIGNS } = require('../src/design-catalog');
+const { getDesign } = require('../src/design-catalog');
+const { PLAYABLE_DESIGN_IDS } = require('../src/playable-library');
 const { createDesignRegistry } = require('./balance/design-registry');
 const { compileDesignProfile } = require('./balance/design-profile');
 
 let compiled;
 
-/** One frozen library fits this first picker; games never reassign its types. */
+/** One curated library fits the picker; games never reassign its types. */
 function getPlayableProfile() {
   if (!compiled) {
     const squareFor = { pawn: 'd2', knight: 'b1', bishop: 'c1', rook: 'a1', queen: 'd1' };
-    const comparisons = Object.values(DESIGNS).map(design => ({
-      armyA: { upgrades: { [squareFor[design.family]]: design.id } },
-      armyB: { upgrades: {} },
-    }));
+    const comparisons = PLAYABLE_DESIGN_IDS.map(id => {
+      const design = getDesign(id);
+      if (!design) throw new Error(`The playable library contains an unknown design: ${id}.`);
+      return {
+        armyA: { upgrades: { [squareFor[design.family]]: id } },
+        armyB: { upgrades: {} },
+      };
+    });
     // Use the experiment compiler, including its allocation and role rules.
     // Ordinary pieces stay reserved even if a particular army omits them.
     compiled = compileDesignProfile(createDesignRegistry({ schemaVersion: 2, comparisons }));

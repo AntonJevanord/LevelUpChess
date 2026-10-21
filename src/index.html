@@ -8,7 +8,7 @@
   <script defer src="dist/app.js"></script>
 </head>
 <body>
-  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 09 / DESIGN PLAYTESTS</span></header>
+  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 10 / PAWN WORKSHOP</span></header>
   <main>
     <section class="intro"><span class="eyebrow">EVERY GREAT GAME STARTS HERE</span><h1>Your next move.</h1><p>Classic chess. Two players. One board.</p></section>
     <div class="game-layout">
@@ -29,7 +29,7 @@
             <p id="experimental-status" role="status" aria-live="polite"></p>
             <label for="experimental-family">Choose a piece family</label><select id="experimental-family"><option value="pawn">Pawns</option><option value="knight">Knights</option><option value="bishop">Bishops</option><option value="queen">Queens</option><option value="rook" selected>Rooks</option></select>
             <div id="experimental-choices"></div>
-            <p class="engine-help">Choices across all families apply to your next new game. Both sides use the same budget limit. Kings remain ordinary and royal. Bare kings draw; other low-material endings stay playable. Select a piece on the board to inspect its moves.</p>
+            <p class="engine-help">Choices across all families apply to your next new game. Twin pawns cost three points once for both units. Added guards push your pawns forward on their file within your half. Kings remain ordinary and royal. Bare kings draw; other low-material endings stay playable.</p>
           </div>
           <div id="piece-upgrade-settings" hidden>
             <label for="piece-upgrade-budget">Budget per side (1–45)</label><input id="piece-upgrade-budget" type="number" min="1" max="45" step="1" value="6">
@@ -46,6 +46,10 @@
             <div class="settings-row"><div><label for="upgrade-b8">Black b8 knight</label><select id="upgrade-b8"><option value="0">0 · Standard</option><option value="1" selected>1 · Blue</option><option value="2">2 · Orange</option><option value="3">3 · Purple</option></select></div><div><label for="upgrade-g8">Black g8 knight</label><select id="upgrade-g8"><option value="0">0 · Standard</option><option value="1">1 · Blue</option><option value="2">2 · Orange</option><option value="3">3 · Purple</option></select></div></div>
             <p id="upgrade-status" role="status" aria-live="polite">White 1/2 · Black 1/2 upgrade points.</p>
             <p class="engine-help">Costs equal levels. Purple pieces start on b3/g3 for White and b6/g6 for Black. Setup applies to your next new game.</p>
+          </div>
+          <div id="army-reset-settings" hidden>
+            <div class="army-reset-actions" role="group" aria-label="Reset army selections"><button id="clear-white-army" type="button" title="Clear White upgrade selections for the next game">Clear White</button><button id="clear-black-army" type="button" title="Clear Black upgrade selections for the next game">Clear Black</button><button id="clear-both-armies" type="button" title="Clear both armies’ upgrade selections for the next game">Clear both</button></div>
+            <p id="army-reset-status" class="engine-help" role="status" aria-live="polite"></p>
           </div>
           <label for="opponent">Opponent</label><select id="opponent"><option value="local">Local player</option><option value="engine">Fairy Stockfish</option></select>
           <div id="engine-settings" hidden>

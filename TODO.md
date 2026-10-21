@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 09 adds the playable experimental picker. The reference Piece upgrades mode keeps its version-05 rules. Version 08 preserves the first design-registry experiment; historical milestones are in [development history](docs/development-history.md).
+Version 10 adds army reset controls, four pawn candidates, and own-file deployment. Version 09 preserves the first playable picker; version 08 preserves the first design-registry experiment. The reference Piece upgrades mode keeps its version-05 rules. Historical milestones are in [development history](docs/development-history.md).
 
 Browser-save compatibility across releases is optional. Experiment definitions, identities, and results must remain reproducible.
 
@@ -37,8 +37,7 @@ Implement in this order. Start human playtesting before requiring tight numerica
 - [x] Begin with original/revised rook choices and a small set of pawn alternatives; label experimental and parked references explicitly.
 - [x] Keep tier/cost separate from design name, behavior revision, and color. Show a short movement description and highlight legal moves; name designs in board/history tooltips.
 - [x] Use green/cyan/red for levels 1/2/3; review desktop/mobile layouts, level numbers, and White/Black contrast.
-- [ ] Consolidate Windows playtesting: direct-file loading, setup budgets, mixed armies, special moves, engine play, timed undo, and save/export recovery. Managed Chromium blocks `file://` in the cloud; the offline HTML check supplies the artifact from memory.
-- [ ] Record feedback by design revision: readability, useful choices, enjoyment, counterplay, and frustrating positions. Retire poor ideas before spending balance games on them.
+- [x] Receive initial playtesting feedback and preserve `version_09` before the next changes.
 
 ### 3. Test the surviving ideas
 
@@ -50,11 +49,23 @@ Implement in this order. Start human playtesting before requiring tight numerica
 
 Two to six ideas per family per tier means 36–108 upgraded designs. Keep that as an idea pool and implement selected alternatives gradually. A full second set does not block the first playable picker.
 
+## Version 10 — army reset and pawn candidates
+
+- [x] Preserve version 09 and develop on `version_10`.
+- [x] Clear White, Black, or both draft armies across all families in each upgrade mode; apply the new army through **New game**.
+- [x] Add Courier, Rank, Returning, and Twin pawn purchases as separate three-point revisions, retaining their predecessors.
+- [x] Deploy pawns first; insert the experimental knight guard on its own second rank and advance only its own pawn stack within its half. Twin pawns plus guard occupy ranks 1–4 with the ordinary knight, mirrored for Black.
+- [x] Freeze a curated 20-design playable library from the 22-entry catalog. Preserve the parked pawn and earlier guard placement for archived balance profiles.
+- [x] Record [working material priors and initial adjustments](DESIGN.md#version-10-pawn-experiments). No new balance campaign is queued.
+- [x] Verify new moves, promotion, en passant, fifty-move counters, mirrored deployment, draft reset, engine play, timed undo, and save/PGN round trips: 324 unit/integration cases, 19 focused browser cases, and an offline/mobile smoke. Combined-run timeouts passed focused rechecks.
+- [ ] Consolidate Windows playtesting, including direct-file loading. Managed Chromium blocks `file://` in the cloud; offline checks supply the complete HTML from memory.
+- [ ] Record feedback by revision: promotion pressure, sideways control, retreat loops, Twin-pawn congestion, readability, enjoyment, and counterplay. Shortlist ideas before declaring another capped balance batch.
+
 ## Deferred work
 
 - [ ] Integrate independent capture-only king choices into the main browser board after royal identity, castling, mating tests, and asymmetric-king evaluation limits are handled. Keep one royal per side.
 - [ ] Agree on queen/rook conversion goals and a consistent dead-position policy; guard grants remain an alternative design.
-- [ ] Add grouped capacity-bounded registries and custom setup support when a declared experiment needs them.
+- [ ] Automatically split larger idea pools into capacity-bounded experiment groups; add general custom setups when a declared experiment needs them.
 - [ ] Investigate ordinary/custom representation effects, material handicaps, wider openings, or evaluation overrides only for a concrete decision. Existing templates are optional research.
 - [ ] Consider random armies, additional art/themes, and online play after the local design workflow is useful.
 

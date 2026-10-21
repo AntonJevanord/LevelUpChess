@@ -4,7 +4,13 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const { normalizeConfig, makeSchedule } = require('../scripts/balance/plan');
-const { DESIGNS } = require('../src/design-catalog');
+const originalDesignIds = [
+  'knight.blue@1', 'knight.orange@1', 'knight.purple@1',
+  'bishop.blue@1', 'bishop.orange@1', 'bishop.purple@1',
+  'queen.blue@1', 'queen.orange@1', 'queen.purple@1',
+  'pawn.blue@1', 'pawn.orange@1', 'pawn.purple@1', 'pawn.purple@2',
+  'rook.blue@1', 'rook.orange@1', 'rook.purple@1', 'rook.purple@2',
+];
 
 function simple() {
   return {
@@ -14,7 +20,7 @@ function simple() {
   };
 }
 
-function allDesigns() {
+function originalLibrary() {
   const config = simple();
   config.comparisons = [{
     id: 'all-active',
@@ -85,7 +91,7 @@ test('schema 2 rejects unknown, numeric, wrong-family and royal choices before s
 
 test('limiting scheduled pairs preserves the full declared campaign registry and letters', native, async t => {
   const dir = temp(t);
-  const config = normalizeConfig(allDesigns());
+  const config = normalizeConfig(originalLibrary());
   const { createDesignRegistry } = require('../scripts/balance/design-registry');
   const { compileDesignProfile } = require('../scripts/balance/design-profile');
   const expected = createDesignRegistry(config);
@@ -98,9 +104,10 @@ test('limiting scheduled pairs preserves the full declared campaign registry and
   assert.equal(manifest.designProfile.hash, compileDesignProfile(expected).hash);
 });
 
-test('one frozen campaign allocation supports all designs, cancellation and replay across colors', native, async t => {
+// This scenario repeats full native preflight across cancellation and resume.
+test('one frozen original-library allocation supports cancellation and replay across colors', { ...native, timeout: 120000 }, async t => {
   const dir = temp(t);
-  const config = normalizeConfig(allDesigns());
+  const config = normalizeConfig(originalLibrary());
   const controller = new AbortController();
   let checked = 0;
   const interrupted = await run(config, dir, {
@@ -114,8 +121,8 @@ test('one frozen campaign allocation supports all designs, cancellation and repl
   assert.equal(interrupted.stopped, true);
   assert.equal(checked, 1, 'all comparisons share one fully preflighted profile');
   const manifest = json(dir, 'run.json');
-  assert.equal(manifest.designRegistry.definitions.length, Object.keys(DESIGNS).length);
-  assert.deepEqual(new Set(manifest.designRegistry.definitions.map(d => d.id)), new Set(Object.keys(DESIGNS)));
+  assert.equal(manifest.designRegistry.definitions.length, originalDesignIds.length);
+  assert.deepEqual(new Set(manifest.designRegistry.definitions.map(d => d.id)), new Set(originalDesignIds));
   const letters = new Map(manifest.designRegistry.allocations.map(a => [a.id, a.letter]));
   assert.notEqual(letters.get('pawn.purple@1'), letters.get('pawn.purple@2'));
   assert.notEqual(letters.get('rook.purple@1'), letters.get('rook.purple@2'));

@@ -40,15 +40,19 @@ test('the embedded profile and native INI reproduce the trusted current catalog'
   const compiled = getPlayableProfile();
   assert.deepEqual(PLAYABLE_PROFILE, compiled);
   assert.equal(readFileSync(require.resolve('../variants/levelup-playable.ini'), 'utf8'), compiled.config);
-  assert.equal(compiled.registry.definitions.length, 17);
-  assert.equal(new Set(DESIGN_OPTIONS.map(option => option.id)).size, 17);
+  assert.equal(compiled.registry.definitions.length, 20);
+  assert.equal(new Set(DESIGN_OPTIONS.map(option => option.id)).size, 20);
   assert.equal(compiled.hash, createHash('sha256').update(JSON.stringify({ config: compiled.config, registry: compiled.registry })).digest('hex'));
-  assert.equal(DESIGN_OPTIONS.find(option => option.id === 'pawn.purple@2').status, 'parked');
+  assert.equal(DESIGN_OPTIONS.find(option => option.id === 'pawn.purple@2'), undefined);
+  assert.equal(DESIGN_OPTIONS.find(option => option.id === 'knight.purple@1'), undefined);
+  for (const id of ['pawn.purple@3', 'pawn.purple@4', 'pawn.purple@5', 'pawn.purple@6', 'knight.purple@2']) {
+    assert.equal(DESIGN_OPTIONS.find(option => option.id === id).status, 'experimental');
+  }
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'rook.purple@2').status, 'experimental');
 });
 
 test('full starting choices resolve IDs for both armies, budgets, and extra units', () => {
-  const choices = { ...DEFAULT_DESIGN_CHOICES, a1: 'rook.purple@2', b1: 'knight.purple@1', a7: 'pawn.purple@2', h8: 'rook.purple@1' };
+  const choices = { ...DEFAULT_DESIGN_CHOICES, a1: 'rook.purple@2', b1: 'knight.purple@2', a7: 'pawn.purple@5', h8: 'rook.purple@1' };
   const setup = designSetupFromChoices(choices, 6);
   assert.deepEqual(setup.costs, { w: 6, b: 6 });
   assert.deepEqual(setup.choices, choices);
@@ -63,15 +67,17 @@ test('full starting choices resolve IDs for both armies, budgets, and extra unit
   assert.throws(() => designSetupFromChoices(choices, 0));
 });
 
-test('mapped V/W remain a pawn and rook in display, checks, and move generation', t => {
-  const pawn = letter('pawn.purple@2'), rook = letter('rook.purple@2');
-  assert.equal(pawn, 'V');
-  assert.equal(rook, 'W');
-  assert.equal(pieceInfoForProfile(PLAYABLE_PROFILE, 'v').family, 'pawn');
-  assert.equal(pieceInfoForProfile(PLAYABLE_PROFILE, 'w').family, 'rook');
+test('allocated custom letters retain pawn and rook roles in display, checks, and movement', t => {
+  const pawn = letter('pawn.purple@5'), rook = letter('rook.purple@2');
+  assert.equal(pieceInfoForProfile(PLAYABLE_PROFILE, pawn).family, 'pawn');
+  assert.equal(pieceInfoForProfile(PLAYABLE_PROFILE, rook).family, 'rook');
+  for (const { id, letter: type } of PLAYABLE_PROFILE.registry.allocations) {
+    const definition = PLAYABLE_PROFILE.registry.definitions.find(item => item.id === id);
+    assert.equal(pieceInfoForProfile(PLAYABLE_PROFILE, type).family, definition.family, id);
+  }
   const instance = game(t, position({ a1: 'K', h7: 'k', d4: pawn, f4: rook }));
   assert.equal(instance.profile.hash, PLAYABLE_PROFILE.hash);
-  assert.equal(instance.pieceInfo('v').level, 3);
+  assert.equal(instance.pieceInfo(pawn.toLowerCase()).level, 3);
   assert.equal(instance.pieceInfo('k').family, 'king');
   assert.ok(instance.moves({ square: 'd4', verbose: true }).some(move => move.to === 'd6'));
   assert.ok(!instance.moves({ square: 'd4', verbose: true }).some(move => move.to === 'd7'));
@@ -108,7 +114,7 @@ test('revised rook captures jump while quiet moves and castling retain rook rule
 
 test('mapped pawn promotions remain standard for both colors', t => {
   for (const color of ['w', 'b']) {
-    const type = letter('pawn.purple@2', color);
+    const type = letter('pawn.purple@5', color);
     const from = color === 'w' ? 'b7' : 'b2';
     const to = color === 'w' ? 'b8' : 'b1';
     const instance = game(t, position({ h1: 'K', h8: 'k', [from]: type }, color));
@@ -134,7 +140,7 @@ test('multi-target en passant and queen landing markers reload under assigned ro
 });
 
 test('PGN snapshots preserve both revisions, reject tampering, and leave failed imports unchanged', t => {
-  const choices = { ...DEFAULT_DESIGN_CHOICES, a1: 'rook.purple@2', h1: 'rook.purple@1', a7: 'pawn.purple@2' };
+  const choices = { ...DEFAULT_DESIGN_CHOICES, a1: 'rook.purple@2', h1: 'rook.purple@1', a7: 'pawn.purple@5' };
   const original = game(t, designSetupFromChoices(choices, 6).fen);
   original.move('e4'); original.move('e5');
   const pgn = original.pgn();

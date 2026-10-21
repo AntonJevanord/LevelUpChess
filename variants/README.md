@@ -2,15 +2,35 @@
 
 Browser and native Fairy Stockfish load the same configuration. Reference Piece upgrades uses `levelup-v5.ini` (`levelup-v5`); Experimental designs uses the generated profile described below. Earlier modes retain `levelup.ini` (`levelup`, version 04) or `levelup-knight.ini` (`levelup-knight`, version 03). Saves and PGNs identify their rules.
 
-## Experimental designs — version 09
+## Experimental designs — version 10
 
-The picker uses one frozen library of 17 immutable design revisions from [the catalog](../src/design-catalog.js). The build compiles [levelup-playable.ini](levelup-playable.ini) and [the matching profile](../src/playable-profile.json) through the same registry/compiler as balance experiments. These are generated files. Display names, descriptions, and tier colors live separately in [design options](../src/design-options.js).
+The picker freezes the 20 revisions in [the playable library](../src/playable-library.js), selected from 22 immutable [catalog entries](../src/design-catalog.js). The build compiles [levelup-playable.ini](levelup-playable.ini) and [the matching profile](../src/playable-profile.json) through the balance registry/compiler. These are generated files. Names, descriptions, and colors live in [design options](../src/design-options.js).
 
-All original designs below remain selectable. `rook.purple@2` adds only capture-only knight jumps to an ordinary rook (`RcN`); `pawn.purple@2` limits quiet orthogonal slides to two clear squares while keeping full bishop captures (`mR2ceB`). Both cost three points. The pawn is labeled parked reference; the rook is experimental. Each side's new-game budget is 1–6.
+Each side has a 1–6 point budget. New pawn purchases all cost three points:
+
+| Design | Movement | Deployment |
+| --- | --- | --- |
+| Courier, `pawn.purple@3` | Quiet forward/horizontal rook slides; forward diagonal captures up to two clear squares (`mfRmsRcfB2`). | Replaces one pawn. |
+| Rank, `pawn.purple@4` | Horizontal rook moves/captures; ordinary forward pawn moves/captures with a clear initial double-step (`ifmnDfmWfceFsR`). | Replaces one pawn. |
+| Returning, `pawn.purple@5` | Forward queen rays up to two clear squares move/capture; backward rays are quiet-only; no sideways rays (`fQ2mbQ2`). | Replaces one pawn. |
+| Twins, `pawn.purple@6` | Each unit jumps one or two squares quietly forward and captures one square diagonally forward (`fmWfmDfceF`). | Two same-type pawns on relative ranks 2/3 for one three-point purchase. |
+
+The revised `knight.purple@2` keeps the ordinary knight and inserts its `WD` guard on b2/g2 for White or b7/g7 for Black. Insertion pushes only its own contiguous pawn stack one square forward, stopping within its own half. With Twins, the ordinary knight, guard, and two pawns fill relative ranks 1/2/3/4. Deployment rejects collisions and overflow. Purchase cost is counted once; the board's level summary counts remaining units.
+
+Other original designs remain selectable, as does the experimental `rook.purple@2` (`RcN`). The parked `pawn.purple@2` and fixed rank-3 `knight.purple@1` remain immutable historical definitions outside this picker; version 09 preserves its earlier library.
 
 The active mapping determines pawn roles, promotions/en passant, extra-unit placement, and castling rooks. It also determines board glyphs and labels; a temporary letter alone never identifies a family. Kings remain ordinary. Experimental games draw bare kings, repetition, stalemate, and the fifty-move rule; other material endings continue conservatively, with checkmate taking priority.
 
 Experimental PGNs include the hashed variant, starting FEN, and a `LevelUpProfile` snapshot containing definitions, allocation, and exact INI. Browser saves also store starting choices where the position describes a standard starting army. Imports require the matching bundled profile and validate every move; arbitrary edited definitions are rejected. Imported study positions are independent of new-game budgets.
+
+### Experimental pawn special rules
+
+- Every new pawn unit must promote to a standard queen, rook, bishop, or knight on the enemy back rank.
+- Courier, Rank, and Twins can capture en passant along their diagonal capture paths. Returning moves quietly onto an empty en-passant target and leaves the bypassed pawn, like the reference orange pawn.
+- Rank's initial clear double-step creates en-passant rights. Courier's long advances, Returning's two-square slides, and Twin repeatable jumps create no such rights, including from shifted starting ranks.
+- Returning quiet moves and quiet sideways Courier/Rank moves count toward the fifty-move limit because they are reversible. Their captures and promotions reset it. Forward-only Courier/Rank moves and Twin forward jumps reset it.
+
+Use **Clear White**, **Clear Black**, or **Clear both** to clear draft selections across hidden families. Budgets stay selected. **New game** applies the new army and resets the board.
 
 ## Version 05 movement
 
@@ -48,7 +68,7 @@ Custom pawns use the engine's native en passant rules:
 
 The board, undo, repetition detection, saved games, and PGN use these engine results, including the blue pawn's multiple en passant targets after a three-square leap.
 
-## Setup and budgets
+## Reference setup and budgets
 
 Choose levels for 30 starting pieces: sixteen pawns, four knights, four bishops, four rooks, and two queens. The same selected budget of 1–45 applies independently to each side. Cost equals level; unspent points are allowed.
 

@@ -29,6 +29,8 @@ const pieceFamily = document.querySelector('#piece-family');
 const experimentalBudget = document.querySelector('#experimental-budget');
 const experimentalStatus = document.querySelector('#experimental-status');
 const experimentalFamily = document.querySelector('#experimental-family');
+const armyResetSettings = document.querySelector('#army-reset-settings');
+const armyResetStatus = document.querySelector('#army-reset-status');
 const experimentalOption = gameMode.querySelector('option[value=levelup-experimental]');
 experimentalOption.value = EXPERIMENTAL_VARIANT;
 const designOptions = new Map(DESIGN_OPTIONS.map(option => [option.id, option]));
@@ -148,6 +150,8 @@ function updateSetup() {
   document.querySelector('#upgrade-settings').hidden = gameMode.value !== VARIANT;
   document.querySelector('#piece-upgrade-settings').hidden = !isPieceVariant(gameMode.value);
   document.querySelector('#experimental-settings').hidden = !isExperimental(gameMode.value);
+  armyResetSettings.hidden = !SUPPORTED_VARIANTS.includes(gameMode.value);
+  armyResetStatus.textContent = '';
   const oldRules = gameMode.value === PIECE_VARIANT;
   const maxBudget = oldRules ? 39 : MAX_PIECE_BUDGET;
   pieceBudget.max = String(maxBudget);
@@ -171,6 +175,22 @@ function updateSetup() {
   status.textContent = !validBudget ? `Choose a whole-number budget from 1 to ${budgetLimit}.` : valid ? `White ${white}/${budget} · Black ${black}/${budget} upgrade points.` : `Budget exceeded: White ${white}/${budget} · Black ${black}/${budget}. Reduce upgrades before starting a new game.`;
   return !SUPPORTED_VARIANTS.includes(gameMode.value) || valid;
 }
+
+function clearArmySelections(color) {
+  if (!SUPPORTED_VARIANTS.includes(gameMode.value)) return;
+  const experimental = isExperimental(gameMode.value);
+  const current = isPieceVariant(gameMode.value);
+  const slots = experimental || current ? PIECE_SLOTS : KNIGHT_SLOTS;
+  const prefix = experimental ? 'experimental-upgrade' : current ? 'piece-upgrade' : 'upgrade';
+  for (const slot of slots.filter(slot => !color || slot.color === color)) {
+    document.querySelector(`#${prefix}-${slot.square}`).value = experimental ? '' : '0';
+  }
+  updateSetup();
+  armyResetStatus.textContent = `${color ? side(color) + ' upgrades' : 'Both armies’ upgrades'} cleared. Choose your army, then start a New game to reset the board.`;
+}
+document.querySelector('#clear-white-army').onclick = () => clearArmySelections('w');
+document.querySelector('#clear-black-army').onclick = () => clearArmySelections('b');
+document.querySelector('#clear-both-armies').onclick = () => clearArmySelections();
 
 let connected = false;
 let engineBusy = false;
@@ -460,7 +480,9 @@ function render(focusSquare) {
       const info = infoFor(piece.type);
       if (info.level) counts.set(info.level, (counts.get(info.level) || 0) + 1);
     }
-    label.textContent = counts.size ? [...counts].sort(([a], [b]) => a - b).map(([level, count]) => `L${level} ×${count}`).join(' · ') : 'LEVEL 0';
+    const levels = counts.size ? [...counts].sort(([a], [b]) => a - b).map(([level, count]) => `L${level} ×${count}`).join(' · ') : 'LEVEL 0';
+    label.textContent = game.profile && counts.size ? `Units · ${levels}` : levels;
+    label.title = game.profile ? 'Upgraded units remaining on the board. Purchase costs are shown in the setup budget.' : '';
   });
   updateClocks();
   void maybeEngineMove();

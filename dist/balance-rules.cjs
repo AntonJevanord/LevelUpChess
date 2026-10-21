@@ -92,7 +92,7 @@ var require_piece_catalog = __commonJS({
 var require_knight_setup = __commonJS({
   "src/knight-setup.js"(exports2, module2) {
     var { PIECES, KNIGHT_LEVELS, KNIGHT_SLOTS, UPGRADE_BUDGETS } = require_piece_catalog();
-    var START_FEN2 = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    var START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
     function placement(fen) {
       if (typeof fen !== "string") throw new Error("The starting FEN is invalid.");
       const ranks = fen.trim().split(/\s+/)[0].split("/");
@@ -132,7 +132,7 @@ var require_knight_setup = __commonJS({
         costs[slot.color] += PIECES[KNIGHT_LEVELS[level]].cost;
       }
       if (costs.w > budget || costs.b > budget) throw new Error(`Budget exceeded: White ${costs.w}/${budget} \xB7 Black ${costs.b}/${budget}.`);
-      const board = placement(START_FEN2);
+      const board = placement(START_FEN);
       for (const slot of KNIGHT_SLOTS) {
         const level = choices[slot.square];
         const type = KNIGHT_LEVELS[level];
@@ -166,7 +166,7 @@ var require_knight_setup = __commonJS({
         return [slot.square, level];
       }));
     }
-    module2.exports = { START_FEN: START_FEN2, setupFromLevels, loadInitialSetup };
+    module2.exports = { START_FEN, setupFromLevels, loadInitialSetup };
   }
 });
 
@@ -174,7 +174,7 @@ var require_knight_setup = __commonJS({
 var require_piece_setup = __commonJS({
   "src/piece-setup.js"(exports2, module2) {
     var { PIECES, PIECE_LEVELS, PIECE_SLOTS: PIECE_SLOTS2, PIECE_BUDGETS, MAX_PIECE_BUDGET } = require_piece_catalog();
-    var { START_FEN: START_FEN2 } = require_knight_setup();
+    var { START_FEN } = require_knight_setup();
     function placement(fen) {
       if (typeof fen !== "string") throw new Error("The starting FEN is invalid.");
       const ranks = fen.trim().split(/\s+/)[0].split("/");
@@ -214,7 +214,7 @@ var require_piece_setup = __commonJS({
         costs[slot.color] += PIECES[type].cost;
       }
       if (costs.w > budget || costs.b > budget) throw new Error(`Budget exceeded: White ${costs.w}/${budget} \xB7 Black ${costs.b}/${budget}.`);
-      const board = placement(START_FEN2);
+      const board = placement(START_FEN);
       for (const slot of PIECE_SLOTS2) {
         const level = choices[slot.square];
         const type = PIECE_LEVELS[slot.family][level];
@@ -248,7 +248,7 @@ var require_piece_setup = __commonJS({
         return [slot.square, Math.max(level, 0)];
       }));
     }
-    module2.exports = { START_FEN: START_FEN2, pieceSetupFromLevels: pieceSetupFromLevels2, loadPieceSetup };
+    module2.exports = { START_FEN, pieceSetupFromLevels: pieceSetupFromLevels2, loadPieceSetup };
   }
 });
 
@@ -357,6 +357,192 @@ var require_profile_fen = __commonJS({
       return new module3.Board(variant, fen);
     }
     module2.exports = { ROYALS: ROYALS2, pieceMap: pieceMap2, placementFromMap: placementFromMap2, checkedBoard: checkedBoard2 };
+  }
+});
+
+// src/design-catalog.js
+var require_design_catalog = __commonJS({
+  "src/design-catalog.js"(exports2, module2) {
+    "use strict";
+    var STANDARD_TYPES = Object.freeze({ pawn: "p", knight: "n", bishop: "b", rook: "r", queen: "q", king: "k" });
+    function freeze(value) {
+      if (value && typeof value === "object") {
+        for (const child of Object.values(value)) freeze(child);
+        Object.freeze(value);
+      }
+      return value;
+    }
+    function definition(family, color, level, movement, legacyType, legacySlot, revision = 1, placement = "replace") {
+      return freeze({
+        id: `${family}.${color}@${revision}`,
+        family,
+        level,
+        revision,
+        movement,
+        legacyType,
+        legacySlot,
+        placement,
+        roles: { pawn: family === "pawn", castlingRook: family === "rook", enPassant: family === "pawn" },
+        ...placement === "extra" ? { extraSquare: { b1: "b3", g1: "g3" } } : {},
+        ...placement === "insert" ? { extraSquare: { b1: "b2", g1: "g2" } } : {}
+      });
+    }
+    var definitions = [
+      definition("knight", "blue", 1, "NmW", "e", 1),
+      definition("knight", "orange", 2, "NsD", "f", 2),
+      definition("knight", "purple", 3, "WD", "g", 3, 1, "extra"),
+      definition("bishop", "blue", 1, "BmW", "h", 4),
+      definition("bishop", "orange", 2, "BcfN", "i", 5),
+      definition("bishop", "purple", 3, "BfbR", "j", 6),
+      definition("queen", "orange", 2, "QmN", "t", 7),
+      definition("queen", "purple", 3, "QN", "u", 8),
+      definition("pawn", "blue", 1, "ifmHfmDfmWfceF", "a", 9),
+      definition("pawn", "orange", 2, "ifmnDfeWfF", "c", 10),
+      definition("pawn", "purple", 3, "mRceB", "d", 11),
+      definition("rook", "purple", 3, "RcFcAcNcD", "o", 12),
+      definition("rook", "blue", 1, "RimD", "l", 13),
+      definition("rook", "orange", 2, "RcpR", "m", 14),
+      definition("queen", "blue", 1, "QimNimCimZ", "s", 15),
+      // New behavior gets a new ID. The predecessor stays unchanged above.
+      definition("pawn", "purple", 3, "mR2ceB", "d", 11, 2),
+      definition("rook", "purple", 3, "RcN", "o", 12, 2),
+      // Version 10 candidates preserve their predecessors for archived profiles.
+      definition("pawn", "purple", 3, "mfRmsRcfB2", "d", 11, 3),
+      definition("pawn", "purple", 3, "ifmnDfmWfceFsR", "d", 11, 4),
+      definition("pawn", "purple", 3, "fQ2mbQ2", "d", 11, 5),
+      definition("pawn", "purple", 3, "fmWfmDfceF", "d", 11, 6, "pair"),
+      definition("knight", "purple", 3, "WD", "g", 3, 2, "insert")
+    ];
+    var DESIGNS = Object.freeze(Object.fromEntries(definitions.map((design) => [design.id, design])));
+    var LEGACY_DESIGN_IDS = Object.freeze(Object.fromEntries(definitions.filter((design) => design.revision === 1).map((design) => [design.legacyType, design.id])));
+    function getDesign(id) {
+      return typeof id === "string" && Object.hasOwn(DESIGNS, id) ? DESIGNS[id] : void 0;
+    }
+    module2.exports = { DESIGNS, STANDARD_TYPES, LEGACY_DESIGN_IDS, getDesign };
+  }
+});
+
+// src/design-deployment.js
+var require_design_deployment = __commonJS({
+  "src/design-deployment.js"(exports2, module2) {
+    "use strict";
+    var { STANDARD_TYPES } = require_design_catalog();
+    var { PIECE_SLOTS: PIECE_SLOTS2 } = require_piece_catalog();
+    var { START_FEN } = require_knight_setup();
+    var { pieceMap: pieceMap2 } = require_profile_fen();
+    var relativeSquare = (square, color) => color === "w" ? square : square[0] + (9 - Number(square[1]));
+    var colored = (type, color) => color === "w" ? type.toUpperCase() : type;
+    var own = (piece, color) => typeof piece === "string" && piece === colored(piece.toLowerCase(), color);
+    var relativeSlots = new Map(PIECE_SLOTS2.filter((slot) => slot.color === "w").map((slot) => [slot.square, slot]));
+    function sourceFor(pieces, square, definition, color) {
+      const slot = relativeSlots.get(square);
+      if (!slot || slot.family !== definition.family || pieces.get(relativeSquare(square, color)) !== colored(STANDARD_TYPES[definition.family], color)) {
+        throw new Error(`The ${definition.family} design cannot be placed for ${relativeSquare(square, color)}.`);
+      }
+    }
+    function insertPawnStack(pieces, target, letter, color, pawnTypes) {
+      if (!/^[a-h]2$/.test(target)) throw new Error("Inserted pieces must start on their own second rank.");
+      const file = target[0];
+      let empty = 2;
+      while (empty <= 4 && pieces.has(relativeSquare(file + empty, color))) {
+        const piece = pieces.get(relativeSquare(file + empty, color));
+        if (!own(piece, color) || !pawnTypes.has(piece.toLowerCase())) throw new Error(`Only your own pawns can move forward to make room on the ${file}-file.`);
+        empty++;
+      }
+      if (empty > 4) throw new Error(`There is no deployment space on your half of the ${file}-file.`);
+      for (let rank = empty; rank > 2; rank--) {
+        const previous = relativeSquare(file + (rank - 1), color);
+        pieces.set(relativeSquare(file + rank, color), pieces.get(previous));
+        pieces.delete(previous);
+      }
+      pieces.set(relativeSquare(target, color), colored(letter, color));
+    }
+    function deployDesignArmies2(profile, white = {}, black = {}, initialPieces = pieceMap2(START_FEN)) {
+      if (!(initialPieces instanceof Map)) throw new Error("Deployment needs a starting piece map.");
+      const pieces = new Map(initialPieces);
+      const pawnTypes = new Set(profile.roles.pawnTypes.filter((type) => !profile.roles.royalTypes.includes(type)));
+      for (const [color, army] of [["w", white], ["b", black]]) {
+        const choices = army.choices || [];
+        const remove = army.remove || [];
+        if (!Array.isArray(choices) || !Array.isArray(remove) || new Set(choices.map((choice) => choice.square)).size !== choices.length) throw new Error("Deployment needs distinct starting choices.");
+        for (const square of remove) {
+          const target = relativeSquare(square, color);
+          const piece = pieces.get(target);
+          if (!relativeSlots.has(square) || choices.some((choice) => choice.square === square) || piece && !own(piece, color)) throw new Error(`The starting piece on ${target} cannot be removed.`);
+          pieces.delete(target);
+        }
+        const ordered = [...choices].sort((a, b) => Number(a.definition.family !== "pawn") - Number(b.definition.family !== "pawn") || a.square.localeCompare(b.square));
+        const extras = [];
+        for (const { square, definition, letter } of ordered) {
+          sourceFor(pieces, square, definition, color);
+          if (definition.placement === "extra" || definition.placement === "insert") {
+            extras.push({ square, definition, letter });
+            continue;
+          }
+          if (definition.placement === "pair") {
+            if (definition.family !== "pawn" || !/^[a-h]2$/.test(square)) throw new Error("Paired designs must replace a starting pawn.");
+            const second = relativeSquare(square[0] + "3", color);
+            if (pieces.has(second)) throw new Error(`The paired-pawn square ${second} is occupied.`);
+            pieces.set(second, colored(letter, color));
+          } else if (definition.placement !== "replace") throw new Error("This deployment rule is not supported.");
+          pieces.set(relativeSquare(square, color), colored(letter, color));
+        }
+        for (const { square, definition, letter } of extras) {
+          const target = definition.extraSquare?.[square];
+          if (!/^[a-h][234]$/.test(target || "") || target[0] !== square[0]) throw new Error(`The extra piece cannot be placed for ${relativeSquare(square, color)}.`);
+          if (definition.placement === "insert") insertPawnStack(pieces, target, letter, color, pawnTypes);
+          else {
+            const destination = relativeSquare(target, color);
+            if (pieces.has(destination)) throw new Error(`The extra-piece square ${destination} is occupied.`);
+            pieces.set(destination, colored(letter, color));
+          }
+        }
+      }
+      return pieces;
+    }
+    function recoverDesignChoices(initialPieces, profile) {
+      const pieces = new Map(initialPieces);
+      const result = Object.fromEntries(PIECE_SLOTS2.map((slot) => [slot.square, ""]));
+      const definitions = profile.registry.allocations.map((allocation) => ({ ...allocation, definition: profile.definitionsByLetter[allocation.letter] }));
+      const pawnTypes = new Set(profile.roles.pawnTypes.filter((type) => !profile.roles.royalTypes.includes(type)));
+      for (const slot of PIECE_SLOTS2.filter((slot2) => slot2.family !== "pawn")) {
+        const square = relativeSquare(slot.square, slot.color);
+        if (pieces.get(slot.square) !== colored(STANDARD_TYPES[slot.family], slot.color)) continue;
+        const inserted = definitions.find(({ definition, letter }) => {
+          const target = definition.extraSquare?.[square];
+          return definition.family === slot.family && definition.placement === "insert" && /^[a-h]2$/.test(target || "") && target[0] === square[0] && pieces.get(relativeSquare(target, slot.color)) === colored(letter, slot.color);
+        });
+        if (!inserted) continue;
+        result[slot.square] = inserted.id;
+        const file = square[0];
+        pieces.delete(relativeSquare(file + "2", slot.color));
+        for (let rank = 3; rank <= 4; rank++) {
+          const source = relativeSquare(file + rank, slot.color);
+          const piece = pieces.get(source);
+          if (!own(piece, slot.color) || !pawnTypes.has(piece.toLowerCase())) break;
+          pieces.set(relativeSquare(file + (rank - 1), slot.color), piece);
+          pieces.delete(source);
+        }
+      }
+      for (const slot of PIECE_SLOTS2) {
+        if (result[slot.square]) continue;
+        const square = relativeSquare(slot.square, slot.color);
+        const source = pieces.get(slot.square);
+        const extra = definitions.find(({ definition, letter }) => {
+          const target = definition.extraSquare?.[square];
+          return definition.family === slot.family && definition.placement === "extra" && target && source === colored(STANDARD_TYPES[slot.family], slot.color) && pieces.get(relativeSquare(target, slot.color)) === colored(letter, slot.color);
+        });
+        if (extra) result[slot.square] = extra.id;
+        else if (own(source, slot.color)) {
+          const definition = profile.definitionsByLetter[source.toLowerCase()];
+          if (definition?.family !== slot.family) continue;
+          if (definition.placement === "replace") result[slot.square] = definition.id;
+          else if (definition.placement === "pair" && slot.family === "pawn" && pieces.get(relativeSquare(square[0] + "3", slot.color)) === source) result[slot.square] = definition.id;
+        }
+      }
+      return result;
+    }
+    module2.exports = { deployDesignArmies: deployDesignArmies2, recoverDesignChoices };
   }
 });
 
@@ -4973,10 +5159,12 @@ var levelup_v5_default = "# Current piece upgrades. The levelup-knight variant p
 var import_piece_setup = __toESM(require_piece_setup());
 var import_piece_catalog = __toESM(require_piece_catalog());
 var import_profile_fen = __toESM(require_profile_fen());
-var { pieceSetupFromLevels, START_FEN } = import_piece_setup.default;
+var import_design_deployment = __toESM(require_design_deployment());
+var { pieceSetupFromLevels } = import_piece_setup.default;
 var { PIECE_SLOTS } = import_piece_catalog.default;
 var ARMY_SQUARES = /* @__PURE__ */ new Set([...PIECE_SLOTS.filter((slot) => slot.color === "w").map((slot) => slot.square), "e1"]);
 var { ROYALS, pieceMap, placementFromMap, checkedBoard } = import_profile_fen.default;
+var { deployDesignArmies } = import_design_deployment.default;
 var ROYAL_MOVES = ["K", "KcsD", "KcD", "KcDcA"];
 var profileCache = /* @__PURE__ */ new Map();
 function normalizeArmy(map = {}) {
@@ -5137,18 +5325,7 @@ async function designMatchRules(input) {
     startingFen(whiteArmy = {}, blackArmy = {}) {
       const white = designArmyChoices(whiteArmy, definitions);
       const black = designArmyChoices(blackArmy, definitions);
-      const pieces = pieceMap(START_FEN);
-      const absolute = (square, color) => color === "w" ? square : square[0] + (9 - Number(square[1]));
-      for (const [color, army] of [["w", white], ["b", black]]) {
-        for (const { square, definition, letter } of army.choices) {
-          const target = definition.placement === "extra" ? definition.extraSquare[square] : square;
-          if (!target) throw new Error(`The extra piece cannot be placed for ${square}.`);
-          const destination = absolute(target, color);
-          if (definition.placement === "extra" && pieces.has(destination)) throw new Error(`The extra-piece square ${destination} is occupied.`);
-          pieces.set(destination, color === "w" ? letter.toUpperCase() : letter);
-        }
-        for (const square of army.remove) pieces.delete(absolute(square, color));
-      }
+      const pieces = deployDesignArmies(profile, white, black);
       const castleRook = (square) => roles.castlingRooks.includes(pieces.get(square)?.toLowerCase());
       const rights = [["K", "h1"], ["Q", "a1"], ["k", "h8"], ["q", "a8"]].filter(([, square]) => castleRook(square)).map(([right]) => right).join("") || "-";
       return placementFromMap(pieces) + ` w ${rights} - 0 1`;

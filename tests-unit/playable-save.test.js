@@ -28,7 +28,7 @@ test.after(() => fs.rmSync(directory, { recursive: true, force: true }));
 
 const settings = { opponent: 'local', humanSide: 'w', difficulty: 'medium', flipped: false, upgradeBudget: 6 };
 const choices = () => Object.fromEntries(PIECE_SLOTS.map(slot => [slot.square,
-  ['a1', 'a8'].includes(slot.square) ? 'rook.purple@2' : ['d2', 'd7'].includes(slot.square) ? 'pawn.purple@2' : '',
+  ['a1', 'a8'].includes(slot.square) ? 'rook.purple@2' : ['d2', 'd7'].includes(slot.square) ? 'pawn.purple@5' : '',
 ]));
 function game(t, fen = designSetupFromChoices(choices(), 6).fen) {
   const value = new api.VariantGame(fen, api.EXPERIMENTAL_VARIANT);
@@ -65,7 +65,7 @@ test('experimental saves retain exact rules, both armies, move history, and paus
   assert.deepEqual(restored.clock.remaining, saved.clock.remaining);
   restored.game.undo();
   assert.equal(restored.game.turn(), 'b');
-  assert.equal(restored.game.get('d7').type, PLAYABLE_PROFILE.registry.allocations.find(a => a.id === 'pawn.purple@2').letter);
+  assert.equal(restored.game.get('d7').type, PLAYABLE_PROFILE.registry.allocations.find(a => a.id === 'pawn.purple@5').letter);
 });
 
 test('mismatched definitions, allocation, config, format, and setup are rejected before replacement', async t => {
@@ -106,7 +106,7 @@ test('experimental PGN is self-describing and a changed snapshot cannot relabel 
 });
 
 test('custom study starts save without inventing a standard-army setup and keep standard promotions', async t => {
-  const pawn = PLAYABLE_PROFILE.registry.allocations.find(a => a.id === 'pawn.purple@2').letter.toUpperCase();
+  const pawn = PLAYABLE_PROFILE.registry.allocations.find(a => a.id === 'pawn.purple@5').letter.toUpperCase();
   const original = game(t, `7k/1${pawn}6/8/8/8/8/8/K7 w - - 0 1`);
   original.move({ from: 'b7', to: 'b8', promotion: 'q' });
   const saved = api.makeSave(original, settings);
@@ -130,4 +130,34 @@ test('valid PGN FEN spacing cannot make a subsequent save lose its starting choi
   const restored = await api.parseSave(JSON.stringify(saved));
   t.after(() => restored.game.dispose());
   assert.equal(restored.game.fen(), original.fen());
+});
+
+test('paired pawns and inserted guards retain their purchases and deployment through saves, PGN, and undo', async t => {
+  const selected = Object.fromEntries(PIECE_SLOTS.map(slot => [slot.square,
+    ['b1', 'g8'].includes(slot.square) ? 'knight.purple@2' : ['b2', 'g7'].includes(slot.square) ? 'pawn.purple@6' : '',
+  ]));
+  const setup = designSetupFromChoices(selected, 6);
+  assert.deepEqual(setup.costs, { w: 6, b: 6 });
+  const original = game(t, setup.fen);
+  const type = id => PLAYABLE_PROFILE.registry.allocations.find(item => item.id === id).letter;
+  for (const square of ['b3', 'b4', 'g5', 'g6']) assert.equal(original.get(square).type, type('pawn.purple@6'));
+  for (const square of ['b2', 'g7']) assert.equal(original.get(square).type, type('knight.purple@2'));
+  assert.equal(original.get('b1').type, 'n');
+  assert.equal(original.get('g8').type, 'n');
+  original.move({ from: 'b4', to: 'b6' });
+  original.move({ from: 'g5', to: 'g3' });
+
+  const saved = api.makeSave(original, settings);
+  assert.deepEqual(saved.setup, { choices: selected, budget: 6 });
+  const restored = await api.parseSave(JSON.stringify(saved));
+  t.after(() => restored.game.dispose());
+  assert.equal(restored.game.fen(), original.fen());
+  assert.deepEqual(restored.game.history(), original.history());
+  restored.game.undo(); restored.game.undo();
+  assert.equal(restored.game.fen(), setup.fen);
+
+  const imported = await api.parsePgn(api.exportPgn(original));
+  t.after(() => imported.dispose());
+  assert.equal(imported.fen(), original.fen());
+  assert.deepEqual(api.makeSave(imported, settings).setup, { choices: selected, budget: 6 });
 });

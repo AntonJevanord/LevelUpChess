@@ -6,9 +6,17 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { createHash } = require('node:crypto');
 const { DESIGNS, STANDARD_TYPES, LEGACY_DESIGN_IDS, getDesign } = require('../src/design-catalog');
+const { PLAYABLE_DESIGN_IDS } = require('../src/playable-library');
 const { createDesignRegistry, restoreDesignRegistry, allocateDesigns } = require('../scripts/balance/design-registry');
 
 const designIds = Object.keys(DESIGNS);
+const originalDesignIds = [
+  'knight.blue@1', 'knight.orange@1', 'knight.purple@1',
+  'bishop.blue@1', 'bishop.orange@1', 'bishop.purple@1',
+  'queen.blue@1', 'queen.orange@1', 'queen.purple@1',
+  'pawn.blue@1', 'pawn.orange@1', 'pawn.purple@1', 'pawn.purple@2',
+  'rook.blue@1', 'rook.orange@1', 'rook.purple@1', 'rook.purple@2',
+];
 function experiment(upgradesA = {}, upgradesB = {}) {
   return { schemaVersion: 2, comparisons: [{ id: 'test', armyA: { upgrades: upgradesA }, armyB: { upgrades: upgradesB } }] };
 }
@@ -21,12 +29,12 @@ function rehash(snapshot) {
   snapshot.hash = createHash('sha256').update(JSON.stringify({ schemaVersion, definitions, allocations })).digest('hex');
 }
 
-test('immutable v1 catalog reproduces all 15 legacy definitions and retains explicit placement roles', () => {
+test('the catalog preserves all 15 legacy definitions and retains explicit placement roles', () => {
   const config = fs.readFileSync(path.join(__dirname, '../variants/levelup-v5.ini'), 'utf8');
   const legacy = [...config.matchAll(/^customPiece(\d+) = ([a-z]):([^\r\n]+)$/gm)];
   assert.equal(legacy.length, 15);
   assert.equal(Object.keys(LEGACY_DESIGN_IDS).length, 15);
-  assert.equal(designIds.length, 17);
+  assert.equal(designIds.length, 22);
   for (const [, slot, type, movement] of legacy) {
     const design = DESIGNS[LEGACY_DESIGN_IDS[type]];
     assert.equal(design.movement, movement);
@@ -70,7 +78,7 @@ test('unchanged legacy letters and slots survive allocation; revisions coexist w
     const design = DESIGNS[allocation.id];
     assert.deepEqual(allocation, { id: design.id, letter: design.legacyType, slot: design.legacySlot });
   }
-  const all = registry(designIds);
+  const all = registry(originalDesignIds);
   for (const previous of current.allocations) assert.deepEqual(all.allocations.find(allocation => allocation.id === previous.id), previous);
   const newPawn = all.allocations.find(allocation => allocation.id === 'pawn.purple@2');
   assert.notEqual(newPawn.letter, DESIGNS['pawn.purple@2'].legacyType);
@@ -81,20 +89,31 @@ test('unchanged legacy letters and slots survive allocation; revisions coexist w
   assert.notEqual(all.hash, current.hash);
 });
 
-test('standard promotion types are always reserved and allocation respects additional helper reservations', () => {
-  const allocated = allocateDesigns(designIds);
+test('a curated 20-design library fits while the complete catalog exceeds letter capacity', () => {
+  const allocated = allocateDesigns(PLAYABLE_DESIGN_IDS);
   const reserved = new Set(Object.values(STANDARD_TYPES));
-  assert.equal(new Set(allocated.map(allocation => allocation.letter)).size, designIds.length);
-  assert.equal(new Set(allocated.map(allocation => allocation.slot)).size, designIds.length);
+  assert.equal(allocated.length, 20);
+  assert.equal(new Set(allocated.map(allocation => allocation.letter)).size, 20);
+  assert.equal(new Set(allocated.map(allocation => allocation.slot)).size, 20);
   for (const allocation of allocated) {
     assert.ok(!reserved.has(allocation.letter));
     assert.ok(allocation.slot >= 1 && allocation.slot <= 25);
   }
+  assert.deepEqual(restoreDesignRegistry(clone(registry(PLAYABLE_DESIGN_IDS))), registry(PLAYABLE_DESIGN_IDS));
+  assert.ok(Object.isFrozen(PLAYABLE_DESIGN_IDS));
+  assert.ok(!PLAYABLE_DESIGN_IDS.includes('pawn.purple@2'));
+  assert.ok(!PLAYABLE_DESIGN_IDS.includes('knight.purple@1'));
+  for (const id of ['pawn.purple@3', 'pawn.purple@4', 'pawn.purple@5', 'pawn.purple@6', 'knight.purple@2']) assert.ok(PLAYABLE_DESIGN_IDS.includes(id));
+  assert.throws(() => allocateDesigns(designIds), /need 22 custom letters; only 20 are available/);
+  assert.throws(() => registry(designIds), /need 22 custom letters; only 20 are available/);
+});
+
+test('standard promotion types remain reserved alongside additional helper letters', () => {
   const helperReserved = allocateDesigns(['pawn.blue@1'], { reservedLetters: ['A', 'V'] });
   assert.notEqual(helperReserved[0].letter, 'a');
   assert.notEqual(helperReserved[0].letter, 'v');
   assert.equal(helperReserved[0].slot, 9, 'letter renaming need not change the engine slot');
-  assert.throws(() => allocateDesigns(designIds, { reservedLetters: 'vwxy' }), /only 16 are available/);
+  assert.throws(() => allocateDesigns(originalDesignIds, { reservedLetters: 'vwxy' }), /only 16 are available/);
   assert.throws(() => allocateDesigns(['pawn.blue@1'], { reservedLetters: 'abcdefghijklmnopqrstuvwxyz' }), /only 0 are available/);
   assert.throws(() => allocateDesigns(['pawn.blue@1'], { reservedLetters: ['aa'] }), /ASCII letters/);
   assert.throws(() => allocateDesigns(['pawn.blue@1'], { reservedLetters: null }), /Reserved letters/);

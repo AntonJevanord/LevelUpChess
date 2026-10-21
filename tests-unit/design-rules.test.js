@@ -11,6 +11,14 @@ const { compileDesignProfile } = require('../scripts/balance/design-profile');
 const { createMatchRules } = require('../dist/balance-rules.cjs');
 
 const slotFor = { pawn: 'a2', knight: 'b1', bishop: 'c1', rook: 'a1', queen: 'd1' };
+// Preserve the original library as an independent historical rules fixture.
+const originalDesignIds = [
+  'knight.blue@1', 'knight.orange@1', 'knight.purple@1',
+  'bishop.blue@1', 'bishop.orange@1', 'bishop.purple@1',
+  'queen.blue@1', 'queen.orange@1', 'queen.purple@1',
+  'pawn.blue@1', 'pawn.orange@1', 'pawn.purple@1', 'pawn.purple@2',
+  'rook.blue@1', 'rook.orange@1', 'rook.purple@1', 'rook.purple@2',
+];
 function registry(ids) {
   return createDesignRegistry({ schemaVersion: 2, comparisons: ids.map(id => ({ armyA: { upgrades: { [slotFor[DESIGNS[id].family]]: id } }, armyB: { upgrades: {} } })) });
 }
@@ -39,11 +47,11 @@ const letter = (id, color = 'w') => {
   return color === 'w' ? allocated.toUpperCase() : allocated;
 };
 test.before(async () => {
-  profile = compileDesignProfile(registry(Object.keys(DESIGNS)));
+  profile = compileDesignProfile(registry(originalDesignIds));
   rules = await createMatchRules({ profile });
 });
 
-test('the compiler is deterministic, archives exact roles, and keeps all registered designs in one profile', () => {
+test('the compiler is deterministic and retains the frozen original library and roles', () => {
   const restored = compileDesignProfile(JSON.parse(JSON.stringify(profile.registry)));
   assert.deepEqual(restored, profile);
   assert.equal(profile.registry.definitions.length, 17);

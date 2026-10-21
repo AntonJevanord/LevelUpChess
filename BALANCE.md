@@ -146,7 +146,9 @@ Use `designs-smoke.json` to verify workflow. Its four-ply limit intentionally tr
 
 Schema-2 results use a new protocol identity. Preserve the mapping when comparing or reproducing results; finite-search play can depend on internal type allocation. Evidence follows stable design revisions and the engine/rules context, never a temporary letter alone. No long-term engine training is performed.
 
-Version 09's browser picker uses a frozen 17-design profile compiled through this same registry/compiler. Its saves and PGNs include a validated profile snapshot. Raw balance PGNs reference their run registry/rules instead of embedding that browser snapshot, so they still need the archived run and a compatible viewer. Larger selectable browser libraries remain later work.
+Version 10's browser picker freezes 20 of the 22 catalog designs through this same registry/compiler. Balance campaigns select their own declared IDs; keep each registry within the 20 available custom letters instead of declaring the whole catalog. Version 09 preserves its earlier 17-design library. Browser saves/PGNs include a validated profile snapshot; raw balance PGNs still need their archived registry/rules and a compatible viewer.
+
+The four version-10 pawn candidates have working material priors, not match results. Their advanced pawn/guard deployment is part of the purchase being tested. Human playtesting and a declared game cap precede another campaign; see [the design notes](DESIGN.md#version-10-pawn-experiments).
 
 ## Openings and fair comparisons
 

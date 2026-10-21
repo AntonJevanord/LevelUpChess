@@ -6,7 +6,7 @@ Current movement rules are documented in [variants/README.md](variants/README.md
 
 Upgrades should be easy to describe, useful to play, and understandable to defend against. Assess tactics, development, endgame conversion, and counterplay separately. A high win rate alone does not make an ability enjoyable.
 
-Costs stay fixed at blue 1, orange 2, and purple 3. Higher tiers should provide greater overall benefit, while distinct abilities support different strategies. They need not retain every move from earlier tiers or win every positional comparison. Colors are presentation; permanent design IDs identify behavior.
+Costs stay fixed at level 1/2/3. Historical IDs use blue/orange/purple; the experimental picker uses green/cyan/red. Higher tiers should provide greater overall benefit, while distinct abilities support different strategies. They need not retain every earlier move or win every positional comparison. Permanent design IDs identify behavior.
 
 Measure an upgrade's added benefit over its ordinary piece, then compare that benefit across families and purchase combinations. The purple knight's benefit includes its extra `WD` unit; its original knight remains on the board. A royal king has no ordinary exchange value, so its upgrades need winning and mating tests.
 
@@ -33,6 +33,27 @@ The [bounded revision plan](experiments/balance/revision-plan.md) spent 160 of a
 - Other designs remain unchanged. The reference Piece upgrades mode keeps version 05 rules; version 09's Experimental designs mode offers the candidate revisions separately.
 
 The batch is closed. Further tests require a specific design question, chosen revisions, and a declared game cap.
+
+## Version 10 pawn experiments
+
+Each new purchase costs **three upgrade points**, targeting about **four total material points**: the ordinary pawn's one plus roughly three added benefit. These broad ranges are judgments for choosing prototypes, not measurements or statistical intervals. The mobility formula for short-range leapers does not price sliders, promotion races, or extra-piece deployment reliably.
+
+| Purchase | Rough whole-piece/package value | Initial design choice |
+| --- | --- | --- |
+| Courier, `pawn.purple@3` | 3–5 | Quiet forward and sideways rook lines; captures only on forward diagonals up to two squares. No backward movement. |
+| Rank, `pawn.purple@4` | 3–4½ | Horizontal rook moves/captures plus ordinary forward pawn moves/captures and a clear initial double-step. |
+| Returning, `pawn.purple@5` | 3–5 | Forward queen lines up to two squares, including captures; backward queen lines up to two squares are quiet-only. No sideways movement. |
+| Twins, `pawn.purple@6` | 3–5 combined | Two units, roughly 1½–2½ each, for one purchase. Each has quiet one- or two-square forward jumps and ordinary diagonal forward captures. No initial three-square jump. |
+
+Keeping full bishop captures on the first idea would retain much of the power that survived the earlier quiet-range nerf. Courier therefore limits captures in both direction and distance while preserving its fast promotion route. Rank's proposed forward-wide knight attacks and Returning's proposed sideways moves are held back until playtesting shows a need. Twin forward jumps let the rear pawn escape a stack without giving either unit long-range capture power.
+
+Movement value is only part of each purchase. Twins start on relative ranks 2/3; adding the revised guard knight advances them to ranks 3/4. Those advanced starts add promotion tempo, congestion, and coordination effects. Record deployment with any future comparison; do not treat the ranges above as measured values for every starting position.
+
+The revised guard is `knight.purple@2`: keep the ordinary knight on rank 1, insert `WD` on rank 2, and push only that file's own pawns forward within ranks 2–4. The earlier fixed rank-3 guard keeps its original ID and behavior. Setup is shared by the browser and balance harness, including recovery of starting purchases from saves and PGNs.
+
+All four pawn candidates use standard Q/R/B/N promotion. Quiet Returning moves, and quiet sideways Courier/Rank moves, count toward the fifty-move limit. Returning visits an empty en-passant target quietly; the other candidates can capture en passant along their capture paths. See [exact special rules](variants/README.md#experimental-pawn-special-rules).
+
+Playtest promotion pressure, rank control, retreat loops, readability, and Twin/guard congestion first. Retire uninteresting ideas before declaring another capped comparison against the fixed Amazon and selected equal-cost purchases. No balance campaign has been run for these four candidates.
 
 ## Kings: preserve a clear mating objective
 
@@ -78,7 +99,7 @@ Pawn alternatives must preserve explicit promotion and en passant rules. Rook al
 
 ## Playtesting and implementation order
 
-Version 09 exposes the original and revised pawn/rook designs alongside the other reference designs. The browser and native bridge use one frozen 17-design library, compiled by the experiment compiler; games do not reassign letters during play. Names, descriptions, tier numbers, and experimental labels make choices readable. Save/PGN snapshots retain the exact rules and require the matching catalog build. Larger selectable libraries and importing retired definitions independently remain later work.
+Version 10 uses a frozen 20-design playable library selected from 22 immutable catalog entries. The parked pawn revision and earlier guard placement remain available in version 09 and historical balance profiles. The browser and native bridge share the experiment compiler; games do not reassign letters during play. Save/PGN snapshots require the matching catalog build. Larger selectable libraries and importing retired definitions independently remain later work.
 
 Do not wait for tightly balanced purple pieces before human playtesting. Gather feedback on readability, useful decisions, enjoyment, frustrating situations, and available counterplay. Discard poor ideas before precise tuning. Then screen surviving designs against the fixed reference and selected equal-cost purchases, with a declared game cap and keep/revise/park decision. New releases may require fresh browser games; backward save compatibility is not required.
 

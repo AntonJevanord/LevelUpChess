@@ -9,6 +9,7 @@ const { build } = require('esbuild');
 test('an explicit profile loads alone, reuses its module, and stays isolated when others load', { timeout: 30000 }, () => {
   const source = `
     const assert = require('node:assert/strict');
+    const { PLAYABLE_PROFILE } = require(${JSON.stringify(require.resolve('../src/design-options'))});
     const { initVariantRules, VariantGame, VARIANT, CURRENT_VARIANT, EXPERIMENTAL_VARIANT, SUPPORTED_VARIANTS } = require(process.argv[1]);
     (async () => {
       const first = initVariantRules(EXPERIMENTAL_VARIANT);
@@ -17,7 +18,8 @@ test('an explicit profile loads alone, reuses its module, and stays isolated whe
       for (const variant of SUPPORTED_VARIANTS.filter(value => value !== EXPERIMENTAL_VARIANT)) {
         assert.throws(() => new VariantGame(undefined, variant), /Call initVariantRules/);
       }
-      const experimental = new VariantGame('8/7k/8/8/3V4/8/8/K7 w - - 0 1', EXPERIMENTAL_VARIANT);
+      const pawn = PLAYABLE_PROFILE.registry.allocations.find(allocation => allocation.id === 'pawn.purple@5').letter.toUpperCase();
+      const experimental = new VariantGame('8/7k/8/8/3' + pawn + '4/8/8/K7 w - - 0 1', EXPERIMENTAL_VARIANT);
       const targets = game => game.moves({ square: 'd4', verbose: true }).map(move => move.to);
       assert.ok(targets(experimental).includes('d6'));
       assert.ok(!targets(experimental).includes('d7'));

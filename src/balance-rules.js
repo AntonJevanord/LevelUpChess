@@ -7,11 +7,13 @@ import currentConfig from '../variants/levelup-v5.ini';
 import pieceSetup from './piece-setup.js';
 import pieceCatalog from './piece-catalog.js';
 import profileFen from './profile-fen.js';
+import designDeployment from './design-deployment.js';
 
-const { pieceSetupFromLevels, START_FEN } = pieceSetup;
+const { pieceSetupFromLevels } = pieceSetup;
 const { PIECE_SLOTS } = pieceCatalog;
 const ARMY_SQUARES = new Set([...PIECE_SLOTS.filter(slot => slot.color === 'w').map(slot => slot.square), 'e1']);
 const { ROYALS, pieceMap, placementFromMap, checkedBoard } = profileFen;
+const { deployDesignArmies } = designDeployment;
 const ROYAL_MOVES = ['K', 'KcsD', 'KcD', 'KcDcA'];
 // Each module owns global movement tables. Cache only two profiles; existing
 // boards retain their own module even after its cache entry has been evicted.
@@ -179,18 +181,7 @@ async function designMatchRules(input) {
     startingFen(whiteArmy = {}, blackArmy = {}) {
       const white = designArmyChoices(whiteArmy, definitions);
       const black = designArmyChoices(blackArmy, definitions);
-      const pieces = pieceMap(START_FEN);
-      const absolute = (square, color) => color === 'w' ? square : square[0] + (9 - Number(square[1]));
-      for (const [color, army] of [['w', white], ['b', black]]) {
-        for (const { square, definition, letter } of army.choices) {
-          const target = definition.placement === 'extra' ? definition.extraSquare[square] : square;
-          if (!target) throw new Error(`The extra piece cannot be placed for ${square}.`);
-          const destination = absolute(target, color);
-          if (definition.placement === 'extra' && pieces.has(destination)) throw new Error(`The extra-piece square ${destination} is occupied.`);
-          pieces.set(destination, color === 'w' ? letter.toUpperCase() : letter);
-        }
-        for (const square of army.remove) pieces.delete(absolute(square, color));
-      }
+      const pieces = deployDesignArmies(profile, white, black);
       const castleRook = square => roles.castlingRooks.includes(pieces.get(square)?.toLowerCase());
       const rights = [['K', 'h1'], ['Q', 'a1'], ['k', 'h8'], ['q', 'a8']].filter(([, square]) => castleRook(square)).map(([right]) => right).join('') || '-';
       return placementFromMap(pieces) + ` w ${rights} - 0 1`;

@@ -19,9 +19,14 @@ const metadata = {
   'pawn.orange@1': ['Forward pawn', 'Move or capture one square forward or diagonally forward. The initial two-step needs a clear path.'],
   'pawn.purple@1': ['Ranging pawn', 'Move along clear rook lines in any direction. Capture along clear bishop lines.'],
   'pawn.purple@2': ['Short-slide pawn', 'Move one or two clear squares orthogonally in any direction. Capture along clear bishop lines.'],
+  'pawn.purple@3': ['Courier pawn', 'Move any clear distance forward or sideways without capturing. Capture one or two clear squares diagonally forward.'],
+  'pawn.purple@4': ['Rank pawn', 'Move or capture along clear horizontal lines. Move one square forward and capture one square diagonally forward; an initial two-step needs a clear path.'],
+  'pawn.purple@5': ['Returning pawn', 'Move or capture one or two clear squares straight or diagonally forward. Move one or two clear squares straight or diagonally backward without capturing. No sideways moves. Moving diagonally to an empty en-passant target is quiet and leaves the bypassed pawn. Quiet moves count toward the fifty-move rule.'],
+  'pawn.purple@6': ['Twin pawns', 'Replace one pawn with two pawns on its file for one three-point purchase. Each moves one square forward or jumps two forward, and captures one square diagonally forward.'],
   'knight.blue@1': ['Step knight', 'Normal knight moves plus one orthogonal step into an empty square.'],
   'knight.orange@1': ['Side-jump knight', 'Normal knight moves plus a two-square sideways jump, including captures.'],
   'knight.purple@1': ['Knight and guard', 'Keep the ordinary knight and add a guard on b3/g3 or b6/g6. It moves or captures one or two squares orthogonally; two-square moves jump.'],
+  'knight.purple@2': ['Knight and guard', 'Keep the ordinary knight and add a guard on b2/g2 or b7/g7, pushing your pawns on that file forward within your half. The guard moves or captures one or two squares orthogonally; two-square moves jump.'],
   'bishop.blue@1': ['Step bishop', 'Normal bishop moves plus one orthogonal step into an empty square.'],
   'bishop.orange@1': ['Forward-capture bishop', 'Normal bishop moves plus capture-only knight jumps two squares forward and one sideways.'],
   'bishop.purple@1': ['Vertical bishop', 'Normal bishop moves plus full vertical rook moves and captures.'],
@@ -44,7 +49,7 @@ const DESIGN_OPTIONS = freeze(PLAYABLE_PROFILE.registry.definitions.map(definiti
     level: definition.level,
     name,
     description: movement + suffix,
-    status: definition.id === 'pawn.purple@2' ? 'parked' : definition.id === 'rook.purple@2' ? 'experimental' : 'reference',
+    status: definition.id === 'pawn.purple@2' ? 'parked' : definition.revision > 1 ? 'experimental' : 'reference',
   };
 }));
 const optionsById = Object.fromEntries(DESIGN_OPTIONS.map(option => [option.id, option]));

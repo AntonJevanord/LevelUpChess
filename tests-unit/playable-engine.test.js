@@ -4,13 +4,19 @@ const fs = require('node:fs');
 const { EventEmitter } = require('node:events');
 const childProcess = require('node:child_process');
 const { getPlayableProfile } = require('../scripts/playable-profile');
+const { DEFAULT_DESIGN_CHOICES, designSetupFromChoices } = require('../src/design-setup');
 const { engineRequest, createPosition, validateProfileIdentity, experimentalCapabilityProbes } = require('../scripts/engine');
 
 const profile = getPlayableProfile();
 const identity = { variant: profile.variant, profileHash: profile.hash, registryHash: profile.registryHash };
 const letter = id => profile.registry.allocations.find(allocation => allocation.id === id).letter.toUpperCase();
 const rookFen = `7k/8/8/5n2/3${letter('rook.purple@2')}4/8/8/7K w - - 0 1`;
-const pawnFen = `7k/8/8/8/8/4${letter('pawn.purple@2')}3/8/7K w - - 0 1`;
+const pawnFen = `7k/8/8/8/8/4${letter('pawn.purple@5')}3/8/7K w - - 0 1`;
+const pairedArmyFen = () => designSetupFromChoices({
+  ...DEFAULT_DESIGN_CHOICES,
+  b1: 'knight.purple@2', b2: 'pawn.purple@6',
+  g8: 'knight.purple@2', g7: 'pawn.purple@6',
+}, 6).fen;
 
 test('experimental engine requests require matching profile and registry identities before launch', async t => {
   t.mock.method(childProcess, 'spawn', () => { throw new Error('An invalid profile must not start an engine.'); });
@@ -42,8 +48,12 @@ test('experimental capability selection follows active immutable IDs and require
   assert.ok(probes.every(probe => probe.exact && probe.required.length && !probe.forbidden.length));
   assert.equal(await experimentalCapabilityProbes(rookFen), probes, 'matching profile and active designs reuse expected move sets');
   const pawnProbes = await experimentalCapabilityProbes(pawnFen);
-  assert.ok(pawnProbes.some(probe => probe.name.startsWith('pawn.purple@2:')));
+  assert.ok(pawnProbes.some(probe => probe.name.startsWith('pawn.purple@5:')));
   assert.ok(pawnProbes.every(probe => !probe.name.startsWith('rook.')));
+  const pairProbes = await experimentalCapabilityProbes(pairedArmyFen());
+  assert.ok(pairProbes.some(probe => probe.name.startsWith('pawn.purple@6:')));
+  assert.ok(pairProbes.some(probe => probe.name.startsWith('knight.purple@2:')));
+  assert.ok(pairProbes.every(probe => /^(pawn\.purple@6:|knight\.purple@2:|ordinary )/.test(probe.name)));
 });
 
 async function fakeExperimentalEngine(t, { unexpectedMove } = {}) {
@@ -94,11 +104,15 @@ test('experimental preflight loads the pinned INI and validates the resulting mo
   assert.equal(child.killed, true);
 });
 
-test('the native engine can reply legally to revised rook and pawn positions', {
+test('the native engine can reply legally to revised pieces and paired pawn armies', {
   skip: !process.env.FAIRY_STOCKFISH_PATH,
-  timeout: 30000,
+  timeout: 60000,
 }, async () => {
-  for (const fen of [rookFen, pawnFen]) {
+  // Exercise every new pawn under the full library's actual letter/slot map,
+  // including V/W letters that older profiles used for pseudo-royal kings.
+  const pawns = ['pawn.purple@3', 'pawn.purple@4', 'pawn.purple@5', 'pawn.purple@6']
+    .map(id => `7k/8/8/8/8/4${letter(id)}3/8/7K w - - 0 1`);
+  for (const fen of [rookFen, ...pawns, pairedArmyFen()]) {
     const board = await createPosition(fen, profile.variant, identity);
     try {
       const legal = board.moves({ verbose: true }).map(move => move.from + move.to + (move.promotion || ''));

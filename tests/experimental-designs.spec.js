@@ -54,7 +54,7 @@ async function hasDesign(page, name, id) {
   await expect(square(page, name)).toHaveAttribute('aria-label', new RegExp(designName(id)));
 }
 
-test.beforeAll(async () => { await initVariantRules(); });
+test.beforeAll(async () => { await initVariantRules(EXPERIMENTAL_VARIANT); });
 test.beforeEach(async ({ page }) => { await page.goto('http://127.0.0.1:4173'); });
 
 test('named alternatives share per-side costs, preserve the board until New game, and resolve mapped glyphs', async ({ page }) => {
@@ -62,8 +62,8 @@ test('named alternatives share per-side costs, preserve the board until New game
   await expect(page.locator('#experimental-budget')).toHaveAttribute('max', '6');
   await choose(page, 'rook', 'a1', 'rook.purple@2');
   await choose(page, 'rook', 'a8', 'rook.purple@1');
-  await choose(page, 'pawn', 'a2', 'pawn.purple@2');
-  await expect(page.locator('#experimental-description-a2')).toContainText('Parked after balance screening');
+  await choose(page, 'pawn', 'a2', 'pawn.purple@5');
+  await expect(page.locator('#experimental-description-a2')).toContainText('backward');
   await choose(page, 'pawn', 'b2', 'pawn.blue@1');
   await expect(page.locator('#experimental-status')).toContainText('White 7/6');
   await page.getByRole('button', { name: 'New game', exact: true }).click();
@@ -74,7 +74,7 @@ test('named alternatives share per-side costs, preserve the board until New game
   await expect(page.locator('#experimental-status')).toContainText('White 6/6 · Black 6/6');
   await start(page);
   await hasDesign(page, 'a1', 'rook.purple@2');
-  await hasDesign(page, 'a2', 'pawn.purple@2');
+  await hasDesign(page, 'a2', 'pawn.purple@5');
   await hasDesign(page, 'a8', 'rook.purple@1');
   await expect(square(page, 'a1').locator('.piece')).toHaveText('♖');
   await expect(square(page, 'a8').locator('.piece')).toHaveText('♜');
@@ -89,7 +89,7 @@ test('named alternatives share per-side costs, preserve the board until New game
 test('save, load and portable PGN restore design choices, mapped move labels and continued play', async ({ page }) => {
   await experimental(page);
   await choose(page, 'rook', 'a1', 'rook.purple@2');
-  await choose(page, 'pawn', 'a2', 'pawn.purple@2');
+  await choose(page, 'pawn', 'a2', 'pawn.purple@5');
   await choose(page, 'rook', 'a8', 'rook.purple@1');
   await start(page);
   await move(page, 'a2', 'a4');
@@ -107,18 +107,57 @@ test('save, load and portable PGN restore design choices, mapped move labels and
   await page.reload();
   await page.getByRole('button', { name: 'Load saved', exact: true }).click();
   await hasDesign(page, 'a3', 'rook.purple@2');
-  await hasDesign(page, 'a4', 'pawn.purple@2');
+  await hasDesign(page, 'a4', 'pawn.purple@5');
   await expect(page.locator('#experimental-upgrade-a1')).toHaveValue('rook.purple@2');
-  await expect(page.locator('#experimental-upgrade-a2')).toHaveValue('pawn.purple@2');
+  await expect(page.locator('#experimental-upgrade-a2')).toHaveValue('pawn.purple@5');
   await expect(page.locator('#experimental-upgrade-a8')).toHaveValue('rook.purple@1');
   await expect(page.locator('#experimental-budget')).toHaveValue('6');
   await page.reload();
   await importPgn(page, pgn);
   await expect(page.locator('#game-mode')).toHaveValue(EXPERIMENTAL_VARIANT);
   await hasDesign(page, 'a3', 'rook.purple@2');
-  await expect(page.locator('#experimental-upgrade-a2')).toHaveValue('pawn.purple@2');
+  await expect(page.locator('#experimental-upgrade-a2')).toHaveValue('pawn.purple@5');
   await move(page, 'g8', 'f6');
   await expect(page.locator('#status')).toHaveText('White to move');
+});
+
+test('twin pawns and inserted guards share one purchase per slot and survive save and PGN recovery', async ({ page }) => {
+  // The complete recovery flow reloads and initializes the rules twice.
+  test.setTimeout(60000);
+  await experimental(page);
+  await choose(page, 'pawn', 'b2', 'pawn.purple@6');
+  await choose(page, 'pawn', 'g7', 'pawn.purple@6');
+  await choose(page, 'knight', 'b1', 'knight.purple@2');
+  await choose(page, 'knight', 'g8', 'knight.purple@2');
+  await expect(page.locator('#experimental-status')).toContainText('White 6/6 · Black 6/6');
+  await start(page);
+  await expect(square(page, 'b1')).toHaveAttribute('aria-label', 'b1 White knight');
+  await expect(square(page, 'g8')).toHaveAttribute('aria-label', 'g8 Black knight');
+  for (const name of ['b2', 'g7']) await hasDesign(page, name, 'knight.purple@2');
+  for (const name of ['b3', 'b4', 'g5', 'g6']) await hasDesign(page, name, 'pawn.purple@6');
+  await expect(page.locator('#board [data-design-id="pawn.purple@6"]')).toHaveCount(4);
+  await expect(square(page, 'c2')).toHaveAttribute('aria-label', 'c2 White pawn');
+  await expect(square(page, 'f7')).toHaveAttribute('aria-label', 'f7 Black pawn');
+  await move(page, 'b4', 'b6');
+  await move(page, 'g5', 'g3');
+  const pgn = await downloadPgn(page);
+  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await page.reload();
+  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await hasDesign(page, 'b6', 'pawn.purple@6');
+  await hasDesign(page, 'g3', 'pawn.purple@6');
+  for (const [name, id] of [['b1', 'knight.purple@2'], ['b2', 'pawn.purple@6'], ['g8', 'knight.purple@2'], ['g7', 'pawn.purple@6']]) {
+    await expect(page.locator(`#experimental-upgrade-${name}`)).toHaveValue(id);
+  }
+  await expect(page.locator('#experimental-status')).toContainText('White 6/6 · Black 6/6');
+  await page.reload();
+  await importPgn(page, pgn);
+  await hasDesign(page, 'b2', 'knight.purple@2');
+  await hasDesign(page, 'g7', 'knight.purple@2');
+  await hasDesign(page, 'b6', 'pawn.purple@6');
+  await hasDesign(page, 'g3', 'pawn.purple@6');
+  await move(page, 'e2', 'e4');
+  await expect(page.locator('#status')).toHaveText('Black to move');
 });
 
 test('revised rook jumps to knight captures across blockers while removed attacks and quiet leaps stay unavailable', async ({ page }) => {
@@ -134,36 +173,36 @@ test('revised rook jumps to knight captures across blockers while removed attack
   await expect(square(page, 'c6')).toHaveAttribute('aria-label', 'c6 Black bishop');
 });
 
-test('short-slide pawn obeys its quiet range and blockers while retaining long diagonal captures', async ({ page }) => {
-  await importPosition(page, fen({ h1: 'K', h8: 'k', d4: letter('pawn.purple@2').toUpperCase(), d5: 'P', f6: 'b' }));
+test('returning pawn obeys its forward range, quiet retreats, and blockers', async ({ page }) => {
+  await importPosition(page, fen({ h1: 'K', h8: 'k', d4: letter('pawn.purple@5').toUpperCase(), d5: 'P', f6: 'b' }));
   await square(page, 'd4').click();
-  for (const name of ['b4', 'd2']) await expect(square(page, name).locator('.move-marker')).toHaveCount(1);
-  for (const name of ['a4', 'd1', 'd6']) await expect(marker(page, name)).toHaveCount(0);
+  for (const name of ['b2', 'd2']) await expect(square(page, name).locator('.move-marker')).toHaveCount(1);
+  for (const name of ['a4', 'b4', 'd1', 'd6']) await expect(marker(page, name)).toHaveCount(0);
   await expect(square(page, 'f6').locator('.capture-marker')).toHaveCount(1);
   await square(page, 'f6').click();
-  await hasDesign(page, 'f6', 'pawn.purple@2');
+  await hasDesign(page, 'f6', 'pawn.purple@5');
 });
 
 test('a valid over-budget study imports safely while its next-game choices require adjustment', async ({ page }) => {
   await move(page, 'e2', 'e4');
-  const type = letter('pawn.purple@2').toUpperCase();
+  const type = letter('pawn.purple@5').toUpperCase();
   await importPosition(page, `rnbqkbnr/pppppppp/8/8/8/8/${type.repeat(4)}PPPP/RNBQKBNR w KQkq - 0 1`);
-  for (const name of ['a2', 'b2', 'c2', 'd2']) await hasDesign(page, name, 'pawn.purple@2');
+  for (const name of ['a2', 'b2', 'c2', 'd2']) await hasDesign(page, name, 'pawn.purple@5');
   await expect(page.locator('#history li')).toHaveCount(0);
   await expect(page.locator('#status')).toHaveText('White to move');
   await expect(page.locator('#time-control')).toHaveValue('none');
   await expect(page.locator('#experimental-status')).toContainText('White 12/6');
   await expect(page.locator('#import-error')).toHaveText('');
   await page.getByRole('button', { name: 'New game', exact: true }).click();
-  await hasDesign(page, 'd2', 'pawn.purple@2');
+  await hasDesign(page, 'd2', 'pawn.purple@5');
   await expect(page.locator('#restart')).not.toBeVisible();
   await move(page, 'a2', 'a4');
-  await hasDesign(page, 'a4', 'pawn.purple@2');
+  await hasDesign(page, 'a4', 'pawn.purple@5');
 });
 
 for (const color of ['w', 'b']) {
   test(`${color === 'w' ? 'White' : 'Black'} revised pawn promotes to a standard piece`, async ({ page }) => {
-    const type = letter('pawn.purple@2');
+    const type = letter('pawn.purple@5');
     const start = color === 'w' ? 'b7' : 'b2';
     const destination = color === 'w' ? 'b8' : 'b1';
     const pieces = color === 'w' ? { a1: 'K', h6: 'k', [start]: type.toUpperCase() } : { h3: 'K', a8: 'k', [start]: type };
@@ -242,7 +281,7 @@ test('native engine plays the experimental board through the browser controls', 
   test.skip(!process.env.FAIRY_STOCKFISH_PATH, 'Set FAIRY_STOCKFISH_PATH for native integration.');
   await experimental(page);
   await choose(page, 'rook', 'a1', 'rook.purple@2');
-  await choose(page, 'pawn', 'd7', 'pawn.purple@2');
+  await choose(page, 'pawn', 'd7', 'pawn.purple@5');
   await start(page);
   await page.selectOption('#opponent', 'engine');
   await expect(page.locator('#engine-status')).toContainText('connected');
