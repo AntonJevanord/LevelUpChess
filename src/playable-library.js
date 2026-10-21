@@ -30,7 +30,7 @@ const REFERENCE_DESIGN_IDS = Object.freeze([
 const PLAYABLE_DESIGN_IDS = Object.freeze([
   'pawn.blue@1', 'pawn.orange@1', 'pawn.orange@2',
   'pawn.purple@1', 'pawn.purple@3', 'pawn.purple@4', 'pawn.purple@5',
-  'knight.blue@1', 'knight.orange@1', 'knight.orange@2', 'knight.purple@2',
+  'knight.blue@1', 'knight.orange@1', 'knight.purple@2', 'knight.purple@3',
   'bishop.purple@1', 'bishop.purple@2',
   'rook.purple@2', 'rook.purple@3',
   'queen.blue@1', 'queen.orange@1', 'queen.purple@1', 'queen.purple@2', 'queen.purple@3',

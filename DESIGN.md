@@ -57,24 +57,32 @@ Playtest promotion pressure, rank control, retreat loops, readability, and Twin/
 
 ## Version 11 mobility and pairs
 
-The **Mobility and pairs** library adds six alternatives. Prices are provisional playtest choices. The broad material ranges below describe whole pieces or packages, not measured values, confidence intervals, or upgrade points. The target is ordinary material plus roughly one point per level, with the unchanged Amazon as the level-3 reference.
+Version 11 introduced the **Mobility and pairs** library. The table reflects current version-12 prices, including the promoted Camel knight. Prices remain provisional playtest choices. The broad material ranges below describe whole pieces or packages, not measured values, confidence intervals, or upgrade points. The target is ordinary material plus roughly one point per level, with the unchanged Amazon as the level-3 reference.
 
 | Purchase | Cost | Rough whole-piece/package value | Design question |
 | --- | --- | --- | --- |
 | Twin pawns, `pawn.orange@2` | 2 | 3–5 combined | Does the existing pair feel worthwhile at a lower price? Movement and deployment match the previous Twins; their level-3 ID stays unchanged. |
-| Camel knight, `knight.orange@2` | 2 | 5–7 | `NC` adds full (1,3) jumps to the knight. Level 2 may underprice its reach; test whether it belongs at level 3. |
+| Camel knight, `knight.purple@3` | 3 | 5–7 | `NC` adds full (1,3) jumps to the knight. Playtesting supports level 3 for its tactical reach; test it unchanged. |
 | Sideways bishop, `bishop.purple@2` | 3 | 5½–7½ | `BmsR2sN`: bishop movement, quiet horizontal slides up to two clear squares, and full wide knight jumps (two files, one rank). Contrasts with the unlimited vertical bishop. |
 | Blink rook, `rook.purple@3` | 3 | 7–10 | Rook captures plus quiet jumps to any empty square within three squares horizontally and vertically. Start without diagonal captures; test development, escapes, and rook-ending conversion first. |
 | Twin short queens, `queen.purple@2` | 3 | 10–13 combined | `Q2` replaces one queen with two weaker units. Splitting material may improve coverage but exposes two targets and limits long-range conversion. |
 | Queen and companion, `queen.purple@3` | 3 | 11½–13 combined | Keep the ordinary queen and grant a capturable `K` companion. Test coordination without giving the royal king additional escapes. |
 
-These ranges are judgments for choosing prototypes. The leaper formula gives about 707 centipawns for 16 unrestricted destinations, but board edges reduce camel mobility substantially. It cannot reliably price quiet-only relocation, sliders, paired units, or their starting deployment. The Camel knight's level-2 price may be too low; it does not establish that camel moves add exactly two material points to a knight.
+These ranges are judgments for choosing prototypes. The leaper formula gives about 707 centipawns for 16 unrestricted destinations, but board edges reduce camel mobility substantially. It cannot reliably price quiet-only relocation, sliders, paired units, or their starting deployment. The Camel knight's level-3 target is about six total material points; its actual benefit remains unmeasured.
 
 Blink uses supported quiet leapers (`RmFmDmNmAmHmCmZmG`), crossing blockers within its three-square radius. Ordinary clear rook lines still extend farther. Its quiet jumps add no attacks, so they do not forbid an opposing king's movement or castling through those squares. Extra diagonal captures are held back until playtesting shows a need.
 
 Both queen purchases insert an extra unit on d2 for White or d7 for Black, advancing their own pawn stack within their half. Twin short queens also replace the original queen on d1/d8. Queen and companion keeps that original queen ordinary; the companion may move into attack and be captured. Only the ordinary king is royal. This deliberately tests whether a stronger purchase needs every individual unit to be stronger than its predecessor.
 
-Playtest readability, useful moves, frustrating escapes, unit coordination, and counterplay before precise tuning. Record feedback against these revision IDs. No balance campaign is automatically queued.
+Playtest readability, useful moves, frustrating escapes, unit coordination, and counterplay alongside the declared comparison. Record feedback against the exact revision IDs; movement changes do not enter an active batch.
+
+## Version 12 level-3 comparison
+
+Promote the unchanged `NC` Camel knight to level 3 as `knight.purple@3`. Its earlier level-2 ID, `knight.orange@2`, stays immutable for archived games. Do not add diagonal steps before seeing the comparison results. If it proves weak, quiet diagonal steps (`NCmF`) would be a smaller first buff than full diagonal moves and captures (`NCF`); either would require a new revision and a later declared test.
+
+The [level-3 campaign](experiments/balance/level3-plan.md) compares 14 nonroyal purchases against one another, with the Amazon kept fixed. It schedules 1,860 games and reserves at most 140 for one selected holdout stage. Every army starts with the same underlying standard material and receives one three-point purchase. Extra units and pushed pawns remain part of that purchase's benefit. Results describe relative upgrade strength and interactions, rather than assigning each whole piece a material value.
+
+Two simple later alternatives are an **Empress rook** (`RN`, full rook and knight moves, roughly eight whole-piece material points) and a **Crowned bishop** (`BW`, bishop moves plus one-square orthogonal moves/captures, roughly five to six). These are broad priors for possible playtests, not measured values. They do not join this frozen campaign. Prefer one clear design change after the results over testing every possible compound.
 
 ## Kings: preserve a clear mating objective
 
@@ -120,7 +128,7 @@ Pawn alternatives must preserve explicit promotion and en passant rules. Rook al
 
 ## Playtesting and implementation order
 
-Version 11 uses two frozen 20-design libraries selected from 28 immutable catalog entries. **Mobility and pairs** offers the new alternatives alongside shared references; **First prototypes** preserves the version-10 selection and exact profile. The parked pawn and earlier guard placement remain available in historical balance profiles. The browser and native bridge share the experiment compiler. Letters may differ between libraries but remain fixed throughout a game, and saves/PGNs select their matching bundled profile. Automatic grouping and independently importing retired definitions remain later work.
+Version 12 uses two frozen 20-design libraries selected from 29 immutable catalog entries. The Workshop replaces the earlier level-2 Camel selection with its level-3 revision. **Mobility and pairs** offers the new alternatives alongside shared references; **First prototypes** preserves the version-10 selection and exact profile. The parked pawn and earlier guard placement remain available in historical balance profiles. The browser and native bridge share the experiment compiler. Letters may differ between libraries but remain fixed throughout a game, and saves/PGNs select their matching bundled profile. Automatic grouping and independently importing retired definitions remain later work.
 
 Do not wait for tightly balanced purple pieces before human playtesting. Gather feedback on readability, useful decisions, enjoyment, frustrating situations, and available counterplay. Discard poor ideas before precise tuning. Then screen surviving designs against the fixed reference and selected equal-cost purchases, with a declared game cap and keep/revise/park decision. New releases may require fresh browser games; backward save compatibility is not required.
 

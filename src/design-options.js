@@ -46,6 +46,7 @@ const metadata = {
   'queen.purple@1': ['Amazon', 'Normal queen moves plus knight jumps, including captures.'],
   'pawn.orange@2': ['Twin pawns', 'Replace one pawn with two pawns on its file for one two-point purchase. Each moves one square forward or jumps two forward, and captures one square diagonally forward.'],
   'knight.orange@2': ['Camel knight', 'Normal knight jumps plus camel jumps: three squares in one direction and one at right angles. All jumps can capture.'],
+  'knight.purple@3': ['Camel knight', 'Normal knight jumps plus camel jumps: three squares in one direction and one at right angles. All jumps can capture.'],
   'bishop.purple@2': ['Sideways bishop', 'Normal bishop moves plus quiet horizontal slides of one or two clear squares, and knight jumps two files sideways and one rank forward or backward, including captures.'],
   'rook.purple@3': ['Blink rook', 'Normal rook moves and captures. Without capturing, also jump to any empty square within three squares horizontally and vertically, crossing intervening pieces.'],
   'queen.purple@2': ['Twin short queens', 'Replace your queen with two short queens for one three-point purchase. Each moves or captures up to two clear squares in any queen direction. The second starts on your second rank, pushing your own pawn stack forward within your half.'],

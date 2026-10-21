@@ -55,6 +55,8 @@ test('the embedded profile and native INI reproduce the trusted current catalog'
   assert.equal(compiled.hash, createHash('sha256').update(JSON.stringify({ config: compiled.config, registry: compiled.registry })).digest('hex'));
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'pawn.purple@2'), undefined);
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'knight.purple@1'), undefined);
+  assert.equal(DESIGN_OPTIONS.find(option => option.id === 'knight.orange@2'), undefined);
+  assert.equal(DESIGN_OPTIONS.find(option => option.id === 'knight.purple@3').level, 3);
   for (const id of ['pawn.purple@3', 'pawn.purple@4', 'pawn.purple@5', 'pawn.purple@6', 'knight.purple@2']) {
     assert.equal(DESIGN_OPTIONS.find(option => option.id === id).status, 'experimental');
   }

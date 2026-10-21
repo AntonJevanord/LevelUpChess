@@ -34,7 +34,7 @@ test('the catalog preserves all 15 legacy definitions and retains explicit place
   const legacy = [...config.matchAll(/^customPiece(\d+) = ([a-z]):([^\r\n]+)$/gm)];
   assert.equal(legacy.length, 15);
   assert.equal(Object.keys(LEGACY_DESIGN_IDS).length, 15);
-  assert.equal(designIds.length, 28);
+  assert.equal(designIds.length, 29);
   for (const [, slot, type, movement] of legacy) {
     const design = DESIGNS[LEGACY_DESIGN_IDS[type]];
     assert.equal(design.movement, movement);
@@ -46,6 +46,10 @@ test('the catalog preserves all 15 legacy definitions and retains explicit place
   assert.equal(getDesign('pawn.purple@2').movement, 'mR2ceB');
   assert.equal(getDesign('rook.purple@1').movement, 'RcFcAcNcD');
   assert.equal(getDesign('rook.purple@2').movement, 'RcN');
+  assert.equal(getDesign('knight.orange@2').level, 2, 'the historical price remains immutable');
+  assert.equal(getDesign('knight.orange@2').movement, 'NC');
+  assert.equal(getDesign('knight.purple@3').level, 3);
+  assert.equal(getDesign('knight.purple@3').movement, 'NC', 'repricing adds no diagonal moves');
   assert.deepEqual(getDesign('pawn.purple@2').roles, { pawn: true, castlingRook: false, enPassant: true });
   assert.deepEqual(getDesign('rook.purple@2').roles, { pawn: false, castlingRook: true, enPassant: false });
   assert.equal(getDesign('knight.purple@1').placement, 'extra');
@@ -103,13 +107,15 @@ test('a curated 20-design library fits while the complete catalog exceeds letter
   assert.ok(Object.isFrozen(PLAYABLE_DESIGN_IDS));
   assert.ok(!PLAYABLE_DESIGN_IDS.includes('pawn.purple@2'));
   assert.ok(!PLAYABLE_DESIGN_IDS.includes('knight.purple@1'));
+  assert.ok(!PLAYABLE_DESIGN_IDS.includes('knight.orange@2'));
+  assert.ok(PLAYABLE_DESIGN_IDS.includes('knight.purple@3'));
   for (const id of ['pawn.purple@3', 'pawn.purple@4', 'pawn.purple@5', 'pawn.orange@2', 'knight.purple@2']) assert.ok(PLAYABLE_DESIGN_IDS.includes(id));
   for (const library of PLAYABLE_LIBRARIES) {
     assert.equal(allocateDesigns(library.designIds).length, 20);
     assert.deepEqual(restoreDesignRegistry(clone(registry(library.designIds))), registry(library.designIds));
   }
-  assert.throws(() => allocateDesigns(designIds), /need 28 custom letters; only 20 are available/);
-  assert.throws(() => registry(designIds), /need 28 custom letters; only 20 are available/);
+  assert.throws(() => allocateDesigns(designIds), /need 29 custom letters; only 20 are available/);
+  assert.throws(() => registry(designIds), /need 29 custom letters; only 20 are available/);
 });
 
 test('standard promotion types remain reserved alongside additional helper letters', () => {

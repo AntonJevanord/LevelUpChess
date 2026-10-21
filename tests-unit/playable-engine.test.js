@@ -141,7 +141,7 @@ test('the native engine can reply legally in both libraries, including pairs and
   // Test the generated allocations, especially letters which another library
   // gives a different family or older rules used for pseudo-royal kings.
   const pieces = ['pawn.purple@3', 'pawn.purple@4', 'pawn.purple@5', 'pawn.orange@2',
-    'knight.orange@2', 'bishop.purple@2', 'rook.purple@3', 'queen.purple@2', 'queen.purple@3']
+    'knight.purple@3', 'bishop.purple@2', 'rook.purple@3', 'queen.purple@2', 'queen.purple@3']
     .map(id => `7k/8/8/8/8/4${letter(id)}3/8/7K w - - 0 1`);
   const positions = [rookFen, ...pieces, pairedArmyFen()].map(fen => ({ fen, profile }));
   for (const other of profiles.filter(value => value.variant !== profile.variant)) {

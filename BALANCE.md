@@ -6,6 +6,44 @@ These tools collect results; they do not assign measured values to pieces or cha
 
 The [first balance revision plan](experiments/balance/revision-plan.md) closed at 160 of at most 200 games with explicit candidate decisions. Existing experiment files are options, not a queue that must be exhausted before development continues.
 
+## Version 12: all level-3 purchases
+
+Use the [declared level-3 plan](experiments/balance/level3-plan.md) for the current batch. Fourteen selected nonroyal purchases play every other purchase over ten color-swapped opening pairs: **91 × 20 = 1,820 games**. Ordinary-versus-ordinary and Amazon-versus-Amazon controls add **40**, for **1,860 main-stage games**. One selected holdout stage may use at most **140 more**; the campaign cap is **2,000 scheduled games**. Royal kings remain separate because schema-2 profiles do not support their upgrades, and asymmetric legacy king evaluation has known limitations.
+
+```bat
+npm.cmd run balance:level3 -- --check
+npm.cmd run balance:level3 -- --stage screen --out balance-results/level3-round-robin
+```
+
+`--check` validates both opening cohorts, both army colors, and native movement without playing games or creating a results run. The campaign keeps 100,000 nodes per move, Skill 20, one thread, 32 MB hash, and the 400-ply limit. After 10–20 games, press **p** to stop after the current pair, inspect actual recorded timing, then resume if the runtime is acceptable:
+
+```bat
+npm.cmd run balance:level3 -- --report balance-results/level3-round-robin
+npm.cmd run balance:level3 -- --resume balance-results/level3-round-robin
+```
+
+The report writes `level3-report.md`, `level3-report.json`, `level3-standings.csv`, and `level3-matrix.csv`. It separates controls, partial pairs, errors, and truncations from scored matchups. Equal-opponent standings require complete opponent coverage; early partial scores are provisional. Timing estimates use this run's completed-game timestamps, not an assumed duration from the older audited files. Fixed nodes preserve search effort, but new movement and longer games can still change wall-clock time.
+
+Do not use `--limit-pairs` as a pilot that can grow: the generic runner records the shortened schedule permanently. Stop and resume the full campaign instead. Preserve this checkout and engine while it runs; changing rules or search settings requires a new experiment identity.
+
+After completing the main stage, select confirmation comparisons once. The selection must include `camel-knight-v-amazon` and `standard-control`, with at most five additional declared matchups:
+
+```bat
+npm.cmd run balance:level3 -- --stage confirm --from balance-results/level3-round-robin --comparisons camel-knight-v-amazon,standard-control --out balance-results/level3-confirmation
+```
+
+Add selected IDs to that same comma-separated argument before starting; do not run separate follow-ups for each new idea. The wrapper limits confirmation to seven comparisons, preserves the full 14-design allocation, and records one fixed confirmation reservation. The plan explains selection and stopping decisions. No ability or evaluation tuning happens during the batch, and no third stage is queued.
+
+### What the controls tell us
+
+A control gives both engines identical armies, strength, and search settings under the same rules profile. Ordinary controls check the baseline pipeline; Amazon self-play also exercises a custom upgrade. Inspect termination reasons, errors, truncations, draw rates, physical White/Black results, and runtime.
+
+With deterministic identical armies, both games of a color-swapped pair can replay the same moves. If White wins twice, Army A wins once as White and loses once as Black: **A still scores 50%**. That score is an expected symmetry check, not evidence that White has no advantage, that movement or evaluation is correct, or that upgrades are balanced. Pairing and independent rule checks provide different safeguards.
+
+The historical three-point Twin-pawn entry is omitted because Twins now target level 2; it remains available in First prototypes for reference.
+
+The round robin compares the **added benefit of a three-point purchase** on otherwise ordinary armies. A stronger score does not make a whole pawn worth more than a whole queen. The matrix can expose conflicting matchups; aggregate standings are descriptive for this opponent set and protocol, not intrinsic piece Elo or measured material values.
+
 ## Start a run
 
 Install dependencies with `npm ci`. On Windows, use `npm.cmd` in place of `npm`. No browser or running game server is needed. The harness uses the bundled Windows engine, or the executable selected by `FAIRY_STOCKFISH_PATH`; Linux/macOS need a compatible native executable.
@@ -41,7 +79,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-These configurations are templates and historical protocols, not a queue. The first revision batch is closed; the version-09 picker is ready for human playtesting before another capped batch is chosen.
+The generic configurations below are templates and historical protocols, not a queue. The first revision batch is closed; the current authorized batch is the level-3 campaign above.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |
@@ -146,9 +184,9 @@ Use `designs-smoke.json` to verify workflow. Its four-ply limit intentionally tr
 
 Schema-2 results use a new protocol identity. Preserve the mapping when comparing or reproducing results; finite-search play can depend on internal type allocation. Evidence follows stable design revisions and the engine/rules context, never a temporary letter alone. No long-term engine training is performed.
 
-Version 10's browser picker freezes 20 of the 22 catalog designs through this same registry/compiler. Balance campaigns select their own declared IDs; keep each registry within the 20 available custom letters instead of declaring the whole catalog. Version 09 preserves its earlier 17-design library. Browser saves/PGNs include a validated profile snapshot; raw balance PGNs still need their archived registry/rules and a compatible viewer.
+Version 12's browser picker has two frozen 20-design libraries selected from 29 catalog entries through this same registry/compiler. Balance campaigns select their own declared IDs; keep each registry within the 20 available custom letters instead of declaring the whole catalog. Version 09 preserves its earlier 17-design library. Browser saves/PGNs include a validated profile snapshot; raw balance PGNs still need their archived registry/rules and a compatible viewer.
 
-The four version-10 pawn candidates have working material priors, not match results. Their advanced pawn/guard deployment is part of the purchase being tested. Human playtesting and a declared game cap precede another campaign; see [the design notes](DESIGN.md#version-10-pawn-experiments).
+The version-10 pawn candidates have working material priors rather than established match values. Their advanced pawn/guard deployment is part of the purchase being tested. The current campaign follows human playtesting and a declared cap; see [the design notes](DESIGN.md#version-12-level-3-comparison).
 
 ## Openings and fair comparisons
 

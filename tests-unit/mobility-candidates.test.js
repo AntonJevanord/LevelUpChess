@@ -12,7 +12,7 @@ const { getDesign } = require('../src/design-catalog');
 const { pieceMap } = require('../src/profile-fen');
 
 const IDS = {
-  camel: 'knight.orange@2', bishop: 'bishop.purple@2', rook: 'rook.purple@3',
+  camel: 'knight.purple@3', bishop: 'bishop.purple@2', rook: 'rook.purple@3',
   shortQueen: 'queen.purple@2', guard: 'queen.purple@3', twins: 'pawn.orange@2',
 };
 const fixtures = [], consequences = [];
@@ -85,6 +85,7 @@ test.before(async () => {
 test.after(() => { if (directory) rmSync(directory, { recursive: true, force: true }); });
 
 test('Camel knight has all sixteen knight/camel jumps, with captures and no blocked intermediate squares', t => {
+  assert.equal(getDesign(IDS.camel).level, 3);
   const type = letter(IDS.camel);
   bothColors(t, 'camel open', position(base(type)), (instance, square) => {
     assert.deepEqual(targets(instance, square('d4')), offsets([...knightOffsets, ...camelOffsets]).map(square).sort());

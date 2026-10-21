@@ -13,6 +13,15 @@ const FINAL = new Set(['completed', 'truncated']);
 const sha256 = value => createHash('sha256').update(value).digest('hex');
 const fingerprint = value => sha256(JSON.stringify(value));
 
+/** Shared by resume and the bounded campaign's cross-stage identity check. */
+function getRunIdentity(enginePath, rulesFile = path.resolve(__dirname, '../../dist/balance-rules.cjs')) {
+  const rulesBundleSha256 = sha256(fs.readFileSync(rulesFile));
+  const engineSha256 = sha256(fs.readFileSync(enginePath));
+  const runnerSources = ['run.js', 'plan.js', 'stats.js', 'storage.js', 'uci.js', 'capabilities.js', '../engine-capabilities.js', 'files.js', 'resume-compatibility.js', 'design-registry.js', 'design-profile.js', '../../src/design-catalog.js']
+    .map(file => ({ file, sha256: sha256(fs.readFileSync(path.resolve(__dirname, file), 'utf8').replace(/\r\n/g, '\n')) }));
+  return { rulesBundleSha256, engineSha256, runnerSources, runnerSha256: fingerprint(runnerSources) };
+}
+
 function checkAbort(signal) {
   if (!signal?.aborted) return;
   const error = new Error('Balance run cancelled.');
@@ -144,11 +153,7 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
   let createMatchRules;
   try { ({ createMatchRules } = nodeRequire(rulesFile)); }
   catch (error) { throw new Error('Balance rules are not built. Run npm.cmd run build first.', { cause: error }); }
-  const bundleHash = sha256(fs.readFileSync(rulesFile));
-  const engineSha256 = sha256(fs.readFileSync(enginePath));
-  const runnerSources = ['run.js', 'plan.js', 'stats.js', 'storage.js', 'uci.js', 'capabilities.js', '../engine-capabilities.js', 'files.js', 'resume-compatibility.js', 'design-registry.js', 'design-profile.js', '../../src/design-catalog.js']
-    .map(file => ({ file, sha256: sha256(fs.readFileSync(path.resolve(__dirname, file), 'utf8').replace(/\r\n/g, '\n')) }));
-  const runnerSha256 = fingerprint(runnerSources);
+  const { rulesBundleSha256: bundleHash, engineSha256, runnerSources, runnerSha256 } = getRunIdentity(enginePath, rulesFile);
   const dynamic = config.schemaVersion === 2;
   // Freeze one allocation for every declared comparison, including both
   // colors. A limited workflow run therefore keeps the full campaign letters.
@@ -240,7 +245,7 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
     };
     if (resume) {
       const original = JSON.parse(fs.readFileSync(path.join(directory, 'run.json'), 'utf8'));
-      if (original.runnerSha256 !== runnerSha256) throw new Error('Cannot resume with a different runner version. Use version_07 for historical version 07 runs, or start a new run directory for version 08.');
+      if (original.runnerSha256 !== runnerSha256) throw new Error('Cannot resume with a different runner version. Use the original branch or checkout for this run, or start a new run directory.');
       for (const field of ['configHash', 'rulesHash', 'engineSha256']) {
         if (original[field] !== manifest[field]) throw new Error(`Cannot resume: ${field} does not match the original run.`);
       }
@@ -420,4 +425,4 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
   } finally { store?.close(); }
 }
 
-module.exports = { runMatches, recoverHistory };
+module.exports = { runMatches, recoverHistory, getRunIdentity };

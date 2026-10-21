@@ -1,0 +1,734 @@
+{
+  "schemaVersion": 2,
+  "name": "Level 3 round robin: 1860 games; fixed designs and screening openings",
+  "seed": 20261021,
+  "repetitions": 1,
+  "engine": {
+    "nodes": 100000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400
+  },
+  "openings": [
+    {
+      "id": "start",
+      "moves": []
+    },
+    {
+      "id": "open-e-pawns",
+      "moves": [
+        "e2e4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "sicilian-prefix",
+      "moves": [
+        "e2e4",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "french-prefix",
+      "moves": [
+        "e2e4",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "caro-prefix",
+      "moves": [
+        "e2e4",
+        "c7c6"
+      ]
+    },
+    {
+      "id": "modern-prefix",
+      "moves": [
+        "e2e4",
+        "g7g6"
+      ]
+    },
+    {
+      "id": "reversed-sicilian-prefix",
+      "moves": [
+        "c2c4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "symmetrical-english-prefix",
+      "moves": [
+        "c2c4",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "kingside-fianchetto-prefix",
+      "moves": [
+        "g2g3",
+        "g7g6"
+      ]
+    },
+    {
+      "id": "ordinary-knights-prefix",
+      "moves": [
+        "g1f3",
+        "g8f6"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "ranging-pawn-v-courier-pawn",
+      "label": "Ranging pawn versus Courier pawn",
+      "armyA": {"upgrades":{"d2":"pawn.purple@1"}},
+      "armyB": {"upgrades":{"d2":"pawn.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "ranging-pawn-v-rank-pawn",
+      "label": "Ranging pawn versus Rank pawn",
+      "armyA": {"upgrades":{"d2":"pawn.purple@1"}},
+      "armyB": {"upgrades":{"d2":"pawn.purple@4"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "ranging-pawn-v-returning-pawn",
+      "label": "Ranging pawn versus Returning pawn",
+      "armyA": {"upgrades":{"d2":"pawn.purple@1"}},
+      "armyB": {"upgrades":{"d2":"pawn.purple@5"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "ranging-pawn-v-knight-guard",
+      "label": "Ranging pawn versus Knight and guard",
+      "armyA": {"upgrades":{"d2":"pawn.purple@1"}},
+      "armyB": {"upgrades":{"b1":"knight.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "ranging-pawn-v-camel-knight",
+      "label": "Ranging pawn versus Camel knight",
+      "armyA": {"upgrades":{"d2":"pawn.purple@1"}},
+      "armyB": {"upgrades":{"b1":"knight.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "ranging-pawn-v-vertical-bishop",
+      "label": "Ranging pawn versus Vertical bishop",
+      "armyA": {"upgrades":{"d2":"pawn.purple@1"}},
+      "armyB": {"upgrades":{"c1":"bishop.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "ranging-pawn-v-sideways-bishop",
+      "label": "Ranging pawn versus Sideways bishop",
+      "armyA": {"upgrades":{"d2":"pawn.purple@1"}},
+      "armyB": {"upgrades":{"c1":"bishop.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "ranging-pawn-v-capture-box-rook",
+      "label": "Ranging pawn versus Capture-box rook",
+      "armyA": {"upgrades":{"d2":"pawn.purple@1"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "ranging-pawn-v-knight-capture-rook",
+      "label": "Ranging pawn versus Knight-capture rook",
+      "armyA": {"upgrades":{"d2":"pawn.purple@1"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "ranging-pawn-v-blink-rook",
+      "label": "Ranging pawn versus Blink rook",
+      "armyA": {"upgrades":{"d2":"pawn.purple@1"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "ranging-pawn-v-amazon",
+      "label": "Ranging pawn versus Amazon",
+      "armyA": {"upgrades":{"d2":"pawn.purple@1"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "ranging-pawn-v-short-queens",
+      "label": "Ranging pawn versus Twin short queens",
+      "armyA": {"upgrades":{"d2":"pawn.purple@1"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "ranging-pawn-v-queen-companion",
+      "label": "Ranging pawn versus Queen and companion",
+      "armyA": {"upgrades":{"d2":"pawn.purple@1"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "courier-pawn-v-rank-pawn",
+      "label": "Courier pawn versus Rank pawn",
+      "armyA": {"upgrades":{"d2":"pawn.purple@3"}},
+      "armyB": {"upgrades":{"d2":"pawn.purple@4"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "courier-pawn-v-returning-pawn",
+      "label": "Courier pawn versus Returning pawn",
+      "armyA": {"upgrades":{"d2":"pawn.purple@3"}},
+      "armyB": {"upgrades":{"d2":"pawn.purple@5"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "courier-pawn-v-knight-guard",
+      "label": "Courier pawn versus Knight and guard",
+      "armyA": {"upgrades":{"d2":"pawn.purple@3"}},
+      "armyB": {"upgrades":{"b1":"knight.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "courier-pawn-v-camel-knight",
+      "label": "Courier pawn versus Camel knight",
+      "armyA": {"upgrades":{"d2":"pawn.purple@3"}},
+      "armyB": {"upgrades":{"b1":"knight.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "courier-pawn-v-vertical-bishop",
+      "label": "Courier pawn versus Vertical bishop",
+      "armyA": {"upgrades":{"d2":"pawn.purple@3"}},
+      "armyB": {"upgrades":{"c1":"bishop.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "courier-pawn-v-sideways-bishop",
+      "label": "Courier pawn versus Sideways bishop",
+      "armyA": {"upgrades":{"d2":"pawn.purple@3"}},
+      "armyB": {"upgrades":{"c1":"bishop.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "courier-pawn-v-capture-box-rook",
+      "label": "Courier pawn versus Capture-box rook",
+      "armyA": {"upgrades":{"d2":"pawn.purple@3"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "courier-pawn-v-knight-capture-rook",
+      "label": "Courier pawn versus Knight-capture rook",
+      "armyA": {"upgrades":{"d2":"pawn.purple@3"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "courier-pawn-v-blink-rook",
+      "label": "Courier pawn versus Blink rook",
+      "armyA": {"upgrades":{"d2":"pawn.purple@3"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "courier-pawn-v-amazon",
+      "label": "Courier pawn versus Amazon",
+      "armyA": {"upgrades":{"d2":"pawn.purple@3"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "courier-pawn-v-short-queens",
+      "label": "Courier pawn versus Twin short queens",
+      "armyA": {"upgrades":{"d2":"pawn.purple@3"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "courier-pawn-v-queen-companion",
+      "label": "Courier pawn versus Queen and companion",
+      "armyA": {"upgrades":{"d2":"pawn.purple@3"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "rank-pawn-v-returning-pawn",
+      "label": "Rank pawn versus Returning pawn",
+      "armyA": {"upgrades":{"d2":"pawn.purple@4"}},
+      "armyB": {"upgrades":{"d2":"pawn.purple@5"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "rank-pawn-v-knight-guard",
+      "label": "Rank pawn versus Knight and guard",
+      "armyA": {"upgrades":{"d2":"pawn.purple@4"}},
+      "armyB": {"upgrades":{"b1":"knight.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "rank-pawn-v-camel-knight",
+      "label": "Rank pawn versus Camel knight",
+      "armyA": {"upgrades":{"d2":"pawn.purple@4"}},
+      "armyB": {"upgrades":{"b1":"knight.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "rank-pawn-v-vertical-bishop",
+      "label": "Rank pawn versus Vertical bishop",
+      "armyA": {"upgrades":{"d2":"pawn.purple@4"}},
+      "armyB": {"upgrades":{"c1":"bishop.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "rank-pawn-v-sideways-bishop",
+      "label": "Rank pawn versus Sideways bishop",
+      "armyA": {"upgrades":{"d2":"pawn.purple@4"}},
+      "armyB": {"upgrades":{"c1":"bishop.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "rank-pawn-v-capture-box-rook",
+      "label": "Rank pawn versus Capture-box rook",
+      "armyA": {"upgrades":{"d2":"pawn.purple@4"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "rank-pawn-v-knight-capture-rook",
+      "label": "Rank pawn versus Knight-capture rook",
+      "armyA": {"upgrades":{"d2":"pawn.purple@4"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "rank-pawn-v-blink-rook",
+      "label": "Rank pawn versus Blink rook",
+      "armyA": {"upgrades":{"d2":"pawn.purple@4"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "rank-pawn-v-amazon",
+      "label": "Rank pawn versus Amazon",
+      "armyA": {"upgrades":{"d2":"pawn.purple@4"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "rank-pawn-v-short-queens",
+      "label": "Rank pawn versus Twin short queens",
+      "armyA": {"upgrades":{"d2":"pawn.purple@4"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "rank-pawn-v-queen-companion",
+      "label": "Rank pawn versus Queen and companion",
+      "armyA": {"upgrades":{"d2":"pawn.purple@4"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "returning-pawn-v-knight-guard",
+      "label": "Returning pawn versus Knight and guard",
+      "armyA": {"upgrades":{"d2":"pawn.purple@5"}},
+      "armyB": {"upgrades":{"b1":"knight.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "returning-pawn-v-camel-knight",
+      "label": "Returning pawn versus Camel knight",
+      "armyA": {"upgrades":{"d2":"pawn.purple@5"}},
+      "armyB": {"upgrades":{"b1":"knight.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "returning-pawn-v-vertical-bishop",
+      "label": "Returning pawn versus Vertical bishop",
+      "armyA": {"upgrades":{"d2":"pawn.purple@5"}},
+      "armyB": {"upgrades":{"c1":"bishop.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "returning-pawn-v-sideways-bishop",
+      "label": "Returning pawn versus Sideways bishop",
+      "armyA": {"upgrades":{"d2":"pawn.purple@5"}},
+      "armyB": {"upgrades":{"c1":"bishop.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "returning-pawn-v-capture-box-rook",
+      "label": "Returning pawn versus Capture-box rook",
+      "armyA": {"upgrades":{"d2":"pawn.purple@5"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "returning-pawn-v-knight-capture-rook",
+      "label": "Returning pawn versus Knight-capture rook",
+      "armyA": {"upgrades":{"d2":"pawn.purple@5"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "returning-pawn-v-blink-rook",
+      "label": "Returning pawn versus Blink rook",
+      "armyA": {"upgrades":{"d2":"pawn.purple@5"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "returning-pawn-v-amazon",
+      "label": "Returning pawn versus Amazon",
+      "armyA": {"upgrades":{"d2":"pawn.purple@5"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "returning-pawn-v-short-queens",
+      "label": "Returning pawn versus Twin short queens",
+      "armyA": {"upgrades":{"d2":"pawn.purple@5"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "returning-pawn-v-queen-companion",
+      "label": "Returning pawn versus Queen and companion",
+      "armyA": {"upgrades":{"d2":"pawn.purple@5"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "knight-guard-v-camel-knight",
+      "label": "Knight and guard versus Camel knight",
+      "armyA": {"upgrades":{"b1":"knight.purple@2"}},
+      "armyB": {"upgrades":{"b1":"knight.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "knight-guard-v-vertical-bishop",
+      "label": "Knight and guard versus Vertical bishop",
+      "armyA": {"upgrades":{"b1":"knight.purple@2"}},
+      "armyB": {"upgrades":{"c1":"bishop.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "knight-guard-v-sideways-bishop",
+      "label": "Knight and guard versus Sideways bishop",
+      "armyA": {"upgrades":{"b1":"knight.purple@2"}},
+      "armyB": {"upgrades":{"c1":"bishop.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "knight-guard-v-capture-box-rook",
+      "label": "Knight and guard versus Capture-box rook",
+      "armyA": {"upgrades":{"b1":"knight.purple@2"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "knight-guard-v-knight-capture-rook",
+      "label": "Knight and guard versus Knight-capture rook",
+      "armyA": {"upgrades":{"b1":"knight.purple@2"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "knight-guard-v-blink-rook",
+      "label": "Knight and guard versus Blink rook",
+      "armyA": {"upgrades":{"b1":"knight.purple@2"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "knight-guard-v-amazon",
+      "label": "Knight and guard versus Amazon",
+      "armyA": {"upgrades":{"b1":"knight.purple@2"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "knight-guard-v-short-queens",
+      "label": "Knight and guard versus Twin short queens",
+      "armyA": {"upgrades":{"b1":"knight.purple@2"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "knight-guard-v-queen-companion",
+      "label": "Knight and guard versus Queen and companion",
+      "armyA": {"upgrades":{"b1":"knight.purple@2"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "camel-knight-v-vertical-bishop",
+      "label": "Camel knight versus Vertical bishop",
+      "armyA": {"upgrades":{"b1":"knight.purple@3"}},
+      "armyB": {"upgrades":{"c1":"bishop.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "camel-knight-v-sideways-bishop",
+      "label": "Camel knight versus Sideways bishop",
+      "armyA": {"upgrades":{"b1":"knight.purple@3"}},
+      "armyB": {"upgrades":{"c1":"bishop.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "camel-knight-v-capture-box-rook",
+      "label": "Camel knight versus Capture-box rook",
+      "armyA": {"upgrades":{"b1":"knight.purple@3"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "camel-knight-v-knight-capture-rook",
+      "label": "Camel knight versus Knight-capture rook",
+      "armyA": {"upgrades":{"b1":"knight.purple@3"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "camel-knight-v-blink-rook",
+      "label": "Camel knight versus Blink rook",
+      "armyA": {"upgrades":{"b1":"knight.purple@3"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "camel-knight-v-amazon",
+      "label": "Camel knight versus Amazon",
+      "armyA": {"upgrades":{"b1":"knight.purple@3"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "camel-knight-v-short-queens",
+      "label": "Camel knight versus Twin short queens",
+      "armyA": {"upgrades":{"b1":"knight.purple@3"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "camel-knight-v-queen-companion",
+      "label": "Camel knight versus Queen and companion",
+      "armyA": {"upgrades":{"b1":"knight.purple@3"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "vertical-bishop-v-sideways-bishop",
+      "label": "Vertical bishop versus Sideways bishop",
+      "armyA": {"upgrades":{"c1":"bishop.purple@1"}},
+      "armyB": {"upgrades":{"c1":"bishop.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "vertical-bishop-v-capture-box-rook",
+      "label": "Vertical bishop versus Capture-box rook",
+      "armyA": {"upgrades":{"c1":"bishop.purple@1"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "vertical-bishop-v-knight-capture-rook",
+      "label": "Vertical bishop versus Knight-capture rook",
+      "armyA": {"upgrades":{"c1":"bishop.purple@1"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "vertical-bishop-v-blink-rook",
+      "label": "Vertical bishop versus Blink rook",
+      "armyA": {"upgrades":{"c1":"bishop.purple@1"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "vertical-bishop-v-amazon",
+      "label": "Vertical bishop versus Amazon",
+      "armyA": {"upgrades":{"c1":"bishop.purple@1"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "vertical-bishop-v-short-queens",
+      "label": "Vertical bishop versus Twin short queens",
+      "armyA": {"upgrades":{"c1":"bishop.purple@1"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "vertical-bishop-v-queen-companion",
+      "label": "Vertical bishop versus Queen and companion",
+      "armyA": {"upgrades":{"c1":"bishop.purple@1"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "sideways-bishop-v-capture-box-rook",
+      "label": "Sideways bishop versus Capture-box rook",
+      "armyA": {"upgrades":{"c1":"bishop.purple@2"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "sideways-bishop-v-knight-capture-rook",
+      "label": "Sideways bishop versus Knight-capture rook",
+      "armyA": {"upgrades":{"c1":"bishop.purple@2"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "sideways-bishop-v-blink-rook",
+      "label": "Sideways bishop versus Blink rook",
+      "armyA": {"upgrades":{"c1":"bishop.purple@2"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "sideways-bishop-v-amazon",
+      "label": "Sideways bishop versus Amazon",
+      "armyA": {"upgrades":{"c1":"bishop.purple@2"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "sideways-bishop-v-short-queens",
+      "label": "Sideways bishop versus Twin short queens",
+      "armyA": {"upgrades":{"c1":"bishop.purple@2"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "sideways-bishop-v-queen-companion",
+      "label": "Sideways bishop versus Queen and companion",
+      "armyA": {"upgrades":{"c1":"bishop.purple@2"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "capture-box-rook-v-knight-capture-rook",
+      "label": "Capture-box rook versus Knight-capture rook",
+      "armyA": {"upgrades":{"a1":"rook.purple@1"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "capture-box-rook-v-blink-rook",
+      "label": "Capture-box rook versus Blink rook",
+      "armyA": {"upgrades":{"a1":"rook.purple@1"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "capture-box-rook-v-amazon",
+      "label": "Capture-box rook versus Amazon",
+      "armyA": {"upgrades":{"a1":"rook.purple@1"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "capture-box-rook-v-short-queens",
+      "label": "Capture-box rook versus Twin short queens",
+      "armyA": {"upgrades":{"a1":"rook.purple@1"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "capture-box-rook-v-queen-companion",
+      "label": "Capture-box rook versus Queen and companion",
+      "armyA": {"upgrades":{"a1":"rook.purple@1"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "knight-capture-rook-v-blink-rook",
+      "label": "Knight-capture rook versus Blink rook",
+      "armyA": {"upgrades":{"a1":"rook.purple@2"}},
+      "armyB": {"upgrades":{"a1":"rook.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "knight-capture-rook-v-amazon",
+      "label": "Knight-capture rook versus Amazon",
+      "armyA": {"upgrades":{"a1":"rook.purple@2"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "knight-capture-rook-v-short-queens",
+      "label": "Knight-capture rook versus Twin short queens",
+      "armyA": {"upgrades":{"a1":"rook.purple@2"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "knight-capture-rook-v-queen-companion",
+      "label": "Knight-capture rook versus Queen and companion",
+      "armyA": {"upgrades":{"a1":"rook.purple@2"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "blink-rook-v-amazon",
+      "label": "Blink rook versus Amazon",
+      "armyA": {"upgrades":{"a1":"rook.purple@3"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "blink-rook-v-short-queens",
+      "label": "Blink rook versus Twin short queens",
+      "armyA": {"upgrades":{"a1":"rook.purple@3"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "blink-rook-v-queen-companion",
+      "label": "Blink rook versus Queen and companion",
+      "armyA": {"upgrades":{"a1":"rook.purple@3"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "amazon-v-short-queens",
+      "label": "Amazon versus Twin short queens",
+      "armyA": {"upgrades":{"d1":"queen.purple@1"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@2"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "amazon-v-queen-companion",
+      "label": "Amazon versus Queen and companion",
+      "armyA": {"upgrades":{"d1":"queen.purple@1"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "short-queens-v-queen-companion",
+      "label": "Twin short queens versus Queen and companion",
+      "armyA": {"upgrades":{"d1":"queen.purple@2"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@3"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "standard-control",
+      "label": "Identical ordinary armies: scoring and completion control",
+      "armyA": {"upgrades":{}},
+      "armyB": {"upgrades":{}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    },
+    {
+      "id": "amazon-control",
+      "label": "Identical Amazon armies: upgraded-context scoring and completion control",
+      "armyA": {"upgrades":{"d1":"queen.purple@1"}},
+      "armyB": {"upgrades":{"d1":"queen.purple@1"}},
+      "strengthA": {"skill":20}, "strengthB": {"skill":20}
+    }
+  ]
+}

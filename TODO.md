@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 11 adds selectable libraries, mobility alternatives, and queen pairs. Version 10 preserves the pawn workshop, version 09 the first playable picker, and version 08 the first design-registry experiment. The reference Piece upgrades mode keeps its version-05 rules. Historical milestones are in [development history](docs/development-history.md).
+Version 12 promotes the Camel knight and prepares a capped level-3 comparison. Version 11 preserves selectable libraries and queen pairs; version 10 the pawn workshop, version 09 the first playable picker, and version 08 the first design-registry experiment. The reference Piece upgrades mode keeps its version-05 rules. Historical milestones are in [development history](docs/development-history.md).
 
 Browser-save compatibility across releases is optional. Experiment definitions, identities, and results must remain reproducible.
 
@@ -73,8 +73,20 @@ Two to six ideas per family per tier means 36–108 upgraded designs. Keep that 
 - [x] Record [provisional costs and material priors](DESIGN.md#version-11-mobility-and-pairs); keep the Amazon reference unchanged.
 - [x] Verify movement, royal safety, castling, deployment, engine play, library switching, and save/PGN round trips: 341 unit/integration cases and 22 focused browser cases. One combined-run native timeout passed its focused recheck.
 - [x] Check the complete HTML offline and at mobile width, including both libraries and queen packages, Twin-pawn displacement, moves, saves, imports, and reset. No external requests, page errors, or horizontal overflow; managed Chromium still blocks direct `file://` navigation.
-- [ ] Playtest both queen packages, camel reach, sideways bishop development, Blink rook escapes, and lower-cost Twins on Windows.
-- [ ] Shortlist enjoyable designs and revise any unclear descriptions before declaring the next capped balance batch.
+- [x] Receive positive playtesting feedback on the new designs; identify the Camel knight for level-3 pricing.
+- [x] Declare the next comparison batch after initial playtesting; keep unimplemented alternatives outside its fixed roster.
+
+## Version 12 — level-3 comparison
+
+- [x] Preserve version 11 and develop on `version_12`.
+- [x] Add `knight.purple@3` at level 3 with unchanged `NC` movement; retain the old level-2 definition and defer any diagonal-step buff.
+- [x] Declare the [14-design round robin](experiments/balance/level3-plan.md): 1,820 matchup games plus 40 controls, with at most 140 selected confirmation games and no automatic third stage.
+- [x] Freeze the roster, short opening cohorts, letter allocation, and previous 100,000-node search settings. Keep upgraded kings outside this batch.
+- [x] Add campaign validation, capped stage selection, matchup/standings reports, timing estimates, and separate control diagnostics. Lock the one confirmation selection and verify its engine, runner, and rules identities against screening.
+- [x] Verify all 3,720 possible army/color/opening assignments and 3,864 exact native/WASM positions across both cohorts. Verify 369 unit/integration cases (two updated expectations passed focused rechecks), 23 focused browser cases, an offline/mobile smoke, and four unscored workflow games covering stop/resume and reports.
+- [ ] Check Windows runtime after 10–20 games by stopping after a pair; resume the same full schedule if acceptable.
+- [ ] Finish the main stage, inspect completion rates, opening sensitivity, pairwise results, and human feedback, then select at most seven holdout comparisons once.
+- [ ] Record keep/revise/park decisions when the capped batch ends. Changes get new revisions and future declared budgets; unused games stay unused.
 
 ## Deferred work
 

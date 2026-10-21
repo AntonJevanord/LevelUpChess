@@ -230,7 +230,7 @@ test('immediate cancellation interrupts an active native search and retains a re
   assert.equal(fs.existsSync(path.join(directory, 'run.lock')), false);
 });
 
-test('version 08 rejects historical runners and still recovers its own interrupted journal history', nativeOptions, async t => {
+test('historical runners are rejected while matching interrupted journal history remains recoverable', nativeOptions, async t => {
   const directory = temporary(t);
   const config = configuration({ repetitions: 2 });
   const rename = fs.renameSync;
@@ -273,7 +273,7 @@ test('version 08 rejects historical runners and still recovers its own interrupt
   assert.ok(patch.fromRunnerSha256.includes(original.runnerSha256));
   assert.ok(patch.fromRunnerSha256.includes('c6e4aea9c046842048ae0f7057bf3639937713638fb3846afe96fe0a23e55899'));
 
-  await assert.rejects(run(config, directory, { resume: true }), /Use version_07/);
+  await assert.rejects(run(config, directory, { resume: true }), /Use the original branch or checkout/);
   assert.equal(read(directory, 'run.json'), manifestBytes);
   assert.equal(read(directory, 'games.jsonl'), currentJournal);
   assert.equal(read(directory, 'checkpoint.json'), currentCheckpoint);

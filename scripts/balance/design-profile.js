@@ -94,7 +94,7 @@ function definitionProbes(definition, letter) {
     { name: 'repeatable quiet twin jump crosses a friendly blocker', fen: position({ a1: 'K', h7: 'k', d4: type, d5: 'P', c5: 'p', e5: 'p' }) },
     { name: 'quiet twin jump cannot capture forward', fen: position({ a1: 'K', h7: 'k', d4: type, d5: 'P', d6: 'p' }) },
   );
-  if (definition.id === 'knight.orange@2') frames.push({
+  if (['knight.orange@2', 'knight.purple@3'].includes(definition.id)) frames.push({
     name: 'camel captures across blockers',
     fen: position({ a1: 'K', h7: 'k', d4: type, d5: 'P', e4: 'P', e7: 'p', g5: 'p', c1: 'p', a3: 'p' }),
   });

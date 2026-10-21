@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "name": "Level 3 all-purchases campaign",
+  "referenceId": "queen.purple@1",
+  "screen": "level3-round-robin.json",
+  "holdout": "level3-holdout.json",
+  "maxGames": 2000,
+  "screenGames": 1860,
+  "holdoutGamesMax": 140,
+  "maxConfirmationComparisons": 7,
+  "mandatoryConfirmationComparisons": [
+    "camel-knight-v-amazon",
+    "standard-control"
+  ],
+  "maxAdditionalConfirmationComparisons": 5,
+  "practicalScoreBand": [
+    0.35,
+    0.65
+  ],
+  "candidates": [
+    {
+      "key": "ranging-pawn",
+      "id": "pawn.purple@1",
+      "label": "Ranging pawn",
+      "square": "d2"
+    },
+    {
+      "key": "courier-pawn",
+      "id": "pawn.purple@3",
+      "label": "Courier pawn",
+      "square": "d2"
+    },
+    {
+      "key": "rank-pawn",
+      "id": "pawn.purple@4",
+      "label": "Rank pawn",
+      "square": "d2"
+    },
+    {
+      "key": "returning-pawn",
+      "id": "pawn.purple@5",
+      "label": "Returning pawn",
+      "square": "d2"
+    },
+    {
+      "key": "knight-guard",
+      "id": "knight.purple@2",
+      "label": "Knight and guard",
+      "square": "b1"
+    },
+    {
+      "key": "camel-knight",
+      "id": "knight.purple@3",
+      "label": "Camel knight",
+      "square": "b1"
+    },
+    {
+      "key": "vertical-bishop",
+      "id": "bishop.purple@1",
+      "label": "Vertical bishop",
+      "square": "c1"
+    },
+    {
+      "key": "sideways-bishop",
+      "id": "bishop.purple@2",
+      "label": "Sideways bishop",
+      "square": "c1"
+    },
+    {
+      "key": "capture-box-rook",
+      "id": "rook.purple@1",
+      "label": "Capture-box rook",
+      "square": "a1"
+    },
+    {
+      "key": "knight-capture-rook",
+      "id": "rook.purple@2",
+      "label": "Knight-capture rook",
+      "square": "a1"
+    },
+    {
+      "key": "blink-rook",
+      "id": "rook.purple@3",
+      "label": "Blink rook",
+      "square": "a1"
+    },
+    {
+      "key": "amazon",
+      "id": "queen.purple@1",
+      "label": "Amazon",
+      "square": "d1"
+    },
+    {
+      "key": "short-queens",
+      "id": "queen.purple@2",
+      "label": "Twin short queens",
+      "square": "d1"
+    },
+    {
+      "key": "queen-companion",
+      "id": "queen.purple@3",
+      "label": "Queen and companion",
+      "square": "d1"
+    }
+  ],
+  "controls": [
+    {
+      "id": "standard-control",
+      "label": "Ordinary armies"
+    },
+    {
+      "id": "amazon-control",
+      "label": "Amazon armies"
+    }
+  ]
+}

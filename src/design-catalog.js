@@ -61,6 +61,8 @@ const definitions = [
   definition('rook', 'purple', 3, 'RmFmDmNmAmHmCmZmG', 'o', 12, 3),
   definition('queen', 'purple', 3, 'Q2', 'u', 8, 2, 'split', { d1: 'd2' }),
   definition('queen', 'purple', 3, 'K', 'u', 8, 3, 'insert', { d1: 'd2' }),
+  // Repricing is also a new immutable revision; keep NC movement unchanged.
+  definition('knight', 'purple', 3, 'NC', 'g', 3, 3),
 ];
 
 const DESIGNS = Object.freeze(Object.fromEntries(definitions.map(design => [design.id, design])));

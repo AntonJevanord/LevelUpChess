@@ -29,6 +29,21 @@ async function importPgn(page, pgn) {
 
 test.beforeEach(async ({ page }) => { await page.goto('http://127.0.0.1:4173'); });
 
+test('Camel knight costs three points, shares a six-point army with Blink, and keeps its camel jump', async ({ page }) => {
+  await page.selectOption('#game-mode', workshop.variant);
+  await choose(page, 'knight', 'b1', 'knight.purple@3');
+  await expect(page.locator('#experimental-status')).toContainText('White 3/6 · Black 0/6');
+  await expect(page.locator('#experimental-upgrade-b1')).toHaveValue('knight.purple@3');
+  await choose(page, 'rook', 'a1', 'rook.purple@3');
+  await expect(page.locator('#experimental-status')).toContainText('White 6/6 · Black 0/6');
+  await start(page);
+  await expect(square(page, 'b1')).toHaveAttribute('data-design-id', 'knight.purple@3');
+  await expect(square(page, 'b1').locator('.piece-level')).toHaveText('L3');
+  await move(page, 'b1', 'c4');
+  await expect(square(page, 'c4')).toHaveAttribute('data-design-id', 'knight.purple@3');
+  await expect(square(page, 'b2')).toHaveAttribute('aria-label', 'b2 White pawn');
+});
+
 test('switching libraries keeps shared choices, clears unavailable choices, and leaves the current board intact', async ({ page }) => {
   await expect(page.locator(`#game-mode option[value="${workshop.variant}"]`)).toHaveText('Experiments · Mobility and pairs');
   await expect(page.locator(`#game-mode option[value="${reference.variant}"]`)).toHaveText('Experiments · First prototypes');
