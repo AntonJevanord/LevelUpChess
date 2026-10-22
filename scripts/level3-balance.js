@@ -16,9 +16,9 @@ const selectedEnginePath = () => path.resolve(process.env.FAIRY_STOCKFISH_PATH |
 const HELP = `Level-3 campaign: 1860 screening games, at most 140 selected holdout games
 
   npm run balance:level3 -- --check
-  npm run balance:level3 -- --stage screen --out DIRECTORY
+  npm run balance:level3 -- --stage screen --out DIRECTORY [--log games|plies]
   npm run balance:level3 -- --report DIRECTORY
-  npm run balance:level3 -- --resume DIRECTORY
+  npm run balance:level3 -- --resume DIRECTORY [--log games|plies]
   npm run balance:level3 -- --stage confirm --from SCREEN_DIRECTORY --comparisons ID,ID --out DIRECTORY
 
 Confirmation must include camel-knight-v-amazon and standard-control, with at
@@ -26,12 +26,13 @@ most five additional comparisons. Declare one selection after the screen;
 resume that run instead of creating another confirmation directory.
 q / Ctrl+C stops now; g stops after the game; p stops after its color pair.
 Use p after the first 10–20 games to check runtime, then --report and --resume.
+Game starts and results are printed by default; --log plies adds move progress.
 `;
 
 function parseArgs(args) {
   if (args.length === 1 && ['--help', '-h'].includes(args[0])) return { help: true };
   if (args.length === 1 && args[0] === '--check') return { check: true };
-  const allowed = new Set(['stage', 'out', 'from', 'comparisons', 'report', 'resume']);
+  const allowed = new Set(['stage', 'out', 'from', 'comparisons', 'report', 'resume', 'log']);
   const options = {};
   for (let index = 0; index < args.length; index += 2) {
     const key = args[index].startsWith('--') ? args[index].slice(2) : '';
@@ -41,8 +42,9 @@ function parseArgs(args) {
   }
   const modes = ['stage', 'report', 'resume'].filter(key => options[key]);
   if (modes.length !== 1) throw new Error('Select --check, --stage, --report, or --resume.');
+  if (options.log !== undefined && (!['games', 'plies'].includes(options.log) || !['stage', 'resume'].includes(modes[0]))) throw new Error('--log games|plies applies only to new or resumed runs.');
   if (!options.stage) {
-    if (Object.keys(options).length !== 1) throw new Error('--report and --resume take only a directory.');
+    if (Object.keys(options).some(key => ![modes[0], 'log'].includes(key))) throw new Error('--report and --resume take only a directory and optional run logging.');
     return options;
   }
   if (!['screen', 'confirm'].includes(options.stage) || !options.out) throw new Error('Select --stage screen or confirm and --out DIRECTORY.');
@@ -119,6 +121,7 @@ function reserveConfirmation(screenDirectory, outDirectory, input, { enginePath 
 
 async function main(args = process.argv.slice(2)) {
   const options = parseArgs(args);
+  const logging = options.log ? ['--log', options.log] : [];
   if (options.help) { console.log(HELP); return; }
   if (options.report) {
     const result = require('./balance/level3-report').writeLevel3Report(options.report);
@@ -145,15 +148,15 @@ async function main(args = process.argv.slice(2)) {
   }
   if (options.resume) {
     verifyCampaignManifest(JSON.parse(fs.readFileSync(path.join(path.resolve(options.resume), 'run.json'), 'utf8')));
-    return require('./balance').main(['--resume', options.resume]);
+    return require('./balance').main(['--resume', options.resume, ...logging]);
   }
   if (options.stage === 'screen') {
     const games = makeSchedule(configFor('screen')).length;
     if (games !== roster.screenGames || games + roster.holdoutGamesMax > roster.maxGames || roster.maxGames > 2000) throw new Error('The declared screen and reserve no longer fit the fixed 2000-game campaign.');
-    return require('./balance').main(['--config', path.join(root, 'experiments/balance', roster.screen), '--out', options.out]);
+    return require('./balance').main(['--config', path.join(root, 'experiments/balance', roster.screen), '--out', options.out, ...logging]);
   }
   const selected = reserveConfirmation(options.from, options.out, options.comparisons);
-  return require('./balance').main(['--config', path.join(root, 'experiments/balance', roster.holdout), '--comparisons', selected.ids.join(','), '--out', selected.outDir]);
+  return require('./balance').main(['--config', path.join(root, 'experiments/balance', roster.holdout), '--comparisons', selected.ids.join(','), '--out', selected.outDir, ...logging]);
 }
 
 if (require.main === module) main().catch(error => { console.error(`Level-3 campaign: ${error.message}`); process.exitCode = 1; });

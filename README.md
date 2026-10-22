@@ -77,6 +77,14 @@ Controls give both engines identical armies. Their paired A score is usually 50%
 
 The first revision remains closed at 160 of its 200-game cap; its [results and decisions](experiments/balance/results/revision-1-rook-confirmation-001.md) remain historical evidence. Version 11 preserves the preceding workshop. See [TODO.md](TODO.md) for current progress.
 
+## Version 13: tools for future balance runs
+
+The playable board and version-12 experiment stay unchanged. New runs can use several independent game workers while each engine keeps one thread and its declared search budget. Start with two workers; speedup depends on available CPU and memory. Keep the current serial campaign running on its original checkout.
+
+`balance` and `balance:level3` now print game starts and results without ply updates; add `--log plies` for the earlier move progress. This takes effect when starting or resuming a process.
+
+`balance:prepare` turns a selected roster into a capped configuration with color pairs, controls, and a frozen design allocation. It does not start games or choose designs, openings, or balance decisions. See [the future-run guide](docs/balance-tools.md) for preparation, parallel execution, and resume commands.
+
 ## Play Fairy Stockfish
 
 Install Node.js 20+, then run these commands in the repository folder on Windows:
@@ -158,7 +166,8 @@ Standard chess uses [chess.js](https://github.com/jhlywa/chess.js), with its BSD
 | `version_09` | Preserved checkpoint | Shared playable profiles and the first 17-design picker |
 | `version_10` | Preserved checkpoint | Army reset controls, pawn candidates, and own-file deployment |
 | `version_11` | Preserved checkpoint | Selectable libraries, mobility alternatives, and queen pairs |
-| `version_12` | In development | Level-3 Camel knight and capped all-design balance campaign |
+| `version_12` | Active experiment | Level-3 Camel knight and capped all-design balance campaign |
+| `version_13` | Current tools | Parallel balance games, quieter output, and roster-based preparation |
 
 Create each development branch from the previous tested milestone and tag finished releases. Tags preserve stable checkpoints while branches can evolve. See [TODO.md](TODO.md) for progress and later work.
 

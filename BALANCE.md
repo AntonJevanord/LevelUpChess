@@ -44,6 +44,12 @@ The historical three-point Twin-pawn entry is omitted because Twins now target l
 
 The round robin compares the **added benefit of a three-point purchase** on otherwise ordinary armies. A stronger score does not make a whole pawn worth more than a whole queen. The matrix can expose conflicting matchups; aggregate standings are descriptive for this opponent set and protocol, not intrinsic piece Elo or measured material values.
 
+## Version 13: future-run tools
+
+Keep the active version-12 serial campaign on its original checkout until it finishes. Version 13 changes preparation, scheduling, output, and reports; it preserves that campaign's rules, engine, roster, search settings, and core runner identity. It does not convert an existing serial run into a parallel run.
+
+For a new schema-2 experiment, `balance:prepare` generates comparisons and controls from a selected roster, checks costs and custom-type capacity, enforces a scheduled-game cap, and validates the selected opening prefixes before writing. `balance:parallel` runs complete color pairs in independent worker directories and aggregates their results. Start with `--jobs 2`; each engine still searches with one thread. See [the future-run guide](docs/balance-tools.md) for commands, limitations, and the decisions that still need human review.
+
 ## Start a run
 
 Install dependencies with `npm ci`. On Windows, use `npm.cmd` in place of `npm`. No browser or running game server is needed. The harness uses the bundled Windows engine, or the executable selected by `FAIRY_STOCKFISH_PATH`; Linux/macOS need a compatible native executable.
@@ -55,6 +61,8 @@ npm run balance -- --config experiments/balance/smoke.json --out balance-results
 ```
 
 The smoke run checks the workflow. Its small search budget and move limit do not provide balance evidence. Choose a new output directory for each experiment; resume an existing one instead of overwriting it.
+
+Game starts, results, preflight notices, and summaries are printed by default. Add `--log plies` to a new or resumed `balance`, `balance:level3`, or `balance:parallel` command for move progress every ten plies. `--log games` explicitly selects the quieter default. A running process keeps its existing output behavior.
 
 | Configuration | Purpose |
 | --- | --- |

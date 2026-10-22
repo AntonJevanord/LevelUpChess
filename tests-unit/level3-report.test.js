@@ -154,6 +154,28 @@ test('missing timestamps cannot invent runtime estimates', () => {
   assert.equal(report.timing.missingOrInvalidTimestamps, 1);
 });
 
+test('parallel runtime estimates account for simultaneous games and the longest remaining queue', () => {
+  const { manifest, record } = fixture();
+  const shards = [{ worker: 1, scheduleIds: [] }, { worker: 2, scheduleIds: [] }];
+  for (let index = 0; index < manifest.schedule.length; index += 2) shards[(index / 2) % 2].scheduleIds.push(...manifest.schedule.slice(index, index + 2).map(game => game.id));
+  manifest.parallel = { schemaVersion: 1, jobs: 2, shards };
+  const balanced = makeLevel3Report(manifest, manifest.schedule.slice(0, 4).map(game => record(game)), roster);
+  assert.equal(balanced.timing.executionMode, 'parallel');
+  assert.equal(balanced.timing.estimatedSequentialRemainingSeconds, 160);
+  assert.equal(balanced.timing.estimatedRemainingSeconds, 80, 'two remaining eight-game queues run concurrently');
+  const firstWorker = new Set(shards[0].scheduleIds);
+  const tail = makeLevel3Report(manifest, manifest.schedule.filter(game => firstWorker.has(game.id)).map(game => record(game)), roster);
+  assert.equal(tail.timing.estimatedRemainingSeconds, 100, 'a finished worker cannot halve the remaining worker queue');
+  assert.deepEqual(tail.timing.remainingByWorker, [{ worker: 1, remainingGames: 0 }, { worker: 2, remainingGames: 10 }]);
+  const noSamples = makeLevel3Report(manifest, [], roster);
+  assert.equal(noSamples.timing.estimatedRemainingSeconds, null);
+  const duplicate = structuredClone(manifest); duplicate.parallel.shards[1].scheduleIds[0] = duplicate.parallel.shards[0].scheduleIds[0];
+  assert.throws(() => makeLevel3Report(duplicate, [], roster), /exactly once/);
+  const splitPair = structuredClone(manifest);
+  [splitPair.parallel.shards[0].scheduleIds[0], splitPair.parallel.shards[1].scheduleIds[0]] = [splitPair.parallel.shards[1].scheduleIds[0], splitPair.parallel.shards[0].scheduleIds[0]];
+  assert.throws(() => makeLevel3Report(splitPair, [], roster), /color pair/);
+});
+
 test('unknown armies, mixed rule/settings identities and schedule edits are rejected', () => {
   const { manifest, record } = fixture();
   const first = record(manifest.schedule[0]);

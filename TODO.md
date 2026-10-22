@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 12 promotes the Camel knight and prepares a capped level-3 comparison. Version 11 preserves selectable libraries and queen pairs; version 10 the pawn workshop, version 09 the first playable picker, and version 08 the first design-registry experiment. The reference Piece upgrades mode keeps its version-05 rules. Historical milestones are in [development history](docs/development-history.md).
+Version 13 improves tools for future balance runs while version 12's capped level-3 comparison continues. The playable board and piece rules remain unchanged. Earlier milestones are in [development history](docs/development-history.md).
 
 Browser-save compatibility across releases is optional. Experiment definitions, identities, and results must remain reproducible.
 
@@ -84,9 +84,18 @@ Two to six ideas per family per tier means 36–108 upgraded designs. Keep that 
 - [x] Freeze the roster, short opening cohorts, letter allocation, and previous 100,000-node search settings. Keep upgraded kings outside this batch.
 - [x] Add campaign validation, capped stage selection, matchup/standings reports, timing estimates, and separate control diagnostics. Lock the one confirmation selection and verify its engine, runner, and rules identities against screening.
 - [x] Verify all 3,720 possible army/color/opening assignments and 3,864 exact native/WASM positions across both cohorts. Verify 369 unit/integration cases (two updated expectations passed focused rechecks), 23 focused browser cases, an offline/mobile smoke, and four unscored workflow games covering stop/resume and reports.
-- [ ] Check Windows runtime after 10–20 games by stopping after a pair; resume the same full schedule if acceptable.
+- [x] Check Windows runtime with the user. The full campaign has reached game 1,077; its long runtime is acceptable. Keep the recorded schedule and settings unchanged.
 - [ ] Finish the main stage, inspect completion rates, opening sensitivity, pairwise results, and human feedback, then select at most seven holdout comparisons once.
 - [ ] Record keep/revise/park decisions when the capped batch ends. Changes get new revisions and future declared budgets; unused games stay unused.
+
+## Version 13 — balance workflow tools
+
+- [x] Preserve version 12 and develop infrastructure on `version_13`; keep the current campaign's rules, engine, roster, and core runner identity frozen.
+- [x] Default to game starts/results and retain optional `--log plies` diagnostics for new or resumed runs.
+- [x] Generate capped round-robin or reference comparisons from a chosen roster, including color pairs, controls, cost/capacity checks, frozen allocations, and opening validation before writing. Preparation never starts games.
+- [x] Add independent parallel workers with complete-pair schedules, separate checkpoints, aggregate results, and coordinated stopping. Freeze worker count for resume; preserve one engine thread and the declared search budget.
+- [x] Verify 197 balance cases, including native parallel stop/resume, failure recovery, preparation limits, and Windows sharing retries; one test mock was corrected and passed its focused recheck. Check native serial resume with the frozen version-12 identity and a four-game parallel CLI/report workflow using all 14 designs. Short, truncated workflow games remain unscored.
+- [x] Publish the tested tools and [future-run guide](docs/balance-tools.md) on `version_13`. Consider parallelism for the next declared run; leave the current serial campaign running.
 
 ## Deferred work
 

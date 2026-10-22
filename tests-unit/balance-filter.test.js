@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { parseArgs, selectComparisons, main } = require('../scripts/balance');
+const { parseArgs, selectComparisons, main, shouldPrintProgress } = require('../scripts/balance');
 const { normalizeConfig, makeSchedule } = require('../scripts/balance/plan');
 const { createDesignRegistry } = require('../scripts/balance/design-registry');
 
@@ -58,13 +58,14 @@ function mockRun(t) {
     if (previous === undefined) delete process.env.FAIRY_STOCKFISH_PATH;
     else process.env.FAIRY_STOCKFISH_PATH = previous;
   });
-  t.mock.method(console, 'log', () => {});
+  const logs = [];
+  t.mock.method(console, 'log', (...args) => { logs.push(args.join(' ')); });
   const calls = [];
   t.mock.method(require('../scripts/balance/run'), 'runMatches', async options => {
     calls.push(options);
     return { stopped: false, summary: { comparisons: [] } };
   });
-  return { directory, calls };
+  return { directory, calls, logs };
 }
 
 test('CLI filters before limiting pairs and passes every declared comparison to the runner', async t => {
@@ -85,4 +86,36 @@ test('CLI rejects an unknown selection before starting a run', async t => {
   await assert.rejects(main(['--config', CONFIRMATION, '--out', path.join(directory, 'results'), '--comparisons', 'typo']), /Unknown comparison ID: typo/);
   assert.equal(calls.length, 0);
   assert.equal(fs.existsSync(path.join(directory, 'results')), false);
+});
+
+test('game logging is the default and ply progress is an explicit diagnostic option', async t => {
+  assert.equal(shouldPrintProgress('Starting game 1/2: example (attempt 1).'), true);
+  assert.equal(shouldPrintProgress('Finished example: 1-0 (checkmate).'), true);
+  assert.equal(shouldPrintProgress('Preflight: validating all requested engine strength settings.'), true);
+  for (const ply of [1, 10, 20]) assert.equal(shouldPrintProgress(`Game example: ply ${ply}, e2e4 (e4).`), false);
+  assert.equal(shouldPrintProgress('Game example: ply 10, e2e4 (e4).', 'plies'), true);
+  assert.equal(shouldPrintProgress('Game example: ply 11, e2e4 (e4).', 'plies'), false);
+  assert.deepEqual(parseArgs(['--resume', 'run', '--log', 'games']), { resume: 'run', log: 'games' });
+  for (const args of [['--resume', 'run', '--log', 'unknown'], ['--status', 'run', '--log', 'games'], ['--config', 'file', '--log']]) assert.throws(() => parseArgs(args));
+  const { directory, calls, logs } = mockRun(t);
+  await main(['--config', CONFIRMATION, '--out', path.join(directory, 'default')]);
+  const defaultCount = logs.length;
+  calls[0].onProgress('Game example: ply 10, e2e4 (e4).');
+  assert.equal(logs.length, defaultCount, 'default logging removes every ply line');
+  await main(['--config', CONFIRMATION, '--out', path.join(directory, 'diagnostic'), '--log', 'plies']);
+  const diagnosticCount = logs.length;
+  calls[1].onProgress('Game example: ply 10, e2e4 (e4).');
+  assert.equal(logs.length, diagnosticCount + 1);
+  assert.deepEqual(calls[0].config, calls[1].config, 'logging cannot change search settings or rules identity');
+  assert.deepEqual(calls[0].schedule, calls[1].schedule);
+});
+
+test('the sequential CLI refuses a parallel parent before launching engines or writing files', async t => {
+  const { directory, calls } = mockRun(t);
+  const run = path.join(directory, 'parallel'); fs.mkdirSync(run);
+  const manifest = JSON.stringify({ parallel: { jobs: 2 } });
+  fs.writeFileSync(path.join(run, 'run.json'), manifest);
+  await assert.rejects(main(['--resume', run]), /balance:parallel/);
+  assert.equal(calls.length, 0);
+  assert.equal(fs.readFileSync(path.join(run, 'run.json'), 'utf8'), manifest);
 });

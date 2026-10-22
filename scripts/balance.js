@@ -10,8 +10,8 @@ const { renameWithRetrySync, unlinkWithRetrySync } = require('./balance/files');
 
 const HELP = `Paired Fairy Stockfish balance experiments
 
-  npm run balance -- --config FILE --out DIRECTORY [--comparisons ID,ID] [--limit-pairs N]
-  npm run balance -- --resume DIRECTORY
+  npm run balance -- --config FILE --out DIRECTORY [--comparisons ID,ID] [--limit-pairs N] [--log games|plies]
+  npm run balance -- --resume DIRECTORY [--log games|plies]
   npm run balance -- --status DIRECTORY
   npm run balance -- --stop-now DIRECTORY
   npm run balance -- --stop-after-game DIRECTORY
@@ -20,12 +20,13 @@ const HELP = `Paired Fairy Stockfish balance experiments
 During a run: q / Ctrl+C stops now; g finishes the game; p finishes the pair.
 --comparisons selects complete comparison pairs for a new run, before --limit-pairs.
 The full configuration and its design letter allocation remain unchanged.
+Game starts and results are printed by default; --log plies adds move progress.
 On Linux/macOS, set FAIRY_STOCKFISH_PATH to a compatible native executable.
 See BALANCE.md for configuration, results, and interpretation.
 `;
 
 function parseArgs(args) {
-  const allowed = new Set(['config', 'out', 'comparisons', 'limit-pairs', 'resume', 'status', 'stop-now', 'stop-after-game', 'stop-after-pair']);
+  const allowed = new Set(['config', 'out', 'comparisons', 'limit-pairs', 'resume', 'status', 'stop-now', 'stop-after-game', 'stop-after-pair', 'log']);
   const values = {};
   if (args.length === 1 && ['--help', '-h'].includes(args[0])) return { help: true };
   for (let index = 0; index < args.length; index++) {
@@ -40,6 +41,7 @@ function parseArgs(args) {
   const modes = ['config', 'resume', 'status', 'stop-now', 'stop-after-game', 'stop-after-pair'].filter(name => Object.hasOwn(values, name));
   if (modes.length !== 1) throw new Error('Select exactly one of --config, --resume, --status, or a stop command.');
   if ((values.out || values['limit-pairs'] || values.comparisons !== undefined) && modes[0] !== 'config') throw new Error('--out, --limit-pairs, and --comparisons apply only to a new --config run.');
+  if (values.log !== undefined && (!['games', 'plies'].includes(values.log) || !['config', 'resume'].includes(modes[0]))) throw new Error('--log games|plies applies only to new or resumed runs.');
   if (values.comparisons !== undefined) values.comparisons = comparisonIds(values.comparisons.split(',').map(id => id.trim()));
   if (values['limit-pairs'] !== undefined) {
     if (!/^[1-9]\d*$/.test(values['limit-pairs']) || !Number.isSafeInteger(Number(values['limit-pairs']))) {
@@ -48,6 +50,12 @@ function parseArgs(args) {
     values['limit-pairs'] = Number(values['limit-pairs']);
   }
   return values;
+}
+
+function shouldPrintProgress(message, level = 'games') {
+  if (!['games', 'plies'].includes(level)) throw new Error('Choose --log games or --log plies.');
+  const ply = message.match(/^Game .*: ply (\d+),/);
+  return !ply || level === 'plies' && Number(ply[1]) % 10 === 0;
 }
 
 function comparisonIds(ids) {
@@ -187,6 +195,7 @@ async function main(args = process.argv.slice(2)) {
   if (resume) {
     outDir = path.resolve(options.resume);
     const manifest = readJson(path.join(outDir, 'run.json'));
+    if (manifest.parallel) throw new Error('This is a parallel run. Use npm.cmd run balance:parallel -- --resume DIRECTORY to resume its workers.');
     config = normalizeConfig(manifest.config);
     schedule = manifest.schedule;
     if (!Array.isArray(schedule) || !schedule.length) throw new Error('The run manifest has no schedule.');
@@ -209,8 +218,7 @@ async function main(args = process.argv.slice(2)) {
   console.log('q / Ctrl+C: stop now; g: after game; p: after pair.');
   try {
     const result = await runMatches({ config, schedule, outDir, resume, enginePath, signal: controller.signal, shouldStop: controls.shouldStop, onProgress: message => {
-      const ply = message.match(/^Game .*: ply (\d+),/);
-      if (!ply || Number(ply[1]) % 10 === 0) console.log(message);
+      if (shouldPrintProgress(message, options.log)) console.log(message);
     } });
     printSummary(result.summary);
     if (result.stopped && !fs.existsSync(path.join(outDir, 'run.json'))) console.log('Stopped during preflight. No games started; repeat the original command to retry.');
@@ -219,4 +227,4 @@ async function main(args = process.argv.slice(2)) {
 }
 
 if (require.main === module) main().catch(error => { console.error(`Balance run failed: ${error.message}`); process.exitCode = 1; });
-module.exports = { parseArgs, selectComparisons, requestStop, showStatus, main };
+module.exports = { parseArgs, selectComparisons, requestStop, showStatus, main, shouldPrintProgress };

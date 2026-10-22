@@ -41,6 +41,7 @@ test('campaign commands reject ambiguous modes, reduced screens, and incomplete 
   assert.deepEqual(parseArgs(['--check']), { check: true });
   assert.deepEqual(parseArgs(['--stage', 'screen', '--out', 'run']), { stage: 'screen', out: 'run' });
   assert.deepEqual(parseArgs(['--resume', 'run']), { resume: 'run' });
+  assert.deepEqual(parseArgs(['--resume', 'run', '--log', 'games']), { resume: 'run', log: 'games' });
   assert.deepEqual(parseArgs(['--report', 'run']), { report: 'run' });
   for (const args of [[], ['--check', '--out', 'run'], ['--stage', 'screen'], ['--stage', 'other', '--out', 'run'],
     ['--stage', 'screen', '--out', 'run', '--comparisons', 'standard-control'], ['--stage', 'confirm', '--out', 'run'],
@@ -50,11 +51,13 @@ test('campaign commands reject ambiguous modes, reduced screens, and incomplete 
   const { main } = require('../scripts/level3-balance');
   await main(['--stage', 'screen', '--out', 'declared-screen']);
   assert.deepEqual(calls[0], ['--config', path.resolve(__dirname, '../experiments/balance/level3-round-robin.json'), '--out', 'declared-screen']);
+  await main(['--stage', 'screen', '--out', 'diagnostic-screen', '--log', 'plies']);
+  assert.deepEqual(calls[1], ['--config', path.resolve(__dirname, '../experiments/balance/level3-round-robin.json'), '--out', 'diagnostic-screen', '--log', 'plies']);
   const roster = require('../experiments/balance/level3-roster.json'), cap = roster.maxGames;
   try {
     roster.maxGames = 2001;
     await assert.rejects(main(['--stage', 'screen', '--out', 'over-budget']), /fixed 2000-game/);
-    assert.equal(calls.length, 1, 'an edited cap cannot launch the runner');
+    assert.equal(calls.length, 2, 'an edited cap cannot launch the runner');
   } finally { roster.maxGames = cap; }
 });
 

@@ -15,6 +15,24 @@ const percent = score => score === null ? '—' : `${(score * 100).toFixed(1)}%`
 const average = values => values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
 const counts = () => ({ completed: 0, truncated: 0, aborted: 0, error: 0, unknown: 0 });
 
+function validateParallelLayout(parallel, schedule) {
+  if (parallel === undefined) return;
+  if (!parallel || parallel.schemaVersion !== 1 || !Number.isInteger(parallel.jobs) || parallel.jobs < 1 || parallel.jobs > 16 || !Array.isArray(parallel.shards) || parallel.shards.length !== parallel.jobs) throw new Error('Invalid parallel worker layout.');
+  const assigned = new Set(), workers = new Set(), pairWorkers = new Map();
+  for (const shard of parallel.shards) {
+    if (!Number.isInteger(shard.worker) || shard.worker < 1 || shard.worker > parallel.jobs || workers.has(shard.worker) || !Array.isArray(shard.scheduleIds) || !shard.scheduleIds.length || shard.scheduleIds.length > schedule.size) throw new Error('Invalid parallel worker assignment.');
+    workers.add(shard.worker);
+    for (const id of shard.scheduleIds) {
+      const game = schedule.get(id);
+      if (!game || assigned.has(id)) throw new Error('Parallel workers must assign every scheduled game exactly once.');
+      assigned.add(id);
+      if (pairWorkers.has(game.pairId) && pairWorkers.get(game.pairId) !== shard.worker) throw new Error('A parallel color pair cannot span multiple workers.');
+      pairWorkers.set(game.pairId, shard.worker);
+    }
+  }
+  if (assigned.size !== schedule.size) throw new Error('Parallel workers must cover the complete frozen schedule.');
+}
+
 function singleArmy(candidate) { return { upgrades: { [candidate.square]: candidate.id }, remove: [] }; }
 
 function validatedInput(manifest, records, roster) {
@@ -64,6 +82,7 @@ function validatedInput(manifest, records, roster) {
     if (schedule.has(game.id) || !isDeepStrictEqual(game, canonical.get(game.id))) throw new Error('The frozen schedule does not match the declared campaign.');
     schedule.set(game.id, game);
   }
+  validateParallelLayout(manifest.parallel, schedule);
   for (const record of records) {
     const game = record && schedule.get(record.id);
     if (!game || record.comparisonId !== game.comparisonId || record.pairId !== game.pairId || record.openingId !== game.openingId || record.aColor !== game.aColor) throw new Error('A journal record does not belong to the frozen schedule.');
@@ -73,7 +92,7 @@ function validatedInput(manifest, records, roster) {
     const black = record.aColor === 'b' ? game.comparison.strengthA : game.comparison.strengthB;
     if (!isDeepStrictEqual(record.whiteStrength, white) || !isDeepStrictEqual(record.blackStrength, black)) throw new Error('A journal record has different engine strength settings.');
   }
-  return { config, profile, matchups, schedule };
+  return { config, profile, matchups, schedule, parallel: manifest.parallel };
 }
 
 /** Keep stats.js's latest-valid-completion behavior, including failed retries. */
@@ -88,7 +107,7 @@ function pairedRecords(records, comparisonId) {
   return [...pairs.values()].filter(pair => pair.length === 2 && pair[0].aColor !== pair[1].aColor && pair[0].openingId === pair[1].openingId).flat();
 }
 
-function timingReport(records, schedule) {
+function timingReport(records, schedule, parallel) {
   const final = new Map();
   for (const record of records) if (record.status === 'truncated' || record.status === 'completed' && RESULTS.has(record.result)) final.set(record.id, record);
   const durations = [];
@@ -105,7 +124,7 @@ function timingReport(records, schedule) {
   const meanSeconds = average(durations);
   const medianSeconds = durations.length ? (durations[Math.floor((durations.length - 1) / 2)] + durations[Math.floor(durations.length / 2)]) / 2 : null;
   const remainingGames = schedule.size - final.size;
-  return {
+  const result = {
     sampleGames: durations.length, missingOrInvalidTimestamps, excludedRetryGames,
     meanSeconds, medianSeconds, observedSeconds: durations.reduce((sum, value) => sum + value, 0),
     remainingGames, estimatedRemainingSeconds: meanSeconds === null ? null : meanSeconds * remainingGames,
@@ -113,11 +132,23 @@ function timingReport(records, schedule) {
     smallSample: durations.length < 20,
     basis: 'Completed/truncated first-attempt games with valid timestamps; retry completions, aborted/error attempts and preflight excluded. Estimates assume the observed games represent the remaining matchups; hardware, congestion and endings can change runtime.',
   };
+  if (parallel) {
+    const remainingByWorker = parallel.shards.map(shard => ({ worker: shard.worker, remainingGames: shard.scheduleIds.filter(id => !final.has(id)).length }));
+    const longestQueue = Math.max(...remainingByWorker.map(worker => worker.remainingGames));
+    result.executionMode = 'parallel';
+    result.jobs = parallel.jobs;
+    result.remainingByWorker = remainingByWorker;
+    result.estimatedSequentialRemainingSeconds = result.estimatedRemainingSeconds;
+    result.estimatedRemainingSeconds = meanSeconds === null ? null : meanSeconds * longestQueue;
+    result.estimatedFullRunSeconds = meanSeconds === null ? null : meanSeconds * Math.max(...parallel.shards.map(shard => shard.scheduleIds.length));
+    result.basis += ' Parallel wall-time estimates use the longest remaining worker queue and observed concurrent game durations. Summed game durations overlap and are not elapsed wall time; worker imbalance and shared CPU resources limit speedup.';
+  }
+  return result;
 }
 
 /** Describe one frozen campaign, without assigning piece Elo or material values. */
 function makeLevel3Report(manifest, records, roster = JSON.parse(fs.readFileSync(DEFAULT_ROSTER, 'utf8'))) {
-  const { config, profile, matchups, schedule } = validatedInput(manifest, records, roster);
+  const { config, profile, matchups, schedule, parallel } = validatedInput(manifest, records, roster);
   const summary = summarize(records), summaries = new Map(summary.comparisons.map(comparison => [comparison.comparisonId, comparison]));
   const matrix = Object.fromEntries(roster.candidates.map(candidate => [candidate.id, {}]));
   const controls = [], results = [];
@@ -180,7 +211,7 @@ function makeLevel3Report(manifest, records, roster = JSON.parse(fs.readFileSync
     schemaVersion: 1, runId: manifest.runId, name: config.name, referenceId: roster.referenceId,
     profileHash: profile.hash, registryHash: profile.registryHash, engine: config.engine,
     scheduledGames: schedule.size, totalAttempts: records.length, statusCounts: summary.statusCounts, rankingAvailable,
-    standings, matrix, matchups: results, controls, timing: timingReport(records, schedule),
+    standings, matrix, matchups: results, controls, timing: timingReport(records, schedule, parallel),
     interpretation: 'Equal-opponent means use complete color-swapped pairs and equally weighted opening-cluster scores. Full means require every roster opponent and every scheduled game for that design to be scored. Rankings wait for the entire round robin to be scored. Partial means can cover different opponents and must not be ranked. Controls are excluded. These are provisional whole-army results under one frozen protocol, not piece Elo, material values, or counts of actual special-ability use.',
   };
 }
@@ -190,7 +221,7 @@ function csv(rows) { return rows.map(row => row.map(value => `"${String(value ??
 function renderMarkdown(report) {
   const rows = report.standings.map(row => `| ${row.rank ?? '—'} | ${row.label} | ${percent(row.meanScore)} | ${percent(row.partialMeanScore)} | ${row.opponentCoverage}/${row.totalOpponents} | ${row.completePairs} | ${row.uniqueOpenings} | ${percent(row.versusReference?.score ?? null)} |`).join('\n');
   const controls = report.controls.map(control => `- ${control.label}: paired A ${percent(control.scoreA)}; physical White ${control.physicalColors.whiteWins} wins / ${control.physicalColors.draws} draws / ${control.physicalColors.blackWins} losses; ${control.completePairs} complete pairs; ${control.statusCounts.truncated || 0} truncated, ${control.statusCounts.error || 0} errors.`).join('\n');
-  const timing = report.timing.meanSeconds === null ? 'No usable game timestamps yet.' : `${report.timing.sampleGames} timed games; mean ${report.timing.meanSeconds.toFixed(1)} seconds, median ${report.timing.medianSeconds.toFixed(1)} seconds. Rough remaining time: ${(report.timing.estimatedRemainingSeconds / 3600).toFixed(1)} hours.${report.timing.smallSample ? ' Fewer than 20 samples: treat this as an early estimate.' : ''}`;
+  const timing = report.timing.meanSeconds === null ? 'No usable game timestamps yet.' : `${report.timing.sampleGames} timed games; mean ${report.timing.meanSeconds.toFixed(1)} seconds, median ${report.timing.medianSeconds.toFixed(1)} seconds. Rough remaining time: ${(report.timing.estimatedRemainingSeconds / 3600).toFixed(1)} hours.${report.timing.executionMode === 'parallel' ? ` ${report.timing.jobs} parallel workers; estimate follows the longest remaining queue.` : ''}${report.timing.smallSample ? ' Fewer than 20 samples: treat this as an early estimate.' : ''}`;
   return `# ${report.name}\n\n${report.interpretation}\n\n| Rank | Purchase | Full mean | Available-opponent mean | Opponents | Pairs | Openings | vs Amazon |\n| --- | --- | --- | --- | --- | --- | --- | --- |\n${rows}\n\n## Controls\n\n${controls || 'No control games scored yet.'}\n\nIdentical control armies commonly produce identical paired games and exactly 50% for A. That score alone does not validate balance or reveal White’s advantage. Physical-color results, runtime, errors, truncations and movement checks provide the useful diagnostics.\n\n## Runtime\n\n${timing}\n\n${report.timing.basis}\n`;
 }
 
