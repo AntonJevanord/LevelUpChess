@@ -6,22 +6,24 @@ These tools collect results; they do not assign measured values to pieces or cha
 
 The [first balance revision plan](experiments/balance/revision-plan.md) closed at 160 of at most 200 games with explicit candidate decisions. Existing experiment files are options, not a queue that must be exhausted before development continues.
 
-## Version 14: new revisions versus the Amazon
+## Version 15: paired alternatives versus the Amazon
 
-Use the [Amazon revision plan](experiments/balance/amazon-revision-plan.md) and its [frozen roster](experiments/balance/amazon-revision-roster.json). Seven new three-point purchases face the unchanged `queen.purple@1` Amazon on otherwise ordinary armies: **7 × 30 opening pairs × 2 colors = 420 games**. Ordinary-versus-ordinary and Amazon-versus-Amazon controls add **120**, for **540 scheduled games**. There is no automatic holdout or extension.
+Use the [paired-alternatives plan](experiments/balance/amazon-alternatives-plan.md) and its [frozen roster](experiments/balance/amazon-alternatives-roster.json). Twelve three-point designs face the unchanged `queen.purple@1` Amazon on otherwise ordinary armies: **12 × 40 opening pairs × 2 colors = 960 games**. Ordinary-versus-ordinary and Amazon-versus-Amazon controls add **160**, for **1,120 scheduled games** within the 1,200-game budget. There is no automatic holdout or extension.
 
 ```bat
-npm.cmd run balance:amazon -- --check
-npm.cmd run balance:amazon -- --out balance-results/amazon-revision --jobs 2
-npm.cmd run balance:amazon -- --report balance-results/amazon-revision
-npm.cmd run balance:amazon -- --resume balance-results/amazon-revision
+npm.cmd run balance:alternatives -- --check
+npm.cmd run balance:alternatives -- --out balance-results/amazon-alternatives --jobs 2
+npm.cmd run balance:alternatives -- --report balance-results/amazon-alternatives
+npm.cmd run balance:alternatives -- --resume balance-results/amazon-alternatives
 ```
 
-`--check` validates every selected army/color/opening and native movement without starting games. Each side uses Skill 20, 100,000 nodes per move, one engine thread, 32 MB hash, and a 400-ply limit. Two independent game workers are a conservative starting point; stop with **q / Ctrl+C**, finish each active game with **g**, or each active pair with **p**. Resume the same directory with its recorded worker count, engine, rules, and settings. Use a new directory for this batch; do not resume the closed version-12 experiment on a changed rules build.
+`--check` validates every selected army/color/opening and native movement without starting games. Each side uses Skill 20, 100,000 nodes per move, one engine thread, 32 MB hash, and a 400-ply limit. Two independent game workers are a conservative starting point; stop with **q / Ctrl+C**, finish each active game with **g**, or each active pair with **p**. Resume the same directory with its recorded worker count, engine, rules, and settings. Use a new directory for this batch.
 
-Use **40%–60% point score against the Amazon** as the practical target: wins plus half the draws, divided by scored games. It is a design band, not a statistical equivalence claim or an intrinsic material value. Report complete-pair counts, opening sensitivity, truncations, and human feedback alongside the score. The 30 short prefixes include related development patterns; they are not 30 independently sampled chess positions. A close result remains a prototype decision, and matching the Amazon does not guarantee good matchups against every other piece.
+Use **40%–60% point score against the Amazon** as the practical target: wins plus half the draws, divided by scored games. It is a design band, not a statistical equivalence claim or an intrinsic material value. Report complete-pair counts, opening sensitivity, truncations, and human feedback alongside the score. The 40 short prefixes include related development patterns; they are not 40 independently sampled chess positions. A close result remains a prototype decision, and matching the Amazon does not guarantee good matchups against every other piece.
 
-Only new behavior revisions are subjects. The unchanged knights, Knight-capture rook, and Returning pawn are retained without another comparison. Capture-box rook is retired from the active workshop; Twin short queens are parked at level 3. The Ranging pawn and companion package receive nerfs, while Courier, Rank, both bishops, and Blink receive buffs. See [the exact design changes](DESIGN.md#version-14-amazon-reference-revisions).
+The six groups are Ranging versus Courier, two Rank pawns, two Vertical bishops, two Sideways bishops, two Blink rooks, and two companions. Each design plays the Amazon separately. Group comparisons use the same fully scored openings for both designs and compare their absolute distance from 50%; incomplete cohorts are provisional. A small gap does not establish a winner. Human playtesting still decides whether a numerically close design is readable and enjoyable. See [the exact alternatives](DESIGN.md#version-15-paired-alternatives).
+
+The unchanged knights, Knight-capture rook, and Returning pawn are retained without another subject comparison. Capture-box rook remains retired and Twin short queens remain parked at level 3. The version-14 [540-game plan](experiments/balance/amazon-revision-plan.md) and command remain archived. This batch replaces it as the next design experiment; it is not an automatic second run. If a version-14 run has started, retain its original directory and matching build. Do not merge journals, reuse its directory, or resume it with changed rules.
 
 ### Closed version-12 screen
 
@@ -51,7 +53,7 @@ npm run balance -- --config experiments/balance/smoke.json --out balance-results
 
 The smoke run checks the workflow. Its small search budget and move limit do not provide balance evidence. Choose a new output directory for each experiment; resume an existing one instead of overwriting it.
 
-Game starts, results, preflight notices, and summaries are printed by default. Add `--log plies` to a new or resumed `balance`, `balance:amazon`, `balance:level3`, or `balance:parallel` command for move progress every ten plies. `--log games` explicitly selects the quieter default. A running process keeps its existing output behavior.
+Game starts, results, preflight notices, and summaries are printed by default. Add `--log plies` to a new or resumed `balance`, `balance:alternatives`, `balance:amazon`, `balance:level3`, or `balance:parallel` command for move progress every ten plies. `--log games` explicitly selects the quieter default. A running process keeps its existing output behavior.
 
 | Configuration | Purpose |
 | --- | --- |
@@ -76,7 +78,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The generic configurations below are templates and historical protocols, not a queue. The current authorized batch is the 540-game Amazon revision comparison above.
+The generic configurations below are templates and historical protocols, not a queue. The current authorized batch is the 1,120-game Amazon alternatives comparison above.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |
@@ -182,9 +184,9 @@ Use `designs-smoke.json` to verify workflow. Its four-ply limit intentionally tr
 
 Schema-2 results use a new protocol identity. Preserve the mapping when comparing or reproducing results; finite-search play can depend on internal type allocation. Evidence follows stable design revisions and the engine/rules context, never a temporary letter alone. No long-term engine training is performed.
 
-Version 14's browser picker uses the same registry/compiler for its revised workshop and archived First prototypes library. Balance campaigns select their own declared IDs; keep each registry within the 20 available custom letters instead of declaring the whole catalog. Version 09 preserves its earlier 17-design library. Browser saves/PGNs include a validated profile snapshot; raw balance PGNs still need their archived registry/rules and a compatible viewer.
+Version 15's browser picker uses the same registry/compiler for Design alternatives, Rebalance workshop, and First prototypes libraries. Balance campaigns select their own declared IDs; keep each registry within the 20 available custom letters instead of declaring the whole catalog. Earlier library profiles remain unchanged. Browser saves/PGNs include a validated profile snapshot; raw balance PGNs still need their archived registry/rules and a compatible viewer.
 
-The version-10 pawn candidates now have coarse screening evidence, while their original material priors remain estimates. Advanced pawn/guard deployment is part of the purchase. The new campaign follows the closed screen and human feedback; see [the design notes](DESIGN.md#version-14-amazon-reference-revisions).
+The version-10 pawn candidates now have coarse screening evidence, while their original material priors remain estimates. Advanced pawn/guard deployment is part of the purchase. The new campaign follows the closed screen and human feedback; see [the design notes](DESIGN.md#version-15-paired-alternatives).
 
 ## Openings and fair comparisons
 

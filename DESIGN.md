@@ -104,9 +104,30 @@ All seven new purchases cost three points. They are prototypes aiming at **40%�
 
 The bishop buffs address poor direct Amazon scores despite more competitive results against other purchases. The Courier/Rank changes preserve their distinct promotion-speed and rank-support roles. The Ranging and companion changes reduce the stronger packages. Actual strength, readability, enjoyment, and counterplay still need testing; finite engine play may value unfamiliar pieces imperfectly.
 
-The [Amazon revision plan](experiments/balance/amazon-revision-plan.md) fixes one **540-game** batch: seven new subjects against the Amazon plus ordinary and Amazon self-play controls, each over 30 color-swapped opening pairs. Search remains 100,000 nodes, Skill 20, one engine thread, 32 MB hash, and 400 plies. Old subject revisions are not rerun. The Amazon remains unchanged as opponent and control, and there is no automatic extension or redesign loop.
+The [Amazon revision plan](experiments/balance/amazon-revision-plan.md) declared **540 games**: seven new subjects against the Amazon plus two controls over 30 color-swapped opening pairs. Version 15 expands the design question into the separate batch below. Preserve the original files and any results with their matching build; do not merge journals or silently change an active experiment.
 
 The target uses wins plus half the draws. It is a practical decision band, not a confidence interval or a material conversion. Related prefixes limit generalization, and a reference-only test cannot expose every rock-paper-scissors matchup. Finish the fixed batch, inspect completion and opening sensitivity, combine human playtesting, then make one keep/revise/park decision per candidate.
+
+## Version 15: paired alternatives
+
+Compare two nearby designs per group against the fixed Amazon before selecting the next playable set. Ranging and Courier already provide two interpretations of a mobile promotion pawn, so they need no additional revisions. Five new immutable IDs bring the batch to 12 subjects:
+
+| Group | Existing option | New alternative |
+| --- | --- | --- |
+| Mobile pawn | Ranging `pawn.purple@7`: quiet rook lines in all directions, diagonal captures up to two clear squares. | Courier `pawn.purple@8`: quiet forward/sideways rook lines, unlimited forward diagonal captures, no retreats. Both already exist. |
+| Rank pawn | `pawn.purple@9`: rank control, ordinary pawn moves, full wide forward knight jumps. | `pawn.purple@10` · `ifmnDfmWfceFsRfsNfsC`: also jump three files sideways and one rank forward, moving or capturing. |
+| Vertical bishop | `bishop.purple@3`: bishop plus vertical rook movement and quiet knight jumps. | `bishop.purple@5` · `BfbRfbN`: replace quiet knight jumps with full jumps one file sideways and two ranks forward or backward. |
+| Sideways bishop | `bishop.purple@4`: bishop, horizontal rook slides up to two squares, and wide knight jumps. | `bishop.purple@6` · `BsRsN`: remove the horizontal range limit. |
+| Blink rook | `rook.purple@4`: rook plus quiet radius-three jumps and adjacent diagonal captures. | `rook.purple@5` · `RFmDmNmAmHmCmZmGcB2`: diagonal captures may extend two clear squares; they cannot jump blockers. |
+| Queen and companion | `queen.purple@4`: keep the queen; extra companion moves quietly like a king and captures diagonally. | `queen.purple@5` · `mKcfKcsW`: companion moves quietly in all eight directions but captures only forward or sideways, never backward. |
+
+Rank's added knight and camel jumps are full moves and captures. Attack-only jumps would increase its control while leaving development constrained; full jumps test whether it can become a useful support piece. The camel's three-file reach gives six potential captures on the next rank, including its ordinary pawn diagonals. This is an intentional larger buff to the weakest pawn role, with strength still to be measured. Both versions retain ordinary initial double-step/en-passant rules and mandatory standard promotion. Jumping quietly onto an empty en-passant target leaves the bypassed pawn.
+
+The bishop alternatives test different tactical coverage rather than simply maximizing mobility. The tall-jump vertical bishop gives up quiet wide knight jumps in exchange for four full tall jumps; the long-sideways bishop tests whether unrestricted horizontal lines are too strong. Blink's alternate expands diagonal captures gradually while preserving quiet relocation. It does not regain the retired Capture-box rook's broad capture jumps. Both companions stay nonroyal and retain the same own-file insertion rules.
+
+The [new plan](experiments/balance/amazon-alternatives-plan.md) fixes **1,120 games**: 12 subjects and two controls, each over 40 color-swapped opening pairs. Search remains 100,000 nodes, Skill 20, one engine thread, 32 MB hash, and 400 plies. This is the single next batch within the authorized 1,200-game budget; the unused 80 games do not queue another stage. Retained knights, Returning pawn, and Knight-capture rook stay outside the subject roster.
+
+Use **40%–60% point score** as a practical band, then compare each pair's distance from 50% on the same fully scored opening cohort. A smaller gap suggests which prototype is closer to the target under these conditions; a small difference does not establish a winner. Check completion, opening sensitivity, readability, enjoyment, and counterplay before selecting one, keeping both, or parking a group. Do not automatically buff the lower score or start another balance chain.
 
 ## Kings: preserve a clear mating objective
 
@@ -152,7 +173,7 @@ Pawn alternatives must preserve explicit promotion and en passant rules. Rook al
 
 ## Playtesting and implementation order
 
-Version 14's **Rebalance workshop** exposes the seven new revisions alongside retained designs within the 20-type limit. **First prototypes (archive)** keeps its exact historical profile, including retired designs for reproducing earlier games. Historical numeric modes also preserve their rules. New setup choices in the current workshop omit Capture-box rook and Twin short queens. The browser and native bridge share the experiment compiler; temporary letters remain fixed within a game and saves/PGNs select their matching bundled profile.
+Version 15's **Design alternatives** library exposes all 12 subjects together with the Amazon and selected retained pieces in one 20-type profile. **Rebalance workshop** and **First prototypes (archive)** retain their exact earlier profiles. Historical numeric modes also preserve their rules. Current workshop setup choices omit Capture-box rook and Twin short queens. The browser and native bridge share the experiment compiler; temporary letters remain fixed within a game and saves/PGNs select their matching bundled profile.
 
 Do not wait for tightly balanced purple pieces before human playtesting. Gather feedback on readability, useful decisions, enjoyment, frustrating situations, and available counterplay. Discard poor ideas before precise tuning. Then screen surviving designs against the fixed reference and selected equal-cost purchases, with a declared game cap and keep/revise/park decision. New releases may require fresh browser games; backward save compatibility is not required.
 

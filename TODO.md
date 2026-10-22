@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 14 revises seven outliers after closing the version-12 screen early, then prepares one capped Amazon comparison. Version 13 preserves reusable parallel-run tools. Earlier milestones are in [development history](docs/development-history.md).
+Version 15 compares paired design alternatives against the fixed Amazon in one 1,120-game batch. Version 14 preserves the first revised workshop and 540-game plan; version 13 preserves reusable parallel-run tools. Earlier milestones are in [development history](docs/development-history.md).
 
 Browser-save compatibility across releases is optional. Experiment definitions, identities, and results must remain reproducible.
 
@@ -108,7 +108,22 @@ Two to six ideas per family per tier means 36–108 upgraded designs. Keep that 
 - [x] Set a 40%–60% point-score design target, with draws worth half a point; retain completion, opening-sensitivity, and human-play feedback beside it.
 - [x] Verify 426 unit/integration cases; update the experiment-file inventory and pass its focused recheck. New-rule tests compare 168 native/browser legal-move sets and 66 resulting positions, covering promotion/en passant, clocks, royal safety, castling, and companion deployment.
 - [x] Validate all 540 army/color/opening assignments, 92 movement probes, and 480 distinct native starting/opening positions. Pass 30 focused browser cases and the offline/mobile check; verify ten unscored serial/parallel workflow games, immutable resume, and the capped Amazon report.
-- [ ] Run the declared batch, inspect complete pairs and human feedback, then record one keep/revise/park decision per new revision. Do not rerun unchanged old subjects or automatically queue another batch.
+- [x] Preserve this plan and its command; the user's paired-alternative request replaces it as the next batch in version 15. Any started run keeps its original directory and matching build; no journals are merged.
+
+## Version 15 — paired design alternatives
+
+Implement and verify the alternatives before starting the single declared batch.
+
+- [x] Preserve version 14 and develop on `version_15`; keep all existing behavior IDs and the original workshop/archive profiles unchanged.
+- [x] Append five immutable three-point alternatives: Rank with full wide forward camel jumps, Vertical bishop with full tall knight jumps, unlimited-horizontal Sideways bishop, Blink with two-square clear diagonal captures, and a companion that captures forward/sideways only. Ranging and Courier form the sixth pair without further revisions.
+- [x] Add ID-specific native/browser probes and independent both-color tests for the changed moves, blockers, promotion/en passant, castling/check, and nonroyal companion placement.
+- [x] Expose both options in each group together in a 20-type **Design alternatives** library; retain the earlier libraries and verify setup, engine play, saves, PGN, and switching.
+- [x] Freeze the [Amazon alternatives plan](experiments/balance/amazon-alternatives-plan.md): 12 subjects × 40 color-swapped opening pairs plus 160 control games = 1,120 games, within the authorized 1,200-game cap. Retain 100,000 nodes, Skill 20, one thread per engine, 32 MB hash, and 400 plies.
+- [x] Add the `balance:alternatives` check/run/resume/report command. Report per-design scores and each group's distance from 50% on shared fully scored openings; show incomplete cohorts as provisional and make no automatic winner declaration.
+- [x] Document full Rank jumps, the 40%–60% point-score target, control limits, preserved experiment identities, and the fixed stopping decision. Unused budget is not an automatic follow-up stage.
+- [x] Validate all 1,120 army/color/opening combinations, 152 movement probes, and 1,040 distinct native positions; verify 132 independent new-rule move sets and 52 resulting positions.
+- [x] Verify 454 unit/integration cases and 36 focused browser cases. Two timing failures in the combined run passed isolated rechecks. Confirm offline play at 390px without external requests, errors, or overflow; verify eight unscored workflow games, immutable stop/resume, and the capped report.
+- [ ] Run the fixed batch once and combine complete-pair scores, opening sensitivity, completion, and human feedback. Record one keep/revise/park decision per group; do not retest unchanged earlier subjects or automatically start another batch.
 
 ## Deferred work
 

@@ -429,7 +429,13 @@ var require_design_catalog = __commonJS({
       definition("bishop", "purple", 3, "BfbRmN", "j", 6, 3),
       definition("bishop", "purple", 3, "BsR2sN", "j", 6, 4),
       definition("rook", "purple", 3, "RFmDmNmAmHmCmZmG", "o", 12, 4),
-      definition("queen", "purple", 3, "FmW", "u", 8, 4, "insert", { d1: "d2" })
+      definition("queen", "purple", 3, "FmW", "u", 8, 4, "insert", { d1: "d2" }),
+      // Version 15 alternatives keep the version-14 revisions intact for comparison.
+      definition("pawn", "purple", 3, "ifmnDfmWfceFsRfsNfsC", "d", 11, 10),
+      definition("bishop", "purple", 3, "BfbRfbN", "j", 6, 5),
+      definition("bishop", "purple", 3, "BsRsN", "j", 6, 6),
+      definition("rook", "purple", 3, "RFmDmNmAmHmCmZmGcB2", "o", 12, 5),
+      definition("queen", "purple", 3, "mKcfKcsW", "u", 8, 5, "insert", { d1: "d2" })
     ];
     var DESIGNS = Object.freeze(Object.fromEntries(definitions.map((design) => [design.id, design])));
     var LEGACY_DESIGN_IDS = Object.freeze(Object.fromEntries(definitions.filter((design) => design.revision === 1).map((design) => [design.legacyType, design.id])));

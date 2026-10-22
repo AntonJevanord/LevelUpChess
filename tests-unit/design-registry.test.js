@@ -34,7 +34,7 @@ test('the catalog preserves all 15 legacy definitions and retains explicit place
   const legacy = [...config.matchAll(/^customPiece(\d+) = ([a-z]):([^\r\n]+)$/gm)];
   assert.equal(legacy.length, 15);
   assert.equal(Object.keys(LEGACY_DESIGN_IDS).length, 15);
-  assert.equal(designIds.length, 36);
+  assert.equal(designIds.length, 41);
   for (const [, slot, type, movement] of legacy) {
     const design = DESIGNS[LEGACY_DESIGN_IDS[type]];
     assert.equal(design.movement, movement);
@@ -115,8 +115,8 @@ test('a curated 20-design library fits while the complete catalog exceeds letter
     assert.equal(allocateDesigns(library.designIds).length, 20);
     assert.deepEqual(restoreDesignRegistry(clone(registry(library.designIds))), registry(library.designIds));
   }
-  assert.throws(() => allocateDesigns(designIds), /need 36 custom letters; only 20 are available/);
-  assert.throws(() => registry(designIds), /need 36 custom letters; only 20 are available/);
+  assert.throws(() => allocateDesigns(designIds), /need 41 custom letters; only 20 are available/);
+  assert.throws(() => registry(designIds), /need 41 custom letters; only 20 are available/);
 });
 
 test('standard promotion types remain reserved alongside additional helper letters', () => {

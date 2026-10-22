@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "name": "Version 15 design alternatives versus Amazon",
+  "referenceId": "queen.purple@1",
+  "config": "amazon-alternatives.json",
+  "maxGames": 1200,
+  "openingPairs": 40,
+  "practicalScoreBand": [
+    0.4,
+    0.6
+  ],
+  "scheduledGames": 1120,
+  "candidates": [
+    {
+      "key": "ranging-pawn",
+      "id": "pawn.purple@7",
+      "label": "Ranging pawn (capture two)",
+      "square": "d2"
+    },
+    {
+      "key": "courier-pawn",
+      "id": "pawn.purple@8",
+      "label": "Courier pawn (long captures)",
+      "square": "d2"
+    },
+    {
+      "key": "rank-pawn",
+      "id": "pawn.purple@9",
+      "label": "Rank pawn (wide jumps)",
+      "square": "d2"
+    },
+    {
+      "key": "rank-camel-pawn",
+      "id": "pawn.purple@10",
+      "label": "Rank pawn (wide knight and camel)",
+      "square": "d2"
+    },
+    {
+      "key": "vertical-bishop",
+      "id": "bishop.purple@3",
+      "label": "Vertical bishop (quiet knight)",
+      "square": "c1"
+    },
+    {
+      "key": "vertical-jump-bishop",
+      "id": "bishop.purple@5",
+      "label": "Vertical bishop (full tall knight)",
+      "square": "c1"
+    },
+    {
+      "key": "sideways-bishop",
+      "id": "bishop.purple@4",
+      "label": "Sideways bishop (rank captures)",
+      "square": "c1"
+    },
+    {
+      "key": "sideways-long-bishop",
+      "id": "bishop.purple@6",
+      "label": "Sideways bishop (unlimited rank)",
+      "square": "c1"
+    },
+    {
+      "key": "blink-rook",
+      "id": "rook.purple@4",
+      "label": "Blink rook (diagonal capture)",
+      "square": "a1"
+    },
+    {
+      "key": "blink-long-capture-rook",
+      "id": "rook.purple@5",
+      "label": "Blink rook (two-square diagonal capture)",
+      "square": "a1"
+    },
+    {
+      "key": "queen-companion",
+      "id": "queen.purple@4",
+      "label": "Queen and diagonal companion",
+      "square": "d1"
+    },
+    {
+      "key": "forward-queen-companion",
+      "id": "queen.purple@5",
+      "label": "Queen and forward companion",
+      "square": "d1"
+    },
+    {
+      "key": "amazon",
+      "id": "queen.purple@1",
+      "label": "Amazon",
+      "square": "d1"
+    }
+  ],
+  "alternativeGroups": [
+    {
+      "key": "ranging-courier",
+      "label": "Ranging / Courier pawn",
+      "designIds": [
+        "pawn.purple@7",
+        "pawn.purple@8"
+      ]
+    },
+    {
+      "key": "rank",
+      "label": "Rank pawn",
+      "designIds": [
+        "pawn.purple@9",
+        "pawn.purple@10"
+      ]
+    },
+    {
+      "key": "vertical",
+      "label": "Vertical bishop",
+      "designIds": [
+        "bishop.purple@3",
+        "bishop.purple@5"
+      ]
+    },
+    {
+      "key": "sideways",
+      "label": "Sideways bishop",
+      "designIds": [
+        "bishop.purple@4",
+        "bishop.purple@6"
+      ]
+    },
+    {
+      "key": "blink",
+      "label": "Blink rook",
+      "designIds": [
+        "rook.purple@4",
+        "rook.purple@5"
+      ]
+    },
+    {
+      "key": "companion",
+      "label": "Queen companion",
+      "designIds": [
+        "queen.purple@4",
+        "queen.purple@5"
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "standard-control",
+      "label": "Ordinary armies"
+    },
+    {
+      "id": "amazon-control",
+      "label": "Amazon armies"
+    }
+  ]
+}

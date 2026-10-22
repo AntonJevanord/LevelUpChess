@@ -41,30 +41,68 @@ test('the embedded profile and native INI reproduce the trusted current catalog'
   assert.deepEqual(PLAYABLE_PROFILE, compiled);
   assert.equal(readFileSync(require.resolve('../variants/levelup-playable.ini'), 'utf8'), compiled.config);
   assert.equal(compiled.registry.definitions.length, 20);
-  assert.equal(new Set(DESIGN_OPTIONS.map(option => option.id)).size, 29);
+  assert.equal(new Set(DESIGN_OPTIONS.map(option => option.id)).size, 34);
   assert.equal(getDesignOptions().length, 20);
   assert.deepEqual(PLAYABLE_PROFILES, getPlayableProfiles());
   for (const profile of PLAYABLE_PROFILES) {
     const files = getPlayableArtifacts(profile.variant);
     assert.deepEqual(JSON.parse(readFileSync(require.resolve('../' + files.json), 'utf8')), profile);
     assert.equal(readFileSync(require.resolve('../' + files.ini), 'utf8'), profile.config);
-    assert.equal(getDesignOptions(profile.variant).length, profile === PLAYABLE_PROFILE ? 20 : 19);
-    assert.ok(getDesignOptions(profile.variant).every(option => option.id !== 'rook.purple@1'), 'retired capture-box rook is absent from both setup pickers');
+    assert.equal(getDesignOptions(profile.variant).length, profile === PLAYABLE_PROFILES[1] ? 19 : 20);
+    assert.ok(getDesignOptions(profile.variant).every(option => option.id !== 'rook.purple@1'), 'retired capture-box rook is absent from every setup picker');
     assert.equal(decodeProfileSnapshot(encodeProfileSnapshot(getProfileSnapshot(profile.variant))).hash, profile.hash);
   }
   assert.equal(PLAYABLE_PROFILES[1].hash, '3f4a34e0852be20501f6e9091332aa92f90a81ad1705f384627e499f5e3fd90a');
+  assert.equal(PLAYABLE_PROFILES.length, 3);
   assert.equal(compiled.hash, createHash('sha256').update(JSON.stringify({ config: compiled.config, registry: compiled.registry })).digest('hex'));
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'pawn.purple@2'), undefined);
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'knight.purple@1'), undefined);
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'knight.orange@2'), undefined);
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'knight.purple@3').level, 3);
   for (const id of ['pawn.purple@3', 'pawn.purple@4', 'pawn.purple@5', 'pawn.purple@6', 'knight.purple@2',
-    'pawn.purple@7', 'pawn.purple@8', 'pawn.purple@9', 'bishop.purple@3', 'bishop.purple@4', 'rook.purple@4', 'queen.purple@4']) {
+    'pawn.purple@7', 'pawn.purple@8', 'pawn.purple@9', 'bishop.purple@3', 'bishop.purple@4', 'rook.purple@4', 'queen.purple@4',
+    'pawn.purple@10', 'bishop.purple@5', 'bishop.purple@6', 'rook.purple@5', 'queen.purple@5']) {
     assert.equal(DESIGN_OPTIONS.find(option => option.id === id).status, 'experimental');
   }
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'rook.purple@2').status, 'experimental');
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'rook.purple@1').status, 'retired');
   assert.ok(!getDesignOptions().some(option => option.id === 'queen.purple@2'), 'short queen pair is parked outside the current library');
+});
+
+test('the alternatives library keeps both options available under distinct immutable IDs', () => {
+  const alternatives = PLAYABLE_PROFILES[2];
+  const ids = new Set(getDesignOptions(alternatives.variant).map(option => option.id));
+  for (const pair of [
+    ['pawn.purple@7', 'pawn.purple@8'], ['pawn.purple@9', 'pawn.purple@10'],
+    ['bishop.purple@3', 'bishop.purple@5'], ['bishop.purple@4', 'bishop.purple@6'],
+    ['rook.purple@4', 'rook.purple@5'], ['queen.purple@4', 'queen.purple@5'],
+  ]) {
+    for (const id of pair) assert.ok(ids.has(id), id);
+    const choices = Object.fromEntries(pair.map(id => [id, DESIGN_OPTIONS.find(option => option.id === id)]));
+    assert.notEqual(choices[pair[0]].name, choices[pair[1]].name);
+  }
+  assert.ok(ids.has('queen.purple@1'), 'the unchanged Amazon remains selectable');
+  assert.equal(new Set(alternatives.registry.allocations.map(item => item.letter)).size, 20);
+});
+
+test('alternative and original revisions deploy together and recover choices only with their own profile', () => {
+  const alternatives = PLAYABLE_PROFILES[2];
+  const choices = { ...DEFAULT_DESIGN_CHOICES,
+    d1: 'queen.purple@5', d2: 'pawn.purple@10', d8: 'queen.purple@4', c8: 'bishop.purple@5' };
+  const setup = designSetupFromChoices(choices, 6, alternatives);
+  assert.deepEqual(setup.costs, { w: 6, b: 6 });
+  assert.deepEqual(loadDesignSetup(setup.fen, alternatives), choices);
+  assert.throws(() => designSetupFromChoices(choices, 6, PLAYABLE_PROFILE), /registered/);
+  const instance = new VariantGame(setup.fen, alternatives.variant);
+  try {
+    assert.equal(instance.get('d1').type, 'q');
+    assert.equal(instance.get('d8').type, 'q');
+    assert.equal(instance.pieceInfo(instance.get('d2').type).designId, 'queen.purple@5');
+    assert.equal(instance.pieceInfo(instance.get('d3').type).designId, 'pawn.purple@10');
+    assert.equal(instance.pieceInfo(instance.get('d7').type).designId, 'queen.purple@4');
+    assert.equal(instance.get('d6').type, 'p');
+    assert.equal(instance.pieceInfo(instance.get('c8').type).designId, 'bishop.purple@5');
+  } finally { instance.dispose(); }
 });
 
 test('full starting choices resolve IDs for both armies, budgets, and extra units', () => {

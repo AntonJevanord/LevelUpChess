@@ -6,9 +6,10 @@ const { getDesign } = require('../../src/design-catalog');
 const { PIECE_SLOTS } = require('../../src/piece-catalog');
 const roster = require('../../experiments/balance/level3-roster.json');
 const revisions = require('../../experiments/balance/amazon-revision-roster.json');
+const alternatives = require('../../experiments/balance/amazon-alternatives-roster.json');
 
 const RESULTS = new Set(['1-0', '0-1', '1/2-1/2']);
-const names = new Map([...roster.candidates, ...revisions.candidates].map(candidate => [candidate.id, candidate.label]));
+const names = new Map([...roster.candidates, ...revisions.candidates, ...alternatives.candidates].map(candidate => [candidate.id, candidate.label]));
 const families = new Map(PIECE_SLOTS.map(slot => [slot.square, slot.family]));
 families.set('e1', 'king');
 const capitalize = text => text[0].toUpperCase() + text.slice(1);

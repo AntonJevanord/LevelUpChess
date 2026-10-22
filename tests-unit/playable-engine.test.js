@@ -73,14 +73,15 @@ test('experimental capability selection follows active immutable IDs and require
     assert.notEqual(otherProbes, probes, 'each library owns its cached expected moves');
     assert.equal(await experimentalCapabilityProbes(otherFen, other.variant), otherProbes);
     assert.ok(otherProbes.every(probe => probe.name.startsWith('rook.purple@2:') || probe.name.startsWith('ordinary ')));
-    const guard = profile.registry.allocations.find(allocation => allocation.id === 'queen.purple@4');
-    const reassigned = other.registry.allocations.find(allocation => allocation.letter === guard.letter);
-    assert.notEqual(reassigned.id, guard.id, 'the libraries deliberately reuse letters for different designs');
-    const sharedFen = `7k/8/8/8/8/4${guard.letter.toUpperCase()}3/8/7K w - - 0 1`;
+    const changed = profile.registry.allocations.find(allocation =>
+      other.registry.allocations.some(item => item.letter === allocation.letter && item.id !== allocation.id));
+    assert.ok(changed, 'each library deliberately reuses a letter for a different design');
+    const reassigned = other.registry.allocations.find(allocation => allocation.letter === changed.letter);
+    const sharedFen = `7k/8/8/8/8/4${changed.letter.toUpperCase()}3/8/7K w - - 0 1`;
     const guardProbes = await experimentalCapabilityProbes(sharedFen, profile.variant);
     const reassignedProbes = await experimentalCapabilityProbes(sharedFen, other.variant);
     assert.notEqual(guardProbes, reassignedProbes, 'identical FEN text cannot share probes across profiles');
-    assert.ok(guardProbes.some(probe => probe.name.startsWith(`${guard.id}:`)));
+    assert.ok(guardProbes.some(probe => probe.name.startsWith(`${changed.id}:`)));
     assert.ok(reassignedProbes.some(probe => probe.name.startsWith(`${reassigned.id}:`)));
   }
   await assert.rejects(experimentalCapabilityProbes(rookFen, 'levelup-design-00000000000000000000'), /Unsupported experimental profile/);
@@ -134,7 +135,7 @@ test('experimental preflight loads the pinned INI and validates the resulting mo
   assert.equal(child.killed, true);
 });
 
-test('the native engine can reply legally in both libraries, including pairs and nonroyal queens', {
+test('the native engine can reply legally in every library, including alternatives and nonroyal queens', {
   skip: !process.env.FAIRY_STOCKFISH_PATH,
   timeout: 60000,
 }, async () => {
@@ -145,7 +146,9 @@ test('the native engine can reply legally in both libraries, including pairs and
     .map(id => `7k/8/8/8/8/4${letter(id)}3/8/7K w - - 0 1`);
   const positions = [rookFen, ...pieces, pairedArmyFen()].map(fen => ({ fen, profile }));
   for (const other of profiles.filter(value => value.variant !== profile.variant)) {
-    positions.push({ profile: other, fen: `7k/8/8/8/8/4${letter('pawn.purple@6', other)}3/8/7K w - - 0 1` });
+    const activeIds = other === profiles[1] ? ['pawn.purple@6']
+      : ['pawn.purple@10', 'bishop.purple@5', 'bishop.purple@6', 'rook.purple@5', 'queen.purple@5'];
+    for (const id of activeIds) positions.push({ profile: other, fen: `7k/8/8/8/8/4${letter(id, other)}3/8/7K w - - 0 1` });
   }
   for (const { fen, profile: value } of positions) {
     const metadata = identityFor(value);

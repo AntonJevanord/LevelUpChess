@@ -68,6 +68,14 @@ test('draws award half-points and a partial color pair still contributes to the 
   assert.match(second, /1 win, 1 draw, 0 losses \(2 games\)/);
 });
 
+test('alternative design results name the exact revision rather than only its family', () => {
+  const game = fixture()[0];
+  game.comparison = { armyA: { upgrades: { d2: 'pawn.purple@10' } }, armyB: { upgrades: { d1: 'queen.purple@1' } } };
+  const output = createProgressFormatter([game])(finish(game, '1-0'));
+  assert.match(output, /Winner: A Rank pawn \(wide knight and camel\) \(White\)/);
+  assert.match(output, /B Amazon/);
+});
+
 test('truncations, aborted attempts, errors and malformed seed identities never become draws or wins', () => {
   const schedule = fixture(), [white, black] = schedule;
   const format = createProgressFormatter(schedule, [

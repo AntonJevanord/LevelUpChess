@@ -2,6 +2,7 @@
 
 const compiled = require('./playable-profile.json');
 const reference = require('./playable-reference-profile.json');
+const alternatives = require('./playable-alternatives-profile.json');
 const { PLAYABLE_LIBRARIES: libraries } = require('./playable-library');
 const { STANDARD_TYPES } = require('./design-catalog');
 const { pieceInfo } = require('./piece-catalog');
@@ -15,7 +16,7 @@ function freeze(value) {
 }
 
 const PLAYABLE_PROFILE = freeze(compiled);
-const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference]);
+const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives]);
 const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
 const EXPERIMENTAL_VARIANTS = freeze(PLAYABLE_PROFILES.map(profile => profile.variant));
 const PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES[index].variant })));
@@ -58,6 +59,11 @@ const metadata = {
   'bishop.purple@4': ['Sideways bishop', 'Normal bishop moves plus horizontal moves and captures of one or two clear squares. Also jump two files sideways and one rank forward or backward, including captures.'],
   'rook.purple@4': ['Blink rook', 'Normal rook moves and captures, plus one-square diagonal captures. Without capturing, also jump to any empty square within three squares horizontally and vertically, crossing intervening pieces.'],
   'queen.purple@4': ['Queen and companion', 'Keep your ordinary queen and add a capturable companion on your second rank, pushing your own pawn stack forward within your half. The companion moves one square in any direction but captures only diagonally. It is not royal; only the ordinary king must avoid check.'],
+  'pawn.purple@10': ['Rank camel pawn', 'Move or capture along clear horizontal lines. Move one square forward, capture one square diagonally forward, or jump two or three files sideways and one rank forward, including captures. The initial two-step needs a clear path.'],
+  'bishop.purple@5': ['Tall-jump vertical bishop', 'Normal bishop moves plus full vertical rook moves and captures. Also jump one file sideways and two ranks forward or backward, including captures.'],
+  'bishop.purple@6': ['Long-sideways bishop', 'Normal bishop moves plus horizontal moves and captures of any clear distance. Also jump two files sideways and one rank forward or backward, including captures.'],
+  'rook.purple@5': ['Diagonal-blink rook', 'Normal rook moves and captures, plus diagonal captures one or two clear squares away. Without capturing, also jump to any empty square within three squares horizontally and vertically, crossing intervening pieces.'],
+  'queen.purple@5': ['Queen and forward companion', 'Keep your ordinary queen and add a capturable companion on your second rank, pushing your own pawn stack forward within your half. The companion moves one square in any direction and captures forward or sideways, including forward diagonals. It cannot capture backward. It is not royal; only the ordinary king must avoid check.'],
 };
 
 const definitions = [...new Map(PLAYABLE_PROFILES.flatMap(profile => profile.registry.definitions).map(definition => [definition.id, definition])).values()];

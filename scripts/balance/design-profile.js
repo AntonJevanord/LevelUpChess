@@ -144,6 +144,30 @@ function definitionProbes(definition, letter) {
     { name: 'companion captures diagonally but steps quietly orthogonally', fen: position({ a1: 'K', h8: 'k', d4: type, c3: 'p', e5: 'p', c4: 'p', d5: 'p' }) },
     { name: 'companion is capturable and nonroyal', fen: position({ a1: 'K', h8: 'k', d4: type, d8: 'r', e8: 'r' }, 'b') },
   );
+  // Alternative fixtures are exact-ID additions; earlier profiles keep their probes.
+  if (definition.id === 'pawn.purple@10') frames.push(
+    { name: 'wide forward knight and camel captures cross blockers', fen: position({ h1: 'K', h8: 'k', d4: type, c4: 'P', e4: 'P', d5: 'P', a5: 'p', b5: 'p', c5: 'p', e5: 'p', f5: 'p', g5: 'p' }) },
+    { name: 'quiet camel visit to an en passant target', fen: position({ h1: 'K', h8: 'k', a5: type, d5: 'p' }, 'w', '-', 'd6') },
+    { name: 'wide camel promotion', fen: position({ h1: 'K', h6: 'k', d7: type, g8: 'r' }) },
+    { name: 'clear initial double step', fen: position({ h1: 'K', h8: 'k', d2: type, c4: 'p' }) },
+  );
+  if (definition.id === 'bishop.purple@5') frames.push(
+    { name: 'tall knight captures cross blockers without wide knight moves', fen: position({ h1: 'K', h7: 'k', d4: type, c4: 'P', e4: 'P', d3: 'P', d5: 'P', c2: 'p', e2: 'p', c6: 'p', e6: 'p', b3: 'p', f5: 'p' }) },
+  );
+  if (definition.id === 'bishop.purple@6') frames.push(
+    { name: 'unlimited horizontal captures stop at blockers', fen: position({ h1: 'K', h7: 'k', d4: type, a4: 'p', h4: 'p', b5: 'p', f5: 'p' }) },
+    { name: 'horizontal rays cannot cross friendly pieces', fen: position({ h1: 'K', h7: 'k', d4: type, c4: 'P', e4: 'P', a4: 'p', h4: 'p' }) },
+  );
+  if (definition.id === 'rook.purple@5') frames.push(
+    { name: 'clear two-square diagonal captures and quiet-only longer jumps', fen: position({ h1: 'K', h8: 'k', d4: type, c4: 'P', e4: 'P', d3: 'P', d5: 'P', b2: 'p', f6: 'p', g7: 'p' }) },
+    { name: 'diagonal captures cannot jump blockers', fen: position({ h1: 'K', h8: 'k', d4: type, c3: 'P', e5: 'P', b2: 'p', f6: 'p' }) },
+    { name: 'two-square diagonal check forbids castling', fen: position({ e1: 'K', h1: 'R', a1: 'N', e8: 'k', c3: letter }, 'w', 'K') },
+  );
+  if (definition.id === 'queen.purple@5') frames.push(
+    { name: 'forward and sideways captures but quiet-only backward steps', fen: position({ a1: 'K', h8: 'k', d4: type, c3: 'p', d3: 'p', e3: 'p', c4: 'p', e4: 'p', c5: 'p', d5: 'p', e5: 'p' }) },
+    { name: 'quiet backward steps across attacked squares remain nonroyal', fen: position({ a1: 'K', h8: 'k', d4: type, c8: 'r', d8: 'r', e8: 'r' }) },
+    { name: 'companion is capturable and nonroyal', fen: position({ a1: 'K', h8: 'k', d4: type, d8: 'r', e8: 'r' }, 'b') },
+  );
   if (definition.roles.castlingRook) frames.push({ name: 'both castling sides', fen: position({ e8: 'k', a1: type, e1: 'K', h1: type }, 'w', 'KQ') });
   for (const legacy of legacyCapabilityProbes(definition.legacyType, 'levelup-v5')) {
     // Repeatable Twin jumps do not create initial-double en passant rights.
