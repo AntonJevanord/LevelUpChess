@@ -8,32 +8,33 @@ Download `index.html` and open it in Chrome, Edge, or Firefox. It includes the b
 
 Select a piece and a highlighted destination. Arrow keys move focus; Enter or Space selects. Includes legal moves, checkmate, draw detection, castling, en passant, selectable promotion, history, undo, and board flip. Threefold repetition and the fifty-move rule end games automatically.
 
-## Version 12: piece workshop and balance
+## Version 14: revised piece workshop
 
-Under **Rules**, choose **Experiments · Mobility and pairs**, select each starting piece's design, then press **New game**. Each side has a 1–6 point budget. Levels use green, cyan, and red accents, with level numbers and separate White/Black piece colors.
+Under **Rules**, choose **Experiments · Rebalance workshop**, select each starting piece's design, then press **New game**. Each side has a 1–6 point budget. Levels use green, cyan, and red accents, with level numbers and separate White/Black piece colors.
 
-New alternatives:
+The [early-closed level-3 screen](experiments/balance/results/level3-screen-001.md) guides seven new three-point revisions:
 
-| Purchase | Cost | Movement |
-| --- | --- | --- |
-| Twin pawns | 2 | Two pawns for one purchase. Each moves one square forward or jumps two, and captures diagonally forward. |
-| Camel knight | 3 | Knight moves plus camel jumps: three squares in one direction and one at right angles (`NC`). |
-| Sideways bishop | 3 | Bishop moves, quiet horizontal slides up to two squares, and jumps two files sideways and one rank forward or backward. |
-| Blink rook | 3 | Rook moves and captures; also jumps quietly to any empty square within three squares horizontally and vertically. |
-| Twin short queens | 3 | Replace the queen with two queens, each limited to two clear squares in any queen direction. |
-| Queen and companion | 3 | Keep the normal queen and add a capturable companion with one-square king movement. Only the ordinary king is royal. |
+| Purchase | Change |
+| --- | --- |
+| Ranging pawn | Quiet rook movement remains unrestricted; diagonal captures stop after two clear squares. |
+| Courier pawn | Keeps quiet forward/sideways rook lines; forward diagonal captures can travel any clear distance. |
+| Rank pawn | Keeps rank control and pawn moves; adds jumping moves/captures two files sideways and one rank forward. |
+| Vertical bishop | Keeps bishop and vertical rook movement; adds quiet knight jumps. |
+| Sideways bishop | Its horizontal slides of up to two clear squares can now capture. Wide knight jumps remain. |
+| Blink rook | Keeps its quiet jumps and rook moves; adds one-square diagonal captures. |
+| Queen and companion | Keeps the ordinary queen. Its companion moves quietly like a king and captures only diagonally. |
 
-Extra queens start on their own second rank and push that file's own pawns forward within their half. The **Knight and guard** uses the same insertion rule. Purchase cost is counted once for a pair; the board summary counts surviving units. Pawn units promote to standard Q/R/B/N, and upgraded rooks can castle normally.
+These are balance candidates. The Amazon, Camel knight (`NC`), Knight and guard, Knight-capture rook, and Returning pawn stay unchanged. Capture-box rook is retired from the active workshop, and Twin short queens are parked at level 3. Earlier definitions remain available through archived profiles and branches.
 
-**Experiments · First prototypes** keeps the previous 20-design library, including the original three-point Twins. Each library fits the engine's 20 custom-type limit. Switching libraries keeps shared draft choices and clears unavailable choices; the current board changes only through **New game**. Use **Clear White**, **Clear Black**, or **Clear both** to reset draft armies across all families.
+Extra companions and guards start on their own second rank and push that file's own pawns forward within their half. Two-point Twin pawns remain available; purchase cost is counted once for a pair, while the board summary counts surviving units. Every pawn unit promotes to standard Q/R/B/N, and upgraded rooks can castle normally.
+
+The **First prototypes (archive)** library preserves its earlier rules. Each library fits the engine's 20 custom-type limit. Switching libraries keeps shared draft choices and clears unavailable choices; **New game** applies the draft. Use **Clear White**, **Clear Black**, or **Clear both** to reset draft armies across all families.
 
 Both libraries support offline play, the local engine, clocks, undo, saves, and PGN. Saves and exports identify their exact library; imports validate the bundled snapshot and every move. New releases may require fresh games.
 
-Experimental games draw bare kings, stalemate, repetition, and the fifty-move rule. Other low-material endings stay playable, with checkmate taking priority. Reversible quiet pawn moves count toward the fifty-move limit; see [exact pawn rules](variants/README.md#experimental-pawn-special-rules).
+Experimental games draw bare kings, stalemate, repetition, and the fifty-move rule. Other low-material endings stay playable, with checkmate taking priority. See [exact pawn rules](variants/README.md#experimental-pawn-special-rules) and the [design decisions](DESIGN.md#version-14-amazon-reference-revisions).
 
-The Camel knight is now level 3 after playtesting; its movement remains `NC`, without extra diagonal steps. The [design notes](DESIGN.md#version-12-level-3-comparison) record the decision and further ideas. Prices remain provisional while the declared comparison batch measures relative upgrade strength.
-
-## Reference piece upgrades
+## Historical reference piece upgrades
 
 Choose **Piece upgrades** under **Rules**, select each piece's level, and press **New game**. Configure pawns, knights, bishops, rooks, and queens with the family selector; choices across families are kept. Each level costs that many points, with the same chosen limit of 1–45 points for each side.
 
@@ -53,37 +54,31 @@ Open [prototypes/kings/index.html](prototypes/kings/index.html) to try the captu
 
 Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Bringing king choices into the main board's setup, engine play, and saves remains integration work. See the [prototype guide](prototypes/kings/README.md).
 
-## Level-3 balance experiment
+## Amazon comparison: 540 games
 
-The [declared campaign](experiments/balance/level3-plan.md) compares 14 selected nonroyal level-3 purchases, including the Camel knight and Amazon, on otherwise ordinary armies. Its round robin schedules **1,860 games**; one selected confirmation stage can use at most **140 more**, within the **2,000-game cap**. Kings need a separate test because the current revision profiles use ordinary royals.
+The [new plan](experiments/balance/amazon-revision-plan.md) compares only the seven new revisions with the unchanged Amazon. Each comparison gets 30 color-swapped opening pairs / 60 games. Ordinary and Amazon self-play controls add 120 games, for a **540-game cap** with no automatic follow-up stage.
 
-On Windows, run:
-
-```bat
-npm.cmd run balance:level3 -- --check
-npm.cmd run balance:level3 -- --stage screen --out balance-results/level3-round-robin
-```
-
-The check validates both opening cohorts and native movement without playing games. Search stays at 100,000 nodes, Skill 20, one thread, 32 MB hash, and 400 plies. After the first 10–20 games, press **p** to finish the current pair and check the recorded timings before continuing:
+On Windows:
 
 ```bat
-npm.cmd run balance:level3 -- --report balance-results/level3-round-robin
-npm.cmd run balance:level3 -- --resume balance-results/level3-round-robin
+npm.cmd run balance:amazon -- --check
+npm.cmd run balance:amazon -- --out balance-results/amazon-revision --jobs 2
 ```
 
-The report produces a matchup matrix, standings, completion counts, control diagnostics, and a rough runtime estimate. Standings compare upgrade purchases under this protocol; they are not material values or piece Elo. Do not use `--limit-pairs` as an extendable pilot: it permanently shortens the recorded schedule.
+The check validates armies, opening prefixes, and native movement without playing games. Search stays at 100,000 nodes per move, Skill 20, one thread per engine, 32 MB hash, and 400 plies. Start with two game workers; runtime depends on CPU and memory. Press **p** to stop each worker after its active color pair, then inspect or resume:
 
-Controls give both engines identical armies. Their paired A score is usually 50% by construction, even when White wins both games. Check White's results, draw rates, errors, truncations, and timings; a 50% control score does not establish balance or correct movement. See [BALANCE.md](BALANCE.md) for interpretation, controls, and the single optional confirmation stage.
+```bat
+npm.cmd run balance:amazon -- --report balance-results/amazon-revision
+npm.cmd run balance:amazon -- --resume balance-results/amazon-revision
+```
 
-The first revision remains closed at 160 of its 200-game cap; its [results and decisions](experiments/balance/results/revision-1-rook-confirmation-001.md) remain historical evidence. Version 11 preserves the preceding workshop. See [TODO.md](TODO.md) for current progress.
+Aim for **40%–60% point score** against the Amazon: one point per win and half per draw. This is a practical design target, not proof of equal strength or material value. The related opening prefixes and modest sample still limit generalization. Keep rules and settings fixed during the run; unchanged earlier candidates are not retested as subjects.
 
-## Version 13: tools for future balance runs
+Finished games name the winner and its color, then show the running matchup points and win/draw/loss counts. Add `--log plies` for move progress. Scores exclude truncations and errors; formal comparisons use complete color pairs. Controls check scoring and completion, and a 50% control score alone does not establish balance. See [BALANCE.md](BALANCE.md) for interpretation.
 
-The playable board and version-12 experiment stay unchanged. New runs can use several independent game workers while each engine keeps one thread and its declared search budget. Start with two workers; speedup depends on available CPU and memory. Keep the current serial campaign running on its original checkout.
+The version-12 campaign closed early at 1,508 of 1,860 finalized scheduled games, with 1,507 completed games, one truncation, and two failed attempts. Its reserved confirmation stage is unused. The [audit and design decisions](experiments/balance/results/level3-screen-001.md) distinguish the newer summary from the earlier standings snapshot; no final ranking is assigned.
 
-`balance` and `balance:level3` now print game starts and results without ply updates; add `--log plies` for the earlier move progress. This takes effect when starting or resuming a process.
-
-`balance:prepare` turns a selected roster into a capped configuration with color pairs, controls, and a frozen design allocation. It does not start games or choose designs, openings, or balance decisions. See [the future-run guide](docs/balance-tools.md) for preparation, parallel execution, and resume commands.
+Reusable `balance:prepare` and `balance:parallel` tools remain available for other declared experiments. See the [future-run guide](docs/balance-tools.md). Historical configurations are preserved evidence, not an automatic test queue.
 
 ## Play Fairy Stockfish
 
@@ -145,7 +140,7 @@ npm test
 
 Edit `src/`, `styles.css`, or validated files in `variants/`, then build and reload. Commit generated `index.html` and `dist/app.js`; do not edit generated HTML. `npm start` serves the game locally.
 
-Experimental behavior lives in immutable revisions in `src/design-catalog.js`. The explicit groups in `src/playable-library.js` select two 20-design libraries from 29 catalog entries. The build uses the balance compiler to generate `src/playable-profile.json`, `src/playable-reference-profile.json`, and their matching INIs in `variants/`; commit these outputs and do not edit them directly. Letters are fixed within each profile and may mean different designs in different libraries.
+Experimental behavior lives in immutable revisions in `src/design-catalog.js`. The explicit groups in `src/playable-library.js` select the current and archived libraries within the engine's 20 custom-type limit. The build uses the balance compiler to generate `src/playable-profile.json`, `src/playable-reference-profile.json`, and their matching INIs in `variants/`; commit these outputs and do not edit them directly. Letters are fixed within each profile and may mean different designs in different libraries.
 
 `npm test` runs unit and browser tests using a temporary server. Set `FAIRY_STOCKFISH_PATH` to enable native integration checks, `CHROMIUM_PATH` to use an installed browser, or `TEST_FILE_URL=1` to test direct-file loading where browser policy permits.
 
@@ -166,8 +161,9 @@ Standard chess uses [chess.js](https://github.com/jhlywa/chess.js), with its BSD
 | `version_09` | Preserved checkpoint | Shared playable profiles and the first 17-design picker |
 | `version_10` | Preserved checkpoint | Army reset controls, pawn candidates, and own-file deployment |
 | `version_11` | Preserved checkpoint | Selectable libraries, mobility alternatives, and queen pairs |
-| `version_12` | Active experiment | Level-3 Camel knight and capped all-design balance campaign |
-| `version_13` | Current tools | Parallel balance games, quieter output, and roster-based preparation |
+| `version_12` | Closed early | Level-3 Camel knight and capped all-design balance campaign |
+| `version_13` | Preserved tools | Parallel balance games, quieter output, and roster-based preparation |
+| `version_14` | Current workshop | Seven new revisions and a capped Amazon comparison |
 
 Create each development branch from the previous tested milestone and tag finished releases. Tags preserve stable checkpoints while branches can evolve. See [TODO.md](TODO.md) for progress and later work.
 

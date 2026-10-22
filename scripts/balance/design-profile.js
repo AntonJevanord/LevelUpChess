@@ -114,6 +114,36 @@ function definitionProbes(definition, letter) {
     name: 'companion is capturable and may move through attacked squares',
     fen: position({ a1: 'K', h8: 'k', d4: type, e8: 'r', b3: 'b' }),
   });
+  // Rebalance fixtures are tied to their new IDs; archived probe lists stay fixed.
+  if (definition.id === 'pawn.purple@7') frames.push(
+    { name: 'ranging capture limit and unrestricted quiet rook lines', fen: position({ h1: 'K', h8: 'k', d4: type, b6: 'p', g7: 'p', b2: 'p', g1: 'p' }) },
+    { name: 'quiet sideways visit to an en passant target', fen: position({ h1: 'K', h8: 'k', a6: type, d5: 'p' }, 'w', '-', 'd6') },
+  );
+  if (definition.id === 'pawn.purple@8') frames.push(
+    { name: 'unlimited forward diagonal captures and no backward movement', fen: position({ h1: 'K', h8: 'k', d4: type, a7: 'p', g7: 'p', b2: 'p', f2: 'p' }) },
+    { name: 'forward diagonals cannot cross blockers', fen: position({ h1: 'K', h8: 'k', d4: type, e5: 'P', g7: 'p', c5: 'p', a7: 'p' }) },
+  );
+  if (definition.id === 'pawn.purple@9') frames.push(
+    { name: 'wide forward jumps cross blockers and capture', fen: position({ h1: 'K', h8: 'k', d4: type, c4: 'P', e4: 'P', d5: 'P', b5: 'p', f5: 'p', c5: 'p', e5: 'p' }) },
+    { name: 'wide quiet jump to an en passant target', fen: position({ h1: 'K', h8: 'k', b5: type, d5: 'p' }, 'w', '-', 'd6') },
+    { name: 'clear initial double step', fen: position({ h1: 'K', h8: 'k', d2: type, c4: 'p' }) },
+  );
+  if (definition.id === 'bishop.purple@3') frames.push({
+    name: 'quiet knight jumps cross blockers but do not capture',
+    fen: position({ a1: 'K', h7: 'k', d4: type, c4: 'P', d5: 'P', e4: 'P', d3: 'P', b3: 'p', f5: 'p', c2: 'P' }),
+  });
+  if (definition.id === 'bishop.purple@4') frames.push({
+    name: 'two-square horizontal captures stop at blockers',
+    fen: position({ a1: 'K', h7: 'k', d4: type, b4: 'p', f4: 'p', a4: 'p', g4: 'p', b5: 'p', f5: 'p' }),
+  });
+  if (definition.id === 'rook.purple@4') frames.push(
+    { name: 'adjacent diagonal captures and quiet-only longer blink jumps', fen: position({ h1: 'K', h7: 'k', d4: type, c4: 'P', e4: 'P', d3: 'P', d5: 'P', c3: 'p', e5: 'p', b2: 'p', f6: 'p', g7: 'p' }) },
+    { name: 'adjacent diagonal check forbids castling', fen: position({ e1: 'K', h1: 'R', a1: 'N', e8: 'k', d2: letter }, 'w', 'K') },
+  );
+  if (definition.id === 'queen.purple@4') frames.push(
+    { name: 'companion captures diagonally but steps quietly orthogonally', fen: position({ a1: 'K', h8: 'k', d4: type, c3: 'p', e5: 'p', c4: 'p', d5: 'p' }) },
+    { name: 'companion is capturable and nonroyal', fen: position({ a1: 'K', h8: 'k', d4: type, d8: 'r', e8: 'r' }, 'b') },
+  );
   if (definition.roles.castlingRook) frames.push({ name: 'both castling sides', fen: position({ e8: 'k', a1: type, e1: 'K', h1: type }, 'w', 'KQ') });
   for (const legacy of legacyCapabilityProbes(definition.legacyType, 'levelup-v5')) {
     // Repeatable Twin jumps do not create initial-double en passant rights.

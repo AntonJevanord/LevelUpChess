@@ -2,46 +2,47 @@
 
 Browser and native Fairy Stockfish load the same configuration. Reference Piece upgrades uses `levelup-v5.ini` (`levelup-v5`); the experimental libraries use the generated profiles described below. Earlier modes retain `levelup.ini` (`levelup`, version 04) or `levelup-knight.ini` (`levelup-knight`, version 03). Saves and PGNs identify their rules.
 
-## Experimental libraries — version 11
+## Experimental libraries — version 14
 
-[The playable library definitions](../src/playable-library.js) select two frozen groups of 20 designs from 28 immutable [catalog entries](../src/design-catalog.js). The build uses the balance registry/compiler to generate their rules:
+[The playable library definitions](../src/playable-library.js) select the current workshop and an exact historical archive from immutable [catalog entries](../src/design-catalog.js). Each profile stays within the engine's 20 custom-type limit. The build generates these artifacts; do not edit them directly:
 
 | Library | Generated rules | Generated profile |
 | --- | --- | --- |
-| Mobility and pairs | [levelup-playable.ini](levelup-playable.ini) | [playable-profile.json](../src/playable-profile.json) |
-| First prototypes | [levelup-playable-reference.ini](levelup-playable-reference.ini) | [playable-reference-profile.json](../src/playable-reference-profile.json) |
+| Rebalance workshop | [levelup-playable.ini](levelup-playable.ini) | [playable-profile.json](../src/playable-profile.json) |
+| First prototypes (archive) | [levelup-playable-reference.ini](levelup-playable-reference.ini) | [playable-reference-profile.json](../src/playable-reference-profile.json) |
 
-Do not edit these artifacts directly. Names, descriptions, and colors live in [design options](../src/design-options.js). Each side has a 1–6 point budget; cost equals level. Switching libraries retains shared draft selections and clears unavailable ones. **New game** applies the draft.
+Names, descriptions, and colors live in [design options](../src/design-options.js). Each side has a 1–6 point budget; cost equals level. Switching libraries retains shared draft choices and clears unavailable ones. **New game** applies the draft. Capture-box rook is retired from the current workshop and Twin short queens are parked at level 3; archived definitions and historical modes remain unchanged.
 
-New Mobility and pairs options:
+### Revised three-point purchases
 
-| Design | Cost | Movement and deployment |
-| --- | --- | --- |
-| Twins, `pawn.orange@2` | 2 | Two units on relative ranks 2/3 for one purchase. Each jumps one or two squares quietly forward and captures one square diagonally forward (`fmWfmDfceF`). |
-| Camel knight, `knight.orange@2` | 2 | Knight plus camel (1,3) jumps, including captures (`NC`). Replaces the knight. |
-| Sideways bishop, `bishop.purple@2` | 3 | Bishop plus quiet horizontal slides up to two clear squares and full jumps two files sideways and one rank forward/backward (`BmsR2sN`). Replaces the bishop. |
-| Blink rook, `rook.purple@3` | 3 | Ordinary rook plus quiet jumps to empty squares within three squares horizontally and vertically (`RmFmDmNmAmHmCmZmG`). Replaces the rook; normal castling remains available. |
-| Twin short queens, `queen.purple@2` | 3 | Replace the queen with two `Q2` units: move/capture up to two clear squares in any queen direction. The second is inserted on d2/d7. |
-| Queen and companion, `queen.purple@3` | 3 | Keep the normal queen and insert a capturable, nonroyal `K` unit on d2/d7. It moves/captures one square in any direction and need not avoid attack. |
+| Design | Movement and deployment |
+| --- | --- |
+| Ranging pawn, `pawn.purple@7` | Quiet rook slides in any direction; diagonal captures along clear lines of one or two squares (`mRceB2`). Replaces one pawn. |
+| Courier pawn, `pawn.purple@8` | Quiet forward/sideways rook lines; forward diagonal captures along any clear distance (`mfRmsRcfB`). No backward movement or captures. |
+| Rank pawn, `pawn.purple@9` | Horizontal rook moves/captures plus ordinary forward pawn moves/captures and a clear initial double-step. Also jumps two files sideways and one rank forward, with or without capture (`ifmnDfmWfceFsRfsN`). |
+| Vertical bishop, `bishop.purple@3` | Bishop plus full vertical rook movement/captures, and quiet knight jumps (`BfbRmN`). Replaces the bishop. |
+| Sideways bishop, `bishop.purple@4` | Bishop plus horizontal slides of one or two clear squares, now including captures; wide knight jumps two files sideways and one rank forward/backward (`BsR2sN`). |
+| Blink rook, `rook.purple@4` | Ordinary rook, one-square diagonal moves/captures, and quiet jumps to empty squares within three files and three ranks (`RFmDmNmAmHmCmZmG`). Normal castling remains available. |
+| Queen and companion, `queen.purple@4` | Keep the ordinary queen and insert a capturable, nonroyal `FmW` companion on d2/d7. It moves one square in any direction but captures only diagonally. |
 
-Blink jumps cross intervening pieces but cannot capture; only its ordinary rook moves add attacks. Range means at most three files and at most three ranks away, including diagonals. Clear rook slides can reach farther. Short-queen rays do not jump.
+Blink's quiet jumps cross intervening pieces; its new diagonal captures reach only adjacent squares. Longer diagonal/knight/camel captures remain forbidden. Quiet-only jumps by Blink or Vertical bishop add no attacks of their own; ordinary attacks after landing can still give check. Sideways bishop's short horizontal slides need a clear path, while its knight jumps ignore blockers. Forward is toward the opponent's back rank for each color.
 
-Both libraries retain the three-point Courier (`mfRmsRcfB2`), Rank (`ifmnDfmWfceFsR`), and Returning (`fQ2mbQ2`) pawn candidates. First prototypes retains the original three-point Twins, `pawn.purple@6`, and the previous 20-design selection unchanged. The parked `pawn.purple@2` and fixed rank-3 `knight.purple@1` remain historical definitions outside both current libraries.
+The current workshop retains Camel knight at level 3 as `knight.purple@3` (`NC`), Knight and guard `knight.purple@2`, Knight-capture rook `rook.purple@2`, and Returning pawn `pawn.purple@5` unchanged. The two-point Twin pawns, `pawn.orange@2`, replace one pawn with two units on relative ranks 2/3; each jumps one or two squares quietly forward and captures one square diagonally forward (`fmWfmDfceF`).
 
-The revised `knight.purple@2` keeps the ordinary knight and inserts its `WD` guard on b2/g2 for White or b7/g7 for Black. Queen packages use the same own-file insertion rule. Insertion pushes only its own contiguous pawn stack one square forward, stopping within its own half. With Twins and the knight guard, the ordinary knight, guard, and two pawns fill relative ranks 1/2/3/4. Deployment rejects collisions and overflow. Purchase cost is counted once; the board's level summary counts remaining units.
+The revised guard keeps the ordinary knight and inserts its `WD` unit on b2/g2 for White or b7/g7 for Black. Queen companions use the same own-file insertion rule. Insertion pushes only its own contiguous pawn stack one square forward, within its own half. With Twins and the knight guard, the ordinary knight, guard, and two pawns fill relative ranks 1/2/3/4. Deployment rejects collisions and overflow. Purchase cost is counted once; the board summary counts surviving units.
 
-The active mapping determines pawn roles, promotions/en passant, extra-unit placement, and castling rooks. It also determines board glyphs and labels; a temporary letter alone never identifies a family. Kings remain ordinary. Experimental games draw bare kings, repetition, stalemate, and the fifty-move rule; other material endings continue conservatively, with checkmate taking priority.
+The active profile determines pawn roles, promotion/en passant, placement, castling rooks, glyphs, and labels. A temporary letter alone never identifies a family. Kings remain ordinary. Experimental games draw bare kings, repetition, stalemate, and the fifty-move rule; other material endings remain playable, with checkmate taking priority.
 
-Experimental PGNs include the hashed variant, starting FEN, and a `LevelUpProfile` snapshot containing definitions, allocation, and exact INI. Browser saves also store starting choices where the position describes a standard starting army. Imports select the matching bundled library profile and validate every move; arbitrary edited definitions are rejected. Imported study positions are independent of new-game budgets.
+Experimental PGNs include the hashed variant, starting FEN, and a `LevelUpProfile` snapshot containing definitions, allocation, and exact INI. Browser saves also store starting choices when the initial position describes a standard army. Imports select a matching bundled profile and validate every move; arbitrary edited definitions are rejected. Imported study positions are independent of new-game budgets. New releases may require fresh games.
 
 ### Experimental pawn special rules
 
-- Every new pawn unit must promote to a standard queen, rook, bishop, or knight on the enemy back rank.
-- Courier, Rank, and Twins can capture en passant along their diagonal capture paths. Returning moves quietly onto an empty en-passant target and leaves the bypassed pawn, like the reference orange pawn.
+- Every pawn unit promotes to a standard queen, rook, bishop, or knight on the enemy back rank, including promotion after a Rank jump.
+- Ranging, Courier, Rank, and Twins can capture ordinary diagonal en-passant targets along their capture paths. A Rank wide knight jump onto an empty en-passant target is a quiet move and leaves the bypassed pawn. Returning also visits empty targets quietly.
 - Rank's initial clear double-step creates en-passant rights. Courier's long advances, Returning's two-square slides, and Twin repeatable jumps create no such rights, including from shifted starting ranks.
-- Returning quiet moves and quiet sideways Courier/Rank moves count toward the fifty-move limit because they are reversible. Their captures and promotions reset it. Forward-only Courier/Rank moves and Twin forward jumps reset it.
+- Quiet Ranging rook moves, Returning moves, and sideways Courier/Rank moves count toward the fifty-move limit because they are reversible. Forward-only Courier/Rank moves and Twin jumps reset it. Captures and promotions reset it.
 
-Use **Clear White**, **Clear Black**, or **Clear both** to clear draft selections across hidden families. Budgets stay selected. **New game** applies the new army and resets the board.
+Use **Clear White**, **Clear Black**, or **Clear both** to reset draft selections across hidden families. Budgets stay selected. **New game** applies the new army and resets the board. See [the design decisions](../DESIGN.md#version-14-amazon-reference-revisions) and [540-game comparison plan](../experiments/balance/amazon-revision-plan.md).
 
 ## Version 05 movement
 

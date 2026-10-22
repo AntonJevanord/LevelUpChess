@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 13 improves tools for future balance runs while version 12's capped level-3 comparison continues. The playable board and piece rules remain unchanged. Earlier milestones are in [development history](docs/development-history.md).
+Version 14 revises seven outliers after closing the version-12 screen early, then prepares one capped Amazon comparison. Version 13 preserves reusable parallel-run tools. Earlier milestones are in [development history](docs/development-history.md).
 
 Browser-save compatibility across releases is optional. Experiment definitions, identities, and results must remain reproducible.
 
@@ -42,9 +42,9 @@ Implement in this order. Start human playtesting before requiring tight numerica
 ### 3. Test the surviving ideas
 
 - [x] Keep `queen.purple@1` (Amazon, `QN`) fixed as the reference upgrade for the next design batch. Its estimated 12–13 total material is a contextual prior, not a measured LevelUp value.
-- [ ] First compare surviving purple purchases against the Amazon purchase on ordinary armies. All sides retain the same underlying standard material.
+- [x] Collect initial direct Amazon comparisons on ordinary armies within the version-12 round robin; keep the same underlying standard material.
 - [ ] Use existing legal armies for tier-ratio comparisons. Add explicit shared custom starting setups only when several copies of one family answer a specific pending question.
-- [ ] Declare candidates, opponents, opening cohorts, search settings, decision criteria, and a game cap before starting a new batch. Confirmation is reserved for shortlisted designs.
+- [x] Declare candidates, opponents, opening cohorts, search settings, decision criteria, and a game cap for each batch. Follow-up stages require an explicit question and budget.
 - [ ] Extend evidence aggregation from the curated ledger when repeated batches justify it; distinguish co-occurrence, actual ability use, and individual-effect evidence.
 
 Two to six ideas per family per tier means 36–108 upgraded designs. Keep that as an idea pool and implement selected alternatives gradually. A full second set does not block the first playable picker.
@@ -84,9 +84,9 @@ Two to six ideas per family per tier means 36–108 upgraded designs. Keep that 
 - [x] Freeze the roster, short opening cohorts, letter allocation, and previous 100,000-node search settings. Keep upgraded kings outside this batch.
 - [x] Add campaign validation, capped stage selection, matchup/standings reports, timing estimates, and separate control diagnostics. Lock the one confirmation selection and verify its engine, runner, and rules identities against screening.
 - [x] Verify all 3,720 possible army/color/opening assignments and 3,864 exact native/WASM positions across both cohorts. Verify 369 unit/integration cases (two updated expectations passed focused rechecks), 23 focused browser cases, an offline/mobile smoke, and four unscored workflow games covering stop/resume and reports.
-- [x] Check Windows runtime with the user. The full campaign has reached game 1,077; its long runtime is acceptable. Keep the recorded schedule and settings unchanged.
-- [ ] Finish the main stage, inspect completion rates, opening sensitivity, pairwise results, and human feedback, then select at most seven holdout comparisons once.
-- [ ] Record keep/revise/park decisions when the capped batch ends. Changes get new revisions and future declared budgets; unused games stay unused.
+- [x] Check Windows runtime with the user and preserve the recorded schedule/settings during play.
+- [x] Close the screen early at the user's request: 1,507 completed games, one truncation, two failed attempts, and 753 complete color pairs. Keep snapshots separate and assign no final rankings.
+- [x] Archive [the results and design decisions](experiments/balance/results/level3-screen-001.md). Do not run the reserved confirmation stage; unused games stay unused.
 
 ## Version 13 — balance workflow tools
 
@@ -95,8 +95,20 @@ Two to six ideas per family per tier means 36–108 upgraded designs. Keep that 
 - [x] Generate capped round-robin or reference comparisons from a chosen roster, including color pairs, controls, cost/capacity checks, frozen allocations, and opening validation before writing. Preparation never starts games.
 - [x] Add independent parallel workers with complete-pair schedules, separate checkpoints, aggregate results, and coordinated stopping. Freeze worker count for resume; preserve one engine thread and the declared search budget.
 - [x] Verify 197 balance cases, including native parallel stop/resume, failure recovery, preparation limits, and Windows sharing retries; one test mock was corrected and passed its focused recheck. Check native serial resume with the frozen version-12 identity and a four-game parallel CLI/report workflow using all 14 designs. Short, truncated workflow games remain unscored.
-- [x] Publish the tested tools and [future-run guide](docs/balance-tools.md) on `version_13`. Consider parallelism for the next declared run; leave the current serial campaign running.
+- [x] Publish the tested tools and [future-run guide](docs/balance-tools.md) on `version_13`. Use parallelism for a later declared run; keep experiment identities separate.
 - [x] Name each game's winning army and color, then show the running matchup points and win/draw/loss counts. Restore counters on resume, combine parallel workers, and keep unfinished games unscored.
+
+## Version 14 — revised purchases against the Amazon
+
+- [x] Preserve version 13 and develop on `version_14`; retain every earlier behavior ID and archived profile.
+- [x] Retire Capture-box rook from the active workshop and park Twin short queens at level 3. Keep the knights, Knight-capture rook, and Returning pawn unchanged without repeat subject tests.
+- [x] Add seven new three-point revisions: Ranging capture-range nerf, Courier capture-range buff, Rank forward-wide jumps, quiet knight jumps for Vertical bishop, capturing horizontal slides for Sideways bishop, adjacent diagonal captures for Blink, and diagonal-only captures for the companion.
+- [x] Expose the revisions in the Rebalance workshop, retain First prototypes as an archive, and document their moves, promotion, castling, and deployment.
+- [x] Declare one [540-game Amazon comparison](experiments/balance/amazon-revision-plan.md): seven new subjects plus two controls over 30 color-swapped opening pairs. Preserve 100,000 nodes, Skill 20, one engine thread, 32 MB hash, and 400 plies; no automatic extra stage.
+- [x] Set a 40%–60% point-score design target, with draws worth half a point; retain completion, opening-sensitivity, and human-play feedback beside it.
+- [x] Verify 426 unit/integration cases; update the experiment-file inventory and pass its focused recheck. New-rule tests compare 168 native/browser legal-move sets and 66 resulting positions, covering promotion/en passant, clocks, royal safety, castling, and companion deployment.
+- [x] Validate all 540 army/color/opening assignments, 92 movement probes, and 480 distinct native starting/opening positions. Pass 30 focused browser cases and the offline/mobile check; verify ten unscored serial/parallel workflow games, immutable resume, and the capped Amazon report.
+- [ ] Run the declared batch, inspect complete pairs and human feedback, then record one keep/revise/park decision per new revision. Do not rerun unchanged old subjects or automatically queue another batch.
 
 ## Deferred work
 

@@ -1,0 +1,439 @@
+{
+  "schemaVersion": 2,
+  "name": "Version 14 revised purchases versus Amazon: reference comparisons",
+  "seed": 42,
+  "repetitions": 1,
+  "engine": {
+    "nodes": 100000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400
+  },
+  "openings": [
+    {
+      "id": "start",
+      "moves": []
+    },
+    {
+      "id": "open-e-pawns",
+      "moves": [
+        "e2e4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "sicilian-prefix",
+      "moves": [
+        "e2e4",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "french-prefix",
+      "moves": [
+        "e2e4",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "caro-prefix",
+      "moves": [
+        "e2e4",
+        "c7c6"
+      ]
+    },
+    {
+      "id": "modern-prefix",
+      "moves": [
+        "e2e4",
+        "g7g6"
+      ]
+    },
+    {
+      "id": "reversed-sicilian-prefix",
+      "moves": [
+        "c2c4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "symmetrical-english-prefix",
+      "moves": [
+        "c2c4",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "kingside-fianchetto-prefix",
+      "moves": [
+        "g2g3",
+        "g7g6"
+      ]
+    },
+    {
+      "id": "ordinary-knights-prefix",
+      "moves": [
+        "g1f3",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "quiet-e-pawns",
+      "moves": [
+        "e2e3",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "quiet-c-pawns",
+      "moves": [
+        "c2c3",
+        "c7c6"
+      ]
+    },
+    {
+      "id": "anglo-indian-prefix",
+      "moves": [
+        "c2c4",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "reti-e-pawn-prefix",
+      "moves": [
+        "g1f3",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "reti-sicilian-prefix",
+      "moves": [
+        "g1f3",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "fianchetto-sicilian-prefix",
+      "moves": [
+        "g2g3",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "bird-open-prefix",
+      "moves": [
+        "f2f4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "king-pawn-step-prefix",
+      "moves": [
+        "h2h3",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "queen-rook-step-prefix",
+      "moves": [
+        "a2a3",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "open-knights-prefix",
+      "moves": [
+        "e2e4",
+        "e7e5",
+        "g1f3",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "open-short-bishops-prefix",
+      "moves": [
+        "e2e4",
+        "e7e5",
+        "f1e2",
+        "f8e7"
+      ]
+    },
+    {
+      "id": "french-knights-prefix",
+      "moves": [
+        "e2e4",
+        "e7e6",
+        "g1f3",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "caro-knights-prefix",
+      "moves": [
+        "e2e4",
+        "c7c6",
+        "g1f3",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "sicilian-knights-prefix",
+      "moves": [
+        "e2e4",
+        "c7c5",
+        "g1f3",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "modern-knights-prefix",
+      "moves": [
+        "e2e4",
+        "g7g6",
+        "g1f3",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "english-open-knights-prefix",
+      "moves": [
+        "c2c4",
+        "e7e5",
+        "g1f3",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "english-symmetry-knights-prefix",
+      "moves": [
+        "c2c4",
+        "c7c5",
+        "g1f3",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "double-fianchetto-bishops-prefix",
+      "moves": [
+        "g2g3",
+        "g7g6",
+        "f1g2",
+        "f8g7"
+      ]
+    },
+    {
+      "id": "reti-fianchetto-knights-prefix",
+      "moves": [
+        "g1f3",
+        "g8f6",
+        "g2g3",
+        "g7g6"
+      ]
+    },
+    {
+      "id": "quiet-centre-knights-prefix",
+      "moves": [
+        "e2e3",
+        "e7e6",
+        "g1f3",
+        "g8f6"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "ranging-pawn-v-amazon",
+      "label": "Ranging pawn (capture two) versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "d2": "pawn.purple@7"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "courier-pawn-v-amazon",
+      "label": "Courier pawn (long captures) versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "d2": "pawn.purple@8"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rank-pawn-v-amazon",
+      "label": "Rank pawn (wide jumps) versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "d2": "pawn.purple@9"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "vertical-bishop-v-amazon",
+      "label": "Vertical bishop (quiet knight) versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "c1": "bishop.purple@3"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "sideways-bishop-v-amazon",
+      "label": "Sideways bishop (rank captures) versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "c1": "bishop.purple@4"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "blink-rook-v-amazon",
+      "label": "Blink rook (diagonal capture) versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@4"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "queen-companion-v-amazon",
+      "label": "Queen and diagonal companion versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.purple@4"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "standard-control",
+      "label": "Ordinary armies",
+      "armyA": {
+        "upgrades": {},
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "amazon-control",
+      "label": "Amazon armies",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    }
+  ]
+}

@@ -34,7 +34,7 @@ test('Camel knight costs three points, shares a six-point army with Blink, and k
   await choose(page, 'knight', 'b1', 'knight.purple@3');
   await expect(page.locator('#experimental-status')).toContainText('White 3/6 · Black 0/6');
   await expect(page.locator('#experimental-upgrade-b1')).toHaveValue('knight.purple@3');
-  await choose(page, 'rook', 'a1', 'rook.purple@3');
+  await choose(page, 'rook', 'a1', 'rook.purple@4');
   await expect(page.locator('#experimental-status')).toContainText('White 6/6 · Black 0/6');
   await start(page);
   await expect(square(page, 'b1')).toHaveAttribute('data-design-id', 'knight.purple@3');
@@ -45,45 +45,48 @@ test('Camel knight costs three points, shares a six-point army with Blink, and k
 });
 
 test('switching libraries keeps shared choices, clears unavailable choices, and leaves the current board intact', async ({ page }) => {
-  await expect(page.locator(`#game-mode option[value="${workshop.variant}"]`)).toHaveText('Experiments · Mobility and pairs');
-  await expect(page.locator(`#game-mode option[value="${reference.variant}"]`)).toHaveText('Experiments · First prototypes');
+  await expect(page.locator(`#game-mode option[value="${workshop.variant}"]`)).toHaveText('Experiments · Rebalance workshop');
+  await expect(page.locator(`#game-mode option[value="${reference.variant}"]`)).toHaveText('Experiments · First prototypes (archive)');
   await page.selectOption('#game-mode', workshop.variant);
   await choose(page, 'pawn', 'a2', 'pawn.purple@5');
-  await choose(page, 'queen', 'd1', 'queen.purple@3');
+  await choose(page, 'queen', 'd1', 'queen.purple@4');
   await start(page);
-  await expect(square(page, 'd2')).toHaveAttribute('data-design-id', 'queen.purple@3');
+  await expect(square(page, 'd2')).toHaveAttribute('data-design-id', 'queen.purple@4');
   await page.selectOption('#game-mode', reference.variant);
   await expect(page.locator('#experimental-upgrade-a2')).toHaveValue('pawn.purple@5');
   await expect(page.locator('#experimental-upgrade-d1')).toHaveValue('');
   await expect(page.locator('#experimental-status')).toContainText('White 3/6 · Black 0/6');
-  await expect(square(page, 'd2')).toHaveAttribute('data-design-id', 'queen.purple@3');
-  await choose(page, 'bishop', 'c1', 'bishop.blue@1');
+  await expect(square(page, 'd2')).toHaveAttribute('data-design-id', 'queen.purple@4');
+  await choose(page, 'bishop', 'c1', 'bishop.orange@1');
   await page.selectOption('#game-mode', workshop.variant);
   await expect(page.locator('#experimental-upgrade-c1')).toHaveValue('');
   await expect(page.locator('#experimental-upgrade-a2')).toHaveValue('pawn.purple@5');
   await expect(page.locator('#experimental-status')).toContainText('White 3/6 · Black 0/6');
-  await expect(square(page, 'd2')).toHaveAttribute('data-design-id', 'queen.purple@3');
+  await expect(square(page, 'd2')).toHaveAttribute('data-design-id', 'queen.purple@4');
   await start(page);
   await expect(square(page, 'd2')).toHaveAttribute('aria-label', 'd2 White pawn');
   await expect(square(page, 'a2')).toHaveAttribute('data-design-id', 'pawn.purple@5');
 });
 
-test('both queen packages place two capturable units, push their pawn, and survive save, PGN and undo', async ({ page }) => {
+test('short queens are retired and revised companions preserve ordinary queens through save, PGN and undo', async ({ page }) => {
   test.setTimeout(60000);
   await page.selectOption('#game-mode', workshop.variant);
-  await choose(page, 'queen', 'd1', 'queen.purple@2');
-  await choose(page, 'queen', 'd8', 'queen.purple@3');
+  await page.selectOption('#experimental-family', 'queen');
+  await expect(page.locator('#experimental-upgrade-d1 option[value="queen.purple@2"]')).toHaveCount(0);
+  await choose(page, 'queen', 'd1', 'queen.purple@4');
+  await choose(page, 'queen', 'd8', 'queen.purple@4');
   await expect(page.locator('#experimental-status')).toContainText('White 3/6 · Black 3/6');
   await start(page);
-  for (const name of ['d1', 'd2']) await expect(square(page, name)).toHaveAttribute('data-design-id', 'queen.purple@2');
+  await expect(square(page, 'd1')).toHaveAttribute('aria-label', 'd1 White queen');
+  await expect(square(page, 'd2')).toHaveAttribute('data-design-id', 'queen.purple@4');
   await expect(square(page, 'd3')).toHaveAttribute('aria-label', 'd3 White pawn');
   await expect(square(page, 'd8')).toHaveAttribute('aria-label', 'd8 Black queen');
-  await expect(square(page, 'd7')).toHaveAttribute('data-design-id', 'queen.purple@3');
+  await expect(square(page, 'd7')).toHaveAttribute('data-design-id', 'queen.purple@4');
   await expect(square(page, 'd6')).toHaveAttribute('aria-label', 'd6 Black pawn');
   await expect(square(page, 'e1')).toHaveAttribute('aria-label', 'e1 White king');
   await expect(square(page, 'e8')).toHaveAttribute('aria-label', 'e8 Black king');
   await expect(page.locator('#board .piece')).toHaveCount(34);
-  await move(page, 'd2', 'f4');
+  await move(page, 'd2', 'e3');
   await move(page, 'd7', 'e6');
   await expect(page.locator('#history li span')).toHaveCount(2);
   const pgn = await pgnDownload(page);
@@ -92,18 +95,16 @@ test('both queen packages place two capturable units, push their pawn, and survi
   await page.reload();
   await page.getByRole('button', { name: 'Load saved', exact: true }).click();
   await expect(page.locator('#game-mode')).toHaveValue(workshop.variant);
-  await expect(square(page, 'f4')).toHaveAttribute('data-design-id', 'queen.purple@2');
-  await expect(square(page, 'e6')).toHaveAttribute('data-design-id', 'queen.purple@3');
-  await expect(page.locator('#experimental-upgrade-d1')).toHaveValue('queen.purple@2');
-  await expect(page.locator('#experimental-upgrade-d8')).toHaveValue('queen.purple@3');
+  for (const name of ['e3', 'e6']) await expect(square(page, name)).toHaveAttribute('data-design-id', 'queen.purple@4');
+  await expect(page.locator('#experimental-upgrade-d1')).toHaveValue('queen.purple@4');
+  await expect(page.locator('#experimental-upgrade-d8')).toHaveValue('queen.purple@4');
   await page.reload();
   await importPgn(page, pgn);
   await expect(page.locator('#game-mode')).toHaveValue(workshop.variant);
-  await expect(square(page, 'f4')).toHaveAttribute('data-design-id', 'queen.purple@2');
-  await expect(square(page, 'e6')).toHaveAttribute('data-design-id', 'queen.purple@3');
+  for (const name of ['e3', 'e6']) await expect(square(page, name)).toHaveAttribute('data-design-id', 'queen.purple@4');
   await page.getByRole('button', { name: '↶ Undo move', exact: true }).click();
-  await expect(square(page, 'd7')).toHaveAttribute('data-design-id', 'queen.purple@3');
-  await expect(square(page, 'e6')).not.toHaveAttribute('data-design-id', 'queen.purple@3');
+  await expect(square(page, 'd7')).toHaveAttribute('data-design-id', 'queen.purple@4');
+  await expect(square(page, 'e6')).not.toHaveAttribute('data-design-id', 'queen.purple@4');
 });
 
 test('loading an original-library save restores that library and its distinct choices', async ({ page }) => {

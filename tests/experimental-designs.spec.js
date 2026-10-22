@@ -64,7 +64,7 @@ test('named alternatives share per-side costs, preserve the board until New game
   await experimental(page);
   await expect(page.locator('#experimental-budget')).toHaveAttribute('max', '6');
   await choose(page, 'rook', 'a1', 'rook.purple@2');
-  await choose(page, 'rook', 'a8', 'rook.purple@1');
+  await choose(page, 'rook', 'a8', 'rook.purple@2');
   await choose(page, 'pawn', 'a2', 'pawn.purple@5');
   await expect(page.locator('#experimental-description-a2')).toContainText('backward');
   await choose(page, 'pawn', 'b2', 'pawn.blue@1');
@@ -78,7 +78,7 @@ test('named alternatives share per-side costs, preserve the board until New game
   await start(page);
   await hasDesign(page, 'a1', 'rook.purple@2');
   await hasDesign(page, 'a2', 'pawn.purple@5');
-  await hasDesign(page, 'a8', 'rook.purple@1');
+  await hasDesign(page, 'a8', 'rook.purple@2');
   await expect(square(page, 'a1').locator('.piece')).toHaveText('♖');
   await expect(square(page, 'a8').locator('.piece')).toHaveText('♜');
   await expect(square(page, 'a2').locator('.piece')).toHaveText('♙');
@@ -93,7 +93,7 @@ test('save, load and portable PGN restore design choices, mapped move labels and
   await experimental(page);
   await choose(page, 'rook', 'a1', 'rook.purple@2');
   await choose(page, 'pawn', 'a2', 'pawn.purple@5');
-  await choose(page, 'rook', 'a8', 'rook.purple@1');
+  await choose(page, 'rook', 'a8', 'rook.purple@2');
   await start(page);
   await move(page, 'a2', 'a4');
   await move(page, 'a7', 'a6');
@@ -113,7 +113,7 @@ test('save, load and portable PGN restore design choices, mapped move labels and
   await hasDesign(page, 'a4', 'pawn.purple@5');
   await expect(page.locator('#experimental-upgrade-a1')).toHaveValue('rook.purple@2');
   await expect(page.locator('#experimental-upgrade-a2')).toHaveValue('pawn.purple@5');
-  await expect(page.locator('#experimental-upgrade-a8')).toHaveValue('rook.purple@1');
+  await expect(page.locator('#experimental-upgrade-a8')).toHaveValue('rook.purple@2');
   await expect(page.locator('#experimental-budget')).toHaveValue('6');
   await page.reload();
   await importPgn(page, pgn);

@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "name": "Version 14 revised purchases versus Amazon",
+  "referenceId": "queen.purple@1",
+  "config": "amazon-revision.json",
+  "maxGames": 540,
+  "openingPairs": 30,
+  "practicalScoreBand": [
+    0.4,
+    0.6
+  ],
+  "candidates": [
+    {
+      "key": "ranging-pawn",
+      "id": "pawn.purple@7",
+      "label": "Ranging pawn (capture two)",
+      "square": "d2"
+    },
+    {
+      "key": "courier-pawn",
+      "id": "pawn.purple@8",
+      "label": "Courier pawn (long captures)",
+      "square": "d2"
+    },
+    {
+      "key": "rank-pawn",
+      "id": "pawn.purple@9",
+      "label": "Rank pawn (wide jumps)",
+      "square": "d2"
+    },
+    {
+      "key": "vertical-bishop",
+      "id": "bishop.purple@3",
+      "label": "Vertical bishop (quiet knight)",
+      "square": "c1"
+    },
+    {
+      "key": "sideways-bishop",
+      "id": "bishop.purple@4",
+      "label": "Sideways bishop (rank captures)",
+      "square": "c1"
+    },
+    {
+      "key": "blink-rook",
+      "id": "rook.purple@4",
+      "label": "Blink rook (diagonal capture)",
+      "square": "a1"
+    },
+    {
+      "key": "queen-companion",
+      "id": "queen.purple@4",
+      "label": "Queen and diagonal companion",
+      "square": "d1"
+    },
+    {
+      "key": "amazon",
+      "id": "queen.purple@1",
+      "label": "Amazon",
+      "square": "d1"
+    }
+  ],
+  "controls": [
+    {
+      "id": "standard-control",
+      "label": "Ordinary armies"
+    },
+    {
+      "id": "amazon-control",
+      "label": "Amazon armies"
+    }
+  ]
+}

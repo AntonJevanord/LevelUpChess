@@ -28,7 +28,7 @@ test.after(() => fs.rmSync(directory, { recursive: true, force: true }));
 
 const settings = { opponent: 'local', humanSide: 'w', difficulty: 'medium', flipped: false, upgradeBudget: 6 };
 const choices = () => Object.fromEntries(PIECE_SLOTS.map(slot => [slot.square,
-  ['a1', 'a8'].includes(slot.square) ? 'rook.purple@2' : ['d2', 'd7'].includes(slot.square) ? 'pawn.purple@5' : '',
+  ['a1', 'a8'].includes(slot.square) ? 'rook.purple@2' : ['d2', 'd7'].includes(slot.square) ? 'pawn.purple@8' : '',
 ]));
 function game(t, fen = designSetupFromChoices(choices(), 6).fen) {
   const value = new api.VariantGame(fen, api.EXPERIMENTAL_VARIANT);
@@ -65,7 +65,7 @@ test('experimental saves retain exact rules, both armies, move history, and paus
   assert.deepEqual(restored.clock.remaining, saved.clock.remaining);
   restored.game.undo();
   assert.equal(restored.game.turn(), 'b');
-  assert.equal(restored.game.get('d7').type, PLAYABLE_PROFILE.registry.allocations.find(a => a.id === 'pawn.purple@5').letter);
+  assert.equal(restored.game.get('d7').type, PLAYABLE_PROFILE.registry.allocations.find(a => a.id === 'pawn.purple@8').letter);
 });
 
 test('mismatched definitions, allocation, config, format, and setup are rejected before replacement', async t => {
@@ -78,7 +78,7 @@ test('mismatched definitions, allocation, config, format, and setup are rejected
     value => { value.profile.registry.allocations[0].letter = 'k'; },
     value => { value.profile.config += '\nking = k:Q\n'; },
     value => { value.version = 1; },
-    value => { value.setup.choices.d2 = 'pawn.purple@1'; },
+    value => { value.setup.choices.d2 = 'pawn.purple@7'; },
     value => { value.settings.upgradeBudget = 3; value.setup = null; },
     value => { delete value.setup; },
   ];
@@ -106,7 +106,7 @@ test('experimental PGN is self-describing and a changed snapshot cannot relabel 
 });
 
 test('custom study starts save without inventing a standard-army setup and keep standard promotions', async t => {
-  const pawn = PLAYABLE_PROFILE.registry.allocations.find(a => a.id === 'pawn.purple@5').letter.toUpperCase();
+  const pawn = PLAYABLE_PROFILE.registry.allocations.find(a => a.id === 'pawn.purple@8').letter.toUpperCase();
   const original = game(t, `7k/1${pawn}6/8/8/8/8/8/K7 w - - 0 1`);
   original.move({ from: 'b7', to: 'b8', promotion: 'q' });
   const saved = api.makeSave(original, settings);

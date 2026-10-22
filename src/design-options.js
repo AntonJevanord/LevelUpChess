@@ -51,6 +51,13 @@ const metadata = {
   'rook.purple@3': ['Blink rook', 'Normal rook moves and captures. Without capturing, also jump to any empty square within three squares horizontally and vertically, crossing intervening pieces.'],
   'queen.purple@2': ['Twin short queens', 'Replace your queen with two short queens for one three-point purchase. Each moves or captures up to two clear squares in any queen direction. The second starts on your second rank, pushing your own pawn stack forward within your half.'],
   'queen.purple@3': ['Queen and companion', 'Keep your ordinary queen and add a capturable companion on your second rank, pushing your own pawn stack forward within your half. The companion moves or captures one square in any direction. It is not royal; only the ordinary king must avoid check.'],
+  'pawn.purple@7': ['Ranging pawn', 'Move along clear rook lines in any direction without capturing. Capture one or two clear squares diagonally in any direction.'],
+  'pawn.purple@8': ['Courier pawn', 'Move any clear distance forward or sideways without capturing. Capture any clear distance diagonally forward. No backward moves.'],
+  'pawn.purple@9': ['Rank pawn', 'Move or capture along clear horizontal lines. Move one square forward, capture one square diagonally forward, or jump two files sideways and one rank forward, including captures. The initial two-step needs a clear path.'],
+  'bishop.purple@3': ['Vertical bishop', 'Normal bishop moves plus full vertical rook moves and captures. Also jump like a knight to empty squares, crossing intervening pieces.'],
+  'bishop.purple@4': ['Sideways bishop', 'Normal bishop moves plus horizontal moves and captures of one or two clear squares. Also jump two files sideways and one rank forward or backward, including captures.'],
+  'rook.purple@4': ['Blink rook', 'Normal rook moves and captures, plus one-square diagonal captures. Without capturing, also jump to any empty square within three squares horizontally and vertically, crossing intervening pieces.'],
+  'queen.purple@4': ['Queen and companion', 'Keep your ordinary queen and add a capturable companion on your second rank, pushing your own pawn stack forward within your half. The companion moves one square in any direction but captures only diagonally. It is not royal; only the ordinary king must avoid check.'],
 };
 
 const definitions = [...new Map(PLAYABLE_PROFILES.flatMap(profile => profile.registry.definitions).map(definition => [definition.id, definition])).values()];
@@ -64,14 +71,14 @@ const DESIGN_OPTIONS = freeze(definitions.map(definition => {
     level: definition.level,
     name,
     description: movement + suffix,
-    status: definition.id === 'pawn.purple@2' ? 'parked' : definition.revision > 1 ? 'experimental' : 'reference',
+    status: definition.id === 'rook.purple@1' ? 'retired' : definition.id === 'pawn.purple@2' ? 'parked' : definition.revision > 1 ? 'experimental' : 'reference',
   };
 }));
 const optionsById = Object.fromEntries(DESIGN_OPTIONS.map(option => [option.id, option]));
 function getDesignOptions(variant = EXPERIMENTAL_VARIANT) {
   const profile = getPlayableProfile(variant);
   if (!profile) return [];
-  return profile.registry.definitions.map(definition => optionsById[definition.id]);
+  return profile.registry.definitions.map(definition => optionsById[definition.id]).filter(option => option.status !== 'retired');
 }
 
 /** Resolve glyphs and labels through the actual profile, never legacy letters. */

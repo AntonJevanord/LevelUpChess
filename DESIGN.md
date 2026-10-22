@@ -45,7 +45,7 @@ Each new purchase costs **three upgrade points**, targeting about **four total m
 | Returning, `pawn.purple@5` | 3–5 | Forward queen lines up to two squares, including captures; backward queen lines up to two squares are quiet-only. No sideways movement. |
 | Twins, `pawn.purple@6` | 3–5 combined | Two units, roughly 1½–2½ each, for one purchase. Each has quiet one- or two-square forward jumps and ordinary diagonal forward captures. No initial three-square jump. |
 
-Keeping full bishop captures on the first idea would retain much of the power that survived the earlier quiet-range nerf. Courier therefore limits captures in both direction and distance while preserving its fast promotion route. Rank's proposed forward-wide knight attacks and Returning's proposed sideways moves are held back until playtesting shows a need. Twin forward jumps let the rear pawn escape a stack without giving either unit long-range capture power.
+Keeping full bishop captures on the first idea would retain much of the power that survived the earlier quiet-range nerf. The initial Courier therefore limited captures in direction and distance while preserving its fast promotion route. Version 14 extends its forward capture range and adds the previously deferred wide forward jumps to Rank. Returning's sideways moves remain deferred. Twin forward jumps let the rear pawn escape a stack without giving either unit long-range capture power.
 
 Movement value is only part of each purchase. Twins start on relative ranks 2/3; adding the revised guard knight advances them to ranks 3/4. Those advanced starts add promotion tempo, congestion, and coordination effects. Record deployment with any future comparison; do not treat the ranges above as measured values for every starting position.
 
@@ -53,11 +53,11 @@ The revised guard is `knight.purple@2`: keep the ordinary knight on rank 1, inse
 
 All four pawn candidates use standard Q/R/B/N promotion. Quiet Returning moves, and quiet sideways Courier/Rank moves, count toward the fifty-move limit. Returning visits an empty en-passant target quietly; the other candidates can capture en passant along their capture paths. See [exact special rules](variants/README.md#experimental-pawn-special-rules).
 
-Playtest promotion pressure, rank control, retreat loops, readability, and Twin/guard congestion first. Retire uninteresting ideas before declaring another capped comparison against the fixed Amazon and selected equal-cost purchases. No balance campaign has been run for these four candidates.
+Playtest promotion pressure, rank control, retreat loops, readability, and Twin/guard congestion first. These initial priors predate the [version-12 screening results](experiments/balance/results/level3-screen-001.md). Version 14 revises the outliers and retains Returning unchanged.
 
 ## Version 11 mobility and pairs
 
-Version 11 introduced the **Mobility and pairs** library. The table reflects current version-12 prices, including the promoted Camel knight. Prices remain provisional playtest choices. The broad material ranges below describe whole pieces or packages, not measured values, confidence intervals, or upgrade points. The target is ordinary material plus roughly one point per level, with the unchanged Amazon as the level-3 reference.
+Version 11 introduced the **Mobility and pairs** library. The table records version-12 prototype prices, including the promoted Camel knight. Prices remain provisional playtest choices. The broad material ranges below describe whole pieces or packages, not measured values, confidence intervals, or upgrade points. The target is ordinary material plus roughly one point per level, with the unchanged Amazon as the level-3 reference.
 
 | Purchase | Cost | Rough whole-piece/package value | Design question |
 | --- | --- | --- | --- |
@@ -70,7 +70,7 @@ Version 11 introduced the **Mobility and pairs** library. The table reflects cur
 
 These ranges are judgments for choosing prototypes. The leaper formula gives about 707 centipawns for 16 unrestricted destinations, but board edges reduce camel mobility substantially. It cannot reliably price quiet-only relocation, sliders, paired units, or their starting deployment. The Camel knight's level-3 target is about six total material points; its actual benefit remains unmeasured.
 
-Blink uses supported quiet leapers (`RmFmDmNmAmHmCmZmG`), crossing blockers within its three-square radius. Ordinary clear rook lines still extend farther. Its quiet jumps add no attacks, so they do not forbid an opposing king's movement or castling through those squares. Extra diagonal captures are held back until playtesting shows a need.
+Blink uses supported quiet leapers (`RmFmDmNmAmHmCmZmG`), crossing blockers within its three-square radius. Ordinary clear rook lines still extend farther. Its quiet jumps add no attacks, so they do not forbid an opposing king's movement or castling through those squares. Version 14 adds adjacent diagonal captures after the screen identified this revision as weak against the Amazon.
 
 Both queen purchases insert an extra unit on d2 for White or d7 for Black, advancing their own pawn stack within their half. Twin short queens also replace the original queen on d1/d8. Queen and companion keeps that original queen ordinary; the companion may move into attack and be captured. Only the ordinary king is royal. This deliberately tests whether a stronger purchase needs every individual unit to be stronger than its predecessor.
 
@@ -78,11 +78,35 @@ Playtest readability, useful moves, frustrating escapes, unit coordination, and 
 
 ## Version 12 level-3 comparison
 
-Promote the unchanged `NC` Camel knight to level 3 as `knight.purple@3`. Its earlier level-2 ID, `knight.orange@2`, stays immutable for archived games. Do not add diagonal steps before seeing the comparison results. If it proves weak, quiet diagonal steps (`NCmF`) would be a smaller first buff than full diagonal moves and captures (`NCF`); either would require a new revision and a later declared test.
+Promote the unchanged `NC` Camel knight to level 3 as `knight.purple@3`. Its earlier level-2 ID, `knight.orange@2`, stays immutable for archived games. The screen supports keeping this design unchanged; no diagonal steps are added. If it proves weak, quiet diagonal steps (`NCmF`) would be a smaller first buff than full diagonal moves and captures (`NCF`); either would require a new revision and a later declared test.
 
-The [level-3 campaign](experiments/balance/level3-plan.md) compares 14 nonroyal purchases against one another, with the Amazon kept fixed. It schedules 1,860 games and reserves at most 140 for one selected holdout stage. Every army starts with the same underlying standard material and receives one three-point purchase. Extra units and pushed pawns remain part of that purchase's benefit. Results describe relative upgrade strength and interactions, rather than assigning each whole piece a material value.
+The [level-3 campaign](experiments/balance/level3-plan.md) declared a 14-purchase round robin, with the Amazon fixed, 1,860 main-stage games, and at most 140 reserved holdout games. The user closed it early at 1,508 finalized scheduled games; the holdout stage remains unused. See the [summary audit](experiments/balance/results/level3-screen-001.md). Every army starts with the same underlying standard material and receives one three-point purchase. Extra units and pushed pawns remain part of that purchase's benefit. Results describe relative upgrade strength and interactions, rather than assigning each whole piece a material value.
 
 Two simple later alternatives are an **Empress rook** (`RN`, full rook and knight moves, roughly eight whole-piece material points) and a **Crowned bishop** (`BW`, bishop moves plus one-square orthogonal moves/captures, roughly five to six). These are broad priors for possible playtests, not measured values. They do not join this frozen campaign. Prefer one clear design change after the results over testing every possible compound.
+
+## Version 14: Amazon reference revisions
+
+The fuller uploaded summary contains 1,507 completed games and one unscored truncation; two historical attempts failed. The earlier-looking CSV/report describe fewer paired games. Use the [audited summary figures](experiments/balance/results/level3-screen-001.md) for this design pass. The campaign is closed without final rankings or its reserved confirmation stage. The user reports PC blackouts; aggregate timeout records alone cannot establish their cause.
+
+Retire Capture-box rook from the active workshop: its 94.4% score against the Amazon and 87.9% available-opponent mean support the user's concern about its capture coverage. Keep the immutable definition and archived profiles. Park Twin short queens at level 3 after a 19.4% reference score; a lower-price experiment is a later choice. Keep the Camel knight, Knight and guard, Knight-capture rook, and Returning pawn unchanged, with no repeat subject tests. Returning's 64.3% reference score and weaker other matchups favor waiting over a blanket buff.
+
+All seven new purchases cost three points. They are prototypes aiming at **40%–60% point score against the unchanged Amazon**, not certified balanced pieces:
+
+| Purchase | New ID / Betza | Design change |
+| --- | --- | --- |
+| Ranging pawn | `pawn.purple@7` · `mRceB2` | Nerf captures to two clear diagonal squares. Preserve unrestricted quiet rook movement in every direction. |
+| Courier pawn | `pawn.purple@8` · `mfRmsRcfB` | Extend forward diagonal captures to any clear distance. Preserve quiet forward/sideways rook movement and no retreats. |
+| Rank pawn | `pawn.purple@9` · `ifmnDfmWfceFsRfsN` | Add moves/captures two files sideways and one rank forward, jumping over blockers. It now attacks four squares on the next rank. Preserve horizontal rook moves/captures and ordinary pawn movement. A wide jump onto an empty en-passant target is quiet and leaves the bypassed pawn. |
+| Vertical bishop | `bishop.purple@3` · `BfbRmN` | Add quiet knight jumps to bishop and full vertical rook movement. This improves development without adding knight attacks. |
+| Sideways bishop | `bishop.purple@4` · `BsR2sN` | Let its existing two-square horizontal slides capture. Preserve bishop movement and wide knight jumps. |
+| Blink rook | `rook.purple@4` · `RFmDmNmAmHmCmZmG` | Add one-square diagonal captures to the existing quiet-jump rook. Longer non-rook captures remain unavailable. |
+| Queen and companion | `queen.purple@4` · `FmW`, inserted | Keep the ordinary queen. The companion moves quietly like a king but captures only diagonally, reducing attacks while retaining its mobility. |
+
+The bishop buffs address poor direct Amazon scores despite more competitive results against other purchases. The Courier/Rank changes preserve their distinct promotion-speed and rank-support roles. The Ranging and companion changes reduce the stronger packages. Actual strength, readability, enjoyment, and counterplay still need testing; finite engine play may value unfamiliar pieces imperfectly.
+
+The [Amazon revision plan](experiments/balance/amazon-revision-plan.md) fixes one **540-game** batch: seven new subjects against the Amazon plus ordinary and Amazon self-play controls, each over 30 color-swapped opening pairs. Search remains 100,000 nodes, Skill 20, one engine thread, 32 MB hash, and 400 plies. Old subject revisions are not rerun. The Amazon remains unchanged as opponent and control, and there is no automatic extension or redesign loop.
+
+The target uses wins plus half the draws. It is a practical decision band, not a confidence interval or a material conversion. Related prefixes limit generalization, and a reference-only test cannot expose every rock-paper-scissors matchup. Finish the fixed batch, inspect completion and opening sensitivity, combine human playtesting, then make one keep/revise/park decision per candidate.
 
 ## Kings: preserve a clear mating objective
 
@@ -119,7 +143,7 @@ These are an idea pool, not implementation commitments or a testing queue. Retai
 | Purple bishop | Limit added vertical slides to one or two squares, or try horizontal slides. Current vertical slides have unlimited range. |
 | Blue rook | Change home-region activation or allow quiet two-square jumps elsewhere. Keep ordinary rook movement and castling. |
 | Orange rook | Limit added screen captures by direction or range. Keep ordinary captures so open positions remain usable. |
-| Purple rook | Playtest the original capture box and retained capture-only-knight revision for readability and counterplay. |
+| Purple rook | Capture-box is retired from the active workshop. Compare the revised Blink with the fixed Amazon; retain Knight-capture unchanged. |
 | Blue queen | Restrict regional powers to one jump family or the back rank. |
 | Orange queen | Try quiet camel jumps, alone or alongside quiet knight jumps. |
 | Purple queen | Keep the Amazon fixed as this batch's reference. Capture-only knight additions remain a later alternative. |
@@ -128,7 +152,7 @@ Pawn alternatives must preserve explicit promotion and en passant rules. Rook al
 
 ## Playtesting and implementation order
 
-Version 12 uses two frozen 20-design libraries selected from 29 immutable catalog entries. The Workshop replaces the earlier level-2 Camel selection with its level-3 revision. **Mobility and pairs** offers the new alternatives alongside shared references; **First prototypes** preserves the version-10 selection and exact profile. The parked pawn and earlier guard placement remain available in historical balance profiles. The browser and native bridge share the experiment compiler. Letters may differ between libraries but remain fixed throughout a game, and saves/PGNs select their matching bundled profile. Automatic grouping and independently importing retired definitions remain later work.
+Version 14's **Rebalance workshop** exposes the seven new revisions alongside retained designs within the 20-type limit. **First prototypes (archive)** keeps its exact historical profile, including retired designs for reproducing earlier games. Historical numeric modes also preserve their rules. New setup choices in the current workshop omit Capture-box rook and Twin short queens. The browser and native bridge share the experiment compiler; temporary letters remain fixed within a game and saves/PGNs select their matching bundled profile.
 
 Do not wait for tightly balanced purple pieces before human playtesting. Gather feedback on readability, useful decisions, enjoyment, frustrating situations, and available counterplay. Discard poor ideas before precise tuning. Then screen surviving designs against the fixed reference and selected equal-cost purchases, with a declared game cap and keep/revise/park decision. New releases may require fresh browser games; backward save compatibility is not required.
 

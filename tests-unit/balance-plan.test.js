@@ -176,9 +176,9 @@ test('schedule shuffles pair order and first color reproducibly from the uint32 
 test('checked-in experiments validate and budget-three cases have equal point costs', () => {
   const directory = path.join(__dirname, '../experiments/balance');
   const names = fs.readdirSync(directory).filter(name => name.endsWith('.json'));
-  assert.deepEqual(names.sort(), ['blue-rook-confirmation.json', 'budget-3-confirmation.json', 'budget-3.json', 'designs-smoke.json', 'level3-holdout.json', 'level3-roster.json', 'level3-round-robin.json', 'material-anchors.json', 'outlier-effects.json', 'purple-material-handicaps.json', 'revision-1-confirmation.json', 'revision-1-screen.json', 'skill-sweep.json', 'smoke.json', 'upgrade-effects.json']);
-  // The roster describes a bounded campaign; it is not itself a run config.
-  for (const name of names.filter(name => name !== 'level3-roster.json')) {
+  assert.deepEqual(names.sort(), ['amazon-revision-roster.json', 'amazon-revision.json', 'blue-rook-confirmation.json', 'budget-3-confirmation.json', 'budget-3.json', 'designs-smoke.json', 'level3-holdout.json', 'level3-roster.json', 'level3-round-robin.json', 'material-anchors.json', 'outlier-effects.json', 'purple-material-handicaps.json', 'revision-1-confirmation.json', 'revision-1-screen.json', 'skill-sweep.json', 'smoke.json', 'upgrade-effects.json']);
+  // Rosters describe bounded campaigns; they are not run configurations.
+  for (const name of names.filter(name => !name.endsWith('-roster.json'))) {
     const config = normalizeConfig(JSON.parse(fs.readFileSync(path.join(directory, name), 'utf8')));
     const schedule = makeSchedule(config);
     assert.equal(schedule.length, 2 * config.openings.length * config.comparisons.length * config.repetitions);

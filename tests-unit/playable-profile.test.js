@@ -41,14 +41,15 @@ test('the embedded profile and native INI reproduce the trusted current catalog'
   assert.deepEqual(PLAYABLE_PROFILE, compiled);
   assert.equal(readFileSync(require.resolve('../variants/levelup-playable.ini'), 'utf8'), compiled.config);
   assert.equal(compiled.registry.definitions.length, 20);
-  assert.equal(new Set(DESIGN_OPTIONS.map(option => option.id)).size, 26);
+  assert.equal(new Set(DESIGN_OPTIONS.map(option => option.id)).size, 29);
   assert.equal(getDesignOptions().length, 20);
   assert.deepEqual(PLAYABLE_PROFILES, getPlayableProfiles());
   for (const profile of PLAYABLE_PROFILES) {
     const files = getPlayableArtifacts(profile.variant);
     assert.deepEqual(JSON.parse(readFileSync(require.resolve('../' + files.json), 'utf8')), profile);
     assert.equal(readFileSync(require.resolve('../' + files.ini), 'utf8'), profile.config);
-    assert.equal(getDesignOptions(profile.variant).length, 20);
+    assert.equal(getDesignOptions(profile.variant).length, profile === PLAYABLE_PROFILE ? 20 : 19);
+    assert.ok(getDesignOptions(profile.variant).every(option => option.id !== 'rook.purple@1'), 'retired capture-box rook is absent from both setup pickers');
     assert.equal(decodeProfileSnapshot(encodeProfileSnapshot(getProfileSnapshot(profile.variant))).hash, profile.hash);
   }
   assert.equal(PLAYABLE_PROFILES[1].hash, '3f4a34e0852be20501f6e9091332aa92f90a81ad1705f384627e499f5e3fd90a');
@@ -57,14 +58,17 @@ test('the embedded profile and native INI reproduce the trusted current catalog'
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'knight.purple@1'), undefined);
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'knight.orange@2'), undefined);
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'knight.purple@3').level, 3);
-  for (const id of ['pawn.purple@3', 'pawn.purple@4', 'pawn.purple@5', 'pawn.purple@6', 'knight.purple@2']) {
+  for (const id of ['pawn.purple@3', 'pawn.purple@4', 'pawn.purple@5', 'pawn.purple@6', 'knight.purple@2',
+    'pawn.purple@7', 'pawn.purple@8', 'pawn.purple@9', 'bishop.purple@3', 'bishop.purple@4', 'rook.purple@4', 'queen.purple@4']) {
     assert.equal(DESIGN_OPTIONS.find(option => option.id === id).status, 'experimental');
   }
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'rook.purple@2').status, 'experimental');
+  assert.equal(DESIGN_OPTIONS.find(option => option.id === 'rook.purple@1').status, 'retired');
+  assert.ok(!getDesignOptions().some(option => option.id === 'queen.purple@2'), 'short queen pair is parked outside the current library');
 });
 
 test('full starting choices resolve IDs for both armies, budgets, and extra units', () => {
-  const choices = { ...DEFAULT_DESIGN_CHOICES, a1: 'rook.purple@2', b1: 'knight.purple@2', a7: 'pawn.purple@5', h8: 'rook.purple@3' };
+  const choices = { ...DEFAULT_DESIGN_CHOICES, a1: 'rook.purple@2', b1: 'knight.purple@2', a7: 'pawn.purple@5', h8: 'rook.purple@4' };
   const setup = designSetupFromChoices(choices, 6);
   assert.deepEqual(setup.costs, { w: 6, b: 6 });
   assert.deepEqual(setup.choices, choices);
@@ -152,7 +156,7 @@ test('multi-target en passant and queen landing markers reload under assigned ro
 });
 
 test('PGN snapshots preserve both revisions, reject tampering, and leave failed imports unchanged', t => {
-  const choices = { ...DEFAULT_DESIGN_CHOICES, a1: 'rook.purple@2', h1: 'rook.purple@3', a7: 'pawn.purple@5' };
+  const choices = { ...DEFAULT_DESIGN_CHOICES, a1: 'rook.purple@2', h1: 'rook.purple@4', a7: 'pawn.purple@5' };
   const original = game(t, designSetupFromChoices(choices, 6).fen);
   original.move('e4'); original.move('e5');
   const pgn = original.pgn();

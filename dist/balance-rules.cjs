@@ -421,7 +421,15 @@ var require_design_catalog = __commonJS({
       definition("queen", "purple", 3, "Q2", "u", 8, 2, "split", { d1: "d2" }),
       definition("queen", "purple", 3, "K", "u", 8, 3, "insert", { d1: "d2" }),
       // Repricing is also a new immutable revision; keep NC movement unchanged.
-      definition("knight", "purple", 3, "NC", "g", 3, 3)
+      definition("knight", "purple", 3, "NC", "g", 3, 3),
+      // Version 14: new revisions after the stopped level-3 comparison.
+      definition("pawn", "purple", 3, "mRceB2", "d", 11, 7),
+      definition("pawn", "purple", 3, "mfRmsRcfB", "d", 11, 8),
+      definition("pawn", "purple", 3, "ifmnDfmWfceFsRfsN", "d", 11, 9),
+      definition("bishop", "purple", 3, "BfbRmN", "j", 6, 3),
+      definition("bishop", "purple", 3, "BsR2sN", "j", 6, 4),
+      definition("rook", "purple", 3, "RFmDmNmAmHmCmZmG", "o", 12, 4),
+      definition("queen", "purple", 3, "FmW", "u", 8, 4, "insert", { d1: "d2" })
     ];
     var DESIGNS = Object.freeze(Object.fromEntries(definitions.map((design) => [design.id, design])));
     var LEGACY_DESIGN_IDS = Object.freeze(Object.fromEntries(definitions.filter((design) => design.revision === 1).map((design) => [design.legacyType, design.id])));

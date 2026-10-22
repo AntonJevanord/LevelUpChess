@@ -6,49 +6,38 @@ These tools collect results; they do not assign measured values to pieces or cha
 
 The [first balance revision plan](experiments/balance/revision-plan.md) closed at 160 of at most 200 games with explicit candidate decisions. Existing experiment files are options, not a queue that must be exhausted before development continues.
 
-## Version 12: all level-3 purchases
+## Version 14: new revisions versus the Amazon
 
-Use the [declared level-3 plan](experiments/balance/level3-plan.md) for the current batch. Fourteen selected nonroyal purchases play every other purchase over ten color-swapped opening pairs: **91 × 20 = 1,820 games**. Ordinary-versus-ordinary and Amazon-versus-Amazon controls add **40**, for **1,860 main-stage games**. One selected holdout stage may use at most **140 more**; the campaign cap is **2,000 scheduled games**. Royal kings remain separate because schema-2 profiles do not support their upgrades, and asymmetric legacy king evaluation has known limitations.
-
-```bat
-npm.cmd run balance:level3 -- --check
-npm.cmd run balance:level3 -- --stage screen --out balance-results/level3-round-robin
-```
-
-`--check` validates both opening cohorts, both army colors, and native movement without playing games or creating a results run. The campaign keeps 100,000 nodes per move, Skill 20, one thread, 32 MB hash, and the 400-ply limit. After 10–20 games, press **p** to stop after the current pair, inspect actual recorded timing, then resume if the runtime is acceptable:
+Use the [Amazon revision plan](experiments/balance/amazon-revision-plan.md) and its [frozen roster](experiments/balance/amazon-revision-roster.json). Seven new three-point purchases face the unchanged `queen.purple@1` Amazon on otherwise ordinary armies: **7 × 30 opening pairs × 2 colors = 420 games**. Ordinary-versus-ordinary and Amazon-versus-Amazon controls add **120**, for **540 scheduled games**. There is no automatic holdout or extension.
 
 ```bat
-npm.cmd run balance:level3 -- --report balance-results/level3-round-robin
-npm.cmd run balance:level3 -- --resume balance-results/level3-round-robin
+npm.cmd run balance:amazon -- --check
+npm.cmd run balance:amazon -- --out balance-results/amazon-revision --jobs 2
+npm.cmd run balance:amazon -- --report balance-results/amazon-revision
+npm.cmd run balance:amazon -- --resume balance-results/amazon-revision
 ```
 
-The report writes `level3-report.md`, `level3-report.json`, `level3-standings.csv`, and `level3-matrix.csv`. It separates controls, partial pairs, errors, and truncations from scored matchups. Equal-opponent standings require complete opponent coverage; early partial scores are provisional. Timing estimates use this run's completed-game timestamps, not an assumed duration from the older audited files. Fixed nodes preserve search effort, but new movement and longer games can still change wall-clock time.
+`--check` validates every selected army/color/opening and native movement without starting games. Each side uses Skill 20, 100,000 nodes per move, one engine thread, 32 MB hash, and a 400-ply limit. Two independent game workers are a conservative starting point; stop with **q / Ctrl+C**, finish each active game with **g**, or each active pair with **p**. Resume the same directory with its recorded worker count, engine, rules, and settings. Use a new directory for this batch; do not resume the closed version-12 experiment on a changed rules build.
 
-Do not use `--limit-pairs` as a pilot that can grow: the generic runner records the shortened schedule permanently. Stop and resume the full campaign instead. Preserve this checkout and engine while it runs; changing rules or search settings requires a new experiment identity.
+Use **40%–60% point score against the Amazon** as the practical target: wins plus half the draws, divided by scored games. It is a design band, not a statistical equivalence claim or an intrinsic material value. Report complete-pair counts, opening sensitivity, truncations, and human feedback alongside the score. The 30 short prefixes include related development patterns; they are not 30 independently sampled chess positions. A close result remains a prototype decision, and matching the Amazon does not guarantee good matchups against every other piece.
 
-After completing the main stage, select confirmation comparisons once. The selection must include `camel-knight-v-amazon` and `standard-control`, with at most five additional declared matchups:
+Only new behavior revisions are subjects. The unchanged knights, Knight-capture rook, and Returning pawn are retained without another comparison. Capture-box rook is retired from the active workshop; Twin short queens are parked at level 3. The Ranging pawn and companion package receive nerfs, while Courier, Rank, both bishops, and Blink receive buffs. See [the exact design changes](DESIGN.md#version-14-amazon-reference-revisions).
 
-```bat
-npm.cmd run balance:level3 -- --stage confirm --from balance-results/level3-round-robin --comparisons camel-knight-v-amazon,standard-control --out balance-results/level3-confirmation
-```
+### Closed version-12 screen
 
-Add selected IDs to that same comma-separated argument before starting; do not run separate follow-ups for each new idea. The wrapper limits confirmation to seven comparisons, preserves the full 14-design allocation, and records one fixed confirmation reservation. The plan explains selection and stopping decisions. No ability or evaluation tuning happens during the batch, and no third stage is queued.
+The user ended the 14-purchase round robin early and authorized a redesign. The newer summary contains **1,507 completed games, one unscored truncation, and two failed attempts**, with **1,508/1,860 scheduled games finalized** and **753 complete color pairs**. The CSV/Markdown standings describe an earlier snapshot. No final rankings are assigned, and the planned confirmation stage is unused. See [the audit and decisions](experiments/balance/results/level3-screen-001.md) for direct Amazon scores, file hashes, and evidence limits.
+
+The user reports two PC blackouts; the aggregate summary records timeouts but cannot verify their cause. The failed attempts receive no score. Earlier definitions, configurations, and the [original plan](experiments/balance/level3-plan.md) remain archived. The old campaign does not need completion before testing the new revisions.
 
 ### What the controls tell us
 
-A control gives both engines identical armies, strength, and search settings under the same rules profile. Ordinary controls check the baseline pipeline; Amazon self-play also exercises a custom upgrade. Inspect termination reasons, errors, truncations, draw rates, physical White/Black results, and runtime.
+A control gives both engines identical armies, strength, and search settings. Ordinary controls exercise the baseline pipeline; Amazon self-play also exercises a custom upgrade. Inspect termination reasons, errors, truncations, draws, physical White/Black results, and runtime.
 
-With deterministic identical armies, both games of a color-swapped pair can replay the same moves. If White wins twice, Army A wins once as White and loses once as Black: **A still scores 50%**. That score is an expected symmetry check, not evidence that White has no advantage, that movement or evaluation is correct, or that upgrades are balanced. Pairing and independent rule checks provide different safeguards.
+With deterministic identical armies, both games of a color-swapped pair can replay the same moves. If White wins twice, Army A wins once as White and loses once as Black: **A still scores 50%**. That is an expected symmetry check. It does not establish balanced upgrades, equal White/Black chances, correct movement, or good engine evaluation.
 
-The historical three-point Twin-pawn entry is omitted because Twins now target level 2; it remains available in First prototypes for reference.
+## Reusable preparation and parallel tools
 
-The round robin compares the **added benefit of a three-point purchase** on otherwise ordinary armies. A stronger score does not make a whole pawn worth more than a whole queen. The matrix can expose conflicting matchups; aggregate standings are descriptive for this opponent set and protocol, not intrinsic piece Elo or measured material values.
-
-## Version 13: future-run tools
-
-Keep the active version-12 serial campaign on its original checkout until it finishes. Version 13 changes preparation, scheduling, output, and reports; it preserves that campaign's rules, engine, roster, search settings, and core runner identity. It does not convert an existing serial run into a parallel run.
-
-For a new schema-2 experiment, `balance:prepare` generates comparisons and controls from a selected roster, checks costs and custom-type capacity, enforces a scheduled-game cap, and validates the selected opening prefixes before writing. `balance:parallel` runs complete color pairs in independent worker directories and aggregates their results. Start with `--jobs 2`; each engine still searches with one thread. See [the future-run guide](docs/balance-tools.md) for commands, limitations, and the decisions that still need human review.
+`balance:prepare` generates comparisons and controls from a selected roster, checks costs and custom-type capacity, enforces a game cap, and validates opening prefixes before writing. `balance:parallel` runs complete color pairs in independent worker directories and aggregates their results. Each engine retains one search thread; parallelism comes from playing different games. See [the tool guide](docs/balance-tools.md) for commands and resume constraints.
 
 ## Start a run
 
@@ -62,7 +51,7 @@ npm run balance -- --config experiments/balance/smoke.json --out balance-results
 
 The smoke run checks the workflow. Its small search budget and move limit do not provide balance evidence. Choose a new output directory for each experiment; resume an existing one instead of overwriting it.
 
-Game starts, results, preflight notices, and summaries are printed by default. Add `--log plies` to a new or resumed `balance`, `balance:level3`, or `balance:parallel` command for move progress every ten plies. `--log games` explicitly selects the quieter default. A running process keeps its existing output behavior.
+Game starts, results, preflight notices, and summaries are printed by default. Add `--log plies` to a new or resumed `balance`, `balance:amazon`, `balance:level3`, or `balance:parallel` command for move progress every ten plies. `--log games` explicitly selects the quieter default. A running process keeps its existing output behavior.
 
 | Configuration | Purpose |
 | --- | --- |
@@ -87,7 +76,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The generic configurations below are templates and historical protocols, not a queue. The first revision batch is closed; the current authorized batch is the level-3 campaign above.
+The generic configurations below are templates and historical protocols, not a queue. The current authorized batch is the 540-game Amazon revision comparison above.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |
@@ -96,6 +85,7 @@ The generic configurations below are templates and historical protocols, not a q
 | Blue-rook confirmation, 80 games | Intended larger search raises its score from 28.75% to 52.5%; control remains 50%. | [Report](experiments/balance/results/blue-rook-confirmation-001.md) |
 | Budget-3 confirmation, 200 games | Selected purple advantages persist at the intended larger search budget. | [Report](experiments/balance/results/budget-3-confirmation-001.md) |
 | First revision, 100 screen + 60 confirmation games | Park pawn@2; keep rook@2 experimentally: 85% vs blue minors, 61.25% vs blue-plus-orange; control 50%. | [Decision and game audit](experiments/balance/results/revision-1-rook-confirmation-001.md), [revision ledger](experiments/balance/results/revision-1-evidence.csv) |
+| Level-3 screen, closed early | Triage the outliers; retire Capture-box rook and park Twin short queens. Incomplete schedules do not support final rankings. | [Summary audit and decisions](experiments/balance/results/level3-screen-001.md) |
 
 These are contextual army scores, not measured whole-piece material values. Reports distinguish summary-only evidence from audited manifests and games. The first revision spent 160 of its capped 200 games; the remaining 40 are unused, with no automatic extension.
 
@@ -186,15 +176,15 @@ Before games start, the runner resolves the union of designs in every comparison
 
 The run archives exact definition snapshots, allocations, generated profile rules, and their hashes. Fresh engine processes are still used for each game. Resume validates the same registry and source/rules identities before writing; it does not silently use a design's latest revision. The initial implementation also verifies archived definitions against the immutable bundled catalog, so keep the original checkout with archived results. Loading retired definitions independently of that checkout belongs to the future portable save/export work.
 
-The revised `pawn.purple@2` has quiet orthogonal slides of one or two clear squares, with the original diagonal captures and standard promotion. `rook.purple@2` keeps ordinary rook movement/captures and adds capture-only knight jumps. Their `@1` predecessors remain unchanged. All other current nonking designs are also available as `family.color@1`; IDs identify behavior and must not be renamed when display colors change.
+The revised `pawn.purple@2` has quiet orthogonal slides of one or two clear squares, with the original diagonal captures and standard promotion. `rook.purple@2` keeps ordinary rook movement/captures and adds capture-only knight jumps. Their `@1` predecessors remain unchanged. Their earlier nonking counterparts retain their `family.color@1` IDs, while later behavior changes use separate revisions. IDs must not be renamed when display colors change.
 
 Use `designs-smoke.json` to verify workflow. Its four-ply limit intentionally truncates games; these are unscored. The first actual candidate batch has **100 screening games** in `revision-1-screen.json`, followed by **at most 100 reserved confirmation games** in `revision-1-confirmation.json`. Their opening sets are disjoint and retain the same fixed suite. The [decision plan](experiments/balance/revision-plan.md) is now closed after 100 screening and 60 selected rook/control confirmation games. These files preserve the protocol; they do not queue another run.
 
 Schema-2 results use a new protocol identity. Preserve the mapping when comparing or reproducing results; finite-search play can depend on internal type allocation. Evidence follows stable design revisions and the engine/rules context, never a temporary letter alone. No long-term engine training is performed.
 
-Version 12's browser picker has two frozen 20-design libraries selected from 29 catalog entries through this same registry/compiler. Balance campaigns select their own declared IDs; keep each registry within the 20 available custom letters instead of declaring the whole catalog. Version 09 preserves its earlier 17-design library. Browser saves/PGNs include a validated profile snapshot; raw balance PGNs still need their archived registry/rules and a compatible viewer.
+Version 14's browser picker uses the same registry/compiler for its revised workshop and archived First prototypes library. Balance campaigns select their own declared IDs; keep each registry within the 20 available custom letters instead of declaring the whole catalog. Version 09 preserves its earlier 17-design library. Browser saves/PGNs include a validated profile snapshot; raw balance PGNs still need their archived registry/rules and a compatible viewer.
 
-The version-10 pawn candidates have working material priors rather than established match values. Their advanced pawn/guard deployment is part of the purchase being tested. The current campaign follows human playtesting and a declared cap; see [the design notes](DESIGN.md#version-12-level-3-comparison).
+The version-10 pawn candidates now have coarse screening evidence, while their original material priors remain estimates. Advanced pawn/guard deployment is part of the purchase. The new campaign follows the closed screen and human feedback; see [the design notes](DESIGN.md#version-14-amazon-reference-revisions).
 
 ## Openings and fair comparisons
 
@@ -236,7 +226,7 @@ To estimate a strength handicap, compare an upgraded army against an ordinary on
 
 Keep ordinary material values separate from upgrade prices. Pawn ≈1, knight/bishop ≈3, rook ≈5, and queen ≈9 are familiar starting references. A target of “ordinary piece value + level” is a design hypothesis: a blue bishop might aim to add about one pawn of value, but its price of 1 does not prove that it does. A royal king has no ordinary exchange value.
 
-The Amazon (`queen.purple@1`, `QN`) is the reference upgrade for the next design batch: ordinary queen ≈9 and Amazon ≈12–13 suggests an added benefit of ≈3–4, not an exact LevelUp measurement. Compare a candidate purple purchase against that queen purchase on otherwise ordinary armies first. Multiple-copy layouts need explicit shared setup support and measure their own context. See [the design rationale](DESIGN.md#material-estimates-and-the-amazon-reference).
+The Amazon (`queen.purple@1`, `QN`) remains the fixed reference upgrade: ordinary queen ≈9 and Amazon ≈12–13 suggests an added benefit of ≈3–4, not an exact LevelUp measurement. Compare a candidate purple purchase against that queen purchase on otherwise ordinary armies first. Multiple-copy layouts need explicit shared setup support and measure their own context. See [the design rationale](DESIGN.md#material-estimates-and-the-amazon-reference).
 
 Material-odds runs can later provide additional anchors under matching conditions. Fit any pawn-equivalent estimates across several anchors, armies, openings, and search budgets; do not convert one score or an engine's centipawn evaluation directly into a material price. Extra units, promotion, and royal safety can make advantages nonlinear.
 
@@ -250,6 +240,6 @@ The first batch has a curated [evidence ledger](experiments/balance/results/revi
 
 Track completed color-swapped pairs, distinct opening families, opponent coverage, unfinished rates, and uncertainty. Count special-ability use separately: merely appearing in an army does not establish that the ability was tested. Repeating the same opening or counting engine evaluation calls should not make a revision look well understood.
 
-Prioritize a revised piece's comparison against an ordinary army, equal-cost alternatives, and relevant interactions. Add targeted starting positions for its changed behavior, such as blocked captures, promotion races, or sparse mating endings; these endgame scenarios still need harness support. Retain ordinary controls and some unchanged comparisons to detect broader effects. Use fixed effort per side within each comparison; prioritize additional paired games rather than giving one army extra search time.
+Prioritize a revised piece's comparison against an ordinary army, equal-cost alternatives, and relevant interactions. Add targeted starting positions for its changed behavior, such as blocked captures, promotion races, or sparse mating endings; these endgame scenarios still need harness support. Retain ordinary and reference self-play controls to detect broader effects; unchanged subject comparisons require a specific reason to spend more games. Use fixed effort per side within each comparison; prioritize additional paired games rather than giving one army extra search time.
 
 Engine evaluation tuning is a separate experiment. Its search evaluates whole positions, and custom-piece values come from movement heuristics or explicit overrides, not an evaluation counter. Change evaluation parameters separately from movement, record a new engine/runner identity, and test against a fixed opponent so tuning cannot validate itself.

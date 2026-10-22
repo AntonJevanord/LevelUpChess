@@ -73,7 +73,7 @@ test('experimental capability selection follows active immutable IDs and require
     assert.notEqual(otherProbes, probes, 'each library owns its cached expected moves');
     assert.equal(await experimentalCapabilityProbes(otherFen, other.variant), otherProbes);
     assert.ok(otherProbes.every(probe => probe.name.startsWith('rook.purple@2:') || probe.name.startsWith('ordinary ')));
-    const guard = profile.registry.allocations.find(allocation => allocation.id === 'queen.purple@3');
+    const guard = profile.registry.allocations.find(allocation => allocation.id === 'queen.purple@4');
     const reassigned = other.registry.allocations.find(allocation => allocation.letter === guard.letter);
     assert.notEqual(reassigned.id, guard.id, 'the libraries deliberately reuse letters for different designs');
     const sharedFen = `7k/8/8/8/8/4${guard.letter.toUpperCase()}3/8/7K w - - 0 1`;
@@ -140,8 +140,8 @@ test('the native engine can reply legally in both libraries, including pairs and
 }, async () => {
   // Test the generated allocations, especially letters which another library
   // gives a different family or older rules used for pseudo-royal kings.
-  const pieces = ['pawn.purple@3', 'pawn.purple@4', 'pawn.purple@5', 'pawn.orange@2',
-    'knight.purple@3', 'bishop.purple@2', 'rook.purple@3', 'queen.purple@2', 'queen.purple@3']
+  const pieces = ['pawn.purple@7', 'pawn.purple@8', 'pawn.purple@9', 'pawn.purple@5', 'pawn.orange@2',
+    'knight.purple@3', 'bishop.purple@3', 'bishop.purple@4', 'rook.purple@4', 'queen.purple@4']
     .map(id => `7k/8/8/8/8/4${letter(id)}3/8/7K w - - 0 1`);
   const positions = [rookFen, ...pieces, pairedArmyFen()].map(fen => ({ fen, profile }));
   for (const other of profiles.filter(value => value.variant !== profile.variant)) {
@@ -158,8 +158,8 @@ test('the native engine can reply legally in both libraries, including pairs and
   }
 });
 
-test('custom king-moving queens are capturable and do not create extra royal pieces', async () => {
-  const guard = letter('queen.purple@3');
+test('revised queen companions are capturable and do not create extra royal pieces', async () => {
+  const guard = letter('queen.purple@4');
   const white = await createPosition(`7k/8/8/4r3/4${guard}3/8/8/K7 b - - 0 1`, profile.variant, identity);
   const black = await createPosition(`7k/8/8/8/4${guard.toLowerCase()}3/4R3/8/K7 w - - 0 1`, profile.variant, identity);
   try {

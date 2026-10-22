@@ -71,7 +71,7 @@ for (const family of Object.keys(PIECE_LEVELS)) {
     standard.value = '';
     standard.textContent = '0 · Standard';
     select.append(standard);
-    for (const design of DESIGN_OPTIONS.filter(option => option.family === family)) {
+    for (const design of DESIGN_OPTIONS.filter(option => option.family === family && option.status !== 'retired')) {
       const option = document.createElement('option');
       option.value = design.id;
       const status = design.status === 'parked' ? 'parked reference' : design.status;
