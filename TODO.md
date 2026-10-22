@@ -96,6 +96,7 @@ Two to six ideas per family per tier means 36–108 upgraded designs. Keep that 
 - [x] Add independent parallel workers with complete-pair schedules, separate checkpoints, aggregate results, and coordinated stopping. Freeze worker count for resume; preserve one engine thread and the declared search budget.
 - [x] Verify 197 balance cases, including native parallel stop/resume, failure recovery, preparation limits, and Windows sharing retries; one test mock was corrected and passed its focused recheck. Check native serial resume with the frozen version-12 identity and a four-game parallel CLI/report workflow using all 14 designs. Short, truncated workflow games remain unscored.
 - [x] Publish the tested tools and [future-run guide](docs/balance-tools.md) on `version_13`. Consider parallelism for the next declared run; leave the current serial campaign running.
+- [x] Name each game's winning army and color, then show the running matchup points and win/draw/loss counts. Restore counters on resume, combine parallel workers, and keep unfinished games unscored.
 
 ## Deferred work
 

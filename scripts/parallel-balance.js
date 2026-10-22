@@ -7,6 +7,7 @@ const { normalizeConfig, makeSchedule } = require('./balance/plan');
 const { runParallel, readParallelStatus } = require('./balance/parallel');
 const { requestStop } = require('./balance');
 const { unlinkWithRetrySync } = require('./balance/files');
+const { createProgressFormatter, readProgressHistory } = require('./balance/progress');
 
 const HELP = `Independent games in parallel; each engine keeps one search thread
 
@@ -24,6 +25,7 @@ Use a NEW output directory: existing serial runs cannot migrate to parallel.
 During a run: q / Ctrl+C stops all workers now; g finishes each active game;
 p finishes each active pair. Game starts/results are the default output;
 --log plies adds move progress. --status reads the parent aggregate only.
+Finished games name the winner and show running matchup points across workers.
 On Linux/macOS set FAIRY_STOCKFISH_PATH to a compatible native engine.
 `;
 
@@ -122,12 +124,13 @@ async function main(args = process.argv.slice(2)) {
   const root = path.resolve(__dirname, '..');
   if (process.platform !== 'win32' && !process.env.FAIRY_STOCKFISH_PATH) throw new Error('Set FAIRY_STOCKFISH_PATH to a compatible native engine on Linux/macOS. See BALANCE.md.');
   const enginePath = path.resolve(process.env.FAIRY_STOCKFISH_PATH || path.join(root, 'stockfish/fairy-stockfish-levelup_x86-64.exe'));
+  const formatProgress = createProgressFormatter(schedule, resume ? readProgressHistory(outDir, manifest) : []);
   const controller = new AbortController(), controls = installControls(outDir, controller);
   console.log(`${resume ? 'Resuming' : 'Starting'} ${schedule.length} scheduled games with ${jobs} workers in ${outDir}`);
   console.log('q / Ctrl+C: stop all now; g: after active games; p: after active pairs.');
   try {
     const result = await runParallel({ config, outDir, resume, enginePath, jobs: resume ? undefined : options.jobs ?? 2,
-      signal: controller.signal, shouldStop: controls.shouldStop, log: options.log, onProgress: console.log });
+      signal: controller.signal, shouldStop: controls.shouldStop, log: options.log, onProgress: message => console.log(formatProgress(message)) });
     printSummary(result.summary);
     console.log(`${result.stopped ? 'Stopped with worker progress saved.' : 'Run finished.'} Results: ${outDir}`);
     return result;

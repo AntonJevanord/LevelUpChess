@@ -65,6 +65,12 @@ The parent produces the usual `run.json`, `games.jsonl`, `summary.json`, and `ga
 
 New and resumed `balance`, `balance:level3`, and `balance:parallel` processes print game starts, results, preflight notices, and summaries by default. `--log games` explicitly selects this mode. Add `--log plies` to print move progress every ten plies for diagnosis. This affects terminal output only; complete move records remain in the result files.
 
+Finished games name the winning army and its color, followed by a running matchup score. A is always the first army and B the second, even when they swap colors. In a game ID, `_w` or `_b` gives A's color; `1-0` means White won and `0-1` means Black won. Thus `camel-knight-v-blink-rook_…_b: 1-0` is a Blink rook win.
+
+The live tally awards one point per win and half per draw, counting all scored games for that matchup. It restores totals on resume and combines parallel workers. Truncated games remain unscored; formal balance estimates still use complete color pairs. Counters update in memory after each result, with saved history loaded once on resume.
+
+The 0.13.1 display update changes the parallel CLI's source fingerprint. Parallel runs started with 0.13.0 should continue on their original checkout. The version-12 serial campaign's rules and core runner identity remain unchanged.
+
 Version 12 has no ply-output switch. Updating files cannot change a process already running; let the current campaign continue rather than interrupting it solely for quieter output.
 
 ## What still needs a decision

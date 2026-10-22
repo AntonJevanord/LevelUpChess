@@ -7,6 +7,7 @@ const { randomUUID } = require('node:crypto');
 const { normalizeConfig, makeSchedule } = require('./balance/plan');
 const { summarize } = require('./balance/stats');
 const { renameWithRetrySync, unlinkWithRetrySync } = require('./balance/files');
+const { createProgressFormatter, readProgressHistory } = require('./balance/progress');
 
 const HELP = `Paired Fairy Stockfish balance experiments
 
@@ -21,6 +22,7 @@ During a run: q / Ctrl+C stops now; g finishes the game; p finishes the pair.
 --comparisons selects complete comparison pairs for a new run, before --limit-pairs.
 The full configuration and its design letter allocation remain unchanged.
 Game starts and results are printed by default; --log plies adds move progress.
+Finished games name the winner and show running matchup points.
 On Linux/macOS, set FAIRY_STOCKFISH_PATH to a compatible native executable.
 See BALANCE.md for configuration, results, and interpretation.
 `;
@@ -190,11 +192,11 @@ async function main(args = process.argv.slice(2)) {
   }
   if (options.status) { showStatus(options.status); return; }
   const root = path.resolve(__dirname, '..');
-  let config, schedule, outDir;
+  let config, schedule, outDir, manifest;
   const resume = Boolean(options.resume);
   if (resume) {
     outDir = path.resolve(options.resume);
-    const manifest = readJson(path.join(outDir, 'run.json'));
+    manifest = readJson(path.join(outDir, 'run.json'));
     if (manifest.parallel) throw new Error('This is a parallel run. Use npm.cmd run balance:parallel -- --resume DIRECTORY to resume its workers.');
     config = normalizeConfig(manifest.config);
     schedule = manifest.schedule;
@@ -211,6 +213,7 @@ async function main(args = process.argv.slice(2)) {
     throw new Error('Set FAIRY_STOCKFISH_PATH to a compatible native engine on Linux/macOS. See BALANCE.md.');
   }
   if (!fs.existsSync(path.join(root, 'dist/balance-rules.cjs'))) throw new Error('Missing rules bundle. Run npm run build first.');
+  const formatProgress = createProgressFormatter(schedule, resume ? readProgressHistory(outDir, manifest) : []);
   const { runMatches } = require('./balance/run');
   const controller = new AbortController();
   const controls = installControls(outDir, controller);
@@ -218,7 +221,7 @@ async function main(args = process.argv.slice(2)) {
   console.log('q / Ctrl+C: stop now; g: after game; p: after pair.');
   try {
     const result = await runMatches({ config, schedule, outDir, resume, enginePath, signal: controller.signal, shouldStop: controls.shouldStop, onProgress: message => {
-      if (shouldPrintProgress(message, options.log)) console.log(message);
+      if (shouldPrintProgress(message, options.log)) console.log(formatProgress(message));
     } });
     printSummary(result.summary);
     if (result.stopped && !fs.existsSync(path.join(outDir, 'run.json'))) console.log('Stopped during preflight. No games started; repeat the original command to retry.');
