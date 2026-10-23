@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 16 remains active for the Blink evaluation check and [balancing strategy](docs/balancing-strategy.md). Its automatic 200 games are complete; the eight-point stage is running. Version 15's completed 1,120-game comparison and replay audit remain preserved. Earlier milestones are in [development history](docs/development-history.md).
+Version 16 remains active for the [balancing strategy](docs/balancing-strategy.md). The [400-game Blink evaluation comparison](experiments/balance/results/rook-values-comparison-001.md) is complete and closed; no extension is queued. Version 15's completed 1,120-game comparison and replay audit remain preserved. Earlier milestones are in [development history](docs/development-history.md).
 
 Browser-save compatibility across releases is optional. Experiment definitions, identities, and results must remain reproducible.
 
@@ -130,7 +130,7 @@ Implement and verify the alternatives before starting the single declared batch.
 
 ## Version 16 — Blink evaluation consistency
 
-Preserve movement IDs, Betza text, three-point prices, and the version-15 executable/results. Keep the engine, runner and policy inputs frozen while the user's second stage runs; documentation updates retain the current experiment identity.
+Preserve movement IDs, Betza text, three-point prices, and the version-15 executable/results. Retain the frozen engine, runner and policy inputs for reproducing the closed batch; documentation and evidence updates retain its identity.
 
 - [x] Preserve version 15 and develop on `version_16`; declare the [400-game evaluation plan](experiments/balance/rook-values-plan.md).
 - [x] Patch explicit custom values through raw/adjusted evaluation, exchange and capture-order tables; leave automatic values unchanged. Record matching source, patch and executable provenance.
@@ -143,15 +143,16 @@ Preserve movement IDs, Betza text, three-point prices, and the version-15 execut
 - [x] Verify source-table consistency and matching source/patch/executable hashes; rebuild the Windows bundle and test the same patch natively on Linux. All existing playable profiles and movement definitions remain unchanged.
 - [x] Receive and replay the [automatic 200-game baseline](experiments/balance/results/rook-values-auto-001.md): all games completed, no errors/truncations, 100 complete pairs and 26,693 legal plies. Regenerate its summary and match declared profile/settings; leave missing manifest/binary identity checks open.
 - [x] Establish the [balancing strategy](docs/balancing-strategy.md): separate engine calibration, contextual upgrade benefit and purchase price; review all active values but override selectively; retain Amazon as one reference and use bounded follow-ups only for concrete decisions.
-- [ ] Receive the second 200 games, now running locally. Compare policies on their shared complete openings and inspect trades, controls and human feedback. The automatic baseline alone does not isolate a value effect; no automatic extra stage follows.
+- [x] Receive and replay the [eight-point 200 games](experiments/balance/results/rook-values-eight-001.md): no errors/truncations, 100 complete pairs and 27,727 legal plies. Every record matches manual MG2042/EG2208; regenerate its summary and compare all 20 shared openings per matchup.
+- [x] Archive the [completed policy comparison](experiments/balance/results/rook-values-comparison-001.md): Quiet −31.25 percentage points, adjacent −8.75, long −3.75; all 80 controls have identical histories. Values affect play, but this does not choose a stronger engine policy or measure intrinsic material.
 - [ ] Verify parent and policy manifests against the bundled executable and source identities when supplied. Uploaded journals alone do not prove which Windows binary ran.
-- [ ] Close the fixed 400-game question with a policy/design decision or an explicit deferral before authorizing another batch.
+- [x] Close the fixed 400-game question: establish sensitivity and explicitly defer authoritative Blink values and movement changes. Preserve prototypes, retract any balanced-Quiet inference, and queue no extension or universal target-value assignment.
 
 ### After the current policy comparison
 
 - [ ] Record actual automatic/explicit MG/EG values, provenance and confidence for shortlisted active designs; retain ordinary-piece defaults and royal semantics. Do not assign desired base-plus-level targets to every custom type.
-- [ ] If the completed comparison leaves a consequential valuation question, declare one bounded calibration pilot. Independent policies for identical armies need new runner support; implement it only after choosing that question and budget.
-- [ ] Once the evaluator is credible, design one bounded Amazon material-anchor pilot: estimate its added value over a queen directly using ordinary-material compensation across several layouts. Freeze the policy, define pawn-equivalent units and stop with a useful range; no new batch is scheduled yet.
+- [ ] Design one bounded Amazon material-anchor pilot: estimate its added value over a queen directly using ordinary-material compensation across several layouts. Freeze unchanged ordinary/Amazon evaluation, define pawn-equivalent units and stop with a useful range; no new batch is scheduled yet. This uses no Blinks and does not require Blink tuning first.
+- [ ] If choosing Blink search values would change a design decision, declare one bounded identical-army calibration pilot. Independent per-engine policies need new runner support; implement it only after choosing that question and budget. This is optional, not a gate for unrelated material anchors.
 - [ ] Use the empirical Amazon bonus Δ as the provisional level-3 added-benefit target, with ⅓Δ/⅔Δ for levels 1/2. Keep uncertainty and context separate from native engine parameters; do not infer exact centipawns from a matchup score.
 - [ ] Human-playtest survivors and use a small, contrasting equal-cost reference set. Apply later compensation checks only to surviving designs whose approximate added-value range would change a design decision.
 

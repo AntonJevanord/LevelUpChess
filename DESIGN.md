@@ -159,7 +159,9 @@ Explicit values must reach raw and adjusted material, static exchange evaluation
 
 Choose a movement change only after reviewing matched complete-opening scores, control diagnostics and human feedback. The experiment tests sensitivity to a chosen evaluation prior; it does not measure intrinsic material, calibrate engine Elo, or automatically authorize another batch.
 
-The [automatic baseline](experiments/balance/results/rook-values-auto-001.md) is complete: Quiet Blink scores 46.25%, adjacent-capture Blink 85%, and long-diagonal Blink 88.75%. Quiet Blink already has a high automatic material estimate (MG3146/EG3944), so differences among these movements do not isolate the effect of valuation. The eight-point stage is running. Keep all three definitions and the engine fixed until it finishes; neither a universal eight-point assignment nor a movement nerf is selected yet.
+The [completed comparison](experiments/balance/results/rook-values-comparison-001.md) gives automatic → eight-point scores of **46.25% → 15%** for Quiet Blink, **85% → 76.25%** for adjacent-capture Blink, and **88.75% → 85%** for long-diagonal Blink. Quiet's result is highly sensitive to the prior; both capture variants retain large observed advantages. All three share the same manual values, so assigned material alone does not explain their different results.
+
+Close the 400-game batch without declaring Quiet Blink balanced, choosing an authoritative value policy or changing movement. Keep the prototypes for human play and the two policies as separate evidence. If selecting Blink search values becomes necessary, compare policies on identical armies under a new bounded question. The proposed Amazon-versus-queen material anchor uses no Blinks and can use unchanged reference evaluation independently of that optional tuning.
 
 ## Kings: preserve a clear mating objective
 

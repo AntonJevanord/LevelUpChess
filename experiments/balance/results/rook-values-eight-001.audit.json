@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-rook-values-eight-results-audit",
+  "runId": "92ee2fb4-ad70-4242-bff8-22646620a088",
+  "runIdSource": "Uploaded summary; journal records contain no run ID.",
+  "inputs": {
+    "summary": {
+      "bytes": 21503,
+      "sha256": "41e36153250a4158db4ce7c1f95d679069016a70ac2c3b891b4750719aab7a38"
+    },
+    "journal": {
+      "bytes": 742462,
+      "sha256": "0a010c4e25724e3940bb79e80dfed49522f42d16479fbda105b3a0fdbdf78538"
+    }
+  },
+  "policy": "eight",
+  "scheduledGames": 200,
+  "totalAttempts": 200,
+  "statusCounts": {
+    "completed": 200,
+    "truncated": 0,
+    "aborted": 0,
+    "error": 0,
+    "unknown": 0
+  },
+  "expectedProtocol": {
+    "variant": "levelup-design-2706ed92e6d779969a2c",
+    "profileHash": "efcb335d7f42158581d90757efb1e9b06e20c5aa9bdbbaaf16e7f3c0eb9cc3c4",
+    "registryHash": "95b047eae3621400450d79a00ae47cd42ae49aba8b88482159b3467d5de3465e",
+    "configSha256": "b9fe6c6734fa2a264f695974a70dd3c057f57ac9283124962b08375cc5222356",
+    "scheduleSha256": "dbc5211d04307d6c6b853bdeab4692b0f822253f2ff709e69569af2a9b7ebda5",
+    "engine": {
+      "nodes": 100000,
+      "threads": 1,
+      "hashMb": 32,
+      "maxPlies": 400
+    },
+    "strength": {
+      "skill": 20
+    },
+    "manualEvaluation": {
+      "pieceValues": {
+        "rook.purple@3": {
+          "mg": 2042,
+          "eg": 2208
+        },
+        "rook.purple@4": {
+          "mg": 2042,
+          "eg": 2208
+        },
+        "rook.purple@5": {
+          "mg": 2042,
+          "eg": 2208
+        }
+      }
+    },
+    "definitions": [
+      {
+        "id": "queen.purple@1",
+        "family": "queen",
+        "level": 3,
+        "revision": 1,
+        "movement": "QN",
+        "legacyType": "u",
+        "legacySlot": 8,
+        "placement": "replace",
+        "roles": {
+          "pawn": false,
+          "castlingRook": false,
+          "enPassant": false
+        }
+      },
+      {
+        "id": "rook.purple@3",
+        "family": "rook",
+        "level": 3,
+        "revision": 3,
+        "movement": "RmFmDmNmAmHmCmZmG",
+        "legacyType": "o",
+        "legacySlot": 12,
+        "placement": "replace",
+        "roles": {
+          "pawn": false,
+          "castlingRook": true,
+          "enPassant": false
+        }
+      },
+      {
+        "id": "rook.purple@4",
+        "family": "rook",
+        "level": 3,
+        "revision": 4,
+        "movement": "RFmDmNmAmHmCmZmG",
+        "legacyType": "o",
+        "legacySlot": 12,
+        "placement": "replace",
+        "roles": {
+          "pawn": false,
+          "castlingRook": true,
+          "enPassant": false
+        }
+      },
+      {
+        "id": "rook.purple@5",
+        "family": "rook",
+        "level": 3,
+        "revision": 5,
+        "movement": "RFmDmNmAmHmCmZmGcB2",
+        "legacyType": "o",
+        "legacySlot": 12,
+        "placement": "replace",
+        "roles": {
+          "pawn": false,
+          "castlingRook": true,
+          "enPassant": false
+        }
+      }
+    ]
+  },
+  "checks": {
+    "summaryRegeneratesExactly": true,
+    "uniqueFirstAttempts": true,
+    "fullEightPointScheduleCovered": true,
+    "exactManualValuesInEveryRecord": true,
+    "recordProtocolAnnotationsMatch": true,
+    "startingArmiesAndForcedPrefixes": true,
+    "legalMovesAndSAN": true,
+    "finalFensAndTerminalOutcomes": true,
+    "noMovesAfterTermination": true,
+    "uploadedManifestAvailable": false,
+    "actualBinaryHashVerified": false,
+    "actualSourceIdentityVerified": false,
+    "recordedNativeValueTablesAvailable": false
+  },
+  "recordedEngineNames": [
+    "Fairy-Stockfish 230826"
+  ],
+  "replay": {
+    "games": 200,
+    "plies": 27727
+  },
+  "comparisons": [
+    {
+      "comparisonId": "amazon-control",
+      "games": 40,
+      "wins": 10,
+      "draws": 20,
+      "losses": 10,
+      "score": 0.5,
+      "completePairs": 20,
+      "uniqueOpenings": 20,
+      "aColorScores": {
+        "w": 0.6,
+        "b": 0.4
+      },
+      "physicalColors": {
+        "whiteWins": 14,
+        "draws": 20,
+        "blackWins": 6,
+        "whiteScore": 0.6
+      }
+    },
+    {
+      "comparisonId": "blink-v-amazon",
+      "games": 40,
+      "wins": 28,
+      "draws": 5,
+      "losses": 7,
+      "score": 0.7625,
+      "completePairs": 20,
+      "uniqueOpenings": 20,
+      "aColorScores": {
+        "w": 0.775,
+        "b": 0.75
+      },
+      "physicalColors": {
+        "whiteWins": 18,
+        "draws": 5,
+        "blackWins": 17,
+        "whiteScore": 0.5125
+      },
+      "exchanges": {
+        "analyzedGames": 40,
+        "amazonTakesBlinkThenRecaptured": 12,
+        "blinkCapturesAmazon": 9,
+        "interpretation": "Observed move-history patterns only; no proof of legal replay, forced trades, engine mistakes or causation."
+      }
+    },
+    {
+      "comparisonId": "long-blink-v-amazon",
+      "games": 40,
+      "wins": 32,
+      "draws": 4,
+      "losses": 4,
+      "score": 0.85,
+      "completePairs": 20,
+      "uniqueOpenings": 20,
+      "aColorScores": {
+        "w": 0.9,
+        "b": 0.8
+      },
+      "physicalColors": {
+        "whiteWins": 20,
+        "draws": 4,
+        "blackWins": 16,
+        "whiteScore": 0.55
+      },
+      "exchanges": {
+        "analyzedGames": 40,
+        "amazonTakesBlinkThenRecaptured": 17,
+        "blinkCapturesAmazon": 7,
+        "interpretation": "Observed move-history patterns only; no proof of legal replay, forced trades, engine mistakes or causation."
+      }
+    },
+    {
+      "comparisonId": "quiet-blink-v-amazon",
+      "games": 40,
+      "wins": 4,
+      "draws": 4,
+      "losses": 32,
+      "score": 0.15,
+      "completePairs": 20,
+      "uniqueOpenings": 20,
+      "aColorScores": {
+        "w": 0.15,
+        "b": 0.15
+      },
+      "physicalColors": {
+        "whiteWins": 18,
+        "draws": 4,
+        "blackWins": 18,
+        "whiteScore": 0.5
+      },
+      "exchanges": {
+        "analyzedGames": 40,
+        "amazonTakesBlinkThenRecaptured": 3,
+        "blinkCapturesAmazon": 4,
+        "interpretation": "Observed move-history patterns only; no proof of legal replay, forced trades, engine mistakes or causation."
+      }
+    },
+    {
+      "comparisonId": "standard-control",
+      "games": 40,
+      "wins": 14,
+      "draws": 12,
+      "losses": 14,
+      "score": 0.5,
+      "completePairs": 20,
+      "uniqueOpenings": 20,
+      "aColorScores": {
+        "w": 0.5,
+        "b": 0.5
+      },
+      "physicalColors": {
+        "whiteWins": 14,
+        "draws": 12,
+        "blackWins": 14,
+        "whiteScore": 0.5
+      }
+    }
+  ],
+  "observedTiming": {
+    "firstUTC": "2026-10-23T13:45:48.154Z",
+    "lastUTC": "2026-10-23T14:15:08.154Z",
+    "elapsedSeconds": 1760,
+    "maxConcurrentGames": 4
+  },
+  "limits": [
+    "No run.json or parent campaign manifest was uploaded. Expected protocol annotations match, but actual engine/source hashes and declared worker layout are unverified.",
+    "This stage records a shared eight-point policy. Comparing both stages measures matchup sensitivity, not which policy plays identical armies better or a true material value.",
+    "Between-design comparisons within this stage share the manual material prior but change movement; their scores remain specific to this engine protocol.",
+    "Observable exchanges and protocol-specific scores do not establish forced trades, engine mistakes, causation, intrinsic material values or calibrated Elo.",
+    "Fixed related opening prefixes, one opponent and one search budget limit generalization; controls exercise the pipeline rather than material calibration.",
+    "Replay validates recorded chess behavior, not process execution or the full native search trace."
+  ]
+}

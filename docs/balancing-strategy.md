@@ -6,31 +6,30 @@ not an exact material number for every possible position.
 
 ## Current evidence and stopping point
 
-The completed automatic-value stage has 200 scored games, no truncations or
-errors, and 20 color-swapped opening pairs per comparison. Draws count as half
-a point. On otherwise ordinary armies, these are the Blink purchase's scores
-against the unchanged Amazon purchase:
+The [400-game comparison](../experiments/balance/results/rook-values-comparison-001.md)
+is complete: 200 games per policy, no errors or truncations, and 20 shared scored
+opening pairs per comparison. Draws count as half a point. Blink purchases faced
+the unchanged Amazon purchase on otherwise ordinary armies:
 
-| Purchase | Stable ID | Point score |
-| --- | --- | ---: |
-| Quiet Blink, ordinary rook captures | `rook.purple@3` | 46.25% |
-| Blink, adjacent diagonal captures | `rook.purple@4` | 85.00% |
-| Long Blink, two-square diagonal captures | `rook.purple@5` | 88.75% |
+| Purchase | Stable ID | Automatic | Eight-point | Change |
+| --- | --- | ---: | ---: | ---: |
+| Quiet Blink, ordinary rook captures | `rook.purple@3` | 46.25% | 15.00% | −31.25 pp |
+| Blink, adjacent diagonal captures | `rook.purple@4` | 85.00% | 76.25% | −8.75 pp |
+| Long Blink, two-square diagonal captures | `rook.purple@5` | 88.75% | 85.00% | −3.75 pp |
 
-This stage varies movement and its automatic valuation together. It reinforces
-the evaluation concern but does not isolate material values as the cause.
-Quiet Blink also receives a high automatic estimate while scoring near 50%.
+Both stages' moves, outcomes and policy annotations check out; actual binary and
+runner identities await the missing manifests. All 80 control games reproduce
+the same histories across policies. Quiet Blink's result changes substantially;
+the capture variants remain above the working band under both policies. In the
+manual stage all three receive the same values, yet their scores differ widely.
 
-The user has started the remaining 200-game eight-point stage. Keep its engine,
-runner, configurations and movements frozen. Compare both policies on shared
-fully scored opening pairs using the [existing plan](../experiments/balance/rook-values-plan.md).
-The complete campaign remains capped at 400 games. No further games are scheduled.
-
-If scores change substantially, the result demonstrates sensitivity to an
-evaluation assumption. If they remain similar, changing this particular prior
-has not explained the original result. Neither outcome proves an exact value,
-best play or a universally balanced movement design. Review recorded trades,
-completion, opening sensitivity and human feedback before choosing a response.
+Close this batch with **evaluation sensitivity established under the recorded
+protocol; authoritative Blink valuation and movement changes deferred**. The
+manual policy does not validate eight points, and the automatic result does not
+certify Quiet Blink as balanced. Both engines changed policy together, so the
+score changes do not identify which engine plays better. Fixed related openings
+limit generalization. Keep both research policies and current prototypes;
+no extension or blanket value assignment follows.
 
 ## Keep three quantities separate
 
@@ -65,17 +64,19 @@ a value until its purchase reaches 50% against Amazon: that would use the desire
 answer as the calibration target. A better or worse Amazon score alone does not
 identify which valuation policy makes either engine play better.
 
-If calibration remains necessary, one future test can give both armies identical
-pieces while the two engines use different valuation policies, swapping policies
+If choosing Blink search values remains necessary, one future test can give both
+armies identical pieces while the engines use different valuation policies, swapping policies
 between colors. Each engine must value both colors consistently. This tests which
 policy plays those armies better; it still does not reveal an intrinsic material
 constant. The current runner shares one policy per game, so this requires a
-separate harness change and an explicitly capped experiment. It is not scheduled.
+separate harness change and an explicitly capped experiment. It is not scheduled
+and does not block an Amazon-only material anchor.
 
 ## Estimate the Amazon's added benefit first
 
-After closing the current 400-game question, a future pilot can estimate the
-Amazon purchase's incremental benefit, Δ, from play. Freeze the evaluator first,
+The next proposed material pilot estimates the Amazon purchase's incremental
+benefit, Δ, from play. It uses only ordinary pieces and the unchanged Amazon;
+neither tested Blink override changes their values. Freeze this reference evaluator,
 then compare matched ordinary-queen armies: one side upgrades its queen to Amazon
 and gives up compensating ordinary material. Swap colors and use several handicap
 amounts and layouts to bracket compensation. Removing material also changes
@@ -97,7 +98,8 @@ Neither conversion is an automatic equality. Do not install these desired streng
 targets as engine parameters or retune the evaluator to obtain them.
 
 Declare the pilot's question, layouts, effort, cap and stopping rule before play.
-Review precision before estimating other purchases. No further games are scheduled.
+Review precision before estimating other purchases. This can proceed independently
+of optional Blink calibration; no further games are currently scheduled.
 
 ## Compare surviving designs against the common target
 

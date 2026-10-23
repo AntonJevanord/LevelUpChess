@@ -53,35 +53,23 @@ Open [prototypes/kings/index.html](prototypes/kings/index.html) to try the captu
 
 Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Bringing king choices into the main board's setup, engine play, and saves remains integration work. See the [prototype guide](prototypes/kings/README.md).
 
-## Version 16: Blink evaluation check
+## Version 16: completed Blink evaluation check
 
 The [400-game plan](experiments/balance/rook-values-plan.md) compares the same three Blink movements under two engine evaluation policies: automatic values and a manual **eight-point whole-rook target**. Eight comes from ordinary rook ≈5 plus three upgrade levels; it is a judgment supplied to the engine, not a measured piece value. The test includes quiet-only Blink alongside the adjacent-diagonal and two-square-diagonal versions. Movement and three-point purchase prices stay unchanged.
 
 Manual values apply to this balance experiment. The playable board continues using automatic values.
 
-Each policy has **200 games**: three Blink designs versus Amazon, plus ordinary and Amazon controls, over 20 color-swapped opening pairs. Both use the same patched engine, prefixes and search settings. Start the automatic baseline first:
+The [completed 400-game comparison](experiments/balance/results/rook-values-comparison-001.md) includes 200 games per policy: three Blink designs versus Amazon, plus ordinary and Amazon controls, over 20 color-swapped opening pairs. Quiet Blink scored **46.25% → 15%**, adjacent-capture Blink **85% → 76.25%**, and long-diagonal Blink **88.75% → 85%**. The value assumption matters, especially for Quiet Blink; neither policy establishes intrinsic strength. No repeat or extension is needed.
+
+Generate the combined report from the existing local campaign:
 
 ```bat
-npm.cmd run balance:rook-values -- --check
-npm.cmd run balance:rook-values -- --out balance-results/rook-values --policy auto --jobs 3
-```
-
-After it finishes, explicitly start the manual-value policy in the same campaign directory:
-
-```bat
-npm.cmd run balance:rook-values -- --out balance-results/rook-values --policy eight
-```
-
-Stopping never launches the next policy. The first launch freezes worker count and campaign identities. Resume an already started policy or inspect partial reports with:
-
-```bat
-npm.cmd run balance:rook-values -- --resume balance-results/rook-values
 npm.cmd run balance:rook-values -- --report balance-results/rook-values
 ```
 
-The report compares policy scores only on shared fully scored openings. Lower values can improve or worsen engine play; a score change does not measure the piece's true material value. This batch has no automatic extension. Keep old result directories with their original branch and engine.
+The report uses shared fully scored openings. The [original plan](experiments/balance/rook-values-plan.md) retains check/run/resume commands for reproduction with matching sources and engine. Keep old result directories with their matching build.
 
-The [automatic baseline](experiments/balance/results/rook-values-auto-001.md) is complete: Quiet Blink scored 46.25%, adjacent-capture Blink 85%, and long-diagonal Blink 88.75%. These compare different movements under automatic values; the eight-point stage is running. The [balancing strategy](docs/balancing-strategy.md) separates engine calibration, upgrade strength and purchase cost. Version 16 remains the active milestone.
+The [balancing strategy](docs/balancing-strategy.md) separates engine calibration, upgrade strength and purchase cost. Keep the current playable prototypes; automatic values remain the browser default without being certified as correct. The next proposed material anchor estimates the Amazon's added value over a queen, using unchanged ordinary/Amazon evaluation. It does not require Blink tuning first. Version 16 remains active; no further batch is scheduled.
 
 ## Completed Amazon comparison: 1,120 games
 

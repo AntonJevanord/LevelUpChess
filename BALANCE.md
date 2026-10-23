@@ -8,9 +8,9 @@ Follow the [version-16 balancing strategy](docs/balancing-strategy.md): audit en
 
 The [first balance revision plan](experiments/balance/revision-plan.md) closed at 160 of at most 200 games with explicit candidate decisions. Existing experiment files are options, not a queue that must be exhausted before development continues.
 
-## Version 16: Blink values, 400 games
+## Version 16: completed Blink values comparison, 400 games
 
-The [declared plan](experiments/balance/rook-values-plan.md) isolates evaluation from movement. Test the quiet-only, adjacent-diagonal and two-square-diagonal Blink revisions (`rook.purple@3`, `@4`, `@5`) against the unchanged Amazon (`queen.purple@1`). Use two policies on the same patched engine:
+The [declared plan](experiments/balance/rook-values-plan.md) isolates evaluation from movement. The [completed comparison](experiments/balance/results/rook-values-comparison-001.md) tests quiet-only, adjacent-diagonal and two-square-diagonal Blink (`rook.purple@3`, `@4`, `@5`) against unchanged Amazon (`queen.purple@1`). It is closed at 400 games; commands below preserve the protocol, not a request to repeat it. Both policies require the same patched engine:
 
 | Policy | Blink values | Games |
 | --- | --- | ---: |
@@ -42,7 +42,9 @@ Preflight verifies the patched engine's actual raw, adjusted, exchange and captu
 
 The patch makes explicit overrides consistent across the identified tables; automatic defaults remain unchanged. It does not correct every fairy-piece evaluation heuristic. A lower assigned value may improve or worsen play. Compare both new policies under matching conditions, retain the version-15 evidence separately, and use outcomes to guide one design decision rather than declare a material value or queue more tests.
 
-The [uploaded automatic baseline](experiments/balance/results/rook-values-auto-001.md) contains 200 completed games, with no errors or truncations. Quiet/adjacent/long Blink scored 46.25% / 85% / 88.75%; each comparison has 20 complete color pairs. Every recorded move and outcome replays correctly, and the summary regenerates. The journal matches the automatic profile; executable and runner identities await the missing manifests. The user has started the second 200-game policy. No movement or valuation decision follows from the first stage alone.
+The uploaded [automatic](experiments/balance/results/rook-values-auto-001.md) and [eight-point](experiments/balance/results/rook-values-eight-001.md) stages contain 400 completed games, no errors/truncations, and 200 complete pairs. All 54,420 recorded plies replay correctly and both summaries regenerate. Quiet/adjacent/long Blink scores change **46.25% → 15% / 85% → 76.25% / 88.75% → 85%** on fully shared openings. All 80 control histories match exactly. Declared profiles/settings agree; actual executable and runner identities await the missing manifests.
+
+Close the sensitivity question: material assumptions substantially affect the Quiet Blink result, while capturing variants still overperform in both tested policies. Do not select a policy by proximity to 50%, assign every piece its desired value, or nerf movement from these scores alone. Authoritative Blink values and movement changes remain deferred. A later identical-army policy duel would test engine play directly; it is optional and does not block an Amazon material-anchor pilot containing no Blinks.
 
 ## Completed version 15: paired alternatives versus the Amazon
 
@@ -118,7 +120,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives batch is closed; the separate 400-game Blink valuation check is the only newly declared batch.
+The generic configurations below are templates and historical protocols, not a queue. Both the Amazon alternatives batch and the 400-game Blink valuation check are closed; no additional batch is scheduled.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |

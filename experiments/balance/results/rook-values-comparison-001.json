@@ -1,0 +1,606 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-rook-values-policy-comparison",
+  "status": "400-game sensitivity question closed",
+  "totalGames": 400,
+  "completePairs": 200,
+  "replayedPliesFromStageAudits": 54420,
+  "errors": 0,
+  "truncations": 0,
+  "inputs": {
+    "auto": {
+      "runId": "ef535a02-cbce-4edb-9423-36e6d1bd596d",
+      "files": [
+        {
+          "file": "rook-values-auto-001.summary.json",
+          "bytes": 21514,
+          "sha256": "477887d3289df50fb7c79c88ce87369dd25a75268e9f5145d9f350a81a0b7b8a"
+        },
+        {
+          "file": "rook-values-auto-001.games.jsonl",
+          "bytes": 698896,
+          "sha256": "1dbe36303d5dd08b8723808f0cd9b295ae832be52f0d5a56279bb3c044976eac"
+        },
+        {
+          "file": "rook-values-auto-001.audit.json",
+          "bytes": 7259,
+          "sha256": "71c9cfa646ea7e0743acb33726d33812c30679e9a30330fb981b283c40dafcc8"
+        }
+      ],
+      "expectedProfileHash": "72dd54f04ae886775e7792a15bba586781394065201c062b1310916b24a32b34",
+      "expectedRegistryHash": "95b047eae3621400450d79a00ae47cd42ae49aba8b88482159b3467d5de3465e",
+      "evaluation": null
+    },
+    "eight": {
+      "runId": "92ee2fb4-ad70-4242-bff8-22646620a088",
+      "files": [
+        {
+          "file": "rook-values-eight-001.summary.json",
+          "bytes": 21503,
+          "sha256": "41e36153250a4158db4ce7c1f95d679069016a70ac2c3b891b4750719aab7a38"
+        },
+        {
+          "file": "rook-values-eight-001.games.jsonl",
+          "bytes": 742462,
+          "sha256": "0a010c4e25724e3940bb79e80dfed49522f42d16479fbda105b3a0fdbdf78538"
+        },
+        {
+          "file": "rook-values-eight-001.audit.json",
+          "bytes": 7677,
+          "sha256": "4bff0a98ffe82b7613e1b86b4995de483c9f59d842bff2835f7b9cf8456b15ba"
+        }
+      ],
+      "expectedProfileHash": "efcb335d7f42158581d90757efb1e9b06e20c5aa9bdbbaaf16e7f3c0eb9cc3c4",
+      "expectedRegistryHash": "95b047eae3621400450d79a00ae47cd42ae49aba8b88482159b3467d5de3465e",
+      "evaluation": {
+        "pieceValues": {
+          "rook.purple@3": {
+            "mg": 2042,
+            "eg": 2208
+          },
+          "rook.purple@4": {
+            "mg": 2042,
+            "eg": 2208
+          },
+          "rook.purple@5": {
+            "mg": 2042,
+            "eg": 2208
+          }
+        }
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "id": "rook.purple@3",
+      "label": "Quiet Blink (no extra captures)",
+      "comparisonId": "quiet-blink-v-amazon",
+      "sharedOpenings": 20,
+      "automaticScore": 0.4625,
+      "eightPointScore": 0.15,
+      "scoreDifference": -0.3125,
+      "openingChanges": {
+        "better": 1,
+        "same": 6,
+        "worse": 13
+      },
+      "policies": {
+        "auto": {
+          "games": 40,
+          "completePairs": 20,
+          "wins": 15,
+          "draws": 7,
+          "losses": 18,
+          "exchanges": {
+            "analyzedGames": 40,
+            "amazonTakesBlinkThenRecaptured": 12,
+            "blinkCapturesAmazon": 3,
+            "interpretation": "Observed move-history patterns only; no proof of legal replay, forced trades, engine mistakes or causation."
+          }
+        },
+        "eight": {
+          "games": 40,
+          "completePairs": 20,
+          "wins": 4,
+          "draws": 4,
+          "losses": 32,
+          "exchanges": {
+            "analyzedGames": 40,
+            "amazonTakesBlinkThenRecaptured": 3,
+            "blinkCapturesAmazon": 4,
+            "interpretation": "Observed move-history patterns only; no proof of legal replay, forced trades, engine mistakes or causation."
+          }
+        }
+      },
+      "openingScores": [
+        {
+          "openingId": "anglo-indian-prefix",
+          "automatic": 0.5,
+          "eightPoint": 0,
+          "difference": -0.5
+        },
+        {
+          "openingId": "bird-open-prefix",
+          "automatic": 0,
+          "eightPoint": 0.75,
+          "difference": 0.75
+        },
+        {
+          "openingId": "caro-prefix",
+          "automatic": 0.75,
+          "eightPoint": 0,
+          "difference": -0.75
+        },
+        {
+          "openingId": "fianchetto-sicilian-prefix",
+          "automatic": 0.5,
+          "eightPoint": 0.5,
+          "difference": 0
+        },
+        {
+          "openingId": "french-prefix",
+          "automatic": 0.75,
+          "eightPoint": 0,
+          "difference": -0.75
+        },
+        {
+          "openingId": "king-pawn-step-prefix",
+          "automatic": 0.5,
+          "eightPoint": 0,
+          "difference": -0.5
+        },
+        {
+          "openingId": "kingside-fianchetto-prefix",
+          "automatic": 0,
+          "eightPoint": 0,
+          "difference": 0
+        },
+        {
+          "openingId": "modern-prefix",
+          "automatic": 0,
+          "eightPoint": 0,
+          "difference": 0
+        },
+        {
+          "openingId": "open-e-pawns",
+          "automatic": 0.5,
+          "eightPoint": 0,
+          "difference": -0.5
+        },
+        {
+          "openingId": "open-knights-prefix",
+          "automatic": 0.5,
+          "eightPoint": 0,
+          "difference": -0.5
+        },
+        {
+          "openingId": "ordinary-knights-prefix",
+          "automatic": 0.75,
+          "eightPoint": 0,
+          "difference": -0.75
+        },
+        {
+          "openingId": "queen-rook-step-prefix",
+          "automatic": 0.25,
+          "eightPoint": 0.25,
+          "difference": 0
+        },
+        {
+          "openingId": "quiet-c-pawns",
+          "automatic": 0.5,
+          "eightPoint": 0.25,
+          "difference": -0.25
+        },
+        {
+          "openingId": "quiet-e-pawns",
+          "automatic": 0.5,
+          "eightPoint": 0.5,
+          "difference": 0
+        },
+        {
+          "openingId": "reti-e-pawn-prefix",
+          "automatic": 0.75,
+          "eightPoint": 0,
+          "difference": -0.75
+        },
+        {
+          "openingId": "reti-sicilian-prefix",
+          "automatic": 0.5,
+          "eightPoint": 0.25,
+          "difference": -0.25
+        },
+        {
+          "openingId": "reversed-sicilian-prefix",
+          "automatic": 0.75,
+          "eightPoint": 0,
+          "difference": -0.75
+        },
+        {
+          "openingId": "sicilian-prefix",
+          "automatic": 0.5,
+          "eightPoint": 0,
+          "difference": -0.5
+        },
+        {
+          "openingId": "start",
+          "automatic": 0.25,
+          "eightPoint": 0,
+          "difference": -0.25
+        },
+        {
+          "openingId": "symmetrical-english-prefix",
+          "automatic": 0.5,
+          "eightPoint": 0.5,
+          "difference": 0
+        }
+      ]
+    },
+    {
+      "id": "rook.purple@4",
+      "label": "Blink (adjacent diagonal captures)",
+      "comparisonId": "blink-v-amazon",
+      "sharedOpenings": 20,
+      "automaticScore": 0.85,
+      "eightPointScore": 0.7625,
+      "scoreDifference": -0.08750000000000002,
+      "openingChanges": {
+        "better": 2,
+        "same": 10,
+        "worse": 8
+      },
+      "policies": {
+        "auto": {
+          "games": 40,
+          "completePairs": 20,
+          "wins": 32,
+          "draws": 4,
+          "losses": 4,
+          "exchanges": {
+            "analyzedGames": 40,
+            "amazonTakesBlinkThenRecaptured": 18,
+            "blinkCapturesAmazon": 8,
+            "interpretation": "Observed move-history patterns only; no proof of legal replay, forced trades, engine mistakes or causation."
+          }
+        },
+        "eight": {
+          "games": 40,
+          "completePairs": 20,
+          "wins": 28,
+          "draws": 5,
+          "losses": 7,
+          "exchanges": {
+            "analyzedGames": 40,
+            "amazonTakesBlinkThenRecaptured": 12,
+            "blinkCapturesAmazon": 9,
+            "interpretation": "Observed move-history patterns only; no proof of legal replay, forced trades, engine mistakes or causation."
+          }
+        }
+      },
+      "openingScores": [
+        {
+          "openingId": "anglo-indian-prefix",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        },
+        {
+          "openingId": "bird-open-prefix",
+          "automatic": 0.5,
+          "eightPoint": 0.5,
+          "difference": 0
+        },
+        {
+          "openingId": "caro-prefix",
+          "automatic": 1,
+          "eightPoint": 0.5,
+          "difference": -0.5
+        },
+        {
+          "openingId": "fianchetto-sicilian-prefix",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        },
+        {
+          "openingId": "french-prefix",
+          "automatic": 0.25,
+          "eightPoint": 1,
+          "difference": 0.75
+        },
+        {
+          "openingId": "king-pawn-step-prefix",
+          "automatic": 1,
+          "eightPoint": 0.5,
+          "difference": -0.5
+        },
+        {
+          "openingId": "kingside-fianchetto-prefix",
+          "automatic": 0.5,
+          "eightPoint": 0.5,
+          "difference": 0
+        },
+        {
+          "openingId": "modern-prefix",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        },
+        {
+          "openingId": "open-e-pawns",
+          "automatic": 1,
+          "eightPoint": 0.75,
+          "difference": -0.25
+        },
+        {
+          "openingId": "open-knights-prefix",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        },
+        {
+          "openingId": "ordinary-knights-prefix",
+          "automatic": 0.75,
+          "eightPoint": 0.5,
+          "difference": -0.25
+        },
+        {
+          "openingId": "queen-rook-step-prefix",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        },
+        {
+          "openingId": "quiet-c-pawns",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        },
+        {
+          "openingId": "quiet-e-pawns",
+          "automatic": 1,
+          "eightPoint": 0.5,
+          "difference": -0.5
+        },
+        {
+          "openingId": "reti-e-pawn-prefix",
+          "automatic": 0.5,
+          "eightPoint": 1,
+          "difference": 0.5
+        },
+        {
+          "openingId": "reti-sicilian-prefix",
+          "automatic": 0.5,
+          "eightPoint": 0.25,
+          "difference": -0.25
+        },
+        {
+          "openingId": "reversed-sicilian-prefix",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        },
+        {
+          "openingId": "sicilian-prefix",
+          "automatic": 1,
+          "eightPoint": 0.5,
+          "difference": -0.5
+        },
+        {
+          "openingId": "start",
+          "automatic": 1,
+          "eightPoint": 0.75,
+          "difference": -0.25
+        },
+        {
+          "openingId": "symmetrical-english-prefix",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        }
+      ]
+    },
+    {
+      "id": "rook.purple@5",
+      "label": "Blink (two-square diagonal captures)",
+      "comparisonId": "long-blink-v-amazon",
+      "sharedOpenings": 20,
+      "automaticScore": 0.8875,
+      "eightPointScore": 0.85,
+      "scoreDifference": -0.03749999999999998,
+      "openingChanges": {
+        "better": 4,
+        "same": 9,
+        "worse": 7
+      },
+      "policies": {
+        "auto": {
+          "games": 40,
+          "completePairs": 20,
+          "wins": 34,
+          "draws": 3,
+          "losses": 3,
+          "exchanges": {
+            "analyzedGames": 40,
+            "amazonTakesBlinkThenRecaptured": 19,
+            "blinkCapturesAmazon": 7,
+            "interpretation": "Observed move-history patterns only; no proof of legal replay, forced trades, engine mistakes or causation."
+          }
+        },
+        "eight": {
+          "games": 40,
+          "completePairs": 20,
+          "wins": 32,
+          "draws": 4,
+          "losses": 4,
+          "exchanges": {
+            "analyzedGames": 40,
+            "amazonTakesBlinkThenRecaptured": 17,
+            "blinkCapturesAmazon": 7,
+            "interpretation": "Observed move-history patterns only; no proof of legal replay, forced trades, engine mistakes or causation."
+          }
+        }
+      },
+      "openingScores": [
+        {
+          "openingId": "anglo-indian-prefix",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        },
+        {
+          "openingId": "bird-open-prefix",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        },
+        {
+          "openingId": "caro-prefix",
+          "automatic": 1,
+          "eightPoint": 0.5,
+          "difference": -0.5
+        },
+        {
+          "openingId": "fianchetto-sicilian-prefix",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        },
+        {
+          "openingId": "french-prefix",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        },
+        {
+          "openingId": "king-pawn-step-prefix",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        },
+        {
+          "openingId": "kingside-fianchetto-prefix",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        },
+        {
+          "openingId": "modern-prefix",
+          "automatic": 1,
+          "eightPoint": 0.5,
+          "difference": -0.5
+        },
+        {
+          "openingId": "open-e-pawns",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        },
+        {
+          "openingId": "open-knights-prefix",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        },
+        {
+          "openingId": "ordinary-knights-prefix",
+          "automatic": 1,
+          "eightPoint": 1,
+          "difference": 0
+        },
+        {
+          "openingId": "queen-rook-step-prefix",
+          "automatic": 1,
+          "eightPoint": 0.75,
+          "difference": -0.25
+        },
+        {
+          "openingId": "quiet-c-pawns",
+          "automatic": 0.5,
+          "eightPoint": 1,
+          "difference": 0.5
+        },
+        {
+          "openingId": "quiet-e-pawns",
+          "automatic": 0.5,
+          "eightPoint": 1,
+          "difference": 0.5
+        },
+        {
+          "openingId": "reti-e-pawn-prefix",
+          "automatic": 0.5,
+          "eightPoint": 1,
+          "difference": 0.5
+        },
+        {
+          "openingId": "reti-sicilian-prefix",
+          "automatic": 0.75,
+          "eightPoint": 0.5,
+          "difference": -0.25
+        },
+        {
+          "openingId": "reversed-sicilian-prefix",
+          "automatic": 0.75,
+          "eightPoint": 0.5,
+          "difference": -0.25
+        },
+        {
+          "openingId": "sicilian-prefix",
+          "automatic": 1,
+          "eightPoint": 0.5,
+          "difference": -0.5
+        },
+        {
+          "openingId": "start",
+          "automatic": 0.75,
+          "eightPoint": 1,
+          "difference": 0.25
+        },
+        {
+          "openingId": "symmetrical-english-prefix",
+          "automatic": 1,
+          "eightPoint": 0.75,
+          "difference": -0.25
+        }
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "standard-control",
+      "gamesPerPolicy": 40,
+      "identicalHistoriesAndOutcomes": 40,
+      "scorePerPolicy": {
+        "auto": 0.5,
+        "eight": 0.5
+      }
+    },
+    {
+      "id": "amazon-control",
+      "gamesPerPolicy": 40,
+      "identicalHistoriesAndOutcomes": 40,
+      "scorePerPolicy": {
+        "auto": 0.5,
+        "eight": 0.5
+      }
+    }
+  ],
+  "subjectGamesPerPolicy": 120,
+  "identicalSubjectHistoriesAndOutcomes": 0,
+  "decision": {
+    "sensitivity": "Observed matchup sensitivity is substantial for Quiet Blink; capturing revisions retain high observed scores under both policies.",
+    "authoritativeEvaluationPolicy": "deferred",
+    "intrinsicMaterialValue": "unmeasured",
+    "movementChange": "deferred",
+    "prototypes": "Preserve all three; neither certify Quiet Blink as balanced nor assign eight points universally.",
+    "furtherGamesScheduled": 0,
+    "nextMaterialQuestion": "A bounded Amazon-over-queen compensation pilot can use unchanged ordinary/Amazon evaluation: no Blink is present, so choosing a Blink policy is not a prerequisite.",
+    "optionalCalibrationQuestion": "Choosing authoritative Blink search values may justify one separately capped identical-army policy duel. The shared-policy runner needs new support; no duel is scheduled."
+  },
+  "limits": [
+    "Both engines use the same policy within each game. A lower Blink-army score does not identify which policy makes either engine play better.",
+    "All stage journal annotations match expected configurations and profiles, but no run.json or parent manifest was supplied; actual executable/source identities remain unverified.",
+    "Stage helpers replay the archived games. This comparison rechecks hashes, summaries, protocol annotations, paired opening scores and observed histories without searches.",
+    "Twenty fixed related opening prefixes are descriptive evidence, not independent random samples or a universal material calibration.",
+    "Exchange counts describe recorded behavior; they do not prove forced trades, mistakes, causation or intrinsic material strength."
+  ]
+}
