@@ -92,12 +92,26 @@ only part of these effects. Native raw MG/EG entries are also internal component
 not a linear conventional material list. There is no justified correction factor
 that makes this control equal 400 and transfers the correction to Amazon.
 
+Four pawns was only a conventional reference, not a narrow acceptance target.
+The supplied ubdip study estimates queen minus rook at 4.89 pawns overall, with
+5.75/4.64 in separate middlegame/endgame fits. These contextual estimates strengthen
+the case for broad sanity checks rather than forcing familiar integers. Our
+control remains unbracketed even at five; it does not prove an incorrect evaluator.
+
 Keep the goal of estimating the Amazon's added benefit Δ over an ordinary queen.
 A revised method should first pass a small diagnostic screen using ordinary
 reference differences, fuller pawn structures, representative matched positions
 and several compensation packages. An exact queen-to-rook replacement could
 improve one setup detail; it does not by itself validate the scale. Define what
 the assay measures, then declare a limited budget before implementation or play.
+
+First investigate [outcome regression](material-regression-review.md) using the
+existing journals, before requesting new games. Fit material differences to final
+results with draws retained, stable design identities, game-balanced sampling and
+validation/resampling grouped by color pair and opening family. Check feature
+coverage and identifiability before reporting pawn-normalized coefficients. The
+handicap data can test this pipeline but cannot establish representative values
+by itself. NNUE does not learn during play and is not required for this diagnostic.
 
 If a credible contextual Δ range is eventually established, use it as a provisional
 level-3 target, with roughly 2Δ/3 and Δ/3 for levels 2 and 1. That remains a design
@@ -124,7 +138,7 @@ with control validity and label unvalidated outputs as contextual odds.
    Treat 40%–60% against Amazon as a practical screening band, not absolute value
    or certification. A score near 50% suggests comparable purchases in that setup.
 4. **Estimate compensation for shortlisted purchases when useful.** Once the
-   Amazon pilot establishes a usable anchor, bracket other purchases against
+   revised material method establishes a usable anchor, compare other purchases against
    ordinary material across several layouts and compare their added benefit
    with the tier target. Report contextual ranges, not exact pawn numbers.
    Add the ordinary baseline to estimate a whole piece only when its assumptions

@@ -29,6 +29,8 @@ Amazon stage 1 has a **4–5 removed-pawn bracket**, interpolated to 4.5833 pawn
 
 The control compares material odds across two different missing-piece setups rather than replacing a queen with a rook on the same square. Removing flank pawns changes files, development, king shelter, pawn structure and promotion chances. The familiar queen-minus-rook difference of roughly four pawns is a conventional reference, not an exact law for these positions. These observations do not isolate whether evaluation or starting-position effects caused the mismatch, and do not establish a universal queen-minus-rook value above five pawns.
 
+Subsequent [source review](../../../docs/material-regression-review.md) corrects the narrow four-pawn expectation: ubdip's supplied empirical study estimates 4.89 overall, with 5.75/4.64 in separate phase fits. A result near five would not by itself invalidate a method. This pilot still lacks a crossing within its grid; the revised interpretation does not alter its data or resume the unused games.
+
 ## Decision and reproduction
 
 Preserve the data and close this pilot without extending its doses, converting the Amazon crossing into a calibrated material claim, or rescaling it until the control equals 400. The experiment has identified that the current method/reference combination is not established for the intended purpose. A later revised method needs a separate question, credible controls and a bounded validation budget before a larger piece survey.
