@@ -130,6 +130,17 @@ recompute unit weights after filtering and use no bootstrap. The
 It is closed without a game-budget extension. Earlier archived diagnostics retain
 their original tool hashes; use their matching revision for exact reproduction.
 
+## Supplied EPD corpus
+
+The [independent EPD audit](../experiments/balance/results/material-epd-001.md)
+reproduces the supplied baseline point values and estimates conditional ranges
+by resampling whole recorded game IDs. It also exposes sensitivity to draws and
+equal game weighting. The optional Python helper and pinned dependencies live
+in `scripts/analysis/`; the game and Node diagnostic need no Python installation.
+These external files have a different collection/evaluation context and are not
+pooled automatically with either archived LevelUp cohort. Preserve input hashes
+and separate generation settings before using them as a reference for upgrades.
+
 ## NNUE and game phase
 
 NNUE uses a separately trained network with fixed weights during ordinary play;

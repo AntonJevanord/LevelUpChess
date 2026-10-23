@@ -1,0 +1,249 @@
+{
+  "schemaVersion": 1,
+  "format": "independent-epd-material-fit-audit",
+  "input": {
+    "file": "test.epd",
+    "bytes": 4728048,
+    "sha256": "9ce2256e8e5e6bf75c1675f4e6e5735fceccf4792b4e47cb1cb087a0823e4d2d",
+    "rows": 35052,
+    "games": 220,
+    "gameResults": {
+      "1-0": 76,
+      "1/2-1/2": 66,
+      "0-1": 78
+    },
+    "rowResults": {
+      "1-0": 10076,
+      "1/2-1/2": 14384,
+      "0-1": 10592
+    }
+  },
+  "reproduction": {
+    "rows": 16661,
+    "games": 154,
+    "rawCoefficients": {
+      "P": 1.5025187936756181,
+      "N": 3.169267337901212,
+      "B": 3.2564321974332184,
+      "R": 5.9051273633023245,
+      "Q": 13.098703471735993,
+      "K": 0.0
+    },
+    "normalizedValues": {
+      "P": 1.0,
+      "N": 2.1093029592982457,
+      "B": 2.167315451320908,
+      "R": 3.9301520807314403,
+      "Q": 8.71783003771459,
+      "K": 0.0
+    },
+    "move": 0.013210535938413202,
+    "normalizer": 1.5025187936756181,
+    "queenMinusRook": 4.787677956983148,
+    "settings": {
+      "solver": "liblinear",
+      "C": 10,
+      "draws": "excluded",
+      "stablePly": 1,
+      "normalization": "minimum positive coefficient >.05"
+    },
+    "gameBootstrap": {
+      "unit": "whole game ID",
+      "draws": "excluded exactly as reference point fit",
+      "weighting": "original position weights retained within each sampled game",
+      "games": 154,
+      "requested": 100,
+      "completed": 100,
+      "nonpositivePawn": 0,
+      "seed": 42,
+      "normalization": "explicit pawn coefficient re-estimated in each replicate",
+      "ratios": {
+        "P": {
+          "lower": 1.0,
+          "upper": 1.0,
+          "std": 0.0
+        },
+        "N": {
+          "lower": 1.6250263569648784,
+          "upper": 2.6492831473011322,
+          "std": 0.2939583460710529
+        },
+        "B": {
+          "lower": 1.7315800336391214,
+          "upper": 2.8668860774708365,
+          "std": 0.2859532672584377
+        },
+        "R": {
+          "lower": 3.206414417703959,
+          "upper": 4.925916285801799,
+          "std": 0.47327302095061186
+        },
+        "Q": {
+          "lower": 6.987891176186956,
+          "upper": 10.510281715334665,
+          "std": 0.9687707855204984
+        },
+        "K": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "std": 0.0
+        }
+      },
+      "queenMinusRook": {
+        "lower": 3.3527468103559404,
+        "upper": 5.861648240954744,
+        "std": 0.692877570402872
+      },
+      "confidence": 0.95,
+      "failedFits": 0
+    }
+  },
+  "gameWeightedScoreFit": {
+    "method": {
+      "target": "expected final White score, W/D/L=1/.5/0",
+      "weighting": "equal total weight per game",
+      "link": "fractional logistic",
+      "ridge": 0.001,
+      "intercept": "unpenalized",
+      "features": [
+        "pawn",
+        "knight",
+        "bishop",
+        "rook",
+        "queen",
+        "tempo"
+      ],
+      "stablePly": 1,
+      "validation": "five deterministic game-held-out folds",
+      "bootstrap": "whole game IDs; recompute pawn-normalized ratio per replicate",
+      "seed": 42
+    },
+    "rows": 29383,
+    "games": 220,
+    "drawGames": 66,
+    "converged": true,
+    "iterations": 15,
+    "coefficients": {
+      "pawn": 0.903326147270743,
+      "knight": 1.4812774057040723,
+      "bishop": 1.5482749667505449,
+      "rook": 2.9739953963327213,
+      "queen": 5.94002643536165,
+      "tempo": 0.014162299913982676
+    },
+    "intercept": 0.0015105254616775005,
+    "arithmeticRatios": {
+      "pawn": 1.0,
+      "knight": 1.6398035307397196,
+      "bishop": 1.7139711624958633,
+      "rook": 3.2922720163898473,
+      "queen": 6.575727330940769,
+      "tempo": 0.015677947501876066
+    },
+    "trainMetrics": {
+      "brier": 0.0931953704050746,
+      "logLoss": 0.4915896944370734
+    },
+    "validationMetrics": {
+      "brier": 0.09471901947834739,
+      "logLoss": 0.4969451479705364
+    },
+    "baselineMetrics": {
+      "brier": 0.17563509004757702,
+      "logLoss": 0.694417577216067
+    },
+    "folds": [
+      {
+        "fold": 0,
+        "trainingGames": 177,
+        "testGames": 43,
+        "converged": true
+      },
+      {
+        "fold": 1,
+        "trainingGames": 174,
+        "testGames": 46,
+        "converged": true
+      },
+      {
+        "fold": 2,
+        "trainingGames": 175,
+        "testGames": 45,
+        "converged": true
+      },
+      {
+        "fold": 3,
+        "trainingGames": 174,
+        "testGames": 46,
+        "converged": true
+      },
+      {
+        "fold": 4,
+        "trainingGames": 180,
+        "testGames": 40,
+        "converged": true
+      }
+    ],
+    "bootstrap": {
+      "requested": 100,
+      "completed": 100,
+      "failed": 0,
+      "nonpositivePawn": 0,
+      "ratios": {
+        "pawn": {
+          "lower": 1.0,
+          "upper": 1.0,
+          "std": 0.0
+        },
+        "knight": {
+          "lower": 1.0921157649820699,
+          "upper": 2.2521949763188367,
+          "std": 0.324788169664738
+        },
+        "bishop": {
+          "lower": 1.2136513449811255,
+          "upper": 2.2978664123674166,
+          "std": 0.29849882245190745
+        },
+        "rook": {
+          "lower": 2.704949194918457,
+          "upper": 4.134636302362124,
+          "std": 0.4094293825330021
+        },
+        "queen": {
+          "lower": 5.25960727892472,
+          "upper": 8.549057542617872,
+          "std": 0.9009564741258133
+        },
+        "tempo": {
+          "lower": 0.011145751163965354,
+          "upper": 0.020108260602049347,
+          "std": 0.002133864525523826
+        }
+      },
+      "unit": "whole game ID",
+      "confidence": 0.95
+    },
+    "limits": [
+      "Original engine/source identity and per-row search settings were not supplied.",
+      "Game IDs prevent within-game leakage, but shared opening families and repeated physical games may still correlate different game IDs.",
+      "Material-only fitted coefficients are contextual outcome predictions, not causal exchange prices or raw engine evaluation units.",
+      "This sensitivity model changes weights, draw treatment, parameterization and regularization; differences from the reference fit do not isolate one cause.",
+      "The supplied hmvc annotation is used as a material-stability counter; full move legality and tactical quietness are not replay-verified."
+    ]
+  },
+  "engineGamesStarted": 0,
+  "runtime": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "sklearn": "1.8.0"
+  },
+  "analysisSourceSha256": "eefcaadd2ed6a84c89887cd504deea94cd659ad238d27fe1ca62858742dcba4b",
+  "verification": {
+    "finalParserCheckedOnFullInput": true,
+    "referencePointFitReproducedAfterParserHardening": true,
+    "bootstrapAndSensitivityResultsReused": true,
+    "note": "The bounded bootstrap and sensitivity calculations preceded final CLI/parser hardening. Their numerical core and data matrices are unchanged; no full CLI rerun is claimed."
+  }
+}

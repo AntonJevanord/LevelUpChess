@@ -128,6 +128,14 @@ Close this cohort without prices or more games. Inspect separately supplied
 outcome-labelled datasets on their own provenance and game counts; do not pool
 them automatically with the handicap or control experiments.
 
+The [supplied ordinary EPD baseline](../experiments/balance/results/material-epd-001.md)
+contains 605 recorded games and reproduces queen 8.40 / rook 4.74 under its
+reference model. Whole-game uncertainty for the difference spans about 2.7–5.1
+pawns; changing draw treatment and game weights also changes the fit. Preserve
+that corpus as a provisional reference without assigning exact prices. Future
+upgrade collection must freeze comparable settings and produce observable
+upgrade imbalances; symmetric Amazon controls did not supply them.
+
 If a credible contextual Δ range is eventually established, use it as a provisional
 level-3 target, with roughly 2Δ/3 and Δ/3 for levels 2 and 1. That remains a design
 hypothesis. Keep native parameter units, displayed engine scores and conventional
