@@ -81,6 +81,8 @@ npm.cmd run balance:rook-values -- --report balance-results/rook-values
 
 The report compares policy scores only on shared fully scored openings. Lower values can improve or worsen engine play; a score change does not measure the piece's true material value. This batch has no automatic extension. Keep old result directories with their original branch and engine.
 
+The [automatic baseline](experiments/balance/results/rook-values-auto-001.md) is complete: Quiet Blink scored 46.25%, adjacent-capture Blink 85%, and long-diagonal Blink 88.75%. These compare different movements under automatic values; the eight-point stage is running. The [balancing strategy](docs/balancing-strategy.md) separates engine calibration, upgrade strength and purchase cost. Version 16 remains the active milestone.
+
 ## Completed Amazon comparison: 1,120 games
 
 The [completed version-15 batch](experiments/balance/results/amazon-alternatives-001.md) reports 1,119 completed games, one truncation, and no errors. Ranging, Rank without camel jumps, and quiet-jump Vertical are near the practical 40%–60% point-score target. Short Sideways and the diagonal companion narrowly miss it; both Blink rooks overshoot. The [game-record audit](experiments/balance/results/amazon-alternatives-001-audit.md) confirms every move and identifies the Blink valuation confound motivating version 16.

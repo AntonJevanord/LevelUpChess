@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 16 prepares one 400-game Blink evaluation check before further movement changes. Version 15's completed 1,120-game comparison and replay audit remain preserved. Earlier milestones are in [development history](docs/development-history.md).
+Version 16 remains active for the Blink evaluation check and [balancing strategy](docs/balancing-strategy.md). Its automatic 200 games are complete; the eight-point stage is running. Version 15's completed 1,120-game comparison and replay audit remain preserved. Earlier milestones are in [development history](docs/development-history.md).
 
 Browser-save compatibility across releases is optional. Experiment definitions, identities, and results must remain reproducible.
 
@@ -130,7 +130,7 @@ Implement and verify the alternatives before starting the single declared batch.
 
 ## Version 16 — Blink evaluation consistency
 
-Implement in this order, then run the fixed local batch once. Preserve movement IDs, Betza text, three-point prices, and the version-15 executable/results.
+Preserve movement IDs, Betza text, three-point prices, and the version-15 executable/results. Keep the engine, runner and policy inputs frozen while the user's second stage runs; documentation updates retain the current experiment identity.
 
 - [x] Preserve version 15 and develop on `version_16`; declare the [400-game evaluation plan](experiments/balance/rook-values-plan.md).
 - [x] Patch explicit custom values through raw/adjusted evaluation, exchange and capture-order tables; leave automatic values unchanged. Record matching source, patch and executable provenance.
@@ -141,8 +141,19 @@ Implement in this order, then run the fixed local batch once. Preserve movement 
 - [x] Document eight as a rook-relative evaluation prior, not measured material: ordinary rook MG/EG 1276/1380 scaled by 8/5 gives 2042/2208. Do not multiply raw pawn units by eight or alter movements to compensate for evaluation.
 - [x] Verify 498 unit/integration cases across the full suite and focused additions, plus 16 browser/API cases. Validate all 400 army/color/opening combinations, 88 movement probes and 320 native positions across both policies. Pass 20 unscored native workflow games, paired stop/resume, immutable identities, partial reports and old-engine rejection before campaign creation.
 - [x] Verify source-table consistency and matching source/patch/executable hashes; rebuild the Windows bundle and test the same patch natively on Linux. All existing playable profiles and movement definitions remain unchanged.
-- [ ] Run the included Windows executable's preflight on the user's computer; Wine is unavailable in this cloud environment.
-- [ ] Run the formal 400-game campaign locally, inspect existing games and human feedback, then decide whether one Blink design needs a movement change. Higher or lower scores under manual values are both possible; no automatic extra stage follows.
+- [x] Receive and replay the [automatic 200-game baseline](experiments/balance/results/rook-values-auto-001.md): all games completed, no errors/truncations, 100 complete pairs and 26,693 legal plies. Regenerate its summary and match declared profile/settings; leave missing manifest/binary identity checks open.
+- [x] Establish the [balancing strategy](docs/balancing-strategy.md): separate engine calibration, contextual upgrade benefit and purchase price; review all active values but override selectively; retain Amazon as one reference and use bounded follow-ups only for concrete decisions.
+- [ ] Receive the second 200 games, now running locally. Compare policies on their shared complete openings and inspect trades, controls and human feedback. The automatic baseline alone does not isolate a value effect; no automatic extra stage follows.
+- [ ] Verify parent and policy manifests against the bundled executable and source identities when supplied. Uploaded journals alone do not prove which Windows binary ran.
+- [ ] Close the fixed 400-game question with a policy/design decision or an explicit deferral before authorizing another batch.
+
+### After the current policy comparison
+
+- [ ] Record actual automatic/explicit MG/EG values, provenance and confidence for shortlisted active designs; retain ordinary-piece defaults and royal semantics. Do not assign desired base-plus-level targets to every custom type.
+- [ ] If the completed comparison leaves a consequential valuation question, declare one bounded calibration pilot. Independent policies for identical armies need new runner support; implement it only after choosing that question and budget.
+- [ ] Once the evaluator is credible, design one bounded Amazon material-anchor pilot: estimate its added value over a queen directly using ordinary-material compensation across several layouts. Freeze the policy, define pawn-equivalent units and stop with a useful range; no new batch is scheduled yet.
+- [ ] Use the empirical Amazon bonus Δ as the provisional level-3 added-benefit target, with ⅓Δ/⅔Δ for levels 1/2. Keep uncertainty and context separate from native engine parameters; do not infer exact centipawns from a matchup score.
+- [ ] Human-playtest survivors and use a small, contrasting equal-cost reference set. Apply later compensation checks only to surviving designs whose approximate added-value range would change a design decision.
 
 ## Deferred work
 

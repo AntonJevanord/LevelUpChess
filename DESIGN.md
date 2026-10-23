@@ -10,11 +10,17 @@ Costs stay fixed at level 1/2/3. Historical IDs use blue/orange/purple; the expe
 
 Measure an upgrade's added benefit over its ordinary piece, then compare that benefit across families and purchase combinations. The purple knight's benefit includes its extra `WD` unit; its original knight remains on the board. A royal king has no ordinary exchange value, so its upgrades need winning and mating tests.
 
+The [version-16 balancing strategy](docs/balancing-strategy.md) separates purchase prices, engine material parameters and empirical added benefit. Audit the values used for every active type; override implausible estimates selectively. Assigning every piece its desired base-plus-level strength would put an untested design target into the evaluator.
+
 ## Material estimates and the Amazon reference
 
 Ordinary pawn ≈1, knight/bishop ≈3, rook ≈5, and queen ≈9 are starting references. “Ordinary value + level” is a design target, not a measurement or a guarantee that one upgrade point equals exactly one pawn.
 
-Use the existing Amazon, `queen.purple@1` (`QN`), as the first reference upgrade. An estimated whole-piece value of 12–13 versus an ordinary queen's 9 suggests an added benefit of roughly **3–4**. Blue and orange can target one-third and two-thirds of that benefit. Keep this reference unchanged within a design batch; its estimated material value remains contextual.
+Use the existing Amazon, `queen.purple@1` (`QN`), as one reference upgrade. The familiar whole-piece estimate of 12–13 versus an ordinary queen's 9 suggests an added benefit of roughly **3–4**, pending measurement in this game. After evaluation review, estimate that bonus directly from play: compare an Amazon upgrade with an ordinary queen army while varying compensating ordinary material across several layouts. Directly estimating the difference avoids subtracting two separately uncertain total values.
+
+Call the resulting approximate bonus **Δ**. Target added benefit of Δ for level 3, roughly ⅔Δ for level 2 and ⅓Δ for level 1, then check surviving designs against contrasting opponents and human feedback. If Δ were 300 material centipawns, the targets would be +100/+200/+300; that is an illustration, not a measured result. Here 100 material centipawns means one pawn-equivalent on the declared reference scale. Engine evaluation scores and raw MG/EG parameters are separate units. Preserve a range and the tested context; neither the tier ratios nor component values guarantee linear strength.
+
+Keep the Amazon and evaluation policy fixed within each batch. Material bracketing can inform our target without prescribing every piece's engine value or treating a 50% Amazon score as sufficient evidence of balance.
 
 The simplest direct comparison uses ordinary starting armies: one receives a candidate purple upgrade, the other receives the Amazon upgrade, and colors swap between paired games. The underlying standard material is identical. This compares upgrade packages without requiring several queens or pretending that a whole pawn and a whole queen have equal value.
 
@@ -152,6 +158,8 @@ The [400-game plan](experiments/balance/rook-values-plan.md) compares automatic 
 Explicit values must reach raw and adjusted material, static exchange evaluation and capture-order tables before testing. A read-only engine diagnostic verifies actual tables before searches. This fixes the identified override inconsistency; it does not make all fairy-piece evaluation or exchange heuristics exact. Lowering a value can improve or worsen play through different trades and search decisions, so compare scores and recorded games without predicting the direction.
 
 Choose a movement change only after reviewing matched complete-opening scores, control diagnostics and human feedback. The experiment tests sensitivity to a chosen evaluation prior; it does not measure intrinsic material, calibrate engine Elo, or automatically authorize another batch.
+
+The [automatic baseline](experiments/balance/results/rook-values-auto-001.md) is complete: Quiet Blink scores 46.25%, adjacent-capture Blink 85%, and long-diagonal Blink 88.75%. Quiet Blink already has a high automatic material estimate (MG3146/EG3944), so differences among these movements do not isolate the effect of valuation. The eight-point stage is running. Keep all three definitions and the engine fixed until it finishes; neither a universal eight-point assignment nor a movement nerf is selected yet.
 
 ## Kings: preserve a clear mating objective
 

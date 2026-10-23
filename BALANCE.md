@@ -4,6 +4,8 @@ Run paired engine games to compare upgrade armies, strength handicaps, and ordin
 
 These tools collect results; they do not assign measured values to pieces or change the game's movement rules.
 
+Follow the [version-16 balancing strategy](docs/balancing-strategy.md): audit engine values, calibrate flagged cases separately, then compare surviving upgrades against fixed references. Material compensation can later provide approximate added-value ranges; Amazon scores alone do not establish pawn-equivalent values.
+
 The [first balance revision plan](experiments/balance/revision-plan.md) closed at 160 of at most 200 games with explicit candidate decisions. Existing experiment files are options, not a queue that must be exhausted before development continues.
 
 ## Version 16: Blink values, 400 games
@@ -39,6 +41,8 @@ The first launch freezes both configurations, source/binary identities and worke
 Preflight verifies the patched engine's actual raw, adjusted, exchange and capture-order values through the read-only `levelupvalues` diagnostic. An older or inconsistent executable cannot start manual-value searches. Evaluation settings use optional schema-2 `evaluation.pieceValues`, keyed by design ID and compiled through its frozen letter allocation; profile and resume identities include them. See [the source/provenance notes](stockfish/README.md) for the engine patch.
 
 The patch makes explicit overrides consistent across the identified tables; automatic defaults remain unchanged. It does not correct every fairy-piece evaluation heuristic. A lower assigned value may improve or worsen play. Compare both new policies under matching conditions, retain the version-15 evidence separately, and use outcomes to guide one design decision rather than declare a material value or queue more tests.
+
+The [uploaded automatic baseline](experiments/balance/results/rook-values-auto-001.md) contains 200 completed games, with no errors or truncations. Quiet/adjacent/long Blink scored 46.25% / 85% / 88.75%; each comparison has 20 complete color pairs. Every recorded move and outcome replays correctly, and the summary regenerates. The journal matches the automatic profile; executable and runner identities await the missing manifests. The user has started the second 200-game policy. No movement or valuation decision follows from the first stage alone.
 
 ## Completed version 15: paired alternatives versus the Amazon
 
@@ -264,9 +268,11 @@ To estimate a strength handicap, compare an upgraded army against an ordinary on
 
 Keep ordinary material values separate from upgrade prices. Pawn ≈1, knight/bishop ≈3, rook ≈5, and queen ≈9 are familiar starting references. A target of “ordinary piece value + level” is a design hypothesis: a blue bishop might aim to add about one pawn of value, but its price of 1 does not prove that it does. A royal king has no ordinary exchange value.
 
-The Amazon (`queen.purple@1`, `QN`) remains the fixed reference upgrade: ordinary queen ≈9 and Amazon ≈12–13 suggests an added benefit of ≈3–4, not an exact LevelUp measurement. Compare a candidate purple purchase against that queen purchase on otherwise ordinary armies first. Multiple-copy layouts need explicit shared setup support and measure their own context. See [the design rationale](DESIGN.md#material-estimates-and-the-amazon-reference).
+The Amazon (`queen.purple@1`, `QN`) remains one fixed reference upgrade: ordinary queen ≈9 and Amazon ≈12–13 suggests an added benefit of ≈3–4, not an exact LevelUp measurement. It is a useful first screen on otherwise ordinary armies. After evaluation review, compare only surviving candidates against a small, contrasting reference set. Multiple-copy layouts need explicit shared setup support and measure their own context. See [the strategy](docs/balancing-strategy.md) and [design rationale](DESIGN.md#material-estimates-and-the-amazon-reference).
 
-Material-odds runs can later provide additional anchors under matching conditions. Fit any pawn-equivalent estimates across several anchors, armies, openings, and search budgets; do not convert one score or an engine's centipawn evaluation directly into a material price. Extra units, promotion, and royal safety can make advantages nonlinear.
+After the current evaluation comparison, the first proposed material anchor is the Amazon's added benefit over an ordinary queen. Estimate this difference directly using compensating ordinary-material handicaps across several layouts and paired openings; subtracting two separately estimated whole-piece values is unnecessary. Report an approximate compensation range. Use that bonus as the level-3 target, with one-third/two-thirds as provisional level-1/2 targets, then check other surviving purchases against it.
+
+Material-odds results remain contextual. Fit pawn-equivalent ranges across several anchors and armies; a later search-budget check requires a concrete unresolved question and its own cap. Define 100 material centipawns as one reference pawn, separately from engine score units and raw MG/EG tables. Do not convert one score or an engine's centipawn evaluation directly into a material price. Extra units, promotion, deployment and royal safety can make advantages nonlinear. This anchor pilot is a proposal, not another scheduled batch.
 
 Start with equal-strength, equal-cost comparisons; inspect completion rates and opening sensitivity before tuning abilities. Keep the agreed 1/2/3 prices and increasing overall strength as design goals, and preserve old profiles when movement changes.
 
@@ -280,4 +286,4 @@ Track completed color-swapped pairs, distinct opening families, opponent coverag
 
 Prioritize a revised piece's comparison against an ordinary army, equal-cost alternatives, and relevant interactions. Add targeted starting positions for its changed behavior, such as blocked captures, promotion races, or sparse mating endings; these endgame scenarios still need harness support. Retain ordinary and reference self-play controls to detect broader effects; unchanged subject comparisons require a specific reason to spend more games. Use fixed effort per side within each comparison; prioritize additional paired games rather than giving one army extra search time.
 
-Engine evaluation tuning is a separate experiment. Its search evaluates whole positions, and custom-piece values come from movement heuristics or explicit overrides, not an evaluation counter. Schema-2 `evaluation.pieceValues` records explicit `{mg, eg}` values by immutable design ID; generated letter-based INI values and their actual engine tables are checked before search. Changing policy requires its own frozen engine/profile/run context. Keep movements fixed and compare against the same opponent; tuning does not validate its own material assumptions.
+Engine evaluation tuning is a separate experiment. Its search evaluates whole positions, and custom-piece values come from movement heuristics or explicit overrides, not an evaluation counter. Schema-2 `evaluation.pieceValues` records explicit `{mg, eg}` values by immutable design ID; generated letter-based INI values and their actual engine tables are checked before search. Changing policy requires its own frozen engine/profile/run context. The current Blink comparison measures sensitivity when both engines share a policy. Testing which policy plays identical armies better would need independent per-engine policies, which the current runner does not support. Do not tune a value until an Amazon score reaches 50% and call that measured balance.
