@@ -74,7 +74,7 @@ and does not block an Amazon-only material anchor.
 
 ## Estimate the Amazon's added benefit first
 
-The next proposed material pilot estimates the Amazon purchase's incremental
+The [512-game material pilot](../experiments/balance/material-estimate-plan.md) estimates the Amazon purchase's incremental
 benefit, Δ, from play. It uses only ordinary pieces and the unchanged Amazon;
 neither tested Blink override changes their values. Freeze this reference evaluator,
 then compare matched ordinary-queen armies: one side upgrades its queen to Amazon
@@ -97,9 +97,14 @@ from native raw MG/EG units and from an engine's displayed centipawn evaluation.
 Neither conversion is an automatic equality. Do not install these desired strength
 targets as engine parameters or retune the evaluator to obtain them.
 
-Declare the pilot's question, layouts, effort, cap and stopping rule before play.
-Review precision before estimating other purchases. This can proceed independently
-of optional Blink calibration; no further games are currently scheduled.
+The pilot declares its layouts, effort, 512-game cap and stopping rule before play.
+Run the 256-game queen-versus-rook odds control once, then Amazon increments of
+64, 64 and 128 games, retaining cumulative estimates at 64/128/256. Live estimates
+update after finished games when complete matched blocks exist. Review layout
+sensitivity and conditional resampling stability before estimating other purchases.
+The control is reused within its frozen context, not repeated at every checkpoint.
+This proceeds independently of optional Blink calibration; formal pilot games
+remain for local execution and no automatic extension follows.
 
 ## Compare surviving designs against the common target
 

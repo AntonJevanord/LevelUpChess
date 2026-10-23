@@ -6,6 +6,16 @@ These tools collect results; they do not assign measured values to pieces or cha
 
 Follow the [version-16 balancing strategy](docs/balancing-strategy.md): audit engine values, calibrate flagged cases separately, then compare surviving upgrades against fixed references. Material compensation can later provide approximate added-value ranges; Amazon scores alone do not establish pawn-equivalent values.
 
+## Version 16: staged material estimate, 512 games
+
+The [declared pilot](experiments/balance/material-estimate-plan.md) uses one 256-game queen-versus-rook odds control and one 256-game Amazon-versus-queen compensation assay. Each uses two, three, four or five missing ordinary pawns, two fixed layouts, 16 prefixes and both colors. The control's approximate 400-material-cp reference is conventional, not an exact official constant. Current setup supports removal odds, not literal replacement of a queen by a rook.
+
+Run `balance:material -- --check`, then `--out DIRECTORY --stage control --jobs 3`. Inspect the control; run `--stage 1`, `2` and `3` separately in the same parent directory. Amazon adds **64 + 64 + 128** games and stores **64/128/256** cumulative snapshots. `--resume DIRECTORY` continues one existing incomplete stage; `--report DIRECTORY` refreshes the report. Nothing advances automatically. The full control is reused; relevant engine/evaluation/method changes require a new control context.
+
+Estimate the 50% compensation crossing from complete matched opening blocks, showing raw dose/layout scores beside a decreasing fit. Grid brackets, plateaus and one-sided limits remain visible; no extrapolated value is invented. Whole-opening resampling supplies a conditional stability band with at least eight usable blocks. Later checkpoints add both samples and different predeclared openings, so they assess nested-cohort stability rather than isolate sample count alone. A larger sample is not an accuracy guarantee.
+
+The parent `material-campaign.json` freezes reference diagnostics, engine, sources, jobs and schedules. `estimates/control.json` and `estimates/amazon-64.json`, `amazon-128.json`, `amazon-256.json` are immutable; filenames denote planned sample sizes, with actual scored coverage inside. `material-report.md/.json` refresh after finished games, and the terminal prints provisional estimates or explains the missing paired blocks. Schedules group complete opening blocks to provide early estimates. Engine movement and values are unchanged; formal pilot games remain for local execution.
+
 The [first balance revision plan](experiments/balance/revision-plan.md) closed at 160 of at most 200 games with explicit candidate decisions. Existing experiment files are options, not a queue that must be exhausted before development continues.
 
 ## Version 16: completed Blink values comparison, 400 games
@@ -120,7 +130,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The generic configurations below are templates and historical protocols, not a queue. Both the Amazon alternatives batch and the 400-game Blink valuation check are closed; no additional batch is scheduled.
+The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives and Blink valuation batches are closed; the separate 512-game material pilot is the current declared experiment.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |

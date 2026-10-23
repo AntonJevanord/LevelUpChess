@@ -1,0 +1,527 @@
+{
+  "schemaVersion": 2,
+  "name": "Version 16 material compensation pilot: queen-rook control and Amazon bonus",
+  "seed": 42,
+  "repetitions": 1,
+  "engine": {
+    "nodes": 100000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400
+  },
+  "openings": [
+    {
+      "id": "start",
+      "moves": []
+    },
+    {
+      "id": "open-e-pawns",
+      "moves": [
+        "e2e4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "queen-pawns",
+      "moves": [
+        "d2d4",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "ordinary-knights",
+      "moves": [
+        "g1f3",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "french-prefix",
+      "moves": [
+        "e2e4",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "scandinavian-prefix",
+      "moves": [
+        "e2e4",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "queen-french-prefix",
+      "moves": [
+        "d2d4",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "queenside-knights",
+      "moves": [
+        "b1c3",
+        "b8c6"
+      ]
+    },
+    {
+      "id": "quiet-e-pawns",
+      "moves": [
+        "e2e3",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "quiet-d-pawns",
+      "moves": [
+        "d2d3",
+        "d7d6"
+      ]
+    },
+    {
+      "id": "pirc-prefix",
+      "moves": [
+        "e2e4",
+        "d7d6"
+      ]
+    },
+    {
+      "id": "queen-open-e-prefix",
+      "moves": [
+        "d2d4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "quiet-center-prefix",
+      "moves": [
+        "d2d3",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "mixed-knights-prefix",
+      "moves": [
+        "g1f3",
+        "b8c6"
+      ]
+    },
+    {
+      "id": "opposite-knights-prefix",
+      "moves": [
+        "b1c3",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "four-knights-prefix",
+      "moves": [
+        "g1f3",
+        "g8f6",
+        "b1c3",
+        "b8c6"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "control-left-h2",
+      "label": "Queen-versus-rook odds, left layout, 2-pawn compensation",
+      "armyA": {
+        "upgrades": {},
+        "remove": [
+          "a1",
+          "a2",
+          "b2"
+        ]
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [
+          "d1"
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "control-left-h3",
+      "label": "Queen-versus-rook odds, left layout, 3-pawn compensation",
+      "armyA": {
+        "upgrades": {},
+        "remove": [
+          "a1",
+          "a2",
+          "b2",
+          "c2"
+        ]
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [
+          "d1"
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "control-left-h4",
+      "label": "Queen-versus-rook odds, left layout, 4-pawn compensation",
+      "armyA": {
+        "upgrades": {},
+        "remove": [
+          "a1",
+          "a2",
+          "b2",
+          "c2",
+          "f2"
+        ]
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [
+          "d1"
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "control-left-h5",
+      "label": "Queen-versus-rook odds, left layout, 5-pawn compensation",
+      "armyA": {
+        "upgrades": {},
+        "remove": [
+          "a1",
+          "a2",
+          "b2",
+          "c2",
+          "f2",
+          "g2"
+        ]
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [
+          "d1"
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "control-right-h2",
+      "label": "Queen-versus-rook odds, right layout, 2-pawn compensation",
+      "armyA": {
+        "upgrades": {},
+        "remove": [
+          "g2",
+          "h1",
+          "h2"
+        ]
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [
+          "d1"
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "control-right-h3",
+      "label": "Queen-versus-rook odds, right layout, 3-pawn compensation",
+      "armyA": {
+        "upgrades": {},
+        "remove": [
+          "f2",
+          "g2",
+          "h1",
+          "h2"
+        ]
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [
+          "d1"
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "control-right-h4",
+      "label": "Queen-versus-rook odds, right layout, 4-pawn compensation",
+      "armyA": {
+        "upgrades": {},
+        "remove": [
+          "c2",
+          "f2",
+          "g2",
+          "h1",
+          "h2"
+        ]
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [
+          "d1"
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "control-right-h5",
+      "label": "Queen-versus-rook odds, right layout, 5-pawn compensation",
+      "armyA": {
+        "upgrades": {},
+        "remove": [
+          "b2",
+          "c2",
+          "f2",
+          "g2",
+          "h1",
+          "h2"
+        ]
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [
+          "d1"
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "amazon-left-h2",
+      "label": "Amazon-over-queen, left layout, 2-pawn compensation",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": [
+          "a2",
+          "b2"
+        ]
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "amazon-left-h3",
+      "label": "Amazon-over-queen, left layout, 3-pawn compensation",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": [
+          "a2",
+          "b2",
+          "c2"
+        ]
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "amazon-left-h4",
+      "label": "Amazon-over-queen, left layout, 4-pawn compensation",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": [
+          "a2",
+          "b2",
+          "c2",
+          "f2"
+        ]
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "amazon-left-h5",
+      "label": "Amazon-over-queen, left layout, 5-pawn compensation",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": [
+          "a2",
+          "b2",
+          "c2",
+          "f2",
+          "g2"
+        ]
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "amazon-right-h2",
+      "label": "Amazon-over-queen, right layout, 2-pawn compensation",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": [
+          "g2",
+          "h2"
+        ]
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "amazon-right-h3",
+      "label": "Amazon-over-queen, right layout, 3-pawn compensation",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": [
+          "f2",
+          "g2",
+          "h2"
+        ]
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "amazon-right-h4",
+      "label": "Amazon-over-queen, right layout, 4-pawn compensation",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": [
+          "c2",
+          "f2",
+          "g2",
+          "h2"
+        ]
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "amazon-right-h5",
+      "label": "Amazon-over-queen, right layout, 5-pawn compensation",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": [
+          "b2",
+          "c2",
+          "f2",
+          "g2",
+          "h2"
+        ]
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    }
+  ]
+}

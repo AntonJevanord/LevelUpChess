@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 16 remains active for the [balancing strategy](docs/balancing-strategy.md). The [400-game Blink evaluation comparison](experiments/balance/results/rook-values-comparison-001.md) is complete and closed; no extension is queued. Version 15's completed 1,120-game comparison and replay audit remain preserved. Earlier milestones are in [development history](docs/development-history.md).
+Version 16 remains active for the [512-game material pilot](experiments/balance/material-estimate-plan.md) and [balancing strategy](docs/balancing-strategy.md). The [400-game Blink evaluation comparison](experiments/balance/results/rook-values-comparison-001.md) is complete and closed. Earlier milestones are in [development history](docs/development-history.md).
 
 Browser-save compatibility across releases is optional. Experiment definitions, identities, and results must remain reproducible.
 
@@ -151,7 +151,12 @@ Preserve movement IDs, Betza text, three-point prices, and the version-15 execut
 ### After the current policy comparison
 
 - [ ] Record actual automatic/explicit MG/EG values, provenance and confidence for shortlisted active designs; retain ordinary-piece defaults and royal semantics. Do not assign desired base-plus-level targets to every custom type.
-- [ ] Design one bounded Amazon material-anchor pilot: estimate its added value over a queen directly using ordinary-material compensation across several layouts. Freeze unchanged ordinary/Amazon evaluation, define pawn-equivalent units and stop with a useful range; no new batch is scheduled yet. This uses no Blinks and does not require Blink tuning first.
+- [x] Design the [512-game material pilot](experiments/balance/material-estimate-plan.md): one 256-game queen-versus-rook odds control, then 64/128/256 cumulative Amazon games. Freeze reference evaluation, nominal pawn units, two removal layouts and 16 opening blocks; use no Blinks.
+- [x] Implement explicit stages, native reference-value inventory, frozen identities, stop/resume and immutable cumulative estimates. Report raw/per-layout curves, monotone-fit crossings, conditional resampling bands and incomplete coverage without extrapolating.
+- [x] Refresh and print live provisional estimates after finished games; explain incomplete paired blocks and preserve final checkpoints. Group schedules by opening block so matched estimates become available early.
+- [x] Pass 53 focused regression checks, all 512 native/browser army/opening comparisons and eight native movement probes. Verify 32 unscored three-worker games with paired stop/resume, native reference inventory, old-engine rejection, immutable checkpoints and live-report callbacks. Keep the formal pilot for local execution.
+- [ ] Run the control locally and inspect the conventional 400-cp comparison and layout sensitivity. Reuse it for the Amazon stages under the same frozen protocol; do not rescale results or extend the budget to force agreement.
+- [ ] Run the three explicit Amazon increments and compare stored estimates. Close at 512 scheduled games with a contextual range, one-sided bound or inconclusive result; no automatic extra run follows.
 - [ ] If choosing Blink search values would change a design decision, declare one bounded identical-army calibration pilot. Independent per-engine policies need new runner support; implement it only after choosing that question and budget. This is optional, not a gate for unrelated material anchors.
 - [ ] Use the empirical Amazon bonus Δ as the provisional level-3 added-benefit target, with ⅓Δ/⅔Δ for levels 1/2. Keep uncertainty and context separate from native engine parameters; do not infer exact centipawns from a matchup score.
 - [ ] Human-playtest survivors and use a small, contrasting equal-cost reference set. Apply later compensation checks only to surviving designs whose approximate added-value range would change a design decision.

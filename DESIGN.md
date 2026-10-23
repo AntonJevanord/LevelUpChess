@@ -20,7 +20,7 @@ Use the existing Amazon, `queen.purple@1` (`QN`), as one reference upgrade. The 
 
 Call the resulting approximate bonus **Δ**. Target added benefit of Δ for level 3, roughly ⅔Δ for level 2 and ⅓Δ for level 1, then check surviving designs against contrasting opponents and human feedback. If Δ were 300 material centipawns, the targets would be +100/+200/+300; that is an illustration, not a measured result. Here 100 material centipawns means one pawn-equivalent on the declared reference scale. Engine evaluation scores and raw MG/EG parameters are separate units. Preserve a range and the tested context; neither the tier ratios nor component values guarantee linear strength.
 
-Keep the Amazon and evaluation policy fixed within each batch. Material bracketing can inform our target without prescribing every piece's engine value or treating a 50% Amazon score as sufficient evidence of balance.
+Keep the Amazon and evaluation policy fixed within each batch. Material bracketing can inform our target without prescribing every piece's engine value or treating a 50% Amazon score as sufficient evidence of balance. The [512-game pilot](experiments/balance/material-estimate-plan.md) prepares a reusable queen-versus-rook odds control and cumulative Amazon estimates at 64/128/256 games; it preserves both raw layout effects and estimation limits.
 
 The simplest direct comparison uses ordinary starting armies: one receives a candidate purple upgrade, the other receives the Amazon upgrade, and colors swap between paired games. The underlying standard material is identical. This compares upgrade packages without requiring several queens or pretending that a whole pawn and a whole queen have equal value.
 
