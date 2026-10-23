@@ -25,6 +25,8 @@ The six groups are Ranging versus Courier, two Rank pawns, two Vertical bishops,
 
 The unchanged knights, Knight-capture rook, and Returning pawn are retained without another subject comparison. Capture-box rook remains retired and Twin short queens remain parked at level 3. The version-14 [540-game plan](experiments/balance/amazon-revision-plan.md) and command remain archived. This batch replaces it as the next design experiment; it is not an automatic second run. If a version-14 run has started, retain its original directory and matching build. Do not merge journals, reuse its directory, or resume it with changed rules.
 
+The [uploaded completed summary](experiments/balance/results/amazon-alternatives-001.md) reports 1,119 completed games, one truncation, no errors, and 559 complete pairs. The batch is closed at 1,120 games; the remaining budget is unused. The result note records the proposed shortlist and separates aggregate consistency from the still-pending manifest/game replay audit. No follow-up run is queued.
+
 ### Closed version-12 screen
 
 The user ended the 14-purchase round robin early and authorized a redesign. The newer summary contains **1,507 completed games, one unscored truncation, and two failed attempts**, with **1,508/1,860 scheduled games finalized** and **753 complete color pairs**. The CSV/Markdown standings describe an earlier snapshot. No final rankings are assigned, and the planned confirmation stage is unused. See [the audit and decisions](experiments/balance/results/level3-screen-001.md) for direct Amazon scores, file hashes, and evidence limits.
@@ -78,7 +80,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The generic configurations below are templates and historical protocols, not a queue. The current authorized batch is the 1,120-game Amazon alternatives comparison above.
+The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives batch above is closed; no next batch is declared.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |

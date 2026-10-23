@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 15 compares paired design alternatives against the fixed Amazon in one 1,120-game batch. Version 14 preserves the first revised workshop and 540-game plan; version 13 preserves reusable parallel-run tools. Earlier milestones are in [development history](docs/development-history.md).
+Version 15 completed its 1,120-game Amazon comparison; the summary supports a shortlist, with game-record review and human feedback pending. Version 14 preserves the first revised workshop and 540-game plan; version 13 preserves reusable parallel-run tools. Earlier milestones are in [development history](docs/development-history.md).
 
 Browser-save compatibility across releases is optional. Experiment definitions, identities, and results must remain reproducible.
 
@@ -123,7 +123,8 @@ Implement and verify the alternatives before starting the single declared batch.
 - [x] Document full Rank jumps, the 40%–60% point-score target, control limits, preserved experiment identities, and the fixed stopping decision. Unused budget is not an automatic follow-up stage.
 - [x] Validate all 1,120 army/color/opening combinations, 152 movement probes, and 1,040 distinct native positions; verify 132 independent new-rule move sets and 52 resulting positions.
 - [x] Verify 454 unit/integration cases and 36 focused browser cases. Two timing failures in the combined run passed isolated rechecks. Confirm offline play at 390px without external requests, errors, or overflow; verify eight unscored workflow games, immutable stop/resume, and the capped report.
-- [ ] Run the fixed batch once and combine complete-pair scores, opening sensitivity, completion, and human feedback. Record one keep/revise/park decision per group; do not retest unchanged earlier subjects or automatically start another batch.
+- [x] Receive and archive the [completed batch summary and shortlist](experiments/balance/results/amazon-alternatives-001.md): 1,119 completed games, one truncation, no errors, and 559 complete color pairs. Check aggregate arithmetic and declared labels; keep manifest/engine identity explicitly unverified until game records arrive.
+- [ ] Review original `run.json` and `games.jsonl`, especially the Blink victories, and combine human feedback before applying the proposed selections. Prefer Ranging, wide-knight Rank, quiet-jump Vertical, short Sideways, and the diagonal companion; review or park both Blink revisions. No new games are queued.
 
 ## Deferred work
 

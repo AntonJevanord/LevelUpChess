@@ -129,6 +129,8 @@ The [new plan](experiments/balance/amazon-alternatives-plan.md) fixes **1,120 ga
 
 Use **40%–60% point score** as a practical band, then compare each pair's distance from 50% on the same fully scored opening cohort. A smaller gap suggests which prototype is closer to the target under these conditions; a small difference does not establish a winner. Check completion, opening sensitivity, readability, enjoyment, and counterplay before selecting one, keeping both, or parking a group. Do not automatically buff the lower score or start another balance chain.
 
+The [completed 1,120-game batch](experiments/balance/results/amazon-alternatives-001.md) favors Ranging (48.75%), wide-knight Rank (54.375%), and quiet-jump Vertical (53.85%). Short Sideways (61.25%) and the diagonal companion (38.75%) are close enough to the target boundary to prioritize playtesting over automatic changes. Both Blink revisions overshoot (81.875% / 89.375%); inspect their existing games before choosing a redesign. These are review recommendations; current movement IDs and picker choices remain unchanged, and no additional games are queued.
+
 ## Kings: preserve a clear mating objective
 
 Keep exactly one royal per side, with check and checkmate. The selected prototype retains ordinary quiet king moves and adds capture-only two-square jumps:
