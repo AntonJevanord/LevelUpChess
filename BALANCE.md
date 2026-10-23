@@ -25,6 +25,14 @@ Missing starting pawns alter development, promotion, king cover and available ta
 
 A future method needs a small diagnostic screen before a full campaign, representative matched positions with fuller pawn structures, and multiple ordinary-material anchors. Keep relative upgrade comparisons and human playtesting as practical design evidence meanwhile.
 
+## Offline outcome-regression diagnostic
+
+`npm.cmd run balance:regression -- --out balance-results/material-regression` replays the committed pilot journals and fits material differences to final scores. No native engine is launched. This first adapter accepts the exact archived version-16 pilot; arbitrary experiment folders need a separate provenance-aware adapter.
+
+The [first result](experiments/balance/results/material-regression-001.md) retains 3,071 samples from 318 games. It keeps draws, gives each sampled game unit total weight, resolves dynamic letters through stable design IDs and holds out/resamples whole opening families. Reports expose no-sample games, partially sampled pairs, rank, convergence, policy identity limits and unsupported estimates. Sparse windows filter nearby material changes without claiming tactical quietness.
+
+The fit predicts outcomes within this selected cohort, while ordinary-piece ratios differ sharply from broad reference estimates. Keep it as a pipeline diagnostic; no material-price table or follow-up games are authorized by that result. Use a new output directory; see [sampling, options and limits](docs/material-regression-review.md#offline-command).
+
 ## Version 16: completed Blink values comparison, 400 games
 
 The [declared plan](experiments/balance/rook-values-plan.md) isolates evaluation from movement. The [completed comparison](experiments/balance/results/rook-values-comparison-001.md) tests quiet-only, adjacent-diagonal and two-square-diagonal Blink (`rook.purple@3`, `@4`, `@5`) against unchanged Amazon (`queen.purple@1`). It is closed at 400 games; commands below preserve the protocol, not a request to repeat it. Both policies require the same patched engine:

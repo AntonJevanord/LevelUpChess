@@ -61,6 +61,14 @@ The control does not validate a conventional material scale. The Amazon's prelim
 
 The batch is **closed at 320 games**. Leave the remaining 192 unused. The [original protocol](experiments/balance/material-estimate-plan.md), commands and snapshots remain preserved for reproduction. The [balancing strategy](docs/balancing-strategy.md) calls for a small method screen before another material campaign; no replacement batch is scheduled.
 
+The [offline regression diagnostic](experiments/balance/results/material-regression-001.md) reuses those games: 3,071 eligible positions, draws retained and validation grouped by related openings. It predicts their outcomes but does not establish transferable material prices. Reproduce it without an engine or new games:
+
+```bat
+npm.cmd run balance:regression -- --out balance-results/material-regression
+```
+
+Use a new output directory. The command saves the dataset, samples, grouped validation, conditional ranges and reproducibility hashes. See the [method and options](docs/material-regression-review.md#offline-command).
+
 ## Completed Blink evaluation check
 
 The [400-game plan](experiments/balance/rook-values-plan.md) compares the same three Blink movements under two engine evaluation policies: automatic values and a manual **eight-point whole-rook target**. Eight comes from ordinary rook ≈5 plus three upgrade levels; it is a judgment supplied to the engine, not a measured piece value. The test includes quiet-only Blink alongside the adjacent-diagonal and two-square-diagonal versions. Movement and three-point purchase prices stay unchanged.

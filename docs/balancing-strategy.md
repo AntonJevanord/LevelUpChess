@@ -113,6 +113,13 @@ coverage and identifiability before reporting pawn-normalized coefficients. The
 handicap data can test this pipeline but cannot establish representative values
 by itself. NNUE does not learn during play and is not required for this diagnostic.
 
+The [implemented diagnostic](../experiments/balance/results/material-regression-001.md)
+retains 3,071 positions from 318 games. It has full feature rank and predicts
+held-out-family outcomes, but its ordinary-material coefficient ratios differ
+sharply from broad reference estimates. Keep the tool; do not adopt its ratios
+as piece prices. Decide whether broader existing data or a different matched
+position design can address that check before declaring another game budget.
+
 If a credible contextual Δ range is eventually established, use it as a provisional
 level-3 target, with roughly 2Δ/3 and Δ/3 for levels 2 and 1. That remains a design
 hypothesis. Keep native parameter units, displayed engine scores and conventional

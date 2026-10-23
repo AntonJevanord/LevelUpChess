@@ -1,7 +1,8 @@
 # Material estimates from game outcomes
 
-Research review, 2026-10-23. This is a method proposal for version 16, not a new
-game batch or a measured value table.
+Research review, 2026-10-23. The offline prototype is implemented and
+[tested on the archived pilot](../experiments/balance/results/material-regression-001.md).
+It is a method diagnostic, not a new game batch or a measured value table.
 
 ## What the supplied articles change
 
@@ -78,6 +79,44 @@ engine games. Their deliberately selected pawn handicaps and limited opening
 families do not become representative merely by extracting more positions. A
 small offline diagnostic must precede any decision to generate broader data; no
 new game budget is declared here.
+
+## Offline command
+
+With installed project dependencies, run from the repository using a new output
+directory. No native executable, Python packages or NNUE network is required:
+
+```bat
+npm.cmd run balance:regression -- --out balance-results/material-regression
+```
+
+This first adapter reads the committed `material-pilot-001` control and Amazon
+journals and verifies their archived checksums. `--archive DIRECTORY` selects a
+copy of that archive, not an arbitrary balance-run directory. It rejects mixed
+identities, policies, incomplete pairs and corrupted records. Actual execution
+provenance remains unverified where original manifests were not supplied.
+
+Sampling starts at ply 16 with stride five and requires unchanged material for
+two plies before and after. The odd stride includes both sides to move. Each
+accepted game has unit total weight; games without samples and partially sampled
+pairs remain in coverage. Related prefixes are explicitly grouped into five
+families, not treated as 16 independent populations.
+
+The expected-score fit uses fixed ridge 0.001 on standardized slopes, an
+unpenalized intercept, whole-family holdouts and seeded family bootstrap. Defaults
+are `--bootstrap 200 --seed 42`; zero resamples disables intervals. The optional
+normalized table requires full rank, convergence, positive stable pawn support,
+enough usable resamples and eight supported families per material feature. That
+is a disclosed conservative reporting rule, not a confidence guarantee or an
+instruction to generate more games. Raw exploratory coefficients and arithmetic
+ordinary-material checks remain visible.
+
+Outputs are `dataset.json`, `samples.jsonl`, `regression-report.json/.md` and
+`analysis-manifest.json`. The manifest hashes inputs, tools, decoder dependencies,
+rules bundle, protocol, dataset and report. Existing outputs are never replaced;
+source journals are never edited. The [first result](../experiments/balance/results/material-regression-001.md)
+shows working extraction and prediction but does not recover transferable
+ordinary-piece values. A broader dataset/design decision precedes any new match
+budget or engine-value change.
 
 ## NNUE and game phase
 

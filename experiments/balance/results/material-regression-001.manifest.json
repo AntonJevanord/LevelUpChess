@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-material-regression-analysis",
+  "engineGamesStarted": 0,
+  "inputs": [
+    {
+      "file": "material-pilot-001.control.games.jsonl",
+      "bytes": 784545,
+      "sha256": "bf13d7c50fa97a6d29730a7e6ad15b3725d5970e8da19e32bdc556563835d47e"
+    },
+    {
+      "file": "material-pilot-001.amazon-64.games.jsonl",
+      "bytes": 199007,
+      "sha256": "a6f2cff0f9cb7bc6ce6471a31f7cc176463d100730d513fc667fe1c98f2a6617"
+    }
+  ],
+  "profileHash": "02ec9d756b42b9397e44c25391377caa3f57c904a429fb8783c48eada35c2201",
+  "registryHash": "555d7dcfff9077accd58601890c1c6080f086c0026fd00bff22cd22cad14592c",
+  "actualEngineAndSourceIdentityVerified": false,
+  "openingGroups": {
+    "start": "unforced",
+    "open-e-pawns": "e-pawn",
+    "french-prefix": "e-pawn",
+    "scandinavian-prefix": "e-pawn",
+    "pirc-prefix": "e-pawn",
+    "queen-pawns": "d-pawn",
+    "queen-french-prefix": "d-pawn",
+    "queen-open-e-prefix": "d-pawn",
+    "quiet-e-pawns": "quiet-pawns",
+    "quiet-d-pawns": "quiet-pawns",
+    "quiet-center-prefix": "quiet-pawns",
+    "ordinary-knights": "knights",
+    "queenside-knights": "knights",
+    "mixed-knights-prefix": "knights",
+    "opposite-knights-prefix": "knights",
+    "four-knights-prefix": "knights"
+  },
+  "sampling": {
+    "minPly": 16,
+    "stride": 5,
+    "stableBefore": 2,
+    "stableAfter": 2
+  },
+  "bootstrap": 200,
+  "seed": 42,
+  "runtime": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "replayRulesBundleSha256": "e89a04467e099e46ea19e50c604da8a8aad905e3fe4ae5d59108cbd984636250",
+  "protocolConfigSha256": "f34e004ad941ed1eba36869e7fe2ef84abbcea8e42c120691a012b4e1356ac00",
+  "tools": [
+    {
+      "file": "scripts/material-regression.js",
+      "sha256": "6be23e0274cda191a3c982e9caa7ef3feee44781d1e706e1f2342ae13e9a5741"
+    },
+    {
+      "file": "scripts/balance/material-dataset.js",
+      "sha256": "f777b161a45e5391eee51d6ba197c05f3b9b047620130f5b80610aeaea573579"
+    },
+    {
+      "file": "scripts/balance/material-regression.js",
+      "sha256": "88d1548de436cc91ea2b5dfc8c755afb53e97c822d9ef5a0d9ff3e6c36a56634"
+    },
+    {
+      "file": "scripts/balance/material-plan.js",
+      "sha256": "1972b9fc12947ef8bdabeba4bed1f2f517099d772e6ec6ffb1fe7ed48b88d1dc"
+    },
+    {
+      "file": "scripts/balance/plan.js",
+      "sha256": "22ba39d61a152f38092cbc192bbb3b9dbeb011ba7a842aeeb95b1e3877d633d0"
+    },
+    {
+      "file": "scripts/balance/design-profile.js",
+      "sha256": "dc69fe2c3f16b87cf9c7174a12ca8ce49b8ea73e15b4dff03df1185009bcb108"
+    },
+    {
+      "file": "scripts/balance/design-registry.js",
+      "sha256": "de9ee5ba4ad2ea24098800be726e8cbdb4155a8f29b9e799ecabc20cb889c073"
+    },
+    {
+      "file": "scripts/balance/evaluation.js",
+      "sha256": "3d6bbbd7ffa94816c269daf2e849710c0637869f0d3f2aabf869103eb3e23d1c"
+    },
+    {
+      "file": "src/design-catalog.js",
+      "sha256": "8727b6e765e2e57907cd2593e7f8a1e08c600a7081d132797b110cc48f9fcfa2"
+    }
+  ],
+  "datasetSha256": "f0ed2735632e76007ea4be429c685037bd9cdcae8a95aea2410f7ef94471fca5",
+  "samplesSha256": "5e8dc03156e68b56f182664383e6f2be70e9da30b3fd17508f5750cb1a775625",
+  "reportSha256": "df53b02052984a1bd1afd7a63cbb8691237a7e6e16ea8f4a79ec8d87c39f2a3c"
+}
