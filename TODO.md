@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 15 completed its 1,120-game Amazon comparison; the summary supports a shortlist, with game-record review and human feedback pending. Version 14 preserves the first revised workshop and 540-game plan; version 13 preserves reusable parallel-run tools. Earlier milestones are in [development history](docs/development-history.md).
+Version 15 completed its 1,120-game Amazon comparison; the manifest and all games replay correctly, with a Blink valuation confound identified before further design changes. Version 14 preserves the first revised workshop and 540-game plan; version 13 preserves reusable parallel-run tools. Earlier milestones are in [development history](docs/development-history.md).
 
 Browser-save compatibility across releases is optional. Experiment definitions, identities, and results must remain reproducible.
 
@@ -124,7 +124,9 @@ Implement and verify the alternatives before starting the single declared batch.
 - [x] Validate all 1,120 army/color/opening combinations, 152 movement probes, and 1,040 distinct native positions; verify 132 independent new-rule move sets and 52 resulting positions.
 - [x] Verify 454 unit/integration cases and 36 focused browser cases. Two timing failures in the combined run passed isolated rechecks. Confirm offline play at 390px without external requests, errors, or overflow; verify eight unscored workflow games, immutable stop/resume, and the capped report.
 - [x] Receive and archive the [completed batch summary and shortlist](experiments/balance/results/amazon-alternatives-001.md): 1,119 completed games, one truncation, no errors, and 559 complete color pairs. Check aggregate arithmetic and declared labels; keep manifest/engine identity explicitly unverified until game records arrive.
-- [ ] Review original `run.json` and `games.jsonl`, especially the Blink victories, and combine human feedback before applying the proposed selections. Prefer Ranging, wide-knight Rank, quiet-jump Vertical, short Sideways, and the diagonal companion; review or park both Blink revisions. No new games are queued.
+- [x] Audit original `run.json` and `games.jsonl`: exact campaign/source/executable identities (verified Windows bundle line endings), regenerated summary, all 1,120 games / 150,035 plies, physical colors and Blink exchanges. Archive the [follow-up audit](experiments/balance/results/amazon-alternatives-001-audit.md), source diagnostic and two importable recorded lines.
+- [x] Verify that duplicate-free Blink @5 notation preserves legal moves at 9,543 recorded positions while changing the engine's automatic valuation. Identify incomplete INI override propagation in exchange heuristics.
+- [ ] Combine human feedback with the tentative shortlist; review evaluation consistency before a Blink movement nerf. Further valuation testing belongs to a separate declared experiment, preserving this completed batch.
 
 ## Deferred work
 

@@ -131,6 +131,8 @@ Use **40%–60% point score** as a practical band, then compare each pair's dist
 
 The [completed 1,120-game batch](experiments/balance/results/amazon-alternatives-001.md) favors Ranging (48.75%), wide-knight Rank (54.375%), and quiet-jump Vertical (53.85%). Short Sideways (61.25%) and the diagonal companion (38.75%) are close enough to the target boundary to prioritize playtesting over automatic changes. Both Blink revisions overshoot (81.875% / 89.375%); inspect their existing games before choosing a redesign. These are review recommendations; current movement IDs and picker choices remain unchanged, and no additional games are queued.
 
+The [manifest/replay audit](experiments/balance/results/amazon-alternatives-001-audit.md) confirms every recorded move, but finds that the engine prices Blink upgrades unusually highly and double-counts overlapping capture descriptions in @5. Equivalent notation preserves movement while changing its automatic material estimate. Resolve evaluation consistency before using these results alone to nerf movement; configuration overrides currently miss normal exchange/capture tables.
+
 ## Kings: preserve a clear mating objective
 
 Keep exactly one royal per side, with check and checkmate. The selected prototype retains ordinary quiet king moves and adds capture-only two-square jumps:

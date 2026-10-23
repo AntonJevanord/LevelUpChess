@@ -1,0 +1,958 @@
+{
+  "schemaVersion": 1,
+  "recordedDate": "2026-10-23",
+  "runId": "dfc6a3dd-4c1d-486f-8042-9c3124234a61",
+  "identity": {
+    "schemaVersion": 1,
+    "runId": "dfc6a3dd-4c1d-486f-8042-9c3124234a61",
+    "sourceFiles": [
+      {
+        "name": "run.json",
+        "bytes": 1078471,
+        "sha256": "b3bb726038d8be23a3fd5b1a56585928e9ad01d1660fd68170f8096f7adde493"
+      },
+      {
+        "name": "games.jsonl",
+        "bytes": 3945077,
+        "sha256": "25193a55ac5e5adab8b04f4bbb8f615dcf7f2c147cd3c4fb63f0d0cdf9977adc"
+      },
+      {
+        "name": "summary.json",
+        "bytes": 95387,
+        "sha256": "67e50b8d234f12850a8d48932501759f902751df0316d3a93b3cb13a2ca0c309"
+      }
+    ],
+    "declaredCampaignExactMatch": true,
+    "registryAndProfileExactMatch": true,
+    "summaryRegenerationExactMatch": true,
+    "scheduleGames": 1120,
+    "journalRecords": 1120,
+    "uniqueGameIds": 1120,
+    "allFirstAttempts": true,
+    "configHashValid": true,
+    "rulesHashValid": true,
+    "runnerSha256": "f3fc412725a9be084c857cba9ac749acbb160623922ae6111de82c413a37b1b3",
+    "runnerSources": [
+      {
+        "file": "run.js",
+        "expected": "30ff5d1273a66033519789eea98c81b2d71017bf1a5c1d6e2ef5ac86d0443170",
+        "actual": "30ff5d1273a66033519789eea98c81b2d71017bf1a5c1d6e2ef5ac86d0443170"
+      },
+      {
+        "file": "plan.js",
+        "expected": "e7a569d36c3c29294c36d6124ed7402e37f7116ff9264b061644cdfb87d6cb25",
+        "actual": "e7a569d36c3c29294c36d6124ed7402e37f7116ff9264b061644cdfb87d6cb25"
+      },
+      {
+        "file": "stats.js",
+        "expected": "dd55139112cc8fa89ae1ebcc7c1f81631e3aca44a6e01e3ad756f4b52766c5fc",
+        "actual": "dd55139112cc8fa89ae1ebcc7c1f81631e3aca44a6e01e3ad756f4b52766c5fc"
+      },
+      {
+        "file": "storage.js",
+        "expected": "5a1f747422e2132ba40b5004adb0e2915655f3aa2352a334b9f13b0f5001e019",
+        "actual": "5a1f747422e2132ba40b5004adb0e2915655f3aa2352a334b9f13b0f5001e019"
+      },
+      {
+        "file": "uci.js",
+        "expected": "48240374844738ff7b3f9309a95edfbac6e4b8642f3955effe52e3ffca77d601",
+        "actual": "48240374844738ff7b3f9309a95edfbac6e4b8642f3955effe52e3ffca77d601"
+      },
+      {
+        "file": "capabilities.js",
+        "expected": "a5cc31921e7d88de8214a09fa888158dc285a3d5fba9682d5c3a91fb601c9086",
+        "actual": "a5cc31921e7d88de8214a09fa888158dc285a3d5fba9682d5c3a91fb601c9086"
+      },
+      {
+        "file": "../engine-capabilities.js",
+        "expected": "640389c60255577db149ba87acccd323fa4209d907fd2eaa8521a1805dbfd6d9",
+        "actual": "640389c60255577db149ba87acccd323fa4209d907fd2eaa8521a1805dbfd6d9"
+      },
+      {
+        "file": "files.js",
+        "expected": "25cd2624c6e08fb674bf06c0a71614606d7d414fc0bacec881e69719f42feedc",
+        "actual": "25cd2624c6e08fb674bf06c0a71614606d7d414fc0bacec881e69719f42feedc"
+      },
+      {
+        "file": "resume-compatibility.js",
+        "expected": "d3034c734b56665a529632aa777fe30eb6679d339463481cbfe8bf22daa4c579",
+        "actual": "d3034c734b56665a529632aa777fe30eb6679d339463481cbfe8bf22daa4c579"
+      },
+      {
+        "file": "design-registry.js",
+        "expected": "de9ee5ba4ad2ea24098800be726e8cbdb4155a8f29b9e799ecabc20cb889c073",
+        "actual": "de9ee5ba4ad2ea24098800be726e8cbdb4155a8f29b9e799ecabc20cb889c073"
+      },
+      {
+        "file": "design-profile.js",
+        "expected": "bb38afccb55c676991436d96d658c111d20d2fb4e00d3ca0dc8afe8b2d49fba1",
+        "actual": "bb38afccb55c676991436d96d658c111d20d2fb4e00d3ca0dc8afe8b2d49fba1"
+      },
+      {
+        "file": "../../src/design-catalog.js",
+        "expected": "8727b6e765e2e57907cd2593e7f8a1e08c600a7081d132797b110cc48f9fcfa2",
+        "actual": "8727b6e765e2e57907cd2593e7f8a1e08c600a7081d132797b110cc48f9fcfa2"
+      }
+    ],
+    "engine": {
+      "file": "stockfish/fairy-stockfish-levelup_x86-64.exe",
+      "sha256": "ad4d1308a7e9fc64ad73864bf740935bf3872d265b165c21abc026655651b9c5",
+      "matchesManifest": true,
+      "reportedNames": [
+        "Fairy-Stockfish 230826"
+      ]
+    },
+    "bundle": {
+      "file": "dist/balance-rules.cjs",
+      "localLfSha256": "e89a04467e099e46ea19e50c604da8a8aad905e3fe4ae5d59108cbd984636250",
+      "localCrlfSha256": "449c4f8d5a1740b62d557f530a94b1b5ebac64054a9cb9eed9833fc2da5940c6",
+      "manifestSha256": "449c4f8d5a1740b62d557f530a94b1b5ebac64054a9cb9eed9833fc2da5940c6",
+      "exactCrlfMatch": true
+    },
+    "parallel": {
+      "jobs": 3,
+      "wholePairPartitionsExactMatch": true,
+      "sources": [
+        {
+          "file": "scripts/balance/parallel.js",
+          "expected": "7083e8c929a32d124eb653dc3dfdf91f796dbb53e76505aac2acc91428a9f7bc",
+          "actual": "7083e8c929a32d124eb653dc3dfdf91f796dbb53e76505aac2acc91428a9f7bc"
+        },
+        {
+          "file": "scripts/balance/parallel-worker.js",
+          "expected": "0993e3c70875ab72c1fe4c524246cd214a36e8e955887f7f4b0b7b229532af3c",
+          "actual": "0993e3c70875ab72c1fe4c524246cd214a36e8e955887f7f4b0b7b229532af3c"
+        },
+        {
+          "file": "scripts/parallel-balance.js",
+          "expected": "6686e307d37a7e906c89697ba42ee9a55ea2d7e506c49196f54cd7c590cd5b71",
+          "actual": "6686e307d37a7e906c89697ba42ee9a55ea2d7e506c49196f54cd7c590cd5b71"
+        }
+      ],
+      "gamesByWorker": [
+        {
+          "worker": 1,
+          "games": 374
+        },
+        {
+          "worker": 2,
+          "games": 374
+        },
+        {
+          "worker": 3,
+          "games": 372
+        }
+      ],
+      "maxConcurrentGames": 3,
+      "workerTimelinesDoNotOverlap": true
+    },
+    "statusCounts": {
+      "completed": 1119,
+      "truncated": 1,
+      "aborted": 0,
+      "error": 0,
+      "unknown": 0
+    },
+    "controls": [
+      {
+        "comparisonId": "standard-control",
+        "physicalColors": {
+          "games": 80,
+          "whiteWins": 20,
+          "draws": 42,
+          "blackWins": 18,
+          "whiteScore": 0.5125
+        },
+        "completePairs": 40,
+        "scoreA": 0.5
+      },
+      {
+        "comparisonId": "amazon-control",
+        "physicalColors": {
+          "games": 80,
+          "whiteWins": 26,
+          "draws": 44,
+          "blackWins": 10,
+          "whiteScore": 0.6
+        },
+        "completePairs": 40,
+        "scoreA": 0.5
+      }
+    ],
+    "truncated": [
+      {
+        "id": "c24_vertical-bishop-v-amazon_o13_quiet-e-pawns_r1_b",
+        "openingId": "quiet-e-pawns",
+        "aColor": "b",
+        "totalPlies": 400,
+        "finalFen": "8/8/8/8/8/5k2/8/3r2BK w - - 3 201",
+        "reason": "max-plies"
+      }
+    ],
+    "timing": {
+      "firstStartedAt": "2026-10-22T19:58:00.102Z",
+      "lastFinishedAt": "2026-10-22T23:55:12.653Z",
+      "elapsedSeconds": 14232.551,
+      "meanGameSeconds": 37.372558035714306,
+      "medianGameSeconds": 34.756,
+      "summedGameSeconds": 41857.26500000002
+    },
+    "limits": [
+      "Manifest hashes identify the declared executable and sources; they do not independently attest the process actually executed those bytes.",
+      "Records lack per-search full engine traces; configured node settings and last-info snapshots are available."
+    ],
+    "comparisonRevision": "a9957a4",
+    "scientificFilesUnchangedSinceRevision": true
+  },
+  "replay": {
+    "games": 1120,
+    "plies": 150035,
+    "completed": 1119,
+    "truncated": 1,
+    "failures": 0,
+    "checks": [
+      "declared starting armies",
+      "opening prefix",
+      "every move legal",
+      "every stored SAN exact",
+      "no moves after terminal",
+      "final FEN exact",
+      "terminal result and reason exact",
+      "truncation limit and nonterminal state"
+    ],
+    "nonBlink": {
+      "schemaVersion": 1,
+      "runId": "dfc6a3dd-4c1d-486f-8042-9c3124234a61",
+      "scope": "All non-Blink games; Blink games audited separately",
+      "games": 960,
+      "plies": 131594,
+      "completed": 959,
+      "truncated": 1,
+      "counts": {
+        "rank-pawn-v-amazon": 80,
+        "standard-control": 80,
+        "forward-queen-companion-v-amazon": 80,
+        "sideways-long-bishop-v-amazon": 80,
+        "vertical-jump-bishop-v-amazon": 80,
+        "queen-companion-v-amazon": 80,
+        "amazon-control": 80,
+        "ranging-pawn-v-amazon": 80,
+        "vertical-bishop-v-amazon": 80,
+        "sideways-bishop-v-amazon": 80,
+        "courier-pawn-v-amazon": 80,
+        "rank-camel-pawn-v-amazon": 80
+      },
+      "diagnostics": [
+        {
+          "id": "c24_vertical-bishop-v-amazon_o13_quiet-e-pawns_r1_b",
+          "finalFen": "8/8/8/8/8/5k2/8/3r2BK w - - 3 201",
+          "legalMoves": [
+            "h1h2"
+          ],
+          "outcome": null,
+          "plyCount": 400
+        }
+      ],
+      "checks": [
+        "declared starting armies",
+        "opening prefix",
+        "every move legal",
+        "every stored SAN exact",
+        "no moves after terminal",
+        "final FEN exact",
+        "terminal result and reason exact",
+        "truncation limit and nonterminal state"
+      ],
+      "elapsedSeconds": 43.539,
+      "failures": 0
+    },
+    "blink": {
+      "games": 160,
+      "plies": 18441,
+      "checksMatched": true
+    }
+  },
+  "blink": {
+    "definitionNotes": {
+      "quietSpecial": "Nonorthogonal quiet blink or orthogonal quiet jump with an occupied intermediate square. Quiet diagonal one-square movement was already present in the prior quiet-Blink design.",
+      "blockers": "Only collinear intermediate lattice squares are counted. Knight/camel/zebra jumps have no collinear intermediate squares; blocked orthogonal exits are reported separately.",
+      "mateSupport": "Static attack of king/empty adjacent squares only, not causal proof of a required contribution."
+    },
+    "byDesign": {
+      "rook.purple@5": {
+        "games": 80,
+        "wins": 70,
+        "draws": 3,
+        "losses": 7,
+        "totalPlies": 9463,
+        "meanPlies": 118.2875,
+        "firstActiveMeanPly": 29.425,
+        "neverMoved": 0,
+        "blinkMoves": 669,
+        "castlesWithBlink": 2,
+        "moveKinds": {
+          "diagonal-capture": 38,
+          "ordinary-rook-quiet": 158,
+          "orthogonal-capture": 70,
+          "quiet-nonorthogonal-blink": 365,
+          "quiet-orthogonal-jump": 38
+        },
+        "quietSpecialDistances": {
+          "1": 64,
+          "2": 138,
+          "3": 201
+        },
+        "quietNonorthogonalDistances": {
+          "1": 64,
+          "2": 123,
+          "3": 178
+        },
+        "quietCollinearBlocked": 53,
+        "quietCollinearBlockerColors": {
+          "enemy": 11,
+          "own": 46
+        },
+        "quietSpecialWithAllOrthogonalExitsOccupied": 11,
+        "diagonalCapturesByDistance": {
+          "1": 24,
+          "2": 14
+        },
+        "diagonalCaptureVictims": {
+          "bishop": 6,
+          "knight": 1,
+          "pawn": 10,
+          "queen.purple@1": 9,
+          "rook": 12
+        },
+        "gamesWithDiagonalCapture": 31,
+        "gamesWithRadius3Quiet": 67,
+        "gamesWithQuietCollinearBlocker": 37,
+        "aliveAtEnd": 13,
+        "capturedByAmazon": 38,
+        "amazonTakesBlinkThenImmediatelyRecaptured": 33,
+        "blinkCapturesAmazon": 22,
+        "blinkDirectMates": 5,
+        "winningFinalBlinkChecks": 5,
+        "winningFinalBlinkAliveOtherMatingMove": 6,
+        "winningFinalBlinkControlsEmptyKingNeighbor": 11,
+        "byOutcome": {
+          "win": {
+            "games": 70,
+            "withDiagonalCapture": 26,
+            "withRadius3Quiet": 58,
+            "amazonTakesBlinkAndImmediateRecapture": 32,
+            "aliveAtEnd": 11
+          },
+          "draw": {
+            "games": 3,
+            "withDiagonalCapture": 3,
+            "withRadius3Quiet": 3,
+            "amazonTakesBlinkAndImmediateRecapture": 0,
+            "aliveAtEnd": 2
+          },
+          "loss": {
+            "games": 7,
+            "withDiagonalCapture": 2,
+            "withRadius3Quiet": 6,
+            "amazonTakesBlinkAndImmediateRecapture": 1,
+            "aliveAtEnd": 0
+          }
+        },
+        "firstActiveMedianPly": 28.5,
+        "amazonTradeOrBlinkCapture": {
+          "games": 55,
+          "wins": 50,
+          "draws": 1,
+          "losses": 4
+        },
+        "noOwnCapture": {
+          "games": 26,
+          "wins": 26,
+          "draws": 0,
+          "losses": 0
+        }
+      },
+      "rook.purple@4": {
+        "games": 80,
+        "wins": 64,
+        "draws": 3,
+        "losses": 13,
+        "totalPlies": 8978,
+        "meanPlies": 112.225,
+        "firstActiveMeanPly": 24.425,
+        "neverMoved": 0,
+        "blinkMoves": 567,
+        "castlesWithBlink": 1,
+        "moveKinds": {
+          "diagonal-capture": 29,
+          "ordinary-rook-quiet": 134,
+          "orthogonal-capture": 69,
+          "quiet-nonorthogonal-blink": 301,
+          "quiet-orthogonal-jump": 34
+        },
+        "quietSpecialDistances": {
+          "1": 35,
+          "2": 111,
+          "3": 189
+        },
+        "quietNonorthogonalDistances": {
+          "1": 35,
+          "2": 104,
+          "3": 162
+        },
+        "quietCollinearBlocked": 61,
+        "quietCollinearBlockerColors": {
+          "enemy": 5,
+          "own": 69
+        },
+        "quietSpecialWithAllOrthogonalExitsOccupied": 18,
+        "diagonalCapturesByDistance": {
+          "1": 29
+        },
+        "diagonalCaptureVictims": {
+          "bishop": 5,
+          "knight": 4,
+          "pawn": 10,
+          "queen.purple@1": 2,
+          "rook": 8
+        },
+        "gamesWithDiagonalCapture": 21,
+        "gamesWithRadius3Quiet": 69,
+        "gamesWithQuietCollinearBlocker": 43,
+        "aliveAtEnd": 11,
+        "capturedByAmazon": 43,
+        "amazonTakesBlinkThenImmediatelyRecaptured": 42,
+        "blinkCapturesAmazon": 16,
+        "blinkDirectMates": 6,
+        "winningFinalBlinkChecks": 6,
+        "winningFinalBlinkAliveOtherMatingMove": 2,
+        "winningFinalBlinkControlsEmptyKingNeighbor": 8,
+        "byOutcome": {
+          "win": {
+            "games": 64,
+            "withDiagonalCapture": 16,
+            "withRadius3Quiet": 54,
+            "amazonTakesBlinkAndImmediateRecapture": 39,
+            "aliveAtEnd": 8
+          },
+          "draw": {
+            "games": 3,
+            "withDiagonalCapture": 1,
+            "withRadius3Quiet": 3,
+            "amazonTakesBlinkAndImmediateRecapture": 0,
+            "aliveAtEnd": 2
+          },
+          "loss": {
+            "games": 13,
+            "withDiagonalCapture": 4,
+            "withRadius3Quiet": 12,
+            "amazonTakesBlinkAndImmediateRecapture": 3,
+            "aliveAtEnd": 1
+          }
+        },
+        "firstActiveMedianPly": 23.0,
+        "amazonTradeOrBlinkCapture": {
+          "games": 58,
+          "wins": 52,
+          "draws": 1,
+          "losses": 5
+        },
+        "noOwnCapture": {
+          "games": 30,
+          "wins": 27,
+          "draws": 1,
+          "losses": 2
+        }
+      }
+    },
+    "examples": [
+      {
+        "id": "c19_blink-rook-v-amazon_o31_english-symmetry-knights-prefix_r1_b",
+        "designId": "rook.purple@4",
+        "aColor": "b",
+        "result": "0-1",
+        "finalOutcome": "win",
+        "totalPlies": 36,
+        "relevantEvents": [
+          {
+            "ply": 22,
+            "move": "a8d5",
+            "san": "Od5",
+            "kind": "quiet-nonorthogonal-blink",
+            "distance": 3,
+            "dx": 3,
+            "dy": 3,
+            "capture": null,
+            "captureFamily": null,
+            "captureDesign": null,
+            "blockers": [
+              {
+                "square": "b7",
+                "piece": "p",
+                "owner": "own"
+              },
+              {
+                "square": "c6",
+                "piece": "n",
+                "owner": "own"
+              }
+            ],
+            "allOrthogonalExitsOccupied": false,
+            "givesCheck": false,
+            "mate": false,
+            "before": "o1b2rk1/pp2bppp/2n1p3/2P4q/8/3BPN2/PPU2PPP/R1B2RK1 b - - 0 11",
+            "after": "2b2rk1/pp2bppp/2n1p3/2Po3q/8/3BPN2/PPU2PPP/R1B2RK1 w - - 1 12"
+          },
+          {
+            "ply": 24,
+            "move": "d5g4",
+            "san": "Og4",
+            "kind": "quiet-nonorthogonal-blink",
+            "distance": 3,
+            "dx": 3,
+            "dy": 1,
+            "capture": null,
+            "captureFamily": null,
+            "captureDesign": null,
+            "blockers": [],
+            "allOrthogonalExitsOccupied": false,
+            "givesCheck": false,
+            "mate": false,
+            "before": "2b2rk1/pp2bppp/2n1p3/2Po3q/1P6/3BPN2/P1U2PPP/R1B2RK1 b - b3 0 12",
+            "after": "2b2rk1/pp2bppp/2n1p3/2P4q/1P4o1/3BPN2/P1U2PPP/R1B2RK1 w - - 1 13"
+          },
+          {
+            "ply": 30,
+            "move": "g4g2",
+            "san": "Oxg2+",
+            "kind": "orthogonal-capture",
+            "distance": 2,
+            "dx": 0,
+            "dy": 2,
+            "capture": "P",
+            "captureFamily": "pawn",
+            "captureDesign": null,
+            "blockers": [],
+            "allOrthogonalExitsOccupied": false,
+            "givesCheck": true,
+            "mate": false,
+            "before": "2b2rk1/pp3ppp/2n2b2/1PP1p2q/6o1/P2BPN2/1BU2PPP/R4RK1 b - - 0 15",
+            "after": "2b2rk1/pp3ppp/2n2b2/1PP1p2q/8/P2BPN2/1BU2PoP/R4RK1 w - - 0 16"
+          }
+        ],
+        "startFen": "onbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBUKBNR w KQkq - 0 1",
+        "finalFen": "5rk1/pp3ppp/2n2b2/1PP1p3/8/P2BPN1b/1BU2PqP/R4R1K w - - 5 19"
+      },
+      {
+        "id": "c19_blink-rook-v-amazon_o15_sicilian-prefix_r1_w",
+        "designId": "rook.purple@4",
+        "aColor": "w",
+        "result": "1-0",
+        "finalOutcome": "win",
+        "totalPlies": 87,
+        "relevantEvents": [
+          {
+            "ply": 15,
+            "move": "a1d2",
+            "san": "Od2",
+            "kind": "quiet-nonorthogonal-blink",
+            "distance": 3,
+            "dx": 3,
+            "dy": 1,
+            "capture": null,
+            "captureFamily": null,
+            "captureDesign": null,
+            "blockers": [],
+            "allOrthogonalExitsOccupied": false,
+            "givesCheck": false,
+            "mate": false,
+            "before": "r1bu3r/pp1pkppp/2nNpn2/8/1b2P3/2N5/PPP2PPP/O1BQKB1R w KQ - 5 8",
+            "after": "r1bu3r/pp1pkppp/2nNpn2/8/1b2P3/2N5/PPPO1PPP/2BQKB1R b K - 6 8"
+          },
+          {
+            "ply": 19,
+            "move": "d2g5",
+            "san": "Og5",
+            "kind": "quiet-nonorthogonal-blink",
+            "distance": 3,
+            "dx": 3,
+            "dy": 3,
+            "capture": null,
+            "captureFamily": null,
+            "captureDesign": null,
+            "blockers": [],
+            "allOrthogonalExitsOccupied": false,
+            "givesCheck": false,
+            "mate": false,
+            "before": "r1b4r/pp1pkppp/2n1pn2/1N2u3/1b2P3/2N5/PPPO1PPP/2BQKB1R w K - 9 10",
+            "after": "r1b4r/pp1pkppp/2n1pn2/1N2u1O1/1b2P3/2N5/PPP2PPP/2BQKB1R b K - 10 10"
+          }
+        ],
+        "startFen": "rnbukbnr/pppppppp/8/8/8/8/PPPPPPPP/ONBQKBNR w KQkq - 0 1",
+        "finalFen": "3n3k/5p2/3p1p2/1p6/p4P2/2P3RQ/PP4P1/5K2 b - - 1 44"
+      },
+      {
+        "id": "c32_blink-long-capture-rook-v-amazon_o22_caro-fianchetto-prefix_r1_b",
+        "designId": "rook.purple@5",
+        "aColor": "b",
+        "result": "0-1",
+        "finalOutcome": "win",
+        "totalPlies": 94,
+        "relevantEvents": [
+          {
+            "ply": 38,
+            "move": "a8d5",
+            "san": "Md5",
+            "kind": "quiet-nonorthogonal-blink",
+            "distance": 3,
+            "dx": 3,
+            "dy": 3,
+            "capture": null,
+            "captureFamily": null,
+            "captureDesign": null,
+            "blockers": [
+              {
+                "square": "b7",
+                "piece": "q",
+                "owner": "own"
+              }
+            ],
+            "allOrthogonalExitsOccupied": false,
+            "givesCheck": false,
+            "mate": false,
+            "before": "m1br2k1/1q3pbp/pP4p1/4N3/1U2n3/6P1/2P2PBP/R1B2RK1 b - - 0 19",
+            "after": "2br2k1/1q3pbp/pP4p1/3mN3/1U2n3/6P1/2P2PBP/R1B2RK1 w - - 1 20"
+          },
+          {
+            "ply": 42,
+            "move": "d5e4",
+            "san": "Mxe4",
+            "kind": "diagonal-capture",
+            "distance": 1,
+            "dx": 1,
+            "dy": 1,
+            "capture": "B",
+            "captureFamily": "bishop",
+            "captureDesign": null,
+            "blockers": [],
+            "allOrthogonalExitsOccupied": false,
+            "givesCheck": false,
+            "mate": false,
+            "before": "2b1r1k1/1q3pbp/pP4p1/3mN1B1/1U2B3/6P1/2P2P1P/R4RK1 b - - 0 21",
+            "after": "2b1r1k1/1q3pbp/pP4p1/4N1B1/1U2m3/6P1/2P2P1P/R4RK1 w - - 0 22"
+          }
+        ],
+        "startFen": "mnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBUKBNR w KQkq - 0 1",
+        "finalFen": "6k1/5p1p/6p1/6PP/7r/7K/5q2/8 w - - 4 48"
+      },
+      {
+        "id": "c32_blink-long-capture-rook-v-amazon_o26_kingside-fianchetto-prefix_r1_w",
+        "designId": "rook.purple@5",
+        "aColor": "w",
+        "result": "1-0",
+        "finalOutcome": "win",
+        "totalPlies": 113,
+        "relevantEvents": [
+          {
+            "ply": 49,
+            "move": "h3f5",
+            "san": "Mxf5",
+            "kind": "diagonal-capture",
+            "distance": 2,
+            "dx": 2,
+            "dy": 2,
+            "capture": "u",
+            "captureFamily": "queen",
+            "captureDesign": "queen.purple@1",
+            "blockers": [],
+            "allOrthogonalExitsOccupied": false,
+            "givesCheck": false,
+            "mate": false,
+            "before": "r5k1/p1p1r2p/1n3ppQ/5u2/2pP4/5P1M/PB4KP/5R2 w - - 0 25",
+            "after": "r5k1/p1p1r2p/1n3ppQ/5M2/2pP4/5P2/PB4KP/5R2 b - - 0 25"
+          }
+        ],
+        "startFen": "rnbukbnr/pppppppp/8/8/8/8/PPPPPPPP/MNBQKBNR w KQkq - 0 1",
+        "finalFen": "6Q1/8/7k/6Q1/5P2/p5K1/P7/8 b - - 4 57"
+      }
+    ]
+  },
+  "evaluation": {
+    "schemaVersion": 1,
+    "method": "Static diagnostic compiled from unmodified vendored piece.cpp and psqt.cpp; calls original Betza parser, piece_value() and PSQT::init(). No search, games, strength tests or production-engine rebuild.",
+    "unit": "engine internal evaluation units; these are not calibrated material points or conventional centipawns",
+    "sourceCommit": "43b66c8abfebfcab893a3a4c349aa790d18df148",
+    "sourceArchive": {
+      "file": "vendor/ffish-es6-0.7.10-source.tar.gz",
+      "sha256": "52b080d823fd4785a598e4201ab26be2752bdbc093b8c9a9a47b99de13a65a86"
+    },
+    "sourceFiles": [
+      {
+        "file": "piece.cpp",
+        "sha256": "6695601cb82b230aab5bd3f8f7422ff8be1ab05163f80bc374ec8137e23399ef"
+      },
+      {
+        "file": "psqt.cpp",
+        "sha256": "c1d918eefcf1c4ea152a5e1440db5c17d940a0904f273ab7649626367ec4e7c2"
+      },
+      {
+        "file": "types.h",
+        "sha256": "7e42ef80439fb779713d8be1b06e14f31f85e7dfdd18a915a61fad38f355868d"
+      },
+      {
+        "file": "position.cpp",
+        "sha256": "d5294e874ca0524c0eed6c41e5f7ed38099e49a0448bda937cab24186c9506c8"
+      },
+      {
+        "file": "movepick.cpp",
+        "sha256": "1395370ae24cc0c66080cd47893fab060bf1f4678796372941bc8cd46b04c73f"
+      },
+      {
+        "file": "parser.cpp",
+        "sha256": "c04182db0679d920f46051c3a4fb295728f531ee8428f78d52d70e9661fde2f6"
+      }
+    ],
+    "diagnostic": {
+      "program": "amazon-alternatives-001-evaluation.cpp",
+      "programSha256": "fb7acad2e1cb131e6b4977ac3a048ad6b62662763ca63faf8d7e6e735bfda527",
+      "output": "QN quietSteps=8 captureSteps=8 quietSliders=8 captureSliders=8 rawMG=3738 rawEG=3875\nRFmDmNmAmHmCmZmG quietSteps=44 captureSteps=4 quietSliders=4 captureSliders=4 rawMG=3536 rawEG=4370\nRFmDmNmAmHmCmZmGcB2 quietSteps=44 captureSteps=4 quietSliders=4 captureSliders=8 rawMG=4002 rawEG=4877\nRmFmDmNmAmHmCmZmGcB2 quietSteps=44 captureSteps=0 quietSliders=4 captureSliders=8 rawMG=3591 rawEG=4430\ndefault Blink4 PieceValueMG=3536 CapturePieceValueMG=3536 EvalPieceValueMG=3536 PSQd4MG=3541\noverride Blink4 PieceValueMG=3536 CapturePieceValueMG=1000 EvalPieceValueMG=1000 PSQd4MG=1005\n",
+      "compilation": "g++ -std=c++17 -O0 -ffunction-sections -fdata-sections -Wl,--gc-sections amazon-alternatives-001-evaluation.cpp -o values-override",
+      "reproduction": "In a temporary directory, extract the recorded vendored archive into fairy-stockfish-43b66c8/ (containing src/), copy this helper beside that directory, then run the recorded g++ command using the helper filename. The original upstream source files remain unchanged."
+    },
+    "values": [
+      {
+        "design": "standard rook",
+        "movement": "R",
+        "mg": 1276,
+        "eg": 1380,
+        "source": "types.h predefined constants"
+      },
+      {
+        "design": "standard queen",
+        "movement": "Q",
+        "mg": 2538,
+        "eg": 2682,
+        "source": "types.h predefined constants"
+      },
+      {
+        "design": "custom Amazon queen.purple@1",
+        "movement": "QN",
+        "mg": 3738,
+        "eg": 3875,
+        "quietSteps": 8,
+        "captureSteps": 8,
+        "quietSliders": 8,
+        "captureSliders": 8,
+        "mgIncrementOverStandardQueen": 1200,
+        "egIncrementOverStandardQueen": 1193
+      },
+      {
+        "design": "Blink rook.purple@4",
+        "movement": "RFmDmNmAmHmCmZmG",
+        "mg": 3536,
+        "eg": 4370,
+        "quietSteps": 44,
+        "captureSteps": 4,
+        "quietSliders": 4,
+        "captureSliders": 4,
+        "mgIncrementOverStandardRook": 2260,
+        "egIncrementOverStandardRook": 2990
+      },
+      {
+        "design": "Blink rook.purple@5",
+        "movement": "RFmDmNmAmHmCmZmGcB2",
+        "mg": 4002,
+        "eg": 4877,
+        "quietSteps": 44,
+        "captureSteps": 4,
+        "quietSliders": 4,
+        "captureSliders": 8,
+        "mgIncrementOverStandardRook": 2726,
+        "egIncrementOverStandardRook": 3497
+      },
+      {
+        "design": "movement-equivalent deduplicated Blink5 (diagnostic only)",
+        "movement": "RmFmDmNmAmHmCmZmGcB2",
+        "mg": 3591,
+        "eg": 4430,
+        "quietSteps": 44,
+        "captureSteps": 0,
+        "quietSliders": 4,
+        "captureSliders": 8
+      }
+    ],
+    "increments": {
+      "amazonOverQueen": {
+        "mg": 1200,
+        "eg": 1193
+      },
+      "blink4OverRook": {
+        "mg": 2260,
+        "eg": 2990
+      },
+      "blink5OverRook": {
+        "mg": 2726,
+        "eg": 3497
+      },
+      "deduplicatedBlink5OverRook": {
+        "mg": 2315,
+        "eg": 3050
+      }
+    },
+    "findings": [
+      {
+        "claim": "Default automatic heuristic counts quiet steps, capture steps, quiet slider directions and capture slider directions separately, then applies a superlinear exp(v0/10000) multiplier.",
+        "source": "psqt.cpp:167-184"
+      },
+      {
+        "claim": "m-only jumps are explicitly valued, with weight30MG/40EG perdirection; capture steps60MG/60EG. Quiet sliders55MG/45EG perfullray; capture sliders185both; orthogonal ray bonuses also apply.",
+        "source": "psqt.cpp:170-181"
+      },
+      {
+        "claim": "Blink5 F capture steps overlap its cB2 capture rays. Movement destinations can deduplicate while valuation counts both parsed components; removing redundant Fcaptures lowers automatic values411MG/447EG without changing intended movement.",
+        "source": "piece.cpp:143-175, psqt.cpp:170-181"
+      },
+      {
+        "claim": "The recorded profile has no pieceValueMg or pieceValueEg overrides. All current values derive from default autoheuristics.",
+        "source": "uploaded run.json designProfile.config"
+      },
+      {
+        "claim": "Overrides exist in variant configuration, but do not update every evaluation/search table in this source version. PSQT::init applies them to PSQT material score, CapturePieceValue and EvalPieceValue after raw PieceValue is assigned.",
+        "source": "parser.cpp:310-327;psqt.cpp:202-203,290-303"
+      },
+      {
+        "claim": "Normal static exchange evaluation and capture ordering use raw PieceValue, not the override-adjusted CapturePieceValue/EvalPieceValue. Config overrides alone therefore cannot fully calibrate normal exchange heuristics.",
+        "source": "position.cpp:2500,2504,2605;movepick.cpp:112,128"
+      },
+      {
+        "claim": "Normal SEE prioritizes ordinary P/N/B/R/Q attackers before its fairy-piece fallback; fallback explicitly chooses next attacker without considering value (least board square), and xray updates in the ordinary branches mention standard sliders only. This is an additional approximation, not proof of a particular observed error.",
+        "source": "position.cpp:2555-2610"
+      }
+    ],
+    "overrideDiagnostic": {
+      "customPiece": "Blink4",
+      "configuredMG": 1000,
+      "configuredEG": 1100,
+      "rawPieceValueMGAfterOverride": 3536,
+      "capturePieceValueMGAfterOverride": 1000,
+      "evalPieceValueMGAfterOverride": 1000,
+      "psqtD4MGAfterOverride": 1005,
+      "productionConfigurationChanged": false
+    },
+    "limits": [
+      "Automatic internal values are beliefs used by this engine, not empirical estimates of true piece strength.",
+      "Static formulas and observed exchange counts cannot prove why any recorded engine chose a capture; search also accounts for tactics, position, other material and king safety.",
+      "Movement-equivalent notation changing evaluation is a representation confound; changes need new immutable experiment identities even if legal moves are equivalent.",
+      "Source diagnostic shares the recorded executable source but is not a run of the Windows PE executable; it does not attest actual execution.",
+      "No balance games or engine searches were run for this static investigation."
+    ]
+  },
+  "notationEquivalence": {
+    "schemaVersion": 1,
+    "runId": "dfc6a3dd-4c1d-486f-8042-9c3124234a61",
+    "purpose": "Research-only equivalent notation audit; no catalog or production profile changes, no searches or new games",
+    "sourceDesignId": "rook.purple@5",
+    "originalMovement": "RFmDmNmAmHmCmZmGcB2",
+    "equivalentMovement": "RmFmDmNmAmHmCmZmGcB2",
+    "games": 80,
+    "replayedMoves": 9463,
+    "positionsCompared": 9543,
+    "legalMovesCompared": 322013,
+    "legalSetsIdentical": true,
+    "resultingFensIdentical": true,
+    "checkStateIdentical": true,
+    "recordedMoveCaptureClassificationIdentical": true,
+    "recordedSANIdentical": true,
+    "failures": 0
+  },
+  "portableExamples": [
+    {
+      "id": "c19_blink-rook-v-amazon_o31_english-symmetry-knights-prefix_r1_b",
+      "startPly": 22,
+      "endPly": 36,
+      "file": "amazon-alternatives-001-blink-attack.pgn",
+      "event": "Recorded Blink attack: quiet jumps and mating line",
+      "sourceStartFen": "o1b2rk1/pp2bppp/2n1p3/2P4q/8/3BPN2/PPU2PPP/R1B2RK1 b - - 0 11",
+      "portableStartFen": "y1b2rk1/pp2bppp/2n1p3/2P4q/8/3BPN2/PPU2PPP/R1B2RK1 b - - 0 11",
+      "sourceFinalFen": "5rk1/pp3ppp/2n2b2/1PP1p3/8/P2BPN1b/1BU2PqP/R4R1K w - - 5 19",
+      "portableFinalFen": "5rk1/pp3ppp/2n2b2/1PP1p3/8/P2BPN1b/1BU2PqP/R4R1K w - - 5 19",
+      "portableProfileHash": "df3354ccd15bb9686a1131edc2bf437f4a6d9509fbbff896f37c1cb85fd99623",
+      "lineMoves": [
+        "a8d5",
+        "b2b4",
+        "d5g4",
+        "a2a3",
+        "e7f6",
+        "c1b2",
+        "e6e5",
+        "b4b5",
+        "g4g2",
+        "g1g2",
+        "c8h3",
+        "g2g1",
+        "h5g4",
+        "g1h1",
+        "g4g2"
+      ],
+      "lineSAN": [
+        "Yd5",
+        "b4",
+        "Yg4",
+        "a3",
+        "Bf6",
+        "Bb2",
+        "e5",
+        "b5",
+        "Yxg2+",
+        "Kxg2",
+        "Bh3+",
+        "Kg1",
+        "Qg4+",
+        "Kh1",
+        "Qg2#"
+      ],
+      "result": "0-1",
+      "roundTripVerified": true,
+      "bytes": 8985
+    },
+    {
+      "id": "c32_blink-long-capture-rook-v-amazon_o22_caro-fianchetto-prefix_r1_b",
+      "startPly": 38,
+      "endPly": 44,
+      "file": "amazon-alternatives-001-blink-exchange.pgn",
+      "event": "Recorded Blink exchange: relocation and Amazon loss",
+      "sourceStartFen": "m1br2k1/1q3pbp/pP4p1/4N3/1U2n3/6P1/2P2PBP/R1B2RK1 b - - 0 19",
+      "portableStartFen": "z1br2k1/1q3pbp/pP4p1/4N3/1U2n3/6P1/2P2PBP/R1B2RK1 b - - 0 19",
+      "sourceFinalFen": "2b1r1k1/5pbp/pP4p1/4N1B1/4q3/6P1/2P2P1P/R4RK1 w - - 0 23",
+      "portableFinalFen": "2b1r1k1/5pbp/pP4p1/4N1B1/4q3/6P1/2P2P1P/R4RK1 w - - 0 23",
+      "portableProfileHash": "df3354ccd15bb9686a1131edc2bf437f4a6d9509fbbff896f37c1cb85fd99623",
+      "lineMoves": [
+        "a8d5",
+        "c1g5",
+        "d8e8",
+        "g2e4",
+        "d5e4",
+        "b4e4",
+        "b7e4"
+      ],
+      "lineSAN": [
+        "Zd5",
+        "Bg5",
+        "Re8",
+        "Bxe4",
+        "Zxe4",
+        "Uxe4",
+        "Qxe4"
+      ],
+      "result": "*",
+      "roundTripVerified": true,
+      "bytes": 8939
+    }
+  ],
+  "interpretation": [
+    "The uploaded campaign and all recorded moves/outcomes are internally consistent; source and executable identities match the recorded version, with a verified Windows newline difference in the generated rules bundle.",
+    "Observed engine-game scores are protocol-specific evidence, not intrinsic material measurements. Replayed exchanges alone do not establish forcedness, optimality or a causal contribution of the material heuristic.",
+    "Equivalent Blink5 notation retains legal movement across all existing Blink5 positions but changes automatic internal valuation. Fix representation/evaluation consistency before using this result alone to prescribe a movement nerf.",
+    "No new balance games, searches, production rule edits or production engine rebuilds were performed. Existing IDs and the historical campaign remain frozen; no new experiment is declared."
+  ]
+}

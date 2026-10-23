@@ -55,7 +55,7 @@ Both kings use the selected level, and other pieces use standard chess rules. Th
 
 ## Amazon comparison: 1,120 games
 
-The [completed batch](experiments/balance/results/amazon-alternatives-001.md) reports 1,119 completed games, one truncation, and no errors. Ranging, Rank without camel jumps, and quiet-jump Vertical are near the target; both Blink rooks overshoot. Game-record review and human feedback precede any movement changes. No additional run is queued.
+The [completed batch](experiments/balance/results/amazon-alternatives-001.md) reports 1,119 completed games, one truncation, and no errors. Ranging, Rank without camel jumps, and quiet-jump Vertical are near the target; both Blink rooks overshoot. The [game-record audit](experiments/balance/results/amazon-alternatives-001-audit.md) confirms every move and identifies a Blink valuation confound; evaluation review and human feedback precede movement changes. No additional run is queued.
 
 The [paired-alternatives plan](experiments/balance/amazon-alternatives-plan.md) compares these 12 designs with the unchanged Amazon. Each gets 40 color-swapped opening pairs / 80 games. Ordinary and Amazon self-play controls add 160 games, for **1,120 scheduled games** within the 1,200-game budget. No follow-up stage starts automatically.
 

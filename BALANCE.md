@@ -25,7 +25,7 @@ The six groups are Ranging versus Courier, two Rank pawns, two Vertical bishops,
 
 The unchanged knights, Knight-capture rook, and Returning pawn are retained without another subject comparison. Capture-box rook remains retired and Twin short queens remain parked at level 3. The version-14 [540-game plan](experiments/balance/amazon-revision-plan.md) and command remain archived. This batch replaces it as the next design experiment; it is not an automatic second run. If a version-14 run has started, retain its original directory and matching build. Do not merge journals, reuse its directory, or resume it with changed rules.
 
-The [uploaded completed summary](experiments/balance/results/amazon-alternatives-001.md) reports 1,119 completed games, one truncation, no errors, and 559 complete pairs. The batch is closed at 1,120 games; the remaining budget is unused. The result note records the proposed shortlist and separates aggregate consistency from the still-pending manifest/game replay audit. No follow-up run is queued.
+The [uploaded completed summary](experiments/balance/results/amazon-alternatives-001.md) reports 1,119 completed games, one truncation, no errors, and 559 complete pairs. The batch is closed at 1,120 games; the remaining budget is unused. The [follow-up audit](experiments/balance/results/amazon-alternatives-001-audit.md) verifies identities and every recorded move, but identifies representation-dependent Blink valuation and incomplete override propagation in exchange heuristics. Keep protocol-specific scores separate from intrinsic material claims. No follow-up run is queued.
 
 ### Closed version-12 screen
 
