@@ -4,3 +4,5 @@ experiments/balance/results/*.summary.json -text
 experiments/balance/results/*.games.jsonl -text
 # Generated profiles compare canonical INI bytes, including on Windows.
 *.ini text eol=lf
+# Preserve pinned patch bytes; blank diff context lines contain a space marker.
+stockfish/patches/*.patch text eol=lf whitespace=-blank-at-eol

@@ -8,7 +8,7 @@ Download `index.html` and open it in Chrome, Edge, or Firefox. It includes the b
 
 Select a piece and a highlighted destination. Arrow keys move focus; Enter or Space selects. Includes legal moves, checkmate, draw detection, castling, en passant, selectable promotion, history, undo, and board flip. Threefold repetition and the fifty-move rule end games automatically.
 
-## Version 15: paired design alternatives
+## Playable design alternatives
 
 Under **Rules**, choose **Experiments · Design alternatives**, select each starting piece's design, then press **New game**. Each side has a 1–6 point budget. Levels use green, cyan, and red accents, with level numbers and separate White/Black piece colors.
 
@@ -53,35 +53,41 @@ Open [prototypes/kings/index.html](prototypes/kings/index.html) to try the captu
 
 Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Bringing king choices into the main board's setup, engine play, and saves remains integration work. See the [prototype guide](prototypes/kings/README.md).
 
-## Amazon comparison: 1,120 games
+## Version 16: Blink evaluation check
 
-The [completed batch](experiments/balance/results/amazon-alternatives-001.md) reports 1,119 completed games, one truncation, and no errors. Ranging, Rank without camel jumps, and quiet-jump Vertical are near the target; both Blink rooks overshoot. The [game-record audit](experiments/balance/results/amazon-alternatives-001-audit.md) confirms every move and identifies a Blink valuation confound; evaluation review and human feedback precede movement changes. No additional run is queued.
+The [400-game plan](experiments/balance/rook-values-plan.md) compares the same three Blink movements under two engine evaluation policies: automatic values and a manual **eight-point whole-rook target**. Eight comes from ordinary rook ≈5 plus three upgrade levels; it is a judgment supplied to the engine, not a measured piece value. The test includes quiet-only Blink alongside the adjacent-diagonal and two-square-diagonal versions. Movement and three-point purchase prices stay unchanged.
 
-The [paired-alternatives plan](experiments/balance/amazon-alternatives-plan.md) compares these 12 designs with the unchanged Amazon. Each gets 40 color-swapped opening pairs / 80 games. Ordinary and Amazon self-play controls add 160 games, for **1,120 scheduled games** within the 1,200-game budget. No follow-up stage starts automatically.
+Manual values apply to this balance experiment. The playable board continues using automatic values.
 
-To reproduce the frozen protocol on Windows (the completed batch does not need replaying):
-
-```bat
-npm.cmd run balance:alternatives -- --check
-npm.cmd run balance:alternatives -- --out balance-results/amazon-alternatives --jobs 2
-```
-
-The check validates armies, opening prefixes, and native movement without playing games. Search stays at 100,000 nodes per move, Skill 20, one thread per engine, 32 MB hash, and 400 plies. Start with two game workers; runtime depends on CPU and memory. Press **p** to stop each worker after its active color pair, then inspect or resume:
+Each policy has **200 games**: three Blink designs versus Amazon, plus ordinary and Amazon controls, over 20 color-swapped opening pairs. Both use the same patched engine, prefixes and search settings. Start the automatic baseline first:
 
 ```bat
-npm.cmd run balance:alternatives -- --report balance-results/amazon-alternatives
-npm.cmd run balance:alternatives -- --resume balance-results/amazon-alternatives
+npm.cmd run balance:rook-values -- --check
+npm.cmd run balance:rook-values -- --out balance-results/rook-values --policy auto --jobs 3
 ```
 
-Aim for **40%–60% point score** against the Amazon: one point per win and half per draw. The report compares alternatives' distance from 50% on shared fully scored openings; small differences remain inconclusive. This is a practical design target, not proof of equal strength or material value. Combine the results with readability, enjoyment, and counterplay. Keep rules and settings fixed during the run; unchanged earlier candidates are not retested as subjects.
+After it finishes, explicitly start the manual-value policy in the same campaign directory:
 
-Finished games name the winner and its color, then show the running matchup points and win/draw/loss counts. Add `--log plies` for move progress. Scores exclude truncations and errors; formal comparisons use complete color pairs. Controls check scoring and completion, and a 50% control score alone does not establish balance. See [BALANCE.md](BALANCE.md) for interpretation.
+```bat
+npm.cmd run balance:rook-values -- --out balance-results/rook-values --policy eight
+```
 
-This replaces the version-14 540-game plan as the next design batch. Its files and branch remain preserved. If that run has already started, keep its directory and matching build separate; do not combine journals or resume it under changed rules.
+Stopping never launches the next policy. The first launch freezes worker count and campaign identities. Resume an already started policy or inspect partial reports with:
 
-The version-12 campaign closed early at 1,508 of 1,860 finalized scheduled games, with 1,507 completed games, one truncation, and two failed attempts. Its reserved confirmation stage is unused. The [audit and design decisions](experiments/balance/results/level3-screen-001.md) distinguish the newer summary from the earlier standings snapshot; no final ranking is assigned.
+```bat
+npm.cmd run balance:rook-values -- --resume balance-results/rook-values
+npm.cmd run balance:rook-values -- --report balance-results/rook-values
+```
 
-Reusable `balance:prepare` and `balance:parallel` tools remain available for other declared experiments. See the [future-run guide](docs/balance-tools.md). Historical configurations are preserved evidence, not an automatic test queue.
+The report compares policy scores only on shared fully scored openings. Lower values can improve or worsen engine play; a score change does not measure the piece's true material value. This batch has no automatic extension. Keep old result directories with their original branch and engine.
+
+## Completed Amazon comparison: 1,120 games
+
+The [completed version-15 batch](experiments/balance/results/amazon-alternatives-001.md) reports 1,119 completed games, one truncation, and no errors. Ranging, Rank without camel jumps, and quiet-jump Vertical are near the practical 40%–60% point-score target. Short Sideways and the diagonal companion narrowly miss it; both Blink rooks overshoot. The [game-record audit](experiments/balance/results/amazon-alternatives-001-audit.md) confirms every move and identifies the Blink valuation confound motivating version 16.
+
+The [original plan](experiments/balance/amazon-alternatives-plan.md) and `balance:alternatives` command remain preserved. Reproduce or resume its games only on the original `version_15` checkout with its matching engine; no replay or extra stage is needed. Keep version-14 and version-15 result directories separate from the new evaluation campaign.
+
+The version-12 round robin also closed early; its reserved confirmation stage is unused. See [the audit and design decisions](experiments/balance/results/level3-screen-001.md). Reusable `balance:prepare` and `balance:parallel` tools are documented in [the tool guide](docs/balance-tools.md); historical configurations are evidence, not an automatic queue.
 
 ## Play Fairy Stockfish
 
@@ -92,7 +98,7 @@ npm.cmd ci
 npm.cmd start
 ```
 
-Open the printed address, keep the terminal running, and choose **Fairy Stockfish** under **Opponent**. Select your side and difficulty. The server launches the bundled LevelUp Windows engine, built from the same source revision as the browser rules. Direct-file play supports local players only.
+Open the printed address, keep the terminal running, and choose **Fairy Stockfish** under **Opponent**. Select your side and difficulty. The server launches the bundled LevelUp Windows engine, using the same movement profiles as the browser board. Direct-file play supports local players only.
 
 - Easy / Medium / Hard use skill 0 / 8 / 20 and 150 / 600 / 1500 ms search budgets. These are presets, not Elo ratings.
 - Pause cancels the current search. Undo takes back a full turn where available and pauses play. Changing opponent, side, or difficulty preserves the board and cancels obsolete searches.
@@ -167,7 +173,8 @@ Standard chess uses [chess.js](https://github.com/jhlywa/chess.js), with its BSD
 | `version_12` | Closed early | Level-3 Camel knight and capped all-design balance campaign |
 | `version_13` | Preserved tools | Parallel balance games, quieter output, and roster-based preparation |
 | `version_14` | Preserved workshop | Seven new revisions and a capped Amazon comparison |
-| `version_15` | Current workshop | Paired alternatives and one 1,120-game Amazon comparison |
+| `version_15` | Completed batch | Paired alternatives, 1,120-game Amazon comparison and replay audit |
+| `version_16` | Current evaluation check | Consistent manual values and a bounded three-Blink policy comparison |
 
 Create each development branch from the previous tested milestone and tag finished releases. Tags preserve stable checkpoints while branches can evolve. See [TODO.md](TODO.md) for progress and later work.
 

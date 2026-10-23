@@ -45,7 +45,7 @@ function validatedInput(manifest, records, roster) {
     if (!definition || definition.level !== 3 || typeof candidate.key !== 'string' || !candidate.label || byId.has(candidate.id) || keys.has(candidate.key)) throw new Error('The campaign roster must contain distinct, known level-3 designs.');
     const army = singleArmy(candidate);
     // Family/slot checks are shared with ordinary campaign normalization.
-    normalizeConfig({ ...config, comparisons: [{ id: 'roster-check', armyA: army, armyB: army }] });
+    normalizeConfig({ ...config, evaluation: undefined, comparisons: [{ id: 'roster-check', armyA: army, armyB: army }] });
     byId.set(candidate.id, candidate);
     byArmy.set(JSON.stringify(army), candidate);
     keys.add(candidate.key);
@@ -72,7 +72,7 @@ function validatedInput(manifest, records, roster) {
       matchups.set(comparison.id, { a, b, key, control: false, comparison });
     }
   }
-  const registry = createDesignRegistry(config), profile = compileDesignProfile(registry);
+  const registry = createDesignRegistry(config), profile = compileDesignProfile(registry, config.evaluation);
   if (!isDeepStrictEqual(manifest.designRegistry, registry)
     || !isDeepStrictEqual(manifest.designProfile, { variant: profile.variant, config: profile.config, hash: profile.hash, registryHash: profile.registryHash })) throw new Error('The manifest does not preserve the declared catalog definitions and rule identity.');
   const canonical = new Map(makeSchedule(config).map(game => [game.id, game]));
@@ -87,7 +87,8 @@ function validatedInput(manifest, records, roster) {
     const game = record && schedule.get(record.id);
     if (!game || record.comparisonId !== game.comparisonId || record.pairId !== game.pairId || record.openingId !== game.openingId || record.aColor !== game.aColor) throw new Error('A journal record does not belong to the frozen schedule.');
     if (record.profileHash !== profile.hash || record.registryHash !== registry.hash || record.registryReference !== 'run.json#designRegistry'
-      || record.variant !== profile.variant || !isDeepStrictEqual(record.engine, config.engine)) throw new Error('A journal record has different definitions, rules, or engine settings.');
+      || record.variant !== profile.variant || !isDeepStrictEqual(record.engine, config.engine)
+      || !isDeepStrictEqual(record.evaluation, config.evaluation)) throw new Error('A journal record has different definitions, rules, or engine settings.');
     const white = record.aColor === 'w' ? game.comparison.strengthA : game.comparison.strengthB;
     const black = record.aColor === 'b' ? game.comparison.strengthA : game.comparison.strengthB;
     if (!isDeepStrictEqual(record.whiteStrength, white) || !isDeepStrictEqual(record.blackStrength, black)) throw new Error('A journal record has different engine strength settings.');

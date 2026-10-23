@@ -129,9 +129,29 @@ The [new plan](experiments/balance/amazon-alternatives-plan.md) fixes **1,120 ga
 
 Use **40%–60% point score** as a practical band, then compare each pair's distance from 50% on the same fully scored opening cohort. A smaller gap suggests which prototype is closer to the target under these conditions; a small difference does not establish a winner. Check completion, opening sensitivity, readability, enjoyment, and counterplay before selecting one, keeping both, or parking a group. Do not automatically buff the lower score or start another balance chain.
 
-The [completed 1,120-game batch](experiments/balance/results/amazon-alternatives-001.md) favors Ranging (48.75%), wide-knight Rank (54.375%), and quiet-jump Vertical (53.85%). Short Sideways (61.25%) and the diagonal companion (38.75%) are close enough to the target boundary to prioritize playtesting over automatic changes. Both Blink revisions overshoot (81.875% / 89.375%); inspect their existing games before choosing a redesign. These are review recommendations; current movement IDs and picker choices remain unchanged, and no additional games are queued.
+The [completed 1,120-game batch](experiments/balance/results/amazon-alternatives-001.md) favors Ranging (48.75%), wide-knight Rank (54.375%), and quiet-jump Vertical (53.85%). Short Sideways (61.25%) and the diagonal companion (38.75%) are close enough to the target boundary to prioritize playtesting over automatic changes. Both Blink revisions overshoot (81.875% / 89.375%); inspect their existing games before choosing a redesign. These are review recommendations; current movement IDs and picker choices remain unchanged. Version 16 isolates the valuation question below.
 
-The [manifest/replay audit](experiments/balance/results/amazon-alternatives-001-audit.md) confirms every recorded move, but finds that the engine prices Blink upgrades unusually highly and double-counts overlapping capture descriptions in @5. Equivalent notation preserves movement while changing its automatic material estimate. Resolve evaluation consistency before using these results alone to nerf movement; configuration overrides currently miss normal exchange/capture tables.
+The [manifest/replay audit](experiments/balance/results/amazon-alternatives-001-audit.md) confirms every recorded move, but finds that the original engine prices Blink upgrades unusually highly and double-counts overlapping capture descriptions in @5. Equivalent notation preserves movement while changing its automatic material estimate. That engine's configuration overrides also miss normal exchange/capture tables; the next experiment fixes override consistency before judging movement.
+
+## Version 16: separate evaluation from movement
+
+Use **eight total material points** as the user's provisional Blink target: ordinary rook ≈5 plus three upgrade levels. This changes the engine's exchange judgment, not the purchase price or the piece's movement, and does not establish a true material value.
+
+| Tested design | Movement held fixed |
+| --- | --- |
+| Quiet Blink, `rook.purple@3` | Rook captures; quiet jumps within three squares. No added diagonal captures. |
+| Adjacent-capture Blink, `rook.purple@4` | Same quiet mobility plus adjacent diagonal captures. |
+| Two-square-capture Blink, `rook.purple@5` | Same quiet mobility plus diagonal captures up to two clear squares. |
+
+Keep @5's existing Betza text, including its overlapping capture description, in both policies. Deduplicating notation at the same time would change the automatic-value baseline and confound this comparison. Movement IDs and three-point prices remain unchanged; evaluation policy receives its own frozen identity.
+
+The manual policy scales the engine's ordinary-rook midgame/endgame values **1276/1380 by 8/5**, yielding **2042/2208** after rounding. This is a rook-relative scale, not eight times the raw pawn value: internal values are not a linear map from familiar pawn-equivalent material. Apply the same manual values to all three Blink types in both engines, including how each engine values the opponent's pieces. Ordinary pieces and Amazon keep their defaults.
+
+The [400-game plan](experiments/balance/rook-values-plan.md) compares automatic and manual values on the **same patched engine**, three movements, 20 opening prefixes, colors and search settings. Each policy has 120 subject games plus 80 controls. Launch the automatic 200 games first, then explicitly launch the manual 200; a stop never advances the campaign. Preserve the original version-15 build and results rather than pooling them with this new baseline.
+
+Explicit values must reach raw and adjusted material, static exchange evaluation and capture-order tables before testing. A read-only engine diagnostic verifies actual tables before searches. This fixes the identified override inconsistency; it does not make all fairy-piece evaluation or exchange heuristics exact. Lowering a value can improve or worsen play through different trades and search decisions, so compare scores and recorded games without predicting the direction.
+
+Choose a movement change only after reviewing matched complete-opening scores, control diagnostics and human feedback. The experiment tests sensitivity to a chosen evaluation prior; it does not measure intrinsic material, calibrate engine Elo, or automatically authorize another batch.
 
 ## Kings: preserve a clear mating objective
 

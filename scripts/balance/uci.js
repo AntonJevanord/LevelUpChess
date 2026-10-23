@@ -286,6 +286,49 @@ class UciEngine {
     });
   }
 
+  /** Read the active variant's material tables without searching a position. */
+  async pieceValues({ signal } = {}) {
+    return this._run(signal, async () => {
+      this._requireReady();
+      let version = false;
+      let complete = false;
+      const pieces = {};
+      try {
+        // The ready barrier keeps trailing or duplicated diagnostic rows inside
+        // this exchange instead of allowing them to leak into a later search.
+        return await this._exchange(['levelupvalues', 'isready'], (line, done) => {
+          if (!line) return;
+          if (/Unknown command:.*levelupvalues/i.test(line)) throw new Error('Engine does not support the levelupvalues diagnostic.');
+          if (line === 'levelupvalues version 1') {
+            if (version || complete) throw new Error('Duplicate piece-value diagnostic version.');
+            version = true;
+            return;
+          }
+          if (line === 'levelupvalues done') {
+            if (!version || complete || !Object.keys(pieces).length) throw new Error('Incomplete or duplicated piece-value diagnostic.');
+            complete = true;
+            return;
+          }
+          if (line === 'readyok') {
+            if (!complete) throw new Error('Piece-value diagnostic ended before all values were reported.');
+            done(Object.freeze({ version: 1, pieces: Object.freeze(pieces) }));
+            return;
+          }
+          const row = line.match(/^levelupvalue ([a-zA-Z]) (\d+) (\d+) (\d+) (\d+) (\d+) (\d+)$/);
+          if (!row || !version || complete) throw new Error('Unsupported or malformed piece-value diagnostic.');
+          const [, letter, ...fields] = row;
+          if (Object.hasOwn(pieces, letter)) throw new Error(`Duplicate piece-value diagnostic for ${letter}.`);
+          const values = fields.map(value => integer(Number(value), 'reported piece value', 0, 10000000));
+          pieces[letter] = Object.freeze(Object.fromEntries(['rawMg', 'rawEg', 'captureMg', 'captureEg', 'evalMg', 'evalEg']
+            .map((field, index) => [field, values[index]])));
+        });
+      } catch (error) {
+        if (error.name === 'AbortError') throw error;
+        throw new Error(`Cannot verify manual piece values: ${error.message} Use the bundled compatible LevelUp engine.`, { cause: error });
+      }
+    });
+  }
+
   async close() {
     const child = this.child;
     if (!child) { this.state = 'closed'; return; }

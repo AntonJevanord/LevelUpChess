@@ -77,7 +77,7 @@ function buildCampaign(roster, options = {}) {
   const name = typeof roster.name === 'string' && roster.name.trim() ? roster.name.trim() : 'Prepared design comparison';
   const config = normalizeConfig({ schemaVersion: 2, name: `${name}: ${mode === 'round-robin' ? 'round robin' : 'reference comparisons'}`, seed, repetitions: 1,
     engine: { nodes, threads: 1, hashMb: 32, maxPlies: 400 }, openings: bank.slice(0, openingPairs), comparisons });
-  const registry = createDesignRegistry(config), profile = compileDesignProfile(registry);
+  const registry = createDesignRegistry(config), profile = compileDesignProfile(registry, config.evaluation);
   const schedule = makeSchedule(config);
   return {
     config,

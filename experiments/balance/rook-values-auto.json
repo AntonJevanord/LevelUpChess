@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 2,
+  "name": "Version 16 Blink valuation: automatic material",
+  "seed": 42,
+  "repetitions": 1,
+  "engine": {
+    "nodes": 100000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400
+  },
+  "openings": [
+    {
+      "id": "start",
+      "moves": []
+    },
+    {
+      "id": "open-e-pawns",
+      "moves": [
+        "e2e4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "sicilian-prefix",
+      "moves": [
+        "e2e4",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "french-prefix",
+      "moves": [
+        "e2e4",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "caro-prefix",
+      "moves": [
+        "e2e4",
+        "c7c6"
+      ]
+    },
+    {
+      "id": "modern-prefix",
+      "moves": [
+        "e2e4",
+        "g7g6"
+      ]
+    },
+    {
+      "id": "reversed-sicilian-prefix",
+      "moves": [
+        "c2c4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "symmetrical-english-prefix",
+      "moves": [
+        "c2c4",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "kingside-fianchetto-prefix",
+      "moves": [
+        "g2g3",
+        "g7g6"
+      ]
+    },
+    {
+      "id": "ordinary-knights-prefix",
+      "moves": [
+        "g1f3",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "quiet-e-pawns",
+      "moves": [
+        "e2e3",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "quiet-c-pawns",
+      "moves": [
+        "c2c3",
+        "c7c6"
+      ]
+    },
+    {
+      "id": "anglo-indian-prefix",
+      "moves": [
+        "c2c4",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "reti-e-pawn-prefix",
+      "moves": [
+        "g1f3",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "reti-sicilian-prefix",
+      "moves": [
+        "g1f3",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "fianchetto-sicilian-prefix",
+      "moves": [
+        "g2g3",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "bird-open-prefix",
+      "moves": [
+        "f2f4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "king-pawn-step-prefix",
+      "moves": [
+        "h2h3",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "queen-rook-step-prefix",
+      "moves": [
+        "a2a3",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "open-knights-prefix",
+      "moves": [
+        "e2e4",
+        "e7e5",
+        "g1f3",
+        "g8f6"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "quiet-blink-v-amazon",
+      "label": "Quiet Blink (no extra captures) versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@3"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "blink-v-amazon",
+      "label": "Blink (adjacent diagonal captures) versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@4"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "long-blink-v-amazon",
+      "label": "Blink (two-square diagonal captures) versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@5"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "standard-control",
+      "label": "Ordinary armies",
+      "armyA": {
+        "upgrades": {},
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "amazon-control",
+      "label": "Amazon armies",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    }
+  ]
+}

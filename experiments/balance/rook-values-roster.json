@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "name": "Version 16 Blink material valuation",
+  "referenceId": "queen.purple@1",
+  "maxGames": 400,
+  "gamesPerPolicy": 200,
+  "openingPairs": 20,
+  "policies": [
+    "auto",
+    "eight"
+  ],
+  "fixedTotalPoints": 8,
+  "pointScale": {
+    "referencePiece": "rook",
+    "referencePoints": 5,
+    "referenceMg": 1276,
+    "referenceEg": 1380
+  },
+  "candidates": [
+    {
+      "key": "quiet-blink",
+      "id": "rook.purple@3",
+      "label": "Quiet Blink (no extra captures)",
+      "square": "a1"
+    },
+    {
+      "key": "blink",
+      "id": "rook.purple@4",
+      "label": "Blink (adjacent diagonal captures)",
+      "square": "a1"
+    },
+    {
+      "key": "long-blink",
+      "id": "rook.purple@5",
+      "label": "Blink (two-square diagonal captures)",
+      "square": "a1"
+    },
+    {
+      "key": "amazon",
+      "id": "queen.purple@1",
+      "label": "Amazon",
+      "square": "d1"
+    }
+  ],
+  "controls": [
+    {
+      "id": "standard-control",
+      "label": "Ordinary armies"
+    },
+    {
+      "id": "amazon-control",
+      "label": "Amazon armies"
+    }
+  ]
+}

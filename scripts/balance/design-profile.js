@@ -3,6 +3,7 @@
 const { createHash } = require('node:crypto');
 const { restoreDesignRegistry } = require('./design-registry');
 const { capabilityProbes: legacyCapabilityProbes } = require('../engine-capabilities');
+const { normalizeEvaluation } = require('./evaluation');
 
 const START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 const COMPILER_VERSION = 1;
@@ -181,9 +182,10 @@ function definitionProbes(definition, letter) {
 }
 
 /** Compile a trusted, archived run-wide registry without mutating older rules. */
-function compileDesignProfile(input) {
+function compileDesignProfile(input, evaluation) {
   const registry = restoreDesignRegistry(input);
-  const variant = `levelup-design-${sha256(JSON.stringify({ compiler: COMPILER_VERSION, registry })).slice(0, 20)}`;
+  const policy = normalizeEvaluation(evaluation, registry.definitions.map(definition => definition.id));
+  const variant = `levelup-design-${sha256(JSON.stringify({ compiler: COMPILER_VERSION, registry, ...(policy ? { evaluation: policy } : {}) })).slice(0, 20)}`;
   const byId = Object.fromEntries(registry.definitions.map(definition => [definition.id, definition]));
   const definitionsByLetter = Object.fromEntries(registry.allocations.map(({ id, letter }) => [letter, byId[id]]));
   const lettersFor = role => registry.allocations.filter(({ id }) => byId[id].roles[role]).map(({ letter }) => letter).sort();
@@ -208,6 +210,7 @@ function compileDesignProfile(input) {
     '# Dynamic experiment profile. Meanings belong to the archived registry.',
     `[${variant}:chess]`,
     ...registry.allocations.slice().sort((a, b) => a.slot - b.slot).map(({ id, letter, slot }) => `customPiece${slot} = ${letter}:${byId[id].movement}`),
+    ...(policy ? ['mg', 'eg'].map(phase => `pieceValue${phase === 'mg' ? 'Mg' : 'Eg'} = ${registry.allocations.filter(({ id }) => Object.hasOwn(policy.pieceValues, id)).map(({ id, letter }) => `${letter}:${policy.pieceValues[id][phase]}`).join(' ')}`) : []),
     'pieceToCharTable = -',
     `castlingRookPiece = ${roles.castlingRooks.join('')}`,
     'doubleStepRegionWhite = *1 *2',
@@ -231,6 +234,7 @@ function compileDesignProfile(input) {
     roles,
     definitionsByLetter,
     capabilityProbes,
+    ...(policy ? { evaluation: policy } : {}),
   });
 }
 

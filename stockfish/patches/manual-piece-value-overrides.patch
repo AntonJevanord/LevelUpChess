@@ -1,0 +1,127 @@
+--- a/src/psqt.cpp
++++ b/src/psqt.cpp
+@@ -20,6 +20,7 @@
+ #include "psqt.h"
+ 
+ #include <algorithm>
++#include <array>
+ #include <sstream>
+ #include <math.h>
+ 
+@@ -193,6 +194,17 @@
+ // the tables are initialized by flipping and changing the sign of the white scores.
+ void init(const Variant* v) {
+ 
++  // A variant may override ordinary pieces as well as custom ones. Restore the
++  // pristine values on every switch, then initialize this variant from scratch.
++  static const auto defaultPieceValue = [] {
++      std::array<std::array<Value, PIECE_NB>, PHASE_NB> values{};
++      for (Phase phase : {MG, EG})
++          std::copy(std::begin(PieceValue[phase]), std::end(PieceValue[phase]), values[phase].begin());
++      return values;
++  }();
++  for (Phase phase : {MG, EG})
++      std::copy(defaultPieceValue[phase].begin(), defaultPieceValue[phase].end(), PieceValue[phase]);
++
+   PieceType strongestPiece = NO_PIECE_TYPE;
+   for (PieceSet ps = v->pieceTypes; ps;)
+   {
+@@ -202,6 +214,12 @@
+           PieceValue[MG][make_piece(WHITE, pt)] = PieceValue[MG][make_piece(BLACK, pt)] = piece_value(MG, pt);
+           PieceValue[EG][make_piece(WHITE, pt)] = PieceValue[EG][make_piece(BLACK, pt)] = piece_value(EG, pt);
+       }
++
++      // Search, ordinary capture ordering and SEE read PieceValue directly.
++      // Keep those values consistent with the explicit PSQT/material override.
++      for (Phase phase : {MG, EG})
++          if (v->pieceValue[phase][pt])
++              PieceValue[phase][make_piece(WHITE, pt)] = PieceValue[phase][make_piece(BLACK, pt)] = Value(v->pieceValue[phase][pt]);
+ 
+       if (PieceValue[MG][pt] > PieceValue[MG][strongestPiece])
+           strongestPiece = pt;
+--- a/src/position.cpp
++++ b/src/position.cpp
+@@ -2555,7 +2555,7 @@
+       // the bitboard 'attackers' any X-ray attackers behind it.
+       if ((bb = stmAttackers & pieces(PAWN)))
+       {
+-          if ((swap = PawnValueMg - swap) < res)
++          if ((swap = PieceValue[MG][PAWN] - swap) < res)
+               break;
+ 
+           occupied ^= least_significant_square_bb(bb);
+@@ -2564,7 +2564,7 @@
+ 
+       else if ((bb = stmAttackers & pieces(KNIGHT)))
+       {
+-          if ((swap = KnightValueMg - swap) < res)
++          if ((swap = PieceValue[MG][KNIGHT] - swap) < res)
+               break;
+ 
+           occupied ^= least_significant_square_bb(bb);
+@@ -2572,7 +2572,7 @@
+ 
+       else if ((bb = stmAttackers & pieces(BISHOP)))
+       {
+-          if ((swap = BishopValueMg - swap) < res)
++          if ((swap = PieceValue[MG][BISHOP] - swap) < res)
+               break;
+ 
+           occupied ^= least_significant_square_bb(bb);
+@@ -2581,7 +2581,7 @@
+ 
+       else if ((bb = stmAttackers & pieces(ROOK)))
+       {
+-          if ((swap = RookValueMg - swap) < res)
++          if ((swap = PieceValue[MG][ROOK] - swap) < res)
+               break;
+ 
+           occupied ^= least_significant_square_bb(bb);
+@@ -2590,7 +2590,7 @@
+ 
+       else if ((bb = stmAttackers & pieces(QUEEN)))
+       {
+-          if ((swap = QueenValueMg - swap) < res)
++          if ((swap = PieceValue[MG][QUEEN] - swap) < res)
+               break;
+ 
+           occupied ^= least_significant_square_bb(bb);
+--- a/src/uci.cpp
++++ b/src/uci.cpp
+@@ -92,6 +92,28 @@
+     sync_cout << "\n" << Eval::trace(p) << sync_endl;
+   }
+ 
++
++  // Read-only material diagnostics for idle clients. Use the selected variant,
++  // since its value tables are initialized even before a position is supplied.
++  void trace_piece_values() {
++    const Variant* v = variants.find(Options["UCI_Variant"])->second;
++    ostringstream output;
++    output << "levelupvalues version 1\n";
++    for (PieceSet pieces = v->pieceTypes; pieces;)
++    {
++        PieceType pt = pop_lsb(pieces);
++        for (Color color : {WHITE, BLACK})
++        {
++            Piece pc = make_piece(color, pt);
++            output << "levelupvalue " << v->pieceToChar[pc]
++                   << " " << PieceValue[MG][pc] << " " << PieceValue[EG][pc]
++                   << " " << CapturePieceValue[MG][pc] << " " << CapturePieceValue[EG][pc]
++                   << " " << EvalPieceValue[MG][pc] << " " << EvalPieceValue[EG][pc] << "\n";
++        }
++    }
++    output << "levelupvalues done";
++    sync_cout << output.str() << sync_endl;
++  }
+ 
+   // setoption() is called when engine receives the "setoption" UCI command. The
+   // function updates the UCI option ("name") to the given value ("value").
+@@ -389,6 +411,7 @@
+       else if (token == "bench")    bench(pos, is, states);
+       else if (token == "d")        sync_cout << pos << sync_endl;
+       else if (token == "eval")     trace_eval(pos);
++      else if (token == "levelupvalues") trace_piece_values();
+       else if (token == "compiler") sync_cout << compiler_info() << sync_endl;
+       else if (token == "export_net")
+       {

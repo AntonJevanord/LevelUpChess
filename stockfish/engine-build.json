@@ -1,16 +1,23 @@
 {
   "file": "fairy-stockfish-levelup_x86-64.exe",
-  "sha256": "ad4d1308a7e9fc64ad73864bf740935bf3872d265b165c21abc026655651b9c5",
-  "bytes": 1924096,
+  "sha256": "848ad74c3fbc2684e57b42c581ee94e93e5ed832fb536846a37f9dddebbb8b16",
+  "bytes": 1923584,
   "format": "PE32+ x86-64 Windows console executable",
   "source": {
     "repository": "https://github.com/fairy-stockfish/Fairy-Stockfish",
     "commit": "43b66c8abfebfcab893a3a4c349aa790d18df148",
     "archive": "vendor/ffish-es6-0.7.10-source.tar.gz",
     "archiveSha256": "52b080d823fd4785a598e4201ab26be2752bdbc093b8c9a9a47b99de13a65a86",
-    "modified": false,
+    "modified": true,
     "license": "GPL-3.0-or-later",
-    "licenseFile": "stockfish/COPYING.txt"
+    "licenseFile": "stockfish/COPYING.txt",
+    "patches": [
+      {
+        "file": "stockfish/patches/manual-piece-value-overrides.patch",
+        "sha256": "6074fdd1a8f1bed8473801c0f41086f9d09872ec4f6847d13ee99abf44544722",
+        "purpose": "Apply explicit material overrides to raw search/SEE tables and adjusted evaluation tables, reset values between variants, and expose the read-only levelupvalues v1 diagnostic."
+      }
+    ]
   },
   "build": {
     "script": "scripts/build-windows-engine.sh",
@@ -28,11 +35,16 @@
     "timezone": "UTC",
     "locale": "C",
     "stripped": true,
-    "reproducibility": "Two clean builds in separate temporary directories using this script and toolchain produced identical bytes and the recorded SHA-256. Other toolchain versions may differ.",
+    "reproducibility": "The script pins the source archive and patch hashes, build date and PE timestamp. This patched binary was built once with the recorded toolchain; repeated-build byte identity has not been checked for this revision. Other toolchain versions may differ.",
     "cpu": "Baseline x86-64 with SSE2; no AVX, BMI2 or POPCNT required",
     "nnue": false,
     "staticRuntime": true,
-    "dllImports": ["ADVAPI32.dll", "KERNEL32.dll", "msvcrt.dll"]
+    "dllImports": [
+      "ADVAPI32.dll",
+      "KERNEL32.dll",
+      "msvcrt.dll"
+    ],
+    "scriptSha256": "73f04adc88bc9bb06e7c88a340f466bd988a74deaed763fce270dc598c5c20ec"
   },
   "toolchain": {
     "compiler": "x86_64-w64-mingw32-g++-posix (GCC) 14-posix",
@@ -45,6 +57,73 @@
     "runtimeNotices": [
       "stockfish/licenses/MINGW-w64.txt",
       "stockfish/licenses/GCC-runtime.txt"
-    ]
+    ],
+    "debianPackages": [
+      {
+        "package": "g++-mingw-w64-x86-64-posix",
+        "version": "14.2.0-19+27+b1",
+        "sha256": "cfa1773c2d0184819050138e587a81606d04a5f92e278b521b72b776d2c256c1",
+        "bytes": 15261820,
+        "url": "https://deb.debian.org/debian/pool/main/g/gcc-mingw-w64/g++-mingw-w64-x86-64-posix_14.2.0-19+27+b1_amd64.deb"
+      },
+      {
+        "package": "gcc-mingw-w64-x86-64-posix",
+        "version": "14.2.0-19+27+b1",
+        "sha256": "e32d24cfd1482394f16d9a84c1d0a9f5aa08ee826a79acc383c70cc8c23c4fe5",
+        "bytes": 37567656,
+        "url": "https://deb.debian.org/debian/pool/main/g/gcc-mingw-w64/gcc-mingw-w64-x86-64-posix_14.2.0-19+27+b1_amd64.deb"
+      },
+      {
+        "package": "gcc-mingw-w64-x86-64-posix-runtime",
+        "version": "14.2.0-19+27+b1",
+        "sha256": "c898d96177574a8a7238564a1e799d8ddfed5a3d2ea005510305f9ad466a6f59",
+        "bytes": 13037152,
+        "url": "https://deb.debian.org/debian/pool/main/g/gcc-mingw-w64/gcc-mingw-w64-x86-64-posix-runtime_14.2.0-19+27+b1_amd64.deb"
+      },
+      {
+        "package": "gcc-mingw-w64-base",
+        "version": "14.2.0-19+27+b1",
+        "sha256": "8d2c64b886ab4a435a78ddc4cd3b510f149b65fbd6be8472e8f460627562718a",
+        "bytes": 194268,
+        "url": "https://deb.debian.org/debian/pool/main/g/gcc-mingw-w64/gcc-mingw-w64-base_14.2.0-19+27+b1_amd64.deb"
+      },
+      {
+        "package": "mingw-w64-common",
+        "version": "12.0.0-5",
+        "sha256": "97dce5d0d8aff1cade4786ad4ef5078345477a598829afcac2e7f2fbc5399990",
+        "bytes": 5792084,
+        "url": "https://deb.debian.org/debian/pool/main/m/mingw-w64/mingw-w64-common_12.0.0-5_all.deb"
+      },
+      {
+        "package": "mingw-w64-x86-64-dev",
+        "version": "12.0.0-5",
+        "sha256": "0bf89cf7454cccb49cd2a46a6f7b33896f6ae3a1a2fe33e02c40be6155bbb385",
+        "bytes": 4871860,
+        "url": "https://deb.debian.org/debian/pool/main/m/mingw-w64/mingw-w64-x86-64-dev_12.0.0-5_all.deb"
+      },
+      {
+        "package": "binutils-mingw-w64-x86-64",
+        "version": "2.44-3+12+b1",
+        "sha256": "b53f4a091b16a0d0952b8e3bd6027931641386258f96b37db1f0c62c787221d3",
+        "bytes": 3473344,
+        "url": "https://deb.debian.org/debian/pool/main/b/binutils-mingw-w64/binutils-mingw-w64-x86-64_2.44-3+12+b1_amd64.deb"
+      }
+    ],
+    "packageIndex": {
+      "url": "https://deb.debian.org/debian/dists/trixie/main/binary-amd64/Packages.xz",
+      "sha256": "7778d3e3f303b7ddb8ce0fe7c8d57473a076c6bf2e8f241f75421d2396352498"
+    }
+  },
+  "validation": {
+    "sourceTableRegression": "bash scripts/check-engine-values.sh: automatic, manual, phase-only, ordinary overrides, both colors, PSQT and repeated variant loading passed.",
+    "nativeDiagnostic": "Same source plus patch, baseline x86-64 Linux: levelupvalues v1 verified all six table values for both colors across nine automatic/manual/phase/ordinary/changed-movement loads; no searches.",
+    "windowsStaticInspection": "PE32+ baseline x86-64; imports only ADVAPI32.dll, KERNEL32.dll and msvcrt.dll.",
+    "windowsRuntime": "Wine is unavailable in this environment; this patched Windows executable has not been run here."
+  },
+  "previousBuild": {
+    "branch": "version_15",
+    "sha256": "ad4d1308a7e9fc64ad73864bf740935bf3872d265b165c21abc026655651b9c5",
+    "sourceModified": false,
+    "note": "Retained by its original Git branch for reproducing or resuming older experiments."
   }
 }

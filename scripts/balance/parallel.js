@@ -83,7 +83,7 @@ function makeManifest(config, schedule, jobs, enginePath) {
   const canonical = new Map(makeSchedule(config).map(game => [game.id, game]));
   for (const game of schedule) if (!isDeepStrictEqual(game, canonical.get(game.id))) throw new Error('The parallel schedule does not match its declared configuration.');
   const partitions = partitionSchedule(schedule, jobs);
-  const registry = createDesignRegistry(config), profile = compileDesignProfile(registry), identity = getRunIdentity(enginePath);
+  const registry = createDesignRegistry(config), profile = compileDesignProfile(registry, config.evaluation), identity = getRunIdentity(enginePath);
   const rulesProfiles = [{ variant: profile.variant, whiteKing: 0, blackKing: 0, configSha256: hash(profile.config),
     file: `rules/${profile.variant}.ini`, royalMode: 'king', evaluationCaveat: null, profileHash: profile.hash, registryHash: registry.hash }];
   const manifest = {
@@ -127,7 +127,7 @@ async function runParallel({ config: input, schedule: requestedSchedule, outDir,
       sessions = state.sessions;
     } catch (error) { if (error.code !== 'ENOENT') throw error; }
   }
-  const store = openStore({ outDir: directory, resume, manifest: generated.manifest });
+  let store;
   const children = new Map(), promises = [];
   let firstError = null, stop = null, saving = false;
   const session = { startedAt: new Date().toISOString() }; sessions.push(session);
@@ -163,6 +163,7 @@ async function runParallel({ config: input, schedule: requestedSchedule, outDir,
         || record.profileHash !== manifest.designProfile.hash || record.registryHash !== manifest.designRegistry.hash
         || record.registryReference !== 'run.json#designRegistry' || record.variant !== manifest.designProfile.variant
         || !isDeepStrictEqual(record.engine, config.engine)) throw new Error(`Worker ${worker} wrote an unknown or mismatched game.`);
+      if (!isDeepStrictEqual(record.evaluation, config.evaluation)) throw new Error(`Worker ${worker} journal evaluation does not match the frozen policy.`);
       if (!Number.isInteger(record.attempt) || record.attempt < 1 || !STATUSES.has(record.status)
         || previous && (record.attempt <= previous.attempt || FINAL.has(previous.status))) throw new Error(`Worker ${worker} journal has a duplicate attempt or a game after finalization.`);
       const white = game.aColor === 'w' ? game.comparison.strengthA : game.comparison.strengthB;
@@ -171,6 +172,18 @@ async function runParallel({ config: input, schedule: requestedSchedule, outDir,
       last.set(record.id, record);
     }
   };
+  // Reject changed policy annotations before opening a store can acquire a
+  // lock or repair a journal, including workers not yet aggregated.
+  if (resume) {
+    validateRecords(readJournal(directory), new Set(byId.keys()), 'aggregate');
+    for (let index = 0; index < manifest.parallel.shards.length; index++) {
+      const shard = manifest.parallel.shards[index], records = readJournal(path.join(directory, shard.directory));
+      if (!records.length) continue;
+      if (!validateWorker(shard, generated.partitions[index])) throw new Error(`Worker ${shard.worker} journal exists without its manifest.`);
+      validateRecords(records, new Set(shard.scheduleIds), shard.worker);
+    }
+  }
+  store = openStore({ outDir: directory, resume, manifest: generated.manifest });
   const collect = () => {
     if (saving) return;
     saving = true;

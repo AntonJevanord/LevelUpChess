@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 15 completed its 1,120-game Amazon comparison; the manifest and all games replay correctly, with a Blink valuation confound identified before further design changes. Version 14 preserves the first revised workshop and 540-game plan; version 13 preserves reusable parallel-run tools. Earlier milestones are in [development history](docs/development-history.md).
+Version 16 prepares one 400-game Blink evaluation check before further movement changes. Version 15's completed 1,120-game comparison and replay audit remain preserved. Earlier milestones are in [development history](docs/development-history.md).
 
 Browser-save compatibility across releases is optional. Experiment definitions, identities, and results must remain reproducible.
 
@@ -127,6 +127,22 @@ Implement and verify the alternatives before starting the single declared batch.
 - [x] Audit original `run.json` and `games.jsonl`: exact campaign/source/executable identities (verified Windows bundle line endings), regenerated summary, all 1,120 games / 150,035 plies, physical colors and Blink exchanges. Archive the [follow-up audit](experiments/balance/results/amazon-alternatives-001-audit.md), source diagnostic and two importable recorded lines.
 - [x] Verify that duplicate-free Blink @5 notation preserves legal moves at 9,543 recorded positions while changing the engine's automatic valuation. Identify incomplete INI override propagation in exchange heuristics.
 - [ ] Combine human feedback with the tentative shortlist; review evaluation consistency before a Blink movement nerf. Further valuation testing belongs to a separate declared experiment, preserving this completed batch.
+
+## Version 16 — Blink evaluation consistency
+
+Implement in this order, then run the fixed local batch once. Preserve movement IDs, Betza text, three-point prices, and the version-15 executable/results.
+
+- [x] Preserve version 15 and develop on `version_16`; declare the [400-game evaluation plan](experiments/balance/rook-values-plan.md).
+- [x] Patch explicit custom values through raw/adjusted evaluation, exchange and capture-order tables; leave automatic values unchanged. Record matching source, patch and executable provenance.
+- [x] Add optional schema-2 `evaluation.pieceValues`, keyed by immutable design ID; compile through the frozen letter allocation and include values in profile/run/resume identities.
+- [x] Preflight the engine's actual value tables with a read-only diagnostic; reject an older or inconsistent engine before manual-value searches. Verify ordinary pieces and Amazon retain their values.
+- [x] Prepare two explicit 200-game policies using the same patched engine: automatic baseline, then manual eight-point total value for all three Blink revisions. Include quiet-only Blink, the same 20 prefixes, both colors and two controls per policy; cap the complete campaign at 400 games.
+- [x] Add `balance:rook-values` check/start/resume/report commands and frozen parent `rook-values-campaign.json`. Finish automatic policy before explicitly launching manual policy; stopping never starts the next policy. Report matched complete-opening scores, changes and control diagnostics.
+- [x] Document eight as a rook-relative evaluation prior, not measured material: ordinary rook MG/EG 1276/1380 scaled by 8/5 gives 2042/2208. Do not multiply raw pawn units by eight or alter movements to compensate for evaluation.
+- [x] Verify 498 unit/integration cases across the full suite and focused additions, plus 16 browser/API cases. Validate all 400 army/color/opening combinations, 88 movement probes and 320 native positions across both policies. Pass 20 unscored native workflow games, paired stop/resume, immutable identities, partial reports and old-engine rejection before campaign creation.
+- [x] Verify source-table consistency and matching source/patch/executable hashes; rebuild the Windows bundle and test the same patch natively on Linux. All existing playable profiles and movement definitions remain unchanged.
+- [ ] Run the included Windows executable's preflight on the user's computer; Wine is unavailable in this cloud environment.
+- [ ] Run the formal 400-game campaign locally, inspect existing games and human feedback, then decide whether one Blink design needs a movement change. Higher or lower scores under manual values are both possible; no automatic extra stage follows.
 
 ## Deferred work
 

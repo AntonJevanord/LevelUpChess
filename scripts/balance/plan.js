@@ -3,6 +3,7 @@
 // Plans describe an experiment, not an estimate of the pieces' material values.
 const { PIECE_SLOTS } = require('../../src/piece-catalog');
 const { getDesign } = require('../../src/design-catalog');
+const { normalizeEvaluation } = require('./evaluation');
 
 const WHITE_SLOTS = new Set([
   ...PIECE_SLOTS.filter(slot => slot.color === 'w').map(slot => slot.square),
@@ -112,8 +113,9 @@ function normalizeEngine(input = {}) {
 }
 
 function normalizeConfig(input) {
-  object(input, 'config', ['schemaVersion', 'name', 'seed', 'repetitions', 'engine', 'openings', 'comparisons']);
+  object(input, 'config', ['schemaVersion', 'name', 'seed', 'repetitions', 'engine', 'openings', 'comparisons', 'evaluation']);
   if (![1, 2].includes(input.schemaVersion)) throw new Error('schemaVersion must be 1 or 2.');
+  if (input.evaluation !== undefined && input.schemaVersion !== 2) throw new Error('evaluation requires schemaVersion 2 design IDs.');
   const openings = list(defaulted(input.openings, [{ id: 'start', moves: [] }]), 'openings', 100).map((opening, index) => {
     const path = `openings[${index}]`;
     object(opening, path, ['id', 'moves']);
@@ -156,6 +158,8 @@ function normalizeConfig(input) {
     openings,
     comparisons,
   };
+  if (input.evaluation !== undefined) config.evaluation = normalizeEvaluation(input.evaluation,
+    comparisons.flatMap(comparison => [comparison.armyA, comparison.armyB].flatMap(army => Object.values(army.upgrades))));
   if (config.repetitions * openings.length * comparisons.length * 2 > MAX_GAMES) {
     throw new Error(`An experiment must schedule at most ${MAX_GAMES} games.`);
   }

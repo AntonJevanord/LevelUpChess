@@ -2,12 +2,14 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { createHash, randomUUID } = require('node:crypto');
 const { createRequire } = require('node:module');
+const { isDeepStrictEqual } = require('node:util');
 const { UciEngine } = require('./uci');
 const { openStore } = require('./storage');
 const { summarize } = require('./stats');
 const { checkCapabilities } = require('./capabilities');
 const { createDesignRegistry, restoreDesignRegistry } = require('./design-registry');
 const { compileDesignProfile } = require('./design-profile');
+const { requireManualValues } = require('./evaluation');
 
 const FINAL = new Set(['completed', 'truncated']);
 const sha256 = value => createHash('sha256').update(value).digest('hex');
@@ -17,7 +19,7 @@ const fingerprint = value => sha256(JSON.stringify(value));
 function getRunIdentity(enginePath, rulesFile = path.resolve(__dirname, '../../dist/balance-rules.cjs')) {
   const rulesBundleSha256 = sha256(fs.readFileSync(rulesFile));
   const engineSha256 = sha256(fs.readFileSync(enginePath));
-  const runnerSources = ['run.js', 'plan.js', 'stats.js', 'storage.js', 'uci.js', 'capabilities.js', '../engine-capabilities.js', 'files.js', 'resume-compatibility.js', 'design-registry.js', 'design-profile.js', '../../src/design-catalog.js']
+  const runnerSources = ['run.js', 'plan.js', 'stats.js', 'storage.js', 'uci.js', 'capabilities.js', '../engine-capabilities.js', 'files.js', 'resume-compatibility.js', 'design-registry.js', 'design-profile.js', 'evaluation.js', '../../src/design-catalog.js']
     .map(file => ({ file, sha256: sha256(fs.readFileSync(path.resolve(__dirname, file), 'utf8').replace(/\r\n/g, '\n')) }));
   return { rulesBundleSha256, engineSha256, runnerSources, runnerSha256: fingerprint(runnerSources) };
 }
@@ -72,7 +74,7 @@ function recoverHistory(game, startFen, checkpoint, records) {
   return saved;
 }
 
-function validateDesignHistory(directory, expected) {
+function validateDesignHistory(directory, expected, evaluation) {
   const verify = (entry, label) => {
     for (const [field, value] of Object.entries(expected)) {
       if (entry[field] !== value) throw new Error(`Cannot resume: ${label} ${field} does not match the frozen design profile.`);
@@ -88,7 +90,11 @@ function validateDesignHistory(directory, expected) {
     const journal = fs.readFileSync(journalFile, 'utf8');
     // Leave a torn final line to the store's backed-up recovery procedure.
     const complete = journal.slice(0, journal.lastIndexOf('\n') + 1);
-    for (const line of complete.split('\n').filter(Boolean)) verify(JSON.parse(line), 'journal record');
+    for (const line of complete.split('\n').filter(Boolean)) {
+      const record = JSON.parse(line);
+      verify(record, 'journal record');
+      if (!isDeepStrictEqual(record.evaluation, evaluation)) throw new Error('Cannot resume: journal record evaluation does not match the frozen design profile.');
+    }
   }
 }
 
@@ -158,7 +164,7 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
   // Freeze one allocation for every declared comparison, including both
   // colors. A limited workflow run therefore keeps the full campaign letters.
   const registry = dynamic ? createDesignRegistry(config) : null;
-  const designProfile = dynamic ? compileDesignProfile(registry) : null;
+  const designProfile = dynamic ? compileDesignProfile(registry, config.evaluation) : null;
   const designSnapshot = dynamic ? {
     variant: designProfile.variant, config: designProfile.config,
     hash: designProfile.hash, registryHash: designProfile.registryHash,
@@ -256,7 +262,7 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
           || fingerprint(original.rulesProfiles) !== fingerprint(manifest.rulesProfiles)) throw new Error('Cannot resume: the compiled design profile snapshot changed.');
         validateDesignHistory(directory, {
           profileHash: designProfile.hash, registryHash: registry.hash, registryReference: 'run.json#designRegistry',
-        });
+        }, config.evaluation);
       }
       // Validate immutable artifacts before openStore can create a lock or
       // repair an interrupted journal. A changed rules file is never reused.
@@ -291,7 +297,7 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
     for (const strength of strengths.values()) {
       checkAbort(signal);
       const engine = newEngine(orderedProfiles[0], strength);
-      try { await engine.start({ signal }); }
+      try { await engine.start({ signal }); await requireManualValues(engine, designProfile, { signal }); }
       finally { await engine.close(); }
     }
     for (const profile of orderedProfiles) {
@@ -301,6 +307,7 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
       const engine = newEngine(profile, { skill: 20 });
       try {
         await engine.start({ signal });
+        await requireManualValues(engine, designProfile, { signal });
         const result = await checkCapabilities({
           engine, rules, startFens: profile.startFens,
           whiteKing: profile.whiteKing, blackKing: profile.blackKing, signal,
@@ -348,6 +355,7 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
         whiteStrength: sides.white.strength, blackStrength: sides.black.strength,
         engineNames: names, lastInfo, engine: config.engine,
         royalMode: profile.royalMode, evaluationCaveat: profile.evaluationCaveat,
+        ...(config.evaluation ? { evaluation: config.evaluation } : {}),
         ...designRefs,
       });
       try {
@@ -362,6 +370,7 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
             const metadata = await engine.start({ signal });
             names[color] = metadata.idname;
             await engine.newGame({ signal });
+            await requireManualValues(engine, designProfile, { signal });
             const nativeLegal = await engine.perft({ fen: board.fen(), signal });
             const wasmLegal = [...board.moves()].sort();
             if (JSON.stringify(nativeLegal) !== JSON.stringify(wasmLegal)) throw new Error(`Native engine and rules disagree on legal moves for ${game.id} (${color}).`);

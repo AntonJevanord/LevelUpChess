@@ -8,6 +8,7 @@ const { createDesignRegistry } = require('./design-registry');
 const { compileDesignProfile } = require('./design-profile');
 const { UciEngine } = require('./uci');
 const { checkCapabilities } = require('./capabilities');
+const { requireManualValues } = require('./evaluation');
 const { STANDARD_TYPES } = require('../../src/design-catalog');
 const { pieceMap } = require('../../src/profile-fen');
 const standardFamilies = Object.fromEntries(Object.entries(STANDARD_TYPES).map(([family, type]) => [type, family]));
@@ -28,7 +29,7 @@ async function validateDesignConfig(input, { enginePath, signal, onProgress = ()
   const config = normalizeConfig(input);
   const schedule = makeSchedule(config);
   const registry = createDesignRegistry(config);
-  const profile = compileDesignProfile(registry);
+  const profile = compileDesignProfile(registry, config.evaluation);
   let createMatchRules;
   try { ({ createMatchRules } = require('../../dist/balance-rules.cjs')); }
   catch (error) { throw new Error('Balance rules are not built. Run npm.cmd run build first.', { cause: error }); }
@@ -118,13 +119,14 @@ async function validateDesignConfig(input, { enginePath, signal, onProgress = ()
     checkAbort(signal);
     engine = makeEngine({ skill: 20 });
     await engine.start({ signal });
+    await requireManualValues(engine, profile, { signal });
     const strengths = new Map(config.comparisons.flatMap(comparison => [comparison.strengthA, comparison.strengthB])
       .map(strength => [JSON.stringify(strength), strength]));
     strengths.delete(JSON.stringify({ skill: 20 }));
     for (const strength of strengths.values()) {
       checkAbort(signal);
       const strengthEngine = makeEngine(strength);
-      try { await strengthEngine.start({ signal }); }
+      try { await strengthEngine.start({ signal }); await requireManualValues(strengthEngine, profile, { signal }); }
       finally { await strengthEngine.close(); }
     }
     const capabilities = await checkCapabilities({ engine, rules, startFens: [...starts], whiteKing: 0, blackKing: 0, signal });

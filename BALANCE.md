@@ -6,9 +6,43 @@ These tools collect results; they do not assign measured values to pieces or cha
 
 The [first balance revision plan](experiments/balance/revision-plan.md) closed at 160 of at most 200 games with explicit candidate decisions. Existing experiment files are options, not a queue that must be exhausted before development continues.
 
-## Version 15: paired alternatives versus the Amazon
+## Version 16: Blink values, 400 games
 
-Use the [paired-alternatives plan](experiments/balance/amazon-alternatives-plan.md) and its [frozen roster](experiments/balance/amazon-alternatives-roster.json). Twelve three-point designs face the unchanged `queen.purple@1` Amazon on otherwise ordinary armies: **12 × 40 opening pairs × 2 colors = 960 games**. Ordinary-versus-ordinary and Amazon-versus-Amazon controls add **160**, for **1,120 scheduled games** within the 1,200-game budget. There is no automatic holdout or extension.
+The [declared plan](experiments/balance/rook-values-plan.md) isolates evaluation from movement. Test the quiet-only, adjacent-diagonal and two-square-diagonal Blink revisions (`rook.purple@3`, `@4`, `@5`) against the unchanged Amazon (`queen.purple@1`). Use two policies on the same patched engine:
+
+| Policy | Blink values | Games |
+| --- | --- | ---: |
+| `auto` | Existing movement-based defaults, including the original @5 notation. | 200 |
+| `eight` | All three custom rooks use MG 2042 / EG 2208 in both engines. | 200 |
+
+Each policy includes three subject comparisons and ordinary/Amazon self-play controls over the same **20 prefixes × two colors**. Both retain Skill 20, 100,000 nodes, one thread, 32 MB hash and a 400-ply limit. The campaign cap is **400 games**, with no automatic extension. Keep @5 notation and all movement rules unchanged so the policy is the deliberate difference.
+
+The manual target is ordinary rook ≈5 plus three levels = eight whole-piece material points. Convert through the ordinary-rook internal values, **1276/1380 × 8/5 → 2042/2208**, not eight times raw pawn units. It is an evaluation prior, not a measured value, game price or strength guarantee. Ordinary pieces and Amazon keep their defaults.
+
+On Windows, start with a new parent directory:
+
+```bat
+npm.cmd run balance:rook-values -- --check
+npm.cmd run balance:rook-values -- --out balance-results/rook-values --policy auto --jobs 3
+```
+
+After `auto` finishes, explicitly launch the second policy:
+
+```bat
+npm.cmd run balance:rook-values -- --out balance-results/rook-values --policy eight
+npm.cmd run balance:rook-values -- --resume balance-results/rook-values
+npm.cmd run balance:rook-values -- --report balance-results/rook-values
+```
+
+The first launch freezes both configurations, source/binary identities and worker count in parent `rook-values-campaign.json`. Keep the entire directory together. Resume continues a started policy; neither stopping nor completing it launches the next one. Reports accept partial runs and compare policy scores only on shared fully scored openings, with differences and controls alongside coverage. Truncations and failed attempts are unscored. Three workers match the user's tested setup; runtime still depends on position length and CPU load.
+
+Preflight verifies the patched engine's actual raw, adjusted, exchange and capture-order values through the read-only `levelupvalues` diagnostic. An older or inconsistent executable cannot start manual-value searches. Evaluation settings use optional schema-2 `evaluation.pieceValues`, keyed by design ID and compiled through its frozen letter allocation; profile and resume identities include them. See [the source/provenance notes](stockfish/README.md) for the engine patch.
+
+The patch makes explicit overrides consistent across the identified tables; automatic defaults remain unchanged. It does not correct every fairy-piece evaluation heuristic. A lower assigned value may improve or worsen play. Compare both new policies under matching conditions, retain the version-15 evidence separately, and use outcomes to guide one design decision rather than declare a material value or queue more tests.
+
+## Completed version 15: paired alternatives versus the Amazon
+
+The preserved `version_15` checkout contains the [paired-alternatives plan](experiments/balance/amazon-alternatives-plan.md) and its [frozen roster](experiments/balance/amazon-alternatives-roster.json). Twelve three-point designs face the unchanged `queen.purple@1` Amazon on otherwise ordinary armies: **12 × 40 opening pairs × 2 colors = 960 games**. Ordinary-versus-ordinary and Amazon-versus-Amazon controls add **160**, for **1,120 scheduled games** within the 1,200-game budget. There is no automatic holdout or extension.
 
 ```bat
 npm.cmd run balance:alternatives -- --check
@@ -25,7 +59,7 @@ The six groups are Ranging versus Courier, two Rank pawns, two Vertical bishops,
 
 The unchanged knights, Knight-capture rook, and Returning pawn are retained without another subject comparison. Capture-box rook remains retired and Twin short queens remain parked at level 3. The version-14 [540-game plan](experiments/balance/amazon-revision-plan.md) and command remain archived. This batch replaces it as the next design experiment; it is not an automatic second run. If a version-14 run has started, retain its original directory and matching build. Do not merge journals, reuse its directory, or resume it with changed rules.
 
-The [uploaded completed summary](experiments/balance/results/amazon-alternatives-001.md) reports 1,119 completed games, one truncation, no errors, and 559 complete pairs. The batch is closed at 1,120 games; the remaining budget is unused. The [follow-up audit](experiments/balance/results/amazon-alternatives-001-audit.md) verifies identities and every recorded move, but identifies representation-dependent Blink valuation and incomplete override propagation in exchange heuristics. Keep protocol-specific scores separate from intrinsic material claims. No follow-up run is queued.
+The [uploaded completed summary](experiments/balance/results/amazon-alternatives-001.md) reports 1,119 completed games, one truncation, no errors, and 559 complete pairs. The batch is closed at 1,120 games; the remaining budget is unused. The [follow-up audit](experiments/balance/results/amazon-alternatives-001-audit.md) verifies identities and every recorded move, but identifies representation-dependent Blink valuation and incomplete override propagation in that engine's exchange heuristics. Version 16 tests this question in the separate 400-game experiment above. Reproduce or resume old runs only with their original checkout and executable.
 
 ### Closed version-12 screen
 
@@ -80,7 +114,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives batch above is closed; no next batch is declared.
+The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives batch is closed; the separate 400-game Blink valuation check is the only newly declared batch.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |
@@ -188,7 +222,7 @@ Schema-2 results use a new protocol identity. Preserve the mapping when comparin
 
 Version 15's browser picker uses the same registry/compiler for Design alternatives, Rebalance workshop, and First prototypes libraries. Balance campaigns select their own declared IDs; keep each registry within the 20 available custom letters instead of declaring the whole catalog. Earlier library profiles remain unchanged. Browser saves/PGNs include a validated profile snapshot; raw balance PGNs still need their archived registry/rules and a compatible viewer.
 
-The version-10 pawn candidates now have coarse screening evidence, while their original material priors remain estimates. Advanced pawn/guard deployment is part of the purchase. The new campaign follows the closed screen and human feedback; see [the design notes](DESIGN.md#version-15-paired-alternatives).
+The version-10 pawn candidates now have coarse screening evidence, while their original material priors remain estimates. Advanced pawn/guard deployment is part of the purchase. The completed design comparison and current evaluation check answer separate questions; see [the design notes](DESIGN.md#version-16-separate-evaluation-from-movement).
 
 ## Openings and fair comparisons
 
@@ -246,4 +280,4 @@ Track completed color-swapped pairs, distinct opening families, opponent coverag
 
 Prioritize a revised piece's comparison against an ordinary army, equal-cost alternatives, and relevant interactions. Add targeted starting positions for its changed behavior, such as blocked captures, promotion races, or sparse mating endings; these endgame scenarios still need harness support. Retain ordinary and reference self-play controls to detect broader effects; unchanged subject comparisons require a specific reason to spend more games. Use fixed effort per side within each comparison; prioritize additional paired games rather than giving one army extra search time.
 
-Engine evaluation tuning is a separate experiment. Its search evaluates whole positions, and custom-piece values come from movement heuristics or explicit overrides, not an evaluation counter. Change evaluation parameters separately from movement, record a new engine/runner identity, and test against a fixed opponent so tuning cannot validate itself.
+Engine evaluation tuning is a separate experiment. Its search evaluates whole positions, and custom-piece values come from movement heuristics or explicit overrides, not an evaluation counter. Schema-2 `evaluation.pieceValues` records explicit `{mg, eg}` values by immutable design ID; generated letter-based INI values and their actual engine tables are checked before search. Changing policy requires its own frozen engine/profile/run context. Keep movements fixed and compare against the same opponent; tuning does not validate its own material assumptions.
