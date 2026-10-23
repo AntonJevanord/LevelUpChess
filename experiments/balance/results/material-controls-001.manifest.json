@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-material-regression-analysis",
+  "engineGamesStarted": 0,
+  "inputs": [
+    {
+      "file": "rook-values-auto-001.games.jsonl",
+      "bytes": 698896,
+      "sha256": "1dbe36303d5dd08b8723808f0cd9b295ae832be52f0d5a56279bb3c044976eac"
+    },
+    {
+      "file": "rook-values-auto-001.audit.json",
+      "bytes": 7259,
+      "sha256": "71c9cfa646ea7e0743acb33726d33812c30679e9a30330fb981b283c40dafcc8"
+    }
+  ],
+  "profileHash": "72dd54f04ae886775e7792a15bba586781394065201c062b1310916b24a32b34",
+  "registryHash": "95b047eae3621400450d79a00ae47cd42ae49aba8b88482159b3467d5de3465e",
+  "actualEngineAndSourceIdentityVerified": false,
+  "openingGroups": {
+    "start": "unforced",
+    "open-e-pawns": "e-pawn",
+    "sicilian-prefix": "e-pawn",
+    "french-prefix": "e-pawn",
+    "caro-prefix": "e-pawn",
+    "modern-prefix": "e-pawn",
+    "open-knights-prefix": "e-pawn",
+    "reversed-sicilian-prefix": "english",
+    "symmetrical-english-prefix": "english",
+    "anglo-indian-prefix": "english",
+    "kingside-fianchetto-prefix": "fianchetto",
+    "fianchetto-sicilian-prefix": "fianchetto",
+    "ordinary-knights-prefix": "knights",
+    "reti-e-pawn-prefix": "knights",
+    "reti-sicilian-prefix": "knights",
+    "quiet-e-pawns": "quiet-pawns",
+    "quiet-c-pawns": "quiet-pawns",
+    "bird-open-prefix": "flank-pawns",
+    "king-pawn-step-prefix": "flank-pawns",
+    "queen-rook-step-prefix": "flank-pawns"
+  },
+  "sampling": {
+    "minPly": 16,
+    "stride": 5,
+    "stableBefore": 2,
+    "stableAfter": 2
+  },
+  "bootstrap": 200,
+  "seed": 42,
+  "runtime": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "replayRulesBundleSha256": "e89a04467e099e46ea19e50c604da8a8aad905e3fe4ae5d59108cbd984636250",
+  "dataset": "controls",
+  "protocolConfigs": [
+    {
+      "file": "experiments/balance/rook-values-auto.json",
+      "sha256": "71d1b54cc1eecd19e724972a3a7359ad3dd542e8b67715232c3049fcd3ca1853"
+    },
+    {
+      "file": "experiments/balance/rook-values-eight.json",
+      "sha256": "8ecece4618f48fd9927baf388b75406102542238b700f5c40ef71698656dc038"
+    },
+    {
+      "file": "experiments/balance/rook-values-roster.json",
+      "sha256": "0724881030724bbd10f6fe2cd499f9eb14c2eddcad2951290ae66f3046647e7d"
+    }
+  ],
+  "tools": [
+    {
+      "file": "scripts/material-regression.js",
+      "sha256": "a8b9af8b9077960db2516ca6fc5339b90bf1082d224e721b69bd6a9b94c0cb56"
+    },
+    {
+      "file": "scripts/balance/material-dataset.js",
+      "sha256": "bbd370206bc9370ea035ca7dea8c5a7545bdcaa8dcbb3345b5000f55260a8499"
+    },
+    {
+      "file": "scripts/balance/material-regression.js",
+      "sha256": "88d1548de436cc91ea2b5dfc8c755afb53e97c822d9ef5a0d9ff3e6c36a56634"
+    },
+    {
+      "file": "scripts/balance/material-plan.js",
+      "sha256": "1972b9fc12947ef8bdabeba4bed1f2f517099d772e6ec6ffb1fe7ed48b88d1dc"
+    },
+    {
+      "file": "scripts/balance/plan.js",
+      "sha256": "22ba39d61a152f38092cbc192bbb3b9dbeb011ba7a842aeeb95b1e3877d633d0"
+    },
+    {
+      "file": "scripts/balance/design-profile.js",
+      "sha256": "dc69fe2c3f16b87cf9c7174a12ca8ce49b8ea73e15b4dff03df1185009bcb108"
+    },
+    {
+      "file": "scripts/balance/design-registry.js",
+      "sha256": "de9ee5ba4ad2ea24098800be726e8cbdb4155a8f29b9e799ecabc20cb889c073"
+    },
+    {
+      "file": "scripts/balance/evaluation.js",
+      "sha256": "3d6bbbd7ffa94816c269daf2e849710c0637869f0d3f2aabf869103eb3e23d1c"
+    },
+    {
+      "file": "src/design-catalog.js",
+      "sha256": "8727b6e765e2e57907cd2593e7f8a1e08c600a7081d132797b110cc48f9fcfa2"
+    },
+    {
+      "file": "scripts/balance/material-control-source.js",
+      "sha256": "a4e5fd59728abf8abe22038c5c7fda93d43c453d5f2837432fee6db2dfc80f36"
+    },
+    {
+      "file": "scripts/balance/material-control-analysis.js",
+      "sha256": "e5ad032c134283e47a6a01b4900476cc693bf30695f04a0756e3693eb448c5f5"
+    },
+    {
+      "file": "scripts/balance/material-control-report.js",
+      "sha256": "5911768217dfba2498023c5044e562ede51c22c49502b13cd6f8bc29c376c31e"
+    },
+    {
+      "file": "scripts/balance/rook-values-report.js",
+      "sha256": "a77caaf7701fa638200b635a57f0f6f42054f506afd3feeaffcf8c9f9ac7e583"
+    }
+  ],
+  "datasetSha256": "e9c197a4d317224f2d6f8e98c6abd63b83b9d18f59ed75503d013b61e69208b7",
+  "samplesSha256": "bceb74fc070b82a8a40b432275e590ded7b7b95e60a70364dbf55571927473f4",
+  "reportSha256": "eb01c76fdb77841e2e380f3efa198dfecd81af5295a2473bcb09d950f69ce375"
+}

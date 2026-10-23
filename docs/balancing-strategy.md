@@ -120,6 +120,14 @@ sharply from broad reference estimates. Keep the tool; do not adopt its ratios
 as piece prices. Decide whether broader existing data or a different matched
 position design can address that check before declaring another game budget.
 
+The [ordinary-control follow-up](../experiments/balance/results/material-controls-001.md)
+is complete. Its 80 records contain 40 distinct histories, only 20 ordinary.
+That ordinary fit still reverses queen/rook ordering. The Amazon count difference
+is zero throughout retained samples, so those controls cannot identify its bonus.
+Close this cohort without prices or more games. Inspect separately supplied
+outcome-labelled datasets on their own provenance and game counts; do not pool
+them automatically with the handicap or control experiments.
+
 If a credible contextual Δ range is eventually established, use it as a provisional
 level-3 target, with roughly 2Δ/3 and Δ/3 for levels 2 and 1. That remains a design
 hypothesis. Keep native parameter units, displayed engine scores and conventional

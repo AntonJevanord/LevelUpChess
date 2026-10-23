@@ -27,11 +27,13 @@ A future method needs a small diagnostic screen before a full campaign, represen
 
 ## Offline outcome-regression diagnostic
 
-`npm.cmd run balance:regression -- --out balance-results/material-regression` replays the committed pilot journals and fits material differences to final scores. No native engine is launched. This first adapter accepts the exact archived version-16 pilot; arbitrary experiment folders need a separate provenance-aware adapter.
+`npm.cmd run balance:regression -- --out balance-results/material-regression` replays the committed pilot journals and fits material differences to final scores. No native engine is launched. The default `--dataset pilot` selects the exact archived version-16 pilot; `--dataset controls` selects the automatic rook campaign's ordinary/Amazon controls. Arbitrary experiment folders need a separate provenance-aware adapter.
 
 The [first result](experiments/balance/results/material-regression-001.md) retains 3,071 samples from 318 games. It keeps draws, gives each sampled game unit total weight, resolves dynamic letters through stable design IDs and holds out/resamples whole opening families. Reports expose no-sample games, partially sampled pairs, rank, convergence, policy identity limits and unsupported estimates. Sparse windows filter nearby material changes without claiming tactical quietness.
 
 The fit predicts outcomes within this selected cohort, while ordinary-piece ratios differ sharply from broad reference estimates. Keep it as a pipeline diagnostic; no material-price table or follow-up games are authorized by that result. Use a new output directory; see [sampling, options and limits](docs/material-regression-review.md#offline-command).
+
+The [control follow-up](experiments/balance/results/material-controls-001.md) verifies 80 records and fits only their 40 distinct histories. The ordinary baseline still fails a material-price sanity check; no retained position has Amazon-count imbalance. That bonus is unidentifiable. Phase filtering does not create missing variation, and the other policy's repeated histories are excluded. Both offline checks are closed.
 
 ## Version 16: completed Blink values comparison, 400 games
 
@@ -101,6 +103,8 @@ The user reports two PC blackouts; the aggregate summary records timeouts but ca
 ### What the controls tell us
 
 A control gives both engines identical armies, strength, and search settings. Ordinary controls exercise the baseline pipeline; Amazon self-play also exercises a custom upgrade. Inspect termination reasons, errors, truncations, draws, physical White/Black results, and runtime.
+
+Deterministic color swaps of identical armies can repeat the exact history. Count those copies once in outcome-regression evidence; swapping A/B labels does not create another independent game. Preserve original records and controls in frozen experiments. Future campaign budgets should justify repeat controls explicitly.
 
 With deterministic identical armies, both games of a color-swapped pair can replay the same moves. If White wins twice, Army A wins once as White and loses once as Black: **A still scores 50%**. That is an expected symmetry check. It does not establish balanced upgrades, equal White/Black chances, correct movement, or good engine evaluation.
 

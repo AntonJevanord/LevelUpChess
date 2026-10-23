@@ -69,6 +69,8 @@ npm.cmd run balance:regression -- --out balance-results/material-regression
 
 Use a new output directory. The command saves the dataset, samples, grouped validation, conditional ranges and reproducibility hashes. See the [method and options](docs/material-regression-review.md#offline-command).
 
+The [ordinary-control follow-up](experiments/balance/results/material-controls-001.md) is also complete: 80 records collapse to 40 distinct histories. Their ordinary-material fit is unsuitable for pricing, and retained positions contain no Amazon-count imbalance. Reproduce that bounded check with `--dataset controls`; no new match run is scheduled.
+
 ## Completed Blink evaluation check
 
 The [400-game plan](experiments/balance/rook-values-plan.md) compares the same three Blink movements under two engine evaluation policies: automatic values and a manual **eight-point whole-rook target**. Eight comes from ordinary rook ≈5 plus three upgrade levels; it is a judgment supplied to the engine, not a measured piece value. The test includes quiet-only Blink alongside the adjacent-diagonal and two-square-diagonal versions. Movement and three-point purchase prices stay unchanged.

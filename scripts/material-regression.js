@@ -7,6 +7,9 @@ const { createHash } = require('node:crypto');
 const { getCampaign } = require('./balance/material-plan');
 const { exportDataset } = require('./balance/material-dataset');
 const { analyzeDataset } = require('./balance/material-regression');
+const { readControlArchive } = require('./balance/material-control-source');
+const { analyzeControls } = require('./balance/material-control-analysis');
+const { formatControlReport } = require('./balance/material-control-report');
 
 const ROOT = path.resolve(__dirname, '..');
 const ARCHIVE = path.join(ROOT, 'experiments/balance/results');
@@ -22,7 +25,9 @@ const OPENING_GROUPS = Object.freeze({
 const TOOL_SOURCES = ['scripts/material-regression.js', 'scripts/balance/material-dataset.js',
   'scripts/balance/material-regression.js', 'scripts/balance/material-plan.js',
   'scripts/balance/plan.js', 'scripts/balance/design-profile.js',
-  'scripts/balance/design-registry.js', 'scripts/balance/evaluation.js', 'src/design-catalog.js'];
+  'scripts/balance/design-registry.js', 'scripts/balance/evaluation.js', 'src/design-catalog.js',
+  'scripts/balance/material-control-source.js', 'scripts/balance/material-control-analysis.js',
+  'scripts/balance/material-control-report.js', 'scripts/balance/rook-values-report.js'];
 const sha256 = value => createHash('sha256').update(value).digest('hex');
 const json = value => JSON.stringify(value, null, 2) + '\n';
 const number = value => Number.isFinite(value) ? value.toFixed(4) : 'unavailable';
@@ -32,7 +37,7 @@ function parseArgs(args) {
   const seen = new Set();
   for (let index = 0; index < args.length; index++) {
     const flag = args[index];
-    if (!['--help', '--out', '--archive', '--bootstrap', '--seed'].includes(flag) || seen.has(flag)) throw new Error(`Unknown or repeated option: ${flag}`);
+    if (!['--help', '--out', '--archive', '--bootstrap', '--seed', '--dataset'].includes(flag) || seen.has(flag)) throw new Error(`Unknown or repeated option: ${flag}`);
     seen.add(flag);
     if (flag === '--help') { options.help = true; continue; }
     const value = args[++index];
@@ -41,6 +46,7 @@ function parseArgs(args) {
   }
   if (options.help && seen.size !== 1) throw new Error('Use --help by itself.');
   if (!options.help && !options.out) throw new Error('Specify --out with a new empty output directory.');
+  if (options.dataset !== undefined && !['pilot', 'controls'].includes(options.dataset)) throw new Error('--dataset must be pilot or controls.');
   if (!Number.isSafeInteger(options.bootstrap) || options.bootstrap < 0 || options.bootstrap > 1000) throw new Error('--bootstrap must be an integer from 0 to 1000.');
   if (!Number.isSafeInteger(options.seed) || options.seed < 0 || options.seed > 0xffffffff) throw new Error('--seed must be an unsigned 32-bit integer.');
   return options;
@@ -137,38 +143,53 @@ function formatReport(report) {
 async function main(args = process.argv.slice(2), services = {}) {
   const options = parseArgs(args), log = services.log || console.log;
   if (options.help) {
-    log('Usage: npm run balance:regression -- --out DIRECTORY [--archive DIRECTORY] [--bootstrap 0..1000] [--seed UINT32]\n'
-      + 'Offline export and expected-score regression of the archived 320-game version-16 pilot. No engine required.');
+    log('Usage: npm run balance:regression -- --out DIRECTORY [--dataset pilot|controls] [--archive DIRECTORY] [--bootstrap 0..1000] [--seed UINT32]\n'
+      + 'Offline export and expected-score regression. Default: archived 320-game handicap pilot. Controls: 80 automatic-policy control records, deduplicated before fitting. No engine required.');
     return { help: true };
   }
   const destination = path.resolve(options.out);
   if (fs.existsSync(destination) && (!fs.statSync(destination).isDirectory() || fs.readdirSync(destination).length)) throw new Error('Use a new empty output directory; existing results are never replaced.');
-  const source = (services.readPilotArchive || readPilotArchive)(options.archive ? path.resolve(options.archive) : undefined);
-  log('Offline export: replaying 320 archived games and checking sparse material samples.');
+  const controls = options.dataset === 'controls';
+  const loader = controls ? services.readControlArchive || readControlArchive : services.readPilotArchive || readPilotArchive;
+  const source = loader(options.archive ? path.resolve(options.archive) : undefined);
+  const recordCount = source.sources.reduce((total, item) => total + item.records.length, 0);
+  log(`Offline export: replaying ${recordCount} archived game records and checking sparse material samples.`);
   const dataset = await (services.exportDataset || exportDataset)({ sources: source.sources, profile: source.profile, openingGroups: source.openingGroups });
   log(`Retained ${dataset.samples.length} positions; fitting and validating by whole opening families.`);
-  const analysis = (services.analyzeDataset || analyzeDataset)(dataset, { bootstrap: options.bootstrap, seed: options.seed });
+  const analysis = controls
+    ? (services.analyzeControls || analyzeControls)(dataset, { bootstrap: options.bootstrap, seed: options.seed, historyKeys: source.selection.historyKeys })
+    : (services.analyzeDataset || analyzeDataset)(dataset, { bootstrap: options.bootstrap, seed: options.seed });
   const { samples, ...metadata } = dataset;
   metadata.sampleCount = samples.length;
   const sampleBytes = samples.map(row => JSON.stringify(row)).join('\n') + '\n';
-  const report = { schemaVersion: 1, format: 'levelup-material-regression-diagnostic', dataset: metadata, analysis };
+  const report = { schemaVersion: 1, format: controls ? 'levelup-material-control-diagnostic' : 'levelup-material-regression-diagnostic', dataset: metadata, analysis,
+    ...(controls ? { sourceSelection: source.selection } : {}) };
   const manifest = { schemaVersion: 1, format: 'levelup-material-regression-analysis',
     engineGamesStarted: 0, inputs: source.inputs, profileHash: source.profile.hash, registryHash: source.profile.registryHash,
     actualEngineAndSourceIdentityVerified: false, openingGroups: source.openingGroups,
     sampling: dataset.sampling, bootstrap: options.bootstrap, seed: options.seed,
     runtime: { node: process.version, platform: process.platform, arch: process.arch },
     replayRulesBundleSha256: sha256(fs.readFileSync(path.join(ROOT, 'dist/balance-rules.cjs'))),
-    protocolConfigSha256: sha256(fs.readFileSync(path.join(ROOT, 'experiments/balance/material-estimate.json'), 'utf8').replace(/\r\n/g, '\n')),
+    dataset: controls ? 'controls' : 'pilot',
+    protocolConfigs: (source.protocolConfigFiles || [path.join(ROOT, 'experiments/balance/material-estimate.json')]).map(file => ({
+      file: path.relative(ROOT, file).split(path.sep).join('/'),
+      sha256: sha256(fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n')),
+    })),
     tools: TOOL_SOURCES.map(file => ({ file, sha256: sha256(fs.readFileSync(path.join(ROOT, file), 'utf8').replace(/\r\n/g, '\n')) })),
     datasetSha256: sha256(json(metadata)), samplesSha256: sha256(sampleBytes), reportSha256: sha256(json(report)),
   };
   const outputs = { 'dataset.json': json(metadata), 'samples.jsonl': sampleBytes,
-    'regression-report.json': json(report), 'regression-report.md': formatReport(report), 'analysis-manifest.json': json(manifest) };
+    'regression-report.json': json(report), 'regression-report.md': controls ? formatControlReport(report) : formatReport(report), 'analysis-manifest.json': json(manifest) };
   // Compute/validate before touching output. Exclusive writes preserve prior evidence.
   fs.mkdirSync(destination, { recursive: true });
   for (const [name, bytes] of Object.entries(outputs)) fs.writeFileSync(path.join(destination, name), bytes, { flag: 'wx' });
-  log(`Offline analysis finished: ${dataset.games.length} games, ${analysis.coverage.groups} opening families.`);
-  log(`Pawn-normalized estimates: ${analysis.normalized.available ? 'available with stated limits' : `unavailable (${analysis.normalized.reason})`}.`);
+  if (controls) {
+    log(`Offline control analysis finished: ${dataset.games.length} records, ${analysis.selection.uniqueHistories} distinct histories.`);
+    log(`Amazon bonus: ${analysis.analyses.combined.amazonBonus.reason || 'see support and baseline checks in report'}.`);
+  } else {
+    log(`Offline analysis finished: ${dataset.games.length} games, ${analysis.coverage.groups} opening families.`);
+    log(`Pawn-normalized estimates: ${analysis.normalized.available ? 'available with stated limits' : `unavailable (${analysis.normalized.reason})`}.`);
+  }
   log(`Report: ${path.join(destination, 'regression-report.md')}`);
   return { report, manifest, directory: destination };
 }

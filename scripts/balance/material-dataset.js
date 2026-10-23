@@ -187,7 +187,7 @@ async function exportDataset({ sources, profile, sampling = {}, openingGroups = 
       phases: Object.fromEntries(['middlegame', 'endgame'].map(phase => [phase, samples.filter(sample => sample.phase === phase).length])) },
     limitations: [
       'Recorded settings and replayed legal moves do not attest the executable or process identity; missing execution provenance remains unknown.',
-      'Selected handicap games are a pipeline diagnostic, not a representative population of ordinary or upgraded-piece positions.',
+      'Selected experiment games are a pipeline diagnostic, not a representative population of ordinary or upgraded-piece positions.',
       'Samples from the same game and related openings are dependent; use game-balanced weights and grouped validation/resampling.',
       'Material-stable windows filter recent/nearby captures and promotions but do not establish tactical quietness.',
       'Ordinary family counts plus upgrade bonuses are model features, not intrinsic exchange prices or engine MG/EG parameters.',

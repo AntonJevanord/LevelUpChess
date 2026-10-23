@@ -1,0 +1,3945 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-material-control-diagnostic",
+  "dataset": {
+    "schemaVersion": 1,
+    "format": "levelup-material-dataset",
+    "featureNames": [
+      "pawn",
+      "knight",
+      "bishop",
+      "rook",
+      "queen",
+      "tempo",
+      "bonus:queen.purple@1",
+      "bonus:rook.purple@3",
+      "bonus:rook.purple@4",
+      "bonus:rook.purple@5"
+    ],
+    "sampling": {
+      "minPly": 16,
+      "stride": 5,
+      "stableBefore": 2,
+      "stableAfter": 2
+    },
+    "identity": {
+      "protocol": "rook-values-v16-automatic-controls",
+      "profileHash": "72dd54f04ae886775e7792a15bba586781394065201c062b1310916b24a32b34",
+      "registryHash": "95b047eae3621400450d79a00ae47cd42ae49aba8b88482159b3467d5de3465e",
+      "evaluation": "automatic-reference",
+      "engineSettings": {
+        "nodes": 100000,
+        "threads": 1,
+        "hashMb": 32,
+        "maxPlies": 400
+      },
+      "whiteStrength": {
+        "skill": 20
+      },
+      "blackStrength": {
+        "skill": 20
+      },
+      "engineIdentityVerified": false,
+      "sourceIdentityVerified": false
+    },
+    "recordedPolicy": {
+      "engine": {
+        "nodes": 100000,
+        "threads": 1,
+        "hashMb": 32,
+        "maxPlies": 400
+      },
+      "evaluation": null,
+      "whiteStrength": {
+        "skill": 20
+      },
+      "blackStrength": {
+        "skill": 20
+      },
+      "engineNames": {
+        "w": "Fairy-Stockfish 230826",
+        "b": "Fairy-Stockfish 230826"
+      }
+    },
+    "profile": {
+      "hash": "72dd54f04ae886775e7792a15bba586781394065201c062b1310916b24a32b34",
+      "registryHash": "95b047eae3621400450d79a00ae47cd42ae49aba8b88482159b3467d5de3465e",
+      "registry": {
+        "schemaVersion": 1,
+        "definitions": [
+          {
+            "id": "queen.purple@1",
+            "family": "queen",
+            "level": 3,
+            "revision": 1,
+            "movement": "QN",
+            "legacyType": "u",
+            "legacySlot": 8,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            }
+          },
+          {
+            "id": "rook.purple@3",
+            "family": "rook",
+            "level": 3,
+            "revision": 3,
+            "movement": "RmFmDmNmAmHmCmZmG",
+            "legacyType": "o",
+            "legacySlot": 12,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": true,
+              "enPassant": false
+            }
+          },
+          {
+            "id": "rook.purple@4",
+            "family": "rook",
+            "level": 3,
+            "revision": 4,
+            "movement": "RFmDmNmAmHmCmZmG",
+            "legacyType": "o",
+            "legacySlot": 12,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": true,
+              "enPassant": false
+            }
+          },
+          {
+            "id": "rook.purple@5",
+            "family": "rook",
+            "level": 3,
+            "revision": 5,
+            "movement": "RFmDmNmAmHmCmZmGcB2",
+            "legacyType": "o",
+            "legacySlot": 12,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": true,
+              "enPassant": false
+            }
+          }
+        ],
+        "allocations": [
+          {
+            "id": "queen.purple@1",
+            "letter": "u",
+            "slot": 8
+          },
+          {
+            "id": "rook.purple@3",
+            "letter": "o",
+            "slot": 12
+          },
+          {
+            "id": "rook.purple@4",
+            "letter": "a",
+            "slot": 1
+          },
+          {
+            "id": "rook.purple@5",
+            "letter": "c",
+            "slot": 2
+          }
+        ],
+        "hash": "95b047eae3621400450d79a00ae47cd42ae49aba8b88482159b3467d5de3465e"
+      },
+      "variant": "levelup-design-7eda174cf171c67896f8",
+      "evaluation": null
+    },
+    "sources": [
+      {
+        "id": "rook-auto-controls",
+        "identity": {
+          "protocol": "rook-values-v16-automatic-controls",
+          "profileHash": "72dd54f04ae886775e7792a15bba586781394065201c062b1310916b24a32b34",
+          "registryHash": "95b047eae3621400450d79a00ae47cd42ae49aba8b88482159b3467d5de3465e",
+          "evaluation": "automatic-reference",
+          "engineSettings": {
+            "nodes": 100000,
+            "threads": 1,
+            "hashMb": 32,
+            "maxPlies": 400
+          },
+          "whiteStrength": {
+            "skill": 20
+          },
+          "blackStrength": {
+            "skill": 20
+          },
+          "engineIdentityVerified": false,
+          "sourceIdentityVerified": false
+        },
+        "metadata": {
+          "runId": "ef535a02-cbce-4edb-9423-36e6d1bd596d",
+          "selection": {
+            "sourcePolicy": "auto",
+            "sourceRecords": 200,
+            "selectedRecords": 80,
+            "comparisons": {
+              "standard-control": 40,
+              "amazon-control": 40
+            },
+            "excludedSubjectRecords": 120,
+            "materialHandicaps": false,
+            "historyHashFormat": "SHA-256 of JSON.stringify({startFen,moves,result,reason,finalFen}); property order as listed",
+            "uniqueHistories": 40,
+            "duplicateRecords": 40,
+            "historyKeys": {
+              "rook-auto-controls:c14_amazon-control_o18_reti-e-pawn-prefix_r1_b": "2b2609fa2867d4c66f062d7ce5f1291a0dfc10a22d11457fa08e8bff9f353af9",
+              "rook-auto-controls:c14_amazon-control_o19_open-knights-prefix_r1_w": "cdb677a342f4d64b41cbaef5dc1ac14ed80a2fd34d1988d501cc0d37d56cf82b",
+              "rook-auto-controls:c14_amazon-control_o18_reti-e-pawn-prefix_r1_w": "2b2609fa2867d4c66f062d7ce5f1291a0dfc10a22d11457fa08e8bff9f353af9",
+              "rook-auto-controls:c16_standard-control_o26_kingside-fianchetto-prefix_r1_b": "73b9144122fe5e7a40faa63bd36a55858a32f14614c94a110656b5398b64d0f9",
+              "rook-auto-controls:c16_standard-control_o26_symmetrical-english-prefix_r1_w": "444b7c0a4894028be144666602c477c9202bf589f131c608107e9d5d97d74c95",
+              "rook-auto-controls:c14_amazon-control_o19_open-knights-prefix_r1_b": "cdb677a342f4d64b41cbaef5dc1ac14ed80a2fd34d1988d501cc0d37d56cf82b",
+              "rook-auto-controls:c16_standard-control_o26_kingside-fianchetto-prefix_r1_w": "73b9144122fe5e7a40faa63bd36a55858a32f14614c94a110656b5398b64d0f9",
+              "rook-auto-controls:c16_standard-control_o26_symmetrical-english-prefix_r1_b": "444b7c0a4894028be144666602c477c9202bf589f131c608107e9d5d97d74c95",
+              "rook-auto-controls:c16_standard-control_o13_quiet-e-pawns_r1_w": "5284d525a90295850928cd1c7bc04c8f6b88cb542ec91ba10308a2e968ddab90",
+              "rook-auto-controls:c16_standard-control_o21_king-pawn-step-prefix_r1_w": "44a820afd81c11b9ac24070d81a6649b9fa6a924a8407df5751f34c6a1ecb955",
+              "rook-auto-controls:c14_amazon-control_o13_modern-prefix_r1_b": "10af8c657c679b17dbe02be832902993222af8a588bed3ef4b74bd149d68316a",
+              "rook-auto-controls:c16_standard-control_o13_quiet-e-pawns_r1_b": "5284d525a90295850928cd1c7bc04c8f6b88cb542ec91ba10308a2e968ddab90",
+              "rook-auto-controls:c16_standard-control_o21_king-pawn-step-prefix_r1_b": "44a820afd81c11b9ac24070d81a6649b9fa6a924a8407df5751f34c6a1ecb955",
+              "rook-auto-controls:c14_amazon-control_o13_modern-prefix_r1_w": "10af8c657c679b17dbe02be832902993222af8a588bed3ef4b74bd149d68316a",
+              "rook-auto-controls:c14_amazon-control_o24_reversed-sicilian-prefix_r1_w": "4d2dc31336935da768a070c5fa9496ee03214f90d96c94adb4d5c724238dc253",
+              "rook-auto-controls:c14_amazon-control_o24_reversed-sicilian-prefix_r1_b": "4d2dc31336935da768a070c5fa9496ee03214f90d96c94adb4d5c724238dc253",
+              "rook-auto-controls:c16_standard-control_o12_open-e-pawns_r1_b": "1b0b0ab0863a15ca64958abffc215d8b7545c12b9d51b39ecc1d34b65df88c21",
+              "rook-auto-controls:c14_amazon-control_o22_queen-rook-step-prefix_r1_b": "376ce31c9101057f48f6d99c932dc140315e71cf021f5c312f9e4084a6231478",
+              "rook-auto-controls:c16_standard-control_o26_fianchetto-sicilian-prefix_r1_b": "f66d9f32ac43fec808a44829b1a461db8d883c99545c1d7bd2853f7a647007d9",
+              "rook-auto-controls:c16_standard-control_o12_open-e-pawns_r1_w": "1b0b0ab0863a15ca64958abffc215d8b7545c12b9d51b39ecc1d34b65df88c21",
+              "rook-auto-controls:c14_amazon-control_o15_sicilian-prefix_r1_b": "a5c4f658078f5e74b3460410b157874568ace355f6ae0c8c45b79ee76979a0ff",
+              "rook-auto-controls:c14_amazon-control_o22_queen-rook-step-prefix_r1_w": "376ce31c9101057f48f6d99c932dc140315e71cf021f5c312f9e4084a6231478",
+              "rook-auto-controls:c16_standard-control_o26_fianchetto-sicilian-prefix_r1_w": "f66d9f32ac43fec808a44829b1a461db8d883c99545c1d7bd2853f7a647007d9",
+              "rook-auto-controls:c14_amazon-control_o15_sicilian-prefix_r1_w": "a5c4f658078f5e74b3460410b157874568ace355f6ae0c8c45b79ee76979a0ff",
+              "rook-auto-controls:c14_amazon-control_o26_symmetrical-english-prefix_r1_w": "37e2b69331263f4ef8844b18271bf58d74681d82af5cca744fa5029ef6f36548",
+              "rook-auto-controls:c16_standard-control_o19_anglo-indian-prefix_r1_w": "5a2c5f2ce2904e99aba04f818a2c37b2f094733d96b4504855664e5565406f9e",
+              "rook-auto-controls:c14_amazon-control_o26_symmetrical-english-prefix_r1_b": "37e2b69331263f4ef8844b18271bf58d74681d82af5cca744fa5029ef6f36548",
+              "rook-auto-controls:c14_amazon-control_o16_bird-open-prefix_r1_b": "062b726b9273ea00d61fc5f1fa8be12e904ed91adea1ee8eab197a3bd3d90736",
+              "rook-auto-controls:c16_standard-control_o19_anglo-indian-prefix_r1_b": "5a2c5f2ce2904e99aba04f818a2c37b2f094733d96b4504855664e5565406f9e",
+              "rook-auto-controls:c16_standard-control_o13_french-prefix_r1_w": "024eef44a24cf918b6b30ef26a934e62ef6fe19e2f297e67649b84bfc8b76644",
+              "rook-auto-controls:c16_standard-control_o13_french-prefix_r1_b": "024eef44a24cf918b6b30ef26a934e62ef6fe19e2f297e67649b84bfc8b76644",
+              "rook-auto-controls:c14_amazon-control_o16_bird-open-prefix_r1_w": "062b726b9273ea00d61fc5f1fa8be12e904ed91adea1ee8eab197a3bd3d90736",
+              "rook-auto-controls:c16_standard-control_o18_reti-e-pawn-prefix_r1_w": "00fd6c352e1ac1497362c7a4d014c04de2f1bbb520b6d83026b396f4755f4045",
+              "rook-auto-controls:c16_standard-control_o18_reti-e-pawn-prefix_r1_b": "00fd6c352e1ac1497362c7a4d014c04de2f1bbb520b6d83026b396f4755f4045",
+              "rook-auto-controls:c14_amazon-control_o12_open-e-pawns_r1_b": "d09fe0a6c797baf5d0cfdf119c708a7d03b5b8e941c2f2f359e6f8a604b5f573",
+              "rook-auto-controls:c14_amazon-control_o23_ordinary-knights-prefix_r1_w": "d08f53c113df07759306890bd69bf0909c4e4848a6c3ecdc047bb16d145a5b65",
+              "rook-auto-controls:c14_amazon-control_o12_open-e-pawns_r1_w": "d09fe0a6c797baf5d0cfdf119c708a7d03b5b8e941c2f2f359e6f8a604b5f573",
+              "rook-auto-controls:c14_amazon-control_o23_ordinary-knights-prefix_r1_b": "d08f53c113df07759306890bd69bf0909c4e4848a6c3ecdc047bb16d145a5b65",
+              "rook-auto-controls:c14_amazon-control_o11_caro-prefix_r1_w": "5e482752a6da0a134eb50345c723c556d195a9e734b5e1f54096675999802d27",
+              "rook-auto-controls:c16_standard-control_o20_reti-sicilian-prefix_r1_b": "adda8bb88ce6877616949f732de9fc50ed38a07df84856f2240051df4c88421f",
+              "rook-auto-controls:c16_standard-control_o20_reti-sicilian-prefix_r1_w": "adda8bb88ce6877616949f732de9fc50ed38a07df84856f2240051df4c88421f",
+              "rook-auto-controls:c14_amazon-control_o11_caro-prefix_r1_b": "5e482752a6da0a134eb50345c723c556d195a9e734b5e1f54096675999802d27",
+              "rook-auto-controls:c14_amazon-control_o13_quiet-c-pawns_r1_w": "25d9696f76ddd09a92bf3e314e7b56b7fe26edd948d48c75095e723ee24adb47",
+              "rook-auto-controls:c16_standard-control_o15_sicilian-prefix_r1_w": "0f1cf23330e3c9849d1796ac227112a0e45915188136224122f8f521d96472b4",
+              "rook-auto-controls:c14_amazon-control_o13_quiet-c-pawns_r1_b": "25d9696f76ddd09a92bf3e314e7b56b7fe26edd948d48c75095e723ee24adb47",
+              "rook-auto-controls:c16_standard-control_o15_sicilian-prefix_r1_b": "0f1cf23330e3c9849d1796ac227112a0e45915188136224122f8f521d96472b4",
+              "rook-auto-controls:c16_standard-control_o23_ordinary-knights-prefix_r1_w": "e9ad7836164c75620c7ffa3a807b82dfa40d83358314b756920d44101988226d",
+              "rook-auto-controls:c16_standard-control_o23_ordinary-knights-prefix_r1_b": "e9ad7836164c75620c7ffa3a807b82dfa40d83358314b756920d44101988226d",
+              "rook-auto-controls:c16_standard-control_o13_quiet-c-pawns_r1_w": "9ce525e1d66ecbef47a36fdc94ee5e73499b386ea54f3b52eaaac0c845d6d3df",
+              "rook-auto-controls:c16_standard-control_o13_quiet-c-pawns_r1_b": "9ce525e1d66ecbef47a36fdc94ee5e73499b386ea54f3b52eaaac0c845d6d3df",
+              "rook-auto-controls:c16_standard-control_o16_bird-open-prefix_r1_w": "4d8f5b62ff801da8881dcb623ce3a6bc26a216f6b6ea7c6556385439e85b61be",
+              "rook-auto-controls:c16_standard-control_o16_bird-open-prefix_r1_b": "4d8f5b62ff801da8881dcb623ce3a6bc26a216f6b6ea7c6556385439e85b61be",
+              "rook-auto-controls:c14_amazon-control_o5_start_r1_w": "d2f2c0f80601d426263ab82e09773cf8711af777c0ebb84c15f181c3f4ee6e20",
+              "rook-auto-controls:c14_amazon-control_o5_start_r1_b": "d2f2c0f80601d426263ab82e09773cf8711af777c0ebb84c15f181c3f4ee6e20",
+              "rook-auto-controls:c14_amazon-control_o26_kingside-fianchetto-prefix_r1_b": "6876fd444823fa9a20f81f0351350224b898873178e7775a8638c721c88209eb",
+              "rook-auto-controls:c14_amazon-control_o26_kingside-fianchetto-prefix_r1_w": "6876fd444823fa9a20f81f0351350224b898873178e7775a8638c721c88209eb",
+              "rook-auto-controls:c16_standard-control_o24_reversed-sicilian-prefix_r1_b": "cc0ee2eace7651aa233c653171d8c83e960609090247e6e228df03fab6aff969",
+              "rook-auto-controls:c14_amazon-control_o19_anglo-indian-prefix_r1_w": "c4ac09151c7a69f1e7c44b40faf41f34862b2e7c0c7952a2282e356460a60510",
+              "rook-auto-controls:c16_standard-control_o24_reversed-sicilian-prefix_r1_w": "cc0ee2eace7651aa233c653171d8c83e960609090247e6e228df03fab6aff969",
+              "rook-auto-controls:c14_amazon-control_o19_anglo-indian-prefix_r1_b": "c4ac09151c7a69f1e7c44b40faf41f34862b2e7c0c7952a2282e356460a60510",
+              "rook-auto-controls:c14_amazon-control_o21_king-pawn-step-prefix_r1_w": "4f1e7d424f47816a6e23253ccf2748a0334ef8dc3b070af100d9e82c74912051",
+              "rook-auto-controls:c14_amazon-control_o20_reti-sicilian-prefix_r1_w": "7090c15474041e61cdad51a6cdf7bf94ceb83cb8ff43a1974ae139fb4013fea8",
+              "rook-auto-controls:c14_amazon-control_o21_king-pawn-step-prefix_r1_b": "4f1e7d424f47816a6e23253ccf2748a0334ef8dc3b070af100d9e82c74912051",
+              "rook-auto-controls:c14_amazon-control_o20_reti-sicilian-prefix_r1_b": "7090c15474041e61cdad51a6cdf7bf94ceb83cb8ff43a1974ae139fb4013fea8",
+              "rook-auto-controls:c16_standard-control_o13_modern-prefix_r1_w": "822bb5ad87e7f6222ad9e026df2778cab490fb304622af9f1ca6a18dfbe19f47",
+              "rook-auto-controls:c14_amazon-control_o26_fianchetto-sicilian-prefix_r1_b": "5414c5dd4f37a490e3c950ce25a530420569f41027a2e5a8b474f480147ab271",
+              "rook-auto-controls:c16_standard-control_o13_modern-prefix_r1_b": "822bb5ad87e7f6222ad9e026df2778cab490fb304622af9f1ca6a18dfbe19f47",
+              "rook-auto-controls:c14_amazon-control_o26_fianchetto-sicilian-prefix_r1_w": "5414c5dd4f37a490e3c950ce25a530420569f41027a2e5a8b474f480147ab271",
+              "rook-auto-controls:c16_standard-control_o19_open-knights-prefix_r1_b": "2075de7329294ad52dd4aa76a07abcd37e5e2ab3afdea598e0b7e3331a909f92",
+              "rook-auto-controls:c16_standard-control_o19_open-knights-prefix_r1_w": "2075de7329294ad52dd4aa76a07abcd37e5e2ab3afdea598e0b7e3331a909f92",
+              "rook-auto-controls:c14_amazon-control_o13_quiet-e-pawns_r1_b": "cfdf3eda4beb406238b86b1a560ebba354afc4c92f458359e28798c33a990f42",
+              "rook-auto-controls:c14_amazon-control_o13_quiet-e-pawns_r1_w": "cfdf3eda4beb406238b86b1a560ebba354afc4c92f458359e28798c33a990f42",
+              "rook-auto-controls:c16_standard-control_o22_queen-rook-step-prefix_r1_b": "9dacf165ea3cf7fcec5f3b2fe4f9892c34f3337b51d461a2379b39c6b6948bb5",
+              "rook-auto-controls:c14_amazon-control_o13_french-prefix_r1_b": "25b02e7c18db0a565e3f49c293410edbe84c877a7aad86747351e35c42144528",
+              "rook-auto-controls:c16_standard-control_o22_queen-rook-step-prefix_r1_w": "9dacf165ea3cf7fcec5f3b2fe4f9892c34f3337b51d461a2379b39c6b6948bb5",
+              "rook-auto-controls:c16_standard-control_o5_start_r1_b": "db1a5f8feb1e6c4f961956d7fe3651d832240581809e8fa44324ce753f185e39",
+              "rook-auto-controls:c14_amazon-control_o13_french-prefix_r1_w": "25b02e7c18db0a565e3f49c293410edbe84c877a7aad86747351e35c42144528",
+              "rook-auto-controls:c16_standard-control_o5_start_r1_w": "db1a5f8feb1e6c4f961956d7fe3651d832240581809e8fa44324ce753f185e39",
+              "rook-auto-controls:c16_standard-control_o11_caro-prefix_r1_w": "29add529cba56b6c5983621b6971d9d00bca9f7d3b1b37cd8776c2e93946b97f",
+              "rook-auto-controls:c16_standard-control_o11_caro-prefix_r1_b": "29add529cba56b6c5983621b6971d9d00bca9f7d3b1b37cd8776c2e93946b97f"
+            },
+            "historyGroups": {
+              "2b2609fa2867d4c66f062d7ce5f1291a0dfc10a22d11457fa08e8bff9f353af9": [
+                "c14_amazon-control_o18_reti-e-pawn-prefix_r1_b",
+                "c14_amazon-control_o18_reti-e-pawn-prefix_r1_w"
+              ],
+              "cdb677a342f4d64b41cbaef5dc1ac14ed80a2fd34d1988d501cc0d37d56cf82b": [
+                "c14_amazon-control_o19_open-knights-prefix_r1_w",
+                "c14_amazon-control_o19_open-knights-prefix_r1_b"
+              ],
+              "73b9144122fe5e7a40faa63bd36a55858a32f14614c94a110656b5398b64d0f9": [
+                "c16_standard-control_o26_kingside-fianchetto-prefix_r1_b",
+                "c16_standard-control_o26_kingside-fianchetto-prefix_r1_w"
+              ],
+              "444b7c0a4894028be144666602c477c9202bf589f131c608107e9d5d97d74c95": [
+                "c16_standard-control_o26_symmetrical-english-prefix_r1_w",
+                "c16_standard-control_o26_symmetrical-english-prefix_r1_b"
+              ],
+              "5284d525a90295850928cd1c7bc04c8f6b88cb542ec91ba10308a2e968ddab90": [
+                "c16_standard-control_o13_quiet-e-pawns_r1_w",
+                "c16_standard-control_o13_quiet-e-pawns_r1_b"
+              ],
+              "44a820afd81c11b9ac24070d81a6649b9fa6a924a8407df5751f34c6a1ecb955": [
+                "c16_standard-control_o21_king-pawn-step-prefix_r1_w",
+                "c16_standard-control_o21_king-pawn-step-prefix_r1_b"
+              ],
+              "10af8c657c679b17dbe02be832902993222af8a588bed3ef4b74bd149d68316a": [
+                "c14_amazon-control_o13_modern-prefix_r1_b",
+                "c14_amazon-control_o13_modern-prefix_r1_w"
+              ],
+              "4d2dc31336935da768a070c5fa9496ee03214f90d96c94adb4d5c724238dc253": [
+                "c14_amazon-control_o24_reversed-sicilian-prefix_r1_w",
+                "c14_amazon-control_o24_reversed-sicilian-prefix_r1_b"
+              ],
+              "1b0b0ab0863a15ca64958abffc215d8b7545c12b9d51b39ecc1d34b65df88c21": [
+                "c16_standard-control_o12_open-e-pawns_r1_b",
+                "c16_standard-control_o12_open-e-pawns_r1_w"
+              ],
+              "376ce31c9101057f48f6d99c932dc140315e71cf021f5c312f9e4084a6231478": [
+                "c14_amazon-control_o22_queen-rook-step-prefix_r1_b",
+                "c14_amazon-control_o22_queen-rook-step-prefix_r1_w"
+              ],
+              "f66d9f32ac43fec808a44829b1a461db8d883c99545c1d7bd2853f7a647007d9": [
+                "c16_standard-control_o26_fianchetto-sicilian-prefix_r1_b",
+                "c16_standard-control_o26_fianchetto-sicilian-prefix_r1_w"
+              ],
+              "a5c4f658078f5e74b3460410b157874568ace355f6ae0c8c45b79ee76979a0ff": [
+                "c14_amazon-control_o15_sicilian-prefix_r1_b",
+                "c14_amazon-control_o15_sicilian-prefix_r1_w"
+              ],
+              "37e2b69331263f4ef8844b18271bf58d74681d82af5cca744fa5029ef6f36548": [
+                "c14_amazon-control_o26_symmetrical-english-prefix_r1_w",
+                "c14_amazon-control_o26_symmetrical-english-prefix_r1_b"
+              ],
+              "5a2c5f2ce2904e99aba04f818a2c37b2f094733d96b4504855664e5565406f9e": [
+                "c16_standard-control_o19_anglo-indian-prefix_r1_w",
+                "c16_standard-control_o19_anglo-indian-prefix_r1_b"
+              ],
+              "062b726b9273ea00d61fc5f1fa8be12e904ed91adea1ee8eab197a3bd3d90736": [
+                "c14_amazon-control_o16_bird-open-prefix_r1_b",
+                "c14_amazon-control_o16_bird-open-prefix_r1_w"
+              ],
+              "024eef44a24cf918b6b30ef26a934e62ef6fe19e2f297e67649b84bfc8b76644": [
+                "c16_standard-control_o13_french-prefix_r1_w",
+                "c16_standard-control_o13_french-prefix_r1_b"
+              ],
+              "00fd6c352e1ac1497362c7a4d014c04de2f1bbb520b6d83026b396f4755f4045": [
+                "c16_standard-control_o18_reti-e-pawn-prefix_r1_w",
+                "c16_standard-control_o18_reti-e-pawn-prefix_r1_b"
+              ],
+              "d09fe0a6c797baf5d0cfdf119c708a7d03b5b8e941c2f2f359e6f8a604b5f573": [
+                "c14_amazon-control_o12_open-e-pawns_r1_b",
+                "c14_amazon-control_o12_open-e-pawns_r1_w"
+              ],
+              "d08f53c113df07759306890bd69bf0909c4e4848a6c3ecdc047bb16d145a5b65": [
+                "c14_amazon-control_o23_ordinary-knights-prefix_r1_w",
+                "c14_amazon-control_o23_ordinary-knights-prefix_r1_b"
+              ],
+              "5e482752a6da0a134eb50345c723c556d195a9e734b5e1f54096675999802d27": [
+                "c14_amazon-control_o11_caro-prefix_r1_w",
+                "c14_amazon-control_o11_caro-prefix_r1_b"
+              ],
+              "adda8bb88ce6877616949f732de9fc50ed38a07df84856f2240051df4c88421f": [
+                "c16_standard-control_o20_reti-sicilian-prefix_r1_b",
+                "c16_standard-control_o20_reti-sicilian-prefix_r1_w"
+              ],
+              "25d9696f76ddd09a92bf3e314e7b56b7fe26edd948d48c75095e723ee24adb47": [
+                "c14_amazon-control_o13_quiet-c-pawns_r1_w",
+                "c14_amazon-control_o13_quiet-c-pawns_r1_b"
+              ],
+              "0f1cf23330e3c9849d1796ac227112a0e45915188136224122f8f521d96472b4": [
+                "c16_standard-control_o15_sicilian-prefix_r1_w",
+                "c16_standard-control_o15_sicilian-prefix_r1_b"
+              ],
+              "e9ad7836164c75620c7ffa3a807b82dfa40d83358314b756920d44101988226d": [
+                "c16_standard-control_o23_ordinary-knights-prefix_r1_w",
+                "c16_standard-control_o23_ordinary-knights-prefix_r1_b"
+              ],
+              "9ce525e1d66ecbef47a36fdc94ee5e73499b386ea54f3b52eaaac0c845d6d3df": [
+                "c16_standard-control_o13_quiet-c-pawns_r1_w",
+                "c16_standard-control_o13_quiet-c-pawns_r1_b"
+              ],
+              "4d8f5b62ff801da8881dcb623ce3a6bc26a216f6b6ea7c6556385439e85b61be": [
+                "c16_standard-control_o16_bird-open-prefix_r1_w",
+                "c16_standard-control_o16_bird-open-prefix_r1_b"
+              ],
+              "d2f2c0f80601d426263ab82e09773cf8711af777c0ebb84c15f181c3f4ee6e20": [
+                "c14_amazon-control_o5_start_r1_w",
+                "c14_amazon-control_o5_start_r1_b"
+              ],
+              "6876fd444823fa9a20f81f0351350224b898873178e7775a8638c721c88209eb": [
+                "c14_amazon-control_o26_kingside-fianchetto-prefix_r1_b",
+                "c14_amazon-control_o26_kingside-fianchetto-prefix_r1_w"
+              ],
+              "cc0ee2eace7651aa233c653171d8c83e960609090247e6e228df03fab6aff969": [
+                "c16_standard-control_o24_reversed-sicilian-prefix_r1_b",
+                "c16_standard-control_o24_reversed-sicilian-prefix_r1_w"
+              ],
+              "c4ac09151c7a69f1e7c44b40faf41f34862b2e7c0c7952a2282e356460a60510": [
+                "c14_amazon-control_o19_anglo-indian-prefix_r1_w",
+                "c14_amazon-control_o19_anglo-indian-prefix_r1_b"
+              ],
+              "4f1e7d424f47816a6e23253ccf2748a0334ef8dc3b070af100d9e82c74912051": [
+                "c14_amazon-control_o21_king-pawn-step-prefix_r1_w",
+                "c14_amazon-control_o21_king-pawn-step-prefix_r1_b"
+              ],
+              "7090c15474041e61cdad51a6cdf7bf94ceb83cb8ff43a1974ae139fb4013fea8": [
+                "c14_amazon-control_o20_reti-sicilian-prefix_r1_w",
+                "c14_amazon-control_o20_reti-sicilian-prefix_r1_b"
+              ],
+              "822bb5ad87e7f6222ad9e026df2778cab490fb304622af9f1ca6a18dfbe19f47": [
+                "c16_standard-control_o13_modern-prefix_r1_w",
+                "c16_standard-control_o13_modern-prefix_r1_b"
+              ],
+              "5414c5dd4f37a490e3c950ce25a530420569f41027a2e5a8b474f480147ab271": [
+                "c14_amazon-control_o26_fianchetto-sicilian-prefix_r1_b",
+                "c14_amazon-control_o26_fianchetto-sicilian-prefix_r1_w"
+              ],
+              "2075de7329294ad52dd4aa76a07abcd37e5e2ab3afdea598e0b7e3331a909f92": [
+                "c16_standard-control_o19_open-knights-prefix_r1_b",
+                "c16_standard-control_o19_open-knights-prefix_r1_w"
+              ],
+              "cfdf3eda4beb406238b86b1a560ebba354afc4c92f458359e28798c33a990f42": [
+                "c14_amazon-control_o13_quiet-e-pawns_r1_b",
+                "c14_amazon-control_o13_quiet-e-pawns_r1_w"
+              ],
+              "9dacf165ea3cf7fcec5f3b2fe4f9892c34f3337b51d461a2379b39c6b6948bb5": [
+                "c16_standard-control_o22_queen-rook-step-prefix_r1_b",
+                "c16_standard-control_o22_queen-rook-step-prefix_r1_w"
+              ],
+              "25b02e7c18db0a565e3f49c293410edbe84c877a7aad86747351e35c42144528": [
+                "c14_amazon-control_o13_french-prefix_r1_b",
+                "c14_amazon-control_o13_french-prefix_r1_w"
+              ],
+              "db1a5f8feb1e6c4f961956d7fe3651d832240581809e8fa44324ce753f185e39": [
+                "c16_standard-control_o5_start_r1_b",
+                "c16_standard-control_o5_start_r1_w"
+              ],
+              "29add529cba56b6c5983621b6971d9d00bca9f7d3b1b37cd8776c2e93946b97f": [
+                "c16_standard-control_o11_caro-prefix_r1_w",
+                "c16_standard-control_o11_caro-prefix_r1_b"
+              ]
+            },
+            "excludedPolicy": "eight-point",
+            "excludedOtherPolicyControlRecords": 80,
+            "otherPolicyJournalLoaded": false,
+            "duplicatePolicyHandling": "Eight-point controls are not loaded or fitted; their repeated histories are not additional evidence."
+          },
+          "openingGroups": {
+            "start": "unforced",
+            "open-e-pawns": "e-pawn",
+            "sicilian-prefix": "e-pawn",
+            "french-prefix": "e-pawn",
+            "caro-prefix": "e-pawn",
+            "modern-prefix": "e-pawn",
+            "open-knights-prefix": "e-pawn",
+            "reversed-sicilian-prefix": "english",
+            "symmetrical-english-prefix": "english",
+            "anglo-indian-prefix": "english",
+            "kingside-fianchetto-prefix": "fianchetto",
+            "fianchetto-sicilian-prefix": "fianchetto",
+            "ordinary-knights-prefix": "knights",
+            "reti-e-pawn-prefix": "knights",
+            "reti-sicilian-prefix": "knights",
+            "quiet-e-pawns": "quiet-pawns",
+            "quiet-c-pawns": "quiet-pawns",
+            "bird-open-prefix": "flank-pawns",
+            "king-pawn-step-prefix": "flank-pawns",
+            "queen-rook-step-prefix": "flank-pawns"
+          },
+          "originalJournal": {
+            "file": "rook-values-auto-001.games.jsonl",
+            "bytes": 698896,
+            "sha256": "1dbe36303d5dd08b8723808f0cd9b295ae832be52f0d5a56279bb3c044976eac"
+          }
+        },
+        "recordsSha256": "a3192f11f11c3f72eebd99fd85d38f50dfc3da94c627645e137e508989ec8ccb",
+        "recordsHashFormat": "SHA-256 of JSON.stringify(records); not original journal bytes",
+        "games": 80
+      }
+    ],
+    "grouping": {
+      "unit": "opening-family",
+      "openingGroups": {
+        "start": "unforced",
+        "open-e-pawns": "e-pawn",
+        "sicilian-prefix": "e-pawn",
+        "french-prefix": "e-pawn",
+        "caro-prefix": "e-pawn",
+        "modern-prefix": "e-pawn",
+        "open-knights-prefix": "e-pawn",
+        "reversed-sicilian-prefix": "english",
+        "symmetrical-english-prefix": "english",
+        "anglo-indian-prefix": "english",
+        "kingside-fianchetto-prefix": "fianchetto",
+        "fianchetto-sicilian-prefix": "fianchetto",
+        "ordinary-knights-prefix": "knights",
+        "reti-e-pawn-prefix": "knights",
+        "reti-sicilian-prefix": "knights",
+        "quiet-e-pawns": "quiet-pawns",
+        "quiet-c-pawns": "quiet-pawns",
+        "bird-open-prefix": "flank-pawns",
+        "king-pawn-step-prefix": "flank-pawns",
+        "queen-rook-step-prefix": "flank-pawns"
+      },
+      "fallback": "Opening IDs without an explicit family remain separate groups."
+    },
+    "games": [
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o18_reti-e-pawn-prefix_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o18_reti-e-pawn-prefix_r1",
+        "groupId": "knights",
+        "result": "1/2-1/2",
+        "samples": 14,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o18_reti-e-pawn-prefix_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "reti-e-pawn-prefix",
+        "aColor": "b",
+        "replayedPlies": 148
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o19_open-knights-prefix_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o19_open-knights-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1/2-1/2",
+        "samples": 35,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o19_open-knights-prefix_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "open-knights-prefix",
+        "aColor": "w",
+        "replayedPlies": 256
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o18_reti-e-pawn-prefix_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o18_reti-e-pawn-prefix_r1",
+        "groupId": "knights",
+        "result": "1/2-1/2",
+        "samples": 14,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o18_reti-e-pawn-prefix_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "reti-e-pawn-prefix",
+        "aColor": "w",
+        "replayedPlies": 148
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o26_kingside-fianchetto-prefix_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o26_kingside-fianchetto-prefix_r1",
+        "groupId": "fianchetto",
+        "result": "0-1",
+        "samples": 16,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o26_kingside-fianchetto-prefix_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "kingside-fianchetto-prefix",
+        "aColor": "b",
+        "replayedPlies": 148
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o26_symmetrical-english-prefix_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o26_symmetrical-english-prefix_r1",
+        "groupId": "english",
+        "result": "0-1",
+        "samples": 15,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o26_symmetrical-english-prefix_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "symmetrical-english-prefix",
+        "aColor": "w",
+        "replayedPlies": 150
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o19_open-knights-prefix_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o19_open-knights-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1/2-1/2",
+        "samples": 35,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o19_open-knights-prefix_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "open-knights-prefix",
+        "aColor": "b",
+        "replayedPlies": 256
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o26_kingside-fianchetto-prefix_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o26_kingside-fianchetto-prefix_r1",
+        "groupId": "fianchetto",
+        "result": "0-1",
+        "samples": 16,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o26_kingside-fianchetto-prefix_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "kingside-fianchetto-prefix",
+        "aColor": "w",
+        "replayedPlies": 148
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o26_symmetrical-english-prefix_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o26_symmetrical-english-prefix_r1",
+        "groupId": "english",
+        "result": "0-1",
+        "samples": 15,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o26_symmetrical-english-prefix_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "symmetrical-english-prefix",
+        "aColor": "b",
+        "replayedPlies": 150
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o13_quiet-e-pawns_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o13_quiet-e-pawns_r1",
+        "groupId": "quiet-pawns",
+        "result": "1-0",
+        "samples": 19,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o13_quiet-e-pawns_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "quiet-e-pawns",
+        "aColor": "w",
+        "replayedPlies": 165
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o21_king-pawn-step-prefix_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o21_king-pawn-step-prefix_r1",
+        "groupId": "flank-pawns",
+        "result": "0-1",
+        "samples": 18,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o21_king-pawn-step-prefix_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "king-pawn-step-prefix",
+        "aColor": "w",
+        "replayedPlies": 156
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o13_modern-prefix_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o13_modern-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1/2-1/2",
+        "samples": 26,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o13_modern-prefix_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "modern-prefix",
+        "aColor": "b",
+        "replayedPlies": 193
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o13_quiet-e-pawns_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o13_quiet-e-pawns_r1",
+        "groupId": "quiet-pawns",
+        "result": "1-0",
+        "samples": 19,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o13_quiet-e-pawns_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "quiet-e-pawns",
+        "aColor": "b",
+        "replayedPlies": 165
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o21_king-pawn-step-prefix_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o21_king-pawn-step-prefix_r1",
+        "groupId": "flank-pawns",
+        "result": "0-1",
+        "samples": 18,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o21_king-pawn-step-prefix_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "king-pawn-step-prefix",
+        "aColor": "b",
+        "replayedPlies": 156
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o13_modern-prefix_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o13_modern-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1/2-1/2",
+        "samples": 26,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o13_modern-prefix_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "modern-prefix",
+        "aColor": "w",
+        "replayedPlies": 193
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o24_reversed-sicilian-prefix_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o24_reversed-sicilian-prefix_r1",
+        "groupId": "english",
+        "result": "1/2-1/2",
+        "samples": 15,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o24_reversed-sicilian-prefix_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "reversed-sicilian-prefix",
+        "aColor": "w",
+        "replayedPlies": 159
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o24_reversed-sicilian-prefix_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o24_reversed-sicilian-prefix_r1",
+        "groupId": "english",
+        "result": "1/2-1/2",
+        "samples": 15,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o24_reversed-sicilian-prefix_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "reversed-sicilian-prefix",
+        "aColor": "b",
+        "replayedPlies": 159
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o12_open-e-pawns_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o12_open-e-pawns_r1",
+        "groupId": "e-pawn",
+        "result": "1-0",
+        "samples": 18,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o12_open-e-pawns_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "open-e-pawns",
+        "aColor": "b",
+        "replayedPlies": 179
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o22_queen-rook-step-prefix_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o22_queen-rook-step-prefix_r1",
+        "groupId": "flank-pawns",
+        "result": "1-0",
+        "samples": 22,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o22_queen-rook-step-prefix_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "queen-rook-step-prefix",
+        "aColor": "b",
+        "replayedPlies": 193
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o26_fianchetto-sicilian-prefix_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o26_fianchetto-sicilian-prefix_r1",
+        "groupId": "fianchetto",
+        "result": "1-0",
+        "samples": 31,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o26_fianchetto-sicilian-prefix_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "fianchetto-sicilian-prefix",
+        "aColor": "b",
+        "replayedPlies": 219
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o12_open-e-pawns_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o12_open-e-pawns_r1",
+        "groupId": "e-pawn",
+        "result": "1-0",
+        "samples": 18,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o12_open-e-pawns_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "open-e-pawns",
+        "aColor": "w",
+        "replayedPlies": 179
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o15_sicilian-prefix_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o15_sicilian-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "0-1",
+        "samples": 10,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o15_sicilian-prefix_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "sicilian-prefix",
+        "aColor": "b",
+        "replayedPlies": 142
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o22_queen-rook-step-prefix_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o22_queen-rook-step-prefix_r1",
+        "groupId": "flank-pawns",
+        "result": "1-0",
+        "samples": 22,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o22_queen-rook-step-prefix_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "queen-rook-step-prefix",
+        "aColor": "w",
+        "replayedPlies": 193
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o26_fianchetto-sicilian-prefix_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o26_fianchetto-sicilian-prefix_r1",
+        "groupId": "fianchetto",
+        "result": "1-0",
+        "samples": 31,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o26_fianchetto-sicilian-prefix_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "fianchetto-sicilian-prefix",
+        "aColor": "w",
+        "replayedPlies": 219
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o15_sicilian-prefix_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o15_sicilian-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "0-1",
+        "samples": 10,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o15_sicilian-prefix_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "sicilian-prefix",
+        "aColor": "w",
+        "replayedPlies": 142
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o26_symmetrical-english-prefix_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o26_symmetrical-english-prefix_r1",
+        "groupId": "english",
+        "result": "0-1",
+        "samples": 12,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o26_symmetrical-english-prefix_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "symmetrical-english-prefix",
+        "aColor": "w",
+        "replayedPlies": 142
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o19_anglo-indian-prefix_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o19_anglo-indian-prefix_r1",
+        "groupId": "english",
+        "result": "1-0",
+        "samples": 16,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o19_anglo-indian-prefix_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "anglo-indian-prefix",
+        "aColor": "w",
+        "replayedPlies": 165
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o26_symmetrical-english-prefix_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o26_symmetrical-english-prefix_r1",
+        "groupId": "english",
+        "result": "0-1",
+        "samples": 12,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o26_symmetrical-english-prefix_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "symmetrical-english-prefix",
+        "aColor": "b",
+        "replayedPlies": 142
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o16_bird-open-prefix_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o16_bird-open-prefix_r1",
+        "groupId": "flank-pawns",
+        "result": "1/2-1/2",
+        "samples": 31,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o16_bird-open-prefix_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "bird-open-prefix",
+        "aColor": "b",
+        "replayedPlies": 234
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o19_anglo-indian-prefix_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o19_anglo-indian-prefix_r1",
+        "groupId": "english",
+        "result": "1-0",
+        "samples": 16,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o19_anglo-indian-prefix_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "anglo-indian-prefix",
+        "aColor": "b",
+        "replayedPlies": 165
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o13_french-prefix_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o13_french-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1/2-1/2",
+        "samples": 8,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o13_french-prefix_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "french-prefix",
+        "aColor": "w",
+        "replayedPlies": 86
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o13_french-prefix_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o13_french-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1/2-1/2",
+        "samples": 8,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o13_french-prefix_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "french-prefix",
+        "aColor": "b",
+        "replayedPlies": 86
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o16_bird-open-prefix_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o16_bird-open-prefix_r1",
+        "groupId": "flank-pawns",
+        "result": "1/2-1/2",
+        "samples": 31,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o16_bird-open-prefix_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "bird-open-prefix",
+        "aColor": "w",
+        "replayedPlies": 234
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o18_reti-e-pawn-prefix_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o18_reti-e-pawn-prefix_r1",
+        "groupId": "knights",
+        "result": "1-0",
+        "samples": 17,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o18_reti-e-pawn-prefix_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "reti-e-pawn-prefix",
+        "aColor": "w",
+        "replayedPlies": 163
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o18_reti-e-pawn-prefix_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o18_reti-e-pawn-prefix_r1",
+        "groupId": "knights",
+        "result": "1-0",
+        "samples": 17,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o18_reti-e-pawn-prefix_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "reti-e-pawn-prefix",
+        "aColor": "b",
+        "replayedPlies": 163
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o12_open-e-pawns_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o12_open-e-pawns_r1",
+        "groupId": "e-pawn",
+        "result": "1-0",
+        "samples": 4,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o12_open-e-pawns_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "open-e-pawns",
+        "aColor": "b",
+        "replayedPlies": 97
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o23_ordinary-knights-prefix_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o23_ordinary-knights-prefix_r1",
+        "groupId": "knights",
+        "result": "1/2-1/2",
+        "samples": 14,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o23_ordinary-knights-prefix_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "ordinary-knights-prefix",
+        "aColor": "w",
+        "replayedPlies": 134
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o12_open-e-pawns_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o12_open-e-pawns_r1",
+        "groupId": "e-pawn",
+        "result": "1-0",
+        "samples": 4,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o12_open-e-pawns_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "open-e-pawns",
+        "aColor": "w",
+        "replayedPlies": 97
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o23_ordinary-knights-prefix_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o23_ordinary-knights-prefix_r1",
+        "groupId": "knights",
+        "result": "1/2-1/2",
+        "samples": 14,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o23_ordinary-knights-prefix_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "ordinary-knights-prefix",
+        "aColor": "b",
+        "replayedPlies": 134
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o11_caro-prefix_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o11_caro-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1-0",
+        "samples": 22,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o11_caro-prefix_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "caro-prefix",
+        "aColor": "w",
+        "replayedPlies": 197
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o20_reti-sicilian-prefix_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o20_reti-sicilian-prefix_r1",
+        "groupId": "knights",
+        "result": "0-1",
+        "samples": 18,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o20_reti-sicilian-prefix_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "reti-sicilian-prefix",
+        "aColor": "b",
+        "replayedPlies": 164
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o20_reti-sicilian-prefix_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o20_reti-sicilian-prefix_r1",
+        "groupId": "knights",
+        "result": "0-1",
+        "samples": 18,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o20_reti-sicilian-prefix_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "reti-sicilian-prefix",
+        "aColor": "w",
+        "replayedPlies": 164
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o11_caro-prefix_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o11_caro-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1-0",
+        "samples": 22,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o11_caro-prefix_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "caro-prefix",
+        "aColor": "b",
+        "replayedPlies": 197
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o13_quiet-c-pawns_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o13_quiet-c-pawns_r1",
+        "groupId": "quiet-pawns",
+        "result": "1/2-1/2",
+        "samples": 18,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o13_quiet-c-pawns_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "quiet-c-pawns",
+        "aColor": "w",
+        "replayedPlies": 176
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o15_sicilian-prefix_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o15_sicilian-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1/2-1/2",
+        "samples": 47,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o15_sicilian-prefix_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "sicilian-prefix",
+        "aColor": "w",
+        "replayedPlies": 311
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o13_quiet-c-pawns_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o13_quiet-c-pawns_r1",
+        "groupId": "quiet-pawns",
+        "result": "1/2-1/2",
+        "samples": 18,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o13_quiet-c-pawns_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "quiet-c-pawns",
+        "aColor": "b",
+        "replayedPlies": 176
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o15_sicilian-prefix_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o15_sicilian-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1/2-1/2",
+        "samples": 47,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o15_sicilian-prefix_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "sicilian-prefix",
+        "aColor": "b",
+        "replayedPlies": 311
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o23_ordinary-knights-prefix_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o23_ordinary-knights-prefix_r1",
+        "groupId": "knights",
+        "result": "1-0",
+        "samples": 17,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o23_ordinary-knights-prefix_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "ordinary-knights-prefix",
+        "aColor": "w",
+        "replayedPlies": 165
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o23_ordinary-knights-prefix_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o23_ordinary-knights-prefix_r1",
+        "groupId": "knights",
+        "result": "1-0",
+        "samples": 17,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o23_ordinary-knights-prefix_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "ordinary-knights-prefix",
+        "aColor": "b",
+        "replayedPlies": 165
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o13_quiet-c-pawns_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o13_quiet-c-pawns_r1",
+        "groupId": "quiet-pawns",
+        "result": "0-1",
+        "samples": 22,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o13_quiet-c-pawns_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "quiet-c-pawns",
+        "aColor": "w",
+        "replayedPlies": 192
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o13_quiet-c-pawns_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o13_quiet-c-pawns_r1",
+        "groupId": "quiet-pawns",
+        "result": "0-1",
+        "samples": 22,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o13_quiet-c-pawns_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "quiet-c-pawns",
+        "aColor": "b",
+        "replayedPlies": 192
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o16_bird-open-prefix_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o16_bird-open-prefix_r1",
+        "groupId": "flank-pawns",
+        "result": "0-1",
+        "samples": 10,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o16_bird-open-prefix_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "bird-open-prefix",
+        "aColor": "w",
+        "replayedPlies": 134
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o16_bird-open-prefix_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o16_bird-open-prefix_r1",
+        "groupId": "flank-pawns",
+        "result": "0-1",
+        "samples": 10,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o16_bird-open-prefix_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "bird-open-prefix",
+        "aColor": "b",
+        "replayedPlies": 134
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o5_start_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o5_start_r1",
+        "groupId": "unforced",
+        "result": "1-0",
+        "samples": 3,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o5_start_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "start",
+        "aColor": "w",
+        "replayedPlies": 53
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o5_start_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o5_start_r1",
+        "groupId": "unforced",
+        "result": "1-0",
+        "samples": 3,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o5_start_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "start",
+        "aColor": "b",
+        "replayedPlies": 53
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o26_kingside-fianchetto-prefix_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o26_kingside-fianchetto-prefix_r1",
+        "groupId": "fianchetto",
+        "result": "1-0",
+        "samples": 10,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o26_kingside-fianchetto-prefix_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "kingside-fianchetto-prefix",
+        "aColor": "b",
+        "replayedPlies": 131
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o26_kingside-fianchetto-prefix_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o26_kingside-fianchetto-prefix_r1",
+        "groupId": "fianchetto",
+        "result": "1-0",
+        "samples": 10,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o26_kingside-fianchetto-prefix_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "kingside-fianchetto-prefix",
+        "aColor": "w",
+        "replayedPlies": 131
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o24_reversed-sicilian-prefix_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o24_reversed-sicilian-prefix_r1",
+        "groupId": "english",
+        "result": "0-1",
+        "samples": 20,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o24_reversed-sicilian-prefix_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "reversed-sicilian-prefix",
+        "aColor": "b",
+        "replayedPlies": 194
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o19_anglo-indian-prefix_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o19_anglo-indian-prefix_r1",
+        "groupId": "english",
+        "result": "1/2-1/2",
+        "samples": 27,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o19_anglo-indian-prefix_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "anglo-indian-prefix",
+        "aColor": "w",
+        "replayedPlies": 216
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o24_reversed-sicilian-prefix_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o24_reversed-sicilian-prefix_r1",
+        "groupId": "english",
+        "result": "0-1",
+        "samples": 20,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o24_reversed-sicilian-prefix_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "reversed-sicilian-prefix",
+        "aColor": "w",
+        "replayedPlies": 194
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o19_anglo-indian-prefix_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o19_anglo-indian-prefix_r1",
+        "groupId": "english",
+        "result": "1/2-1/2",
+        "samples": 27,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o19_anglo-indian-prefix_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "anglo-indian-prefix",
+        "aColor": "b",
+        "replayedPlies": 216
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o21_king-pawn-step-prefix_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o21_king-pawn-step-prefix_r1",
+        "groupId": "flank-pawns",
+        "result": "1/2-1/2",
+        "samples": 11,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o21_king-pawn-step-prefix_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "king-pawn-step-prefix",
+        "aColor": "w",
+        "replayedPlies": 121
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o20_reti-sicilian-prefix_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o20_reti-sicilian-prefix_r1",
+        "groupId": "knights",
+        "result": "1-0",
+        "samples": 13,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o20_reti-sicilian-prefix_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "reti-sicilian-prefix",
+        "aColor": "w",
+        "replayedPlies": 129
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o21_king-pawn-step-prefix_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o21_king-pawn-step-prefix_r1",
+        "groupId": "flank-pawns",
+        "result": "1/2-1/2",
+        "samples": 11,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o21_king-pawn-step-prefix_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "king-pawn-step-prefix",
+        "aColor": "b",
+        "replayedPlies": 121
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o20_reti-sicilian-prefix_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o20_reti-sicilian-prefix_r1",
+        "groupId": "knights",
+        "result": "1-0",
+        "samples": 13,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o20_reti-sicilian-prefix_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "reti-sicilian-prefix",
+        "aColor": "b",
+        "replayedPlies": 129
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o13_modern-prefix_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o13_modern-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1/2-1/2",
+        "samples": 17,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o13_modern-prefix_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "modern-prefix",
+        "aColor": "w",
+        "replayedPlies": 161
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o26_fianchetto-sicilian-prefix_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o26_fianchetto-sicilian-prefix_r1",
+        "groupId": "fianchetto",
+        "result": "0-1",
+        "samples": 16,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o26_fianchetto-sicilian-prefix_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "fianchetto-sicilian-prefix",
+        "aColor": "b",
+        "replayedPlies": 178
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o13_modern-prefix_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o13_modern-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1/2-1/2",
+        "samples": 17,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o13_modern-prefix_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "modern-prefix",
+        "aColor": "b",
+        "replayedPlies": 161
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o26_fianchetto-sicilian-prefix_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o26_fianchetto-sicilian-prefix_r1",
+        "groupId": "fianchetto",
+        "result": "0-1",
+        "samples": 16,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o26_fianchetto-sicilian-prefix_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "fianchetto-sicilian-prefix",
+        "aColor": "w",
+        "replayedPlies": 178
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o19_open-knights-prefix_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o19_open-knights-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1/2-1/2",
+        "samples": 7,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o19_open-knights-prefix_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "open-knights-prefix",
+        "aColor": "b",
+        "replayedPlies": 119
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o19_open-knights-prefix_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o19_open-knights-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1/2-1/2",
+        "samples": 7,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o19_open-knights-prefix_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "open-knights-prefix",
+        "aColor": "w",
+        "replayedPlies": 119
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o13_quiet-e-pawns_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o13_quiet-e-pawns_r1",
+        "groupId": "quiet-pawns",
+        "result": "1/2-1/2",
+        "samples": 5,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o13_quiet-e-pawns_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "quiet-e-pawns",
+        "aColor": "b",
+        "replayedPlies": 82
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o13_quiet-e-pawns_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o13_quiet-e-pawns_r1",
+        "groupId": "quiet-pawns",
+        "result": "1/2-1/2",
+        "samples": 5,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o13_quiet-e-pawns_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "quiet-e-pawns",
+        "aColor": "w",
+        "replayedPlies": 82
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o22_queen-rook-step-prefix_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o22_queen-rook-step-prefix_r1",
+        "groupId": "flank-pawns",
+        "result": "1-0",
+        "samples": 17,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o22_queen-rook-step-prefix_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "queen-rook-step-prefix",
+        "aColor": "b",
+        "replayedPlies": 149
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o13_french-prefix_r1_b",
+        "pairId": "rook-auto-controls:c14_amazon-control_o13_french-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1-0",
+        "samples": 19,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o13_french-prefix_r1_b",
+        "comparisonId": "amazon-control",
+        "openingId": "french-prefix",
+        "aColor": "b",
+        "replayedPlies": 165
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o22_queen-rook-step-prefix_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o22_queen-rook-step-prefix_r1",
+        "groupId": "flank-pawns",
+        "result": "1-0",
+        "samples": 17,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o22_queen-rook-step-prefix_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "queen-rook-step-prefix",
+        "aColor": "w",
+        "replayedPlies": 149
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o5_start_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o5_start_r1",
+        "groupId": "unforced",
+        "result": "1/2-1/2",
+        "samples": 27,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o5_start_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "start",
+        "aColor": "b",
+        "replayedPlies": 197
+      },
+      {
+        "gameId": "rook-auto-controls:c14_amazon-control_o13_french-prefix_r1_w",
+        "pairId": "rook-auto-controls:c14_amazon-control_o13_french-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1-0",
+        "samples": 19,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c14_amazon-control_o13_french-prefix_r1_w",
+        "comparisonId": "amazon-control",
+        "openingId": "french-prefix",
+        "aColor": "w",
+        "replayedPlies": 165
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o5_start_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o5_start_r1",
+        "groupId": "unforced",
+        "result": "1/2-1/2",
+        "samples": 27,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o5_start_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "start",
+        "aColor": "w",
+        "replayedPlies": 197
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o11_caro-prefix_r1_w",
+        "pairId": "rook-auto-controls:c16_standard-control_o11_caro-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1/2-1/2",
+        "samples": 14,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o11_caro-prefix_r1_w",
+        "comparisonId": "standard-control",
+        "openingId": "caro-prefix",
+        "aColor": "w",
+        "replayedPlies": 158
+      },
+      {
+        "gameId": "rook-auto-controls:c16_standard-control_o11_caro-prefix_r1_b",
+        "pairId": "rook-auto-controls:c16_standard-control_o11_caro-prefix_r1",
+        "groupId": "e-pawn",
+        "result": "1/2-1/2",
+        "samples": 14,
+        "sourceId": "rook-auto-controls",
+        "recordId": "c16_standard-control_o11_caro-prefix_r1_b",
+        "comparisonId": "standard-control",
+        "openingId": "caro-prefix",
+        "aColor": "b",
+        "replayedPlies": 158
+      }
+    ],
+    "coverage": {
+      "completedGames": 80,
+      "completePairs": 40,
+      "sampledGames": 80,
+      "gamesWithoutSamples": 0,
+      "groups": 7,
+      "sampledPairs": 40,
+      "sampledCompletePairs": 40,
+      "sampledPartialPairs": 0,
+      "pairsWithoutSamples": 0,
+      "replayedPlies": 13042,
+      "positionsReplayed": 13122,
+      "candidates": 2402,
+      "accepted": 1402,
+      "excluded": {
+        "terminal": 18,
+        "windowEdge": 14,
+        "materialChange": 968
+      },
+      "phases": {
+        "middlegame": 392,
+        "endgame": 1010
+      }
+    },
+    "limitations": [
+      "Recorded settings and replayed legal moves do not attest the executable or process identity; missing execution provenance remains unknown.",
+      "Selected experiment games are a pipeline diagnostic, not a representative population of ordinary or upgraded-piece positions.",
+      "Samples from the same game and related openings are dependent; use game-balanced weights and grouped validation/resampling.",
+      "Material-stable windows filter recent/nearby captures and promotions but do not establish tactical quietness.",
+      "Ordinary family counts plus upgrade bonuses are model features, not intrinsic exchange prices or engine MG/EG parameters.",
+      "Each sampled game has total weight one; games with no accepted positions are retained in coverage but contribute no fitting weight."
+    ],
+    "sampleCount": 1402
+  },
+  "analysis": {
+    "schemaVersion": 1,
+    "format": "levelup-material-controls-diagnostic",
+    "method": {
+      "primaryFits": [
+        "ordinary",
+        "combined"
+      ],
+      "phaseFits": [
+        "middlegame",
+        "endgame"
+      ],
+      "phaseCohort": "standard-control",
+      "phaseBootstrap": 0,
+      "phaseInterpretation": "Predeclared sensitivity check using the same ordinary histories; no phase-specific resampling or parameter tuning.",
+      "sourcePoliciesPooled": false,
+      "engineGamesStarted": 0
+    },
+    "selection": {
+      "inputRecords": 80,
+      "uniqueHistories": 40,
+      "duplicatedRecords": 40,
+      "inputSamples": 1402,
+      "uniqueSamples": 701,
+      "keyDefinition": "Verified SHA-256 of full starting FEN, moves, result, reason and final FEN; never inferred from sparse samples.",
+      "histories": [
+        {
+          "historyKey": "5e482752a6da0a134eb50345c723c556d195a9e734b5e1f54096675999802d27",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o11_caro-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o11_caro-prefix_r1_b",
+            "rook-auto-controls:c14_amazon-control_o11_caro-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "d09fe0a6c797baf5d0cfdf119c708a7d03b5b8e941c2f2f359e6f8a604b5f573",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o12_open-e-pawns_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o12_open-e-pawns_r1_b",
+            "rook-auto-controls:c14_amazon-control_o12_open-e-pawns_r1_w"
+          ]
+        },
+        {
+          "historyKey": "25b02e7c18db0a565e3f49c293410edbe84c877a7aad86747351e35c42144528",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o13_french-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o13_french-prefix_r1_b",
+            "rook-auto-controls:c14_amazon-control_o13_french-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "10af8c657c679b17dbe02be832902993222af8a588bed3ef4b74bd149d68316a",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o13_modern-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o13_modern-prefix_r1_b",
+            "rook-auto-controls:c14_amazon-control_o13_modern-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "25d9696f76ddd09a92bf3e314e7b56b7fe26edd948d48c75095e723ee24adb47",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o13_quiet-c-pawns_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o13_quiet-c-pawns_r1_b",
+            "rook-auto-controls:c14_amazon-control_o13_quiet-c-pawns_r1_w"
+          ]
+        },
+        {
+          "historyKey": "cfdf3eda4beb406238b86b1a560ebba354afc4c92f458359e28798c33a990f42",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o13_quiet-e-pawns_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o13_quiet-e-pawns_r1_b",
+            "rook-auto-controls:c14_amazon-control_o13_quiet-e-pawns_r1_w"
+          ]
+        },
+        {
+          "historyKey": "a5c4f658078f5e74b3460410b157874568ace355f6ae0c8c45b79ee76979a0ff",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o15_sicilian-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o15_sicilian-prefix_r1_b",
+            "rook-auto-controls:c14_amazon-control_o15_sicilian-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "062b726b9273ea00d61fc5f1fa8be12e904ed91adea1ee8eab197a3bd3d90736",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o16_bird-open-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o16_bird-open-prefix_r1_b",
+            "rook-auto-controls:c14_amazon-control_o16_bird-open-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "2b2609fa2867d4c66f062d7ce5f1291a0dfc10a22d11457fa08e8bff9f353af9",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o18_reti-e-pawn-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o18_reti-e-pawn-prefix_r1_b",
+            "rook-auto-controls:c14_amazon-control_o18_reti-e-pawn-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "c4ac09151c7a69f1e7c44b40faf41f34862b2e7c0c7952a2282e356460a60510",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o19_anglo-indian-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o19_anglo-indian-prefix_r1_b",
+            "rook-auto-controls:c14_amazon-control_o19_anglo-indian-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "cdb677a342f4d64b41cbaef5dc1ac14ed80a2fd34d1988d501cc0d37d56cf82b",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o19_open-knights-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o19_open-knights-prefix_r1_b",
+            "rook-auto-controls:c14_amazon-control_o19_open-knights-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "7090c15474041e61cdad51a6cdf7bf94ceb83cb8ff43a1974ae139fb4013fea8",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o20_reti-sicilian-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o20_reti-sicilian-prefix_r1_b",
+            "rook-auto-controls:c14_amazon-control_o20_reti-sicilian-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "4f1e7d424f47816a6e23253ccf2748a0334ef8dc3b070af100d9e82c74912051",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o21_king-pawn-step-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o21_king-pawn-step-prefix_r1_b",
+            "rook-auto-controls:c14_amazon-control_o21_king-pawn-step-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "376ce31c9101057f48f6d99c932dc140315e71cf021f5c312f9e4084a6231478",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o22_queen-rook-step-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o22_queen-rook-step-prefix_r1_b",
+            "rook-auto-controls:c14_amazon-control_o22_queen-rook-step-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "d08f53c113df07759306890bd69bf0909c4e4848a6c3ecdc047bb16d145a5b65",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o23_ordinary-knights-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o23_ordinary-knights-prefix_r1_b",
+            "rook-auto-controls:c14_amazon-control_o23_ordinary-knights-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "4d2dc31336935da768a070c5fa9496ee03214f90d96c94adb4d5c724238dc253",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o24_reversed-sicilian-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o24_reversed-sicilian-prefix_r1_b",
+            "rook-auto-controls:c14_amazon-control_o24_reversed-sicilian-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "5414c5dd4f37a490e3c950ce25a530420569f41027a2e5a8b474f480147ab271",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o26_fianchetto-sicilian-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o26_fianchetto-sicilian-prefix_r1_b",
+            "rook-auto-controls:c14_amazon-control_o26_fianchetto-sicilian-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "6876fd444823fa9a20f81f0351350224b898873178e7775a8638c721c88209eb",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o26_kingside-fianchetto-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o26_kingside-fianchetto-prefix_r1_b",
+            "rook-auto-controls:c14_amazon-control_o26_kingside-fianchetto-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "37e2b69331263f4ef8844b18271bf58d74681d82af5cca744fa5029ef6f36548",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o26_symmetrical-english-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o26_symmetrical-english-prefix_r1_b",
+            "rook-auto-controls:c14_amazon-control_o26_symmetrical-english-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "d2f2c0f80601d426263ab82e09773cf8711af777c0ebb84c15f181c3f4ee6e20",
+          "retainedGameId": "rook-auto-controls:c14_amazon-control_o5_start_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c14_amazon-control_o5_start_r1_b",
+            "rook-auto-controls:c14_amazon-control_o5_start_r1_w"
+          ]
+        },
+        {
+          "historyKey": "29add529cba56b6c5983621b6971d9d00bca9f7d3b1b37cd8776c2e93946b97f",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o11_caro-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o11_caro-prefix_r1_b",
+            "rook-auto-controls:c16_standard-control_o11_caro-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "1b0b0ab0863a15ca64958abffc215d8b7545c12b9d51b39ecc1d34b65df88c21",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o12_open-e-pawns_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o12_open-e-pawns_r1_b",
+            "rook-auto-controls:c16_standard-control_o12_open-e-pawns_r1_w"
+          ]
+        },
+        {
+          "historyKey": "024eef44a24cf918b6b30ef26a934e62ef6fe19e2f297e67649b84bfc8b76644",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o13_french-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o13_french-prefix_r1_b",
+            "rook-auto-controls:c16_standard-control_o13_french-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "822bb5ad87e7f6222ad9e026df2778cab490fb304622af9f1ca6a18dfbe19f47",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o13_modern-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o13_modern-prefix_r1_b",
+            "rook-auto-controls:c16_standard-control_o13_modern-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "9ce525e1d66ecbef47a36fdc94ee5e73499b386ea54f3b52eaaac0c845d6d3df",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o13_quiet-c-pawns_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o13_quiet-c-pawns_r1_b",
+            "rook-auto-controls:c16_standard-control_o13_quiet-c-pawns_r1_w"
+          ]
+        },
+        {
+          "historyKey": "5284d525a90295850928cd1c7bc04c8f6b88cb542ec91ba10308a2e968ddab90",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o13_quiet-e-pawns_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o13_quiet-e-pawns_r1_b",
+            "rook-auto-controls:c16_standard-control_o13_quiet-e-pawns_r1_w"
+          ]
+        },
+        {
+          "historyKey": "0f1cf23330e3c9849d1796ac227112a0e45915188136224122f8f521d96472b4",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o15_sicilian-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o15_sicilian-prefix_r1_b",
+            "rook-auto-controls:c16_standard-control_o15_sicilian-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "4d8f5b62ff801da8881dcb623ce3a6bc26a216f6b6ea7c6556385439e85b61be",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o16_bird-open-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o16_bird-open-prefix_r1_b",
+            "rook-auto-controls:c16_standard-control_o16_bird-open-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "00fd6c352e1ac1497362c7a4d014c04de2f1bbb520b6d83026b396f4755f4045",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o18_reti-e-pawn-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o18_reti-e-pawn-prefix_r1_b",
+            "rook-auto-controls:c16_standard-control_o18_reti-e-pawn-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "5a2c5f2ce2904e99aba04f818a2c37b2f094733d96b4504855664e5565406f9e",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o19_anglo-indian-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o19_anglo-indian-prefix_r1_b",
+            "rook-auto-controls:c16_standard-control_o19_anglo-indian-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "2075de7329294ad52dd4aa76a07abcd37e5e2ab3afdea598e0b7e3331a909f92",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o19_open-knights-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o19_open-knights-prefix_r1_b",
+            "rook-auto-controls:c16_standard-control_o19_open-knights-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "adda8bb88ce6877616949f732de9fc50ed38a07df84856f2240051df4c88421f",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o20_reti-sicilian-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o20_reti-sicilian-prefix_r1_b",
+            "rook-auto-controls:c16_standard-control_o20_reti-sicilian-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "44a820afd81c11b9ac24070d81a6649b9fa6a924a8407df5751f34c6a1ecb955",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o21_king-pawn-step-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o21_king-pawn-step-prefix_r1_b",
+            "rook-auto-controls:c16_standard-control_o21_king-pawn-step-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "9dacf165ea3cf7fcec5f3b2fe4f9892c34f3337b51d461a2379b39c6b6948bb5",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o22_queen-rook-step-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o22_queen-rook-step-prefix_r1_b",
+            "rook-auto-controls:c16_standard-control_o22_queen-rook-step-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "e9ad7836164c75620c7ffa3a807b82dfa40d83358314b756920d44101988226d",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o23_ordinary-knights-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o23_ordinary-knights-prefix_r1_b",
+            "rook-auto-controls:c16_standard-control_o23_ordinary-knights-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "cc0ee2eace7651aa233c653171d8c83e960609090247e6e228df03fab6aff969",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o24_reversed-sicilian-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o24_reversed-sicilian-prefix_r1_b",
+            "rook-auto-controls:c16_standard-control_o24_reversed-sicilian-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "f66d9f32ac43fec808a44829b1a461db8d883c99545c1d7bd2853f7a647007d9",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o26_fianchetto-sicilian-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o26_fianchetto-sicilian-prefix_r1_b",
+            "rook-auto-controls:c16_standard-control_o26_fianchetto-sicilian-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "73b9144122fe5e7a40faa63bd36a55858a32f14614c94a110656b5398b64d0f9",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o26_kingside-fianchetto-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o26_kingside-fianchetto-prefix_r1_b",
+            "rook-auto-controls:c16_standard-control_o26_kingside-fianchetto-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "444b7c0a4894028be144666602c477c9202bf589f131c608107e9d5d97d74c95",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o26_symmetrical-english-prefix_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o26_symmetrical-english-prefix_r1_b",
+            "rook-auto-controls:c16_standard-control_o26_symmetrical-english-prefix_r1_w"
+          ]
+        },
+        {
+          "historyKey": "db1a5f8feb1e6c4f961956d7fe3651d832240581809e8fa44324ce753f185e39",
+          "retainedGameId": "rook-auto-controls:c16_standard-control_o5_start_r1_b",
+          "recordGameIds": [
+            "rook-auto-controls:c16_standard-control_o5_start_r1_b",
+            "rook-auto-controls:c16_standard-control_o5_start_r1_w"
+          ]
+        }
+      ]
+    },
+    "analyses": {
+      "ordinary": {
+        "id": "ordinary",
+        "featureNames": [
+          "pawn",
+          "knight",
+          "bishop",
+          "rook",
+          "queen",
+          "tempo"
+        ],
+        "selection": {
+          "comparisonIds": [
+            "standard-control"
+          ],
+          "phase": null,
+          "inputUniqueGames": 20,
+          "sampledGames": 20,
+          "gamesWithoutSamples": 0,
+          "samples": 374,
+          "droppedZeroFeatures": [
+            "bonus:queen.purple@1",
+            "bonus:rook.purple@3",
+            "bonus:rook.purple@4",
+            "bonus:rook.purple@5"
+          ],
+          "weighting": "Each retained history has unit total sample weight, recomputed after phase selection."
+        },
+        "analysis": {
+          "schemaVersion": 1,
+          "method": {
+            "target": "expected final White score, W/D/L = 1/0.5/0",
+            "link": "fractional-logistic cross-entropy",
+            "intercept": "unpenalized",
+            "ridge": 0.001,
+            "ridgeScale": "mean game-weighted loss; penalty on standardized slopes",
+            "weighting": "each sampled game has unit total weight",
+            "bootstrapUnit": "whole opening family",
+            "minimumBootstrapGroups": 4,
+            "minimumNormalizationGroups": 8,
+            "normalizationThreshold": "Conservative reporting policy, not a confidence guarantee or a reason to generate more games automatically.",
+            "regularizationCaveat": "Ridge produces finite exploratory slopes even for some separated outcomes; absence of a perfect-classification flag does not exclude quasi-separation.",
+            "interpretation": "Exploratory outcome-predictive coefficients conditional on this selected dataset and playing policy; not intrinsic or causal piece values."
+          },
+          "coverage": {
+            "samples": 374,
+            "games": 20,
+            "pairs": 20,
+            "groups": 7,
+            "groupIds": [
+              "e-pawn",
+              "english",
+              "fianchetto",
+              "flank-pawns",
+              "knights",
+              "quiet-pawns",
+              "unforced"
+            ],
+            "drawGames": 6,
+            "features": [
+              {
+                "name": "pawn",
+                "min": -4,
+                "max": 3,
+                "nonzeroGames": 19,
+                "groupsWithNonzero": 7
+              },
+              {
+                "name": "knight",
+                "min": -1,
+                "max": 2,
+                "nonzeroGames": 13,
+                "groupsWithNonzero": 7
+              },
+              {
+                "name": "bishop",
+                "min": -1,
+                "max": 1,
+                "nonzeroGames": 14,
+                "groupsWithNonzero": 7
+              },
+              {
+                "name": "rook",
+                "min": -1,
+                "max": 1,
+                "nonzeroGames": 8,
+                "groupsWithNonzero": 5
+              },
+              {
+                "name": "queen",
+                "min": -1,
+                "max": 2,
+                "nonzeroGames": 10,
+                "groupsWithNonzero": 5
+              },
+              {
+                "name": "tempo",
+                "min": -1,
+                "max": 1,
+                "nonzeroGames": 20,
+                "groupsWithNonzero": 7
+              }
+            ]
+          },
+          "rank": {
+            "rank": 7,
+            "columns": 7,
+            "fullRank": true,
+            "dependentFeatures": [],
+            "minimumPivot": 0.39165928323501925,
+            "correlations": []
+          },
+          "fit": {
+            "converged": true,
+            "reason": null,
+            "iterations": 8,
+            "intercept": -0.02019573832854372,
+            "coefficients": {
+              "pawn": 1.6796075770778653,
+              "knight": 3.096877094668198,
+              "bishop": 2.9650914361216563,
+              "rook": 3.6712068239559748,
+              "queen": 2.963807747138014,
+              "tempo": 0.1406957058429271
+            },
+            "possibleSeparation": false,
+            "metrics": {
+              "brier": 0.054567361240415196,
+              "logLoss": 0.397517673333654
+            }
+          },
+          "validation": {
+            "available": true,
+            "reason": null,
+            "unit": "whole-opening-family",
+            "folds": [
+              {
+                "heldOutGroup": "e-pawn",
+                "trainingGroups": [
+                  "english",
+                  "fianchetto",
+                  "flank-pawns",
+                  "knights",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "e-pawn"
+                ],
+                "trainingGames": 14,
+                "testGames": 6,
+                "converged": true,
+                "fullRank": true,
+                "metrics": {
+                  "brier": 0.048305477510381625,
+                  "logLoss": 0.7735680129645417
+                },
+                "baselineMetrics": {
+                  "brier": 0.04889455782312967,
+                  "logLoss": 0.7076298011967196
+                }
+              },
+              {
+                "heldOutGroup": "english",
+                "trainingGroups": [
+                  "e-pawn",
+                  "fianchetto",
+                  "flank-pawns",
+                  "knights",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "english"
+                ],
+                "trainingGames": 17,
+                "testGames": 3,
+                "converged": true,
+                "fullRank": true,
+                "metrics": {
+                  "brier": 0.07806206537307715,
+                  "logLoss": 0.27165908561692215
+                },
+                "baselineMetrics": {
+                  "brier": 0.26066897347174156,
+                  "logLoss": 0.7145107904909184
+                }
+              },
+              {
+                "heldOutGroup": "fianchetto",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "flank-pawns",
+                  "knights",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "fianchetto"
+                ],
+                "trainingGames": 18,
+                "testGames": 2,
+                "converged": true,
+                "fullRank": true,
+                "metrics": {
+                  "brier": 0.142770973866168,
+                  "logLoss": 0.44188007521803335
+                },
+                "baselineMetrics": {
+                  "brier": 0.24999999999999997,
+                  "logLoss": 0.6931471805599454
+                }
+              },
+              {
+                "heldOutGroup": "flank-pawns",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "fianchetto",
+                  "knights",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "flank-pawns"
+                ],
+                "trainingGames": 17,
+                "testGames": 3,
+                "converged": true,
+                "fullRank": true,
+                "metrics": {
+                  "brier": 0.1771816343486281,
+                  "logLoss": 0.5245857998427708
+                },
+                "baselineMetrics": {
+                  "brier": 0.2606689734717419,
+                  "logLoss": 0.7145107904909196
+                }
+              },
+              {
+                "heldOutGroup": "knights",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "fianchetto",
+                  "flank-pawns",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "knights"
+                ],
+                "trainingGames": 17,
+                "testGames": 3,
+                "converged": true,
+                "fullRank": true,
+                "metrics": {
+                  "brier": 0.04021723086577809,
+                  "logLoss": 0.16882329815934985
+                },
+                "baselineMetrics": {
+                  "brier": 0.26066897347174267,
+                  "logLoss": 0.7145107904909213
+                }
+              },
+              {
+                "heldOutGroup": "quiet-pawns",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "fianchetto",
+                  "flank-pawns",
+                  "knights",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "quiet-pawns"
+                ],
+                "trainingGames": 18,
+                "testGames": 2,
+                "converged": true,
+                "fullRank": true,
+                "metrics": {
+                  "brier": 0.08047054020774533,
+                  "logLoss": 0.25833864546359747
+                },
+                "baselineMetrics": {
+                  "brier": 0.25000000000000017,
+                  "logLoss": 0.6931471805599455
+                }
+              },
+              {
+                "heldOutGroup": "unforced",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "fianchetto",
+                  "flank-pawns",
+                  "knights",
+                  "quiet-pawns"
+                ],
+                "testGroups": [
+                  "unforced"
+                ],
+                "trainingGames": 19,
+                "testGames": 1,
+                "converged": true,
+                "fullRank": true,
+                "metrics": {
+                  "brier": 0.12499271639032926,
+                  "logLoss": 1.0810098761257707
+                },
+                "baselineMetrics": {
+                  "brier": 5.435744675038536e-30,
+                  "logLoss": 0.6931471805599457
+                }
+              }
+            ],
+            "metrics": {
+              "brier": 0.08738457006814435,
+              "logLoss": 0.5009029973066675
+            },
+            "baselineMetrics": {
+              "brier": 0.18196940540922166,
+              "logLoss": 0.7071055912199107
+            }
+          },
+          "bootstrap": {
+            "available": true,
+            "reason": null,
+            "requested": 200,
+            "completed": 200,
+            "seed": 42,
+            "confidence": 0.95,
+            "groupUnit": "whole-opening-family",
+            "minimumGroups": 4,
+            "groupCount": 7,
+            "rankDeficient": 1,
+            "nonconverged": 0,
+            "pawnNonpositive": 0,
+            "possibleSeparation": 0,
+            "validRatios": 199,
+            "pawnCoefficient": {
+              "lower": 1.0693798544291058,
+              "upper": 2.910120369501539
+            },
+            "coefficientIntervals": {
+              "pawn": {
+                "lower": 1.0693798544291058,
+                "upper": 2.910120369501539
+              },
+              "knight": {
+                "lower": -0.035674790154302645,
+                "upper": 6.812178326920091
+              },
+              "bishop": {
+                "lower": -0.28584888111316636,
+                "upper": 5.843286018968243
+              },
+              "rook": {
+                "lower": 1.7765298639828289,
+                "upper": 7.534183081793758
+              },
+              "queen": {
+                "lower": 1.9757074241167212,
+                "upper": 4.560724795710289
+              },
+              "tempo": {
+                "lower": 0.0016861915772378227,
+                "upper": 0.2983724083241307
+              }
+            },
+            "ratioIntervals": {
+              "pawn": {
+                "lower": 1,
+                "upper": 1
+              },
+              "knight": {
+                "lower": -0.024678499005548162,
+                "upper": 4.374321762179806
+              },
+              "bishop": {
+                "lower": -0.18745502758024427,
+                "upper": 3.675799349409258
+              },
+              "rook": {
+                "lower": 1.3202172479676135,
+                "upper": 4.542482662763264
+              },
+              "queen": {
+                "lower": 0.6820910744101596,
+                "upper": 3.577609924207422
+              },
+              "tempo": {
+                "lower": 0.001235725666551631,
+                "upper": 0.11910260533417175
+              }
+            },
+            "interpretation": "Exploratory conditional whole-family percentile stability; failed and unsupported fits are counted, not hidden. Not a universal confidence interval or representative material calibration."
+          },
+          "normalized": {
+            "available": false,
+            "reason": "fewer-than-eight-opening-families",
+            "reasons": [
+              "fewer-than-eight-opening-families",
+              "insufficient-feature-group-support"
+            ],
+            "minimumGroups": 8,
+            "values": null
+          },
+          "warnings": [
+            "Recorded settings and replayed legal moves do not attest the executable or process identity; missing execution provenance remains unknown.",
+            "Selected experiment games are a pipeline diagnostic, not a representative population of ordinary or upgraded-piece positions.",
+            "Samples from the same game and related openings are dependent; use game-balanced weights and grouped validation/resampling.",
+            "Material-stable windows filter recent/nearby captures and promotions but do not establish tactical quietness.",
+            "Ordinary family counts plus upgrade bonuses are model features, not intrinsic exchange prices or engine MG/EG parameters.",
+            "Each sampled game has total weight one; games with no accepted positions are retained in coverage but contribute no fitting weight.",
+            "Identical full recorded histories are counted once; original A/B labels do not create independent observations.",
+            "Pawn-normalized point estimates withheld: fewer-than-eight-opening-families, insufficient-feature-group-support."
+          ]
+        },
+        "ordinaryRatios": {
+          "available": true,
+          "reason": null,
+          "calibrated": false,
+          "interpretation": "Raw fitted-slope arithmetic for ordinary-material sanity checks; not a released material-price table.",
+          "values": {
+            "pawn": 1,
+            "knight": 1.8438099094885358,
+            "bishop": 1.7653477375234519,
+            "rook": 2.1857527163237966,
+            "queen": 1.7645834584137592,
+            "tempo": 0.08376701067740215
+          },
+          "queenMinusRook": -0.42116925791003745
+        },
+        "amazonBonus": {
+          "available": false,
+          "reason": "not-modelled-ordinary-only",
+          "calibrated": false,
+          "nonzeroGames": 0,
+          "supportGroups": 0,
+          "rawCoefficient": null,
+          "rawPawnRatio": null,
+          "interpretation": "No observed upgrade imbalance means no information about its bonus; a ridge coefficient of zero is not zero piece strength."
+        }
+      },
+      "combined": {
+        "id": "combined",
+        "featureNames": [
+          "pawn",
+          "knight",
+          "bishop",
+          "rook",
+          "queen",
+          "tempo",
+          "bonus:queen.purple@1"
+        ],
+        "selection": {
+          "comparisonIds": [
+            "standard-control",
+            "amazon-control"
+          ],
+          "phase": null,
+          "inputUniqueGames": 40,
+          "sampledGames": 40,
+          "gamesWithoutSamples": 0,
+          "samples": 701,
+          "droppedZeroFeatures": [
+            "bonus:rook.purple@3",
+            "bonus:rook.purple@4",
+            "bonus:rook.purple@5"
+          ],
+          "weighting": "Each retained history has unit total sample weight, recomputed after phase selection."
+        },
+        "analysis": {
+          "schemaVersion": 1,
+          "method": {
+            "target": "expected final White score, W/D/L = 1/0.5/0",
+            "link": "fractional-logistic cross-entropy",
+            "intercept": "unpenalized",
+            "ridge": 0.001,
+            "ridgeScale": "mean game-weighted loss; penalty on standardized slopes",
+            "weighting": "each sampled game has unit total weight",
+            "bootstrapUnit": "whole opening family",
+            "minimumBootstrapGroups": 4,
+            "minimumNormalizationGroups": 8,
+            "normalizationThreshold": "Conservative reporting policy, not a confidence guarantee or a reason to generate more games automatically.",
+            "regularizationCaveat": "Ridge produces finite exploratory slopes even for some separated outcomes; absence of a perfect-classification flag does not exclude quasi-separation.",
+            "interpretation": "Exploratory outcome-predictive coefficients conditional on this selected dataset and playing policy; not intrinsic or causal piece values."
+          },
+          "coverage": {
+            "samples": 701,
+            "games": 40,
+            "pairs": 40,
+            "groups": 7,
+            "groupIds": [
+              "e-pawn",
+              "english",
+              "fianchetto",
+              "flank-pawns",
+              "knights",
+              "quiet-pawns",
+              "unforced"
+            ],
+            "drawGames": 16,
+            "features": [
+              {
+                "name": "pawn",
+                "min": -4,
+                "max": 3,
+                "nonzeroGames": 37,
+                "groupsWithNonzero": 7
+              },
+              {
+                "name": "knight",
+                "min": -2,
+                "max": 2,
+                "nonzeroGames": 29,
+                "groupsWithNonzero": 7
+              },
+              {
+                "name": "bishop",
+                "min": -1,
+                "max": 2,
+                "nonzeroGames": 28,
+                "groupsWithNonzero": 7
+              },
+              {
+                "name": "rook",
+                "min": -1,
+                "max": 1,
+                "nonzeroGames": 14,
+                "groupsWithNonzero": 6
+              },
+              {
+                "name": "queen",
+                "min": -1,
+                "max": 2,
+                "nonzeroGames": 14,
+                "groupsWithNonzero": 6
+              },
+              {
+                "name": "tempo",
+                "min": -1,
+                "max": 1,
+                "nonzeroGames": 40,
+                "groupsWithNonzero": 7
+              },
+              {
+                "name": "bonus:queen.purple@1",
+                "min": 0,
+                "max": 0,
+                "nonzeroGames": 0,
+                "groupsWithNonzero": 0
+              }
+            ]
+          },
+          "rank": {
+            "rank": 7,
+            "columns": 8,
+            "fullRank": false,
+            "dependentFeatures": [
+              "bonus:queen.purple@1"
+            ],
+            "minimumPivot": 0.3438748390108261,
+            "correlations": []
+          },
+          "fit": {
+            "converged": true,
+            "reason": null,
+            "iterations": 8,
+            "intercept": 0.16866668623856623,
+            "coefficients": {
+              "pawn": 1.4255607996064832,
+              "knight": 1.633250442053934,
+              "bishop": 1.350531299415124,
+              "rook": 2.862327273036371,
+              "queen": 3.612706446886384,
+              "tempo": 0.12740150331384745,
+              "bonus:queen.purple@1": 0
+            },
+            "possibleSeparation": false,
+            "metrics": {
+              "brier": 0.06538616602958996,
+              "logLoss": 0.4851950325064819
+            }
+          },
+          "validation": {
+            "available": true,
+            "reason": null,
+            "unit": "whole-opening-family",
+            "folds": [
+              {
+                "heldOutGroup": "e-pawn",
+                "trainingGroups": [
+                  "english",
+                  "fianchetto",
+                  "flank-pawns",
+                  "knights",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "e-pawn"
+                ],
+                "trainingGames": 28,
+                "testGames": 12,
+                "converged": true,
+                "fullRank": false,
+                "metrics": {
+                  "brier": 0.07619813004968462,
+                  "logLoss": 0.6454165347951997
+                },
+                "baselineMetrics": {
+                  "brier": 0.10002125850340206,
+                  "logLoss": 0.6848529722419806
+                }
+              },
+              {
+                "heldOutGroup": "english",
+                "trainingGroups": [
+                  "e-pawn",
+                  "fianchetto",
+                  "flank-pawns",
+                  "knights",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "english"
+                ],
+                "trainingGames": 34,
+                "testGames": 6,
+                "converged": true,
+                "fullRank": false,
+                "metrics": {
+                  "brier": 0.07262610520803263,
+                  "logLoss": 0.46407036813337543
+                },
+                "baselineMetrics": {
+                  "brier": 0.20386389850057596,
+                  "logLoss": 0.7684115470213232
+                }
+              },
+              {
+                "heldOutGroup": "fianchetto",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "flank-pawns",
+                  "knights",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "fianchetto"
+                ],
+                "trainingGames": 36,
+                "testGames": 4,
+                "converged": true,
+                "fullRank": false,
+                "metrics": {
+                  "brier": 0.06172415428131503,
+                  "logLoss": 0.23522947893163504
+                },
+                "baselineMetrics": {
+                  "brier": 0.25308641975308577,
+                  "logLoss": 0.699358440559223
+                }
+              },
+              {
+                "heldOutGroup": "flank-pawns",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "fianchetto",
+                  "knights",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "flank-pawns"
+                ],
+                "trainingGames": 34,
+                "testGames": 6,
+                "converged": true,
+                "fullRank": false,
+                "metrics": {
+                  "brier": 0.09952839289854987,
+                  "logLoss": 0.5308653883411741
+                },
+                "baselineMetrics": {
+                  "brier": 0.17012687427912368,
+                  "logLoss": 0.7001159344818371
+                }
+              },
+              {
+                "heldOutGroup": "knights",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "fianchetto",
+                  "flank-pawns",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "knights"
+                ],
+                "trainingGames": 34,
+                "testGames": 6,
+                "converged": true,
+                "fullRank": false,
+                "metrics": {
+                  "brier": 0.03229385498335236,
+                  "logLoss": 0.3613006846257363
+                },
+                "baselineMetrics": {
+                  "brier": 0.1577277970011539,
+                  "logLoss": 0.6752497786054601
+                }
+              },
+              {
+                "heldOutGroup": "quiet-pawns",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "fianchetto",
+                  "flank-pawns",
+                  "knights",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "quiet-pawns"
+                ],
+                "trainingGames": 36,
+                "testGames": 4,
+                "converged": true,
+                "fullRank": false,
+                "metrics": {
+                  "brier": 0.06424225929129887,
+                  "logLoss": 0.5544013915751653
+                },
+                "baselineMetrics": {
+                  "brier": 0.12808641975308602,
+                  "logLoss": 0.6993584405592231
+                }
+              },
+              {
+                "heldOutGroup": "unforced",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "fianchetto",
+                  "flank-pawns",
+                  "knights",
+                  "quiet-pawns"
+                ],
+                "testGroups": [
+                  "unforced"
+                ],
+                "trainingGames": 38,
+                "testGames": 2,
+                "converged": true,
+                "fullRank": false,
+                "metrics": {
+                  "brier": 0.2340145527130002,
+                  "logLoss": 0.9646289432918729
+                },
+                "baselineMetrics": {
+                  "brier": 0.10682132963989034,
+                  "logLoss": 0.6567172748857504
+                }
+              }
+            ],
+            "metrics": {
+              "brier": 0.07782406097130627,
+              "logLoss": 0.5242549608188715
+            },
+            "baselineMetrics": {
+              "brier": 0.153222513450759,
+              "logLoss": 0.6997300325450164
+            }
+          },
+          "bootstrap": {
+            "available": false,
+            "reason": "no-full-rank-converged-resamples",
+            "requested": 200,
+            "completed": 200,
+            "seed": 42,
+            "confidence": 0.95,
+            "groupUnit": "whole-opening-family",
+            "minimumGroups": 4,
+            "groupCount": 7,
+            "rankDeficient": 200,
+            "nonconverged": 0,
+            "pawnNonpositive": 0,
+            "possibleSeparation": 0,
+            "validRatios": 0,
+            "pawnCoefficient": {
+              "lower": null,
+              "upper": null
+            },
+            "coefficientIntervals": {
+              "pawn": {
+                "lower": null,
+                "upper": null
+              },
+              "knight": {
+                "lower": null,
+                "upper": null
+              },
+              "bishop": {
+                "lower": null,
+                "upper": null
+              },
+              "rook": {
+                "lower": null,
+                "upper": null
+              },
+              "queen": {
+                "lower": null,
+                "upper": null
+              },
+              "tempo": {
+                "lower": null,
+                "upper": null
+              },
+              "bonus:queen.purple@1": {
+                "lower": null,
+                "upper": null
+              }
+            },
+            "ratioIntervals": {
+              "pawn": {
+                "lower": null,
+                "upper": null
+              },
+              "knight": {
+                "lower": null,
+                "upper": null
+              },
+              "bishop": {
+                "lower": null,
+                "upper": null
+              },
+              "rook": {
+                "lower": null,
+                "upper": null
+              },
+              "queen": {
+                "lower": null,
+                "upper": null
+              },
+              "tempo": {
+                "lower": null,
+                "upper": null
+              },
+              "bonus:queen.purple@1": {
+                "lower": null,
+                "upper": null
+              }
+            },
+            "interpretation": "Exploratory conditional whole-family percentile stability; failed and unsupported fits are counted, not hidden. Not a universal confidence interval or representative material calibration."
+          },
+          "normalized": {
+            "available": false,
+            "reason": "rank-deficient-design",
+            "reasons": [
+              "rank-deficient-design",
+              "fewer-than-eight-opening-families",
+              "insufficient-feature-group-support",
+              "insufficient-stable-bootstrap-ratios",
+              "pawn-bootstrap-band-not-positive"
+            ],
+            "minimumGroups": 8,
+            "values": null
+          },
+          "warnings": [
+            "Recorded settings and replayed legal moves do not attest the executable or process identity; missing execution provenance remains unknown.",
+            "Selected experiment games are a pipeline diagnostic, not a representative population of ordinary or upgraded-piece positions.",
+            "Samples from the same game and related openings are dependent; use game-balanced weights and grouped validation/resampling.",
+            "Material-stable windows filter recent/nearby captures and promotions but do not establish tactical quietness.",
+            "Ordinary family counts plus upgrade bonuses are model features, not intrinsic exchange prices or engine MG/EG parameters.",
+            "Each sampled game has total weight one; games with no accepted positions are retained in coverage but contribute no fitting weight.",
+            "Identical full recorded histories are counted once; original A/B labels do not create independent observations.",
+            "Ridge yields exploratory predictions despite missing rank; coefficients are not separately identified by these data.",
+            "Pawn-normalized point estimates withheld: rank-deficient-design, fewer-than-eight-opening-families, insufficient-feature-group-support, insufficient-stable-bootstrap-ratios, pawn-bootstrap-band-not-positive."
+          ]
+        },
+        "ordinaryRatios": {
+          "available": false,
+          "reason": "rank-deficient-design",
+          "calibrated": false,
+          "interpretation": "Raw fitted-slope arithmetic for ordinary-material sanity checks; not a released material-price table.",
+          "values": null,
+          "queenMinusRook": null
+        },
+        "amazonBonus": {
+          "available": false,
+          "reason": "unidentifiable-zero-upgrade-imbalance",
+          "calibrated": false,
+          "nonzeroGames": 0,
+          "supportGroups": 0,
+          "rawCoefficient": null,
+          "rawPawnRatio": null,
+          "interpretation": "No observed upgrade imbalance means no information about its bonus; a ridge coefficient of zero is not zero piece strength."
+        }
+      },
+      "middlegame": {
+        "id": "middlegame",
+        "featureNames": [
+          "pawn",
+          "knight",
+          "bishop",
+          "rook",
+          "queen",
+          "tempo"
+        ],
+        "selection": {
+          "comparisonIds": [
+            "standard-control"
+          ],
+          "phase": "middlegame",
+          "inputUniqueGames": 20,
+          "sampledGames": 19,
+          "gamesWithoutSamples": 1,
+          "samples": 92,
+          "droppedZeroFeatures": [
+            "bonus:queen.purple@1",
+            "bonus:rook.purple@3",
+            "bonus:rook.purple@4",
+            "bonus:rook.purple@5"
+          ],
+          "weighting": "Each retained history has unit total sample weight, recomputed after phase selection."
+        },
+        "analysis": {
+          "schemaVersion": 1,
+          "method": {
+            "target": "expected final White score, W/D/L = 1/0.5/0",
+            "link": "fractional-logistic cross-entropy",
+            "intercept": "unpenalized",
+            "ridge": 0.001,
+            "ridgeScale": "mean game-weighted loss; penalty on standardized slopes",
+            "weighting": "each sampled game has unit total weight",
+            "bootstrapUnit": "whole opening family",
+            "minimumBootstrapGroups": 4,
+            "minimumNormalizationGroups": 8,
+            "normalizationThreshold": "Conservative reporting policy, not a confidence guarantee or a reason to generate more games automatically.",
+            "regularizationCaveat": "Ridge produces finite exploratory slopes even for some separated outcomes; absence of a perfect-classification flag does not exclude quasi-separation.",
+            "interpretation": "Exploratory outcome-predictive coefficients conditional on this selected dataset and playing policy; not intrinsic or causal piece values."
+          },
+          "coverage": {
+            "samples": 92,
+            "games": 19,
+            "pairs": 19,
+            "groups": 7,
+            "groupIds": [
+              "e-pawn",
+              "english",
+              "fianchetto",
+              "flank-pawns",
+              "knights",
+              "quiet-pawns",
+              "unforced"
+            ],
+            "drawGames": 6,
+            "features": [
+              {
+                "name": "pawn",
+                "min": -2,
+                "max": 2,
+                "nonzeroGames": 14,
+                "groupsWithNonzero": 6
+              },
+              {
+                "name": "knight",
+                "min": -1,
+                "max": 2,
+                "nonzeroGames": 10,
+                "groupsWithNonzero": 5
+              },
+              {
+                "name": "bishop",
+                "min": -1,
+                "max": 1,
+                "nonzeroGames": 11,
+                "groupsWithNonzero": 6
+              },
+              {
+                "name": "rook",
+                "min": -1,
+                "max": 0,
+                "nonzeroGames": 2,
+                "groupsWithNonzero": 2
+              },
+              {
+                "name": "queen",
+                "min": 0,
+                "max": 0,
+                "nonzeroGames": 0,
+                "groupsWithNonzero": 0
+              },
+              {
+                "name": "tempo",
+                "min": -1,
+                "max": 1,
+                "nonzeroGames": 19,
+                "groupsWithNonzero": 7
+              }
+            ]
+          },
+          "rank": {
+            "rank": 6,
+            "columns": 7,
+            "fullRank": false,
+            "dependentFeatures": [
+              "queen"
+            ],
+            "minimumPivot": 0.08752544884772126,
+            "correlations": [
+              {
+                "left": "knight",
+                "right": "bishop",
+                "correlation": -0.8432987647177588
+              }
+            ]
+          },
+          "fit": {
+            "converged": true,
+            "reason": null,
+            "iterations": 4,
+            "intercept": -0.2765842661903095,
+            "coefficients": {
+              "pawn": 1.3556499532946484,
+              "knight": 2.9997012686611098,
+              "bishop": 3.0181107144085444,
+              "rook": 3.336043626272312,
+              "queen": 0,
+              "tempo": -0.06212589315799345
+            },
+            "possibleSeparation": false,
+            "metrics": {
+              "brier": 0.12905479924874996,
+              "logLoss": 0.6020411532815977
+            }
+          },
+          "validation": {
+            "available": true,
+            "reason": null,
+            "unit": "whole-opening-family",
+            "folds": [
+              {
+                "heldOutGroup": "e-pawn",
+                "trainingGroups": [
+                  "english",
+                  "fianchetto",
+                  "flank-pawns",
+                  "knights",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "e-pawn"
+                ],
+                "trainingGames": 14,
+                "testGames": 5,
+                "converged": true,
+                "fullRank": false,
+                "metrics": {
+                  "brier": 0.076026936198074,
+                  "logLoss": 0.921716294666652
+                },
+                "baselineMetrics": {
+                  "brier": 0.0012755102040816117,
+                  "logLoss": 0.6957047308933304
+                }
+              },
+              {
+                "heldOutGroup": "english",
+                "trainingGroups": [
+                  "e-pawn",
+                  "fianchetto",
+                  "flank-pawns",
+                  "knights",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "english"
+                ],
+                "trainingGames": 16,
+                "testGames": 3,
+                "converged": true,
+                "fullRank": false,
+                "metrics": {
+                  "brier": 0.23848695140184334,
+                  "logLoss": 0.6665544949879131
+                },
+                "baselineMetrics": {
+                  "brier": 0.2500000000000003,
+                  "logLoss": 0.6931471805599461
+                }
+              },
+              {
+                "heldOutGroup": "fianchetto",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "flank-pawns",
+                  "knights",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "fianchetto"
+                ],
+                "trainingGames": 17,
+                "testGames": 2,
+                "converged": true,
+                "fullRank": false,
+                "metrics": {
+                  "brier": 0.3562932933115788,
+                  "logLoss": 1.824207621277542
+                },
+                "baselineMetrics": {
+                  "brier": 0.25086505190311414,
+                  "logLoss": 0.6948802845481886
+                }
+              },
+              {
+                "heldOutGroup": "flank-pawns",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "fianchetto",
+                  "knights",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "flank-pawns"
+                ],
+                "trainingGames": 16,
+                "testGames": 3,
+                "converged": true,
+                "fullRank": false,
+                "metrics": {
+                  "brier": 0.40435783393526775,
+                  "logLoss": 1.156897546077613
+                },
+                "baselineMetrics": {
+                  "brier": 0.25000000000000006,
+                  "logLoss": 0.6931471805599454
+                }
+              },
+              {
+                "heldOutGroup": "knights",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "fianchetto",
+                  "flank-pawns",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "knights"
+                ],
+                "trainingGames": 16,
+                "testGames": 3,
+                "converged": true,
+                "fullRank": false,
+                "metrics": {
+                  "brier": 0.20600182289448477,
+                  "logLoss": 0.6002166479273597
+                },
+                "baselineMetrics": {
+                  "brier": 0.27473958333333326,
+                  "logLoss": 0.7429070970908321
+                }
+              },
+              {
+                "heldOutGroup": "quiet-pawns",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "fianchetto",
+                  "flank-pawns",
+                  "knights",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "quiet-pawns"
+                ],
+                "trainingGames": 17,
+                "testGames": 2,
+                "converged": true,
+                "fullRank": false,
+                "metrics": {
+                  "brier": 0.28958543678739856,
+                  "logLoss": 0.7988364267177045
+                },
+                "baselineMetrics": {
+                  "brier": 0.25086505190311426,
+                  "logLoss": 0.6948802845481885
+                }
+              },
+              {
+                "heldOutGroup": "unforced",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "fianchetto",
+                  "flank-pawns",
+                  "knights",
+                  "quiet-pawns"
+                ],
+                "testGroups": [
+                  "unforced"
+                ],
+                "trainingGames": 18,
+                "testGames": 1,
+                "converged": true,
+                "fullRank": false,
+                "metrics": {
+                  "brier": 0.005166990724689372,
+                  "logLoss": 0.7036100809794114
+                },
+                "baselineMetrics": {
+                  "brier": 0.0007716049382715902,
+                  "logLoss": 0.6946927768447818
+                }
+              }
+            ],
+            "metrics": {
+              "brier": 0.22229468192672644,
+              "logLoss": 0.9383834588043066
+            },
+            "baselineMetrics": {
+              "brier": 0.17551726913532323,
+              "logLoss": 0.7021232602177037
+            }
+          },
+          "bootstrap": {
+            "available": false,
+            "reason": "disabled",
+            "requested": 0,
+            "completed": 0,
+            "seed": 42,
+            "confidence": 0.95,
+            "groupUnit": "whole-opening-family",
+            "minimumGroups": 4,
+            "groupCount": 7,
+            "rankDeficient": 0,
+            "nonconverged": 0,
+            "pawnNonpositive": 0,
+            "possibleSeparation": 0,
+            "validRatios": 0,
+            "pawnCoefficient": {
+              "lower": null,
+              "upper": null
+            },
+            "coefficientIntervals": {},
+            "ratioIntervals": {},
+            "interpretation": "Exploratory conditional whole-family percentile stability; failed and unsupported fits are counted, not hidden. Not a universal confidence interval or representative material calibration."
+          },
+          "normalized": {
+            "available": false,
+            "reason": "rank-deficient-design",
+            "reasons": [
+              "rank-deficient-design",
+              "fewer-than-eight-opening-families",
+              "insufficient-feature-group-support",
+              "insufficient-stable-bootstrap-ratios",
+              "pawn-bootstrap-band-not-positive"
+            ],
+            "minimumGroups": 8,
+            "values": null
+          },
+          "warnings": [
+            "Recorded settings and replayed legal moves do not attest the executable or process identity; missing execution provenance remains unknown.",
+            "Selected experiment games are a pipeline diagnostic, not a representative population of ordinary or upgraded-piece positions.",
+            "Samples from the same game and related openings are dependent; use game-balanced weights and grouped validation/resampling.",
+            "Material-stable windows filter recent/nearby captures and promotions but do not establish tactical quietness.",
+            "Ordinary family counts plus upgrade bonuses are model features, not intrinsic exchange prices or engine MG/EG parameters.",
+            "Each sampled game has total weight one; games with no accepted positions are retained in coverage but contribute no fitting weight.",
+            "Identical full recorded histories are counted once; original A/B labels do not create independent observations.",
+            "Ridge yields exploratory predictions despite missing rank; coefficients are not separately identified by these data.",
+            "Pawn-normalized point estimates withheld: rank-deficient-design, fewer-than-eight-opening-families, insufficient-feature-group-support, insufficient-stable-bootstrap-ratios, pawn-bootstrap-band-not-positive."
+          ]
+        },
+        "ordinaryRatios": {
+          "available": false,
+          "reason": "rank-deficient-design",
+          "calibrated": false,
+          "interpretation": "Raw fitted-slope arithmetic for ordinary-material sanity checks; not a released material-price table.",
+          "values": null,
+          "queenMinusRook": null
+        },
+        "amazonBonus": {
+          "available": false,
+          "reason": "not-modelled-ordinary-only",
+          "calibrated": false,
+          "nonzeroGames": 0,
+          "supportGroups": 0,
+          "rawCoefficient": null,
+          "rawPawnRatio": null,
+          "interpretation": "No observed upgrade imbalance means no information about its bonus; a ridge coefficient of zero is not zero piece strength."
+        }
+      },
+      "endgame": {
+        "id": "endgame",
+        "featureNames": [
+          "pawn",
+          "knight",
+          "bishop",
+          "rook",
+          "queen",
+          "tempo"
+        ],
+        "selection": {
+          "comparisonIds": [
+            "standard-control"
+          ],
+          "phase": "endgame",
+          "inputUniqueGames": 20,
+          "sampledGames": 20,
+          "gamesWithoutSamples": 0,
+          "samples": 282,
+          "droppedZeroFeatures": [
+            "bonus:queen.purple@1",
+            "bonus:rook.purple@3",
+            "bonus:rook.purple@4",
+            "bonus:rook.purple@5"
+          ],
+          "weighting": "Each retained history has unit total sample weight, recomputed after phase selection."
+        },
+        "analysis": {
+          "schemaVersion": 1,
+          "method": {
+            "target": "expected final White score, W/D/L = 1/0.5/0",
+            "link": "fractional-logistic cross-entropy",
+            "intercept": "unpenalized",
+            "ridge": 0.001,
+            "ridgeScale": "mean game-weighted loss; penalty on standardized slopes",
+            "weighting": "each sampled game has unit total weight",
+            "bootstrapUnit": "whole opening family",
+            "minimumBootstrapGroups": 4,
+            "minimumNormalizationGroups": 8,
+            "normalizationThreshold": "Conservative reporting policy, not a confidence guarantee or a reason to generate more games automatically.",
+            "regularizationCaveat": "Ridge produces finite exploratory slopes even for some separated outcomes; absence of a perfect-classification flag does not exclude quasi-separation.",
+            "interpretation": "Exploratory outcome-predictive coefficients conditional on this selected dataset and playing policy; not intrinsic or causal piece values."
+          },
+          "coverage": {
+            "samples": 282,
+            "games": 20,
+            "pairs": 20,
+            "groups": 7,
+            "groupIds": [
+              "e-pawn",
+              "english",
+              "fianchetto",
+              "flank-pawns",
+              "knights",
+              "quiet-pawns",
+              "unforced"
+            ],
+            "drawGames": 6,
+            "features": [
+              {
+                "name": "pawn",
+                "min": -4,
+                "max": 3,
+                "nonzeroGames": 18,
+                "groupsWithNonzero": 7
+              },
+              {
+                "name": "knight",
+                "min": -1,
+                "max": 1,
+                "nonzeroGames": 6,
+                "groupsWithNonzero": 5
+              },
+              {
+                "name": "bishop",
+                "min": -1,
+                "max": 1,
+                "nonzeroGames": 7,
+                "groupsWithNonzero": 4
+              },
+              {
+                "name": "rook",
+                "min": -1,
+                "max": 1,
+                "nonzeroGames": 8,
+                "groupsWithNonzero": 5
+              },
+              {
+                "name": "queen",
+                "min": -1,
+                "max": 2,
+                "nonzeroGames": 10,
+                "groupsWithNonzero": 5
+              },
+              {
+                "name": "tempo",
+                "min": -1,
+                "max": 1,
+                "nonzeroGames": 20,
+                "groupsWithNonzero": 7
+              }
+            ]
+          },
+          "rank": {
+            "rank": 7,
+            "columns": 7,
+            "fullRank": true,
+            "dependentFeatures": [],
+            "minimumPivot": 0.4979000437046453,
+            "correlations": []
+          },
+          "fit": {
+            "converged": true,
+            "reason": null,
+            "iterations": 8,
+            "intercept": 0.28847439640255335,
+            "coefficients": {
+              "pawn": 1.815236671209436,
+              "knight": 2.687910324403152,
+              "bishop": 2.9002180605984442,
+              "rook": 3.8680978302729856,
+              "queen": 3.1330422922394647,
+              "tempo": 0.11075775870831722
+            },
+            "possibleSeparation": false,
+            "metrics": {
+              "brier": 0.026580512683026473,
+              "logLoss": 0.31757889362161656
+            }
+          },
+          "validation": {
+            "available": true,
+            "reason": null,
+            "unit": "whole-opening-family",
+            "folds": [
+              {
+                "heldOutGroup": "e-pawn",
+                "trainingGroups": [
+                  "english",
+                  "fianchetto",
+                  "flank-pawns",
+                  "knights",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "e-pawn"
+                ],
+                "trainingGames": 14,
+                "testGames": 6,
+                "converged": true,
+                "fullRank": true,
+                "metrics": {
+                  "brier": 0.08450885295650457,
+                  "logLoss": 0.937418516051698
+                },
+                "baselineMetrics": {
+                  "brier": 0.04889455782312944,
+                  "logLoss": 0.7076298011967213
+                }
+              },
+              {
+                "heldOutGroup": "english",
+                "trainingGroups": [
+                  "e-pawn",
+                  "fianchetto",
+                  "flank-pawns",
+                  "knights",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "english"
+                ],
+                "trainingGames": 17,
+                "testGames": 3,
+                "converged": true,
+                "fullRank": true,
+                "metrics": {
+                  "brier": 0.06383075579113516,
+                  "logLoss": 0.20319877329872454
+                },
+                "baselineMetrics": {
+                  "brier": 0.2606689734717417,
+                  "logLoss": 0.7145107904909188
+                }
+              },
+              {
+                "heldOutGroup": "fianchetto",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "flank-pawns",
+                  "knights",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "fianchetto"
+                ],
+                "trainingGames": 18,
+                "testGames": 2,
+                "converged": true,
+                "fullRank": true,
+                "metrics": {
+                  "brier": 0.022783085574057258,
+                  "logLoss": 0.14423635724509426
+                },
+                "baselineMetrics": {
+                  "brier": 0.24999999999999986,
+                  "logLoss": 0.6931471805599451
+                }
+              },
+              {
+                "heldOutGroup": "flank-pawns",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "fianchetto",
+                  "knights",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "flank-pawns"
+                ],
+                "trainingGames": 17,
+                "testGames": 3,
+                "converged": true,
+                "fullRank": true,
+                "metrics": {
+                  "brier": 0.07817208226501281,
+                  "logLoss": 0.24356349622664644
+                },
+                "baselineMetrics": {
+                  "brier": 0.2606689734717421,
+                  "logLoss": 0.71451079049092
+                }
+              },
+              {
+                "heldOutGroup": "knights",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "fianchetto",
+                  "flank-pawns",
+                  "quiet-pawns",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "knights"
+                ],
+                "trainingGames": 17,
+                "testGames": 3,
+                "converged": true,
+                "fullRank": true,
+                "metrics": {
+                  "brier": 0.03738322226535085,
+                  "logLoss": 0.1470242432170862
+                },
+                "baselineMetrics": {
+                  "brier": 0.2606689734717416,
+                  "logLoss": 0.714510790490919
+                }
+              },
+              {
+                "heldOutGroup": "quiet-pawns",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "fianchetto",
+                  "flank-pawns",
+                  "knights",
+                  "unforced"
+                ],
+                "testGroups": [
+                  "quiet-pawns"
+                ],
+                "trainingGames": 18,
+                "testGames": 2,
+                "converged": true,
+                "fullRank": true,
+                "metrics": {
+                  "brier": 0.017693241861131703,
+                  "logLoss": 0.1023534144033397
+                },
+                "baselineMetrics": {
+                  "brier": 0.2500000000000001,
+                  "logLoss": 0.6931471805599451
+                }
+              },
+              {
+                "heldOutGroup": "unforced",
+                "trainingGroups": [
+                  "e-pawn",
+                  "english",
+                  "fianchetto",
+                  "flank-pawns",
+                  "knights",
+                  "quiet-pawns"
+                ],
+                "testGroups": [
+                  "unforced"
+                ],
+                "trainingGames": 19,
+                "testGames": 1,
+                "converged": true,
+                "fullRank": true,
+                "metrics": {
+                  "brier": 0.14357634294055416,
+                  "logLoss": 1.123321632602601
+                },
+                "baselineMetrics": {
+                  "brier": 1.109335647967048e-31,
+                  "logLoss": 0.6931471805599452
+                }
+              }
+            ],
+            "metrics": {
+              "brier": 0.0634870148257228,
+              "logLoss": 0.4511185905218511
+            },
+            "baselineMetrics": {
+              "brier": 0.1819694054092226,
+              "logLoss": 0.707105591219917
+            }
+          },
+          "bootstrap": {
+            "available": false,
+            "reason": "disabled",
+            "requested": 0,
+            "completed": 0,
+            "seed": 42,
+            "confidence": 0.95,
+            "groupUnit": "whole-opening-family",
+            "minimumGroups": 4,
+            "groupCount": 7,
+            "rankDeficient": 0,
+            "nonconverged": 0,
+            "pawnNonpositive": 0,
+            "possibleSeparation": 0,
+            "validRatios": 0,
+            "pawnCoefficient": {
+              "lower": null,
+              "upper": null
+            },
+            "coefficientIntervals": {},
+            "ratioIntervals": {},
+            "interpretation": "Exploratory conditional whole-family percentile stability; failed and unsupported fits are counted, not hidden. Not a universal confidence interval or representative material calibration."
+          },
+          "normalized": {
+            "available": false,
+            "reason": "fewer-than-eight-opening-families",
+            "reasons": [
+              "fewer-than-eight-opening-families",
+              "insufficient-feature-group-support",
+              "insufficient-stable-bootstrap-ratios",
+              "pawn-bootstrap-band-not-positive"
+            ],
+            "minimumGroups": 8,
+            "values": null
+          },
+          "warnings": [
+            "Recorded settings and replayed legal moves do not attest the executable or process identity; missing execution provenance remains unknown.",
+            "Selected experiment games are a pipeline diagnostic, not a representative population of ordinary or upgraded-piece positions.",
+            "Samples from the same game and related openings are dependent; use game-balanced weights and grouped validation/resampling.",
+            "Material-stable windows filter recent/nearby captures and promotions but do not establish tactical quietness.",
+            "Ordinary family counts plus upgrade bonuses are model features, not intrinsic exchange prices or engine MG/EG parameters.",
+            "Each sampled game has total weight one; games with no accepted positions are retained in coverage but contribute no fitting weight.",
+            "Identical full recorded histories are counted once; original A/B labels do not create independent observations.",
+            "Pawn-normalized point estimates withheld: fewer-than-eight-opening-families, insufficient-feature-group-support, insufficient-stable-bootstrap-ratios, pawn-bootstrap-band-not-positive."
+          ]
+        },
+        "ordinaryRatios": {
+          "available": true,
+          "reason": null,
+          "calibrated": false,
+          "interpretation": "Raw fitted-slope arithmetic for ordinary-material sanity checks; not a released material-price table.",
+          "values": {
+            "pawn": 1,
+            "knight": 1.4807492417020642,
+            "bishop": 1.5977079499314646,
+            "rook": 2.1309055131063386,
+            "queen": 1.725969038600358,
+            "tempo": 0.06101560224349299
+          },
+          "queenMinusRook": -0.4049364745059806
+        },
+        "amazonBonus": {
+          "available": false,
+          "reason": "not-modelled-ordinary-only",
+          "calibrated": false,
+          "nonzeroGames": 0,
+          "supportGroups": 0,
+          "rawCoefficient": null,
+          "rawPawnRatio": null,
+          "interpretation": "No observed upgrade imbalance means no information about its bonus; a ridge coefficient of zero is not zero piece strength."
+        }
+      }
+    },
+    "phaseSensitivity": {
+      "cohort": "standard-control",
+      "bootstrap": 0,
+      "middlegame": {
+        "available": false,
+        "reason": "rank-deficient-design",
+        "calibrated": false,
+        "interpretation": "Raw fitted-slope arithmetic for ordinary-material sanity checks; not a released material-price table.",
+        "values": null,
+        "queenMinusRook": null
+      },
+      "endgame": {
+        "available": true,
+        "reason": null,
+        "calibrated": false,
+        "interpretation": "Raw fitted-slope arithmetic for ordinary-material sanity checks; not a released material-price table.",
+        "values": {
+          "pawn": 1,
+          "knight": 1.4807492417020642,
+          "bishop": 1.5977079499314646,
+          "rook": 2.1309055131063386,
+          "queen": 1.725969038600358,
+          "tempo": 0.06101560224349299
+        },
+        "queenMinusRook": -0.4049364745059806
+      }
+    },
+    "decision": {
+      "status": "diagnostic-only",
+      "ordinaryBaselineIdentified": true,
+      "ordinaryMaterialTableSupported": false,
+      "amazonBonusStatus": "unavailable",
+      "amazonBonusReason": "unidentifiable-zero-upgrade-imbalance",
+      "interpretation": "Ordinary baseline checks precede any Amazon price interpretation; fixed reference targets are not used to tune the fit. No new game batch follows automatically."
+    },
+    "warnings": [
+      "Twenty ordinary and twenty Amazon histories, when present, are still a small fixed cohort; deduplication does not create representative sampling.",
+      "Phase fits reuse these histories and are dependent sensitivity checks, not independent confirmations.",
+      "Inactive Blink columns are omitted only after verifying their observed counts are zero. An absent Amazon imbalance is retained and reported as unidentifiable.",
+      "Full numerical rank and accurate outcome prediction do not establish transferable material values."
+    ]
+  },
+  "sourceSelection": {
+    "sourcePolicy": "auto",
+    "sourceRecords": 200,
+    "selectedRecords": 80,
+    "comparisons": {
+      "standard-control": 40,
+      "amazon-control": 40
+    },
+    "excludedSubjectRecords": 120,
+    "materialHandicaps": false,
+    "historyHashFormat": "SHA-256 of JSON.stringify({startFen,moves,result,reason,finalFen}); property order as listed",
+    "uniqueHistories": 40,
+    "duplicateRecords": 40,
+    "historyKeys": {
+      "rook-auto-controls:c14_amazon-control_o18_reti-e-pawn-prefix_r1_b": "2b2609fa2867d4c66f062d7ce5f1291a0dfc10a22d11457fa08e8bff9f353af9",
+      "rook-auto-controls:c14_amazon-control_o19_open-knights-prefix_r1_w": "cdb677a342f4d64b41cbaef5dc1ac14ed80a2fd34d1988d501cc0d37d56cf82b",
+      "rook-auto-controls:c14_amazon-control_o18_reti-e-pawn-prefix_r1_w": "2b2609fa2867d4c66f062d7ce5f1291a0dfc10a22d11457fa08e8bff9f353af9",
+      "rook-auto-controls:c16_standard-control_o26_kingside-fianchetto-prefix_r1_b": "73b9144122fe5e7a40faa63bd36a55858a32f14614c94a110656b5398b64d0f9",
+      "rook-auto-controls:c16_standard-control_o26_symmetrical-english-prefix_r1_w": "444b7c0a4894028be144666602c477c9202bf589f131c608107e9d5d97d74c95",
+      "rook-auto-controls:c14_amazon-control_o19_open-knights-prefix_r1_b": "cdb677a342f4d64b41cbaef5dc1ac14ed80a2fd34d1988d501cc0d37d56cf82b",
+      "rook-auto-controls:c16_standard-control_o26_kingside-fianchetto-prefix_r1_w": "73b9144122fe5e7a40faa63bd36a55858a32f14614c94a110656b5398b64d0f9",
+      "rook-auto-controls:c16_standard-control_o26_symmetrical-english-prefix_r1_b": "444b7c0a4894028be144666602c477c9202bf589f131c608107e9d5d97d74c95",
+      "rook-auto-controls:c16_standard-control_o13_quiet-e-pawns_r1_w": "5284d525a90295850928cd1c7bc04c8f6b88cb542ec91ba10308a2e968ddab90",
+      "rook-auto-controls:c16_standard-control_o21_king-pawn-step-prefix_r1_w": "44a820afd81c11b9ac24070d81a6649b9fa6a924a8407df5751f34c6a1ecb955",
+      "rook-auto-controls:c14_amazon-control_o13_modern-prefix_r1_b": "10af8c657c679b17dbe02be832902993222af8a588bed3ef4b74bd149d68316a",
+      "rook-auto-controls:c16_standard-control_o13_quiet-e-pawns_r1_b": "5284d525a90295850928cd1c7bc04c8f6b88cb542ec91ba10308a2e968ddab90",
+      "rook-auto-controls:c16_standard-control_o21_king-pawn-step-prefix_r1_b": "44a820afd81c11b9ac24070d81a6649b9fa6a924a8407df5751f34c6a1ecb955",
+      "rook-auto-controls:c14_amazon-control_o13_modern-prefix_r1_w": "10af8c657c679b17dbe02be832902993222af8a588bed3ef4b74bd149d68316a",
+      "rook-auto-controls:c14_amazon-control_o24_reversed-sicilian-prefix_r1_w": "4d2dc31336935da768a070c5fa9496ee03214f90d96c94adb4d5c724238dc253",
+      "rook-auto-controls:c14_amazon-control_o24_reversed-sicilian-prefix_r1_b": "4d2dc31336935da768a070c5fa9496ee03214f90d96c94adb4d5c724238dc253",
+      "rook-auto-controls:c16_standard-control_o12_open-e-pawns_r1_b": "1b0b0ab0863a15ca64958abffc215d8b7545c12b9d51b39ecc1d34b65df88c21",
+      "rook-auto-controls:c14_amazon-control_o22_queen-rook-step-prefix_r1_b": "376ce31c9101057f48f6d99c932dc140315e71cf021f5c312f9e4084a6231478",
+      "rook-auto-controls:c16_standard-control_o26_fianchetto-sicilian-prefix_r1_b": "f66d9f32ac43fec808a44829b1a461db8d883c99545c1d7bd2853f7a647007d9",
+      "rook-auto-controls:c16_standard-control_o12_open-e-pawns_r1_w": "1b0b0ab0863a15ca64958abffc215d8b7545c12b9d51b39ecc1d34b65df88c21",
+      "rook-auto-controls:c14_amazon-control_o15_sicilian-prefix_r1_b": "a5c4f658078f5e74b3460410b157874568ace355f6ae0c8c45b79ee76979a0ff",
+      "rook-auto-controls:c14_amazon-control_o22_queen-rook-step-prefix_r1_w": "376ce31c9101057f48f6d99c932dc140315e71cf021f5c312f9e4084a6231478",
+      "rook-auto-controls:c16_standard-control_o26_fianchetto-sicilian-prefix_r1_w": "f66d9f32ac43fec808a44829b1a461db8d883c99545c1d7bd2853f7a647007d9",
+      "rook-auto-controls:c14_amazon-control_o15_sicilian-prefix_r1_w": "a5c4f658078f5e74b3460410b157874568ace355f6ae0c8c45b79ee76979a0ff",
+      "rook-auto-controls:c14_amazon-control_o26_symmetrical-english-prefix_r1_w": "37e2b69331263f4ef8844b18271bf58d74681d82af5cca744fa5029ef6f36548",
+      "rook-auto-controls:c16_standard-control_o19_anglo-indian-prefix_r1_w": "5a2c5f2ce2904e99aba04f818a2c37b2f094733d96b4504855664e5565406f9e",
+      "rook-auto-controls:c14_amazon-control_o26_symmetrical-english-prefix_r1_b": "37e2b69331263f4ef8844b18271bf58d74681d82af5cca744fa5029ef6f36548",
+      "rook-auto-controls:c14_amazon-control_o16_bird-open-prefix_r1_b": "062b726b9273ea00d61fc5f1fa8be12e904ed91adea1ee8eab197a3bd3d90736",
+      "rook-auto-controls:c16_standard-control_o19_anglo-indian-prefix_r1_b": "5a2c5f2ce2904e99aba04f818a2c37b2f094733d96b4504855664e5565406f9e",
+      "rook-auto-controls:c16_standard-control_o13_french-prefix_r1_w": "024eef44a24cf918b6b30ef26a934e62ef6fe19e2f297e67649b84bfc8b76644",
+      "rook-auto-controls:c16_standard-control_o13_french-prefix_r1_b": "024eef44a24cf918b6b30ef26a934e62ef6fe19e2f297e67649b84bfc8b76644",
+      "rook-auto-controls:c14_amazon-control_o16_bird-open-prefix_r1_w": "062b726b9273ea00d61fc5f1fa8be12e904ed91adea1ee8eab197a3bd3d90736",
+      "rook-auto-controls:c16_standard-control_o18_reti-e-pawn-prefix_r1_w": "00fd6c352e1ac1497362c7a4d014c04de2f1bbb520b6d83026b396f4755f4045",
+      "rook-auto-controls:c16_standard-control_o18_reti-e-pawn-prefix_r1_b": "00fd6c352e1ac1497362c7a4d014c04de2f1bbb520b6d83026b396f4755f4045",
+      "rook-auto-controls:c14_amazon-control_o12_open-e-pawns_r1_b": "d09fe0a6c797baf5d0cfdf119c708a7d03b5b8e941c2f2f359e6f8a604b5f573",
+      "rook-auto-controls:c14_amazon-control_o23_ordinary-knights-prefix_r1_w": "d08f53c113df07759306890bd69bf0909c4e4848a6c3ecdc047bb16d145a5b65",
+      "rook-auto-controls:c14_amazon-control_o12_open-e-pawns_r1_w": "d09fe0a6c797baf5d0cfdf119c708a7d03b5b8e941c2f2f359e6f8a604b5f573",
+      "rook-auto-controls:c14_amazon-control_o23_ordinary-knights-prefix_r1_b": "d08f53c113df07759306890bd69bf0909c4e4848a6c3ecdc047bb16d145a5b65",
+      "rook-auto-controls:c14_amazon-control_o11_caro-prefix_r1_w": "5e482752a6da0a134eb50345c723c556d195a9e734b5e1f54096675999802d27",
+      "rook-auto-controls:c16_standard-control_o20_reti-sicilian-prefix_r1_b": "adda8bb88ce6877616949f732de9fc50ed38a07df84856f2240051df4c88421f",
+      "rook-auto-controls:c16_standard-control_o20_reti-sicilian-prefix_r1_w": "adda8bb88ce6877616949f732de9fc50ed38a07df84856f2240051df4c88421f",
+      "rook-auto-controls:c14_amazon-control_o11_caro-prefix_r1_b": "5e482752a6da0a134eb50345c723c556d195a9e734b5e1f54096675999802d27",
+      "rook-auto-controls:c14_amazon-control_o13_quiet-c-pawns_r1_w": "25d9696f76ddd09a92bf3e314e7b56b7fe26edd948d48c75095e723ee24adb47",
+      "rook-auto-controls:c16_standard-control_o15_sicilian-prefix_r1_w": "0f1cf23330e3c9849d1796ac227112a0e45915188136224122f8f521d96472b4",
+      "rook-auto-controls:c14_amazon-control_o13_quiet-c-pawns_r1_b": "25d9696f76ddd09a92bf3e314e7b56b7fe26edd948d48c75095e723ee24adb47",
+      "rook-auto-controls:c16_standard-control_o15_sicilian-prefix_r1_b": "0f1cf23330e3c9849d1796ac227112a0e45915188136224122f8f521d96472b4",
+      "rook-auto-controls:c16_standard-control_o23_ordinary-knights-prefix_r1_w": "e9ad7836164c75620c7ffa3a807b82dfa40d83358314b756920d44101988226d",
+      "rook-auto-controls:c16_standard-control_o23_ordinary-knights-prefix_r1_b": "e9ad7836164c75620c7ffa3a807b82dfa40d83358314b756920d44101988226d",
+      "rook-auto-controls:c16_standard-control_o13_quiet-c-pawns_r1_w": "9ce525e1d66ecbef47a36fdc94ee5e73499b386ea54f3b52eaaac0c845d6d3df",
+      "rook-auto-controls:c16_standard-control_o13_quiet-c-pawns_r1_b": "9ce525e1d66ecbef47a36fdc94ee5e73499b386ea54f3b52eaaac0c845d6d3df",
+      "rook-auto-controls:c16_standard-control_o16_bird-open-prefix_r1_w": "4d8f5b62ff801da8881dcb623ce3a6bc26a216f6b6ea7c6556385439e85b61be",
+      "rook-auto-controls:c16_standard-control_o16_bird-open-prefix_r1_b": "4d8f5b62ff801da8881dcb623ce3a6bc26a216f6b6ea7c6556385439e85b61be",
+      "rook-auto-controls:c14_amazon-control_o5_start_r1_w": "d2f2c0f80601d426263ab82e09773cf8711af777c0ebb84c15f181c3f4ee6e20",
+      "rook-auto-controls:c14_amazon-control_o5_start_r1_b": "d2f2c0f80601d426263ab82e09773cf8711af777c0ebb84c15f181c3f4ee6e20",
+      "rook-auto-controls:c14_amazon-control_o26_kingside-fianchetto-prefix_r1_b": "6876fd444823fa9a20f81f0351350224b898873178e7775a8638c721c88209eb",
+      "rook-auto-controls:c14_amazon-control_o26_kingside-fianchetto-prefix_r1_w": "6876fd444823fa9a20f81f0351350224b898873178e7775a8638c721c88209eb",
+      "rook-auto-controls:c16_standard-control_o24_reversed-sicilian-prefix_r1_b": "cc0ee2eace7651aa233c653171d8c83e960609090247e6e228df03fab6aff969",
+      "rook-auto-controls:c14_amazon-control_o19_anglo-indian-prefix_r1_w": "c4ac09151c7a69f1e7c44b40faf41f34862b2e7c0c7952a2282e356460a60510",
+      "rook-auto-controls:c16_standard-control_o24_reversed-sicilian-prefix_r1_w": "cc0ee2eace7651aa233c653171d8c83e960609090247e6e228df03fab6aff969",
+      "rook-auto-controls:c14_amazon-control_o19_anglo-indian-prefix_r1_b": "c4ac09151c7a69f1e7c44b40faf41f34862b2e7c0c7952a2282e356460a60510",
+      "rook-auto-controls:c14_amazon-control_o21_king-pawn-step-prefix_r1_w": "4f1e7d424f47816a6e23253ccf2748a0334ef8dc3b070af100d9e82c74912051",
+      "rook-auto-controls:c14_amazon-control_o20_reti-sicilian-prefix_r1_w": "7090c15474041e61cdad51a6cdf7bf94ceb83cb8ff43a1974ae139fb4013fea8",
+      "rook-auto-controls:c14_amazon-control_o21_king-pawn-step-prefix_r1_b": "4f1e7d424f47816a6e23253ccf2748a0334ef8dc3b070af100d9e82c74912051",
+      "rook-auto-controls:c14_amazon-control_o20_reti-sicilian-prefix_r1_b": "7090c15474041e61cdad51a6cdf7bf94ceb83cb8ff43a1974ae139fb4013fea8",
+      "rook-auto-controls:c16_standard-control_o13_modern-prefix_r1_w": "822bb5ad87e7f6222ad9e026df2778cab490fb304622af9f1ca6a18dfbe19f47",
+      "rook-auto-controls:c14_amazon-control_o26_fianchetto-sicilian-prefix_r1_b": "5414c5dd4f37a490e3c950ce25a530420569f41027a2e5a8b474f480147ab271",
+      "rook-auto-controls:c16_standard-control_o13_modern-prefix_r1_b": "822bb5ad87e7f6222ad9e026df2778cab490fb304622af9f1ca6a18dfbe19f47",
+      "rook-auto-controls:c14_amazon-control_o26_fianchetto-sicilian-prefix_r1_w": "5414c5dd4f37a490e3c950ce25a530420569f41027a2e5a8b474f480147ab271",
+      "rook-auto-controls:c16_standard-control_o19_open-knights-prefix_r1_b": "2075de7329294ad52dd4aa76a07abcd37e5e2ab3afdea598e0b7e3331a909f92",
+      "rook-auto-controls:c16_standard-control_o19_open-knights-prefix_r1_w": "2075de7329294ad52dd4aa76a07abcd37e5e2ab3afdea598e0b7e3331a909f92",
+      "rook-auto-controls:c14_amazon-control_o13_quiet-e-pawns_r1_b": "cfdf3eda4beb406238b86b1a560ebba354afc4c92f458359e28798c33a990f42",
+      "rook-auto-controls:c14_amazon-control_o13_quiet-e-pawns_r1_w": "cfdf3eda4beb406238b86b1a560ebba354afc4c92f458359e28798c33a990f42",
+      "rook-auto-controls:c16_standard-control_o22_queen-rook-step-prefix_r1_b": "9dacf165ea3cf7fcec5f3b2fe4f9892c34f3337b51d461a2379b39c6b6948bb5",
+      "rook-auto-controls:c14_amazon-control_o13_french-prefix_r1_b": "25b02e7c18db0a565e3f49c293410edbe84c877a7aad86747351e35c42144528",
+      "rook-auto-controls:c16_standard-control_o22_queen-rook-step-prefix_r1_w": "9dacf165ea3cf7fcec5f3b2fe4f9892c34f3337b51d461a2379b39c6b6948bb5",
+      "rook-auto-controls:c16_standard-control_o5_start_r1_b": "db1a5f8feb1e6c4f961956d7fe3651d832240581809e8fa44324ce753f185e39",
+      "rook-auto-controls:c14_amazon-control_o13_french-prefix_r1_w": "25b02e7c18db0a565e3f49c293410edbe84c877a7aad86747351e35c42144528",
+      "rook-auto-controls:c16_standard-control_o5_start_r1_w": "db1a5f8feb1e6c4f961956d7fe3651d832240581809e8fa44324ce753f185e39",
+      "rook-auto-controls:c16_standard-control_o11_caro-prefix_r1_w": "29add529cba56b6c5983621b6971d9d00bca9f7d3b1b37cd8776c2e93946b97f",
+      "rook-auto-controls:c16_standard-control_o11_caro-prefix_r1_b": "29add529cba56b6c5983621b6971d9d00bca9f7d3b1b37cd8776c2e93946b97f"
+    },
+    "historyGroups": {
+      "2b2609fa2867d4c66f062d7ce5f1291a0dfc10a22d11457fa08e8bff9f353af9": [
+        "c14_amazon-control_o18_reti-e-pawn-prefix_r1_b",
+        "c14_amazon-control_o18_reti-e-pawn-prefix_r1_w"
+      ],
+      "cdb677a342f4d64b41cbaef5dc1ac14ed80a2fd34d1988d501cc0d37d56cf82b": [
+        "c14_amazon-control_o19_open-knights-prefix_r1_w",
+        "c14_amazon-control_o19_open-knights-prefix_r1_b"
+      ],
+      "73b9144122fe5e7a40faa63bd36a55858a32f14614c94a110656b5398b64d0f9": [
+        "c16_standard-control_o26_kingside-fianchetto-prefix_r1_b",
+        "c16_standard-control_o26_kingside-fianchetto-prefix_r1_w"
+      ],
+      "444b7c0a4894028be144666602c477c9202bf589f131c608107e9d5d97d74c95": [
+        "c16_standard-control_o26_symmetrical-english-prefix_r1_w",
+        "c16_standard-control_o26_symmetrical-english-prefix_r1_b"
+      ],
+      "5284d525a90295850928cd1c7bc04c8f6b88cb542ec91ba10308a2e968ddab90": [
+        "c16_standard-control_o13_quiet-e-pawns_r1_w",
+        "c16_standard-control_o13_quiet-e-pawns_r1_b"
+      ],
+      "44a820afd81c11b9ac24070d81a6649b9fa6a924a8407df5751f34c6a1ecb955": [
+        "c16_standard-control_o21_king-pawn-step-prefix_r1_w",
+        "c16_standard-control_o21_king-pawn-step-prefix_r1_b"
+      ],
+      "10af8c657c679b17dbe02be832902993222af8a588bed3ef4b74bd149d68316a": [
+        "c14_amazon-control_o13_modern-prefix_r1_b",
+        "c14_amazon-control_o13_modern-prefix_r1_w"
+      ],
+      "4d2dc31336935da768a070c5fa9496ee03214f90d96c94adb4d5c724238dc253": [
+        "c14_amazon-control_o24_reversed-sicilian-prefix_r1_w",
+        "c14_amazon-control_o24_reversed-sicilian-prefix_r1_b"
+      ],
+      "1b0b0ab0863a15ca64958abffc215d8b7545c12b9d51b39ecc1d34b65df88c21": [
+        "c16_standard-control_o12_open-e-pawns_r1_b",
+        "c16_standard-control_o12_open-e-pawns_r1_w"
+      ],
+      "376ce31c9101057f48f6d99c932dc140315e71cf021f5c312f9e4084a6231478": [
+        "c14_amazon-control_o22_queen-rook-step-prefix_r1_b",
+        "c14_amazon-control_o22_queen-rook-step-prefix_r1_w"
+      ],
+      "f66d9f32ac43fec808a44829b1a461db8d883c99545c1d7bd2853f7a647007d9": [
+        "c16_standard-control_o26_fianchetto-sicilian-prefix_r1_b",
+        "c16_standard-control_o26_fianchetto-sicilian-prefix_r1_w"
+      ],
+      "a5c4f658078f5e74b3460410b157874568ace355f6ae0c8c45b79ee76979a0ff": [
+        "c14_amazon-control_o15_sicilian-prefix_r1_b",
+        "c14_amazon-control_o15_sicilian-prefix_r1_w"
+      ],
+      "37e2b69331263f4ef8844b18271bf58d74681d82af5cca744fa5029ef6f36548": [
+        "c14_amazon-control_o26_symmetrical-english-prefix_r1_w",
+        "c14_amazon-control_o26_symmetrical-english-prefix_r1_b"
+      ],
+      "5a2c5f2ce2904e99aba04f818a2c37b2f094733d96b4504855664e5565406f9e": [
+        "c16_standard-control_o19_anglo-indian-prefix_r1_w",
+        "c16_standard-control_o19_anglo-indian-prefix_r1_b"
+      ],
+      "062b726b9273ea00d61fc5f1fa8be12e904ed91adea1ee8eab197a3bd3d90736": [
+        "c14_amazon-control_o16_bird-open-prefix_r1_b",
+        "c14_amazon-control_o16_bird-open-prefix_r1_w"
+      ],
+      "024eef44a24cf918b6b30ef26a934e62ef6fe19e2f297e67649b84bfc8b76644": [
+        "c16_standard-control_o13_french-prefix_r1_w",
+        "c16_standard-control_o13_french-prefix_r1_b"
+      ],
+      "00fd6c352e1ac1497362c7a4d014c04de2f1bbb520b6d83026b396f4755f4045": [
+        "c16_standard-control_o18_reti-e-pawn-prefix_r1_w",
+        "c16_standard-control_o18_reti-e-pawn-prefix_r1_b"
+      ],
+      "d09fe0a6c797baf5d0cfdf119c708a7d03b5b8e941c2f2f359e6f8a604b5f573": [
+        "c14_amazon-control_o12_open-e-pawns_r1_b",
+        "c14_amazon-control_o12_open-e-pawns_r1_w"
+      ],
+      "d08f53c113df07759306890bd69bf0909c4e4848a6c3ecdc047bb16d145a5b65": [
+        "c14_amazon-control_o23_ordinary-knights-prefix_r1_w",
+        "c14_amazon-control_o23_ordinary-knights-prefix_r1_b"
+      ],
+      "5e482752a6da0a134eb50345c723c556d195a9e734b5e1f54096675999802d27": [
+        "c14_amazon-control_o11_caro-prefix_r1_w",
+        "c14_amazon-control_o11_caro-prefix_r1_b"
+      ],
+      "adda8bb88ce6877616949f732de9fc50ed38a07df84856f2240051df4c88421f": [
+        "c16_standard-control_o20_reti-sicilian-prefix_r1_b",
+        "c16_standard-control_o20_reti-sicilian-prefix_r1_w"
+      ],
+      "25d9696f76ddd09a92bf3e314e7b56b7fe26edd948d48c75095e723ee24adb47": [
+        "c14_amazon-control_o13_quiet-c-pawns_r1_w",
+        "c14_amazon-control_o13_quiet-c-pawns_r1_b"
+      ],
+      "0f1cf23330e3c9849d1796ac227112a0e45915188136224122f8f521d96472b4": [
+        "c16_standard-control_o15_sicilian-prefix_r1_w",
+        "c16_standard-control_o15_sicilian-prefix_r1_b"
+      ],
+      "e9ad7836164c75620c7ffa3a807b82dfa40d83358314b756920d44101988226d": [
+        "c16_standard-control_o23_ordinary-knights-prefix_r1_w",
+        "c16_standard-control_o23_ordinary-knights-prefix_r1_b"
+      ],
+      "9ce525e1d66ecbef47a36fdc94ee5e73499b386ea54f3b52eaaac0c845d6d3df": [
+        "c16_standard-control_o13_quiet-c-pawns_r1_w",
+        "c16_standard-control_o13_quiet-c-pawns_r1_b"
+      ],
+      "4d8f5b62ff801da8881dcb623ce3a6bc26a216f6b6ea7c6556385439e85b61be": [
+        "c16_standard-control_o16_bird-open-prefix_r1_w",
+        "c16_standard-control_o16_bird-open-prefix_r1_b"
+      ],
+      "d2f2c0f80601d426263ab82e09773cf8711af777c0ebb84c15f181c3f4ee6e20": [
+        "c14_amazon-control_o5_start_r1_w",
+        "c14_amazon-control_o5_start_r1_b"
+      ],
+      "6876fd444823fa9a20f81f0351350224b898873178e7775a8638c721c88209eb": [
+        "c14_amazon-control_o26_kingside-fianchetto-prefix_r1_b",
+        "c14_amazon-control_o26_kingside-fianchetto-prefix_r1_w"
+      ],
+      "cc0ee2eace7651aa233c653171d8c83e960609090247e6e228df03fab6aff969": [
+        "c16_standard-control_o24_reversed-sicilian-prefix_r1_b",
+        "c16_standard-control_o24_reversed-sicilian-prefix_r1_w"
+      ],
+      "c4ac09151c7a69f1e7c44b40faf41f34862b2e7c0c7952a2282e356460a60510": [
+        "c14_amazon-control_o19_anglo-indian-prefix_r1_w",
+        "c14_amazon-control_o19_anglo-indian-prefix_r1_b"
+      ],
+      "4f1e7d424f47816a6e23253ccf2748a0334ef8dc3b070af100d9e82c74912051": [
+        "c14_amazon-control_o21_king-pawn-step-prefix_r1_w",
+        "c14_amazon-control_o21_king-pawn-step-prefix_r1_b"
+      ],
+      "7090c15474041e61cdad51a6cdf7bf94ceb83cb8ff43a1974ae139fb4013fea8": [
+        "c14_amazon-control_o20_reti-sicilian-prefix_r1_w",
+        "c14_amazon-control_o20_reti-sicilian-prefix_r1_b"
+      ],
+      "822bb5ad87e7f6222ad9e026df2778cab490fb304622af9f1ca6a18dfbe19f47": [
+        "c16_standard-control_o13_modern-prefix_r1_w",
+        "c16_standard-control_o13_modern-prefix_r1_b"
+      ],
+      "5414c5dd4f37a490e3c950ce25a530420569f41027a2e5a8b474f480147ab271": [
+        "c14_amazon-control_o26_fianchetto-sicilian-prefix_r1_b",
+        "c14_amazon-control_o26_fianchetto-sicilian-prefix_r1_w"
+      ],
+      "2075de7329294ad52dd4aa76a07abcd37e5e2ab3afdea598e0b7e3331a909f92": [
+        "c16_standard-control_o19_open-knights-prefix_r1_b",
+        "c16_standard-control_o19_open-knights-prefix_r1_w"
+      ],
+      "cfdf3eda4beb406238b86b1a560ebba354afc4c92f458359e28798c33a990f42": [
+        "c14_amazon-control_o13_quiet-e-pawns_r1_b",
+        "c14_amazon-control_o13_quiet-e-pawns_r1_w"
+      ],
+      "9dacf165ea3cf7fcec5f3b2fe4f9892c34f3337b51d461a2379b39c6b6948bb5": [
+        "c16_standard-control_o22_queen-rook-step-prefix_r1_b",
+        "c16_standard-control_o22_queen-rook-step-prefix_r1_w"
+      ],
+      "25b02e7c18db0a565e3f49c293410edbe84c877a7aad86747351e35c42144528": [
+        "c14_amazon-control_o13_french-prefix_r1_b",
+        "c14_amazon-control_o13_french-prefix_r1_w"
+      ],
+      "db1a5f8feb1e6c4f961956d7fe3651d832240581809e8fa44324ce753f185e39": [
+        "c16_standard-control_o5_start_r1_b",
+        "c16_standard-control_o5_start_r1_w"
+      ],
+      "29add529cba56b6c5983621b6971d9d00bca9f7d3b1b37cd8776c2e93946b97f": [
+        "c16_standard-control_o11_caro-prefix_r1_w",
+        "c16_standard-control_o11_caro-prefix_r1_b"
+      ]
+    },
+    "excludedPolicy": "eight-point",
+    "excludedOtherPolicyControlRecords": 80,
+    "otherPolicyJournalLoaded": false,
+    "duplicatePolicyHandling": "Eight-point controls are not loaded or fitted; their repeated histories are not additional evidence."
+  }
+}

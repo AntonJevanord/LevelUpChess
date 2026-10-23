@@ -89,9 +89,9 @@ directory. No native executable, Python packages or NNUE network is required:
 npm.cmd run balance:regression -- --out balance-results/material-regression
 ```
 
-This first adapter reads the committed `material-pilot-001` control and Amazon
+The default `--dataset pilot` reads the committed `material-pilot-001` control and Amazon
 journals and verifies their archived checksums. `--archive DIRECTORY` selects a
-copy of that archive, not an arbitrary balance-run directory. It rejects mixed
+copy of the selected archive, not an arbitrary balance-run directory. It rejects mixed
 identities, policies, incomplete pairs and corrupted records. Actual execution
 provenance remains unverified where original manifests were not supplied.
 
@@ -117,6 +117,18 @@ source journals are never edited. The [first result](../experiments/balance/resu
 shows working extraction and prediction but does not recover transferable
 ordinary-piece values. A broader dataset/design decision precedes any new match
 budget or engine-value change.
+
+`--dataset controls` selects only the automatic rook campaign's 40 ordinary and
+40 Amazon control records. The original full profile is kept for decoding;
+unused Blink columns are removed from fits only after verifying zero counts.
+Verified full-history fingerprints collapse repeated A/B records before fitting.
+The ordinary baseline is fitted first, then the combined model keeps an explicit
+Amazon bonus feature even when it is unidentified. Ordinary-only phase fits
+recompute unit weights after filtering and use no bootstrap. The
+[completed check](../experiments/balance/results/material-controls-001.md) finds
+40 distinct histories, unsuitable ordinary-price ratios and no Amazon imbalance.
+It is closed without a game-budget extension. Earlier archived diagnostics retain
+their original tool hashes; use their matching revision for exact reproduction.
 
 ## NNUE and game phase
 

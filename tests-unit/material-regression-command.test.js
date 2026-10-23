@@ -31,11 +31,47 @@ function fixture() {
 test('offline command accepts only bounded analysis options and requires an explicit output', () => {
   assert.deepEqual(parseArgs(['--help']), { bootstrap: 200, seed: 42, help: true });
   assert.deepEqual(parseArgs(['--out', 'r', '--bootstrap', '0', '--seed', '7']), { out: 'r', bootstrap: 0, seed: 7 });
+  assert.deepEqual(parseArgs(['--out', 'r', '--dataset', 'controls']), { out: 'r', dataset: 'controls', bootstrap: 200, seed: 42 });
   for (const args of [[], ['--out'], ['--out', 'r', '--bootstrap', '-1'], ['--out', 'r', '--bootstrap', '1001'],
     ['--out', 'r', '--seed', '1.2'], ['--out', 'r', '--seed', '4294967296'], ['--help', '--out', 'r'],
-    ['--out', 'r', '--out', 'q'], ['--out', 'r', '--engine', 'stockfish'], ['--out', 'r', '--jobs', '3']]) {
+    ['--out', 'r', '--out', 'q'], ['--out', 'r', '--engine', 'stockfish'], ['--out', 'r', '--jobs', '3'],
+    ['--out', 'r', '--dataset', 'both'], ['--out', 'r', '--dataset', 'controls', '--dataset', 'pilot']]) {
     assert.throws(() => parseArgs(args), args.join(' '));
   }
+});
+
+test('control mode selects its adapter, preserves audit records and dispatches the deduplicated analysis', async t => {
+  const directory = path.join(temporary(t), 'controls'), data = fixture();
+  data.source.selection = { sourceRecords: 200, selectedRecords: 80, uniqueHistories: 40, historyKeys: { g: 'hash' } };
+  const summary = { selection: { uniqueHistories: 40, duplicateRecords: 40 },
+    analyses: { ordinary: { analysis: data.analysis, ordinaryRatios: { available: false, reason: 'unsupported' } },
+      combined: { analysis: data.analysis, amazonBonus: { available: false, reason: 'unidentifiable-zero-upgrade-imbalance' } } },
+    warnings: ['No Amazon imbalance.'] };
+  const result = await main(['--dataset', 'controls', '--out', directory, '--bootstrap', '0'], {
+    readPilotArchive() { throw new Error('must not load handicap pilot'); },
+    readControlArchive: () => data.source,
+    exportDataset: async () => data.dataset,
+    analyzeControls: (dataset, options) => {
+      assert.equal(dataset, data.dataset); assert.deepEqual(options.historyKeys, { g: 'hash' });
+      assert.equal(options.bootstrap, 0); return summary;
+    }, log() {},
+  });
+  assert.equal(result.report.format, 'levelup-material-control-diagnostic');
+  assert.equal(result.manifest.dataset, 'controls');
+  const text = fs.readFileSync(path.join(directory, 'regression-report.md'), 'utf8');
+  assert.match(text, /Distinct physical histories: 40/);
+  assert.match(text, /unidentifiable-zero-upgrade-imbalance/);
+  assert.match(text, /missing information, not a zero-value upgrade/);
+  assert.match(text, /held-out|Held-out/);
+});
+
+test('control selection failures stop before output creation or fitting', async t => {
+  const directory = path.join(temporary(t), 'invalid-controls');
+  await assert.rejects(main(['--dataset', 'controls', '--out', directory], {
+    readControlArchive() { throw new Error('Invalid original control archive'); },
+    analyzeControls() { throw new Error('must not fit'); }, log() {},
+  }), /Invalid original control archive/);
+  assert.equal(fs.existsSync(directory), false);
 });
 
 test('archive loader keeps the two matched source contexts and groups related opening prefixes', () => {
