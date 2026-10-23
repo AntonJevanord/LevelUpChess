@@ -53,24 +53,13 @@ Open [prototypes/kings/index.html](prototypes/kings/index.html) to try the captu
 
 Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Bringing king choices into the main board's setup, engine play, and saves remains integration work. See the [prototype guide](prototypes/kings/README.md).
 
-## Version 16: material estimate pilot
+## Version 16: material pilot stopped
 
-The [512-game pilot](experiments/balance/material-estimate-plan.md) estimates the Amazon's added value over an ordinary queen through pawn compensation. Run a 256-game queen-versus-rook material-odds control once, then three Amazon increments of **64 + 64 + 128** games. They save cumulative estimates at **64, 128 and 256** games. Larger samples improve precision; they do not guarantee accuracy or remove setup effects.
+The [audited pilot](experiments/balance/results/material-pilot-001.md) contains 256 control games and the first 64 Amazon games. All games replay correctly. The queen-favored control side still scores **89.84% after four pawn removals** and **82.81% after five**, so the tested range never brackets compensation.
 
-```bat
-npm.cmd run balance:material -- --check
-npm.cmd run balance:material -- --out balance-results/material-estimate --stage control --jobs 3
-```
+The control does not validate a conventional material scale. The Amazon's preliminary crossing of about 4.6 removed starting pawns cannot establish a +460-cp upgrade bonus. Removing many pawns changes development, king cover, targets and promotion; the control and Amazon armies also differ in queen presence. More samples would not remove those setup effects.
 
-Inspect the control before the Amazon stages. Its conventional reference is about 400 material centipawns, with 100 per reference pawn; it is a sanity check, not exact ground truth. The control is reused throughout this frozen campaign.
-
-```bat
-npm.cmd run balance:material -- --out balance-results/material-estimate --stage 1
-npm.cmd run balance:material -- --out balance-results/material-estimate --stage 2
-npm.cmd run balance:material -- --out balance-results/material-estimate --stage 3
-```
-
-Each command runs only its requested stage. Stop with `q` / Ctrl+C, after active games with `g`, or after active color pairs with `p`. Continue with `--resume balance-results/material-estimate`; inspect estimates with `--report balance-results/material-estimate`. Live estimates print after finished games, explaining any missing complete paired blocks. `material-report.md` refreshes during play; immutable checkpoints in `estimates/` retain the three cumulative results. No formal pilot games have been run in the cloud.
+The batch is **closed at 320 games**. Leave the remaining 192 unused. The [original protocol](experiments/balance/material-estimate-plan.md), commands and snapshots remain preserved for reproduction. The [balancing strategy](docs/balancing-strategy.md) calls for a small method screen before another material campaign; no replacement batch is scheduled.
 
 ## Completed Blink evaluation check
 
@@ -88,7 +77,7 @@ npm.cmd run balance:rook-values -- --report balance-results/rook-values
 
 The report uses shared fully scored openings. The [original plan](experiments/balance/rook-values-plan.md) retains check/run/resume commands for reproduction with matching sources and engine. Keep old result directories with their matching build.
 
-The [balancing strategy](docs/balancing-strategy.md) separates engine calibration, upgrade strength and purchase cost. Keep the current playable prototypes; automatic values remain the browser default without being certified as correct. The separate material pilot above uses unchanged ordinary/Amazon evaluation and does not require Blink tuning first.
+The [balancing strategy](docs/balancing-strategy.md) separates engine calibration, upgrade strength and purchase cost. Keep the current playable prototypes; automatic values remain the browser default without being certified as correct. The closed material pilot used unchanged ordinary/Amazon evaluation.
 
 ## Completed Amazon comparison: 1,120 games
 

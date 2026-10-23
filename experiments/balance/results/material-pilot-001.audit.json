@@ -1,0 +1,718 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-material-pilot-results-audit",
+  "recordedDate": "2026-10-23",
+  "inputs": {
+    "uploaded-report.md": {
+      "file": "material-pilot-001.uploaded-report.md",
+      "bytes": 2635,
+      "sha256": "88b957c9fd942c624993f2bdf818fdc84b07c156328952feb427ed4370a869b0"
+    },
+    "control.summary.json": {
+      "file": "material-pilot-001.control.summary.json",
+      "bytes": 29613,
+      "sha256": "6fda624eadffdcd5e36a4ba2c9b938f3fa5c142acd875c20fd433dabfd3a8a29"
+    },
+    "control.games.jsonl": {
+      "file": "material-pilot-001.control.games.jsonl",
+      "bytes": 784545,
+      "sha256": "bf13d7c50fa97a6d29730a7e6ad15b3725d5970e8da19e32bdc556563835d47e"
+    },
+    "amazon-64.summary.json": {
+      "file": "material-pilot-001.amazon-64.summary.json",
+      "bytes": 18167,
+      "sha256": "d14258229b8c39cee73b1d8eb58754f7f4e2d1e0edcd546b91261662ccae4f16"
+    },
+    "amazon-64.games.jsonl": {
+      "file": "material-pilot-001.amazon-64.games.jsonl",
+      "bytes": 199007,
+      "sha256": "a6f2cff0f9cb7bc6ce6471a31f7cc176463d100730d513fc667fe1c98f2a6617"
+    }
+  },
+  "completedGames": 320,
+  "completePairs": 160,
+  "replayedPlies": 34360,
+  "originalScheduledGames": 512,
+  "unusedGames": 192,
+  "identity": {
+    "variant": "levelup-design-86e286af00551f1ab411",
+    "profileHash": "02ec9d756b42b9397e44c25391377caa3f57c904a429fb8783c48eada35c2201",
+    "registryHash": "555d7dcfff9077accd58601890c1c6080f086c0026fd00bff22cd22cad14592c",
+    "protocolRevision": "5ccc720",
+    "expectedEngine": {
+      "nodes": 100000,
+      "threads": 1,
+      "hashMb": 32,
+      "maxPlies": 400
+    },
+    "actualBinaryAndSourceVerified": false,
+    "parentAndPolicyManifestsAvailable": false,
+    "recordedReferenceDiagnosticAvailable": false
+  },
+  "phases": {
+    "control": {
+      "runId": "a4eda5e7-986d-4d26-a372-0aa6aca4dc5a",
+      "runIdSource": "Uploaded summary; journal records have no run ID.",
+      "stage": "control",
+      "games": 256,
+      "completePairs": 128,
+      "replayedPlies": 27333,
+      "statusCounts": {
+        "completed": 256,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "checks": {
+        "exactSummaryRegeneration": true,
+        "exactStageScheduleAndAnnotations": true,
+        "startingArmiesAndForcedPrefixes": true,
+        "legalMovesAndSAN": true,
+        "finalFENAndTerminalOutcomes": true,
+        "noMovesAfterTermination": true,
+        "uploadedReportMathematics": true
+      },
+      "estimate": {
+        "schemaVersion": 1,
+        "nOpenings": 16,
+        "testedCompensationCp": [
+          200,
+          300,
+          400,
+          500
+        ],
+        "rawCurve": [
+          {
+            "compensationCp": 200,
+            "score": 1
+          },
+          {
+            "compensationCp": 300,
+            "score": 0.9765625
+          },
+          {
+            "compensationCp": 400,
+            "score": 0.8984375
+          },
+          {
+            "compensationCp": 500,
+            "score": 0.828125
+          }
+        ],
+        "fittedCurve": [
+          {
+            "compensationCp": 200,
+            "score": 1
+          },
+          {
+            "compensationCp": 300,
+            "score": 0.9765625
+          },
+          {
+            "compensationCp": 400,
+            "score": 0.8984375
+          },
+          {
+            "compensationCp": 500,
+            "score": 0.828125
+          }
+        ],
+        "estimate": {
+          "status": "above-range",
+          "lowerCp": 500,
+          "upperCp": null,
+          "pointCp": null
+        },
+        "layouts": [
+          {
+            "layout": "left",
+            "rawCurve": [
+              {
+                "compensationCp": 200,
+                "score": 1
+              },
+              {
+                "compensationCp": 300,
+                "score": 0.96875
+              },
+              {
+                "compensationCp": 400,
+                "score": 0.890625
+              },
+              {
+                "compensationCp": 500,
+                "score": 0.828125
+              }
+            ],
+            "fittedCurve": [
+              {
+                "compensationCp": 200,
+                "score": 1
+              },
+              {
+                "compensationCp": 300,
+                "score": 0.96875
+              },
+              {
+                "compensationCp": 400,
+                "score": 0.890625
+              },
+              {
+                "compensationCp": 500,
+                "score": 0.828125
+              }
+            ],
+            "estimate": {
+              "status": "above-range",
+              "lowerCp": 500,
+              "upperCp": null,
+              "pointCp": null
+            }
+          },
+          {
+            "layout": "right",
+            "rawCurve": [
+              {
+                "compensationCp": 200,
+                "score": 1
+              },
+              {
+                "compensationCp": 300,
+                "score": 0.984375
+              },
+              {
+                "compensationCp": 400,
+                "score": 0.90625
+              },
+              {
+                "compensationCp": 500,
+                "score": 0.828125
+              }
+            ],
+            "fittedCurve": [
+              {
+                "compensationCp": 200,
+                "score": 1
+              },
+              {
+                "compensationCp": 300,
+                "score": 0.984375
+              },
+              {
+                "compensationCp": 400,
+                "score": 0.90625
+              },
+              {
+                "compensationCp": 500,
+                "score": 0.828125
+              }
+            ],
+            "estimate": {
+              "status": "above-range",
+              "lowerCp": 500,
+              "upperCp": null,
+              "pointCp": null
+            }
+          }
+        ],
+        "diagnostics": {
+          "rawNonMonotone": false,
+          "reversals": [],
+          "maxRawReversal": 0,
+          "maxIsotonicAdjustment": 0,
+          "layoutPointDifferenceCp": null,
+          "layoutRangesOverlap": true
+        },
+        "bootstrap": {
+          "available": true,
+          "reason": null,
+          "requestedReplicates": 1000,
+          "replicates": 1000,
+          "seed": 42,
+          "confidence": 0.95,
+          "lowerCp": 500,
+          "upperCp": null,
+          "statusCounts": {
+            "bracketed": 0,
+            "plateau": 0,
+            "below-range": 0,
+            "above-range": 1000
+          },
+          "interpretation": "Conditional whole-opening-block resampling stability for this fixed layout and opening cohort; not a universal confidence interval, an accuracy guarantee, or independent validation of cumulative stages. Censored and plateau replicates are retained."
+        }
+      },
+      "comparisons": [
+        {
+          "comparisonId": "control-left-h2",
+          "games": 32,
+          "wins": 32,
+          "draws": 0,
+          "losses": 0,
+          "score": 1,
+          "reasons": {
+            "checkmate": 32
+          },
+          "aColorScores": {
+            "w": 1,
+            "b": 1
+          }
+        },
+        {
+          "comparisonId": "control-left-h3",
+          "games": 32,
+          "wins": 30,
+          "draws": 2,
+          "losses": 0,
+          "score": 0.96875,
+          "reasons": {
+            "threefold-repetition": 1,
+            "checkmate": 30,
+            "fifty-move-rule": 1
+          },
+          "aColorScores": {
+            "w": 0.96875,
+            "b": 0.96875
+          }
+        },
+        {
+          "comparisonId": "control-left-h4",
+          "games": 32,
+          "wins": 27,
+          "draws": 3,
+          "losses": 2,
+          "score": 0.890625,
+          "reasons": {
+            "checkmate": 29,
+            "insufficient-material": 1,
+            "fifty-move-rule": 1,
+            "threefold-repetition": 1
+          },
+          "aColorScores": {
+            "w": 0.9375,
+            "b": 0.84375
+          }
+        },
+        {
+          "comparisonId": "control-left-h5",
+          "games": 32,
+          "wins": 24,
+          "draws": 5,
+          "losses": 3,
+          "score": 0.828125,
+          "reasons": {
+            "checkmate": 27,
+            "fifty-move-rule": 2,
+            "insufficient-material": 3
+          },
+          "aColorScores": {
+            "w": 0.84375,
+            "b": 0.8125
+          }
+        },
+        {
+          "comparisonId": "control-right-h2",
+          "games": 32,
+          "wins": 32,
+          "draws": 0,
+          "losses": 0,
+          "score": 1,
+          "reasons": {
+            "checkmate": 32
+          },
+          "aColorScores": {
+            "w": 1,
+            "b": 1
+          }
+        },
+        {
+          "comparisonId": "control-right-h3",
+          "games": 32,
+          "wins": 31,
+          "draws": 1,
+          "losses": 0,
+          "score": 0.984375,
+          "reasons": {
+            "checkmate": 31,
+            "threefold-repetition": 1
+          },
+          "aColorScores": {
+            "w": 1,
+            "b": 0.96875
+          }
+        },
+        {
+          "comparisonId": "control-right-h4",
+          "games": 32,
+          "wins": 27,
+          "draws": 4,
+          "losses": 1,
+          "score": 0.90625,
+          "reasons": {
+            "checkmate": 28,
+            "threefold-repetition": 2,
+            "fifty-move-rule": 2
+          },
+          "aColorScores": {
+            "w": 0.9375,
+            "b": 0.875
+          }
+        },
+        {
+          "comparisonId": "control-right-h5",
+          "games": 32,
+          "wins": 25,
+          "draws": 3,
+          "losses": 4,
+          "score": 0.828125,
+          "reasons": {
+            "checkmate": 29,
+            "threefold-repetition": 1,
+            "fifty-move-rule": 2
+          },
+          "aColorScores": {
+            "w": 0.84375,
+            "b": 0.8125
+          }
+        }
+      ]
+    },
+    "amazon": {
+      "runId": "f7e8178f-0c0d-41d2-9f8e-689110d0391f",
+      "runIdSource": "Uploaded summary; journal records have no run ID.",
+      "stage": "amazon-1",
+      "games": 64,
+      "completePairs": 32,
+      "replayedPlies": 7027,
+      "statusCounts": {
+        "completed": 64,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "checks": {
+        "exactSummaryRegeneration": true,
+        "exactStageScheduleAndAnnotations": true,
+        "startingArmiesAndForcedPrefixes": true,
+        "legalMovesAndSAN": true,
+        "finalFENAndTerminalOutcomes": true,
+        "noMovesAfterTermination": true,
+        "uploadedReportMathematics": true
+      },
+      "estimate": {
+        "schemaVersion": 1,
+        "nOpenings": 4,
+        "testedCompensationCp": [
+          200,
+          300,
+          400,
+          500
+        ],
+        "rawCurve": [
+          {
+            "compensationCp": 200,
+            "score": 0.8125
+          },
+          {
+            "compensationCp": 300,
+            "score": 0.75
+          },
+          {
+            "compensationCp": 400,
+            "score": 0.71875
+          },
+          {
+            "compensationCp": 500,
+            "score": 0.34375
+          }
+        ],
+        "fittedCurve": [
+          {
+            "compensationCp": 200,
+            "score": 0.8125
+          },
+          {
+            "compensationCp": 300,
+            "score": 0.75
+          },
+          {
+            "compensationCp": 400,
+            "score": 0.71875
+          },
+          {
+            "compensationCp": 500,
+            "score": 0.34375
+          }
+        ],
+        "estimate": {
+          "status": "bracketed",
+          "lowerCp": 400,
+          "upperCp": 500,
+          "pointCp": 458.3333333333333
+        },
+        "layouts": [
+          {
+            "layout": "left",
+            "rawCurve": [
+              {
+                "compensationCp": 200,
+                "score": 0.875
+              },
+              {
+                "compensationCp": 300,
+                "score": 0.8125
+              },
+              {
+                "compensationCp": 400,
+                "score": 0.625
+              },
+              {
+                "compensationCp": 500,
+                "score": 0.3125
+              }
+            ],
+            "fittedCurve": [
+              {
+                "compensationCp": 200,
+                "score": 0.875
+              },
+              {
+                "compensationCp": 300,
+                "score": 0.8125
+              },
+              {
+                "compensationCp": 400,
+                "score": 0.625
+              },
+              {
+                "compensationCp": 500,
+                "score": 0.3125
+              }
+            ],
+            "estimate": {
+              "status": "bracketed",
+              "lowerCp": 400,
+              "upperCp": 500,
+              "pointCp": 440
+            }
+          },
+          {
+            "layout": "right",
+            "rawCurve": [
+              {
+                "compensationCp": 200,
+                "score": 0.75
+              },
+              {
+                "compensationCp": 300,
+                "score": 0.6875
+              },
+              {
+                "compensationCp": 400,
+                "score": 0.8125
+              },
+              {
+                "compensationCp": 500,
+                "score": 0.375
+              }
+            ],
+            "fittedCurve": [
+              {
+                "compensationCp": 200,
+                "score": 0.75
+              },
+              {
+                "compensationCp": 300,
+                "score": 0.75
+              },
+              {
+                "compensationCp": 400,
+                "score": 0.75
+              },
+              {
+                "compensationCp": 500,
+                "score": 0.375
+              }
+            ],
+            "estimate": {
+              "status": "bracketed",
+              "lowerCp": 400,
+              "upperCp": 500,
+              "pointCp": 466.6666666666667
+            }
+          }
+        ],
+        "diagnostics": {
+          "rawNonMonotone": false,
+          "reversals": [],
+          "maxRawReversal": 0,
+          "maxIsotonicAdjustment": 0,
+          "layoutPointDifferenceCp": 26.666666666666686,
+          "layoutRangesOverlap": true
+        },
+        "bootstrap": {
+          "available": false,
+          "reason": "requires-at-least-8-opening-blocks",
+          "requestedReplicates": 1000,
+          "replicates": 0,
+          "seed": 42,
+          "confidence": 0.95,
+          "lowerCp": null,
+          "upperCp": null,
+          "statusCounts": {
+            "bracketed": 0,
+            "plateau": 0,
+            "below-range": 0,
+            "above-range": 0
+          },
+          "interpretation": "Conditional whole-opening-block resampling stability for this fixed layout and opening cohort; not a universal confidence interval, an accuracy guarantee, or independent validation of cumulative stages. Censored and plateau replicates are retained."
+        }
+      },
+      "comparisons": [
+        {
+          "comparisonId": "amazon-left-h2",
+          "games": 8,
+          "wins": 7,
+          "draws": 0,
+          "losses": 1,
+          "score": 0.875,
+          "reasons": {
+            "checkmate": 8
+          },
+          "aColorScores": {
+            "w": 1,
+            "b": 0.75
+          }
+        },
+        {
+          "comparisonId": "amazon-left-h3",
+          "games": 8,
+          "wins": 6,
+          "draws": 1,
+          "losses": 1,
+          "score": 0.8125,
+          "reasons": {
+            "checkmate": 7,
+            "threefold-repetition": 1
+          },
+          "aColorScores": {
+            "w": 0.625,
+            "b": 1
+          }
+        },
+        {
+          "comparisonId": "amazon-left-h4",
+          "games": 8,
+          "wins": 4,
+          "draws": 2,
+          "losses": 2,
+          "score": 0.625,
+          "reasons": {
+            "checkmate": 6,
+            "insufficient-material": 1,
+            "threefold-repetition": 1
+          },
+          "aColorScores": {
+            "w": 0.875,
+            "b": 0.375
+          }
+        },
+        {
+          "comparisonId": "amazon-left-h5",
+          "games": 8,
+          "wins": 2,
+          "draws": 1,
+          "losses": 5,
+          "score": 0.3125,
+          "reasons": {
+            "insufficient-material": 1,
+            "checkmate": 7
+          },
+          "aColorScores": {
+            "w": 0.5,
+            "b": 0.125
+          }
+        },
+        {
+          "comparisonId": "amazon-right-h2",
+          "games": 8,
+          "wins": 6,
+          "draws": 0,
+          "losses": 2,
+          "score": 0.75,
+          "reasons": {
+            "checkmate": 8
+          },
+          "aColorScores": {
+            "w": 0.75,
+            "b": 0.75
+          }
+        },
+        {
+          "comparisonId": "amazon-right-h3",
+          "games": 8,
+          "wins": 5,
+          "draws": 1,
+          "losses": 2,
+          "score": 0.6875,
+          "reasons": {
+            "checkmate": 7,
+            "threefold-repetition": 1
+          },
+          "aColorScores": {
+            "w": 0.75,
+            "b": 0.625
+          }
+        },
+        {
+          "comparisonId": "amazon-right-h4",
+          "games": 8,
+          "wins": 6,
+          "draws": 1,
+          "losses": 1,
+          "score": 0.8125,
+          "reasons": {
+            "checkmate": 7,
+            "insufficient-material": 1
+          },
+          "aColorScores": {
+            "w": 0.875,
+            "b": 0.75
+          }
+        },
+        {
+          "comparisonId": "amazon-right-h5",
+          "games": 8,
+          "wins": 2,
+          "draws": 2,
+          "losses": 4,
+          "score": 0.375,
+          "reasons": {
+            "checkmate": 6,
+            "threefold-repetition": 2
+          },
+          "aColorScores": {
+            "w": 0.375,
+            "b": 0.375
+          }
+        }
+      ]
+    }
+  },
+  "decision": {
+    "status": "Close the pilot at the supplied 320 games; retain the remaining 192 games unused.",
+    "conventionalMaterialCalibration": "not established",
+    "calibratedAmazonMaterialValue": "unmeasured",
+    "interpretation": "The observed queen-versus-rook odds curve does not bracket compensation in the tested 2–5-pawn range. The Amazon crossing is nominal pawn-removal compensation in these setups, not calibrated centipawns."
+  },
+  "limits": [
+    "No parent or child run manifests were supplied. Expected record annotations match, but executable/source identities, worker layout and actual native reference diagnostics are unverified.",
+    "The control is a missing-rook versus missing-queen material-odds proxy, not a literal queen-to-rook replacement.",
+    "Removing many flank pawns changes development, files, king cover, pawn structure and promotion chances. Two layouts do not eliminate those contextual effects.",
+    "The control does not establish that its compensation is intrinsically greater than five pawns or isolate whether engine evaluation or setup effects caused the discrepancy.",
+    "The Amazon sample contains four fixed related opening blocks; its approximate 458.33 nominal-cp crossing has no bootstrap stability band and is not an intrinsic material value.",
+    "Pooled curves have no reversal; the Amazon right-layout raw curve rises from 68.75% at three removed pawns to 81.25% at four. That remains visible in per-layout data.",
+    "Replay validates recorded chess behavior and arithmetic, not process execution or best-play quality. No searches or new games are performed."
+  ]
+}

@@ -1,5 +1,7 @@
 # Material compensation: Amazon and ordinary-piece control
 
+**Closed at 320 games: 256 control + 64 Amazon.** The [result audit](results/material-pilot-001.md) finds no scoring or legal-move discrepancy, but the control never reaches compensation within two to five removed pawns. It does not validate a conventional material scale. Leave the remaining 192 games unused; the protocol below is preserved for reproduction, not a request to continue.
+
 Version 16 asks how much ordinary material compensates for upgrading a queen
 to the unchanged Amazon, `queen.purple@1` (`QN`). Estimate this added benefit
 directly, using the [balancing strategy](../../docs/balancing-strategy.md).

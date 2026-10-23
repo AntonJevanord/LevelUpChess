@@ -1,0 +1,656 @@
+{
+  "schemaVersion": 1,
+  "totalAttempts": 64,
+  "invalidRecords": 0,
+  "statusCounts": {
+    "completed": 64,
+    "truncated": 0,
+    "aborted": 0,
+    "error": 0,
+    "unknown": 0
+  },
+  "comparisons": [
+    {
+      "comparisonId": "amazon-left-h2",
+      "attempts": 8,
+      "statusCounts": {
+        "completed": 8,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 8
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 8,
+        "wins": 7,
+        "draws": 0,
+        "losses": 1,
+        "score": 0.875
+      },
+      "paired": {
+        "games": 8,
+        "wins": 7,
+        "draws": 0,
+        "losses": 1,
+        "score": 0.875,
+        "completePairs": 4,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 3,
+        "pairDraws": 1,
+        "pairLosses": 0
+      },
+      "openingClusters": [
+        {
+          "openingId": "open-e-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "ordinary-knights",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "queen-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 1
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.875,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 4,
+        "insufficientData": false,
+        "eloDifference": 338.0392160057027,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.19594924212969023,
+          "upper": 1,
+          "eloLower": -245.25595100830094,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "amazon-left-h3",
+      "attempts": 8,
+      "statusCounts": {
+        "completed": 8,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 7,
+        "threefold-repetition": 1
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 8,
+        "wins": 6,
+        "draws": 1,
+        "losses": 1,
+        "score": 0.8125
+      },
+      "paired": {
+        "games": 8,
+        "wins": 6,
+        "draws": 1,
+        "losses": 1,
+        "score": 0.8125,
+        "completePairs": 4,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 3,
+        "pairDraws": 1,
+        "pairLosses": 0
+      },
+      "openingClusters": [
+        {
+          "openingId": "open-e-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "ordinary-knights",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-pawns",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 0.5
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.8125,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 4,
+        "insufficientData": false,
+        "eloDifference": 254.72883903486974,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.13344924212969023,
+          "upper": 1,
+          "eloLower": -324.99115787631905,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "amazon-left-h4",
+      "attempts": 8,
+      "statusCounts": {
+        "completed": 8,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 6,
+        "insufficient-material": 1,
+        "threefold-repetition": 1
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 8,
+        "wins": 4,
+        "draws": 2,
+        "losses": 2,
+        "score": 0.625
+      },
+      "paired": {
+        "games": 8,
+        "wins": 4,
+        "draws": 2,
+        "losses": 2,
+        "score": 0.625,
+        "completePairs": 4,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 2,
+        "pairDraws": 1,
+        "pairLosses": 1
+      },
+      "openingClusters": [
+        {
+          "openingId": "open-e-pawns",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "ordinary-knights",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "queen-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 0.25
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.625,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 4,
+        "insufficientData": false,
+        "eloDifference": 88.73949984654254,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0,
+          "upper": 1,
+          "eloLower": null,
+          "eloUpper": null,
+          "eloLowerLabel": "-infinity",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "amazon-left-h5",
+      "attempts": 8,
+      "statusCounts": {
+        "completed": 8,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "insufficient-material": 1,
+        "checkmate": 7
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 8,
+        "wins": 2,
+        "draws": 1,
+        "losses": 5,
+        "score": 0.3125
+      },
+      "paired": {
+        "games": 8,
+        "wins": 2,
+        "draws": 1,
+        "losses": 5,
+        "score": 0.3125,
+        "completePairs": 4,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 1,
+        "pairDraws": 1,
+        "pairLosses": 2
+      },
+      "openingClusters": [
+        {
+          "openingId": "open-e-pawns",
+          "completePairs": 1,
+          "score": 0
+        },
+        {
+          "openingId": "ordinary-knights",
+          "completePairs": 1,
+          "score": 0
+        },
+        {
+          "openingId": "queen-pawns",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 0.75
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.3125,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 4,
+        "insufficientData": false,
+        "eloDifference": -136.9690723288825,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0,
+          "upper": 0.9915507578703098,
+          "eloLower": null,
+          "eloUpper": 827.7988779839654,
+          "eloLowerLabel": "-infinity",
+          "eloUpperLabel": "finite",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "amazon-right-h2",
+      "attempts": 8,
+      "statusCounts": {
+        "completed": 8,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 8
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 8,
+        "wins": 6,
+        "draws": 0,
+        "losses": 2,
+        "score": 0.75
+      },
+      "paired": {
+        "games": 8,
+        "wins": 6,
+        "draws": 0,
+        "losses": 2,
+        "score": 0.75,
+        "completePairs": 4,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 2,
+        "pairDraws": 2,
+        "pairLosses": 0
+      },
+      "openingClusters": [
+        {
+          "openingId": "open-e-pawns",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "ordinary-knights",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-pawns",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 1
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.75,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 4,
+        "insufficientData": false,
+        "eloDifference": 190.84850188786498,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.07094924212969023,
+          "upper": 1,
+          "eloLower": -446.8366724783203,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "amazon-right-h3",
+      "attempts": 8,
+      "statusCounts": {
+        "completed": 8,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 7,
+        "threefold-repetition": 1
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 8,
+        "wins": 5,
+        "draws": 1,
+        "losses": 2,
+        "score": 0.6875
+      },
+      "paired": {
+        "games": 8,
+        "wins": 5,
+        "draws": 1,
+        "losses": 2,
+        "score": 0.6875,
+        "completePairs": 4,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 2,
+        "pairDraws": 2,
+        "pairLosses": 0
+      },
+      "openingClusters": [
+        {
+          "openingId": "open-e-pawns",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "ordinary-knights",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "queen-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 0.5
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.6875,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 4,
+        "insufficientData": false,
+        "eloDifference": 136.9690723288825,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.008449242129690226,
+          "upper": 1,
+          "eloLower": -827.7988779839654,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "amazon-right-h4",
+      "attempts": 8,
+      "statusCounts": {
+        "completed": 8,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 7,
+        "insufficient-material": 1
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 8,
+        "wins": 6,
+        "draws": 1,
+        "losses": 1,
+        "score": 0.8125
+      },
+      "paired": {
+        "games": 8,
+        "wins": 6,
+        "draws": 1,
+        "losses": 1,
+        "score": 0.8125,
+        "completePairs": 4,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 3,
+        "pairDraws": 1,
+        "pairLosses": 0
+      },
+      "openingClusters": [
+        {
+          "openingId": "open-e-pawns",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "ordinary-knights",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "queen-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 1
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.8125,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 4,
+        "insufficientData": false,
+        "eloDifference": 254.72883903486974,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.13344924212969023,
+          "upper": 1,
+          "eloLower": -324.99115787631905,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "amazon-right-h5",
+      "attempts": 8,
+      "statusCounts": {
+        "completed": 8,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 6,
+        "threefold-repetition": 2
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 8,
+        "wins": 2,
+        "draws": 2,
+        "losses": 4,
+        "score": 0.375
+      },
+      "paired": {
+        "games": 8,
+        "wins": 2,
+        "draws": 2,
+        "losses": 4,
+        "score": 0.375,
+        "completePairs": 4,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 1,
+        "pairDraws": 1,
+        "pairLosses": 2
+      },
+      "openingClusters": [
+        {
+          "openingId": "open-e-pawns",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "ordinary-knights",
+          "completePairs": 1,
+          "score": 0
+        },
+        {
+          "openingId": "queen-pawns",
+          "completePairs": 1,
+          "score": 0.25
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 0.75
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.375,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 4,
+        "insufficientData": false,
+        "eloDifference": -88.73949984654254,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0,
+          "upper": 1,
+          "eloLower": null,
+          "eloUpper": null,
+          "eloLowerLabel": "-infinity",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    }
+  ],
+  "runId": "f7e8178f-0c0d-41d2-9f8e-689110d0391f",
+  "scheduledGames": 64,
+  "nextIndex": 64
+}

@@ -70,41 +70,45 @@ between colors. Each engine must value both colors consistently. This tests whic
 policy plays those armies better; it still does not reveal an intrinsic material
 constant. The current runner shares one policy per game, so this requires a
 separate harness change and an explicitly capped experiment. It is not scheduled
-and does not block an Amazon-only material anchor.
+and is independent of reviewing the material method.
 
-## Estimate the Amazon's added benefit first
+## Material anchor: first method did not validate the scale
 
-The [512-game material pilot](../experiments/balance/material-estimate-plan.md) estimates the Amazon purchase's incremental
-benefit, Δ, from play. It uses only ordinary pieces and the unchanged Amazon;
-neither tested Blink override changes their values. Freeze this reference evaluator,
-then compare matched ordinary-queen armies: one side upgrades its queen to Amazon
-and gives up compensating ordinary material. Swap colors and use several handicap
-amounts and layouts to bracket compensation. Removing material also changes
-development and king shelter, so report a contextual range.
+The [first material pilot](../experiments/balance/results/material-pilot-001.md)
+stopped after 256 control games and 64 Amazon games. All 320 replay correctly,
+but the queen-favored control side still scored 82.81% after five pawn removals.
+It did not recover a 50% crossing in the tested range. The remaining 192 games
+are unused; no replacement campaign is scheduled.
 
-This estimates Δ directly instead of subtracting two separately estimated
-whole-piece values. The ordinary queen remains the common baseline. Matching
-Amazon's win rate alone provides no absolute material value; compensation
-supplies that reference.
+The Amazon's first-stage crossing is about 4.58 removed starting pawns across
+four opening blocks. The control did not establish that coordinate as conventional
+pawn-equivalent material, so do not call it +458 cp or assign a whole-piece value
+of 13.58. A consistent curve and narrower sampling band cannot remove setup bias.
 
-Use the estimated Δ as a common provisional target: level 3 aims at Δ added
-benefit, level 2 at roughly 2Δ/3, and level 1 at roughly Δ/3. If Δ were hypothetically
-300 material centipawns, those targets would be 300/200/100. This is an example,
-not a measurement, and strength need not scale linearly with purchase level.
+Removing many starting pawns changes mobility, king cover, targets and promotion.
+The control opponent has no queen, whereas the Amazon opponent keeps one, making
+some pawn-removal costs different between phases. Two left/right layouts expose
+only part of these effects. Native raw MG/EG entries are also internal components,
+not a linear conventional material list. There is no justified correction factor
+that makes this control equal 400 and transfers the correction to Amazon.
 
-Define material centipawns as 100 per reference pawn. Keep that convention distinct
-from native raw MG/EG units and from an engine's displayed centipawn evaluation.
-Neither conversion is an automatic equality. Do not install these desired strength
-targets as engine parameters or retune the evaluator to obtain them.
+Keep the goal of estimating the Amazon's added benefit Δ over an ordinary queen.
+A revised method should first pass a small diagnostic screen using ordinary
+reference differences, fuller pawn structures, representative matched positions
+and several compensation packages. An exact queen-to-rook replacement could
+improve one setup detail; it does not by itself validate the scale. Define what
+the assay measures, then declare a limited budget before implementation or play.
 
-The pilot declares its layouts, effort, 512-game cap and stopping rule before play.
-Run the 256-game queen-versus-rook odds control once, then Amazon increments of
-64, 64 and 128 games, retaining cumulative estimates at 64/128/256. Live estimates
-update after finished games when complete matched blocks exist. Review layout
-sensitivity and conditional resampling stability before estimating other purchases.
-The control is reused within its frozen context, not repeated at every checkpoint.
-This proceeds independently of optional Blink calibration; formal pilot games
-remain for local execution and no automatic extension follows.
+If a credible contextual Δ range is eventually established, use it as a provisional
+level-3 target, with roughly 2Δ/3 and Δ/3 for levels 2 and 1. That remains a design
+hypothesis. Keep native parameter units, displayed engine scores and conventional
+material centipawns separate. Do not tune the evaluator or reinterpret the data
+until the desired target appears.
+
+For now, retain the ordinary/Amazon evaluation and movement definitions, use
+relative equal-cost comparisons and human feedback for design decisions, and
+preserve both valid games and negative method results. Future reports must lead
+with control validity and label unvalidated outputs as contextual odds.
 
 ## Compare surviving designs against the common target
 

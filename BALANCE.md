@@ -6,17 +6,24 @@ These tools collect results; they do not assign measured values to pieces or cha
 
 Follow the [version-16 balancing strategy](docs/balancing-strategy.md): audit engine values, calibrate flagged cases separately, then compare surviving upgrades against fixed references. Material compensation can later provide approximate added-value ranges; Amazon scores alone do not establish pawn-equivalent values.
 
-## Version 16: staged material estimate, 512 games
+## Version 16: material pilot closed at 320 games
 
-The [declared pilot](experiments/balance/material-estimate-plan.md) uses one 256-game queen-versus-rook odds control and one 256-game Amazon-versus-queen compensation assay. Each uses two, three, four or five missing ordinary pawns, two fixed layouts, 16 prefixes and both colors. The control's approximate 400-material-cp reference is conventional, not an exact official constant. Current setup supports removal odds, not literal replacement of a queen by a rook.
+The [result audit](experiments/balance/results/material-pilot-001.md) covers all 256 queen-versus-rook odds controls and 64 first-stage Amazon games: 320 completed games, 160 complete color pairs and 34,360 legal plies. Both summaries and the uploaded report's curves regenerate. The recorded profiles/settings agree with the declared protocol; executable/source identities await missing manifests.
 
-Run `balance:material -- --check`, then `--out DIRECTORY --stage control --jobs 3`. Inspect the control; run `--stage 1`, `2` and `3` separately in the same parent directory. Amazon adds **64 + 64 + 128** games and stores **64/128/256** cumulative snapshots. `--resume DIRECTORY` continues one existing incomplete stage; `--report DIRECTORY` refreshes the report. Nothing advances automatically. The full control is reused; relevant engine/evaluation/method changes require a new control context.
+| Removed starting pawns | Queen-favored control score | Amazon first-stage score |
+| --- | ---: | ---: |
+| 2 | 100.00% | 81.25% |
+| 3 | 97.66% | 75.00% |
+| 4 | 89.84% | 71.88% |
+| 5 | 82.81% | 34.38% |
 
-Estimate the 50% compensation crossing from complete matched opening blocks, showing raw dose/layout scores beside a decreasing fit. Grid brackets, plateaus and one-sided limits remain visible; no extrapolated value is invented. Whole-opening resampling supplies a conditional stability band with at least eight usable blocks. Later checkpoints add both samples and different predeclared openings, so they assess nested-cohort stability rather than isolate sample count alone. A larger sample is not an accuracy guarantee.
+The control has no 50% crossing in this range. Its two layouts agree on that result. The estimator correctly returns an above-range bound, but the method has not calibrated nominal removed-pawn units to conventional material values. The Amazon crossing near 4.58 removed pawns is contextual handicap evidence; it does not establish a +458-cp bonus or a 13.58-point piece.
 
-The parent `material-campaign.json` freezes reference diagnostics, engine, sources, jobs and schedules. `estimates/control.json` and `estimates/amazon-64.json`, `amazon-128.json`, `amazon-256.json` are immutable; filenames denote planned sample sizes, with actual scored coverage inside. `material-report.md/.json` refresh after finished games, and the terminal prints provisional estimates or explains the missing paired blocks. Schedules group complete opening blocks to provide early estimates. Engine movement and values are unchanged; formal pilot games remain for local execution.
+Missing starting pawns alter development, promotion, king cover and available targets. In the control, the opposing side has no queen; the Amazon assay retains the opponent's queen, changing the cost of exposing one's king. Matching-source raw MG/EG values also do not follow a linear 1/3/5/9 list. Neither these mechanisms nor capture counts alone prove why a search chose a move. Replacing a queen with a rook on its exact square would not automatically fix all these confounds.
 
-The [first balance revision plan](experiments/balance/revision-plan.md) closed at 160 of at most 200 games with explicit candidate decisions. Existing experiment files are options, not a queue that must be exhausted before development continues.
+**Close the pilot at 320 games and leave 192 unused.** Preserve the [original capped protocol](experiments/balance/material-estimate-plan.md), sources, journals and immutable checkpoints. Do not complete the remaining stages merely for narrower uncertainty, add pawn doses to chase a crossing, or rescale Amazon results to force the control to equal 400. The report should be read as opening-pawn odds until a material interpretation is validated. No new batch is scheduled.
+
+A future method needs a small diagnostic screen before a full campaign, representative matched positions with fuller pawn structures, and multiple ordinary-material anchors. Keep relative upgrade comparisons and human playtesting as practical design evidence meanwhile.
 
 ## Version 16: completed Blink values comparison, 400 games
 
@@ -54,7 +61,7 @@ The patch makes explicit overrides consistent across the identified tables; auto
 
 The uploaded [automatic](experiments/balance/results/rook-values-auto-001.md) and [eight-point](experiments/balance/results/rook-values-eight-001.md) stages contain 400 completed games, no errors/truncations, and 200 complete pairs. All 54,420 recorded plies replay correctly and both summaries regenerate. Quiet/adjacent/long Blink scores change **46.25% → 15% / 85% → 76.25% / 88.75% → 85%** on fully shared openings. All 80 control histories match exactly. Declared profiles/settings agree; actual executable and runner identities await the missing manifests.
 
-Close the sensitivity question: material assumptions substantially affect the Quiet Blink result, while capturing variants still overperform in both tested policies. Do not select a policy by proximity to 50%, assign every piece its desired value, or nerf movement from these scores alone. Authoritative Blink values and movement changes remain deferred. A later identical-army policy duel would test engine play directly; it is optional and does not block an Amazon material-anchor pilot containing no Blinks.
+Close the sensitivity question: material assumptions substantially affect the Quiet Blink result, while capturing variants still overperform in both tested policies. Do not select a policy by proximity to 50%, assign every piece its desired value, or nerf movement from these scores alone. Authoritative Blink values and movement changes remain deferred. A later identical-army policy duel would test engine play directly; it is optional and independent of the material-method review.
 
 ## Completed version 15: paired alternatives versus the Amazon
 
@@ -130,7 +137,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives and Blink valuation batches are closed; the separate 512-game material pilot is the current declared experiment.
+The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation and first material pilot are closed; no replacement batch is scheduled.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |
@@ -282,9 +289,9 @@ Keep ordinary material values separate from upgrade prices. Pawn ≈1, knight/bi
 
 The Amazon (`queen.purple@1`, `QN`) remains one fixed reference upgrade: ordinary queen ≈9 and Amazon ≈12–13 suggests an added benefit of ≈3–4, not an exact LevelUp measurement. It is a useful first screen on otherwise ordinary armies. After evaluation review, compare only surviving candidates against a small, contrasting reference set. Multiple-copy layouts need explicit shared setup support and measure their own context. See [the strategy](docs/balancing-strategy.md) and [design rationale](DESIGN.md#material-estimates-and-the-amazon-reference).
 
-After the current evaluation comparison, the first proposed material anchor is the Amazon's added benefit over an ordinary queen. Estimate this difference directly using compensating ordinary-material handicaps across several layouts and paired openings; subtracting two separately estimated whole-piece values is unnecessary. Report an approximate compensation range. Use that bonus as the level-3 target, with one-third/two-thirds as provisional level-1/2 targets, then check other surviving purchases against it.
+The intended material anchor remains the Amazon's added benefit over an ordinary queen. Direct compensation avoids subtracting two separately uncertain whole-piece estimates, but the first pilot did not validate its material scale. A revised method must pass a small control screen before any larger campaign. Only a credible compensation range could inform level-3 targets and provisional one-third/two-thirds targets for levels 1/2.
 
-Material-odds results remain contextual. Fit pawn-equivalent ranges across several anchors and armies; a later search-budget check requires a concrete unresolved question and its own cap. Define 100 material centipawns as one reference pawn, separately from engine score units and raw MG/EG tables. Do not convert one score or an engine's centipawn evaluation directly into a material price. Extra units, promotion, deployment and royal safety can make advantages nonlinear. This anchor pilot is a proposal, not another scheduled batch.
+Material-odds results remain contextual. A future assay needs several anchors and armies; a later search-budget check requires a concrete unresolved question and its own cap. Define 100 material centipawns as one reference pawn, separately from engine score units and raw MG/EG tables. Do not convert one score or an engine's centipawn evaluation directly into a material price. Extra units, promotion, deployment and royal safety can make advantages nonlinear. No replacement batch is scheduled.
 
 Start with equal-strength, equal-cost comparisons; inspect completion rates and opening sensitivity before tuning abilities. Keep the agreed 1/2/3 prices and increasing overall strength as design goals, and preserve old profiles when movement changes.
 

@@ -1,0 +1,1141 @@
+{
+  "schemaVersion": 1,
+  "totalAttempts": 256,
+  "invalidRecords": 0,
+  "statusCounts": {
+    "completed": 256,
+    "truncated": 0,
+    "aborted": 0,
+    "error": 0,
+    "unknown": 0
+  },
+  "comparisons": [
+    {
+      "comparisonId": "control-left-h2",
+      "attempts": 32,
+      "statusCounts": {
+        "completed": 32,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 32
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 32,
+        "wins": 32,
+        "draws": 0,
+        "losses": 0,
+        "score": 1
+      },
+      "paired": {
+        "games": 32,
+        "wins": 32,
+        "draws": 0,
+        "losses": 0,
+        "score": 1,
+        "completePairs": 16,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 16,
+        "pairDraws": 0,
+        "pairLosses": 0
+      },
+      "openingClusters": [
+        {
+          "openingId": "four-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "french-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "mixed-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "open-e-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "opposite-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "ordinary-knights",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "pirc-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-french-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-open-e-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queenside-knights",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-center-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-d-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-e-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "scandinavian-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 1
+        }
+      ],
+      "primaryEstimate": {
+        "score": 1,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 16,
+        "insufficientData": false,
+        "eloDifference": null,
+        "eloUnbounded": true,
+        "eloLabel": "+infinity",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.6604746210648451,
+          "upper": 1,
+          "eloLower": 115.59355671358873,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "control-left-h3",
+      "attempts": 32,
+      "statusCounts": {
+        "completed": 32,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "threefold-repetition": 1,
+        "checkmate": 30,
+        "fifty-move-rule": 1
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 32,
+        "wins": 30,
+        "draws": 2,
+        "losses": 0,
+        "score": 0.96875
+      },
+      "paired": {
+        "games": 32,
+        "wins": 30,
+        "draws": 2,
+        "losses": 0,
+        "score": 0.96875,
+        "completePairs": 16,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 16,
+        "pairDraws": 0,
+        "pairLosses": 0
+      },
+      "openingClusters": [
+        {
+          "openingId": "four-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "french-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "mixed-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "open-e-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "opposite-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "ordinary-knights",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "pirc-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-french-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-open-e-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queenside-knights",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-center-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-d-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-e-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "scandinavian-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 0.75
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.96875,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 16,
+        "insufficientData": false,
+        "eloDifference": 596.5446775337091,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.6292246210648451,
+          "upper": 1,
+          "eloLower": 91.8779281837676,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "control-left-h4",
+      "attempts": 32,
+      "statusCounts": {
+        "completed": 32,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 29,
+        "insufficient-material": 1,
+        "fifty-move-rule": 1,
+        "threefold-repetition": 1
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 32,
+        "wins": 27,
+        "draws": 3,
+        "losses": 2,
+        "score": 0.890625
+      },
+      "paired": {
+        "games": 32,
+        "wins": 27,
+        "draws": 3,
+        "losses": 2,
+        "score": 0.890625,
+        "completePairs": 16,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 14,
+        "pairDraws": 2,
+        "pairLosses": 0
+      },
+      "openingClusters": [
+        {
+          "openingId": "four-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "french-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "mixed-knights-prefix",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "open-e-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "opposite-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "ordinary-knights",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "pirc-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "queen-french-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-open-e-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-pawns",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "queenside-knights",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-center-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-d-pawns",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "quiet-e-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "scandinavian-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 1
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.890625,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 16,
+        "insufficientData": false,
+        "eloDifference": 364.3107262632938,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.5510996210648451,
+          "upper": 1,
+          "eloLower": 35.63205615916166,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "control-left-h5",
+      "attempts": 32,
+      "statusCounts": {
+        "completed": 32,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 27,
+        "fifty-move-rule": 2,
+        "insufficient-material": 3
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 32,
+        "wins": 24,
+        "draws": 5,
+        "losses": 3,
+        "score": 0.828125
+      },
+      "paired": {
+        "games": 32,
+        "wins": 24,
+        "draws": 5,
+        "losses": 3,
+        "score": 0.828125,
+        "completePairs": 16,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 12,
+        "pairDraws": 4,
+        "pairLosses": 0
+      },
+      "openingClusters": [
+        {
+          "openingId": "four-knights-prefix",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "french-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "mixed-knights-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "open-e-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "opposite-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "ordinary-knights",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "pirc-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "queen-french-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-open-e-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queenside-knights",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-center-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "quiet-d-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-e-pawns",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "scandinavian-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 0.75
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.828125,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 16,
+        "insufficientData": false,
+        "eloDifference": 273.1532737770256,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.4885996210648451,
+          "upper": 1,
+          "eloLower": -7.9231678692297125,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "control-right-h2",
+      "attempts": 32,
+      "statusCounts": {
+        "completed": 32,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 32
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 32,
+        "wins": 32,
+        "draws": 0,
+        "losses": 0,
+        "score": 1
+      },
+      "paired": {
+        "games": 32,
+        "wins": 32,
+        "draws": 0,
+        "losses": 0,
+        "score": 1,
+        "completePairs": 16,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 16,
+        "pairDraws": 0,
+        "pairLosses": 0
+      },
+      "openingClusters": [
+        {
+          "openingId": "four-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "french-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "mixed-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "open-e-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "opposite-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "ordinary-knights",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "pirc-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-french-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-open-e-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queenside-knights",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-center-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-d-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-e-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "scandinavian-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 1
+        }
+      ],
+      "primaryEstimate": {
+        "score": 1,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 16,
+        "insufficientData": false,
+        "eloDifference": null,
+        "eloUnbounded": true,
+        "eloLabel": "+infinity",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.6604746210648451,
+          "upper": 1,
+          "eloLower": 115.59355671358873,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "control-right-h3",
+      "attempts": 32,
+      "statusCounts": {
+        "completed": 32,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 31,
+        "threefold-repetition": 1
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 32,
+        "wins": 31,
+        "draws": 1,
+        "losses": 0,
+        "score": 0.984375
+      },
+      "paired": {
+        "games": 32,
+        "wins": 31,
+        "draws": 1,
+        "losses": 0,
+        "score": 0.984375,
+        "completePairs": 16,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 16,
+        "pairDraws": 0,
+        "pairLosses": 0
+      },
+      "openingClusters": [
+        {
+          "openingId": "four-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "french-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "mixed-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "open-e-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "opposite-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "ordinary-knights",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "pirc-prefix",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "queen-french-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-open-e-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queenside-knights",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-center-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-d-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-e-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "scandinavian-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 1
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.984375,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 16,
+        "insufficientData": false,
+        "eloDifference": 719.7362197814326,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.6448496210648451,
+          "upper": 1,
+          "eloLower": 103.61846663155812,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "control-right-h4",
+      "attempts": 32,
+      "statusCounts": {
+        "completed": 32,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 28,
+        "threefold-repetition": 2,
+        "fifty-move-rule": 2
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 32,
+        "wins": 27,
+        "draws": 4,
+        "losses": 1,
+        "score": 0.90625
+      },
+      "paired": {
+        "games": 32,
+        "wins": 27,
+        "draws": 4,
+        "losses": 1,
+        "score": 0.90625,
+        "completePairs": 16,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 15,
+        "pairDraws": 1,
+        "pairLosses": 0
+      },
+      "openingClusters": [
+        {
+          "openingId": "four-knights-prefix",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "french-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "mixed-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "open-e-pawns",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "opposite-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "ordinary-knights",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "pirc-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-french-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-open-e-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-pawns",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "queenside-knights",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-center-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-d-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-e-pawns",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "scandinavian-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 1
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.90625,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 16,
+        "insufficientData": false,
+        "eloDifference": 394.1106972717174,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.5667246210648451,
+          "upper": 1,
+          "eloLower": 46.643227998395204,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    },
+    {
+      "comparisonId": "control-right-h5",
+      "attempts": 32,
+      "statusCounts": {
+        "completed": 32,
+        "truncated": 0,
+        "aborted": 0,
+        "error": 0,
+        "unknown": 0
+      },
+      "reasons": {
+        "checkmate": 29,
+        "threefold-repetition": 1,
+        "fifty-move-rule": 2
+      },
+      "invalidCompleted": 0,
+      "duplicateCompleted": 0,
+      "overall": {
+        "games": 32,
+        "wins": 25,
+        "draws": 3,
+        "losses": 4,
+        "score": 0.828125
+      },
+      "paired": {
+        "games": 32,
+        "wins": 25,
+        "draws": 3,
+        "losses": 4,
+        "score": 0.828125,
+        "completePairs": 16,
+        "partialPairs": 0,
+        "invalidPairs": 0,
+        "pairWins": 12,
+        "pairDraws": 4,
+        "pairLosses": 0
+      },
+      "openingClusters": [
+        {
+          "openingId": "four-knights-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "french-prefix",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "mixed-knights-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "open-e-pawns",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "opposite-knights-prefix",
+          "completePairs": 1,
+          "score": 0.75
+        },
+        {
+          "openingId": "ordinary-knights",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "pirc-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "queen-french-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-open-e-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queen-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "queenside-knights",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-center-prefix",
+          "completePairs": 1,
+          "score": 0.5
+        },
+        {
+          "openingId": "quiet-d-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "quiet-e-pawns",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "scandinavian-prefix",
+          "completePairs": 1,
+          "score": 1
+        },
+        {
+          "openingId": "start",
+          "completePairs": 1,
+          "score": 0.5
+        }
+      ],
+      "primaryEstimate": {
+        "score": 0.828125,
+        "scoreBasis": "equal-weight opening-cluster means of complete color-swapped pairs",
+        "uniqueOpenings": 16,
+        "insufficientData": false,
+        "eloDifference": 273.1532737770256,
+        "eloUnbounded": false,
+        "eloLabel": "finite",
+        "interpretation": "score-equivalent Elo difference for these armies under this protocol; not piece Elo or calibrated engine strength",
+        "interval": {
+          "confidence": 0.95,
+          "method": "Hoeffding bound over independent opening-cluster means",
+          "lower": 0.4885996210648451,
+          "upper": 1,
+          "eloLower": -7.9231678692297125,
+          "eloUpper": null,
+          "eloLowerLabel": "finite",
+          "eloUpperLabel": "+infinity",
+          "assumption": "Conditional on independently sampled opening families represented by distinct openingId values; fixed or related openings are descriptive only."
+        }
+      }
+    }
+  ],
+  "runId": "a4eda5e7-986d-4d26-a372-0aa6aca4dc5a",
+  "scheduledGames": 256,
+  "nextIndex": 256
+}
