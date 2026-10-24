@@ -6,7 +6,22 @@ These tools collect results; they do not assign measured values to pieces or cha
 
 Follow the [version-16 balancing strategy](docs/balancing-strategy.md): audit engine values, calibrate flagged cases separately, then compare surviving upgrades against fixed references. Material compensation can later provide approximate added-value ranges; Amazon scores alone do not establish pawn-equivalent values.
 
-## Version 16: material pilot closed at 320 games
+## Version 16: fixed 96-game material-data pilot
+
+The [new collection plan](experiments/balance/material-collection-plan.md) selects 32 full-army book positions with seed 42. Each supplies one ordinary game and Amazon-versus-queen games in both colors: **96 total**. Automatic values, Skill 20, 20,000 nodes, one thread, 32 MB hash and a 400-ply limit are fixed. The collection/report workflow is implemented; local pilot execution remains unchecked.
+
+```bat
+npm.cmd run material:collect -- --check --book "..\chess-variant-stats\chess.epd"
+npm.cmd run material:collect -- --out balance-results/material-data-pilot --book "..\chess-variant-stats\chess.epd" --jobs 3
+npm.cmd run material:collect -- --resume balance-results/material-data-pilot
+npm.cmd run material:collect -- --report balance-results/material-data-pilot
+```
+
+Use a new directory. Resume keeps the saved worker count and frozen executable/source/rules identities; selected FENs and the book hash are retained. **g** finishes active games, **p** finishes active units/pairs, and **q / Ctrl+C** stops now with checkpoints. Starts and results print during play. Reports refresh on stop/completion or offline `--report`, without live fitting.
+
+Review actual upgrade-count variation, ordinary-feature coverage and prediction before conditional coefficients. Grouping binds each position's three conditions; broader opening families are unknown. Keep the supplied legacy EPD baseline separate. This pilot assigns no material prices and launches no larger batch; see the plan for filtering, artifacts and review limits.
+
+## Closed material-compensation pilot: 320 games
 
 The [result audit](experiments/balance/results/material-pilot-001.md) covers all 256 queen-versus-rook odds controls and 64 first-stage Amazon games: 320 completed games, 160 complete color pairs and 34,360 legal plies. Both summaries and the uploaded report's curves regenerate. The recorded profiles/settings agree with the declared protocol; executable/source identities await missing manifests.
 
@@ -21,7 +36,7 @@ The control has no 50% crossing in this range. Its two layouts agree on that res
 
 Missing starting pawns alter development, promotion, king cover and available targets. In the control, the opposing side has no queen; the Amazon assay retains the opponent's queen, changing the cost of exposing one's king. Matching-source raw MG/EG values also do not follow a linear 1/3/5/9 list. Neither these mechanisms nor capture counts alone prove why a search chose a move. Replacing a queen with a rook on its exact square would not automatically fix all these confounds.
 
-**Close the pilot at 320 games and leave 192 unused.** Preserve the [original capped protocol](experiments/balance/material-estimate-plan.md), sources, journals and immutable checkpoints. Do not complete the remaining stages merely for narrower uncertainty, add pawn doses to chase a crossing, or rescale Amazon results to force the control to equal 400. The report should be read as opening-pawn odds until a material interpretation is validated. No new batch is scheduled.
+**Close the pilot at 320 games and leave 192 unused.** Preserve the [original capped protocol](experiments/balance/material-estimate-plan.md), sources, journals and immutable checkpoints. Do not complete the remaining stages merely for narrower uncertainty, add pawn doses to chase a crossing, or rescale Amazon results to force the control to equal 400. The report should be read as opening-pawn odds until a material interpretation is validated. The separate matched-data pilot above does not extend this experiment.
 
 A future method needs a small diagnostic screen before a full campaign, representative matched positions with fuller pawn structures, and multiple ordinary-material anchors. Keep relative upgrade comparisons and human playtesting as practical design evidence meanwhile.
 
@@ -149,7 +164,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation and first material pilot are closed; no replacement batch is scheduled.
+The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation and first material pilot are closed. Only the separately declared 96-game collection pilot is the next material-data step.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |

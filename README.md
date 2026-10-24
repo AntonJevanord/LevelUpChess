@@ -53,13 +53,24 @@ Open [prototypes/kings/index.html](prototypes/kings/index.html) to try the captu
 
 Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Bringing king choices into the main board's setup, engine play, and saves remains integration work. See the [prototype guide](prototypes/kings/README.md).
 
-## Version 16: material pilot stopped
+## Version 16: matched material-data pilot
+
+The next [96-game pilot](experiments/balance/material-collection-plan.md) collects one ordinary game and an Amazon game in each color from each of 32 full-army book positions. Both sides use automatic evaluation, Skill 20 and 20,000 nodes per move. Its collection/report workflow is implemented; the local pilot remains to be run.
+
+```bat
+npm.cmd run material:collect -- --check --book "..\chess-variant-stats\chess.epd"
+npm.cmd run material:collect -- --out balance-results/material-data-pilot --book "..\chess-variant-stats\chess.epd" --jobs 3
+```
+
+The [plan](experiments/balance/material-collection-plan.md) covers stop/resume, offline reports and frozen identities. It checks data coverage before treating regression coefficients as useful estimates; it assigns no material prices and starts no larger batch automatically.
+
+## Closed material-compensation pilot
 
 The [audited pilot](experiments/balance/results/material-pilot-001.md) contains 256 control games and the first 64 Amazon games. All games replay correctly. The queen-favored control side still scores **89.84% after four pawn removals** and **82.81% after five**, so the tested range never brackets compensation.
 
 The control does not validate a conventional material scale. The Amazon's preliminary crossing of about 4.6 removed starting pawns cannot establish a +460-cp upgrade bonus. Removing many pawns changes development, king cover, targets and promotion; the control and Amazon armies also differ in queen presence. More samples would not remove those setup effects.
 
-The batch is **closed at 320 games**. Leave the remaining 192 unused. The [original protocol](experiments/balance/material-estimate-plan.md), commands and snapshots remain preserved for reproduction. The [balancing strategy](docs/balancing-strategy.md) calls for a small method screen before another material campaign; no replacement batch is scheduled.
+The batch is **closed at 320 games**. Leave the remaining 192 unused. The [original protocol](experiments/balance/material-estimate-plan.md), commands and snapshots remain preserved for reproduction. The separate collection pilot above follows the [balancing strategy](docs/balancing-strategy.md); it does not extend this compensation experiment.
 
 The [offline regression diagnostic](experiments/balance/results/material-regression-001.md) reuses those games: 3,071 eligible positions, draws retained and validation grouped by related openings. It predicts their outcomes but does not establish transferable material prices. Reproduce it without an engine or new games:
 
@@ -71,7 +82,9 @@ Use a new output directory. The command saves the dataset, samples, grouped vali
 
 The [ordinary-control follow-up](experiments/balance/results/material-controls-001.md) is also complete: 80 records collapse to 40 distinct histories. Their ordinary-material fit is unsuitable for pricing, and retained positions contain no Amazon-count imbalance. Reproduce that bounded check with `--dataset controls`; no new match run is scheduled.
 
-The [supplied EPD audit](experiments/balance/results/material-epd-001.md) independently reproduces queen 8.40 and rook 4.74 from 605 recorded games. Whole-game uncertainty is much wider than position-level errors. Preserve this broader provisional baseline before planning upgrade data collection; no further ordinary-game batch is requested.
+The [supplied EPD audit](experiments/balance/results/material-epd-001.md) independently reproduces queen 8.40 and rook 4.74 from 605 recorded games. Whole-game uncertainty is much wider than position-level errors. Preserve this provisional legacy baseline separately from the new matched collection; their generation identities and settings differ.
+
+For external Python runs, use the exact same filename for generation and fitting: `baseline-chess.epd` and `baseline_chess.epd` are different files. Give each settings combination its own output file; compare input hashes, position counts and game counts before interpreting repeated estimates as convergence. The project's optional EPD audit prints these input details.
 
 ## Completed Blink evaluation check
 

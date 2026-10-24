@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "material-collection-v16-pilot-001",
+  "seed": 42,
+  "bookPositions": 32,
+  "totalGames": 96,
+  "designId": "queen.purple@1",
+  "evaluation": "automatic",
+  "engine": {
+    "nodes": 20000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400
+  },
+  "strength": {
+    "skill": 20
+  },
+  "sampling": {
+    "minPly": 16,
+    "stride": 5,
+    "stableBefore": 2,
+    "stableAfter": 2
+  }
+}

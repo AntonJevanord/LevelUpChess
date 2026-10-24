@@ -132,9 +132,25 @@ The [supplied ordinary EPD baseline](../experiments/balance/results/material-epd
 contains 605 recorded games and reproduces queen 8.40 / rook 4.74 under its
 reference model. Whole-game uncertainty for the difference spans about 2.7–5.1
 pawns; changing draw treatment and game weights also changes the fit. Preserve
-that corpus as a provisional reference without assigning exact prices. Future
-upgrade collection must freeze comparable settings and produce observable
-upgrade imbalances; symmetric Amazon controls did not supply them.
+that corpus as a provisional reference without assigning exact prices. Keep its
+legacy generation settings separate from new data.
+
+The next step is the [fixed 96-game collection pilot](../experiments/balance/material-collection-plan.md):
+32 distinct full-army book positions, each played once with ordinary pieces and
+with an Amazon in each color. Seed 42, automatic evaluation, Skill 20, 20,000
+nodes, one thread, 32 MB hash and 400 plies are fixed. Require quiet, legal starts
+in all three conditions; freeze the selected FENs, original book hash, rules,
+source/executable identities and worker count. This provides both signs of the
+starting upgrade imbalance without mass pawn removal or duplicate ordinary
+color swaps. Actual sampled variation and feature support still require review.
+
+The collector and offline report workflow are implemented; local pilot execution
+remains unchecked. Retain draws and equal total game weights. Group validation
+and resampling by selected starting position, with its three conditions together;
+broader opening families are unknown. Report completion, distinct histories,
+imbalance, rank and prediction before conditional coefficient ranges. Stop at
+96 games and decide what the data supports before declaring another budget.
+Neither this pilot nor an available normalized fit validates a material-price table.
 
 If a credible contextual Δ range is eventually established, use it as a provisional
 level-3 target, with roughly 2Δ/3 and Δ/3 for levels 2 and 1. That remains a design

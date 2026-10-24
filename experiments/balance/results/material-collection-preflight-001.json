@@ -1,0 +1,458 @@
+{
+  "schemaVersion": 1,
+  "id": "material-collection-preflight-001",
+  "date": "2026-10-23",
+  "scope": "Preflight and unscored workflow validation only; the 96-game pilot has not been played.",
+  "planId": "material-collection-v16-pilot-001",
+  "settings": {
+    "seed": 42,
+    "nodes": 20000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400,
+    "skill": 20,
+    "bookPositions": 32,
+    "totalGames": 96
+  },
+  "book": {
+    "name": "chess.epd",
+    "bytes": 2043394,
+    "sha256": "d9987108d1b67e8d90b2c231af7df46340124025681e493341b96539aa8070fe",
+    "nonemptyLines": 31526,
+    "uniqueFullMaterialCandidates": 30871,
+    "candidatesExamined": 33,
+    "selectedPositions": 32,
+    "unexaminedCandidates": 30838,
+    "reasonCounts": {
+      "material-not-full-standard": 655,
+      "initial-check": 1
+    },
+    "selection": "Seeded shuffle of unique full-material candidates; accept only quiet positions legal and nonterminal under all three conditions, without either upgrade creating check."
+  },
+  "selectedOpenings": [
+    {
+      "id": "book-001",
+      "line": 16236,
+      "fen": "r1bqkbnr/1ppppppp/n7/p7/P7/N3P3/1PPP1PPP/R1BQKBNR b KQkq - 0 1",
+      "positionSha256": "05bf0efeeee4ef8a76384e7af5ecc16045daff2501f079e4381054a2bdf313c8"
+    },
+    {
+      "id": "book-002",
+      "line": 2748,
+      "fen": "rnbqkbnr/ppp1ppp1/3p4/P6p/7P/8/1PPPPPP1/RNBQKBNR b KQkq - 0 1",
+      "positionSha256": "7134283891c21eb8c2ec16074978e7126a838c104081154f06a2110ab6918171"
+    },
+    {
+      "id": "book-003",
+      "line": 15180,
+      "fen": "r1bqkb1r/pppppppp/2n4n/8/8/1P3N2/P1PPPPPP/RNBQKBR1 b Qkq - 0 1",
+      "positionSha256": "efb31b88743683ab7eb1c8103c80676958627c1a7ea00a87cff74f3ace99c516"
+    },
+    {
+      "id": "book-004",
+      "line": 367,
+      "fen": "r1bqkbnr/pppppp1p/n5p1/8/1P6/N1P5/P2PPPPP/R1BQKBNR b KQkq - 0 1",
+      "positionSha256": "eff1c1faa16fc47a328f99c918d7ecbf58e06077ebcbb41696d1baee7d39fcc8"
+    },
+    {
+      "id": "book-005",
+      "line": 30070,
+      "fen": "rnbqkbnr/pp1ppp1p/2p5/6p1/P7/N1P5/1P1PPPPP/R1BQKBNR b KQkq - 0 1",
+      "positionSha256": "eb79ffc93c3465d346f95da4550f2e9401c014618812181a2401b76b9071670f"
+    },
+    {
+      "id": "book-006",
+      "line": 24115,
+      "fen": "rnbqkbnr/p1ppppp1/1p5p/8/5N2/2N5/PPPPPPPP/R1BQKB1R b KQkq - 0 1",
+      "positionSha256": "d2338ceaa580bf20f63d83c531199d42e3f26fdd16ab4c0b51b6866505de2144"
+    },
+    {
+      "id": "book-007",
+      "line": 23451,
+      "fen": "rnbqkbnr/pppppp2/7p/6p1/3P2P1/5N2/PPP1PP1P/RNBQKB1R b KQkq - 0 1",
+      "positionSha256": "6f50345c5edd349d66c5df251f1140e85a7c20f65e5ab84d1bce8f4b005ee3d4"
+    },
+    {
+      "id": "book-008",
+      "line": 4500,
+      "fen": "rnbqkbnr/pp2pppp/2pp4/8/3P4/6PP/PPP1PP2/RNBQKBNR b KQkq - 0 1",
+      "positionSha256": "68dfb00c8b966d40652cdbfd9396892d3c53a94d448a393d81acb94e09e44474"
+    },
+    {
+      "id": "book-009",
+      "line": 30443,
+      "fen": "rnbqkbnr/pp1p1ppp/2p1p3/8/4P3/6P1/PPPP1PBP/RNBQK1NR b KQkq - 0 1",
+      "positionSha256": "bebf915d39dedb56de88f99da9af84ec04f66b3d977e2b380ca83e8b917c1990"
+    },
+    {
+      "id": "book-010",
+      "line": 5704,
+      "fen": "rnbqk1nr/pppppp1p/6pb/1N6/1P6/8/P1PPPPPP/R1BQKBNR b KQkq - 0 1",
+      "positionSha256": "907288fdc0b9b2f1840f3d5e27a74e495073417107e9ff57a37410ab4cbc230d"
+    },
+    {
+      "id": "book-011",
+      "line": 1837,
+      "fen": "r1bqkbnr/ppp1pppp/n2p4/8/8/3P1NP1/PPP1PP1P/RNBQKB1R b KQkq - 0 1",
+      "positionSha256": "bd1e81dfdb60225c4ff478f21f47d3a00a7b1b86d30ff0dc1ae8d4f04a9c975f"
+    },
+    {
+      "id": "book-012",
+      "line": 26603,
+      "fen": "rnbqkb1r/pppppppp/8/5nB1/P7/3P4/1PP1PPPP/RN1QKBNR b KQkq - 0 1",
+      "positionSha256": "d6f58ed860a2485ad165e08c56e663f210882f33f54c51960dca64cc3ab01d57"
+    },
+    {
+      "id": "book-013",
+      "line": 14524,
+      "fen": "r1bqkbnr/pppnpppp/3p4/8/8/1P1PB3/P1P1PPPP/RN1QKBNR b KQkq - 0 1",
+      "positionSha256": "47384bcb85672d7ff0978592238641dcc255c61ae7df6111a43304f3c38ebd47"
+    },
+    {
+      "id": "book-014",
+      "line": 25927,
+      "fen": "r1bqkbnr/ppp1pppp/n7/3p4/8/4PN2/PPPPKPPP/RNBQ1B1R b kq - 0 1",
+      "positionSha256": "840bf4527a4b3b765edff7cad0dd49d11d768981689d08f50fc50a6dcff38aa9"
+    },
+    {
+      "id": "book-015",
+      "line": 196,
+      "fen": "rnbqk1nr/ppppbppp/8/P3p3/4P3/8/1PPP1PPP/RNBQKBNR b KQkq - 0 1",
+      "positionSha256": "46405e7eda146e773411654f73cc15c8d92e996cb05c3883d005d55c257d6b6e"
+    },
+    {
+      "id": "book-016",
+      "line": 1221,
+      "fen": "rnbqk1nr/pppppp1p/6pb/8/P6P/1P6/2PPPPP1/RNBQKBNR b KQkq - 0 1",
+      "positionSha256": "51dec6d9e8dad1fddbad8f6d969b26f0ac81d7d338da40e30d831bfe446c84f2"
+    },
+    {
+      "id": "book-017",
+      "line": 12018,
+      "fen": "rn1qkbnr/ppp1pppp/3p4/5b2/3P2P1/N7/PPP1PP1P/R1BQKBNR b KQkq - 0 1",
+      "positionSha256": "8918cf6067e5a95cb70df1b11be3b7408db794f4c608d61ef6868ace404920b0"
+    },
+    {
+      "id": "book-018",
+      "line": 20000,
+      "fen": "rnbqkbnr/pp2pppp/3p4/2p5/2P5/4P1P1/PP1P1P1P/RNBQKBNR b KQkq - 0 1",
+      "positionSha256": "b75828dc293883eebdb62a1023be8a0ed4491a1e90fe9e0d6a63632cc1eda95e"
+    },
+    {
+      "id": "book-019",
+      "line": 11129,
+      "fen": "rnbqkbnr/pppp1pp1/4p3/7p/1P1P4/8/P1PNPPPP/R1BQKBNR b KQkq - 0 1",
+      "positionSha256": "640ed65766374c9c1014c7955386e41dcc583d015923f5db813a71c4983d13f9"
+    },
+    {
+      "id": "book-020",
+      "line": 10613,
+      "fen": "r1bqkbnr/p1pppppp/2n5/1p6/7P/1P1P4/P1P1PPP1/RNBQKBNR b KQkq - 0 1",
+      "positionSha256": "a754105e974318c3fadd72d2751362ce7e2b84ce0fe767d15649266c42b65398"
+    },
+    {
+      "id": "book-021",
+      "line": 22626,
+      "fen": "rnbqk1nr/pppp1ppp/4p3/1Bb5/6Q1/4P3/PPPP1PPP/RNB1K1NR b KQkq - 0 1",
+      "positionSha256": "50010c8d329513fb7795eb1fa3d7bbe15753ef0e59b6eff21a2929fde521602a"
+    },
+    {
+      "id": "book-022",
+      "line": 20608,
+      "fen": "rnb1kbnr/ppqppppp/2p5/8/3N4/2N5/PPPPPPPP/R1BQKB1R b KQkq - 0 1",
+      "positionSha256": "5bd87118f6032699e5970764e0eb33d4997dd032ef7f861389b615d1381102c1"
+    },
+    {
+      "id": "book-023",
+      "line": 28270,
+      "fen": "rnb1kbnr/pppp1ppp/4p3/8/2P4q/1P5P/P2PPPP1/RNBQKBNR b KQkq - 0 1",
+      "positionSha256": "67d5b5350686ed78d6ac9bcfb1d51acc58d60a45bcac77149c1fdeeb39a1b465"
+    },
+    {
+      "id": "book-024",
+      "line": 9483,
+      "fen": "r1bqkbnr/pppnpppp/3p4/6B1/1P1P4/8/P1P1PPPP/RN1QKBNR b KQkq - 0 1",
+      "positionSha256": "ad0ea6b717ce3f82f1ad249fcd1febcb72f607d49bd9f18eca9ce4b96de490a6"
+    },
+    {
+      "id": "book-025",
+      "line": 7001,
+      "fen": "rnbqk1nr/pppp1ppp/4p3/2b5/3P4/4P1P1/PPP2P1P/RNBQKBNR b KQkq - 0 1",
+      "positionSha256": "c7a8f7aa6f7c1cf0cc6b8953312581968da924b199b05f69b4e2132ae8b55db8"
+    },
+    {
+      "id": "book-026",
+      "line": 7104,
+      "fen": "rnbqkbnr/pp1p1ppp/2p5/4p3/8/P2P2P1/1PP1PP1P/RNBQKBNR b KQkq - 0 1",
+      "positionSha256": "116f15fc88785f10f6cd5a2d411dbc66eb05426ed1b8376ab50424b8ca8e2d23"
+    },
+    {
+      "id": "book-027",
+      "line": 15507,
+      "fen": "rnb1kbnr/pppqpppp/3p4/8/4P1P1/5N2/PPPP1P1P/RNBQKB1R b KQkq - 0 1",
+      "positionSha256": "bd587e2a59349d8a7488fe8e7ae0cff32253c50282beb1f73b65a17187509028"
+    },
+    {
+      "id": "book-028",
+      "line": 31056,
+      "fen": "r1bqkbnr/pppnpppp/3p4/3N4/8/P7/1PPPPPPP/R1BQKBNR b KQkq - 0 1",
+      "positionSha256": "740269a129dab14538269dbd00a8f1021de27b7c12ece00e41b7e90147ffa9b5"
+    },
+    {
+      "id": "book-029",
+      "line": 1002,
+      "fen": "rnbqkbnr/ppppppp1/8/8/7p/2N1P2N/PPPP1PPP/R1BQKB1R b KQkq - 0 1",
+      "positionSha256": "72a78dd8c41670ee757fb1fd6e35ba6bbce1f475deab6969d38cc0ca856f5df4"
+    },
+    {
+      "id": "book-030",
+      "line": 25813,
+      "fen": "r1bqkbnr/ppp1pppp/2np4/8/8/3BPN2/PPPP1PPP/RNBQK2R b KQkq - 0 1",
+      "positionSha256": "8b67020b4a77cee5780c6f10e6f7b3e4a8a3a7f7b7af0d49cf058da8f2509c03"
+    },
+    {
+      "id": "book-031",
+      "line": 6242,
+      "fen": "rnbqkbnr/pp2pppp/3p4/2p5/1P2P2P/8/P1PP1PP1/RNBQKBNR b KQkq - 0 1",
+      "positionSha256": "4a12c9515f3a1008fba7bfe10af15b94c841dd8101947b783cd5be444068c70f"
+    },
+    {
+      "id": "book-032",
+      "line": 816,
+      "fen": "r1bqkbnr/pppp1ppp/n7/4p3/4P3/1PN5/P1PP1PPP/R1BQKBNR b KQkq - 0 1",
+      "positionSha256": "d1090b98b9279fad17b626026c256bf18c26ceb3eeb4a715ace4ab38ec3469f9"
+    }
+  ],
+  "profileHash": "02ec9d756b42b9397e44c25391377caa3f57c904a429fb8783c48eada35c2201",
+  "registryHash": "555d7dcfff9077accd58601890c1c6080f086c0026fd00bff22cd22cad14592c",
+  "identity": {
+    "rulesBundleSha256": "e89a04467e099e46ea19e50c604da8a8aad905e3fe4ae5d59108cbd984636250",
+    "engineSha256": "8ccde8596fb88aa7fbbf1020cc5afa52ef9d1887764275ea8e627ba0227e4f1e",
+    "runnerSources": [
+      {
+        "file": "run.js",
+        "sha256": "c647fdbf81b5420a3928fcb21d7e8fcd865e703a8f64f9a2fca588b10e40c26e"
+      },
+      {
+        "file": "plan.js",
+        "sha256": "22ba39d61a152f38092cbc192bbb3b9dbeb011ba7a842aeeb95b1e3877d633d0"
+      },
+      {
+        "file": "stats.js",
+        "sha256": "dd55139112cc8fa89ae1ebcc7c1f81631e3aca44a6e01e3ad756f4b52766c5fc"
+      },
+      {
+        "file": "storage.js",
+        "sha256": "5a1f747422e2132ba40b5004adb0e2915655f3aa2352a334b9f13b0f5001e019"
+      },
+      {
+        "file": "uci.js",
+        "sha256": "fe0617deb68d7556d59cf0a0063f565be9a8867c4a7a2ba2643f763e36390088"
+      },
+      {
+        "file": "capabilities.js",
+        "sha256": "a5cc31921e7d88de8214a09fa888158dc285a3d5fba9682d5c3a91fb601c9086"
+      },
+      {
+        "file": "../engine-capabilities.js",
+        "sha256": "640389c60255577db149ba87acccd323fa4209d907fd2eaa8521a1805dbfd6d9"
+      },
+      {
+        "file": "files.js",
+        "sha256": "25cd2624c6e08fb674bf06c0a71614606d7d414fc0bacec881e69719f42feedc"
+      },
+      {
+        "file": "resume-compatibility.js",
+        "sha256": "d3034c734b56665a529632aa777fe30eb6679d339463481cbfe8bf22daa4c579"
+      },
+      {
+        "file": "design-registry.js",
+        "sha256": "de9ee5ba4ad2ea24098800be726e8cbdb4155a8f29b9e799ecabc20cb889c073"
+      },
+      {
+        "file": "design-profile.js",
+        "sha256": "dc69fe2c3f16b87cf9c7174a12ca8ce49b8ea73e15b4dff03df1185009bcb108"
+      },
+      {
+        "file": "evaluation.js",
+        "sha256": "3d6bbbd7ffa94816c269daf2e849710c0637869f0d3f2aabf869103eb3e23d1c"
+      },
+      {
+        "file": "../../src/design-catalog.js",
+        "sha256": "8727b6e765e2e57907cd2593e7f8a1e08c600a7081d132797b110cc48f9fcfa2"
+      }
+    ],
+    "runnerSha256": "87c705b5b75a54456c109a3478fb7dc22030a2afa6ff41dc77d727047651ca62",
+    "collectorSources": [
+      {
+        "file": "scripts/material-collect.js",
+        "sha256": "9b8b7a043dc5c87741a2dcfc9dde2d35bb777a3e1f0a7b255593596d4b2b33bd"
+      },
+      {
+        "file": "scripts/balance/material-collection-plan.js",
+        "sha256": "e91b9150bdbdb665095c2267043172fe15d9bdc138e17764752ae5c159f469e3"
+      },
+      {
+        "file": "scripts/balance/material-collection-run.js",
+        "sha256": "156298ad6067c4a29ccfea80905566f06b08eb057690c0dc1d56150a543a037b"
+      },
+      {
+        "file": "scripts/balance/material-collection-report.js",
+        "sha256": "8114bdfbc4d5948379deb4b20b8d8b946febf4452f63633aa2af44780eb4f4dc"
+      },
+      {
+        "file": "scripts/balance/material-dataset.js",
+        "sha256": "bbd370206bc9370ea035ca7dea8c5a7545bdcaa8dcbb3345b5000f55260a8499"
+      },
+      {
+        "file": "scripts/balance/material-regression.js",
+        "sha256": "88d1548de436cc91ea2b5dfc8c755afb53e97c822d9ef5a0d9ff3e6c36a56634"
+      },
+      {
+        "file": "experiments/balance/material-collection.json",
+        "sha256": "1c2e4d4a09a0e8340205035493a950e66e2998d1601479fc956615255540168c"
+      }
+    ],
+    "collectorSha256": "cee55c0f6d6b7df2a9337876f85055ba8243d7922bb217cfc888bac877dfbc77"
+  },
+  "native": {
+    "engineName": "Fairy-Stockfish 230826",
+    "pieceValues": {
+      "version": 1,
+      "pieces": {
+        "P": {
+          "rawMg": 126,
+          "rawEg": 208,
+          "captureMg": 126,
+          "captureEg": 208,
+          "evalMg": 126,
+          "evalEg": 208
+        },
+        "p": {
+          "rawMg": 126,
+          "rawEg": 208,
+          "captureMg": 126,
+          "captureEg": 208,
+          "evalMg": 126,
+          "evalEg": 208
+        },
+        "N": {
+          "rawMg": 781,
+          "rawEg": 854,
+          "captureMg": 781,
+          "captureEg": 854,
+          "evalMg": 781,
+          "evalEg": 854
+        },
+        "n": {
+          "rawMg": 781,
+          "rawEg": 854,
+          "captureMg": 781,
+          "captureEg": 854,
+          "evalMg": 781,
+          "evalEg": 854
+        },
+        "B": {
+          "rawMg": 825,
+          "rawEg": 915,
+          "captureMg": 825,
+          "captureEg": 915,
+          "evalMg": 825,
+          "evalEg": 915
+        },
+        "b": {
+          "rawMg": 825,
+          "rawEg": 915,
+          "captureMg": 825,
+          "captureEg": 915,
+          "evalMg": 825,
+          "evalEg": 915
+        },
+        "R": {
+          "rawMg": 1276,
+          "rawEg": 1380,
+          "captureMg": 1276,
+          "captureEg": 1380,
+          "evalMg": 1276,
+          "evalEg": 1380
+        },
+        "r": {
+          "rawMg": 1276,
+          "rawEg": 1380,
+          "captureMg": 1276,
+          "captureEg": 1380,
+          "evalMg": 1276,
+          "evalEg": 1380
+        },
+        "Q": {
+          "rawMg": 2538,
+          "rawEg": 2682,
+          "captureMg": 2538,
+          "captureEg": 2682,
+          "evalMg": 2538,
+          "evalEg": 2682
+        },
+        "q": {
+          "rawMg": 2538,
+          "rawEg": 2682,
+          "captureMg": 2538,
+          "captureEg": 2682,
+          "evalMg": 2538,
+          "evalEg": 2682
+        },
+        "U": {
+          "rawMg": 3738,
+          "rawEg": 3875,
+          "captureMg": 3738,
+          "captureEg": 3875,
+          "evalMg": 3738,
+          "evalEg": 3875
+        },
+        "u": {
+          "rawMg": 3738,
+          "rawEg": 3875,
+          "captureMg": 3738,
+          "captureEg": 3875,
+          "evalMg": 3738,
+          "evalEg": 3875
+        },
+        "K": {
+          "rawMg": 0,
+          "rawEg": 0,
+          "captureMg": 0,
+          "captureEg": 0,
+          "evalMg": 0,
+          "evalEg": 0
+        },
+        "k": {
+          "rawMg": 0,
+          "rawEg": 0,
+          "captureMg": 0,
+          "captureEg": 0,
+          "evalMg": 0,
+          "evalEg": 0
+        }
+      }
+    },
+    "capabilityProbes": 8,
+    "startingPositions": 96,
+    "searchesStarted": 0
+  },
+  "workflow": {
+    "games": 3,
+    "nodes": 1000,
+    "maxPlies": 4,
+    "jobs": 2,
+    "immediateCancellation": true,
+    "resumedWithoutJobsOverride": true,
+    "missingCollectionSnapshotRecovered": true,
+    "prefixPreserved": true,
+    "finalStatuses": {
+      "truncated": 3
+    },
+    "fittedSamples": 0,
+    "completedResumeJournalUnchanged": true,
+    "searchesBeforeCancellation": 2,
+    "interpretation": "Deliberately truncated workflow fixtures provide no balance evidence."
+  }
+}
