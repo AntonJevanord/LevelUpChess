@@ -6,6 +6,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const { EventEmitter } = require('node:events');
+const { spawn } = require('node:child_process');
 const { parseArgs, installControls, main } = require('../scripts/material-collect');
 
 function fixture(t) {
@@ -101,4 +102,71 @@ test('keyboard stop modes and SIGINT preserve raw mode and remove listeners', ()
   input.emit('data', 'p'); assert.equal(controls.shouldStop(), 'now');
   controls.close(); assert.deepEqual(raw, [true, false]);
   assert.equal(events.listenerCount('SIGINT'), 0); assert.equal(input.listenerCount('data'), 0);
+});
+
+test('closing controls releases fresh or paused terminals and preserves existing consumers', () => {
+  for (const initialFlow of [null, false, true]) {
+    const input = new EventEmitter(), events = new EventEmitter(), raw = [];
+    let pauses = 0;
+    Object.assign(input, { isTTY: true, isRaw: true, readableFlowing: initialFlow,
+      // Fresh stdin reports false here, although it has never been resumed.
+      isPaused: () => input.readableFlowing === false,
+      setRawMode(value) { input.isRaw = value; raw.push(value); },
+      resume() { input.readableFlowing = true; },
+      pause() { input.readableFlowing = false; pauses++; } });
+    const existing = () => {};
+    if (initialFlow === true) input.on('data', existing);
+    const controls = installControls(new AbortController(), { input, events, log() {} });
+    controls.close();
+    assert.equal(pauses, initialFlow === true ? 0 : 1, `original flow ${initialFlow}`);
+    assert.equal(input.readableFlowing, initialFlow === true);
+    assert.deepEqual(raw, [true, true]);
+    assert.equal(events.listenerCount('SIGINT'), 0);
+    assert.deepEqual(input.listeners('data'), initialFlow === true ? [existing] : []);
+  }
+});
+
+test('the command exits naturally after completion or failure while its input pipe stays open', async t => {
+  const data = fixture(t);
+  for (const fail of [false, true]) {
+    const source = `
+      const assert = require('node:assert/strict');
+      const { main } = require(${JSON.stringify(require.resolve('../scripts/material-collect'))});
+      assert.equal(process.stdin.readableFlowing, null);
+      assert.equal(process.stdin.isPaused(), false);
+      Object.defineProperty(process.stdin, 'isTTY', { value: true });
+      process.stdin.setRawMode = () => {};
+      main(['--out', ${JSON.stringify(data.out)}, '--book', ${JSON.stringify(data.book)}], {
+        enginePath: process.execPath,
+        createCollectionPlan: async () => ({ openings: [{}], schedule: [{}], book: { sha256: 'fixture' } }),
+        runCollection: async () => {
+          if (${fail}) throw new Error('fixture failure');
+          return { finishedGames: 1, scheduledGames: 1 };
+        },
+        log() {},
+      }).then(() => console.log('RETURNED'), error => {
+        console.log('RETURNED'); console.error(error.message); process.exitCode = 1;
+      });
+    `;
+    await new Promise((resolve, reject) => {
+      const child = spawn(process.execPath, ['-e', source], { stdio: ['pipe', 'pipe', 'pipe'] });
+      let output = '', errors = '';
+      child.stdout.on('data', chunk => { output += chunk; });
+      child.stderr.on('data', chunk => { errors += chunk; });
+      const timer = setTimeout(() => {
+        child.kill(); reject(new Error(`Command kept input active after returning: ${output} ${errors}`));
+      }, 10000);
+      child.once('error', error => { clearTimeout(timer); reject(error); });
+      child.once('close', (code, signal) => {
+        clearTimeout(timer);
+        try {
+          assert.equal(signal, null, errors);
+          assert.equal(code, fail ? 1 : 0, errors);
+          assert.match(output, /RETURNED/);
+          resolve();
+        } catch (error) { reject(error); }
+      });
+      // Keep the parent end open: EOF must not be what lets the child exit.
+    });
+  }
 });

@@ -55,14 +55,13 @@ Both kings use the selected level, and other pieces use standard chess rules. Th
 
 ## Version 16: matched material-data pilot
 
-The next [96-game pilot](experiments/balance/material-collection-plan.md) collects one ordinary game and an Amazon game in each color from each of 32 full-army book positions. Both sides use automatic evaluation, Skill 20 and 20,000 nodes per move. Its collection/report workflow is implemented; the local pilot remains to be run.
+The [96-game pilot](experiments/balance/material-collection-plan.md) is complete: all games finished without errors or truncations, and all 10,639 recorded plies replay correctly. The [audit](experiments/balance/results/material-collection-001.md) verifies the recorded sources, engine and rules; it retains 881 samples without adopting material prices.
 
 ```bat
-npm.cmd run material:collect -- --check --book "..\chess-variant-stats\chess.epd"
-npm.cmd run material:collect -- --out balance-results/material-data-pilot --book "..\chess-variant-stats\chess.epd" --jobs 3
+npm.cmd run material:collect -- --report balance-results/material-data-pilot
 ```
 
-The [plan](experiments/balance/material-collection-plan.md) covers stop/resume, offline reports and frozen identities. It checks data coverage before treating regression coefficients as useful estimates; it assigns no material prices and starts no larger batch automatically.
+Use your actual result directory. Terminal cleanup now releases keyboard input so completed commands exit normally. Existing games need no rerun; offline reporting preserves their manifest. The [plan](experiments/balance/material-collection-plan.md) retains reproduction commands and frozen identities. No larger batch starts automatically.
 
 ## Closed material-compensation pilot
 

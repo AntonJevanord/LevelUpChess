@@ -3,7 +3,8 @@
 Collect **96 games maximum**, then review data coverage before deciding on more
 play. This tests whether matched ordinary/Amazon games support useful outcome
 regression. It does not establish piece prices or change movement or evaluation.
-The workflow is implemented; the user's local pilot has not run yet.
+The [first pilot is complete](results/material-collection-001.md): 96 completed
+games, no errors or truncations, and 881 retained samples. No repeat is required.
 
 [Cloud validation](results/material-collection-preflight-001.json) passed all 96
 native starting-position checks and eight movement probes without searches.
@@ -58,6 +59,9 @@ or an Amazon color pair), or **q / Ctrl+C** to stop immediately and save active
 histories. Checkpoints allow interrupted games to continue. Starts and results
 print during play, without ply logs or live fits. Reports refresh after a normal
 stop or completion; `--report` regenerates them offline without an engine.
+Terminal cleanup now releases previously idle input so the command exits after
+finishing. Completed original runs can regenerate reports after this fix without
+changing their manifest; unfinished runs retain the original source requirements.
 Only one report writer can refresh a directory at a time. If a blackout leaves
 `report.lock`, remove it only after confirming its recorded process has stopped.
 

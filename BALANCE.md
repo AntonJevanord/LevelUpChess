@@ -8,7 +8,7 @@ Follow the [version-16 balancing strategy](docs/balancing-strategy.md): audit en
 
 ## Version 16: fixed 96-game material-data pilot
 
-The [new collection plan](experiments/balance/material-collection-plan.md) selects 32 full-army book positions with seed 42. Each supplies one ordinary game and Amazon-versus-queen games in both colors: **96 total**. Automatic values, Skill 20, 20,000 nodes, one thread, 32 MB hash and a 400-ply limit are fixed. The collection/report workflow is implemented; local pilot execution remains unchecked.
+The [collection plan](experiments/balance/material-collection-plan.md) selects 32 full-army book positions with seed 42. Each supplies one ordinary game and Amazon-versus-queen games in both colors: **96 total**. Automatic values, Skill 20, 20,000 nodes, one thread, 32 MB hash and a 400-ply limit are fixed. The [completed pilot audit](experiments/balance/results/material-collection-001.md) verifies 96 completed games, all 10,639 plies and 881 retained samples, with no errors or truncations. No repeat run is required.
 
 ```bat
 npm.cmd run material:collect -- --check --book "..\chess-variant-stats\chess.epd"
@@ -18,6 +18,8 @@ npm.cmd run material:collect -- --report balance-results/material-data-pilot
 ```
 
 Use a new directory. Resume keeps the saved worker count and frozen executable/source/rules identities; selected FENs and the book hash are retained. **g** finishes active games, **p** finishes active units/pairs, and **q / Ctrl+C** stops now with checkpoints. Starts and results print during play. Reports refresh on stop/completion or offline `--report`, without live fitting.
+
+The original terminal cleanup could keep Node running after all work finished; it now releases previously idle input. Existing completed runs can use `--report` after pulling the fix. Unfinished runs still require their matching frozen checkout; the shutdown patch does not relax source-identity checks.
 
 Review actual upgrade-count variation, ordinary-feature coverage and prediction before conditional coefficients. Grouping binds each position's three conditions; broader opening families are unknown. Keep the supplied legacy EPD baseline separate. This pilot assigns no material prices and launches no larger batch; see the plan for filtering, artifacts and review limits.
 
@@ -164,7 +166,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation and first material pilot are closed. Only the separately declared 96-game collection pilot is the next material-data step.
+The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation, compensation pilot and 96-game collection pilot are complete. No further batch is scheduled.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |

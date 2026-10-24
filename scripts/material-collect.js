@@ -55,7 +55,9 @@ function selectedEnginePath() {
 
 function installControls(controller, { input = process.stdin, events = process, log = console.log } = {}) {
   let stop = null;
-  const previousRaw = Boolean(input.isRaw), wasPaused = input.isPaused?.() ?? true;
+  // A fresh terminal has readableFlowing=null but isPaused()=false. Remember
+  // actual consumption so the read started here cannot keep the CLI alive.
+  const previousRaw = Boolean(input.isRaw), wasFlowing = input.readableFlowing === true;
   const request = action => {
     if (stop === 'now') return;
     stop = action;
@@ -83,7 +85,7 @@ function installControls(controller, { input = process.stdin, events = process, 
       if (input.isTTY) {
         input.removeListener('data', onData);
         input.setRawMode?.(previousRaw);
-        if (wasPaused) input.pause?.();
+        if (!wasFlowing) input.pause?.();
       }
     },
   };
