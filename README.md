@@ -63,6 +63,8 @@ npm.cmd run material:collect -- --report balance-results/material-data-pilot
 
 Use your actual result directory. Terminal cleanup now releases keyboard input so completed commands exit normally. Existing games need no rerun; offline reporting preserves their manifest. The [plan](experiments/balance/material-collection-plan.md) retains reproduction commands and frozen identities. No larger batch starts automatically.
 
+The separate [pawn-1/queen-9 anchor review](experiments/balance/results/material-collection-001-anchors.md) gives conditional knight/bishop/rook estimates of 3.12/3.01/3.68 and an Amazon bonus of 2.82. The rook remains sensitive to the cohort; original reports and engine values are unchanged.
+
 ## Closed material-compensation pilot
 
 The [audited pilot](experiments/balance/results/material-pilot-001.md) contains 256 control games and the first 64 Amazon games. All games replay correctly. The queen-favored control side still scores **89.84% after four pawn removals** and **82.81% after five**, so the tested range never brackets compensation.

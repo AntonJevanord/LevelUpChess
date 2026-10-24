@@ -153,6 +153,15 @@ imbalance, rank and prediction before conditional coefficient ranges. Keep this
 batch closed and decide what the data supports before declaring another budget.
 Neither this pilot nor an available normalized fit validates a material-price table.
 
+The [offline anchor review](../experiments/balance/results/material-collection-001-anchors.md)
+tests the proposed pawn = 1, queen = 9 convention by constrained refitting, with
+a free material-to-score conversion. Its combined Amazon bonus is about 2.82;
+held-out prediction is similar to the unconstrained fit. These anchors are
+assumptions, and ordinary-only versus combined rook estimates still differ.
+Keep the original reports and engine parameters unchanged. Fresh-position
+confirmation can test this explicit convention before expanding the reference
+set; no additional batch has been declared.
+
 If a credible contextual Δ range is eventually established, use it as a provisional
 level-3 target, with roughly 2Δ/3 and Δ/3 for levels 2 and 1. That remains a design
 hypothesis. Keep native parameter units, displayed engine scores and conventional

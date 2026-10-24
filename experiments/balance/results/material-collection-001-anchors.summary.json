@@ -1,0 +1,928 @@
+{
+  "schemaVersion": 1,
+  "runId": "73d037eb-77f6-421d-addf-c74b66218283",
+  "engineGamesStarted": 0,
+  "inputs": {
+    "datasetSha256": "ca6ff72c693e837c7b3599ee4eed698de96fc074546f710f080f898cd743feec",
+    "samplesSha256": "2ae5ffa16834b811ea7e220398dd9a36dcc7b958335a4a24e2a3427e3e1a1cf0",
+    "primaryReportSha256": "295d3e83439b8661d12a154af42f3a747319fab5d7633d42a5dd5e6fd095a0e3",
+    "analysisSourceSha256": "2f05e1af224b3d69085ed7cfed1cac356a94a3ccfc74eeb7a6c1cad8eb8f6115"
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "method": {
+    "anchor": "beta_queen = 9 * beta_pawn; score scale and intercept remain fitted",
+    "ridge": 0.001,
+    "penalty": "Same original-feature standardized slope penalty for both models; constrain through linear parameter map",
+    "weighting": "Unit total sample weight per game; draws retained",
+    "validation": "Leave one selected book-position cluster out; all three conditions stay together",
+    "baselineCheck": "Independent unconstrained coefficients match frozen Node report within 1e-4"
+  },
+  "limits": [
+    "Pawn=1 and queen=9 are assumed anchors, not measured ratios.",
+    "Point fits and held-out diagnostics only; no uncertainty intervals for constrained values.",
+    "Thirty-two selected positions may share opening ancestry; no significance or generalization claim.",
+    "Same outcomes reused for model comparison; this is exploratory and needs an untouched future validation set."
+  ],
+  "results": [
+    {
+      "cohort": "ordinary",
+      "model": "unconstrained",
+      "games": 32,
+      "samples": 351,
+      "groups": 32,
+      "converged": true,
+      "allHoldoutsConverged": true,
+      "coefficients": {
+        "pawn": 1.5823534147552523,
+        "knight": 3.7413049540626595,
+        "bishop": 3.5293003046540767,
+        "rook": 3.9582481655514234,
+        "queen": 6.512013289852459,
+        "tempo": 0.21351612312594348
+      },
+      "pawnNormalized": {
+        "pawn": 1.0,
+        "knight": 2.3643927577590746,
+        "bishop": 2.2304121644025807,
+        "rook": 2.501494374544424,
+        "queen": 4.115397501676131,
+        "tempo": 0.13493579950909304
+      },
+      "heldOutMetrics": {
+        "brier": 0.07992834409703366,
+        "logLoss": 0.38233488819244094
+      },
+      "folds": [
+        {
+          "group": "book-001",
+          "converged": true,
+          "brier": 0.10931600987309387,
+          "logLoss": 0.29501849312094336
+        },
+        {
+          "group": "book-002",
+          "converged": true,
+          "brier": 0.08151583633946,
+          "logLoss": 0.24457044889875915
+        },
+        {
+          "group": "book-003",
+          "converged": true,
+          "brier": 0.1925018240635302,
+          "logLoss": 0.5331400796157956
+        },
+        {
+          "group": "book-004",
+          "converged": true,
+          "brier": 0.03466071727015077,
+          "logLoss": 0.8278457986327357
+        },
+        {
+          "group": "book-005",
+          "converged": true,
+          "brier": 0.010203332801538909,
+          "logLoss": 0.08306568792343842
+        },
+        {
+          "group": "book-006",
+          "converged": true,
+          "brier": 0.004636130393115094,
+          "logLoss": 0.04168138178507407
+        },
+        {
+          "group": "book-007",
+          "converged": true,
+          "brier": 0.022641409095150222,
+          "logLoss": 0.1612062094510371
+        },
+        {
+          "group": "book-008",
+          "converged": true,
+          "brier": 0.06498812902229358,
+          "logLoss": 0.19922248479949328
+        },
+        {
+          "group": "book-009",
+          "converged": true,
+          "brier": 0.017405876934392973,
+          "logLoss": 0.07647387298434
+        },
+        {
+          "group": "book-010",
+          "converged": true,
+          "brier": 0.19423706689115158,
+          "logLoss": 0.5609889762597225
+        },
+        {
+          "group": "book-011",
+          "converged": true,
+          "brier": 0.09581303107313299,
+          "logLoss": 1.0477772055158538
+        },
+        {
+          "group": "book-012",
+          "converged": true,
+          "brier": 0.14704916025797674,
+          "logLoss": 0.4573580588887589
+        },
+        {
+          "group": "book-013",
+          "converged": true,
+          "brier": 0.19049984230009923,
+          "logLoss": 0.5067239722985494
+        },
+        {
+          "group": "book-014",
+          "converged": true,
+          "brier": 0.05409533922934328,
+          "logLoss": 0.8406834850340177
+        },
+        {
+          "group": "book-015",
+          "converged": true,
+          "brier": 0.015446470628715358,
+          "logLoss": 0.07154530365926796
+        },
+        {
+          "group": "book-016",
+          "converged": true,
+          "brier": 0.012922604520718075,
+          "logLoss": 0.7240752640096233
+        },
+        {
+          "group": "book-017",
+          "converged": true,
+          "brier": 0.011795279420484372,
+          "logLoss": 0.06860863925995646
+        },
+        {
+          "group": "book-018",
+          "converged": true,
+          "brier": 0.07330693201342116,
+          "logLoss": 0.21834901692829162
+        },
+        {
+          "group": "book-019",
+          "converged": true,
+          "brier": 0.02094237728194173,
+          "logLoss": 0.1213551599805166
+        },
+        {
+          "group": "book-020",
+          "converged": true,
+          "brier": 0.21820378234123644,
+          "logLoss": 0.5519693244712077
+        },
+        {
+          "group": "book-021",
+          "converged": true,
+          "brier": 0.027750061327212153,
+          "logLoss": 0.12792008469708074
+        },
+        {
+          "group": "book-022",
+          "converged": true,
+          "brier": 0.04658085842253356,
+          "logLoss": 0.8911898086193419
+        },
+        {
+          "group": "book-023",
+          "converged": true,
+          "brier": 0.04891947767458912,
+          "logLoss": 0.20002398083435333
+        },
+        {
+          "group": "book-024",
+          "converged": true,
+          "brier": 0.04206351700342885,
+          "logLoss": 0.1960400463842129
+        },
+        {
+          "group": "book-025",
+          "converged": true,
+          "brier": 0.02615715978972588,
+          "logLoss": 0.756361291682913
+        },
+        {
+          "group": "book-026",
+          "converged": true,
+          "brier": 0.05539281552273423,
+          "logLoss": 0.19584021218017597
+        },
+        {
+          "group": "book-027",
+          "converged": true,
+          "brier": 0.018448133406804988,
+          "logLoss": 0.11523660238402778
+        },
+        {
+          "group": "book-028",
+          "converged": true,
+          "brier": 0.07441197484181969,
+          "logLoss": 0.25989171382187853
+        },
+        {
+          "group": "book-029",
+          "converged": true,
+          "brier": 0.03438874700892057,
+          "logLoss": 0.10687047654239604
+        },
+        {
+          "group": "book-030",
+          "converged": true,
+          "brier": 0.15228290507067316,
+          "logLoss": 0.4370946687591431
+        },
+        {
+          "group": "book-031",
+          "converged": true,
+          "brier": 0.10362103512825123,
+          "logLoss": 0.3119550351948025
+        },
+        {
+          "group": "book-032",
+          "converged": true,
+          "brier": 0.3555091741574366,
+          "logLoss": 1.004633637540401
+        }
+      ]
+    },
+    {
+      "cohort": "ordinary",
+      "model": "pawn-1-queen-9-assumed",
+      "games": 32,
+      "samples": 351,
+      "groups": 32,
+      "converged": true,
+      "allHoldoutsConverged": true,
+      "coefficients": {
+        "pawn": 1.3664406738763737,
+        "knight": 3.4337111776406344,
+        "bishop": 3.2627830722979403,
+        "rook": 3.672979242071069,
+        "queen": 12.297966064887365,
+        "tempo": 0.20049192474075186
+      },
+      "pawnNormalized": {
+        "pawn": 1.0,
+        "knight": 2.5128871258638292,
+        "bishop": 2.387797095531375,
+        "rook": 2.6879902745074284,
+        "queen": 9.000000000000002,
+        "tempo": 0.14672567098869235
+      },
+      "heldOutMetrics": {
+        "brier": 0.07791170271796567,
+        "logLoss": 0.3751386550071918
+      },
+      "folds": [
+        {
+          "group": "book-001",
+          "converged": true,
+          "brier": 0.10315602553537406,
+          "logLoss": 0.28797658821415095
+        },
+        {
+          "group": "book-002",
+          "converged": true,
+          "brier": 0.08017359348248787,
+          "logLoss": 0.24597570154542148
+        },
+        {
+          "group": "book-003",
+          "converged": true,
+          "brier": 0.18617923913998566,
+          "logLoss": 0.5107294389349825
+        },
+        {
+          "group": "book-004",
+          "converged": true,
+          "brier": 0.0313218612039616,
+          "logLoss": 0.805941439222371
+        },
+        {
+          "group": "book-005",
+          "converged": true,
+          "brier": 0.011011248088814523,
+          "logLoss": 0.08689374059527898
+        },
+        {
+          "group": "book-006",
+          "converged": true,
+          "brier": 0.005895268871236283,
+          "logLoss": 0.047064881325005074
+        },
+        {
+          "group": "book-007",
+          "converged": true,
+          "brier": 0.032021382898826375,
+          "logLoss": 0.1954338427519353
+        },
+        {
+          "group": "book-008",
+          "converged": true,
+          "brier": 0.06640124022917143,
+          "logLoss": 0.20731074216342668
+        },
+        {
+          "group": "book-009",
+          "converged": true,
+          "brier": 0.01931051661767031,
+          "logLoss": 0.08884325899596317
+        },
+        {
+          "group": "book-010",
+          "converged": true,
+          "brier": 0.1925930791316317,
+          "logLoss": 0.5579173789247288
+        },
+        {
+          "group": "book-011",
+          "converged": true,
+          "brier": 0.08628460134424243,
+          "logLoss": 0.979986827933203
+        },
+        {
+          "group": "book-012",
+          "converged": true,
+          "brier": 0.05858343339822356,
+          "logLoss": 0.20847570223799236
+        },
+        {
+          "group": "book-013",
+          "converged": true,
+          "brier": 0.19389742515409175,
+          "logLoss": 0.5146979386309659
+        },
+        {
+          "group": "book-014",
+          "converged": true,
+          "brier": 0.042174135954372624,
+          "logLoss": 0.7987131708205288
+        },
+        {
+          "group": "book-015",
+          "converged": true,
+          "brier": 0.020952600891616123,
+          "logLoss": 0.08572738602139068
+        },
+        {
+          "group": "book-016",
+          "converged": true,
+          "brier": 0.011086405858675706,
+          "logLoss": 0.7183461867744291
+        },
+        {
+          "group": "book-017",
+          "converged": true,
+          "brier": 0.017736897814544635,
+          "logLoss": 0.0866614265819534
+        },
+        {
+          "group": "book-018",
+          "converged": true,
+          "brier": 0.04167722095641108,
+          "logLoss": 0.15238525007671946
+        },
+        {
+          "group": "book-019",
+          "converged": true,
+          "brier": 0.02976236773653492,
+          "logLoss": 0.15289462242154048
+        },
+        {
+          "group": "book-020",
+          "converged": true,
+          "brier": 0.21521931522369855,
+          "logLoss": 0.5424125294703005
+        },
+        {
+          "group": "book-021",
+          "converged": true,
+          "brier": 0.04884936154731043,
+          "logLoss": 0.18403474834622321
+        },
+        {
+          "group": "book-022",
+          "converged": true,
+          "brier": 0.042582772113063876,
+          "logLoss": 0.8525929989222456
+        },
+        {
+          "group": "book-023",
+          "converged": true,
+          "brier": 0.05366391329207866,
+          "logLoss": 0.2200272741249609
+        },
+        {
+          "group": "book-024",
+          "converged": true,
+          "brier": 0.05530452989492471,
+          "logLoss": 0.23182327496306995
+        },
+        {
+          "group": "book-025",
+          "converged": true,
+          "brier": 0.020453803638395412,
+          "logLoss": 0.7401081842650641
+        },
+        {
+          "group": "book-026",
+          "converged": true,
+          "brier": 0.057548428527356595,
+          "logLoss": 0.20557005033651163
+        },
+        {
+          "group": "book-027",
+          "converged": true,
+          "brier": 0.026928570154831157,
+          "logLoss": 0.14764948987932305
+        },
+        {
+          "group": "book-028",
+          "converged": true,
+          "brier": 0.07950301985508136,
+          "logLoss": 0.27913805373648964
+        },
+        {
+          "group": "book-029",
+          "converged": true,
+          "brier": 0.03621135793272422,
+          "logLoss": 0.11461265308408983
+        },
+        {
+          "group": "book-030",
+          "converged": true,
+          "brier": 0.181133978335413,
+          "logLoss": 0.5084696557947873
+        },
+        {
+          "group": "book-031",
+          "converged": true,
+          "brier": 0.09819870920300046,
+          "logLoss": 0.29708131194640286
+        },
+        {
+          "group": "book-032",
+          "converged": true,
+          "brier": 0.34735818294914994,
+          "logLoss": 0.9489412111886799
+        }
+      ]
+    },
+    {
+      "cohort": "combined",
+      "model": "unconstrained",
+      "games": 96,
+      "samples": 881,
+      "groups": 32,
+      "converged": true,
+      "allHoldoutsConverged": true,
+      "coefficients": {
+        "pawn": 1.0611701484144722,
+        "knight": 3.1032423779292966,
+        "bishop": 2.9785208726908734,
+        "rook": 3.620821903987772,
+        "queen": 7.882098619459068,
+        "tempo": 0.05422711413998917,
+        "bonus:queen.purple@1": 2.8440021333373546
+      },
+      "pawnNormalized": {
+        "pawn": 1.0,
+        "knight": 2.9243589094227245,
+        "bishop": 2.806826857258636,
+        "rook": 3.412103053782427,
+        "queen": 7.427742507868281,
+        "tempo": 0.05110124349145292,
+        "bonus:queen.purple@1": 2.680062323263303
+      },
+      "heldOutMetrics": {
+        "brier": 0.05045744118668275,
+        "logLoss": 0.2674190478522419
+      },
+      "folds": [
+        {
+          "group": "book-001",
+          "converged": true,
+          "brier": 0.033090653087521855,
+          "logLoss": 0.10948635110557448
+        },
+        {
+          "group": "book-002",
+          "converged": true,
+          "brier": 0.046793899835577336,
+          "logLoss": 0.1746864612169038
+        },
+        {
+          "group": "book-003",
+          "converged": true,
+          "brier": 0.06800831286615139,
+          "logLoss": 0.4316798755679334
+        },
+        {
+          "group": "book-004",
+          "converged": true,
+          "brier": 0.009674559361340403,
+          "logLoss": 0.28840857422487615
+        },
+        {
+          "group": "book-005",
+          "converged": true,
+          "brier": 0.15434936231193586,
+          "logLoss": 0.6008512837103647
+        },
+        {
+          "group": "book-006",
+          "converged": true,
+          "brier": 0.0031794815060465706,
+          "logLoss": 0.030432123835989186
+        },
+        {
+          "group": "book-007",
+          "converged": true,
+          "brier": 0.023258443284179392,
+          "logLoss": 0.12305809186792162
+        },
+        {
+          "group": "book-008",
+          "converged": true,
+          "brier": 0.30815363147700375,
+          "logLoss": 1.3259117004044232
+        },
+        {
+          "group": "book-009",
+          "converged": true,
+          "brier": 0.013961446636320651,
+          "logLoss": 0.07138408975509905
+        },
+        {
+          "group": "book-010",
+          "converged": true,
+          "brier": 0.09436913452092638,
+          "logLoss": 0.30418493071905517
+        },
+        {
+          "group": "book-011",
+          "converged": true,
+          "brier": 0.02008624091362859,
+          "logLoss": 0.30084745492971227
+        },
+        {
+          "group": "book-012",
+          "converged": true,
+          "brier": 0.02189586740941507,
+          "logLoss": 0.11124503809436286
+        },
+        {
+          "group": "book-013",
+          "converged": true,
+          "brier": 0.12860632002423,
+          "logLoss": 0.4040497545419305
+        },
+        {
+          "group": "book-014",
+          "converged": true,
+          "brier": 0.056421995553200245,
+          "logLoss": 0.42131633057166806
+        },
+        {
+          "group": "book-015",
+          "converged": true,
+          "brier": 0.0073291745962413895,
+          "logLoss": 0.03262944651461688
+        },
+        {
+          "group": "book-016",
+          "converged": true,
+          "brier": 0.009387440560647118,
+          "logLoss": 0.3003462774952758
+        },
+        {
+          "group": "book-017",
+          "converged": true,
+          "brier": 0.012483910873905562,
+          "logLoss": 0.07227061951036662
+        },
+        {
+          "group": "book-018",
+          "converged": true,
+          "brier": 0.00542935754687128,
+          "logLoss": 0.04536167854299858
+        },
+        {
+          "group": "book-019",
+          "converged": true,
+          "brier": 0.019501592459027033,
+          "logLoss": 0.12778241712146457
+        },
+        {
+          "group": "book-020",
+          "converged": true,
+          "brier": 0.13929555916703776,
+          "logLoss": 0.8695666630518544
+        },
+        {
+          "group": "book-021",
+          "converged": true,
+          "brier": 0.03719459627801979,
+          "logLoss": 0.13991230796942544
+        },
+        {
+          "group": "book-022",
+          "converged": true,
+          "brier": 0.027438938847534414,
+          "logLoss": 0.33003719326330383
+        },
+        {
+          "group": "book-023",
+          "converged": true,
+          "brier": 0.034565482139326434,
+          "logLoss": 0.16949325173380325
+        },
+        {
+          "group": "book-024",
+          "converged": true,
+          "brier": 0.024784959595827126,
+          "logLoss": 0.12949658788041304
+        },
+        {
+          "group": "book-025",
+          "converged": true,
+          "brier": 0.006770728692311218,
+          "logLoss": 0.2710251324435442
+        },
+        {
+          "group": "book-026",
+          "converged": true,
+          "brier": 0.04423992705983539,
+          "logLoss": 0.1780120865235616
+        },
+        {
+          "group": "book-027",
+          "converged": true,
+          "brier": 0.013513298119082922,
+          "logLoss": 0.08883061802451768
+        },
+        {
+          "group": "book-028",
+          "converged": true,
+          "brier": 0.048543073381155634,
+          "logLoss": 0.4097401479618352
+        },
+        {
+          "group": "book-029",
+          "converged": true,
+          "brier": 0.019747578784132008,
+          "logLoss": 0.09194428343693822
+        },
+        {
+          "group": "book-030",
+          "converged": true,
+          "brier": 0.07674101809902982,
+          "logLoss": 0.2329271467384276
+        },
+        {
+          "group": "book-031",
+          "converged": true,
+          "brier": 0.039720879249486536,
+          "logLoss": 0.14772300081115194
+        },
+        {
+          "group": "book-032",
+          "converged": true,
+          "brier": 0.06610125373689939,
+          "logLoss": 0.22276861170242815
+        }
+      ]
+    },
+    {
+      "cohort": "combined",
+      "model": "pawn-1-queen-9-assumed",
+      "games": 96,
+      "samples": 881,
+      "groups": 32,
+      "converged": true,
+      "allHoldoutsConverged": true,
+      "coefficients": {
+        "pawn": 0.9988461112106753,
+        "knight": 3.113043024702849,
+        "bishop": 3.0036463165156664,
+        "rook": 3.674641452880111,
+        "queen": 8.989615000896078,
+        "tempo": 0.05242549810841039,
+        "bonus:queen.purple@1": 2.8211339466412606
+      },
+      "pawnNormalized": {
+        "pawn": 1.0,
+        "knight": 3.1166392798282114,
+        "bishop": 3.0071161941803277,
+        "rook": 3.678886478745133,
+        "queen": 9.0,
+        "tempo": 0.05248606118600874,
+        "bonus:queen.purple@1": 2.8243929820398836
+      },
+      "heldOutMetrics": {
+        "brier": 0.05077002018323388,
+        "logLoss": 0.2655022288843038
+      },
+      "folds": [
+        {
+          "group": "book-001",
+          "converged": true,
+          "brier": 0.032846472199738,
+          "logLoss": 0.11016194477649044
+        },
+        {
+          "group": "book-002",
+          "converged": true,
+          "brier": 0.04567806932431447,
+          "logLoss": 0.1728080005432311
+        },
+        {
+          "group": "book-003",
+          "converged": true,
+          "brier": 0.0656633166593395,
+          "logLoss": 0.4240451846245555
+        },
+        {
+          "group": "book-004",
+          "converged": true,
+          "brier": 0.009507588153377622,
+          "logLoss": 0.2886967845469903
+        },
+        {
+          "group": "book-005",
+          "converged": true,
+          "brier": 0.15309430265394053,
+          "logLoss": 0.5901309382365779
+        },
+        {
+          "group": "book-006",
+          "converged": true,
+          "brier": 0.0032999692476685036,
+          "logLoss": 0.03031159400636282
+        },
+        {
+          "group": "book-007",
+          "converged": true,
+          "brier": 0.024834931570544765,
+          "logLoss": 0.12728321397608114
+        },
+        {
+          "group": "book-008",
+          "converged": true,
+          "brier": 0.3060270303901585,
+          "logLoss": 1.2556198438397128
+        },
+        {
+          "group": "book-009",
+          "converged": true,
+          "brier": 0.014046293869028476,
+          "logLoss": 0.07329939397326465
+        },
+        {
+          "group": "book-010",
+          "converged": true,
+          "brier": 0.0935831427105518,
+          "logLoss": 0.302842196864555
+        },
+        {
+          "group": "book-011",
+          "converged": true,
+          "brier": 0.01944198394501769,
+          "logLoss": 0.2990833746421186
+        },
+        {
+          "group": "book-012",
+          "converged": true,
+          "brier": 0.022948257061415102,
+          "logLoss": 0.1130423209811175
+        },
+        {
+          "group": "book-013",
+          "converged": true,
+          "brier": 0.1305111019410913,
+          "logLoss": 0.40802090893324106
+        },
+        {
+          "group": "book-014",
+          "converged": true,
+          "brier": 0.05737505191556947,
+          "logLoss": 0.42536764097183827
+        },
+        {
+          "group": "book-015",
+          "converged": true,
+          "brier": 0.007979841560128789,
+          "logLoss": 0.03410589793818675
+        },
+        {
+          "group": "book-016",
+          "converged": true,
+          "brier": 0.01033117837355403,
+          "logLoss": 0.30393596448216087
+        },
+        {
+          "group": "book-017",
+          "converged": true,
+          "brier": 0.0131572252631934,
+          "logLoss": 0.07374257837030174
+        },
+        {
+          "group": "book-018",
+          "converged": true,
+          "brier": 0.0038052562437738795,
+          "logLoss": 0.03495737144955861
+        },
+        {
+          "group": "book-019",
+          "converged": true,
+          "brier": 0.020629254922349467,
+          "logLoss": 0.1311905683760236
+        },
+        {
+          "group": "book-020",
+          "converged": true,
+          "brier": 0.1402803796362855,
+          "logLoss": 0.8601022162886292
+        },
+        {
+          "group": "book-021",
+          "converged": true,
+          "brier": 0.041656192691294634,
+          "logLoss": 0.1508165496653382
+        },
+        {
+          "group": "book-022",
+          "converged": true,
+          "brier": 0.0291328498516117,
+          "logLoss": 0.3324317404313659
+        },
+        {
+          "group": "book-023",
+          "converged": true,
+          "brier": 0.03230181691355676,
+          "logLoss": 0.1619319409564134
+        },
+        {
+          "group": "book-024",
+          "converged": true,
+          "brier": 0.026211688639848907,
+          "logLoss": 0.13291855351699924
+        },
+        {
+          "group": "book-025",
+          "converged": true,
+          "brier": 0.006278634196275696,
+          "logLoss": 0.2702209013940961
+        },
+        {
+          "group": "book-026",
+          "converged": true,
+          "brier": 0.044063289310494545,
+          "logLoss": 0.17791522917031213
+        },
+        {
+          "group": "book-027",
+          "converged": true,
+          "brier": 0.014896356184502274,
+          "logLoss": 0.09353611543676878
+        },
+        {
+          "group": "book-028",
+          "converged": true,
+          "brier": 0.04881773104791749,
+          "logLoss": 0.4111880669391442
+        },
+        {
+          "group": "book-029",
+          "converged": true,
+          "brier": 0.021124074003194607,
+          "logLoss": 0.09598779294093258
+        },
+        {
+          "group": "book-030",
+          "converged": true,
+          "brier": 0.07970675899092466,
+          "logLoss": 0.2434636823871623
+        },
+        {
+          "group": "book-031",
+          "converged": true,
+          "brier": 0.03957239527691318,
+          "logLoss": 0.148517227692585
+        },
+        {
+          "group": "book-032",
+          "converged": true,
+          "brier": 0.06583821111590901,
+          "logLoss": 0.21839558594560574
+        }
+      ]
+    }
+  ]
+}
