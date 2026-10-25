@@ -6,22 +6,27 @@ These tools collect results; they do not assign measured values to pieces or cha
 
 Follow the [version-16 balancing strategy](docs/balancing-strategy.md): audit engine values, calibrate flagged cases separately, then compare surviving upgrades against fixed references. Material compensation can later provide approximate added-value ranges; Amazon scores alone do not establish pawn-equivalent values.
 
-## Version 16: four-reference comparison
+## Version 16: completed four-reference comparison
 
-The [fixed plan](experiments/balance/reference-panel-proposal.md) uses **128 fresh positions × 21 conditions = 2,688 games**, with **four jobs** and cumulative checkpoints at **672/1,344/2,688**. One shared profile contains the unchanged Horizontal bishop, Knight-capture rook, Camel knight and Amazon. All 416 positions from the completed pilot and material study are excluded.
+The [completed review](experiments/balance/results/reference-panel-001.md) closes **2,688 scheduled games**: 2,687 completed, one unscored 400-ply truncation, no errors or retries. All **301,770 plies** replay, all 27 recorded source hashes and engine/rules identity verify, and the uploaded dataset and report regenerate exactly. Keep the original files and checkpoints; no replay or extension is needed.
 
 ```bat
-npm.cmd run material:references -- --check --book "..\chess-variant-stats\chess.epd"
-npm.cmd run material:references -- --out balance-results/reference-panel --book "..\chess-variant-stats\chess.epd"
-npm.cmd run material:references -- --resume balance-results/reference-panel
 npm.cmd run material:references -- --report balance-results/reference-panel
+node experiments/balance/results/reference-panel-001.audit.cjs
 ```
 
-Use a new output folder and adjust the book path if needed. Resume uses its frozen positions, four workers and original executable/source identities; supply no new book or jobs. `--check` starts no games. `--report` replays recorded games without an engine or Python. Validation passed: 685 tests, 36 environment-dependent skips, all 2,688 native starts and 30 capability/role probes. Two interrupted four-job invocations preserved prefixes and the original manifest; offline reporting exits naturally. See the [evidence](experiments/balance/results/reference-panel-preflight-001.json). No scored study games have run in the cloud.
+These commands analyze existing data without engine searches. The [original protocol](experiments/balance/reference-panel-proposal.md) and [preflight evidence](experiments/balance/results/reference-panel-preflight-001.json) remain preserved.
 
-**q / Ctrl+C** saves active move histories and stops without expensive analysis; use `--report` afterward to refresh estimates. **g** finishes active games and **p** finishes active pairs before reporting and exit. Immediate stop during analysis preserves the previous report and does not freeze an incomplete checkpoint. Starts/results name the players, winner/color and running points; ply logs are omitted. Analysis prints progress, and the final stage exits normally at the cap.
+| Upgrade | Combined added value | Score against Amazon |
+| --- | ---: | ---: |
+| Horizontal bishop | 4.66 | 57.03% |
+| Knight-capture rook | 3.15 | 42.97% |
+| Camel knight | 3.79 | 51.18% |
+| Amazon | 3.96 | Reference |
 
-`reference-report.md` and `.json` compare ordinary/single-upgrade, head-to-head and combined estimates, paired differences at a practical ±0.5-pawn resolution, and predictions made with whole position groups withheld. Primary fits assume pawn = 1 and queen = 9; unconstrained diagnostics remain visible. Checkpoint reports stay in `checkpoints/672`, `checkpoints/1344` and `checkpoints/2688`; the current report includes their trajectory. The dataset, sparse samples and ordinary/single/head EPDs are saved alongside them. Keep the complete result folder and matching checkout/engine together.
+These are conditional bonuses under assumed P=1/Q=9, not whole-piece prices or native MG/EG values. All four cohort-equivalence checks remain inconclusive at ±0.5 pawn. The bishop is near even against Camel; the rook scores about 31% against each. Material-only predictions miss some matchup margins. All starts have Black to move because the book does; paired upgrade colors remain balanced.
+
+The [revision proposal](experiments/balance/reference-revision-proposal.md) tests three modest bishop nerfs and three rook buffs against unchanged Camel/Amazon, capped at 5,504 games with four jobs. It needs collector implementation; the current command does not launch that proposal. No further validation match run is needed for the completed study.
 
 ## Completed 1,152-game convergence study
 
@@ -196,7 +201,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation, compensation pilot, 96-game collection pilot and [1,152-game convergence study](experiments/balance/results/material-study-001.md) are complete. The separately configured [four-reference comparison](experiments/balance/reference-panel-proposal.md) is the next bounded study.
+The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation, compensation pilot, 96-game collection pilot and [1,152-game convergence study](experiments/balance/results/material-study-001.md) are complete. The [four-reference study](experiments/balance/results/reference-panel-001.md) is also closed. The [bishop/rook revision proposal](experiments/balance/reference-revision-proposal.md) is the next design step and is not configured yet.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |

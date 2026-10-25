@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 16 remains active. The [2,688-game four-reference comparison](experiments/balance/reference-panel-proposal.md) is ready for local execution with four jobs. The [1,152-game convergence study](experiments/balance/results/material-study-001.md) is complete and closed: rough contextual estimates are usable, with an Amazon upgrade bonus near 3.8 on the assumed pawn-1/queen-9 scale. Keep the [96-game pilot](experiments/balance/results/material-collection-001.md), earlier 320-game material pilot and 400-game Blink comparison separate and closed. Earlier milestones are in [development history](docs/development-history.md).
+Version 16 remains active. The [2,688-game four-reference comparison](experiments/balance/results/reference-panel-001.md) is complete and closed. Next is the [six-candidate bishop/rook proposal](experiments/balance/reference-revision-proposal.md), retaining Camel knight and Amazon as references. Keep the completed 1,152-game convergence study, 96-game pilot, earlier 320-game material pilot and 400-game Blink comparison separate. Earlier milestones are in [development history](docs/development-history.md).
 
 Browser-save compatibility across releases is optional. Experiment definitions, identities, and results must remain reproducible.
 
@@ -184,8 +184,11 @@ Preserve movement IDs, Betza text, three-point prices, and the version-15 execut
 - [x] Implement `material:references` with a fixed shared profile, 416-position exclusions, matched member selection, 21-game blocks, three cohort fits, paired difference uncertainty, grouped predictions and immutable cumulative reports. Preserve all earlier frozen collector/model sources and completed evidence.
 - [x] Pass 53 new checks and the full suite: 685 passed, 36 environment-dependent cases skipped. Preserve [validation evidence](experiments/balance/results/reference-panel-preflight-001.json) for all 2,688 native starts, 30 movement/role probes, two interrupted four-job invocations with preserved prefixes/manifests, honest provisional reporting and natural offline CLI exit. Zero completed study games in the cloud.
 - [x] Preserve the updated [family draft](experiments/designs/family-draft.ini) separately; keep tested `BsR2sN` for this experiment as confirmed, with automatic evaluation.
-- [ ] Run the fixed 2,688-game study locally with four jobs and preserve reports at 672/1,344/2,688 games.
-- [ ] Review separate/combined estimates, paired cohort differences, feature/phase support and predicted-versus-observed matchup scores. Close at the cap as usable, inconclusive or context-dependent; no automatic extension or redesign.
+- [x] Receive and audit the [completed four-reference study](experiments/balance/results/reference-panel-001.md): 2,687 completed games, one unscored truncation and no errors/retries. Verify all 27 source hashes, recorded engine/rules identity and all 301,770 plies; reproduce the uploaded dataset, all three checkpoint estimates and final Markdown exactly. No new engine games.
+- [x] Close at the cap with useful contextual comparisons and inconclusive ±0.5-pawn cohort equivalence. Combined bonuses are bishop 4.66, rook 3.15, Camel 3.79 and Amazon 3.96. Camel/Amazon score 51.18%; bishop/Camel remains close to even despite the model's 64.01% prediction. Keep all-Black-to-move book coverage and conditional uncertainty explicit; do not replace the truncation.
+- [x] Draft [three bishop nerfs and three rook buffs](experiments/balance/reference-revision-proposal.md), retaining Camel/Amazon. Propose 128 fresh 43-game blocks, 5,504 games, four jobs and three cohort estimates. Current design definitions and playing policy remain unchanged.
+- [ ] Implement the new candidate registry/schedule/report support with fresh immutable IDs, then check new movements, castling, standard promotions, native values and stop/resume before collection. No additional validation match campaign is needed for the completed study.
+- [ ] In the next report revision, place partial-pair notes below the matchup table; preserve the original uploaded report and frozen reporter sources.
 - [ ] Human-playtest survivors and use a small, contrasting equal-cost reference set. Apply later compensation checks only to surviving designs whose approximate added-value range would change a design decision.
 
 ## Deferred work

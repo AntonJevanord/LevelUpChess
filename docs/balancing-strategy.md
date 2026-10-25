@@ -183,23 +183,31 @@ purchase prices unchanged; a three-point purchase need not confer exactly three
 pawns of benefit. Preserve native parameter units, displayed engine scores and
 material estimates separately. Do not tune the evaluator to produce the target.
 
-The [four-reference plan](../experiments/balance/reference-panel-proposal.md)
-compares Horizontal bishop, Knight-capture rook, Camel knight and Amazon across
-128 matched positions, capped at 2,688 games with four jobs. All 1,152 ordinary/
-single-upgrade and 1,536 head-to-head games inform the final estimates. Five fixed
-folds withhold whole 21-game position blocks, training on the other groups to
-check head-to-head predictions. No outcome predicts itself. Selected FENs can
-share broader opening ancestry, so this remains conditional validation. The
-collector and reports passed 685 tests and
-[native/workflow validation](../experiments/balance/results/reference-panel-preflight-001.json).
-The fixed study is ready for local execution. No scored study games have run in the cloud. Earlier frozen sources
-and completed studies stay unchanged.
+The [completed four-reference study](../experiments/balance/results/reference-panel-001.md)
+closes at 2,688 scheduled games: 2,687 completed and one unscored truncation.
+All 301,770 plies, recorded identities, the uploaded dataset and final report
+validate. Combined bonuses are Horizontal bishop 4.66, Knight-capture rook 3.15,
+Camel knight 3.79 and Amazon 3.96. Unconstrained values retain the same ordering.
 
-Also fit the ordinary/single-upgrade and head-to-head cohorts separately. Use
-paired whole-position resampling to compare their estimated bonuses and difference
-ranges against a practical ±0.5-pawn guide. A head-to-head cohort can support
-relative bonuses without identifying their absolute level; expose rank or
-coverage failures rather than declaring equivalence from overlapping intervals.
+Ordinary/single and head-to-head values have not established equivalence within
+±0.5 pawn for any reference. Bishop and rook estimates shift downward in the
+head-to-head cohort; their intervals lie below zero but still cross −0.5. Camel
+and Amazon shifts are smaller but uncertain. Use the models as contextual aids,
+not interchangeable or universal price measurements. All book positions start
+with Black to move, and broader opening ancestry remains unknown.
+
+Camel scores 51.18% against Amazon. Bishop/Camel is also near even at 51.56%,
+while the rook scores about 31% against each. The starting-score predictor
+expects 64.01% for bishop against Camel: material-only values do not capture
+every matchup margin. Preserve both the coefficients and direct scores. No
+additional validation match campaign or truncation replay is required.
+
+Proceed with the [six-candidate revision proposal](../experiments/balance/reference-revision-proposal.md):
+three modest bishop nerfs and three rook buffs against unchanged Camel/Amazon.
+The proposed 5,504-game cap keeps 128 matched positions and separate/combined
+estimates. Implement fresh immutable IDs and schedule/report support, then run
+the normal movement/native and stop/resume checks before collection. Keep the
+new cohort and eight-type playing-policy context separate from completed studies.
 
 For now, retain the ordinary/Amazon evaluation and movement definitions, use
 relative equal-cost comparisons and human feedback for design decisions, and

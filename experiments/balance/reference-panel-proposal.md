@@ -3,17 +3,18 @@
 Test whether upgrades with similar fitted **added benefit over their ordinary
 piece** also score near 50% against each other. The completed
 [1,152-game material study](results/material-study-001.md) stays closed and
-separate. The configured cap is **2,688 games with four jobs**. Implementation and
-[validation](results/reference-panel-preflight-001.json) are complete: 685 tests
-passed, with 36 environment-dependent cases skipped. All 2,688 native starts and
-30 movement/role probes passed, and two interrupted four-job invocations preserved
-their histories and manifest. No scored study games have run in the cloud.
+separate. The study is **complete and closed at 2,688 scheduled games**. The
+[results and audit](results/reference-panel-001.md) verify 2,687 completed games,
+one unscored truncation, all recorded moves and exact report regeneration. No
+repeat or extension is needed. The original design and
+[preflight validation](results/reference-panel-preflight-001.json) remain preserved.
 The [frozen configuration](reference-panel.json) changes no pieces, prices or
 automatic engine values.
 
-## Run on Windows
+## Original Windows commands
 
-From the repository folder, using a new output directory:
+Preserved for reproduction, not a request to repeat the completed study. Use
+`--report` on the existing result folder for offline analysis. From the repository folder:
 
 ```bat
 git pull

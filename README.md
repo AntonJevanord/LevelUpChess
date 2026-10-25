@@ -53,16 +53,17 @@ Open [prototypes/kings/index.html](prototypes/kings/index.html) to try the captu
 
 Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Bringing king choices into the main board's setup, engine play, and saves remains integration work. See the [prototype guide](prototypes/kings/README.md).
 
-## Version 16: four-reference comparison
+## Version 16: completed four-reference comparison
 
-The [four-reference plan](experiments/balance/reference-panel-proposal.md) compares Horizontal bishop, Knight-capture rook, Camel knight and Amazon over **2,688 games with four jobs**. Reports at **672, 1,344 and 2,688 games** compare material estimates from ordinary/single-upgrade games, head-to-head games and both combined, with uncertainty on their differences and grouped prediction checks.
+The [four-reference review](experiments/balance/results/reference-panel-001.md) closes the study at **2,688 scheduled games**: 2,687 completed, one unscored move-limit truncation, no errors. All 301,770 recorded plies replay, and the dataset and report reproduce exactly.
 
 ```bat
-npm.cmd run material:references -- --check --book "..\chess-variant-stats\chess.epd"
-npm.cmd run material:references -- --out balance-results/reference-panel --book "..\chess-variant-stats\chess.epd"
+npm.cmd run material:references -- --report balance-results/reference-panel
 ```
 
-Ready for local execution: 685 tests passed, with 36 environment-dependent cases skipped, and native preflight validated all 2,688 starts. The [validation evidence](experiments/balance/results/reference-panel-preflight-001.json) also records interrupted four-job resume and natural offline CLI exit. No scored study games have run in the cloud. The [plan](experiments/balance/reference-panel-proposal.md) covers stop/resume, offline reports and the fixed cap. Pieces, purchase prices and automatic engine values remain unchanged; pawn = 1 and queen = 9 are analysis assumptions.
+Camel knight scores 51.18% against Amazon. The bishop is strong across the basket, while the rook trails all three opponents. Material estimates give useful context, but equivalence between ordinary/single and head-to-head estimates remains inconclusive at ±0.5 pawn. Keep this run closed; no repeat is needed.
+
+The next [revision proposal](experiments/balance/reference-revision-proposal.md) contains three modest bishop nerfs and three rook buffs against unchanged Camel/Amazon references. Its proposed 5,504-game cap and four-job design need collector implementation before a new run. Piece movements, engine values and purchase prices have not changed.
 
 ## Completed material estimate study
 
