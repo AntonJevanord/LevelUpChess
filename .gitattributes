@@ -1,5 +1,8 @@
 # Keep archived experiment data identical to its recorded upload checksum.
 experiments/balance/results/*.summary.json -text
+experiments/balance/results/*.uploaded-summary.json -text
+# Preserve original collection manifests used by reproducible result audits.
+experiments/balance/results/*.collection.json -text
 # Preserve the checksum of archived game subsets across Windows checkouts.
 experiments/balance/results/*.games.jsonl -text
 # Preserve original uploaded reports alongside their recorded checksums.

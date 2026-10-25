@@ -160,28 +160,43 @@ held-out prediction is similar to the unconstrained fit. These anchors are
 assumptions, and ordinary-only versus combined rook estimates still differ.
 Keep the original reports and engine parameters unchanged.
 
-The next [fixed 1,152-game convergence study](../experiments/balance/material-study-plan.md)
-uses four jobs over 384 fresh ordinary/Amazon triplets, excluding the pilot's 32
-positions and keeping its evidence separate. Cumulative 384/768/1,152-game barriers
-preserve complete triplets. Keep the primary pawn-1/queen-9 assumptions, free score
-conversion, unconstrained diagnostics, five grouped folds and 200 whole-position
-resamples fixed throughout. Rules, native evaluation and search effort stay fixed.
-Implementation and native validation are being completed; no formal study games
-have run in the cloud.
+The [completed 1,152-game convergence study](../experiments/balance/results/material-study-001.md)
+adds 384 fresh ordinary/Amazon triplets with four recorded jobs, excluding the
+pilot's 32 positions. All games finish without errors or truncations; all 126,924
+plies replay, recorded source/executable hashes verify, and all three cumulative
+checkpoints reproduce. Primary pawn-1/queen-9 assumptions, unconstrained diagnostics,
+five grouped folds, 200 whole-position resamples and engine settings remain fixed.
 
-At the cap, compare estimate changes, conditional interval half-widths and the
-ordinary/combined rook gap against a practical 0.5-pawn resolution, alongside
-phase and feature support. These are decision flags, not statistical equivalence
-claims. More positions may reduce sampling uncertainty but do not remove selection
-bias or prove the anchors. Close as usable within the recorded context, imprecise
-or cohort-dependent; do not force rook = 5 or extend automatically. Broader opening
-ancestry remains unknown. Add other references only after this measurement review.
+Close the study as **usable for rough comparisons in this context**, without an
+extension. Combined rook is 4.78 and Amazon bonus is 3.84 (range 3.37–4.38). Each
+changes about 0.32 from the preceding checkpoint, while the anchored ordinary/
+combined rook gap falls from the pilot's roughly 0.99 to 0.30. The bonus interval
+half-width is about 0.50. These meet the intent of the practical design-resolution
+review, not a formal convergence or universal-price test. Unconstrained combined
+Amazon bonus is similar at 3.75; its rook cohort gap remains 0.57. Phase effects
+and unknown broader opening ancestry still limit interpretation.
 
-If a credible contextual Δ range is eventually established, use it as a provisional
-level-3 target, with roughly 2Δ/3 and Δ/3 for levels 2 and 1. That remains a design
-hypothesis. Keep native parameter units, displayed engine scores and conventional
-material centipawns separate. Do not tune the evaluator or reinterpret the data
-until the desired target appears.
+Use contextual Δ ≈ 3.8 as the provisional level-3 added-benefit reference, with
+rough targets near 2.6 and 1.3 for levels 2 and 1. These lower-tier targets remain
+design hypotheses, not measured piece strengths. Keep the Amazon fixed and
+purchase prices unchanged; a three-point purchase need not confer exactly three
+pawns of benefit. Preserve native parameter units, displayed engine scores and
+material estimates separately. Do not tune the evaluator to produce the target.
+
+The [four-reference proposal](../experiments/balance/reference-panel-proposal.md)
+compares Horizontal bishop, Knight-capture rook, Camel knight and Amazon across
+128 matched positions, capped at 2,688 games with four jobs. All 1,152 ordinary/
+single-upgrade and 1,536 head-to-head games inform the final estimates. Five fixed
+folds withhold whole 21-game position blocks, training on the other groups to
+check head-to-head predictions. No outcome predicts itself. Selected FENs can
+share broader opening ancestry, so this remains conditional validation. The
+proposal needs collector/report implementation before any scored run.
+
+Also fit the ordinary/single-upgrade and head-to-head cohorts separately. Use
+paired whole-position resampling to compare their estimated bonuses and difference
+ranges against a practical ±0.5-pawn guide. A head-to-head cohort can support
+relative bonuses without identifying their absolute level; expose rank or
+coverage failures rather than declaring equivalence from overlapping intervals.
 
 For now, retain the ordinary/Amazon evaluation and movement definitions, use
 relative equal-cost comparisons and human feedback for design decisions, and

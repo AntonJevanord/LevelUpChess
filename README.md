@@ -53,16 +53,17 @@ Open [prototypes/kings/index.html](prototypes/kings/index.html) to try the captu
 
 Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Bringing king choices into the main board's setup, engine play, and saves remains integration work. See the [prototype guide](prototypes/kings/README.md).
 
-## Version 16: material estimate convergence study
+## Version 16: completed material estimate study
 
-The next [fixed 1,152-game study](experiments/balance/material-study-plan.md) tests whether estimates stabilize with more data. Four jobs play ordinary/Amazon triplets across 384 fresh book positions, with cumulative reports after 384, 768 and 1,152 games. Pawn = 1 and queen = 9 are declared analysis assumptions; pieces, engine evaluation and search effort stay fixed.
+The [1,152-game study](experiments/balance/results/material-study-001.md) is complete: all games finished without errors or truncations, and all 126,924 plies replay correctly. Under the assumed pawn = 1 / queen = 9 scale, the combined estimates are knight 2.88, bishop 3.04, rook 4.78 and Amazon 12.84, including an upgrade bonus of 3.84 (conditional range 3.37–4.38).
 
 ```bat
-npm.cmd run material:study -- --check --book "..\chess-variant-stats\chess.epd"
-npm.cmd run material:study -- --out balance-results/material-study --book "..\chess-variant-stats\chess.epd"
+npm.cmd run material:study -- --report balance-results/material-study
 ```
 
-The command is ready: 632 tests passed, and native preflight validated all 1,152 starts. No formal cloud games have run. The [plan](experiments/balance/material-study-plan.md) includes setup, stop/resume, reporting and the final decision. The study excludes the pilot positions and stops at its cap; more data does not guarantee removal of selection bias.
+More data substantially improved stability; residual cohort and phase effects remain. Use the result for rough comparisons in this context. The study is closed at its declared cap; no repeat or extension is needed. Original files, checkpoint estimates and the reproducible offline audit are preserved in the [review](experiments/balance/results/material-study-001.md). Engine values and purchase prices remain unchanged.
+
+The next [proposed four-reference comparison](experiments/balance/reference-panel-proposal.md) compares estimates from ordinary/single-upgrade games, head-to-head games and both combined, with whole-position prediction checks. Its 2,688-game cap and four-job design are documented; the collector is not configured yet.
 
 ## Completed matched material-data pilot
 

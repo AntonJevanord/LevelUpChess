@@ -6,20 +6,20 @@ These tools collect results; they do not assign measured values to pieces or cha
 
 Follow the [version-16 balancing strategy](docs/balancing-strategy.md): audit engine values, calibrate flagged cases separately, then compare surviving upgrades against fixed references. Material compensation can later provide approximate added-value ranges; Amazon scores alone do not establish pawn-equivalent values.
 
-## Version 16: fixed 1,152-game convergence study
+## Version 16: completed 1,152-game convergence study
 
-The [new study](experiments/balance/material-study-plan.md) uses **384 fresh book positions × three conditions = 1,152 scheduled games**, with **four jobs** and cumulative checkpoints at **384/768/1,152**. Exclude the pilot's 32 positions and keep its results separate. Ordinary pieces and the unchanged Amazon retain automatic evaluation, Skill 20, 20,000 nodes, one thread per engine, 32 MB hash and 400 plies.
+The [completed study](experiments/balance/results/material-study-001.md) contains **384 fresh book positions × three conditions = 1,152 completed games**, with recorded **four-job** settings and cumulative checkpoints at **384/768/1,152**. All 126,924 plies replay, the final report regenerates exactly, and original manifest/source/executable hashes verify. The pilot's 32 positions are excluded. Ordinary pieces and unchanged Amazon retain automatic evaluation, Skill 20, 20,000 nodes, one thread per engine, 32 MB hash and 400 plies.
 
 ```bat
-npm.cmd run material:study -- --check --book "..\chess-variant-stats\chess.epd"
-npm.cmd run material:study -- --out balance-results/material-study --book "..\chess-variant-stats\chess.epd"
-npm.cmd run material:study -- --resume balance-results/material-study
 npm.cmd run material:study -- --report balance-results/material-study
+node experiments/balance/results/material-study-001.audit.cjs
 ```
 
-The command and [native validation](experiments/balance/results/material-study-preflight-001.json) are ready; no formal study games have run in the cloud. Complete-triplet barriers preserve cumulative reports before continuing within the cap. **q / Ctrl+C** stops now, **g** after active games, and **p** after active pairs. Resume keeps four jobs and frozen identities; offline reporting starts no games.
+The study is closed; no further collection is needed. The commands above analyze existing data only. The [original plan](experiments/balance/material-study-plan.md), native preflight and raw evidence remain preserved.
 
-Primary fits assume pawn = 1 and queen = 9; unconstrained fits remain diagnostics. Freeze five grouped validation folds and 200 whole-position resamples, retaining draws and game weights. Review estimate changes, conditional interval widths, ordinary/combined rook differences and phase support at a practical 0.5-pawn resolution. The final decision can be usable, uncertain or cohort-dependent; reaching rook = 5 is not a success condition. No extension follows automatically.
+Under assumed pawn = 1 and queen = 9, combined values are knight 2.88, bishop 3.04, rook 4.78 and Amazon bonus 3.84 (conditional range 3.37–4.38). More data substantially improves stability and narrows the anchored rook cohort gap to 0.30. The unconstrained combined bonus is similar at 3.75, but its rook gap remains 0.57. Close as usable for rough comparisons in context; no universal price table, evaluation change or automatic extension follows. Five grouped folds and 200 whole-position resamples retain draws and game weights.
+
+The [next proposal](experiments/balance/reference-panel-proposal.md) compares four fixed references with 1,152 ordinary/single-upgrade and 1,536 head-to-head games, capped at 2,688 with four jobs. Report estimates for each cohort and both combined, plus paired uncertainty on their differences; whole-position holdouts check predictions. It is documented but not configured or started.
 
 ## Completed 96-game material-data pilot
 
@@ -181,7 +181,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation, compensation pilot and 96-game collection pilot are complete. The separately declared [1,152-game convergence study](experiments/balance/material-study-plan.md) is the next collection step.
+The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation, compensation pilot, 96-game collection pilot and [1,152-game convergence study](experiments/balance/results/material-study-001.md) are complete. No collection batch is currently scheduled.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |

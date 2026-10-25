@@ -2,9 +2,11 @@
 
 Test whether more distinct positions stabilize the conditional material
 estimates. The fixed cap is **1,152 new scheduled games**, using **four jobs**.
-The command and [native validation](results/material-study-preflight-001.json)
-are complete. No formal study games have run in the cloud. This replaces the
-earlier 576-game suggestion.
+The study is **complete and closed**; see the [results and audit](results/material-study-001.md).
+All 1,152 local games finished, and no extension is scheduled. The protocol and
+commands below preserve the original design, which replaced the earlier
+576-game suggestion. [Native validation](results/material-study-preflight-001.json)
+started no completed study games in the cloud.
 
 ## Frozen design
 
@@ -32,9 +34,10 @@ analysis settings and four-job configuration before play. Each checkpoint waits
 for its complete scheduled triplets, preserving cumulative estimates independently
 of worker completion order. Collection then continues within this declared cap.
 
-## Run on Windows
+## Original Windows commands
 
-From the repository folder:
+Preserved for reproduction, not a request to repeat the completed study. Use
+`--report` on the existing result folder for offline analysis. From the repository folder:
 
 ```bat
 git pull

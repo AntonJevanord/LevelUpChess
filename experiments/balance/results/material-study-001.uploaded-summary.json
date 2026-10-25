@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "runId": "cfc4f115-7a1c-44ef-84f2-e06f49a0b17d",
+  "scheduledGames": 1152,
+  "finishedGames": 1152,
+  "statusCounts": {
+    "completed": 1152,
+    "truncated": 0,
+    "aborted": 0,
+    "error": 0
+  }
+}
