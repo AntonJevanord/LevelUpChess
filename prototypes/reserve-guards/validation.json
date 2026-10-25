@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "reserve-guards-functional-001",
+  "date": "2026-10-25",
+  "scope": "Isolated movement/drop/adjudication checks and up to six bounded native searches; no balance games.",
+  "rulesSha256": "293ac2da7245ef920dbe963d607a3181948386e62ea92ad42e1d84f88bfc5a85",
+  "verifierSha256": "aa3fcb054b7d55b19949597f8f2ce6e2508303d3f3f6da3da0ff9fb3f408785c",
+  "browserRulesVersion": "ffish-es6 0.7.10",
+  "browserFixtures": 56,
+  "stateChecks": 18,
+  "nativePositions": 58,
+  "nativeSearches": 6,
+  "completedBalanceGames": 0,
+  "failures": 0,
+  "interpretation": "Functional evidence only. Ordinary royal kings remain distinct from capturable reserve guards; no material balance or general forced-mate claim follows.",
+  "nativeEngine": {
+    "name": "Fairy-Stockfish 230826",
+    "file": "stockfish",
+    "platform": "linux",
+    "sha256": "8ccde8596fb88aa7fbbf1020cc5afa52ef9d1887764275ea8e627ba0227e4f1e"
+  }
+}

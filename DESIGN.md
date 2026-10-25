@@ -165,7 +165,7 @@ Close the 400-game batch without declaring Quiet Blink balanced, choosing an aut
 
 ## Kings: preserve a clear mating objective
 
-Keep exactly one royal per side, with check and checkmate. The selected prototype retains ordinary quiet king moves and adds capture-only two-square jumps:
+Keep exactly one royal per side, with check and checkmate. The capture-only prototype retains ordinary quiet king moves and adds capture-only two-square jumps:
 
 | Level | Added captures | Definition |
 | --- | --- | --- |
@@ -179,7 +179,9 @@ The [local prototype](prototypes/kings/README.md) applies one level to both king
 
 Before adopting king designs, settle the intended queen-and-king and rook-and-king conversion goals and a consistent dead-position policy. Verify check handling, safe captures, castling, repetition, and mating examples. A failed engine conversion is not proof that mate is impossible. Historical probes and reproducible FENs are in [king design notes](docs/king-design-notes.md).
 
-A capturable nonroyal guard remains a future alternative, potentially targeting 1/2/3 material units. Broad quiet leaps, extra royals, cooldowns, or powers disabled in check need separate design and engine work; none is currently promised.
+A [finite-reserve guard prototype](prototypes/reserve-guards/README.md) now explores another route: retain the ordinary royal king and grant one capturable pocket piece. The user's six options provide two alternatives at each cost, 1/1/2/2/3/3. Deployment spends a turn on an empty square in the owner's half. Captures remove pieces permanently; `twoBoards = false` preserves a finite reserve. This avoids initial pawn displacement and retains ordinary king/castling identity. Reserve interpositions can still delay mate, and draw adjudication needs review. Reserves are available immediately unless an experiment explicitly supplies an opening prefix. Movement strength, playable reserve controls and balance integration remain separate steps; the active bishop/rook experiment is unchanged.
+
+Balance the nonroyal roster before assessing these king purchases. Freeze a drop policy, then prioritize paired head-to-head performance against varied equal-cost upgrades. Additional units change exchanges, sacrifices and late-game coordination; a single material coefficient can miss those interactions. Treat fitted material as a secondary description of the same games, with deployment and remaining-material context, rather than the direct tuning target. Rule changes need a distinct experiment identity; other families' reserve grants can follow if useful.
 
 ## Candidate ideas
 

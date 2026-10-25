@@ -21,10 +21,16 @@ collection, especially if Ranging and Courier are too similar to retain both.
 Returning pawn remains optional if playtesting gives it a distinct useful role.
 Blink's unresolved evaluation sensitivity stays a separate deferred question.
 
-Defer every purchase that adds units: guard knights, Twin pawns, split queens,
-queen companions and possible king guards. Preserve their historical definitions
-and results. Royal king upgrades need separate safety, mating and conversion
-checks before joining general balance comparisons.
+Keep extra-unit purchases outside this balance roster: guard knights, Twin
+pawns, split queens and queen companions. Preserve their historical definitions
+and results. The newer [finite-reserve proposal](../../prototypes/reserve-guards/README.md)
+explores deployment without starting congestion and with an ordinary royal
+king. Review its isolated playability while balancing the replacement roster.
+Only after that roster is settled, assess reserve king purchases through paired
+head-to-head games against those fixed equal-cost opponents. Freeze drop rules;
+material estimates remain secondary diagnostics. Reserves add no games to this
+campaign. Changed royal kings still need separate safety, mating and conversion
+checks.
 
 ## Order and reuse
 
