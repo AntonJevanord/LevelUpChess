@@ -53,6 +53,10 @@ ordinary rook support, phase coverage and conditional uncertainty. This is a
 proposal, not a configured or started batch. No extension follows automatically.
 Confirm the measurement convention before adding the other reference upgrades.
 
+The user's subsequent 500–1,500-game request supersedes this suggestion with the
+separately declared [1,152-game convergence study](../material-study-plan.md).
+The pilot and its recorded estimates remain unchanged.
+
 The original reporter remains unchanged. Reproduce this separate diagnostic with
 the optional NumPy/SciPy dependencies from `scripts/analysis/requirements-epd.txt`:
 

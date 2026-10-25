@@ -66,6 +66,9 @@ function parseBookFen(line) {
     if (squares !== 8) return { reason: 'invalid-fen' };
   }
   if (!isDeepStrictEqual(counts, START_COUNTS)) return { reason: 'material-not-full-standard' };
+  // Equivalent empty-square encodings describe the same physical position.
+  fields[0] = ranks.map(rank => rank.replace(/[1-8]/g, digit => '.'.repeat(Number(digit)))
+    .replace(/\.+/g, empty => String(empty.length))).join('/');
   // Normalize an equivalent ordering of castling flags for physical deduplication.
   fields[2] = [...'KQkq'].filter(right => fields[2].includes(right)).join('') || '-';
   return { fen: fields.join(' '), key: fields.slice(0, 4).join(' ') };
@@ -112,8 +115,19 @@ function quietStartRejection(fen) {
 }
 
 async function createCollectionPlan(bookBytes, options = {}) {
+  return createPlanForProtocol(bookBytes, getCollectionProtocol(), options);
+}
+
+// Internal shared planner for separately declared, frozen collection protocols.
+// Public pilot options remain limited to the book name and rules factory.
+async function createPlanForProtocol(bookBytes, library, options = {}) {
   if (!options || typeof options !== 'object' || Array.isArray(options)
     || Object.keys(options).some(key => !['bookName', 'rulesFactory'].includes(key))) throw new Error('Unsupported material collection planning options.');
+  if (!library?.protocol || !library.registry || !library.profile || !library.settings
+    || !Number.isSafeInteger(library.settings.bookPositions) || library.settings.bookPositions < 1
+    || library.settings.bookPositions > 500 || library.settings.totalGames !== 3 * library.settings.bookPositions) {
+    throw new Error('An intact bounded collection protocol is required.');
+  }
   if (!(typeof bookBytes === 'string' || bookBytes instanceof Uint8Array)) throw new Error('An opening book must be UTF-8 bytes or text.');
   const bytes = Buffer.from(bookBytes);
   if (!bytes.length || bytes.length > 32 * 1024 * 1024) throw new Error('The opening book must contain 1 byte to 32 MiB.');
@@ -122,7 +136,8 @@ async function createCollectionPlan(bookBytes, options = {}) {
   let text;
   try { text = new TextDecoder('utf-8', { fatal: true }).decode(bytes); }
   catch { throw new Error('The opening book must be valid UTF-8.'); }
-  const library = getCollectionProtocol(), candidates = [], seen = new Set(), rejections = [];
+  const candidates = [], seen = new Set(), rejections = [];
+  const excluded = new Set(library.exclusions?.positions.map(position => position.positionSha256) || []);
   const lines = text.split(/\r?\n/);
   let nonemptyLines = 0;
   lines.forEach((line, index) => {
@@ -131,7 +146,11 @@ async function createCollectionPlan(bookBytes, options = {}) {
     const parsed = line.length > 4096 ? { reason: 'line-too-long' } : parseBookFen(line);
     if (parsed.reason) { rejections.push({ line: index + 1, reason: parsed.reason }); return; }
     if (seen.has(parsed.key)) { rejections.push({ line: index + 1, reason: 'duplicate-physical-position' }); return; }
-    seen.add(parsed.key); candidates.push({ line: index + 1, fen: parsed.fen });
+    seen.add(parsed.key);
+    if (excluded.has(sha256(parsed.key))) {
+      rejections.push({ line: index + 1, reason: 'excluded-pilot-position' }); return;
+    }
+    candidates.push({ line: index + 1, fen: parsed.fen });
   });
   const rules = await (options.rulesFactory || require('../../dist/balance-rules.cjs').createMatchRules)({ profile: library.profile });
   const amazon = library.registry.allocations.find(item => item.id === library.protocol.designId).letter;
@@ -156,7 +175,7 @@ async function createCollectionPlan(bookBytes, options = {}) {
       if (invalid) break;
     }
     if (invalid) continue;
-    const id = `book-${String(openings.length + 1).padStart(3, '0')}`;
+    const id = `${library.openingPrefix || 'book'}-${String(openings.length + 1).padStart(3, '0')}`;
     openings.push({ id, line: candidate.line, fen: candidate.fen,
       positionSha256: sha256(candidate.fen.split(' ').slice(0, 4).join(' ')) });
     const ordinaryUnit = `${id}-ordinary`, amazonUnit = `${id}-amazon`;
@@ -177,11 +196,16 @@ async function createCollectionPlan(bookBytes, options = {}) {
   const reasonCounts = {};
   for (const rejection of rejections) reasonCounts[rejection.reason] = (reasonCounts[rejection.reason] || 0) + 1;
   const book = { name: path.basename(bookName.replace(/\\/g, '/')), bytes: bytes.length, sha256: sha256(bytes),
-    nonemptyLines, uniqueFullMaterialCandidates: candidates.length, candidatesExamined: examined,
+    nonemptyLines, uniqueFullMaterialCandidates: candidates.length + (reasonCounts['excluded-pilot-position'] || 0), candidatesExamined: examined,
     selectedPositions: openings.length, unexaminedCandidates: candidates.length - examined,
     reasonCounts, rejections, selection: 'Seeded shuffle of unique full-material candidates; accept only quiet positions legal and nonterminal under all three conditions, without either upgrade creating check.' };
+  if (library.exclusions) {
+    book.eligibleAfterExclusions = candidates.length;
+    book.excludedPilotPositionsFound = reasonCounts['excluded-pilot-position'] || 0;
+    book.selection += ' Exclude the frozen pilot physical positions before shuffling.';
+  }
   if (openings.length !== library.settings.bookPositions) {
-    const error = new Error(`Opening book supplies only ${openings.length} usable positions; this pilot requires ${library.settings.bookPositions} distinct positions legal in all three conditions.`);
+    const error = new Error(`Opening book supplies only ${openings.length} usable positions; this ${library.study ? 'study' : 'pilot'} requires ${library.settings.bookPositions} distinct positions legal in all three conditions.`);
     error.book = book;
     throw error;
   }
@@ -190,7 +214,9 @@ async function createCollectionPlan(bookBytes, options = {}) {
     configFiles: library.configFiles, configSha256: library.configSha256, book,
     openings, schedule, units, totalGames: schedule.length,
     grouping: { unit: 'selected opening position', unknownOpeningFamilies: true,
-      interpretation: 'The ordinary game and both upgraded games share a group. Different book positions may still share opening ancestry.' } });
+      interpretation: 'The ordinary game and both upgraded games share a group. Different book positions may still share opening ancestry.' },
+    ...(library.study ? { study: library.study } : {}),
+    ...(library.exclusions ? { exclusions: library.exclusions } : {}) });
 }
 
-module.exports = { CONFIG_FILE, getCollectionProtocol, createCollectionPlan };
+module.exports = { CONFIG_FILE, getCollectionProtocol, createCollectionPlan, createPlanForProtocol };

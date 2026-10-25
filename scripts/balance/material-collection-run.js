@@ -14,6 +14,9 @@ const { UciEngine } = require('./uci');
 const { checkCapabilities } = require('./capabilities');
 
 const ROOT = path.resolve(__dirname, '../..');
+const STUDY_ID = 'material-collection-v16-confirmation-001';
+const STUDY_CHECKPOINTS = [384, 768, 1152];
+const STUDY_ANALYSIS = { anchors: { pawn: 1, queen: 9 }, ridge: 0.001, bootstrap: 200, validationFolds: 5 };
 const FINAL = new Set(['completed', 'truncated']);
 const STATUSES = new Set([...FINAL, 'aborted', 'error']);
 const sha256 = value => createHash('sha256').update(value).digest('hex');
@@ -26,12 +29,25 @@ function abortIfNeeded(signal) {
 }
 
 function validatePlan(plan) {
+  const study = plan?.id === STUDY_ID || plan?.protocol?.id === STUDY_ID;
   if (!plan?.profile?.config || !plan.registry || plan.profile.registryHash !== plan.registry.hash
     || !isDeepStrictEqual(plan.profile.registry, plan.registry) || !Array.isArray(plan.schedule) || !plan.schedule.length
-    || plan.schedule.length > 96 || !Array.isArray(plan.units) || !plan.units.length) throw new Error('An intact bounded collection plan is required.');
+    || plan.schedule.length > (study ? 1152 : 96) || !Array.isArray(plan.units) || !plan.units.length) throw new Error('An intact bounded collection plan is required.');
   const settings = plan.settings;
   for (const key of ['nodes', 'threads', 'hashMb', 'maxPlies']) if (!Number.isSafeInteger(settings?.[key]) || settings[key] < 1) throw new Error(`Invalid collection ${key}.`);
   if (settings.threads !== 1 || settings.skill !== 20) throw new Error('Collection uses one search thread and equal Skill 20 engines.');
+  if (study && (plan.id !== STUDY_ID || plan.protocol?.id !== STUDY_ID
+    || plan.schedule.length !== 1152 || plan.totalGames !== 1152 || settings.totalGames !== 1152
+    || settings.bookPositions !== 384 || !Array.isArray(plan.openings) || plan.openings.length !== 384
+    || settings.nodes !== 20000 || settings.hashMb !== 32 || settings.maxPlies !== 400
+    || plan.protocol.totalGames !== 1152 || plan.protocol.bookPositions !== 384
+    || plan.protocol.jobs !== 4 || plan.study?.jobs !== 4
+    || !isDeepStrictEqual(plan.protocol.checkpoints, STUDY_CHECKPOINTS)
+    || !isDeepStrictEqual(plan.study?.checkpoints, STUDY_CHECKPOINTS)
+    || !isDeepStrictEqual(plan.protocol.analysis, STUDY_ANALYSIS)
+    || !isDeepStrictEqual(plan.study?.analysis, STUDY_ANALYSIS))) {
+    throw new Error('The declared material study requires its complete frozen 1,152-game plan and four workers.');
+  }
   const games = new Map();
   for (const game of plan.schedule) {
     if (!game || typeof game.id !== 'string' || !game.id || games.has(game.id) || typeof game.unitId !== 'string'
@@ -52,7 +68,39 @@ function validatePlan(plan) {
     members.forEach(game => assigned.add(game.id));
   }
   if (assigned.size !== games.size) throw new Error('Every collection game must belong to one unit.');
+  if (study) {
+    const openings = new Set(plan.openings.map(opening => opening.id));
+    if (openings.size !== 384 || plan.units.length !== 768) throw new Error('The material study requires 384 distinct opening triplets.');
+    for (let index = 0; index < plan.schedule.length; index += 3) {
+      const triplet = plan.schedule.slice(index, index + 3), opening = triplet[0].openingId;
+      if (!openings.delete(opening) || triplet.some(game => game.openingId !== opening)
+        || triplet.filter(game => game.kind === 'ordinary').length !== 1
+        || new Set(triplet.filter(game => game.kind === 'amazon').map(game => game.aColor)).size !== 2) {
+        throw new Error('The material study schedule must contain complete, consecutive opening triplets.');
+      }
+    }
+    if (openings.size) throw new Error('Every material-study opening must supply one triplet.');
+  }
   return games;
+}
+
+function invocationPrefix(plan, untilGames) {
+  const count = untilGames ?? plan.schedule.length;
+  if (!Number.isSafeInteger(count) || count < 1 || count > plan.schedule.length) throw new Error('untilGames must select a bounded scheduled prefix.');
+  if (plan.id === STUDY_ID && !STUDY_CHECKPOINTS.includes(count)) throw new Error('The material study stops only at its declared game checkpoints.');
+  const ids = new Set(plan.schedule.slice(0, count).map(game => game.id));
+  const openingMembership = new Map();
+  for (const game of plan.schedule) {
+    const membership = ids.has(game.id), prior = openingMembership.get(game.openingId);
+    if (prior !== undefined && prior !== membership) throw new Error('untilGames cannot split an opening triplet.');
+    openingMembership.set(game.openingId, membership);
+  }
+  const units = plan.units.filter(unit => {
+    const membership = unit.gameIds.map(id => ids.has(id));
+    if (membership.some(Boolean) && !membership.every(Boolean)) throw new Error('untilGames cannot split a collection unit.');
+    return membership[0];
+  });
+  return { count, ids, units };
 }
 
 function collectionIdentity(enginePath) {
@@ -195,14 +243,16 @@ function validateHistory(records, checkpoint, games, rules, plan) {
   return recovered;
 }
 
-async function runCollection({ plan, outDir, enginePath, jobs, resume = false, signal,
+async function runCollection({ plan, outDir, enginePath, jobs, resume = false, signal, untilGames,
   shouldStop = () => null, onProgress = () => {}, engineFactory = options => new UciEngine(options),
   rulesFactory = require('../../dist/balance-rules.cjs').createMatchRules,
   getIdentity = collectionIdentity, preflight = checkCollection, storeFactory = openStore } = {}) {
   const games = validatePlan(plan);
+  const prefix = invocationPrefix(plan, untilGames);
   const directory = path.resolve(outDir), original = resume ? readCollectionManifest(directory) : null;
-  jobs ??= original?.jobs ?? 3;
+  jobs ??= original?.jobs ?? (plan.id === STUDY_ID ? 4 : 3);
   if (!Number.isSafeInteger(jobs) || jobs < 1 || jobs > 16) throw new Error('Collection jobs must be an integer from 1 to 16.');
+  if (plan.id === STUDY_ID && jobs !== 4) throw new Error('The declared material study uses four workers.');
   const identity = getIdentity(enginePath);
   const configHash = fingerprint({ plan, jobs, collectorSha256: identity.collectorSha256 });
   const rulesHash = fingerprint({ bundle: identity.rulesBundleSha256, profile: plan.profile, registry: plan.registry });
@@ -242,7 +292,8 @@ async function runCollection({ plan, outDir, enginePath, jobs, resume = false, s
   const persist = () => store.saveCheckpoint({ schemaVersion: 1, current: Object.fromEntries(active), finishedGames: done.size });
   const progress = message => { onProgress(message); };
   const response = () => ({ manifest: store.manifest, records: [...store.records], finishedGames: done.size,
-    scheduledGames: plan.schedule.length, stopped: done.size < plan.schedule.length, outDir: directory });
+    scheduledGames: plan.schedule.length, stopped: done.size < plan.schedule.length, outDir: directory,
+    untilGames: prefix.count, checkpointReached: [...prefix.ids].every(id => done.has(id)) });
   try {
     if (!isDeepStrictEqual(store.manifest, manifest)) throw new Error('Frozen collection manifest changed while waiting for the run lock.');
     // Preflight runs before locking. A previous owner may have stopped while it
@@ -254,7 +305,7 @@ async function runCollection({ plan, outDir, enginePath, jobs, resume = false, s
     writeSnapshot(variantPath, plan.profile.config);
     async function worker(workerId) {
       while (!fatal && !controller.signal.aborted && !shouldStop()) {
-        const unit = plan.units[cursor++];
+        const unit = prefix.units[cursor++];
         if (!unit) return;
         if (unit.gameIds.every(id => done.has(id))) continue;
         const engines = [];
@@ -318,7 +369,7 @@ async function runCollection({ plan, outDir, enginePath, jobs, resume = false, s
         } finally { await Promise.allSettled(engines.map(engine => engine.close())); }
       }
     }
-    await Promise.all(Array.from({ length: Math.min(jobs, plan.units.length) }, (_, index) => worker(index + 1)));
+    await Promise.all(Array.from({ length: Math.min(jobs, prefix.units.length) }, (_, index) => worker(index + 1)));
     store.saveSummary({ schemaVersion: 1, runId: store.manifest.runId, scheduledGames: plan.schedule.length, finishedGames: done.size,
       statusCounts: Object.fromEntries([...STATUSES].map(status => [status, store.records.filter(record => record.status === status).length])) });
     if (fatal) throw fatal;

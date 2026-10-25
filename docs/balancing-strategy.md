@@ -78,7 +78,7 @@ The [first material pilot](../experiments/balance/results/material-pilot-001.md)
 stopped after 256 control games and 64 Amazon games. All 320 replay correctly,
 but the queen-favored control side still scored 82.81% after five pawn removals.
 It did not recover a 50% crossing in the tested range. The remaining 192 games
-are unused; no replacement campaign is scheduled.
+are unused; no further pawn-odds campaign is scheduled.
 
 The Amazon's first-stage crossing is about 4.58 removed starting pawns across
 four opening blocks. The control did not establish that coordinate as conventional
@@ -158,9 +158,24 @@ tests the proposed pawn = 1, queen = 9 convention by constrained refitting, with
 a free material-to-score conversion. Its combined Amazon bonus is about 2.82;
 held-out prediction is similar to the unconstrained fit. These anchors are
 assumptions, and ordinary-only versus combined rook estimates still differ.
-Keep the original reports and engine parameters unchanged. Fresh-position
-confirmation can test this explicit convention before expanding the reference
-set; no additional batch has been declared.
+Keep the original reports and engine parameters unchanged.
+
+The next [fixed 1,152-game convergence study](../experiments/balance/material-study-plan.md)
+uses four jobs over 384 fresh ordinary/Amazon triplets, excluding the pilot's 32
+positions and keeping its evidence separate. Cumulative 384/768/1,152-game barriers
+preserve complete triplets. Keep the primary pawn-1/queen-9 assumptions, free score
+conversion, unconstrained diagnostics, five grouped folds and 200 whole-position
+resamples fixed throughout. Rules, native evaluation and search effort stay fixed.
+Implementation and native validation are being completed; no formal study games
+have run in the cloud.
+
+At the cap, compare estimate changes, conditional interval half-widths and the
+ordinary/combined rook gap against a practical 0.5-pawn resolution, alongside
+phase and feature support. These are decision flags, not statistical equivalence
+claims. More positions may reduce sampling uncertainty but do not remove selection
+bias or prove the anchors. Close as usable within the recorded context, imprecise
+or cohort-dependent; do not force rook = 5 or extend automatically. Broader opening
+ancestry remains unknown. Add other references only after this measurement review.
 
 If a credible contextual Δ range is eventually established, use it as a provisional
 level-3 target, with roughly 2Δ/3 and Δ/3 for levels 2 and 1. That remains a design

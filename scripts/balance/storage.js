@@ -87,8 +87,8 @@ function createLock(file, owner) {
   fs.closeSync(fd);
 }
 
-function acquireLock(directory, runId) {
-  const file = path.join(directory, 'run.lock');
+function acquireLock(directory, runId, name = 'run.lock') {
+  const file = path.join(directory, name);
   const owner = { pid: process.pid, token: randomUUID(), runId, createdAt: new Date().toISOString() };
   let failure;
   let acquired = false;
@@ -102,7 +102,7 @@ function acquireLock(directory, runId) {
   if (existing && !definitelyDead(existing.pid)) throw new Error(`Run is locked by process ${existing.pid}.`);
 
   // Serialize stale-lock reclamation, so two starters cannot delete each other's new lock.
-  const reclaim = path.join(directory, 'run.lock.reclaim');
+  const reclaim = path.join(directory, `${name}.reclaim`);
   try { createLock(reclaim, owner); }
   catch (error) {
     if (error.code === 'EEXIST') throw new Error('Another process is reclaiming the run lock; retry after it finishes.');
@@ -254,4 +254,4 @@ function openStore({ outDir, resume = false, manifest: requestedManifest } = {})
   }
 }
 
-module.exports = { openStore };
+module.exports = { openStore, acquireLock };

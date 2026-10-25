@@ -53,7 +53,18 @@ Open [prototypes/kings/index.html](prototypes/kings/index.html) to try the captu
 
 Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Bringing king choices into the main board's setup, engine play, and saves remains integration work. See the [prototype guide](prototypes/kings/README.md).
 
-## Version 16: matched material-data pilot
+## Version 16: material estimate convergence study
+
+The next [fixed 1,152-game study](experiments/balance/material-study-plan.md) tests whether estimates stabilize with more data. Four jobs play ordinary/Amazon triplets across 384 fresh book positions, with cumulative reports after 384, 768 and 1,152 games. Pawn = 1 and queen = 9 are declared analysis assumptions; pieces, engine evaluation and search effort stay fixed.
+
+```bat
+npm.cmd run material:study -- --check --book "..\chess-variant-stats\chess.epd"
+npm.cmd run material:study -- --out balance-results/material-study --book "..\chess-variant-stats\chess.epd"
+```
+
+The command is ready: 632 tests passed, and native preflight validated all 1,152 starts. No formal cloud games have run. The [plan](experiments/balance/material-study-plan.md) includes setup, stop/resume, reporting and the final decision. The study excludes the pilot positions and stops at its cap; more data does not guarantee removal of selection bias.
+
+## Completed matched material-data pilot
 
 The [96-game pilot](experiments/balance/material-collection-plan.md) is complete: all games finished without errors or truncations, and all 10,639 recorded plies replay correctly. The [audit](experiments/balance/results/material-collection-001.md) verifies the recorded sources, engine and rules; it retains 881 samples without adopting material prices.
 
@@ -81,7 +92,7 @@ npm.cmd run balance:regression -- --out balance-results/material-regression
 
 Use a new output directory. The command saves the dataset, samples, grouped validation, conditional ranges and reproducibility hashes. See the [method and options](docs/material-regression-review.md#offline-command).
 
-The [ordinary-control follow-up](experiments/balance/results/material-controls-001.md) is also complete: 80 records collapse to 40 distinct histories. Their ordinary-material fit is unsuitable for pricing, and retained positions contain no Amazon-count imbalance. Reproduce that bounded check with `--dataset controls`; no new match run is scheduled.
+The [ordinary-control follow-up](experiments/balance/results/material-controls-001.md) is also complete: 80 records collapse to 40 distinct histories. Their ordinary-material fit is unsuitable for pricing, and retained positions contain no Amazon-count imbalance. Reproduce that bounded check with `--dataset controls`; it starts no match games.
 
 The [supplied EPD audit](experiments/balance/results/material-epd-001.md) independently reproduces queen 8.40 and rook 4.74 from 605 recorded games. Whole-game uncertainty is much wider than position-level errors. Preserve this provisional legacy baseline separately from the new matched collection; their generation identities and settings differ.
 

@@ -130,8 +130,8 @@ function startingCounts(fen, profile) {
   return counts;
 }
 
-async function makeCollectionReport(manifest, records, { rulesFactory, bootstrap = 200 } = {}) {
-  if (!Array.isArray(records) || !Number.isSafeInteger(bootstrap) || bootstrap < 0 || bootstrap > 1000) fail('Use collection records and bootstrap 0–1000.');
+async function makeCollectionReport(manifest, records, { rulesFactory, bootstrap = 200, analyze = true } = {}) {
+  if (!Array.isArray(records) || !Number.isSafeInteger(bootstrap) || bootstrap < 0 || bootstrap > 1000 || typeof analyze !== 'boolean') fail('Use collection records, bootstrap 0–1000 and a boolean analysis switch.');
   const { plan, latest } = latestRecords(manifest, records);
   const rules = await (rulesFactory || require('../../dist/balance-rules.cjs').createMatchRules)({ profile: plan.profile });
   const featureNames = [...ORDINARY, ...plan.registry.definitions.map(definition => `bonus:${definition.id}`).sort()];
@@ -225,18 +225,18 @@ async function makeCollectionReport(manifest, records, { rulesFactory, bootstrap
       positiveSamples: upgradeSamples.filter(sample => sample.x[bonusIndex] > 0).length,
       negativeSamples: upgradeSamples.filter(sample => sample.x[bonusIndex] < 0).length },
     phases: Object.fromEntries(['middlegame', 'endgame'].map(phase => [phase, dataset.samples.filter(sample => sample.phase === phase).length])) };
-  const ordinary = clusterAnalysis(project(dataset, 'ordinary', ORDINARY), { bootstrap, seed: plan.settings.seed ?? 42 });
-  const combined = clusterAnalysis(dataset, { bootstrap, seed: plan.settings.seed ?? 42 });
+  const ordinary = analyze ? clusterAnalysis(project(dataset, 'ordinary', ORDINARY), { bootstrap, seed: plan.settings.seed ?? 42 }) : null;
+  const combined = analyze ? clusterAnalysis(dataset, { bootstrap, seed: plan.settings.seed ?? 42 }) : null;
   const warnings = [...dataset.limitations];
   if (coverage.remainingGames) warnings.push('Collection is incomplete; estimates use only completed recorded outcomes and may be affected by unfinished-game selection.');
   if (statusCounts.truncated) warnings.push('Ply-limited games are unscored and excluded, not drawn games or losses.');
   if (partialScoredAmazonUnits) warnings.push(`${partialScoredAmazonUnits} Amazon units currently contribute a completed outcome from only one color; provisional evidence is not fully color-paired.`);
   if (!coverage.upgradeImbalance.games) warnings.push('No retained Amazon-count imbalance: its bonus is unidentifiable, not zero-valued.');
-  if (!ordinary.rank.fullRank || !ordinary.fit.converged || !ordinary.normalized.available) warnings.push('The ordinary baseline does not yet support the conditional normalized table; do not price the Amazon bonus from this pilot.');
+  if (ordinary && (!ordinary.rank.fullRank || !ordinary.fit.converged || !ordinary.normalized.available)) warnings.push('The ordinary baseline does not yet support the conditional normalized table; do not price the Amazon bonus from this pilot.');
   const metadata = { ...dataset, samples: undefined, sampleCount: dataset.samples.length };
   const report = { schemaVersion: 1, format: 'levelup-material-collection-report', runId: manifest.runId,
     profileHash: plan.profile.hash, registryHash: plan.registry.hash, coverage,
-    sampling: plan.protocol.sampling, analysis: { ordinary, combined }, warnings,
+    sampling: plan.protocol.sampling, analysis: analyze ? { ordinary, combined } : {}, warnings,
     materialPriceTableSupported: false,
     interpretation: 'Capped collection diagnostic. Outcome-predictive coefficients are provisional; no playing value, purchase price or extra game budget is assigned.' };
   return { report, dataset: metadata, samples: dataset.samples, epd };

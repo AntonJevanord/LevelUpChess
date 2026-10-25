@@ -6,7 +6,22 @@ These tools collect results; they do not assign measured values to pieces or cha
 
 Follow the [version-16 balancing strategy](docs/balancing-strategy.md): audit engine values, calibrate flagged cases separately, then compare surviving upgrades against fixed references. Material compensation can later provide approximate added-value ranges; Amazon scores alone do not establish pawn-equivalent values.
 
-## Version 16: fixed 96-game material-data pilot
+## Version 16: fixed 1,152-game convergence study
+
+The [new study](experiments/balance/material-study-plan.md) uses **384 fresh book positions × three conditions = 1,152 scheduled games**, with **four jobs** and cumulative checkpoints at **384/768/1,152**. Exclude the pilot's 32 positions and keep its results separate. Ordinary pieces and the unchanged Amazon retain automatic evaluation, Skill 20, 20,000 nodes, one thread per engine, 32 MB hash and 400 plies.
+
+```bat
+npm.cmd run material:study -- --check --book "..\chess-variant-stats\chess.epd"
+npm.cmd run material:study -- --out balance-results/material-study --book "..\chess-variant-stats\chess.epd"
+npm.cmd run material:study -- --resume balance-results/material-study
+npm.cmd run material:study -- --report balance-results/material-study
+```
+
+The command and [native validation](experiments/balance/results/material-study-preflight-001.json) are ready; no formal study games have run in the cloud. Complete-triplet barriers preserve cumulative reports before continuing within the cap. **q / Ctrl+C** stops now, **g** after active games, and **p** after active pairs. Resume keeps four jobs and frozen identities; offline reporting starts no games.
+
+Primary fits assume pawn = 1 and queen = 9; unconstrained fits remain diagnostics. Freeze five grouped validation folds and 200 whole-position resamples, retaining draws and game weights. Review estimate changes, conditional interval widths, ordinary/combined rook differences and phase support at a practical 0.5-pawn resolution. The final decision can be usable, uncertain or cohort-dependent; reaching rook = 5 is not a success condition. No extension follows automatically.
+
+## Completed 96-game material-data pilot
 
 The [collection plan](experiments/balance/material-collection-plan.md) selects 32 full-army book positions with seed 42. Each supplies one ordinary game and Amazon-versus-queen games in both colors: **96 total**. Automatic values, Skill 20, 20,000 nodes, one thread, 32 MB hash and a 400-ply limit are fixed. The [completed pilot audit](experiments/balance/results/material-collection-001.md) verifies 96 completed games, all 10,639 plies and 881 retained samples, with no errors or truncations. No repeat run is required.
 
@@ -166,7 +181,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation, compensation pilot and 96-game collection pilot are complete. No further batch is scheduled.
+The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation, compensation pilot and 96-game collection pilot are complete. The separately declared [1,152-game convergence study](experiments/balance/material-study-plan.md) is the next collection step.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |
@@ -320,7 +335,7 @@ The Amazon (`queen.purple@1`, `QN`) remains one fixed reference upgrade: ordinar
 
 The intended material anchor remains the Amazon's added benefit over an ordinary queen. Direct compensation avoids subtracting two separately uncertain whole-piece estimates, but the first pilot did not validate its material scale. A revised method must pass a small control screen before any larger campaign. Only a credible compensation range could inform level-3 targets and provisional one-third/two-thirds targets for levels 1/2.
 
-Material-odds results remain contextual. A future assay needs several anchors and armies; a later search-budget check requires a concrete unresolved question and its own cap. Define 100 material centipawns as one reference pawn, separately from engine score units and raw MG/EG tables. Do not convert one score or an engine's centipawn evaluation directly into a material price. Extra units, promotion, deployment and royal safety can make advantages nonlinear. No replacement batch is scheduled.
+Material-odds results remain contextual. A future assay needs several anchors and armies; a later search-budget check requires a concrete unresolved question and its own cap. Define 100 material centipawns as one reference pawn, separately from engine score units and raw MG/EG tables. Do not convert one score or an engine's centipawn evaluation directly into a material price. Extra units, promotion, deployment and royal safety can make advantages nonlinear. No further material-odds batch is scheduled; the convergence study uses ordinary/Amazon outcome data separately.
 
 Start with equal-strength, equal-cost comparisons; inspect completion rates and opening sensitivity before tuning abilities. Keep the agreed 1/2/3 prices and increasing overall strength as design goals, and preserve old profiles when movement changes.
 

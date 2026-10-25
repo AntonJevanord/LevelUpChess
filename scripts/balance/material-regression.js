@@ -3,6 +3,7 @@
 // Offline, outcome-predictive diagnostic. These coefficients are neither search
 // parameters nor causal exchange prices. No engine evaluation enters the fit.
 const RIDGE = 0.001;
+const { createHash } = require('node:crypto');
 const MIN_BOOTSTRAP_GROUPS = 4;
 const MIN_NORMALIZATION_GROUPS = 8;
 const SCORES = { '1-0': 1, '1/2-1/2': 0.5, '0-1': 0 };
@@ -17,9 +18,16 @@ function prepare(dataset, options) {
     || dataset.featureNames.some(name => typeof name !== 'string' || !name)
     || !Array.isArray(dataset.samples) || !Array.isArray(dataset.games)) throw new Error('A material dataset needs featureNames, samples and games.');
   const bootstrap = options.bootstrap ?? 200, seed = options.seed ?? 42;
-  if (Object.keys(options).some(key => !['bootstrap', 'seed'].includes(key))
+  const anchors = options.anchors ?? null, validationFolds = options.validationFolds;
+  if (Object.keys(options).some(key => !['bootstrap', 'seed', 'anchors', 'validationFolds', 'onProgress'].includes(key))
     || !Number.isSafeInteger(bootstrap) || bootstrap < 0 || bootstrap > 2000
     || !Number.isSafeInteger(seed) || seed < 0 || seed > 0xffffffff) throw new Error('Use bootstrap 0–2000 and an unsigned 32-bit seed.');
+  if (anchors !== null && (!anchors || typeof anchors !== 'object' || Array.isArray(anchors)
+    || Object.keys(anchors).length !== 2 || Object.keys(anchors).some(key => !['pawn', 'queen'].includes(key))
+    || anchors.pawn !== 1 || anchors.queen !== 9
+    || !dataset.featureNames.includes('pawn') || !dataset.featureNames.includes('queen'))) throw new Error('Anchors require pawn=1 and queen=9 features.');
+  if (validationFolds !== undefined && (!Number.isSafeInteger(validationFolds) || validationFolds < 2 || validationFolds > 10)) throw new Error('Use 2–10 grouped validation folds.');
+  if (options.onProgress !== undefined && typeof options.onProgress !== 'function') throw new Error('onProgress must be a function.');
   const games = new Map(dataset.games.map(game => [game.gameId, game]));
   if (games.size !== dataset.games.length) throw new Error('Duplicate dataset game ID.');
   const pairGroups = new Map();
@@ -47,7 +55,8 @@ function prepare(dataset, options) {
   }
   const rows = [...dataset.samples].sort((a, b) => a.groupId.localeCompare(b.groupId) || a.gameId.localeCompare(b.gameId)
     || JSON.stringify(a.x).localeCompare(JSON.stringify(b.x)) || a.weight - b.weight);
-  return { rows, names: [...dataset.featureNames], groups: unique(rows.map(row => row.groupId)), bootstrap, seed };
+  return { rows, names: [...dataset.featureNames], groups: unique(rows.map(row => row.groupId)), bootstrap, seed,
+    anchors, validationFolds, onProgress: options.onProgress };
 }
 
 function design(rows, size) {
@@ -88,6 +97,16 @@ function rankOf(rows, names) {
   return { rank, columns: d, fullRank: rank === d, dependentFeatures: order.slice(rank).map(index => columns[index]), minimumPivot: Number.isFinite(minimumPivot) ? minimumPivot : null, correlations };
 }
 
+function modelRank(rows, names, anchors) {
+  if (!anchors) return rankOf(rows, names);
+  const pawn = names.indexOf('pawn'), queen = names.indexOf('queen');
+  const reducedNames = names.filter((_, j) => j !== queen).map(name => name === 'pawn' ? 'pawn+9*queen' : name);
+  const reduced = rows.map(row => ({ ...row, x: row.x.filter((_, j) => j !== queen)
+    .map((value, j) => reducedNames[j] === 'pawn+9*queen' ? row.x[pawn] + 9 * row.x[queen] : value) }));
+  return { ...rankOf(reduced, reducedNames), originalColumns: names.length + 1,
+    constraint: 'beta_queen = 9 * beta_pawn', fixedRatios: { pawn: 1, queen: 9 } };
+}
+
 function solve(matrix, vector) {
   const a = matrix.map((row, index) => [...row, vector[index]]), n = vector.length;
   for (let k = 0; k < n; k++) {
@@ -105,7 +124,8 @@ function solve(matrix, vector) {
   return answer;
 }
 
-function fit(rows, names) {
+function fit(rows, names, anchors) {
+  if (anchors) return fitAnchored(rows, names);
   if (!rows.length) return { converged: false, reason: 'no-data', iterations: 0, coefficients: {}, intercept: 0 };
   const transformed = design(rows, names.length), observations = transformed.rows, weight = sumWeight(rows), d = names.length + 1;
   let beta = new Array(d).fill(0), converged = false, iteration = 0;
@@ -141,6 +161,53 @@ function fit(rows, names) {
     intercept: beta[0] - dot(beta.slice(1).map((value, j) => value / transformed.scales[j]), transformed.means), coefficients };
 }
 
+function fitAnchored(rows, names) {
+  if (!rows.length) return { converged: false, reason: 'no-data', iterations: 0, coefficients: {}, intercept: 0 };
+  const transformed = design(rows, names.length), pawn = names.indexOf('pawn'), queen = names.indexOf('queen');
+  // Raw beta_Q=9*beta_P becomes b_Q=9*s_Q/s_P*b_P in the original
+  // standardized basis. Penalize both expanded slopes, never only the merged
+  // feature: its variance includes a covariance term absent from that penalty.
+  const factor = 9 * transformed.scales[queen] / transformed.scales[pawn];
+  const columns = Array.from({ length: names.length + 1 }, (_, j) => j).filter(j => j !== queen + 1);
+  const p = columns.indexOf(pawn + 1), d = columns.length, weight = sumWeight(rows);
+  const observations = transformed.rows.map(row => ({ ...row,
+    z: columns.map(j => row.z[j] + (j === pawn + 1 ? factor * row.z[queen + 1] : 0)) }));
+  const penalties = columns.map((j, index) => !j ? 0 : RIDGE * (index === p ? 1 + factor * factor : 1));
+  let beta = new Array(d).fill(0), converged = false, iteration = 0;
+  const objective = values => observations.reduce((total, row) => {
+    const value = dot(row.z, values);
+    return total + row.weight * (Math.max(value, 0) + Math.log1p(Math.exp(-Math.abs(value))) - row.y * value) / weight;
+  }, values.reduce((sum, value, j) => sum + penalties[j] * value * value / 2, 0));
+  for (; iteration < 80; iteration++) {
+    const gradient = beta.map((value, j) => penalties[j] * value);
+    const hessian = Array.from({ length: d }, (_, i) => Array.from({ length: d }, (_, j) => i === j ? penalties[i] : 0));
+    for (const row of observations) {
+      const probability = sigmoid(dot(row.z, beta)), error = (probability - row.y) * row.weight / weight;
+      const curvature = Math.max(probability * (1 - probability), 1e-14) * row.weight / weight;
+      for (let i = 0; i < d; i++) {
+        gradient[i] += error * row.z[i];
+        for (let j = 0; j <= i; j++) hessian[i][j] += curvature * row.z[i] * row.z[j];
+      }
+    }
+    if (Math.max(...gradient.map(Math.abs)) < 1e-8) { converged = true; break; }
+    for (let i = 0; i < d; i++) for (let j = i + 1; j < d; j++) hessian[i][j] = hessian[j][i];
+    const step = solve(hessian, gradient);
+    if (!step) break;
+    const before = objective(beta); let scale = 1, next;
+    do { next = beta.map((value, j) => value - scale * step[j]); scale /= 2; } while (objective(next) > before + 1e-12 && scale > 1e-8);
+    if (next.some(value => !Number.isFinite(value) || Math.abs(value) > 100)) break;
+    beta = next;
+  }
+  const expanded = new Array(names.length + 1).fill(0);
+  columns.forEach((column, index) => { expanded[column] = beta[index]; });
+  expanded[queen + 1] = factor * beta[p];
+  const coefficients = Object.fromEntries(names.map((name, j) => [name, expanded[j + 1] / transformed.scales[j]]));
+  const positiveScale = coefficients.pawn > 1e-6;
+  if (!positiveScale || rows.every(row => row.y === 0) || rows.every(row => row.y === 1)) converged = false;
+  return { converged, reason: !positiveScale ? 'anchor-scale-not-positive' : converged ? null : 'no-finite-converged-fit', iterations: iteration,
+    intercept: expanded[0] - dot(names.map(name => coefficients[name]), transformed.means), coefficients };
+}
+
 function metrics(rows, prediction) {
   const weight = sumWeight(rows); let brier = 0, logLoss = 0;
   for (const row of rows) {
@@ -154,17 +221,45 @@ const prediction = (model, names) => row => sigmoid(model.intercept + row.x.redu
 const separates = (rows, names, model) => rows.length > 0 && rows.every(row => row.y !== 0.5
   && (model.intercept + row.x.reduce((sum, value, j) => sum + value * model.coefficients[names[j]], 0)) * (2 * row.y - 1) > 1e-6);
 
-function validation(rows, names, groups) {
+function validation(rows, names, groups, anchors, foldCount, onProgress) {
+  if (foldCount !== undefined) return groupedValidation(rows, names, groups, anchors, foldCount, onProgress);
   const output = { available: false, reason: null, unit: 'whole-opening-family', folds: [], metrics: null, baselineMetrics: null };
   if (groups.length < 2) { output.reason = 'requires-at-least-two-groups'; return output; }
   const all = [], baseline = [];
   for (const group of groups) {
-    const train = rows.filter(row => row.groupId !== group), test = rows.filter(row => row.groupId === group), model = fit(train, names);
+    const train = rows.filter(row => row.groupId !== group), test = rows.filter(row => row.groupId === group), model = fit(train, names, anchors);
     const mean = train.reduce((sum, row) => sum + row.y * row.weight, 0) / sumWeight(train), predict = prediction(model, names);
     output.folds.push({ heldOutGroup: group, trainingGroups: groups.filter(value => value !== group), testGroups: [group],
       trainingGames: unique(train.map(row => row.gameId)).length, testGames: unique(test.map(row => row.gameId)).length,
-      converged: model.converged, fullRank: rankOf(train, names).fullRank, metrics: metrics(test, predict), baselineMetrics: metrics(test, () => mean) });
+      converged: model.converged, fullRank: modelRank(train, names, anchors).fullRank, metrics: metrics(test, predict), baselineMetrics: metrics(test, () => mean) });
     for (const row of test) { all.push({ ...row, probability: predict(row) }); baseline.push({ ...row, probability: mean }); }
+    onProgress?.({ phase: 'validation', completed: output.folds.length, total: groups.length });
+  }
+  output.available = output.folds.every(fold => fold.converged);
+  output.reason = output.available ? null : 'some-training-folds-did-not-converge';
+  output.metrics = metrics(all, row => row.probability); output.baselineMetrics = metrics(baseline, row => row.probability);
+  return output;
+}
+
+function groupedValidation(rows, names, groups, anchors, foldCount, onProgress) {
+  const assignments = new Map(groups.map(group => [group, parseInt(createHash('sha256').update(group).digest('hex').slice(0, 8), 16) % foldCount]));
+  const occupied = [...new Set(assignments.values())].sort((a, b) => a - b);
+  const output = { available: false, reason: null, unit: 'whole-opening-family',
+    strategy: 'sha256-group-id-modulo', requestedFolds: foldCount, occupiedFolds: occupied.length,
+    folds: [], metrics: null, baselineMetrics: null };
+  if (occupied.length < 2) { output.reason = 'requires-at-least-two-occupied-folds'; return output; }
+  const all = [], baseline = [];
+  for (const fold of occupied) {
+    const testGroups = groups.filter(group => assignments.get(group) === fold), testSet = new Set(testGroups);
+    const train = rows.filter(row => !testSet.has(row.groupId)), test = rows.filter(row => testSet.has(row.groupId));
+    const model = fit(train, names, anchors), mean = train.reduce((sum, row) => sum + row.y * row.weight, 0) / sumWeight(train);
+    const predict = prediction(model, names);
+    output.folds.push({ fold, trainingGroups: groups.filter(group => !testSet.has(group)), testGroups,
+      trainingGames: unique(train.map(row => row.gameId)).length, testGames: unique(test.map(row => row.gameId)).length,
+      converged: model.converged, fullRank: modelRank(train, names, anchors).fullRank,
+      metrics: metrics(test, predict), baselineMetrics: metrics(test, () => mean) });
+    for (const row of test) { all.push({ ...row, probability: predict(row) }); baseline.push({ ...row, probability: mean }); }
+    onProgress?.({ phase: 'validation', completed: output.folds.length, total: occupied.length });
   }
   output.available = output.folds.every(fold => fold.converged);
   output.reason = output.available ? null : 'some-training-folds-did-not-converge';
@@ -182,27 +277,34 @@ function interval(values) {
   return { lower: sorted[Math.floor((sorted.length - 1) * 0.025)], upper: sorted[Math.ceil((sorted.length - 1) * 0.975)] };
 }
 
-function resample(rows, names, groups, requested, seed) {
+function resample(rows, names, groups, requested, seed, anchors, onProgress) {
   const result = { available: false, reason: null, requested, completed: 0, seed, confidence: 0.95, groupUnit: 'whole-opening-family',
     minimumGroups: MIN_BOOTSTRAP_GROUPS, groupCount: groups.length, rankDeficient: 0, nonconverged: 0, pawnNonpositive: 0, possibleSeparation: 0,
     validRatios: 0, pawnCoefficient: { lower: null, upper: null }, coefficientIntervals: {}, ratioIntervals: {},
     interpretation: 'Exploratory conditional whole-family percentile stability; failed and unsupported fits are counted, not hidden. Not a universal confidence interval or representative material calibration.' };
+  if (anchors) result.fixedRatios = { pawn: 1, queen: 9 };
   if (!requested || groups.length < MIN_BOOTSTRAP_GROUPS) { result.reason = !requested ? 'disabled' : 'requires-at-least-four-groups'; return result; }
   const byGroup = new Map(groups.map(group => [group, rows.filter(row => row.groupId === group)])), random = randomSource(seed);
   const coefficients = Object.fromEntries(names.map(name => [name, []])), ratios = Object.fromEntries(names.map(name => [name, []]));
+  onProgress?.({ phase: 'bootstrap', completed: 0, total: requested });
   for (let replicate = 0; replicate < requested; replicate++) {
     const draws = new Map();
     for (let j = 0; j < groups.length; j++) { const group = groups[Math.floor(random() * groups.length)]; draws.set(group, (draws.get(group) || 0) + 1); }
     const sampled = [...draws].flatMap(([group, count]) => byGroup.get(group).map(row => ({ ...row, weight: row.weight * count })));
-    const model = fit(sampled, names), rank = rankOf(sampled, names); result.completed++;
-    if (!model.converged) { result.nonconverged++; continue; }
+    const model = fit(sampled, names, anchors), rank = modelRank(sampled, names, anchors); result.completed++;
+    if (result.completed % 20 === 0 || result.completed === requested) onProgress?.({ phase: 'bootstrap', completed: result.completed, total: requested });
+    if (!model.converged) {
+      if (anchors && model.reason === 'anchor-scale-not-positive') result.pawnNonpositive++;
+      else result.nonconverged++;
+      continue;
+    }
     if (!rank.fullRank) { result.rankDeficient++; continue; }
     for (const name of names) coefficients[name].push(model.coefficients[name]);
     if (separates(sampled, names, model)) { result.possibleSeparation++; continue; }
     const pawn = model.coefficients.pawn;
     if (!(pawn > 1e-6)) { result.pawnNonpositive++; continue; }
     result.validRatios++;
-    for (const name of names) ratios[name].push(model.coefficients[name] / pawn);
+    for (const name of names) ratios[name].push(anchors && name === 'queen' ? 9 : anchors && name === 'pawn' ? 1 : model.coefficients[name] / pawn);
   }
   result.available = coefficients[names[0]].length > 0;
   result.reason = result.available ? null : 'no-full-rank-converged-resamples';
@@ -213,14 +315,21 @@ function resample(rows, names, groups, requested, seed) {
 }
 
 function analyzeDataset(dataset, options = {}) {
-  const { rows, names, groups, bootstrap, seed } = prepare(dataset, options);
+  const { rows, names, groups, bootstrap, seed, anchors, validationFolds, onProgress } = prepare(dataset, options);
   const coverage = { samples: rows.length, games: unique(rows.map(row => row.gameId)).length, pairs: unique(rows.map(row => row.pairId)).length,
     groups: groups.length, groupIds: groups, drawGames: unique(rows.filter(row => row.y === 0.5).map(row => row.gameId)).length,
     features: names.map((name, j) => ({ name, min: rows.length ? rows.reduce((minimum, row) => Math.min(minimum, row.x[j]), Infinity) : null,
       max: rows.length ? rows.reduce((maximum, row) => Math.max(maximum, row.x[j]), -Infinity) : null,
       nonzeroGames: unique(rows.filter(row => row.x[j] !== 0).map(row => row.gameId)).length,
       groupsWithNonzero: unique(rows.filter(row => row.x[j] !== 0).map(row => row.groupId)).length })) };
-  const rank = rankOf(rows, names), model = fit(rows, names), bands = resample(rows, names, groups, bootstrap, seed), reasons = [];
+  if (anchors) {
+    const pawn = names.indexOf('pawn'), queen = names.indexOf('queen');
+    const supported = rows.filter(row => row.x[pawn] + 9 * row.x[queen] !== 0);
+    coverage.anchorScaleSupport = { feature: 'pawn+9*queen',
+      nonzeroGames: unique(supported.map(row => row.gameId)).length,
+      groupsWithNonzero: unique(supported.map(row => row.groupId)).length };
+  }
+  const rank = modelRank(rows, names, anchors), model = fit(rows, names, anchors), bands = resample(rows, names, groups, bootstrap, seed, anchors, onProgress), reasons = [];
   const possibleSeparation = separates(rows, names, model);
   if (!rows.length) reasons.push('no-data');
   if (!rank.fullRank) reasons.push('rank-deficient-design');
@@ -228,11 +337,18 @@ function analyzeDataset(dataset, options = {}) {
   if (possibleSeparation) reasons.push('possible-outcome-separation');
   if (!(model.coefficients.pawn > 1e-6)) reasons.push('pawn-coefficient-not-positive');
   if (groups.length < MIN_NORMALIZATION_GROUPS) reasons.push('fewer-than-eight-opening-families');
-  if (coverage.features.some(feature => feature.name !== 'tempo' && feature.groupsWithNonzero < MIN_NORMALIZATION_GROUPS)) reasons.push('insufficient-feature-group-support');
+  if (coverage.features.some(feature => feature.name !== 'tempo' && !(anchors && feature.name === 'queen')
+    && (anchors && feature.name === 'pawn' ? coverage.anchorScaleSupport.groupsWithNonzero : feature.groupsWithNonzero) < MIN_NORMALIZATION_GROUPS)) reasons.push('insufficient-feature-group-support');
   if (!bands.available || bands.validRatios < Math.max(20, 0.9 * bootstrap)) reasons.push('insufficient-stable-bootstrap-ratios');
   if (!(bands.pawnCoefficient.lower > 1e-6)) reasons.push('pawn-bootstrap-band-not-positive');
   const normalized = { available: !reasons.length, reason: reasons[0] || null, reasons,
-    minimumGroups: MIN_NORMALIZATION_GROUPS, values: reasons.length ? null : Object.fromEntries(names.map(name => [name, model.coefficients[name] / model.coefficients.pawn])) };
+    minimumGroups: MIN_NORMALIZATION_GROUPS, values: reasons.length ? null : Object.fromEntries(names.map(name => [name,
+      anchors && name === 'queen' ? 9 : anchors && name === 'pawn' ? 1 : model.coefficients[name] / model.coefficients.pawn])) };
+  if (anchors) {
+    normalized.fixedAnchors = { pawn: 1, queen: 9 };
+    normalized.materialPriceTableSupported = false;
+    normalized.interpretation = 'Conditional fitted ratios under assumed pawn=1 and queen=9. Fixed anchors are assumptions, not measured values or uncertainty bounds.';
+  }
   const warnings = [...(dataset.limitations || [])];
   if (!rank.fullRank) warnings.push('Ridge yields exploratory predictions despite missing rank; coefficients are not separately identified by these data.');
   if (possibleSeparation) warnings.push('The fitted linear predictor perfectly separates decisive outcomes; finite slopes depend on ridge rather than an ordinary finite unpenalized likelihood estimate.');
@@ -244,9 +360,12 @@ function analyzeDataset(dataset, options = {}) {
       bootstrapUnit: 'whole opening family', minimumBootstrapGroups: MIN_BOOTSTRAP_GROUPS, minimumNormalizationGroups: MIN_NORMALIZATION_GROUPS,
       normalizationThreshold: 'Conservative reporting policy, not a confidence guarantee or a reason to generate more games automatically.',
       regularizationCaveat: 'Ridge produces finite exploratory slopes even for some separated outcomes; absence of a perfect-classification flag does not exclude quasi-separation.',
-      interpretation: 'Exploratory outcome-predictive coefficients conditional on this selected dataset and playing policy; not intrinsic or causal piece values.' },
+      interpretation: 'Exploratory outcome-predictive coefficients conditional on this selected dataset and playing policy; not intrinsic or causal piece values.',
+      ...(anchors ? { anchors: { pawn: 1, queen: 9 }, anchorConstraint: 'beta_queen = 9 * beta_pawn with positive fitted score conversion',
+        anchorPenalty: 'Both original pawn and queen standardized slopes retain their ridge penalties.' } : {}),
+      ...(validationFolds !== undefined ? { validationFolds, validationAssignment: 'sha256-group-id-modulo' } : {}) },
     coverage, rank, fit: { ...model, possibleSeparation, metrics: rows.length ? metrics(rows, prediction(model, names)) : { brier: null, logLoss: null } },
-    validation: validation(rows, names, groups), bootstrap: bands, normalized, warnings };
+    validation: validation(rows, names, groups, anchors, validationFolds, onProgress), bootstrap: bands, normalized, warnings };
 }
 
 module.exports = { analyzeDataset };
