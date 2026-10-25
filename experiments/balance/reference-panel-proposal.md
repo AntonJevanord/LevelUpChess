@@ -1,10 +1,45 @@
-# Proposed four-reference comparison
+# Four-reference comparison plan
 
 Test whether upgrades with similar fitted **added benefit over their ordinary
 piece** also score near 50% against each other. The completed
 [1,152-game material study](results/material-study-001.md) stays closed and
-separate. This is a proposed **2,688-game cap with four jobs**, not a configured
-or started campaign. No pieces, prices or engine values change.
+separate. The configured cap is **2,688 games with four jobs**. Implementation and
+[validation](results/reference-panel-preflight-001.json) are complete: 685 tests
+passed, with 36 environment-dependent cases skipped. All 2,688 native starts and
+30 movement/role probes passed, and two interrupted four-job invocations preserved
+their histories and manifest. No scored study games have run in the cloud.
+The [frozen configuration](reference-panel.json) changes no pieces, prices or
+automatic engine values.
+
+## Run on Windows
+
+From the repository folder, using a new output directory:
+
+```bat
+git pull
+npm.cmd run material:references -- --check --book "..\chess-variant-stats\chess.epd"
+npm.cmd run material:references -- --out balance-results/reference-panel --book "..\chess-variant-stats\chess.epd"
+npm.cmd run material:references -- --resume balance-results/reference-panel
+npm.cmd run material:references -- --report balance-results/reference-panel
+```
+
+Adjust the book path if needed. Four jobs are fixed; `--jobs 4` is optional on a
+new run. Resume uses the saved positions and original identities, so supply no
+new book or job count. Preserve the complete result folder and matching checkout
+and engine. `--check` performs native movement/value checks without starting
+games; `--report` works offline without an engine or Python.
+
+Press **q / Ctrl+C** to save active move histories and stop immediately, skipping
+expensive analysis. Run `--report` afterward to refresh estimates. **g** finishes
+active games and **p** finishes active pairs before reporting and exit. Immediate
+stop during analysis leaves the previous report intact and never freezes an
+incomplete checkpoint. Starts/results print named winners/colors and running
+points without ply logs; analysis prints progress. The final stage exits normally.
+
+Current outputs are `reference-report.md`/`.json`, `reference-dataset.json`,
+`reference-samples.jsonl` and `ordinary.epd`/`single.epd`/`head.epd`. Immutable
+checkpoint reports live in `checkpoints/672`, `checkpoints/1344` and
+`checkpoints/2688`; the current report includes their estimate trajectory.
 
 ## Freeze the four references
 
@@ -19,6 +54,11 @@ The bishop includes sideways moves **and captures**; it is neither the older
 quiet-sideways `@2` nor unlimited-sideways `@6`. All four replace pieces, avoiding
 extra units and pawn displacement. The rook retains its castling role, and
 promotion remains standard Q/R/B/N.
+
+The updated [family design draft](../designs/family-draft.ini) is preserved
+separately. As confirmed for this run, retain the tested bishop `BsR2sN` and
+automatic values; the draft's `BsNsWsD` sideways jump and manual MG settings are
+different research choices.
 
 Earlier screening supports comparison, not assumed equality: Camel knight and
 Knight-capture rook scored about 56.3% and 47.2% against Amazon over only eight
@@ -42,7 +82,7 @@ Use one shared registry/profile with four custom letters for the entire run.
 Substitute pieces on their actual book-position squares, keeping the rest of the
 position intact. Use the same selected member of each family in all 21 conditions.
 
-Freeze selection before implementation: alternate leftmost/rightmost ordinary
+The frozen selection alternates leftmost/rightmost ordinary
 knight and rook by block parity, with file ties resolved toward the owner's back
 rank. For bishops, alternate color complexes: odd blocks use White's dark-squared
 and Black's light-squared bishop, even blocks the reverse. This gives 64 positions

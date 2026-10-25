@@ -53,7 +53,18 @@ Open [prototypes/kings/index.html](prototypes/kings/index.html) to try the captu
 
 Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Bringing king choices into the main board's setup, engine play, and saves remains integration work. See the [prototype guide](prototypes/kings/README.md).
 
-## Version 16: completed material estimate study
+## Version 16: four-reference comparison
+
+The [four-reference plan](experiments/balance/reference-panel-proposal.md) compares Horizontal bishop, Knight-capture rook, Camel knight and Amazon over **2,688 games with four jobs**. Reports at **672, 1,344 and 2,688 games** compare material estimates from ordinary/single-upgrade games, head-to-head games and both combined, with uncertainty on their differences and grouped prediction checks.
+
+```bat
+npm.cmd run material:references -- --check --book "..\chess-variant-stats\chess.epd"
+npm.cmd run material:references -- --out balance-results/reference-panel --book "..\chess-variant-stats\chess.epd"
+```
+
+Ready for local execution: 685 tests passed, with 36 environment-dependent cases skipped, and native preflight validated all 2,688 starts. The [validation evidence](experiments/balance/results/reference-panel-preflight-001.json) also records interrupted four-job resume and natural offline CLI exit. No scored study games have run in the cloud. The [plan](experiments/balance/reference-panel-proposal.md) covers stop/resume, offline reports and the fixed cap. Pieces, purchase prices and automatic engine values remain unchanged; pawn = 1 and queen = 9 are analysis assumptions.
+
+## Completed material estimate study
 
 The [1,152-game study](experiments/balance/results/material-study-001.md) is complete: all games finished without errors or truncations, and all 126,924 plies replay correctly. Under the assumed pawn = 1 / queen = 9 scale, the combined estimates are knight 2.88, bishop 3.04, rook 4.78 and Amazon 12.84, including an upgrade bonus of 3.84 (conditional range 3.37–4.38).
 
@@ -62,8 +73,6 @@ npm.cmd run material:study -- --report balance-results/material-study
 ```
 
 More data substantially improved stability; residual cohort and phase effects remain. Use the result for rough comparisons in this context. The study is closed at its declared cap; no repeat or extension is needed. Original files, checkpoint estimates and the reproducible offline audit are preserved in the [review](experiments/balance/results/material-study-001.md). Engine values and purchase prices remain unchanged.
-
-The next [proposed four-reference comparison](experiments/balance/reference-panel-proposal.md) compares estimates from ordinary/single-upgrade games, head-to-head games and both combined, with whole-position prediction checks. Its 2,688-game cap and four-job design are documented; the collector is not configured yet.
 
 ## Completed matched material-data pilot
 

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "reference-panel-v16-001",
+  "seed": 42,
+  "bookPositions": 128,
+  "conditionsPerPosition": 21,
+  "totalGames": 2688,
+  "jobs": 4,
+  "checkpoints": [672, 1344, 2688],
+  "designIds": ["bishop.purple@4", "rook.purple@2", "knight.purple@3", "queen.purple@1"],
+  "evaluation": "automatic",
+  "engine": { "nodes": 20000, "threads": 1, "hashMb": 32, "maxPlies": 400 },
+  "strength": { "skill": 20 },
+  "sampling": { "minPly": 16, "stride": 5, "stableBefore": 2, "stableAfter": 2 },
+  "analysis": { "anchors": { "pawn": 1, "queen": 9 }, "ridge": 0.001, "bootstrap": 200, "validationFolds": 5, "agreementMargin": 0.5 },
+  "selection": "Alternate left/right knights and rooks; alternate original bishop color complexes; preserve one member per family/color throughout each block.",
+  "excludeSources": [
+    { "file": "experiments/balance/results/material-collection-preflight-001.json", "sha256": "8ba23279d021fdf2401d5d74b49b4b72e94a33d2b109403a78abed998e6891ee" },
+    { "file": "experiments/balance/results/material-study-preflight-001.json", "sha256": "375e0d5b8189f04350a42f50f3d89aeff02d77a1e2f07cf502a3c4da173e312e" }
+  ]
+}

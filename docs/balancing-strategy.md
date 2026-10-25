@@ -183,14 +183,17 @@ purchase prices unchanged; a three-point purchase need not confer exactly three
 pawns of benefit. Preserve native parameter units, displayed engine scores and
 material estimates separately. Do not tune the evaluator to produce the target.
 
-The [four-reference proposal](../experiments/balance/reference-panel-proposal.md)
+The [four-reference plan](../experiments/balance/reference-panel-proposal.md)
 compares Horizontal bishop, Knight-capture rook, Camel knight and Amazon across
 128 matched positions, capped at 2,688 games with four jobs. All 1,152 ordinary/
 single-upgrade and 1,536 head-to-head games inform the final estimates. Five fixed
 folds withhold whole 21-game position blocks, training on the other groups to
 check head-to-head predictions. No outcome predicts itself. Selected FENs can
 share broader opening ancestry, so this remains conditional validation. The
-proposal needs collector/report implementation before any scored run.
+collector and reports passed 685 tests and
+[native/workflow validation](../experiments/balance/results/reference-panel-preflight-001.json).
+The fixed study is ready for local execution. No scored study games have run in the cloud. Earlier frozen sources
+and completed studies stay unchanged.
 
 Also fit the ordinary/single-upgrade and head-to-head cohorts separately. Use
 paired whole-position resampling to compare their estimated bonuses and difference

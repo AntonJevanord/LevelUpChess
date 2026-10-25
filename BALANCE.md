@@ -6,7 +6,24 @@ These tools collect results; they do not assign measured values to pieces or cha
 
 Follow the [version-16 balancing strategy](docs/balancing-strategy.md): audit engine values, calibrate flagged cases separately, then compare surviving upgrades against fixed references. Material compensation can later provide approximate added-value ranges; Amazon scores alone do not establish pawn-equivalent values.
 
-## Version 16: completed 1,152-game convergence study
+## Version 16: four-reference comparison
+
+The [fixed plan](experiments/balance/reference-panel-proposal.md) uses **128 fresh positions × 21 conditions = 2,688 games**, with **four jobs** and cumulative checkpoints at **672/1,344/2,688**. One shared profile contains the unchanged Horizontal bishop, Knight-capture rook, Camel knight and Amazon. All 416 positions from the completed pilot and material study are excluded.
+
+```bat
+npm.cmd run material:references -- --check --book "..\chess-variant-stats\chess.epd"
+npm.cmd run material:references -- --out balance-results/reference-panel --book "..\chess-variant-stats\chess.epd"
+npm.cmd run material:references -- --resume balance-results/reference-panel
+npm.cmd run material:references -- --report balance-results/reference-panel
+```
+
+Use a new output folder and adjust the book path if needed. Resume uses its frozen positions, four workers and original executable/source identities; supply no new book or jobs. `--check` starts no games. `--report` replays recorded games without an engine or Python. Validation passed: 685 tests, 36 environment-dependent skips, all 2,688 native starts and 30 capability/role probes. Two interrupted four-job invocations preserved prefixes and the original manifest; offline reporting exits naturally. See the [evidence](experiments/balance/results/reference-panel-preflight-001.json). No scored study games have run in the cloud.
+
+**q / Ctrl+C** saves active move histories and stops without expensive analysis; use `--report` afterward to refresh estimates. **g** finishes active games and **p** finishes active pairs before reporting and exit. Immediate stop during analysis preserves the previous report and does not freeze an incomplete checkpoint. Starts/results name the players, winner/color and running points; ply logs are omitted. Analysis prints progress, and the final stage exits normally at the cap.
+
+`reference-report.md` and `.json` compare ordinary/single-upgrade, head-to-head and combined estimates, paired differences at a practical ±0.5-pawn resolution, and predictions made with whole position groups withheld. Primary fits assume pawn = 1 and queen = 9; unconstrained diagnostics remain visible. Checkpoint reports stay in `checkpoints/672`, `checkpoints/1344` and `checkpoints/2688`; the current report includes their trajectory. The dataset, sparse samples and ordinary/single/head EPDs are saved alongside them. Keep the complete result folder and matching checkout/engine together.
+
+## Completed 1,152-game convergence study
 
 The [completed study](experiments/balance/results/material-study-001.md) contains **384 fresh book positions × three conditions = 1,152 completed games**, with recorded **four-job** settings and cumulative checkpoints at **384/768/1,152**. All 126,924 plies replay, the final report regenerates exactly, and original manifest/source/executable hashes verify. The pilot's 32 positions are excluded. Ordinary pieces and unchanged Amazon retain automatic evaluation, Skill 20, 20,000 nodes, one thread per engine, 32 MB hash and 400 plies.
 
@@ -18,8 +35,6 @@ node experiments/balance/results/material-study-001.audit.cjs
 The study is closed; no further collection is needed. The commands above analyze existing data only. The [original plan](experiments/balance/material-study-plan.md), native preflight and raw evidence remain preserved.
 
 Under assumed pawn = 1 and queen = 9, combined values are knight 2.88, bishop 3.04, rook 4.78 and Amazon bonus 3.84 (conditional range 3.37–4.38). More data substantially improves stability and narrows the anchored rook cohort gap to 0.30. The unconstrained combined bonus is similar at 3.75, but its rook gap remains 0.57. Close as usable for rough comparisons in context; no universal price table, evaluation change or automatic extension follows. Five grouped folds and 200 whole-position resamples retain draws and game weights.
-
-The [next proposal](experiments/balance/reference-panel-proposal.md) compares four fixed references with 1,152 ordinary/single-upgrade and 1,536 head-to-head games, capped at 2,688 with four jobs. Report estimates for each cohort and both combined, plus paired uncertainty on their differences; whole-position holdouts check predictions. It is documented but not configured or started.
 
 ## Completed 96-game material-data pilot
 
@@ -181,7 +196,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation, compensation pilot, 96-game collection pilot and [1,152-game convergence study](experiments/balance/results/material-study-001.md) are complete. No collection batch is currently scheduled.
+The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation, compensation pilot, 96-game collection pilot and [1,152-game convergence study](experiments/balance/results/material-study-001.md) are complete. The separately configured [four-reference comparison](experiments/balance/reference-panel-proposal.md) is the next bounded study.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |
