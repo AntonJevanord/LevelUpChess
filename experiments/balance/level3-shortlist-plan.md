@@ -10,7 +10,7 @@ not alter the running experiment.
 | --- | --- |
 | Queen | Fixed Amazon, `queen.purple@1` |
 | Knight | Camel knight, `knight.purple@3` |
-| Horizontal bishop | Select after the current experiment |
+| Horizontal bishop | Original `bishop.purple@4` or a revision, after the current review |
 | Rook | Select after the current experiment |
 | Mobile pawn | Ranging `pawn.purple@7` and/or Courier `pawn.purple@8` |
 | Rank pawn | Wide-knight version, `pawn.purple@9` |
