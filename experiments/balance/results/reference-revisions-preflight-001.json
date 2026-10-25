@@ -1,0 +1,1069 @@
+{
+  "schemaVersion": 1,
+  "id": "reference-revisions-preflight-001",
+  "date": "2026-10-25",
+  "scope": "Native diagnostics, archived-move replay and interrupted four-worker workflow only. Zero completed extension games or new balance evidence.",
+  "planId": "reference-revisions-v16-001",
+  "settings": {
+    "seed": 42,
+    "nodes": 20000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400,
+    "skill": 20,
+    "bookPositions": 128,
+    "totalGames": 4608
+  },
+  "jobs": 4,
+  "checkpoints": [
+    1152,
+    2304,
+    4608
+  ],
+  "analysis": {
+    "anchors": {
+      "pawn": 1,
+      "queen": 9
+    },
+    "ridge": 0.001,
+    "bootstrap": 200,
+    "validationFolds": 5,
+    "agreementMargin": 0.5
+  },
+  "inheritedGames": 2688,
+  "newScheduledGames": 4608,
+  "linkedScheduledGames": 7296,
+  "parent": {
+    "manifestFile": "experiments/balance/results/reference-panel-001.collection.json",
+    "manifestSha256": "534dd8c8688899b555757978fcf8a36fabd700416e6dd78b18e6e858d6871417",
+    "journalFile": "experiments/balance/results/reference-panel-001.games.jsonl",
+    "journalSha256": "3aaa7ea9dd70cb555e368849897d6c1dc67d6240b0091c5da5092fcb9b64ba49",
+    "runId": "fdbc7887-daf3-4ce6-b33b-98e95bcfe7a9",
+    "profileHash": "f954b668baec85cd8427e2381ffef2fd79c6b62e89e2cddc7a15d0e6e9cb601c",
+    "registryHash": "8ffe24875d86dcfba9880163d825e4761082cd178562b1e8f4978aec9afe7be0",
+    "engineSha256": "848ad74c3fbc2684e57b42c581ee94e93e5ed832fb536846a37f9dddebbb8b16",
+    "scheduledGames": 2688,
+    "completedGames": 2687,
+    "truncatedGames": 1
+  },
+  "roster": [
+    {
+      "key": "horizontal-bishop",
+      "label": "Horizontal bishop (original)",
+      "id": "bishop.purple@4",
+      "family": "bishop",
+      "movement": "BsR2sN",
+      "role": "historical"
+    },
+    {
+      "key": "knight-capture-rook",
+      "label": "Knight-capture rook (original)",
+      "id": "rook.purple@2",
+      "family": "rook",
+      "movement": "RcN",
+      "role": "historical"
+    },
+    {
+      "key": "bishop-short-side",
+      "label": "Bishop: short side",
+      "id": "bishop.purple@7",
+      "family": "bishop",
+      "movement": "BsWsN",
+      "role": "candidate"
+    },
+    {
+      "key": "bishop-quiet-jump",
+      "label": "Bishop: quiet jump",
+      "id": "bishop.purple@8",
+      "family": "bishop",
+      "movement": "BsR2msN",
+      "role": "candidate"
+    },
+    {
+      "key": "bishop-forward-jump",
+      "label": "Bishop: forward jump",
+      "id": "bishop.purple@9",
+      "family": "bishop",
+      "movement": "BsR2fsN",
+      "role": "candidate"
+    },
+    {
+      "key": "rook-diagonal-capture",
+      "label": "Rook: diagonal capture",
+      "id": "rook.purple@6",
+      "family": "rook",
+      "movement": "RcNcF",
+      "role": "candidate"
+    },
+    {
+      "key": "rook-diagonal-step",
+      "label": "Rook: diagonal step",
+      "id": "rook.purple@7",
+      "family": "rook",
+      "movement": "RcNF",
+      "role": "candidate"
+    },
+    {
+      "key": "rook-full-knight",
+      "label": "Rook: full knight",
+      "id": "rook.purple@8",
+      "family": "rook",
+      "movement": "RN",
+      "role": "candidate"
+    },
+    {
+      "key": "camel-knight",
+      "label": "Camel knight",
+      "id": "knight.purple@3",
+      "family": "knight",
+      "movement": "NC",
+      "role": "reference"
+    },
+    {
+      "key": "amazon",
+      "label": "Amazon",
+      "id": "queen.purple@1",
+      "family": "queen",
+      "movement": "QN",
+      "role": "reference"
+    }
+  ],
+  "profileHash": "08f66036deb767594385af3d5cfdb945d016465b46cbce88e1f0f4882f3c83eb",
+  "registryHash": "c0366c75ae2b09dfd77e47ec574229c9ae58caa8a90c6bbbb4493c85bd38d150",
+  "identity": {
+    "rulesBundleSha256": "22471ea98ae6918421784933d6bf465756248a916ccd96be8cbcf29910d92089",
+    "engineSha256": "8ccde8596fb88aa7fbbf1020cc5afa52ef9d1887764275ea8e627ba0227e4f1e",
+    "runnerSources": [
+      {
+        "file": "run.js",
+        "sha256": "c647fdbf81b5420a3928fcb21d7e8fcd865e703a8f64f9a2fca588b10e40c26e"
+      },
+      {
+        "file": "plan.js",
+        "sha256": "22ba39d61a152f38092cbc192bbb3b9dbeb011ba7a842aeeb95b1e3877d633d0"
+      },
+      {
+        "file": "stats.js",
+        "sha256": "dd55139112cc8fa89ae1ebcc7c1f81631e3aca44a6e01e3ad756f4b52766c5fc"
+      },
+      {
+        "file": "storage.js",
+        "sha256": "6ab2623e2877c3caec418c27fefa737d108cf0e0e8dab805caaa404d72c563fc"
+      },
+      {
+        "file": "uci.js",
+        "sha256": "fe0617deb68d7556d59cf0a0063f565be9a8867c4a7a2ba2643f763e36390088"
+      },
+      {
+        "file": "capabilities.js",
+        "sha256": "a5cc31921e7d88de8214a09fa888158dc285a3d5fba9682d5c3a91fb601c9086"
+      },
+      {
+        "file": "../engine-capabilities.js",
+        "sha256": "640389c60255577db149ba87acccd323fa4209d907fd2eaa8521a1805dbfd6d9"
+      },
+      {
+        "file": "files.js",
+        "sha256": "25cd2624c6e08fb674bf06c0a71614606d7d414fc0bacec881e69719f42feedc"
+      },
+      {
+        "file": "resume-compatibility.js",
+        "sha256": "d3034c734b56665a529632aa777fe30eb6679d339463481cbfe8bf22daa4c579"
+      },
+      {
+        "file": "design-registry.js",
+        "sha256": "de9ee5ba4ad2ea24098800be726e8cbdb4155a8f29b9e799ecabc20cb889c073"
+      },
+      {
+        "file": "design-profile.js",
+        "sha256": "1304775684d659d3d043e3712f1907df1cd4ec9cb3444260ad312aa664d35e99"
+      },
+      {
+        "file": "evaluation.js",
+        "sha256": "3d6bbbd7ffa94816c269daf2e849710c0637869f0d3f2aabf869103eb3e23d1c"
+      },
+      {
+        "file": "../../src/design-catalog.js",
+        "sha256": "bb11efa4fb955f831204669f586223e3e2d37d009b8e8e65784c4fcd37fa45bb"
+      }
+    ],
+    "runnerSha256": "1aa822d702d06278e37bc13b3d16b05bbb15cc2c542f40f232a8bea421e971df",
+    "revisionSources": [
+      {
+        "file": "scripts/reference-revisions.js",
+        "sha256": "4c075df0a0bfe0ec19d0065ed7af57e7607556ee5e9d0fee4512012df7301cf0"
+      },
+      {
+        "file": "scripts/balance/revision-run.js",
+        "sha256": "96de532c5a45f8fc0bcf69c07141b9a29c4698065783e42fa9ea33a9b483dc83"
+      },
+      {
+        "file": "scripts/balance/revision-plan.js",
+        "sha256": "387e05adcbabc2fc734988fe929cfad68e8753f8579040757052cb42cf6c7e5d"
+      },
+      {
+        "file": "scripts/balance/revision-collection-run.js",
+        "sha256": "c63c96295561c79b480819e104f221335fb0960c47ab53198138730baf0db25e"
+      },
+      {
+        "file": "scripts/balance/revision-report.js",
+        "sha256": "ce40a3d89a262d49fe8faff980466ee6fdc1ea146e376cd51bf06572ab6f46e6"
+      },
+      {
+        "file": "scripts/balance/revision-dataset.js",
+        "sha256": "7535aa1bddd342abd7efb057b0f0d707b1b227399cc81ddb79ac9ac9559b4aa8"
+      },
+      {
+        "file": "scripts/balance/revision-compatibility.js",
+        "sha256": "b57c33adeaf4c59608778181adae1d2068d142fd6e060a5b5d5bb9318bcd4b06"
+      },
+      {
+        "file": "scripts/balance/reference-plan.js",
+        "sha256": "94fdff04a688fb545bd54ee57b295facbda4342492c16dcc8b6176bb122e7dec"
+      },
+      {
+        "file": "scripts/balance/reference-dataset.js",
+        "sha256": "50fc494f6ad505f9bfb6ab93bc6c11e99fa21f1223ca2ea7fc31281bc0606d07"
+      },
+      {
+        "file": "scripts/balance/reference-report.js",
+        "sha256": "8fff28b0ba4ba293757be390a86f157fdd6b51647cd229fdf48bf37837b79574"
+      },
+      {
+        "file": "experiments/balance/reference-panel.json",
+        "sha256": "5bd06ec03c576f39ef7df8d564481b5db3906fbcc95f91d6747cb4f56357a569"
+      },
+      {
+        "file": "scripts/balance/reference-regression.js",
+        "sha256": "3b08f4f43ebd91973bd75da7eae85719af990e36464b0a9d59fa7fcaea024ec2"
+      },
+      {
+        "file": "scripts/balance/reference-analysis.js",
+        "sha256": "94ffb85205ef1a384c17b38fe1dfabd2aa4739b74e6ecb506470a9760b1b7e1f"
+      },
+      {
+        "file": "scripts/balance/material-dataset.js",
+        "sha256": "bbd370206bc9370ea035ca7dea8c5a7545bdcaa8dcbb3345b5000f55260a8499"
+      },
+      {
+        "file": "scripts/balance/material-regression.js",
+        "sha256": "08a576bdb7b087b1932188285b19557ef08b2f7cc39b447359bc9c09412693ed"
+      },
+      {
+        "file": "scripts/material-collect.js",
+        "sha256": "6ac7a151353c7927c0b750e920c8ec7d0c65229b433103add776a84122be4979"
+      },
+      {
+        "file": "experiments/balance/reference-revisions.json",
+        "sha256": "edd6194319482b6ada4be8f0feeab46a9797529fd93575a19b14ec746b781946"
+      },
+      {
+        "file": "experiments/balance/results/reference-panel-001.collection.json",
+        "sha256": "534dd8c8688899b555757978fcf8a36fabd700416e6dd78b18e6e858d6871417"
+      },
+      {
+        "file": "experiments/balance/results/reference-panel-001.games.jsonl",
+        "sha256": "3aaa7ea9dd70cb555e368849897d6c1dc67d6240b0091c5da5092fcb9b64ba49"
+      }
+    ],
+    "collectorSha256": "70e851fae53b425a0f1b81942326a7125375fde48e24cbfc373827d9f506b068",
+    "revisionSha256": "70e851fae53b425a0f1b81942326a7125375fde48e24cbfc373827d9f506b068"
+  },
+  "enginePlatform": "linux",
+  "bundledWindowsEngineSha256": "848ad74c3fbc2684e57b42c581ee94e93e5ed832fb536846a37f9dddebbb8b16",
+  "native": {
+    "engineName": "Fairy-Stockfish 230826",
+    "pieceValues": {
+      "version": 1,
+      "pieces": {
+        "P": {
+          "rawMg": 126,
+          "rawEg": 208,
+          "captureMg": 126,
+          "captureEg": 208,
+          "evalMg": 126,
+          "evalEg": 208
+        },
+        "p": {
+          "rawMg": 126,
+          "rawEg": 208,
+          "captureMg": 126,
+          "captureEg": 208,
+          "evalMg": 126,
+          "evalEg": 208
+        },
+        "N": {
+          "rawMg": 781,
+          "rawEg": 854,
+          "captureMg": 781,
+          "captureEg": 854,
+          "evalMg": 781,
+          "evalEg": 854
+        },
+        "n": {
+          "rawMg": 781,
+          "rawEg": 854,
+          "captureMg": 781,
+          "captureEg": 854,
+          "evalMg": 781,
+          "evalEg": 854
+        },
+        "B": {
+          "rawMg": 825,
+          "rawEg": 915,
+          "captureMg": 825,
+          "captureEg": 915,
+          "evalMg": 825,
+          "evalEg": 915
+        },
+        "b": {
+          "rawMg": 825,
+          "rawEg": 915,
+          "captureMg": 825,
+          "captureEg": 915,
+          "evalMg": 825,
+          "evalEg": 915
+        },
+        "R": {
+          "rawMg": 1276,
+          "rawEg": 1380,
+          "captureMg": 1276,
+          "captureEg": 1380,
+          "evalMg": 1276,
+          "evalEg": 1380
+        },
+        "r": {
+          "rawMg": 1276,
+          "rawEg": 1380,
+          "captureMg": 1276,
+          "captureEg": 1380,
+          "evalMg": 1276,
+          "evalEg": 1380
+        },
+        "Q": {
+          "rawMg": 2538,
+          "rawEg": 2682,
+          "captureMg": 2538,
+          "captureEg": 2682,
+          "evalMg": 2538,
+          "evalEg": 2682
+        },
+        "q": {
+          "rawMg": 2538,
+          "rawEg": 2682,
+          "captureMg": 2538,
+          "captureEg": 2682,
+          "evalMg": 2538,
+          "evalEg": 2682
+        },
+        "A": {
+          "rawMg": 1742,
+          "rawEg": 1769,
+          "captureMg": 1742,
+          "captureEg": 1769,
+          "evalMg": 1742,
+          "evalEg": 1769
+        },
+        "a": {
+          "rawMg": 1742,
+          "rawEg": 1769,
+          "captureMg": 1742,
+          "captureEg": 1769,
+          "evalMg": 1742,
+          "evalEg": 1769
+        },
+        "C": {
+          "rawMg": 1539,
+          "rawEg": 1582,
+          "captureMg": 1539,
+          "captureEg": 1582,
+          "evalMg": 1539,
+          "evalEg": 1582
+        },
+        "c": {
+          "rawMg": 1539,
+          "rawEg": 1582,
+          "captureMg": 1539,
+          "captureEg": 1582,
+          "evalMg": 1539,
+          "evalEg": 1582
+        },
+        "G": {
+          "rawMg": 1663,
+          "rawEg": 1877,
+          "captureMg": 1663,
+          "captureEg": 1877,
+          "evalMg": 1663,
+          "evalEg": 1877
+        },
+        "g": {
+          "rawMg": 1663,
+          "rawEg": 1877,
+          "captureMg": 1663,
+          "captureEg": 1877,
+          "evalMg": 1663,
+          "evalEg": 1877
+        },
+        "D": {
+          "rawMg": 1618,
+          "rawEg": 1635,
+          "captureMg": 1618,
+          "captureEg": 1635,
+          "evalMg": 1618,
+          "evalEg": 1635
+        },
+        "d": {
+          "rawMg": 1618,
+          "rawEg": 1635,
+          "captureMg": 1618,
+          "captureEg": 1635,
+          "evalMg": 1618,
+          "evalEg": 1635
+        },
+        "E": {
+          "rawMg": 2240,
+          "rawEg": 2297,
+          "captureMg": 2240,
+          "captureEg": 2297,
+          "evalMg": 2240,
+          "evalEg": 2297
+        },
+        "e": {
+          "rawMg": 2240,
+          "rawEg": 2297,
+          "captureMg": 2240,
+          "captureEg": 2297,
+          "evalMg": 2240,
+          "evalEg": 2297
+        },
+        "J": {
+          "rawMg": 1858,
+          "rawEg": 1903,
+          "captureMg": 1858,
+          "captureEg": 1903,
+          "evalMg": 1858,
+          "evalEg": 1903
+        },
+        "j": {
+          "rawMg": 1858,
+          "rawEg": 1903,
+          "captureMg": 1858,
+          "captureEg": 1903,
+          "evalMg": 1858,
+          "evalEg": 1903
+        },
+        "F": {
+          "rawMg": 2413,
+          "rawEg": 2531,
+          "captureMg": 2413,
+          "captureEg": 2531,
+          "evalMg": 2413,
+          "evalEg": 2531
+        },
+        "f": {
+          "rawMg": 2413,
+          "rawEg": 2531,
+          "captureMg": 2413,
+          "captureEg": 2531,
+          "evalMg": 2413,
+          "evalEg": 2531
+        },
+        "U": {
+          "rawMg": 3738,
+          "rawEg": 3875,
+          "captureMg": 3738,
+          "captureEg": 3875,
+          "evalMg": 3738,
+          "evalEg": 3875
+        },
+        "u": {
+          "rawMg": 3738,
+          "rawEg": 3875,
+          "captureMg": 3738,
+          "captureEg": 3875,
+          "evalMg": 3738,
+          "evalEg": 3875
+        },
+        "H": {
+          "rawMg": 2240,
+          "rawEg": 2413,
+          "captureMg": 2240,
+          "captureEg": 2413,
+          "evalMg": 2240,
+          "evalEg": 2413
+        },
+        "h": {
+          "rawMg": 2240,
+          "rawEg": 2413,
+          "captureMg": 2240,
+          "captureEg": 2413,
+          "evalMg": 2240,
+          "evalEg": 2413
+        },
+        "O": {
+          "rawMg": 1904,
+          "rawEg": 1959,
+          "captureMg": 1904,
+          "captureEg": 1959,
+          "evalMg": 1904,
+          "evalEg": 1959
+        },
+        "o": {
+          "rawMg": 1904,
+          "rawEg": 1959,
+          "captureMg": 1904,
+          "captureEg": 1959,
+          "evalMg": 1904,
+          "evalEg": 1959
+        },
+        "K": {
+          "rawMg": 0,
+          "rawEg": 0,
+          "captureMg": 0,
+          "captureEg": 0,
+          "evalMg": 0,
+          "evalEg": 0
+        },
+        "k": {
+          "rawMg": 0,
+          "rawEg": 0,
+          "captureMg": 0,
+          "captureEg": 0,
+          "evalMg": 0,
+          "evalEg": 0
+        }
+      }
+    },
+    "parentCompatibility": {
+      "passed": true,
+      "oldAllocationsPreserved": true,
+      "inventoryMatches": true,
+      "amazonStrongestUnchanged": true,
+      "comparedPieceTypes": 10,
+      "comparedColorEntries": 20,
+      "comparedValueFields": 120,
+      "staticEvaluation": {
+        "positions": 48,
+        "matching": true,
+        "sha256": "f520f04b84ddc03ef44c31f8ee5c62a88a8792edede26a30de4e12a10ceb394d",
+        "samples": [
+          {
+            "gameId": "reference-001-ordinary",
+            "kind": "ordinary",
+            "ply": 0,
+            "fen": "rnbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNBQK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "d59caee4361433b8791cf732b862aabf1e5c5f5d57249487d45c5afd60e8f9e5",
+            "traceSha256": "6e9c50742d5478f25cd6bca2fbf4ca354b560dada9127b79062bd16f731a38df"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-ordinary-w",
+            "kind": "single",
+            "ply": 64,
+            "fen": "8/4P1k1/3N1npp/p1p5/8/PB1r1N1P/5PP1/2R3K1 b - - 0 33",
+            "phase": "middlegame",
+            "fenSha256": "7ba06eee5e1acbb3affe161ef338b51f6eb5016ea3dbeb49b9309adb1c622a32",
+            "traceSha256": "f96e0ea6a6706221f4f99c0c3d51c3f439efefe13feb6dd44c4499c70d5dd467"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-ordinary-b",
+            "kind": "single",
+            "ply": 113,
+            "fen": "8/5pkp/4p3/3pP3/3q4/K7/8/6q1 w - - 0 58",
+            "phase": "endgame",
+            "fenSha256": "1d6567070b8c0231b87029e189de40ea385a04ee2954f2e4747da3f2d4e9a840",
+            "traceSha256": "d52184e21afe93dd3cbe93ba76f0807f8f5da30fc14bdc5c92859714ecf3b442"
+          },
+          {
+            "gameId": "reference-001-knight-capture-rook-v-ordinary-w",
+            "kind": "single",
+            "ply": 0,
+            "fen": "rnbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/ONBQK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "e61571abde8ed31a06a383b85ca7610dab1983d62153f2a9ad128ab91ac268ee",
+            "traceSha256": "54f137478e6f30dc62318e869d0785cbde98c419926ec0a9794c598477519aa4"
+          },
+          {
+            "gameId": "reference-001-knight-capture-rook-v-ordinary-b",
+            "kind": "single",
+            "ply": 59,
+            "fen": "2or2k1/p4p2/6pp/1P2P3/1pn2P2/2nBR3/2RB2PP/6K1 w - - 6 31",
+            "phase": "middlegame",
+            "fenSha256": "286637fb0a1136a7114a0f42d86c5d1dab85c778e11421fd68dfa183c08a1206",
+            "traceSha256": "50cc606a4957a4117e530e42a4ff37f509ac7250651f49eb13e74b9abb5ceaec"
+          },
+          {
+            "gameId": "reference-001-camel-knight-v-ordinary-b",
+            "kind": "single",
+            "ply": 0,
+            "fen": "rgbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNBQK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "cea2a58fe748dab8ec630333ee642802035f5905a919d6027312e77d28a03922",
+            "traceSha256": "69b73a37891f58a292d200689b4baf4d62ae298b85d44183acebb5f5a5579bf5"
+          },
+          {
+            "gameId": "reference-001-amazon-v-ordinary-w",
+            "kind": "single",
+            "ply": 58,
+            "fen": "5r2/2p3p1/1p1b1pk1/3B2p1/1PP5/2BK2P1/5P2/R7 b - - 5 30",
+            "phase": "endgame",
+            "fenSha256": "82ad8ebd3b4486eda4697d2568c97ea8b38ddc29ae73e869fd82ca1eef2ddff3",
+            "traceSha256": "9b9a53ef9013ac8702d6af8dd37a70e8b8cacfadb273830bd32cd590b0c64a79"
+          },
+          {
+            "gameId": "reference-001-camel-knight-v-amazon-w",
+            "kind": "head",
+            "ply": 0,
+            "fen": "rnbuk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RGBQK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "99fdb097f73a5c182f28e3902d37a5c3a5422a09368e68c2e36806b1c2eac437",
+            "traceSha256": "c8ca46323bc327758b49db6465d96a2ec21c5cfea4dce9f4066865dd11a39e87"
+          },
+          {
+            "gameId": "reference-001-camel-knight-v-amazon-b",
+            "kind": "head",
+            "ply": 59,
+            "fen": "2R1n2r/r5k1/5pP1/p2Np3/Pp2P2p/8/1P2B1PP/3R3K w - - 0 31",
+            "phase": "middlegame",
+            "fenSha256": "9176571f1ea1a6b2c701e9d41db34489482066776859698f10bfd852b45df3bf",
+            "traceSha256": "3933310487fb9e1cb60b3dc67bf9b4d3b31d8052a6937a39e54487f085098f31"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-amazon-w",
+            "kind": "head",
+            "ply": 234,
+            "fen": "8/8/8/5k2/8/8/8/bK6 b - - 6 118",
+            "phase": "endgame",
+            "fenSha256": "7a63e60c043ba28674d69868becfad9dbf380db69a21c28eba642da31e7cffa8",
+            "traceSha256": "4626e7dafdbb539ad73be3f6c9e80e6931d2ddbdcc3283bf5d150bb873e1bde8"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-amazon-b",
+            "kind": "head",
+            "ply": 0,
+            "fen": "rnjqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNBUK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "5286340c3dec7c8d8aa7b5755d0226cdc0265dfaa1808ba73964c0dee152ca18",
+            "traceSha256": "e6abeeda88e6ddf341527a1e4df3a6ddd7cf388ef9565906250afd11bb41bd01"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-camel-knight-w",
+            "kind": "head",
+            "ply": 80,
+            "fen": "q3r1k1/R5pp/4pp2/2Qp1n2/3P1P2/3N3P/6PK/8 b - - 7 41",
+            "phase": "middlegame",
+            "fenSha256": "5cc0e696ffbfe0412d91eac9def7bab47d6c5b715b5199d56e19a77439192c32",
+            "traceSha256": "53496451c50ff65aa1d2a830dd2b0c1e97c3991f9a4e614685efeca089d4c1ef"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-knight-capture-rook-w",
+            "kind": "head",
+            "ply": 0,
+            "fen": "onbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNJQK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "12010c20959802fe9d9f1fc6b6fb157da26ec4806870fa4724bd8bbad86f182b",
+            "traceSha256": "86a72350e2cbd0f7f4d916ae1d351fc44ae93552326a3ca072cf037789ccb3ab"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-knight-capture-rook-b",
+            "kind": "head",
+            "ply": 33,
+            "fen": "2rr2k1/1p2jpp1/p3pn1p/4b3/1P6/P1N1P3/O2BBPPP/3R2K1 w - - 2 18",
+            "phase": "middlegame",
+            "fenSha256": "32b5d33cdf5078831fcb306fe41767ae932d8dadd2d2ce9bb7e5ff9b021985da",
+            "traceSha256": "f2c499ce5e1cb4aff064eb1b09a8dfc828f118a3b9fb76e61f8fd4fed6c7cbab"
+          },
+          {
+            "gameId": "reference-001-knight-capture-rook-v-amazon-w",
+            "kind": "head",
+            "ply": 123,
+            "fen": "8/8/4k3/6p1/4q3/5p2/8/5K2 w - - 0 63",
+            "phase": "endgame",
+            "fenSha256": "85a78f3f76866f700beb553d3682a8757067a2f08431bc5bc3525ad5bc208271",
+            "traceSha256": "1fbc358ee9e66d1acb365ad9971d699e50b3430d2c7a23cfde35027c39981c46"
+          },
+          {
+            "gameId": "reference-001-knight-capture-rook-v-amazon-b",
+            "kind": "head",
+            "ply": 0,
+            "fen": "onbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNBUK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "561aced1b3ffecfa32134e18f770b23d66804199fbc89cc35a65d5d260c1ee9a",
+            "traceSha256": "f3f8300fe469983e8d96b7aa2312cc014658861b49f754c7a991b9a1fcb4324d"
+          },
+          {
+            "gameId": "reference-001-knight-capture-rook-v-camel-knight-w",
+            "kind": "head",
+            "ply": 88,
+            "fen": "8/q5p1/1p4kp/3OB3/p3p3/P3P1P1/1P6/6K1 b - - 0 45",
+            "phase": "endgame",
+            "fenSha256": "6289192c07bdd1338f59f93b1317a249b0c6db9b4c1eb52e1b626b26341c81c2",
+            "traceSha256": "78746cd79bf4750290a87aecab5fea7ddf4b02b22a3063529598cadbec032471"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-ordinary-w",
+            "kind": "single",
+            "ply": 124,
+            "fen": "5k2/8/8/3BR1P1/7N/7P/6PK/8 b - - 4 63",
+            "phase": "endgame",
+            "fenSha256": "ecd64552ed24286f8d82df049f95236e90588adbc46817188c351552d19b3c39",
+            "traceSha256": "962fde14ccfc628e2e131892ff8d471816ecb41197f3bc62c3a3725197596bf2"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-ordinary-b",
+            "kind": "single",
+            "ply": 0,
+            "fen": "rnjqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNBQK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "424f52825c84a830a06855e3413822590733a56c9bbd0fc4fa1a73e319259a38",
+            "traceSha256": "bf7f262f16a75119f7b1b8922ba97a1b3179920a100dfacecc451caf16b03f74"
+          },
+          {
+            "gameId": "reference-001-knight-capture-rook-v-ordinary-w",
+            "kind": "single",
+            "ply": 67,
+            "fen": "3r1r2/6k1/2b1p2p/1p2qp2/pPpPp1pP/2P1P1P1/P1N3O1/5RK1 w - - 0 35",
+            "phase": "middlegame",
+            "fenSha256": "b18719800b69d232517c5d99c9878fc5e323c1596451850b024c68c602a556fc",
+            "traceSha256": "f36356795a6410281c5d7014479dcff73175b11bfe3b8ef6de538e463f74625a"
+          },
+          {
+            "gameId": "reference-001-camel-knight-v-ordinary-w",
+            "kind": "single",
+            "ply": 0,
+            "fen": "rnbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RGBQK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "c85d93605cbaddabe7b729c138f244b29517d9891a54e18dac0f8318705788b1",
+            "traceSha256": "24255885c343e3aa8cfe3a8ee822769210ec01c22b773fed727f3d3c289f6b57"
+          },
+          {
+            "gameId": "reference-001-camel-knight-v-ordinary-b",
+            "kind": "single",
+            "ply": 42,
+            "fen": "2r2rk1/p2q2pp/5p1g/1P2p3/4B3/2B1P1P1/1P2QP1P/R5K1 b - - 1 22",
+            "phase": "middlegame",
+            "fenSha256": "30e0b4b47db533688674f56db9ad99bf7d90e12f8cf915b5f3d73eeef74fd5b9",
+            "traceSha256": "d99f06f66e442c6aed5263c55c4be1c69715eb90fc868597a20f9b26417a36c4"
+          },
+          {
+            "gameId": "reference-001-amazon-v-ordinary-b",
+            "kind": "single",
+            "ply": 0,
+            "fen": "rnbuk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNBQK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "b4fd80f211a044715a32e2bd6060e7ef978a336fb4288b1652f7944fa14a08b9",
+            "traceSha256": "630a5303fd91e1e6d30ad9faf6e362a3b6cd46e1d07303337feef491259f8e22"
+          },
+          {
+            "gameId": "reference-001-camel-knight-v-amazon-w",
+            "kind": "head",
+            "ply": 49,
+            "fen": "r5k1/pp3p1p/2p1r3/5b2/8/PPP3B1/5bPK/R7 w - - 0 26",
+            "phase": "middlegame",
+            "fenSha256": "cf07559d8180dce152ed1aca14343b28a906ea81c8c745e2e40dae1359d8795d",
+            "traceSha256": "2f7c00fa31d799a54ed16716b5dea45c2e5ca0eac31beb396034cb7384548787"
+          },
+          {
+            "gameId": "reference-001-camel-knight-v-amazon-b",
+            "kind": "head",
+            "ply": 114,
+            "fen": "5N2/8/1R6/8/2B5/1P5P/6QP/1k5K b - - 4 58",
+            "phase": "endgame",
+            "fenSha256": "a6d8bb324517c4833802ea2e30301185a357f72b0944bfe019964f0e33068b31",
+            "traceSha256": "72cc40d4f03befba61d4aae4663fedad8bd37946d7543a878e29a79c4dffbb7c"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-amazon-w",
+            "kind": "head",
+            "ply": 0,
+            "fen": "rnbuk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNJQK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "f77963a1468f5ecb4b65258e1a1da352e3b448c5d09f927d6be529f939ddc870",
+            "traceSha256": "2aaf9585842692dc907a8ca4cbeb6822f22a7803d56555de1e9b844fa2414415"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-amazon-b",
+            "kind": "head",
+            "ply": 70,
+            "fen": "4r3/pp2n3/2p2k1p/7P/8/8/PP3KB1/3R4 b - - 0 36",
+            "phase": "endgame",
+            "fenSha256": "87efb6067365b45554223d45fa4b5edb5c8a41afc071ee6291c96fc42d19a69f",
+            "traceSha256": "72d127f6acd9757637b87fc4e578281da4cbb091e0df0b12137dc8b82cee6b4b"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-camel-knight-b",
+            "kind": "head",
+            "ply": 0,
+            "fen": "rnjqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RGBQK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "10de7a5c5a50b3f115161130f0747eee1a5990e3b12a8bf878edd309017f2ff1",
+            "traceSha256": "a0741c20220000bde5107d126f2b4f5404e9f0699aa7e83ac4ff173cc2123f11"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-knight-capture-rook-w",
+            "kind": "head",
+            "ply": 53,
+            "fen": "1k6/p1p3pp/1pP5/3o1p2/3P4/P6P/7P/1R3R1K w - - 0 28",
+            "phase": "endgame",
+            "fenSha256": "dc7ea23333c4a506d8256534d280701a84c006bbddac691eb586f199807c25d9",
+            "traceSha256": "1c9ab04f29c2b9a9bb32929ea85be02df895e2158d7263687cb42d7a3b58d051"
+          },
+          {
+            "gameId": "reference-001-knight-capture-rook-v-amazon-w",
+            "kind": "head",
+            "ply": 0,
+            "fen": "rnbuk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/ONBQK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "31cb9141ddf20d73e137495332586a8ffaead10ff047cdab5cb6f6d177bd0ab1",
+            "traceSha256": "682793708acf5bf234e7f41959a6ad588d5af8b549dc05df2cbcf4db36c576f5"
+          },
+          {
+            "gameId": "reference-001-knight-capture-rook-v-amazon-b",
+            "kind": "head",
+            "ply": 59,
+            "fen": "4o1k1/1p3pp1/1Pp3qp/2Pp4/3Pn2B/7P/3U1PBP/R4K2 w - - 5 31",
+            "phase": "middlegame",
+            "fenSha256": "7820bf5492f236f0e32b3a646c4764dd7f7ca363708c9160704db23da563490b",
+            "traceSha256": "3c6570b0db0faa1101102e900eae20394d11703f91908ca664620c82dae93797"
+          },
+          {
+            "gameId": "reference-001-knight-capture-rook-v-camel-knight-w",
+            "kind": "head",
+            "ply": 172,
+            "fen": "1k6/5Q2/8/1K6/8/8/8/8 b - - 5 87",
+            "phase": "endgame",
+            "fenSha256": "e36aa8bc4069bac9e9c7cda48b24ff7f7c635011240faeb20cff966b7bc379eb",
+            "traceSha256": "b53256929953e27aa0733076513350122c51ed1962b229777ace0c70f656eeb2"
+          },
+          {
+            "gameId": "reference-001-knight-capture-rook-v-camel-knight-b",
+            "kind": "head",
+            "ply": 0,
+            "fen": "onbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RGBQK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "4f10a6da3ef869fb00d007f716721f1bcff2932e2c76f776463fb9e55bbf6e5d",
+            "traceSha256": "fb2a5359ed0a3e2cc830e189568a0842102f5aceda125772db1538a6f3ed29c0"
+          },
+          {
+            "gameId": "reference-001-ordinary",
+            "kind": "ordinary",
+            "ply": 162,
+            "fen": "8/8/8/4K3/7k/8/6Q1/8 b - - 10 82",
+            "phase": "endgame",
+            "fenSha256": "5e7a9040492cbc4db1f98c2befabfae0263b5787da38bd09377d3959f0da2aba",
+            "traceSha256": "04e1db6ebfb7b6b0e362a9ae32bb792bbceb558caf606b71b4f388b312795f32"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-ordinary-w",
+            "kind": "single",
+            "ply": 0,
+            "fen": "rnbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNJQK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "6d150fa04bd265e759344210e6278b57fdd4201d153a617e1fca29e07cbb8c71",
+            "traceSha256": "fbdd56914704c5a094b360b626136bb83c5e4ee77c8e3869be25acc06fd1516a"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-ordinary-b",
+            "kind": "single",
+            "ply": 58,
+            "fen": "6k1/2qnjppp/4p3/3p4/3P1P2/3B1PP1/1Q4KP/2N5 b - - 6 30",
+            "phase": "middlegame",
+            "fenSha256": "cba725606b7ee6dd133f806c091aff0f3f5e4a45ab57d14f8241b6b86293e3a3",
+            "traceSha256": "82f3007141d84fbf7c89e5557cb318a04e26dfe841f4b5626fed180233275140"
+          },
+          {
+            "gameId": "reference-001-knight-capture-rook-v-ordinary-w",
+            "kind": "single",
+            "ply": 130,
+            "fen": "8/7O/6R1/4k3/pPp3pP/P1P3K1/8/8 b - - 2 66",
+            "phase": "endgame",
+            "fenSha256": "82f4846a1f5b43034e118177b7aaccde68fcf58166409fef8ba7099792b64832",
+            "traceSha256": "45543a3c5585e67cfff023ef64aad683e11ce395b9569a2c5ef6908496a5aace"
+          },
+          {
+            "gameId": "reference-001-knight-capture-rook-v-ordinary-b",
+            "kind": "single",
+            "ply": 0,
+            "fen": "onbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNBQK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "0f99335fc2a43b9d887aae9f0d44f4bb4db0ce5879dd81a454697699f36f6ee2",
+            "traceSha256": "d203cd4b640b4e2705e787d05cbdd4f24e1b8746eb821cf855dc8a01c7655387"
+          },
+          {
+            "gameId": "reference-001-camel-knight-v-ordinary-w",
+            "kind": "single",
+            "ply": 52,
+            "fen": "5r1k/pb3ppp/1p1r4/6q1/3P1R2/P2B4/1P1Q2PP/2R3K1 b - - 0 27",
+            "phase": "middlegame",
+            "fenSha256": "74775edc37b44df548c230a70c1fae0341555ce6d80f6f82178f4ce660006db8",
+            "traceSha256": "27b52884a90454dc9946be3c5c9c79b229093e6d9bf4edce68dbba90d40af5bd"
+          },
+          {
+            "gameId": "reference-001-camel-knight-v-ordinary-b",
+            "kind": "single",
+            "ply": 81,
+            "fen": "8/3K2kp/5p2/4p3/3gP2P/5PP1/1Pq5/8 w - - 4 42",
+            "phase": "endgame",
+            "fenSha256": "0242941761c4914fc799b484a8087637a09b0cf3328a74f98311e181d2e352ec",
+            "traceSha256": "e5f690c6e7cef33a1acde2733a4839177c554a342f61fbf973b16c5618d5bc0a"
+          },
+          {
+            "gameId": "reference-001-amazon-v-ordinary-w",
+            "kind": "single",
+            "ply": 0,
+            "fen": "rnbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNBUK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "3e0b1e33a43c9dd41a19506adb8ed05a66cd04523200ff5965471a7edcb98ba4",
+            "traceSha256": "a28d368035bb172b3bbc739f2d5e04f76be4471a5ab8c86fa6bb2afb297bd3d0"
+          },
+          {
+            "gameId": "reference-001-amazon-v-ordinary-b",
+            "kind": "single",
+            "ply": 51,
+            "fen": "6RB/1ppk1p2/p7/7p/4pP2/4n3/P1u4r/1R2Q1K1 w - - 0 27",
+            "phase": "middlegame",
+            "fenSha256": "cefc6680d6ce16f77507fc8700e32ce6cda12c3933efb2a74b6faac7b9787b64",
+            "traceSha256": "9ee1e1812af1f91ae903584f02ed65ad554f7f291207e919d65959f118f091bb"
+          },
+          {
+            "gameId": "reference-001-camel-knight-v-amazon-w",
+            "kind": "head",
+            "ply": 95,
+            "fen": "6k1/1p5p/2p2pb1/2P5/2K5/5r2/p7/8 w - - 0 49",
+            "phase": "endgame",
+            "fenSha256": "b5b3cd2bcac4630750d29368382468442c5ad5a8b0800e35b130f183d3bc3a62",
+            "traceSha256": "956ed939a2246a0f4fff127f60ad1cf5056ccf78f6608eb8fa01074e79b328cb"
+          },
+          {
+            "gameId": "reference-001-camel-knight-v-amazon-b",
+            "kind": "head",
+            "ply": 0,
+            "fen": "rgbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNBUK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "e490be33f5c55146b3185abe7a921e56d391e25717700b3db8db4fe4a3270fe3",
+            "traceSha256": "2cb0f10e55704b2ddab7206854209b568c7df820b83d2fdd3f443540649d88d8"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-amazon-w",
+            "kind": "head",
+            "ply": 119,
+            "fen": "8/8/8/4k3/3b2P1/1R6/1p6/1K6 w - - 1 61",
+            "phase": "endgame",
+            "fenSha256": "36a5bab84c89050754ad58886978e5ddecfba6c0003fd32927a1a5cdc9983412",
+            "traceSha256": "85e07acc282a86fa8bdf8c69f4912cf91319c48fdf2c1d8d796e1402820e8a5e"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-amazon-b",
+            "kind": "head",
+            "ply": 137,
+            "fen": "6K1/7P/2p2q2/8/8/1k6/8/q7 w - - 0 70",
+            "phase": "endgame",
+            "fenSha256": "90f4fa0b40d80594bb6630892d7b1ce9e9b57297662c4fb37c2697988ba1d068",
+            "traceSha256": "8dfe2c2681941007c6ccfe746f3d19210cfa9330312668f0faa95e70750584bc"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-camel-knight-w",
+            "kind": "head",
+            "ply": 0,
+            "fen": "rgbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNJQK2R b KQkq - 0 1",
+            "phase": "middlegame",
+            "fenSha256": "726627415ce09446f4364bf44d684935e931c1f38980f1b62320558c41b7f0f1",
+            "traceSha256": "826d1540ff23fb839f967aec540aa6516a7156b90d18c0c751bd7f53b97d5845"
+          },
+          {
+            "gameId": "reference-001-horizontal-bishop-v-camel-knight-b",
+            "kind": "head",
+            "ply": 55,
+            "fen": "3r4/p5pk/2p1p2p/5j2/3P1P2/1R6/P6P/2BR2K1 w - - 0 29",
+            "phase": "endgame",
+            "fenSha256": "7b02e9191e01f7b026de97b0e785755e84192dc96e640192c3a893cafc88a451",
+            "traceSha256": "fc8ee69710cfed11b6ba585a3ec3640dfd4f9f16c303fb0e777feecde4ac84d4"
+          }
+        ],
+        "phases": {
+          "middlegame": 31,
+          "endgame": 17
+        }
+      },
+      "legalMoves": {
+        "positions": 57,
+        "matching": true
+      },
+      "searchesStarted": 0,
+      "interpretation": "Bounded diagnostics preserve parent allocations, values and sampled static evaluation/legal behavior. Original parent manifests and policy identities remain separate; this is not a universal equivalence proof."
+    },
+    "capabilityProbes": 90,
+    "roleProbes": 2,
+    "startingPositions": 4608,
+    "searchesStarted": 0
+  },
+  "workflow": {
+    "rounds": [
+      {
+        "targetPlies": 1,
+        "finishedGames": 0,
+        "attempts": 4,
+        "activeGames": 4,
+        "maxSavedPlies": 1
+      },
+      {
+        "targetPlies": 2,
+        "finishedGames": 0,
+        "attempts": 8,
+        "activeGames": 4,
+        "maxSavedPlies": 2
+      }
+    ],
+    "jobs": 4,
+    "manifestPreserved": true,
+    "prefixesPreserved": true,
+    "parentHashesPreserved": true,
+    "reportLeavesJournalsUnchanged": true,
+    "provisionalStatus": "provisional",
+    "inheritedRecords": 2688,
+    "inheritedCompleted": 2687,
+    "newFinished": 0,
+    "completedStudyGames": 0,
+    "allLocksReleased": true,
+    "newOnlyProgress": true,
+    "reportBootstrap": 0,
+    "reportAnalysisStatus": "rank-deficient-design",
+    "processExitedNaturally": true,
+    "offlineCli": {
+      "exitsNaturally": true,
+      "enginePathUnavailable": true,
+      "reportBootstrap": 0,
+      "coveredNewGames": 0,
+      "inheritedGames": 2688
+    }
+  },
+  "linkedReplay": {
+    "inheritedCompletedGames": 2687,
+    "inheritedTruncatedGames": 1,
+    "newCompletedGames": 0,
+    "replayedCompletedPlies": 301370,
+    "samples": 25365,
+    "features": 16,
+    "openingGroups": 128,
+    "sourceContexts": [
+      "parent",
+      "extension"
+    ],
+    "historicalFourTypeDecoding": true,
+    "stableIdProjection": true,
+    "projectedStartCells": 42992,
+    "newCandidateFeaturesZeroWithoutNewGames": true,
+    "rawJournalsUnchanged": true,
+    "analysisBootstrapForWorkflow": 0,
+    "interpretation": "Archived moves are reconstructed for analysis; engines do not play those games again. Sparse new-design estimates remain unsupported."
+  },
+  "validation": {
+    "newChecks": 51,
+    "unitPass": 736,
+    "environmentDependentSkipped": 36,
+    "failed": 0,
+    "legacyEstimatorSourcesUnchanged": true,
+    "earlierRawArchivesAndBundledWindowsEnginePreserved": true,
+    "testOnlyCatalogInventoryUpdated": true
+  }
+}

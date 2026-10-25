@@ -169,6 +169,16 @@ function definitionProbes(definition, letter) {
     { name: 'quiet backward steps across attacked squares remain nonroyal', fen: position({ a1: 'K', h8: 'k', d4: type, c8: 'r', d8: 'r', e8: 'r' }) },
     { name: 'companion is capturable and nonroyal', fen: position({ a1: 'K', h8: 'k', d4: type, d8: 'r', e8: 'r' }, 'b') },
   );
+  // The linked revision screen adds exact-ID fixtures without changing any
+  // earlier profile's movement probes or archived definitions.
+  if (['bishop.purple@7', 'bishop.purple@8', 'bishop.purple@9'].includes(definition.id)) frames.push(
+    { name: 'wide knight capture directions and horizontal range', fen: position({ a1: 'K', h7: 'k', d4: type, b3: 'p', f3: 'p', b5: 'p', f5: 'p', c4: 'p', f4: 'p' }) },
+    { name: 'sideways slides stop at a friendly blocker', fen: position({ a1: 'K', h7: 'k', d4: type, e4: 'P', f4: 'p' }) },
+  );
+  if (['rook.purple@6', 'rook.purple@7', 'rook.purple@8'].includes(definition.id)) frames.push(
+    { name: 'adjacent diagonal and knight capture permissions', fen: position({ a1: 'K', h7: 'k', d4: type, c3: 'p', e5: 'p', b5: 'p', f5: 'p', c2: 'p', e2: 'p' }) },
+    { name: 'quiet diagonal and knight jumps across blockers', fen: position({ a1: 'K', h7: 'k', d4: type, c4: 'P', e4: 'P', d3: 'P', d5: 'P' }) },
+  );
   if (definition.roles.castlingRook) frames.push({ name: 'both castling sides', fen: position({ e8: 'k', a1: type, e1: 'K', h1: type }, 'w', 'KQ') });
   for (const legacy of legacyCapabilityProbes(definition.legacyType, 'levelup-v5')) {
     // Repeatable Twin jumps do not create initial-double en passant rights.

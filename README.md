@@ -63,7 +63,16 @@ npm.cmd run material:references -- --report balance-results/reference-panel
 
 Camel knight scores 51.18% against Amazon. The bishop is strong across the basket, while the rook trails all three opponents. Material estimates give useful context, but equivalence between ordinary/single and head-to-head estimates remains inconclusive at ±0.5 pawn. Keep this run closed; no repeat is needed.
 
-The next [revision proposal](experiments/balance/reference-revision-proposal.md) contains three modest bishop nerfs and three rook buffs against unchanged Camel/Amazon references. Its proposed 5,504-game cap and four-job design need collector implementation before a new run. Piece movements, engine values and purchase prices have not changed.
+The [linked revision experiment](experiments/balance/reference-revision-proposal.md) adds three bishop nerfs and three rook buffs against unchanged Camel/Amazon references. It reuses all 2,688 original records and collects **4,608 new games with four jobs**, saving 896 repeated games. New results go in a separate folder; the completed files remain intact.
+
+```bat
+npm.cmd run material:revisions -- --check
+npm.cmd run material:revisions -- --out balance-results/reference-revisions --jobs 4
+```
+
+The archived parent supplies the exact same 128 positions, so no opening-book download is needed. Estimates refresh at 1,152 / 2,304 / 4,608 new games and combine old and new evidence while retaining their source contexts. Preflight checks historical piece allocations, native values, and sampled legal moves/static evaluations before permitting reuse. See the [experiment guide](experiments/balance/reference-revision-proposal.md) for stop, resume and report commands. These six definitions are headless test candidates; the playable libraries and purchase prices stay unchanged.
+
+The completed reference audit's original whole-file source hashes match commit `1658cc4`. Reproduce that historical audit on its matching checkout; additive candidate definitions in current source files intentionally change their hashes.
 
 ## Completed material estimate study
 

@@ -77,6 +77,13 @@ const definitions = [
   definition('bishop', 'purple', 3, 'BsRsN', 'j', 6, 6),
   definition('rook', 'purple', 3, 'RFmDmNmAmHmCmZmGcB2', 'o', 12, 5),
   definition('queen', 'purple', 3, 'mKcfKcsW', 'u', 8, 5, 'insert', { d1: 'd2' }),
+  // Version 16 revision screen: retain every measured predecessor above.
+  definition('bishop', 'purple', 3, 'BsWsN', 'j', 6, 7),
+  definition('bishop', 'purple', 3, 'BsR2msN', 'j', 6, 8),
+  definition('bishop', 'purple', 3, 'BsR2fsN', 'j', 6, 9),
+  definition('rook', 'purple', 3, 'RcNcF', 'o', 12, 6),
+  definition('rook', 'purple', 3, 'RcNF', 'o', 12, 7),
+  definition('rook', 'purple', 3, 'RN', 'o', 12, 8),
 ];
 
 const DESIGNS = Object.freeze(Object.fromEntries(definitions.map(design => [design.id, design])));

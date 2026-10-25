@@ -15,7 +15,7 @@ npm.cmd run material:references -- --report balance-results/reference-panel
 node experiments/balance/results/reference-panel-001.audit.cjs
 ```
 
-These commands analyze existing data without engine searches. The [original protocol](experiments/balance/reference-panel-proposal.md) and [preflight evidence](experiments/balance/results/reference-panel-preflight-001.json) remain preserved.
+These commands analyze existing data without engine searches. Reproduce its full source-identity audit on matching commit `1658cc4`; new candidate definitions intentionally change current whole-file hashes. The [original protocol](experiments/balance/reference-panel-proposal.md) and [preflight evidence](experiments/balance/results/reference-panel-preflight-001.json) remain preserved.
 
 | Upgrade | Combined added value | Score against Amazon |
 | --- | ---: | ---: |
@@ -26,7 +26,24 @@ These commands analyze existing data without engine searches. The [original prot
 
 These are conditional bonuses under assumed P=1/Q=9, not whole-piece prices or native MG/EG values. All four cohort-equivalence checks remain inconclusive at ±0.5 pawn. The bishop is near even against Camel; the rook scores about 31% against each. Material-only predictions miss some matchup margins. All starts have Black to move because the book does; paired upgrade colors remain balanced.
 
-The [revision proposal](experiments/balance/reference-revision-proposal.md) tests three modest bishop nerfs and three rook buffs against unchanged Camel/Amazon, capped at 5,504 games with four jobs. It needs collector implementation; the current command does not launch that proposal. No further validation match run is needed for the completed study.
+## Linked bishop/rook revision experiment
+
+The [revision experiment](experiments/balance/reference-revision-proposal.md) tests three bishop nerfs and three rook buffs against unchanged Camel/Amazon. It inherits all 2,688 parent records and collects **4,608 new games**, for 7,296 linked records at the cap. The exact same 128 positions and family members keep opening groups matched. No unchanged matchup or ordinary control is replayed by default.
+
+```bat
+npm.cmd run material:revisions -- --check
+npm.cmd run material:revisions -- --out balance-results/reference-revisions --jobs 4
+npm.cmd run material:revisions -- --resume balance-results/reference-revisions
+npm.cmd run material:revisions -- --report balance-results/reference-revisions
+```
+
+Use a new output directory; no `--book` argument is needed. The archived parent is copied byte-for-byte under `parent/` in that directory and checked before reuse. Its games retain their original four-type profile; new games use a ten-type profile with unchanged historical letters. Native preflight verifies values and sampled legal/static-evaluation behavior under both profiles. These bounded checks support conditional reuse, not a universal proof that the historical and current processes are identical.
+
+New-game progress stops at cumulative barriers **1,152 / 2,304 / 4,608**, each followed by refreshed estimates using all parent data plus the new prefix. Whole-position bootstrap and validation groups keep old and new conditions together. The manifest records both source contexts; final combined estimates use 7,296 scheduled records, with the parent's one truncation still unscored. Raw historical files, completed checkpoints and purchase prices stay unchanged.
+
+[Validation evidence](experiments/balance/results/reference-revisions-preflight-001.json) records all 4,608 native starts, historical compatibility, archived-move replay, interruption/resume and offline-report exit. The full suite passes 736 checks, with 36 environment-dependent cases skipped.
+
+**q / Ctrl+C** stops immediately with saved move prefixes, **g** finishes active games, and **p** finishes active pairs. Resume retains the four-job setting, engine, profile and source identity. Offline `--report` starts no engine games. Checkpoint uncertainty, cohort effects and matchup dependence govern design decisions; this batch does not automatically trigger another validation campaign.
 
 ## Completed 1,152-game convergence study
 
@@ -201,7 +218,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation, compensation pilot, 96-game collection pilot and [1,152-game convergence study](experiments/balance/results/material-study-001.md) are complete. The [four-reference study](experiments/balance/results/reference-panel-001.md) is also closed. The [bishop/rook revision proposal](experiments/balance/reference-revision-proposal.md) is the next design step and is not configured yet.
+The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation, compensation pilot, 96-game collection pilot and [1,152-game convergence study](experiments/balance/results/material-study-001.md) are complete. The [four-reference study](experiments/balance/results/reference-panel-001.md) is also closed. The [linked bishop/rook experiment](experiments/balance/reference-revision-proposal.md) is the only new declared collection.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |
