@@ -45,6 +45,8 @@ New-game progress stops at cumulative barriers **1,152 / 2,304 / 4,608**, each f
 
 **q / Ctrl+C** stops immediately with saved move prefixes, **g** finishes active games, and **p** finishes active pairs. Resume retains the four-job setting, engine, profile and source identity. Offline `--report` starts no engine games. Checkpoint uncertainty, cohort effects and matchup dependence govern design decisions; this batch does not automatically trigger another validation campaign.
 
+After this run, the [provisional level-3 shortlist](experiments/balance/level3-shortlist-plan.md) leads toward one capped round robin. Extra-unit upgrades are deferred. Freeze the final roster and budget after reviewing results; this planning note changes no active experiment settings.
+
 ## Completed 1,152-game convergence study
 
 The [completed study](experiments/balance/results/material-study-001.md) contains **384 fresh book positions × three conditions = 1,152 completed games**, with recorded **four-job** settings and cumulative checkpoints at **384/768/1,152**. All 126,924 plies replay, the final report regenerates exactly, and original manifest/source/executable hashes verify. The pilot's 32 positions are excluded. Ordinary pieces and unchanged Amazon retain automatic evaluation, Skill 20, 20,000 nodes, one thread per engine, 32 MB hash and 400 plies.
