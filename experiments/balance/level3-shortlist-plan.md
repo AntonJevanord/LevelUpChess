@@ -1,13 +1,14 @@
 # Next level-3 balance pass
 
-After the current bishop/rook experiment, select a small roster for one capped
+After the current five-bishop experiment, select a small roster for one capped
 head-to-head campaign. This is a planning note; it starts no new games and does
 not alter the running experiment.
 
-The [reported completion and valuation review](results/reference-revisions-001-review.md)
-now closes that collection at its cap. Review the [simple reference ideas](simple-reference-ideas.md),
-including pure `BsR` and rook-to-queen, before freezing the next roster. They
-remain unscored candidates and do not automatically replace measured designs.
+The [simple comparison](results/simple-reference-001-review.md) supports `RfB`
+alongside Camel and Amazon. The [four-piece matrix](reference-matrix-plan.md)
+adds short-side bishop provisionally: at the 640-game checkpoint it scores
+50.39% against `RfB`; older reported scores are 41.02% against Camel and 47.66%
+against Amazon. Finish the current run before freezing the final roster.
 
 ## Provisional roster
 
@@ -15,8 +16,8 @@ remain unscored candidates and do not automatically replace measured designs.
 | --- | --- |
 | Queen | Fixed Amazon, `queen.purple@1` |
 | Knight | Camel knight, `knight.purple@3` |
-| Horizontal bishop | Original `bishop.purple@4` or a revision, after the current review |
-| Rook | Select after the current experiment |
+| Horizontal bishop | Short-side `bishop.purple@7` provisionally; retain alternatives until the current run finishes |
+| Rook | Forward-bishop rook `rook.purple@10` (`RfB`) |
 | Mobile pawn | Ranging `pawn.purple@7` and/or Courier `pawn.purple@8` |
 | Rank pawn | Wide-knight version, `pawn.purple@9` |
 | Vertical bishop | Quiet-knight version, `bishop.purple@3` |
@@ -55,9 +56,11 @@ checks.
    and move toward levels 1/2 and mixed six-point armies. Further collection
    requires a specific unresolved decision, rather than tighter numbers alone.
 
-Among the selected horizontal bishop, rook, Camel and Amazon, the current data
-can supply five of six pairings. The selected new bishop versus selected new
-rook is still missing. Other entrants need their cross-family matchups too.
+All six pairings among the provisional horizontal bishop, rook, Camel and
+Amazon have reported results; bishop versus rook is still running. Raw recovery
+for the older bishop–Camel/Amazon comparisons currently covers 80 of 128 groups.
+Recover remaining histories before proposing replacement games; no core matchup
+needs an automatic repeat. Other entrants need their cross-family matchups.
 
 With eight designs there are 28 pairings. Forty matched positions played in both
 upgrade colors give **2,240 head-to-head games before compatible reuse**. A final

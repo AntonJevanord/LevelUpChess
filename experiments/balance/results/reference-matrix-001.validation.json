@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-reference-matrix-workflow",
+  "recordedDate": "2026-10-26",
+  "offlineChildProcessesReturned": true,
+  "unavailableEnginePath": true,
+  "defaultMatrixAndRefreshPassed": true,
+  "actualPartialRevisionJournalImported": true,
+  "archivedCopiesDeduplicated": true,
+  "recoveredHeadGames": 320,
+  "remainingHistoricalGames": 192,
+  "sourceFilesUnchanged": true,
+  "runningBishopIdentityUnchanged": true,
+  "headRecordsRecoveredEarlierLegallyReplayed": true,
+  "newGameSearches": 0,
+  "materialRefits": 0,
+  "tests": {
+    "focusedChecksPassed": 34,
+    "newMatrixCases": 18,
+    "failed": 0
+  },
+  "toolSources": [
+    {
+      "file": "scripts/reference-matrix.js",
+      "sha256": "ee35d6365783acb413e2ace9e50e8f1d2cbb35d7452836828e8625f86392fa96"
+    },
+    {
+      "file": "scripts/balance/reference-matrix.js",
+      "sha256": "f2e633228090dd6989592531dfab3c9cf2b9a29a84ff299974a101d7e4796c68"
+    }
+  ],
+  "recoveryAudit": {
+    "file": "experiments/balance/results/short-side-revision-recovery-001.audit.json",
+    "sha256": "908819f8abf13411ba49a143704ae1dbee8de4ab8bf1ffe44b1ccbf3a48f9230",
+    "replayedGames": 480,
+    "replayedPlies": 54855
+  }
+}

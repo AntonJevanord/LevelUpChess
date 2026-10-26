@@ -57,13 +57,24 @@ Both kings use the selected level, and other pieces use standard chess rules. Th
 
 The completed [simple-piece comparison](experiments/balance/results/simple-reference-001-review.md) supports `RfB` as a provisional reference alongside Amazon (`QN`) and Camel knight (`NC`): it scores **52.73% against Amazon and 50.98% against Camel**.
 
-The [next experiment](experiments/balance/bishop-reference-plan.md) compares five bishops against `RfB`: original horizontal, short-side, forward-jump, and two rank bishops with quiet sideways hops. It schedules **1,280 new games with four jobs**, reusing all 5,760 original/simple records.
+The [current experiment](experiments/balance/bishop-reference-plan.md) compares five bishops against `RfB`: original horizontal, short-side, forward-jump, and two rank bishops with quiet sideways hops. It schedules **1,280 new games with four jobs**, reusing all 5,760 original/simple records.
 
 ```bat
 npm.cmd run material:bishops -- --out balance-results/bishop-references --jobs 4
 ```
 
 Use a new folder; the retained games and openings are included. Reports at 320 / 640 / 1,280 new games print ordinary P/N/B/R/Q estimates, the queen–rook gap, upgrade bonuses and paired scores. P=1/Q=9 remain assumed anchors. New bishop estimates come from head-to-head and combined data; ordinary/single estimates for those designs remain unavailable. See the [guide](experiments/balance/bishop-reference-plan.md) for movements, stop/resume and offline reporting. The playable picker is unchanged.
+
+Build a small [four-piece matchup matrix](experiments/balance/reference-matrix-plan.md)
+from the latest bishop report without starting games or creating EPD exports:
+
+```bat
+npm.cmd run material:matrix -- --bishop balance-results/bishop-references --out balance-results/reference-matrix
+```
+
+Add `--revisions balance-results/reference-revisions` if that older folder still
+exists. The tool separates reported scores from recovered raw-game coverage and
+lists missing bishop–Camel/Amazon games; it leaves the running collector unchanged.
 
 ## Completed four-reference comparison
 

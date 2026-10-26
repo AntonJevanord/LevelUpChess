@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-reference-matrix-observation",
+  "kind": "user-reported-checkpoint",
+  "recordedDate": "2026-10-26",
+  "checkpoint": 640,
+  "studyId": "bishop-references-v16-001",
+  "bishopVsRook": {
+    "designA": "bishop.purple@7",
+    "designB": "rook.purple@10",
+    "games": 128,
+    "wins": 56,
+    "draws": 17,
+    "losses": 55,
+    "observedAScore": 0.50390625,
+    "observedInterval": {
+      "lower": 0.4077,
+      "upper": 0.6055
+    }
+  },
+  "interpretation": "Transcribed from the user’s checkpoint table. Its raw journal and process manifest have not been uploaded; replace this display observation with the actual local bishop report via --bishop. It is not game evidence for pooling or gap scheduling."
+}

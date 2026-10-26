@@ -4,6 +4,11 @@ Run paired engine games to compare upgrade armies, strength handicaps, and ordin
 
 These tools collect results; they do not assign measured values to pieces or change the game's movement rules.
 
+For a compact comparison of Short-side bishop, `RfB`, Camel and Amazon, use the
+[four-piece matrix](experiments/balance/reference-matrix-plan.md). It reads the
+latest bishop report, preserves report-only versus recovered-game evidence,
+and lists exact historical gaps without launching games or exporting EPDs.
+
 Follow the [version-16 balancing strategy](docs/balancing-strategy.md): audit engine values, calibrate flagged cases separately, then compare surviving upgrades against fixed references. Material compensation can later provide approximate added-value ranges; Amazon scores alone do not establish pawn-equivalent values.
 
 ## Version 16: bishops against RfB
