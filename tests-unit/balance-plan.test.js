@@ -176,7 +176,7 @@ test('schedule shuffles pair order and first color reproducibly from the uint32 
 test('checked-in experiments validate and budget-three cases have equal point costs', () => {
   const directory = path.join(__dirname, '../experiments/balance');
   const names = fs.readdirSync(directory).filter(name => name.endsWith('.json'));
-  assert.deepEqual(names.sort(), ['amazon-alternatives-roster.json', 'amazon-alternatives.json', 'amazon-revision-roster.json', 'amazon-revision.json', 'blue-rook-confirmation.json', 'budget-3-confirmation.json', 'budget-3.json', 'designs-smoke.json', 'level3-holdout.json', 'level3-roster.json', 'level3-round-robin.json', 'material-anchors.json', 'material-collection.json', 'material-estimate.json', 'material-study.json', 'outlier-effects.json', 'purple-material-handicaps.json', 'reference-panel.json', 'reference-revisions.json', 'revision-1-confirmation.json', 'revision-1-screen.json', 'rook-values-auto.json', 'rook-values-eight.json', 'rook-values-roster.json', 'skill-sweep.json', 'smoke.json', 'upgrade-effects.json']);
+  assert.deepEqual(names.sort(), ['amazon-alternatives-roster.json', 'amazon-alternatives.json', 'amazon-revision-roster.json', 'amazon-revision.json', 'blue-rook-confirmation.json', 'budget-3-confirmation.json', 'budget-3.json', 'designs-smoke.json', 'level3-holdout.json', 'level3-roster.json', 'level3-round-robin.json', 'material-anchors.json', 'material-collection.json', 'material-estimate.json', 'material-study.json', 'outlier-effects.json', 'purple-material-handicaps.json', 'reference-panel.json', 'reference-revisions.json', 'revision-1-confirmation.json', 'revision-1-screen.json', 'rook-values-auto.json', 'rook-values-eight.json', 'rook-values-roster.json', 'simple-references.json', 'skill-sweep.json', 'smoke.json', 'upgrade-effects.json']);
   // Rosters and the collection protocol have dedicated bounded validators.
   const { getCollectionProtocol } = require('../scripts/balance/material-collection-plan');
   assert.equal(getCollectionProtocol().settings.totalGames, 96);
@@ -186,7 +186,9 @@ test('checked-in experiments validate and budget-three cases have equal point co
   assert.equal(getReferenceProtocol().settings.totalGames, 2688);
   const { getRevisionProtocol } = require('../scripts/balance/revision-plan');
   assert.equal(getRevisionProtocol().settings.totalGames, 4608);
-  for (const name of names.filter(name => !name.endsWith('-roster.json') && !['material-collection.json', 'material-study.json', 'reference-panel.json', 'reference-revisions.json'].includes(name))) {
+  const { getSimpleProtocol } = require('../scripts/balance/simple-plan');
+  assert.equal(getSimpleProtocol().settings.totalGames, 3072);
+  for (const name of names.filter(name => !name.endsWith('-roster.json') && !['material-collection.json', 'material-study.json', 'reference-panel.json', 'reference-revisions.json', 'simple-references.json'].includes(name))) {
     const config = normalizeConfig(JSON.parse(fs.readFileSync(path.join(directory, name), 'utf8')));
     const schedule = makeSchedule(config);
     assert.equal(schedule.length, 2 * config.openings.length * config.comparisons.length * config.repetitions);

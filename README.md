@@ -53,7 +53,17 @@ Open [prototypes/kings/index.html](prototypes/kings/index.html) to try the captu
 
 Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Bringing king choices into the main board's setup, engine play, and saves remains integration work. See the [prototype guide](prototypes/kings/README.md).
 
-## Version 16: completed four-reference comparison
+## Version 16: simple-piece comparison
+
+The [simple-piece experiment](experiments/balance/simple-reference-plan.md) compares `BsR`, `RB`, `RfB` and `RB2` against Amazon (`QN`) and Camel knight (`NC`). It runs **3,072 new games with four jobs**: 2,048 head-to-head games and 1,024 ordinary-army games, reusing the original 2,688 reference records.
+
+```bat
+npm.cmd run material:simple -- --out balance-results/simple-references --jobs 4
+```
+
+Use a new folder; no opening-book download is needed. Reports at 768 / 1,536 / 3,072 new games print ordinary P/N/B/R/Q estimates, the queen–rook gap and upgrade bonuses. P=1/Q=9 are assumed anchors. Only the queen-moving rook receives ordinary-queen native values; the others retain automatic values. See the [guide](experiments/balance/simple-reference-plan.md) for stop/resume and offline reporting.
+
+## Completed four-reference comparison
 
 The [four-reference review](experiments/balance/results/reference-panel-001.md) closes the study at **2,688 scheduled games**: 2,687 completed, one unscored move-limit truncation, no errors. All 301,770 recorded plies replay, and the dataset and report reproduce exactly.
 
@@ -63,14 +73,7 @@ npm.cmd run material:references -- --report balance-results/reference-panel
 
 Camel knight scores 51.18% against Amazon. The bishop is strong across the basket, while the rook trails all three opponents. Material estimates give useful context, but equivalence between ordinary/single and head-to-head estimates remains inconclusive at ±0.5 pawn. Keep this run closed; no repeat is needed.
 
-The [linked revision experiment](experiments/balance/reference-revision-proposal.md) adds three bishop nerfs and three rook buffs against unchanged Camel/Amazon references. It reuses all 2,688 original records and collects **4,608 new games with four jobs**, saving 896 repeated games. New results go in a separate folder; the completed files remain intact.
-
-```bat
-npm.cmd run material:revisions -- --check
-npm.cmd run material:revisions -- --out balance-results/reference-revisions --jobs 4
-```
-
-The archived parent supplies the exact same 128 positions, so no opening-book download is needed. Estimates refresh at 1,152 / 2,304 / 4,608 new games and combine old and new evidence while retaining their source contexts. Preflight checks historical piece allocations, native values, and sampled legal moves/static evaluations before permitting reuse. See the [experiment guide](experiments/balance/reference-revision-proposal.md) for stop, resume and report commands. These six definitions are headless test candidates; the playable libraries and purchase prices stay unchanged.
+The [4,608-game revision report](experiments/balance/results/reference-revisions-001-review.md) is also complete. Preserve its results; its original collector identity matches commit `f963a32`. The simple-piece experiment is a new collection with separate profiles and output files.
 
 The completed reference audit's original whole-file source hashes match commit `1658cc4`. Reproduce that historical audit on its matching checkout; additive candidate definitions in current source files intentionally change their hashes.
 

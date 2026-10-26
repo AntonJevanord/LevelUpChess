@@ -442,7 +442,12 @@ var require_design_catalog = __commonJS({
       definition("bishop", "purple", 3, "BsR2fsN", "j", 6, 9),
       definition("rook", "purple", 3, "RcNcF", "o", 12, 6),
       definition("rook", "purple", 3, "RcNF", "o", 12, 7),
-      definition("rook", "purple", 3, "RN", "o", 12, 8)
+      definition("rook", "purple", 3, "RN", "o", 12, 8),
+      // Simple references keep the historical allocations free for linked evidence.
+      definition("bishop", "purple", 3, "BsR", "v", 16, 10),
+      definition("rook", "purple", 3, "RB", "w", 17, 9),
+      definition("rook", "purple", 3, "RfB", "x", 18, 10),
+      definition("rook", "purple", 3, "RB2", "y", 19, 11)
     ];
     var DESIGNS = Object.freeze(Object.fromEntries(definitions.map((design) => [design.id, design])));
     var LEGACY_DESIGN_IDS = Object.freeze(Object.fromEntries(definitions.filter((design) => design.revision === 1).map((design) => [design.legacyType, design.id])));

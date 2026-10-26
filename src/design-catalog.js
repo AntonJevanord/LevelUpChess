@@ -84,6 +84,11 @@ const definitions = [
   definition('rook', 'purple', 3, 'RcNcF', 'o', 12, 6),
   definition('rook', 'purple', 3, 'RcNF', 'o', 12, 7),
   definition('rook', 'purple', 3, 'RN', 'o', 12, 8),
+  // Simple references keep the historical allocations free for linked evidence.
+  definition('bishop', 'purple', 3, 'BsR', 'v', 16, 10),
+  definition('rook', 'purple', 3, 'RB', 'w', 17, 9),
+  definition('rook', 'purple', 3, 'RfB', 'x', 18, 10),
+  definition('rook', 'purple', 3, 'RB2', 'y', 19, 11),
 ];
 
 const DESIGNS = Object.freeze(Object.fromEntries(definitions.map(design => [design.id, design])));

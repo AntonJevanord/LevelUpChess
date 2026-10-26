@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "simple-references-v16-001",
+  "seed": 42,
+  "bookPositions": 128,
+  "conditionsPerPosition": 24,
+  "totalGames": 3072,
+  "jobs": 4,
+  "checkpoints": [
+    768,
+    1536,
+    3072
+  ],
+  "designIds": [
+    "bishop.purple@4",
+    "rook.purple@2",
+    "bishop.purple@10",
+    "rook.purple@9",
+    "rook.purple@10",
+    "rook.purple@11",
+    "knight.purple@3",
+    "queen.purple@1"
+  ],
+  "evaluation": {
+    "pieceValues": {
+      "rook.purple@9": {
+        "mg": 2538,
+        "eg": 2682
+      }
+    }
+  },
+  "engine": {
+    "nodes": 20000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400
+  },
+  "strength": {
+    "skill": 20
+  },
+  "sampling": {
+    "minPly": 16,
+    "stride": 5,
+    "stableBefore": 2,
+    "stableAfter": 2
+  },
+  "analysis": {
+    "anchors": {
+      "pawn": 1,
+      "queen": 9
+    },
+    "ridge": 0.001,
+    "bootstrap": 200,
+    "validationFolds": 5,
+    "agreementMargin": 0.5
+  },
+  "selection": "Reuse the exact 128 original positions, selected family members and opening IDs; append only the four simple candidates against ordinary armies and the two unchanged references.",
+  "referenceIds": [
+    "knight.purple@3",
+    "queen.purple@1"
+  ],
+  "parent": {
+    "manifestFile": "experiments/balance/results/reference-panel-001.collection.json",
+    "manifestSha256": "534dd8c8688899b555757978fcf8a36fabd700416e6dd78b18e6e858d6871417",
+    "journalFile": "experiments/balance/results/reference-panel-001.games.jsonl",
+    "journalSha256": "3aaa7ea9dd70cb555e368849897d6c1dc67d6240b0091c5da5092fcb9b64ba49"
+  }
+}

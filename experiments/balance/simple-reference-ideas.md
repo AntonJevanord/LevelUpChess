@@ -1,7 +1,8 @@
 # Simple reference candidates
 
-These are candidates for a later declared comparison, not additions to the
-current catalog or a queued balance run. Prefer a small set of readable ideas.
+These ideas now form the declared [simple-piece comparison](simple-reference-plan.md).
+All four have new immutable catalog IDs; scored results are still pending.
+The table records their earlier draft and campaign history.
 
 | Movement | Meaning | Recorded balance status |
 | --- | --- | --- |
@@ -38,7 +39,6 @@ use the ordinary queen's prior or an ordinary queen representation, with role
 and castling behavior verified. Matching priors alone does not prove identical
 custom-piece search behavior.
 
-Prioritize `BsR` and rook-to-queen for simple design review. `RfB` and `RB2`
-provide direction-limited and range-limited alternatives if a later decision
-needs them. Freeze any resulting roster, evaluation policy, positions and cap
-before collecting games; the current experiment remains closed at its cap.
+The user selected all four for the new capped comparison against `QN` and `NC`.
+Its roster, queen-matched `RB` prior, positions and game cap are frozen in the
+plan. The earlier 4,608-game revision collection remains closed.

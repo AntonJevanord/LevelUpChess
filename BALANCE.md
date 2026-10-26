@@ -6,7 +6,21 @@ These tools collect results; they do not assign measured values to pieces or cha
 
 Follow the [version-16 balancing strategy](docs/balancing-strategy.md): audit engine values, calibrate flagged cases separately, then compare surviving upgrades against fixed references. Material compensation can later provide approximate added-value ranges; Amazon scores alone do not establish pawn-equivalent values.
 
-## Version 16: completed four-reference comparison
+## Version 16: simple-piece comparison
+
+The [simple-piece plan](experiments/balance/simple-reference-plan.md) compares `BsR`, `RB`, `RfB` and `RB2` against fixed `QN`/`NC`: **3,072 new games**, four jobs, 128 inherited opening groups. Its 2,048 head-to-head and 1,024 ordinary-army games link to the original 2,688 records without replaying them.
+
+```bat
+npm.cmd run material:simple -- --out balance-results/simple-references --jobs 4
+npm.cmd run material:simple -- --resume balance-results/simple-references
+npm.cmd run material:simple -- --report balance-results/simple-references
+```
+
+Reports at 768 / 1,536 / 3,072 new games print ordinary P/N/B/R/Q estimates and the queen–rook gap, with P=1/Q=9 labeled as assumptions. Markdown retains cohort estimates, conditional ranges and checkpoint history. The royal king has no material estimate. `RB` alone uses ordinary-queen native values MG2538/EG2682; every other type keeps automatic values. Movement/role checks, diagnostics and parent compatibility run before collection. Use a new folder; `--check` performs preflight only. The same q/g/p controls apply. See the plan for policy and inference limits.
+
+[Validation evidence](experiments/balance/results/simple-reference-preflight-001.json) records all 3,072 native starts, 68 movement/role probes, historical compatibility, interruption/resume and ordinary-value reporting. The full unit suite passes 785 checks, with 36 environment-dependent cases skipped. No completed campaign games were played in the cloud.
+
+## Completed four-reference comparison
 
 The [completed review](experiments/balance/results/reference-panel-001.md) closes **2,688 scheduled games**: 2,687 completed, one unscored 400-ply truncation, no errors or retries. All **301,770 plies** replay, all 27 recorded source hashes and engine/rules identity verify, and the uploaded dataset and report regenerate exactly. Keep the original files and checkpoints; no replay or extension is needed.
 
@@ -26,9 +40,11 @@ These commands analyze existing data without engine searches. Reproduce its full
 
 These are conditional bonuses under assumed P=1/Q=9, not whole-piece prices or native MG/EG values. All four cohort-equivalence checks remain inconclusive at ±0.5 pawn. The bishop is near even against Camel; the rook scores about 31% against each. Material-only predictions miss some matchup margins. All starts have Black to move because the book does; paired upgrade colors remain balanced.
 
-## Linked bishop/rook revision experiment
+## Closed bishop/rook revision experiment
 
 The [revision experiment](experiments/balance/reference-revision-proposal.md) tests three bishop nerfs and three rook buffs against unchanged Camel/Amazon. It inherits all 2,688 parent records and collects **4,608 new games**, for 7,296 linked records at the cap. The exact same 128 positions and family members keep opening groups matched. No unchanged matchup or ordinary control is replayed by default.
+
+The [final supplied report](experiments/balance/results/reference-revisions-001-review.md) closes this collection. Reproduce its original whole-file identity on commit `f963a32`; the commands below describe its archived workflow, not another scheduled run.
 
 ```bat
 npm.cmd run material:revisions -- --check
@@ -220,7 +236,7 @@ npm run balance -- --config experiments/balance/budget-3.json --out balance-resu
 
 Add `--limit-pairs 2` to a new run to cap that invocation at two color-swapped pairs. A limited run is useful for inspection, not a substitute for broad opening coverage.
 
-The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation, compensation pilot, 96-game collection pilot and [1,152-game convergence study](experiments/balance/results/material-study-001.md) are complete. The [four-reference study](experiments/balance/results/reference-panel-001.md) is also closed. The [linked bishop/rook experiment](experiments/balance/reference-revision-proposal.md) is the only new declared collection.
+The generic configurations below are templates and historical protocols, not a queue. The Amazon alternatives, Blink valuation, compensation pilot, 96-game collection pilot and [1,152-game convergence study](experiments/balance/results/material-study-001.md) are complete. The original four-reference and linked bishop/rook collections are closed. The [simple-piece comparison](experiments/balance/simple-reference-plan.md) is the only new declared collection.
 
 | Completed experiment | Main finding | Evidence |
 | --- | --- | --- |
