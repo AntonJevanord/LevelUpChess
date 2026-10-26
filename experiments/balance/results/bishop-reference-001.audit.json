@@ -1,0 +1,397 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-bishop-final-upload-audit",
+  "recordedDate": "2026-10-26",
+  "sourceCommitForAnalysisIdentity": "cacd5b4",
+  "runId": "6629e1ce-1689-47f6-9f0b-e0db9af01285",
+  "inputs": {
+    "report": {
+      "file": "/workspace/attachments/11f9413d-a374-43be-a107-9f1912e7455d/bishop-report.json",
+      "sha256": "64b54f3a83f7fe74609fc8f96571edebcacf0006a71d824a648bcbfd20b5f1a5",
+      "bytes": 3364478
+    },
+    "journal": {
+      "file": "/workspace/attachments/b920c7ed-9a1e-4eea-ba60-839cc525e5d6/games.jsonl",
+      "sha256": "a54f1b4bf55e7ad5259aa465285605d23f8a999a4f3f045a18d3cc6a58b910da",
+      "bytes": 4460265
+    },
+    "summary": {
+      "file": "/workspace/attachments/f7ec26cf-7f13-4e37-a0d8-5aca3f9b237c/summary.json",
+      "sha256": "ebd14c5634dd9177872bc04ed5077e215207b7e8705e3197eb69d15e941c41d9",
+      "bytes": 228
+    }
+  },
+  "originalCollectionManifestSupplied": false,
+  "claimedManifestSha256": "8f80d84377620526a5dbf2fee80f45c3a9de9a55237f8384e5db272150f5c1cb",
+  "originalManifestSha256Verified": false,
+  "historicalNativeInventoryIndependentlyVerified": false,
+  "checks": {
+    "journalHashMatchesReport": true,
+    "all1280ScheduleAndPolicyAnnotationsMatch": true,
+    "allMovesSanFinalOutcomesReplay": true,
+    "extensionCoverageExactlyMatchesReport": true,
+    "summaryExactlyMatchesJournal": true,
+    "allFinalMatchupCountsAndScoresMatch": true,
+    "all16AnalysisSourceHashesMatchFrozenCommit": true
+  },
+  "profileHash": "b2c0b54f4d98ce600f4d5c1c2deb92b3dfccdd657250b8307b7778a570dbecf7",
+  "registryHash": "43744bc9d6af7cb0adf88b26d6827392c10f8ef849704405af5555a77068082a",
+  "extension": {
+    "scheduledGames": 1280,
+    "studyScheduledGames": 1280,
+    "journalAttempts": 1280,
+    "observedGames": 1280,
+    "finalizedGames": 1280,
+    "remainingGames": 0,
+    "statusCounts": {
+      "completed": 1280,
+      "truncated": 0,
+      "aborted": 0,
+      "error": 0
+    },
+    "completedRecords": 1280,
+    "uniqueHistories": 1280,
+    "sampledGames": 1277,
+    "gamesWithoutSamples": 3,
+    "duplicateGames": [],
+    "samples": 13883,
+    "replayedPlies": 156583,
+    "candidates": 27986,
+    "excluded": {
+      "terminal": 294,
+      "windowEdge": 215,
+      "materialChange": 13594
+    },
+    "partialScoredPairs": 0,
+    "openingGroups": 128,
+    "blocks": 128,
+    "attemptStatusCounts": {
+      "completed": 1280,
+      "truncated": 0,
+      "aborted": 0,
+      "error": 0
+    },
+    "cohorts": {
+      "baseline": {
+        "distinctGames": 0,
+        "sampledGames": 0,
+        "samples": 0,
+        "groups": 0,
+        "phases": {
+          "middlegame": 0,
+          "endgame": 0
+        }
+      },
+      "head": {
+        "distinctGames": 1280,
+        "sampledGames": 1277,
+        "samples": 13883,
+        "groups": 128,
+        "phases": {
+          "middlegame": 5151,
+          "endgame": 8732
+        }
+      },
+      "combined": {
+        "distinctGames": 1280,
+        "sampledGames": 1277,
+        "samples": 13883,
+        "groups": 128,
+        "phases": {
+          "middlegame": 5151,
+          "endgame": 8732
+        }
+      }
+    },
+    "materialSupport": {
+      "pawn": {
+        "samples": 8163,
+        "games": 1231,
+        "groups": 128,
+        "positiveGames": 786,
+        "negativeGames": 859
+      },
+      "knight": {
+        "samples": 4996,
+        "games": 943,
+        "groups": 128,
+        "positiveGames": 487,
+        "negativeGames": 518
+      },
+      "bishop": {
+        "samples": 5567,
+        "games": 1044,
+        "groups": 128,
+        "positiveGames": 599,
+        "negativeGames": 561
+      },
+      "rook": {
+        "samples": 5682,
+        "games": 964,
+        "groups": 128,
+        "positiveGames": 514,
+        "negativeGames": 508
+      },
+      "queen": {
+        "samples": 2751,
+        "games": 713,
+        "groups": 128,
+        "positiveGames": 342,
+        "negativeGames": 410
+      },
+      "bonus:bishop.purple@10": {
+        "samples": 0,
+        "games": 0,
+        "groups": 0,
+        "positiveGames": 0,
+        "negativeGames": 0
+      },
+      "bonus:bishop.purple@11": {
+        "samples": 1122,
+        "games": 237,
+        "groups": 126,
+        "positiveGames": 116,
+        "negativeGames": 121
+      },
+      "bonus:bishop.purple@12": {
+        "samples": 1085,
+        "games": 229,
+        "groups": 126,
+        "positiveGames": 116,
+        "negativeGames": 113
+      },
+      "bonus:bishop.purple@4": {
+        "samples": 896,
+        "games": 227,
+        "groups": 127,
+        "positiveGames": 116,
+        "negativeGames": 111
+      },
+      "bonus:bishop.purple@7": {
+        "samples": 1006,
+        "games": 223,
+        "groups": 127,
+        "positiveGames": 113,
+        "negativeGames": 110
+      },
+      "bonus:bishop.purple@9": {
+        "samples": 960,
+        "games": 220,
+        "groups": 127,
+        "positiveGames": 109,
+        "negativeGames": 111
+      },
+      "bonus:knight.purple@3": {
+        "samples": 0,
+        "games": 0,
+        "groups": 0,
+        "positiveGames": 0,
+        "negativeGames": 0
+      },
+      "bonus:queen.purple@1": {
+        "samples": 0,
+        "games": 0,
+        "groups": 0,
+        "positiveGames": 0,
+        "negativeGames": 0
+      },
+      "bonus:rook.purple@10": {
+        "samples": 5186,
+        "games": 1146,
+        "groups": 128,
+        "positiveGames": 585,
+        "negativeGames": 561
+      },
+      "bonus:rook.purple@11": {
+        "samples": 0,
+        "games": 0,
+        "groups": 0,
+        "positiveGames": 0,
+        "negativeGames": 0
+      },
+      "bonus:rook.purple@2": {
+        "samples": 0,
+        "games": 0,
+        "groups": 0,
+        "positiveGames": 0,
+        "negativeGames": 0
+      },
+      "bonus:rook.purple@9": {
+        "samples": 0,
+        "games": 0,
+        "groups": 0,
+        "positiveGames": 0,
+        "negativeGames": 0
+      }
+    },
+    "phases": {
+      "middlegame": 5151,
+      "endgame": 8732
+    }
+  },
+  "matchups": [
+    {
+      "id": "bishop.purple@4",
+      "games": 256,
+      "wins": 144,
+      "draws": 34,
+      "losses": 78,
+      "score": 0.62890625,
+      "conditionalRange": {
+        "lower": 0.580078125,
+        "upper": 0.6875
+      },
+      "headBonus": {
+        "value": 4.146673633337941,
+        "assumed": false,
+        "supported": true,
+        "interval": {
+          "lower": 3.7942534983306597,
+          "upper": 4.384487925698937
+        },
+        "reason": null
+      },
+      "combinedBonus": {
+        "value": 4.44514676200431,
+        "assumed": false,
+        "supported": true,
+        "interval": {
+          "lower": 4.213403134008648,
+          "upper": 4.636051324356029
+        },
+        "reason": null
+      }
+    },
+    {
+      "id": "bishop.purple@7",
+      "games": 256,
+      "wins": 114,
+      "draws": 45,
+      "losses": 97,
+      "score": 0.533203125,
+      "conditionalRange": {
+        "lower": 0.474609375,
+        "upper": 0.58984375
+      },
+      "headBonus": {
+        "value": 3.607701925198451,
+        "assumed": false,
+        "supported": true,
+        "interval": {
+          "lower": 3.021135157305169,
+          "upper": 4.144285270721102
+        },
+        "reason": null
+      },
+      "combinedBonus": {
+        "value": 3.7465799935666504,
+        "assumed": false,
+        "supported": true,
+        "interval": {
+          "lower": 3.175225121883919,
+          "upper": 4.228168367088969
+        },
+        "reason": null
+      }
+    },
+    {
+      "id": "bishop.purple@9",
+      "games": 256,
+      "wins": 94,
+      "draws": 40,
+      "losses": 122,
+      "score": 0.4453125,
+      "conditionalRange": {
+        "lower": 0.38671875,
+        "upper": 0.50390625
+      },
+      "headBonus": {
+        "value": 2.971626509123603,
+        "assumed": false,
+        "supported": true,
+        "interval": {
+          "lower": 2.516223448626396,
+          "upper": 3.4673003445167296
+        },
+        "reason": null
+      },
+      "combinedBonus": {
+        "value": 3.1389507182557885,
+        "assumed": false,
+        "supported": true,
+        "interval": {
+          "lower": 2.687376607785474,
+          "upper": 3.6149942115351443
+        },
+        "reason": null
+      }
+    },
+    {
+      "id": "bishop.purple@11",
+      "games": 256,
+      "wins": 98,
+      "draws": 48,
+      "losses": 110,
+      "score": 0.4765625,
+      "conditionalRange": {
+        "lower": 0.427734375,
+        "upper": 0.52734375
+      },
+      "headBonus": {
+        "value": 2.795503700627161,
+        "assumed": false,
+        "supported": true,
+        "interval": {
+          "lower": 2.3697092137114373,
+          "upper": 3.2825700922038674
+        },
+        "reason": null
+      },
+      "combinedBonus": {
+        "value": 2.977807382663573,
+        "assumed": false,
+        "supported": true,
+        "interval": {
+          "lower": 2.5639050608612117,
+          "upper": 3.43163156929053
+        },
+        "reason": null
+      }
+    },
+    {
+      "id": "bishop.purple@12",
+      "games": 256,
+      "wins": 97,
+      "draws": 43,
+      "losses": 116,
+      "score": 0.462890625,
+      "conditionalRange": {
+        "lower": 0.421875,
+        "upper": 0.5234375
+      },
+      "headBonus": {
+        "value": 2.8728075250698675,
+        "assumed": false,
+        "supported": true,
+        "interval": {
+          "lower": 2.503936520882844,
+          "upper": 3.34656055356336
+        },
+        "reason": null
+      },
+      "combinedBonus": {
+        "value": 3.048803703910557,
+        "assumed": false,
+        "supported": true,
+        "interval": {
+          "lower": 2.7187334928214355,
+          "upper": 3.463039730580125
+        },
+        "reason": null
+      }
+    }
+  ],
+  "searchesStarted": 0,
+  "newGames": 0,
+  "interpretation": "Completed bishop extension legally replays under the canonical frozen profile. The process manifest and historical native inventory were not supplied; the claimed original manifest checksum is not independently verified. No new balance games or engine searches occurred."
+}

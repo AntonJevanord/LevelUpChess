@@ -92,6 +92,7 @@ const definitions = [
   // Quiet horizontal hurdle hops; both are separate immutable test candidates.
   definition('bishop', 'purple', 3, 'BsRgmsR', 'z', 20, 11),
   definition('bishop', 'purple', 3, 'BsRgmsR0', 'l', 21, 12),
+  definition('bishop', 'purple', 3, 'BsR2nsN', 'm', 22, 13),
 ];
 
 const DESIGNS = Object.freeze(Object.fromEntries(definitions.map(design => [design.id, design])));

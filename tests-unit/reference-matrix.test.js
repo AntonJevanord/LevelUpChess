@@ -53,7 +53,8 @@ test('matrix uses row scores, half-point draws and complementary reciprocal cell
 test('default matrix separates historical report scores from recovered raw coverage', () => {
   const { report, gapPlan } = makeReferenceMatrix();
   assert.equal(report.reportedMatchups.length, 6);
-  assert.equal(report.matrix[BISHOP][ROOK].score, 64.5 / 128);
+  assert.equal(report.matrix[BISHOP][ROOK].score, 136.5 / 256);
+  assert.equal(report.matrix[BISHOP][ROOK].games, 256);
   assert.equal(report.matrix[BISHOP][AMAZON].games, 256);
   assert.equal(report.matrix[BISHOP][AMAZON].score, 122 / 256);
   assert.equal(report.matrix[BISHOP][CAMEL].score, 105 / 256);

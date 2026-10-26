@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "bishop-decision-v16-001",
+  "seed": 42,
+  "jobs": 4,
+  "positions": 128,
+  "maxNewGames": 1472,
+  "comparisonGames": 1280,
+  "comparisonCheckpoints": [
+    320,
+    640,
+    1280
+  ],
+  "engine": {
+    "nodes": 20000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400
+  },
+  "strength": {
+    "skill": 20
+  },
+  "analysis": {
+    "bootstrap": 200,
+    "confidence": 0.95
+  },
+  "candidates": [
+    "bishop.purple@7",
+    "bishop.purple@12",
+    "bishop.purple@13"
+  ],
+  "references": [
+    "rook.purple@10",
+    "knight.purple@3",
+    "queen.purple@1"
+  ],
+  "newMovement": "BsR2nsN",
+  "selection": "Restore only absent short-side bishop/Camel/Amazon cells, then compare the long quiet-hop and lame wide-knight bishops with fixed references. Reuse both existing bishop/rook matchups; close this bishop decision at the cap."
+}

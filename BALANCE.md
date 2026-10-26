@@ -11,22 +11,24 @@ and lists exact historical gaps without launching games or exporting EPDs.
 
 Follow the [version-16 balancing strategy](docs/balancing-strategy.md): audit engine values, calibrate flagged cases separately, then compare surviving upgrades against fixed references. Material compensation can later provide approximate added-value ranges; Amazon scores alone do not establish pawn-equivalent values.
 
-## Version 16: bishops against RfB
+## Version 16: bounded bishop decision
 
-The [bishop comparison](experiments/balance/bishop-reference-plan.md) schedules **1,280 new games**: five bishop designs against the unchanged `RfB` rook, both colors on the same 128 positions. Four jobs and checkpoints at **320 / 640 / 1,280** are fixed. All 5,760 original/simple records are retained once, for a linked cap of 7,040. No ordinary control or unchanged QN/NC matchup is replayed.
+The [completed bishop study](experiments/balance/results/bishop-reference-001.report.md) closes at 1,280 games: no errors/truncations/retries, 156,583 legally replayed plies. Short-side bishop scores 53.32% against RfB; long quiet-hop bishop scores 46.29%. Both remain candidates.
+
+The [follow-up](experiments/balance/bishop-decision-plan.md) uses two stages: up to 192 missing short-side/Camel/Amazon cells under the original profile, then 1,280 games testing long quiet hop against Camel/Amazon and `BsR2nsN` against all three references. Reuse both existing rook matchups and detect retained historical games before scheduling replacements. The maximum is 1,472 new games; no controls or existing matchups repeat.
 
 ```bat
-npm.cmd run material:bishops -- --check
-npm.cmd run material:bishops -- --out balance-results/bishop-references --jobs 4
-npm.cmd run material:bishops -- --resume balance-results/bishop-references
-npm.cmd run material:bishops -- --report balance-results/bishop-references
+npm.cmd run balance:bishop-decision -- --check
+npm.cmd run balance:bishop-decision -- --out balance-results/bishop-decision --jobs 4
+npm.cmd run balance:bishop-decision -- --resume balance-results/bishop-decision
+npm.cmd run balance:bishop-decision -- --report balance-results/bishop-decision
 ```
 
-Compare `BsR2sN`, `BsWsN`, `BsR2fsN`, `BsRgmsR` and `BsRgmsR0`. The last two add quiet horizontal hops over one piece: immediate landing beyond the hurdle, or any empty landing beyond it before the next blocker. Their ordinary bishop and horizontal captures still stop at blockers. `RfB` retains normal castling.
+The standard old revision folder is detected automatically; `--revisions PATH` selects another. Keep Skill20, 20,000 nodes/move, one thread, 32MB hash, 400 plies and four workers. Both-color movement, castling, promotion, source histories, native values and sampled static behavior must pass before games start. The new bishop uses first-leg blocking: e4 blocks d4–f5; f4 does not. Only the inherited queen-moving rook retains its explicit queen-equivalent prior.
 
-Reports retain ordinary values, queen–rook gap, upgrade bonuses, complete color-pair scores and conditional ranges. P=1/Q=9 are assumptions. Four new bishop types appear only in head-to-head games, so their ordinary/single coefficients remain unavailable; removing their absent columns preserves the older designs' baseline fit. Head/combined estimates still require full rank. Whole-position resampling and validation keep inherited and new conditions together.
+After restoration, comparison reports freeze at 320/640/1,280 new comparison games. They combine actual raw outcomes into nine paired candidate/reference scores with conditional opening-block ranges, retaining source context, partial pairs and unscored truncations. No material refit, EPD or sampled-position export is generated. Choose a readable survivor at the cap, rather than automatically scheduling another bishop revision.
 
-Use a new folder; no book download is needed. **q / Ctrl+C** saves current prefixes and stops now, **g** finishes active games, and **p** finishes active pairs. Resume freezes the source, profile, policy and executable. Offline reporting needs no engine or Python. Preflight checks starts, movements, roles, values and bounded historical compatibility before collection. The playable picker is unchanged.
+The [original five-bishop protocol](experiments/balance/bishop-reference-plan.md) stays closed. Reproduce its uploaded analysis source identity on `cacd5b4`; the original process manifest/native inventory was not supplied. New headless definitions do not change the playable picker.
 
 ## Completed simple-piece comparison
 

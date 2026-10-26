@@ -1,0 +1,1286 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-bishop-decision-validation",
+  "recordedDate": "2026-10-26",
+  "studyId": "bishop-decision-v16-001",
+  "scope": "Native diagnostics and bounded interrupted UCI prefixes only; no completed new balance games.",
+  "maxNewGames": 1472,
+  "existingRelevantGames": 832,
+  "identity": {
+    "rulesBundleSha256": "318709e32e17919a3e0723bc63affe053dea39ad3109be8e825acb0ee9e89901",
+    "engineSha256": "8ccde8596fb88aa7fbbf1020cc5afa52ef9d1887764275ea8e627ba0227e4f1e",
+    "runnerSources": [
+      {
+        "file": "run.js",
+        "sha256": "c647fdbf81b5420a3928fcb21d7e8fcd865e703a8f64f9a2fca588b10e40c26e"
+      },
+      {
+        "file": "plan.js",
+        "sha256": "22ba39d61a152f38092cbc192bbb3b9dbeb011ba7a842aeeb95b1e3877d633d0"
+      },
+      {
+        "file": "stats.js",
+        "sha256": "dd55139112cc8fa89ae1ebcc7c1f81631e3aca44a6e01e3ad756f4b52766c5fc"
+      },
+      {
+        "file": "storage.js",
+        "sha256": "6ab2623e2877c3caec418c27fefa737d108cf0e0e8dab805caaa404d72c563fc"
+      },
+      {
+        "file": "uci.js",
+        "sha256": "fe0617deb68d7556d59cf0a0063f565be9a8867c4a7a2ba2643f763e36390088"
+      },
+      {
+        "file": "capabilities.js",
+        "sha256": "a5cc31921e7d88de8214a09fa888158dc285a3d5fba9682d5c3a91fb601c9086"
+      },
+      {
+        "file": "../engine-capabilities.js",
+        "sha256": "640389c60255577db149ba87acccd323fa4209d907fd2eaa8521a1805dbfd6d9"
+      },
+      {
+        "file": "files.js",
+        "sha256": "25cd2624c6e08fb674bf06c0a71614606d7d414fc0bacec881e69719f42feedc"
+      },
+      {
+        "file": "resume-compatibility.js",
+        "sha256": "d3034c734b56665a529632aa777fe30eb6679d339463481cbfe8bf22daa4c579"
+      },
+      {
+        "file": "design-registry.js",
+        "sha256": "de9ee5ba4ad2ea24098800be726e8cbdb4155a8f29b9e799ecabc20cb889c073"
+      },
+      {
+        "file": "design-profile.js",
+        "sha256": "d322715c4f24035e2ba3981fa4c45bb1f4e8eb0448a607ff727f6755a9499fa3"
+      },
+      {
+        "file": "evaluation.js",
+        "sha256": "3d6bbbd7ffa94816c269daf2e849710c0637869f0d3f2aabf869103eb3e23d1c"
+      },
+      {
+        "file": "../../src/design-catalog.js",
+        "sha256": "e88a121a29901045300ce68e6ae3ba8c53fd535d02ed86bcff26a3a1d71e93ae"
+      }
+    ],
+    "runnerSha256": "21c9ab0f6d3fb8df714b00e162b6d5f4ae9cf414bf49600b923364f7b2783635",
+    "decisionSources": [
+      {
+        "file": "scripts/bishop-decision.js",
+        "sha256": "ee58ba172e5b0229250d07d997a510f179d120ec9023785aaa85845f212445dc"
+      },
+      {
+        "file": "scripts/balance/bishop-decision-run.js",
+        "sha256": "065faa0b389342eb50378e4ed87c63cdccc4944efae07500892c98e4edc9ec0b"
+      },
+      {
+        "file": "scripts/balance/bishop-decision-plan.js",
+        "sha256": "cfe4da1972bf332b391d7d2e3b15fe8e561cfc7f7cd1a0f8d00d4cea636c2e43"
+      },
+      {
+        "file": "scripts/balance/head-collection.js",
+        "sha256": "6230ecfa588c503196b7302a92adc84c9eadb6b47a8fa08989590ceb137f0644"
+      },
+      {
+        "file": "scripts/balance/bishop-decision-preflight.js",
+        "sha256": "cea83b576ce47eb6ac4e00eaee1100fcc2796d429170750e29577bbfc86e1787"
+      },
+      {
+        "file": "scripts/balance/bishop-decision-evidence.js",
+        "sha256": "0f2228180c155d206cc557ceb7135e34d241796470abc8bfb20d94fe82228be2"
+      },
+      {
+        "file": "scripts/balance/bishop-decision-report.js",
+        "sha256": "ce7b3d065af30fed785fd9301df919e76bc3f1636d34ba560f1ca0017ddd11fd"
+      },
+      {
+        "file": "scripts/balance/reference-matrix.js",
+        "sha256": "7a848b340975ada99dfa8a36cc1d43788614595cbb072b81d17b3db19debf8f7"
+      },
+      {
+        "file": "scripts/balance/revision-compatibility.js",
+        "sha256": "b57c33adeaf4c59608778181adae1d2068d142fd6e060a5b5d5bb9318bcd4b06"
+      },
+      {
+        "file": "scripts/balance/revision-plan.js",
+        "sha256": "387e05adcbabc2fc734988fe929cfad68e8753f8579040757052cb42cf6c7e5d"
+      },
+      {
+        "file": "scripts/balance/bishop-plan.js",
+        "sha256": "85215244409f2cab419b02c9af9e8318f804e2340e22c16223e36cb1d5e5bf0a"
+      },
+      {
+        "file": "scripts/balance/bishop-source.js",
+        "sha256": "6365f2ccf10eabc35bb80138b4bc4ef64e12b8e3a2ba555d71667cca06c82b3a"
+      },
+      {
+        "file": "scripts/balance/simple-plan.js",
+        "sha256": "af2c0e324912bb99a6b825581663cb65599c5c82222e1ad703c7f8f5ee7e25ce"
+      },
+      {
+        "file": "scripts/balance/design-registry.js",
+        "sha256": "de9ee5ba4ad2ea24098800be726e8cbdb4155a8f29b9e799ecabc20cb889c073"
+      },
+      {
+        "file": "scripts/balance/simple-dataset.js",
+        "sha256": "5520aaa746973b0a29257df40993175ac85f8213bb033127990ba97e4efafefe"
+      },
+      {
+        "file": "scripts/balance/reference-dataset.js",
+        "sha256": "50fc494f6ad505f9bfb6ab93bc6c11e99fa21f1223ca2ea7fc31281bc0606d07"
+      },
+      {
+        "file": "scripts/balance/reference-plan.js",
+        "sha256": "94fdff04a688fb545bd54ee57b295facbda4342492c16dcc8b6176bb122e7dec"
+      },
+      {
+        "file": "scripts/balance/material-dataset.js",
+        "sha256": "bbd370206bc9370ea035ca7dea8c5a7545bdcaa8dcbb3345b5000f55260a8499"
+      },
+      {
+        "file": "scripts/balance/design-profile.js",
+        "sha256": "d322715c4f24035e2ba3981fa4c45bb1f4e8eb0448a607ff727f6755a9499fa3"
+      },
+      {
+        "file": "scripts/balance/evaluation.js",
+        "sha256": "3d6bbbd7ffa94816c269daf2e849710c0637869f0d3f2aabf869103eb3e23d1c"
+      },
+      {
+        "file": "src/design-catalog.js",
+        "sha256": "e88a121a29901045300ce68e6ae3ba8c53fd535d02ed86bcff26a3a1d71e93ae"
+      },
+      {
+        "file": "scripts/material-collect.js",
+        "sha256": "6ac7a151353c7927c0b750e920c8ec7d0c65229b433103add776a84122be4979"
+      },
+      {
+        "file": "experiments/balance/results/reference-revisions-preflight-001.json",
+        "sha256": "d10aeefcbd0d49de62d7b3ebe31cfa66a7befeba8af238de3ce8c944a2489004"
+      },
+      {
+        "file": "experiments/balance/results/bishop-reference-preflight-001.json",
+        "sha256": "fa39093193db46d29a08afea8acf26ba41db14212f36c7726815a3edd8a5a0d8"
+      },
+      {
+        "file": "experiments/balance/bishop-decision.json",
+        "sha256": "c1fed7bf7b223d5f168a155db2a2755605ba07a38c2d566824419eca66a8b50e"
+      },
+      {
+        "file": "experiments/balance/results/bishop-reference-001.games.jsonl",
+        "sha256": "a54f1b4bf55e7ad5259aa465285605d23f8a999a4f3f045a18d3cc6a58b910da"
+      },
+      {
+        "file": "experiments/balance/results/bishop-reference-001.uploaded-report.json",
+        "sha256": "64b54f3a83f7fe74609fc8f96571edebcacf0006a71d824a648bcbfd20b5f1a5"
+      },
+      {
+        "file": "experiments/balance/results/bishop-reference-001.audit.json",
+        "sha256": "4c0783cf60c7654a161879d0c667aa2195f89e3ea9461616b776db76a9589b93"
+      },
+      {
+        "file": "experiments/balance/results/short-side-revision-recovery-001.games.jsonl",
+        "sha256": "c5e3d9c38b14f354c4febda2fa35dfce1fc35b7cb76140191274ccb3e5dee7c0"
+      },
+      {
+        "file": "experiments/balance/results/reference-matrix.expected-games.json",
+        "sha256": "44f7d047c3d43aac01aa22e602fbf92ca380fef5241bd5a17fb9defc1042f8ad"
+      },
+      {
+        "file": "experiments/balance/bishop-references.json",
+        "sha256": "bf3fcbba5e238405a7114e276db38e3a1939b5f1fd73a9959d58dbfd1ca12f8f"
+      },
+      {
+        "file": "experiments/balance/simple-references.json",
+        "sha256": "de35d06d2f2e5f6abf6b50c15598d6fec9757a960b31c9a9950bbbf9136ab352"
+      },
+      {
+        "file": "experiments/balance/results/reference-panel-001.collection.json",
+        "sha256": "534dd8c8688899b555757978fcf8a36fabd700416e6dd78b18e6e858d6871417"
+      },
+      {
+        "file": "experiments/balance/results/reference-panel-001.games.jsonl",
+        "sha256": "3aaa7ea9dd70cb555e368849897d6c1dc67d6240b0091c5da5092fcb9b64ba49"
+      },
+      {
+        "file": "experiments/balance/results/simple-reference-001.replay-source.json",
+        "sha256": "c7313eb0330d637ea5105d2e44ad8dc93e11e26895ee59e828946dfcec0edd82"
+      },
+      {
+        "file": "experiments/balance/results/simple-reference-001.games.jsonl",
+        "sha256": "8de913ef53c3023f525c80da572e6ad153d83d2651a96d3ccbbad10f5eea2b84"
+      },
+      {
+        "file": "experiments/balance/results/simple-reference-001.uploaded-dataset.json",
+        "sha256": "00813eed16ac43f1193d3d26924cfd272d25a6348cc3610c8561e59077100696"
+      },
+      {
+        "file": "experiments/balance/results/simple-reference-001.uploaded-report.json",
+        "sha256": "c83a26ca3cf0ab33306bc7ad2481076b6585786538c6d90d7342e0b8f2c4c4dd"
+      },
+      {
+        "file": "experiments/balance/reference-revisions.json",
+        "sha256": "edd6194319482b6ada4be8f0feeab46a9797529fd93575a19b14ec746b781946"
+      }
+    ],
+    "collectorSha256": "cc78a24646dbfeca240c1f2dac33b433298b838a5476e1e0c3c8caba90b0f32c",
+    "decisionSha256": "cc78a24646dbfeca240c1f2dac33b433298b838a5476e1e0c3c8caba90b0f32c"
+  },
+  "bundledWindowsEngineSha256": "848ad74c3fbc2684e57b42c581ee94e93e5ed832fb536846a37f9dddebbb8b16",
+  "tests": {
+    "fullUnitRun": {
+      "passed": 945,
+      "skipped": 36,
+      "failed": 0
+    },
+    "finalPreflightCases": {
+      "passed": 14,
+      "failed": 0
+    },
+    "uniquePassed": 946,
+    "newUniqueCases": 78,
+    "interpretation": "One fallback preflight case was added after its full-suite file loaded; the latest complete fourteen-case preflight suite was then rerun. Every checked-in test passed."
+  },
+  "sourceReplay": {
+    "hashesMatch": true,
+    "selectedHistoriesMatchRawSources": true,
+    "restoredGames": 320,
+    "inheritedBishopGames": 512,
+    "sources": [
+      {
+        "context": "inherited-bishop",
+        "games": 512,
+        "plies": 63713,
+        "profileHash": "b2c0b54f4d98ce600f4d5c1c2deb92b3dfccdd657250b8307b7778a570dbecf7",
+        "recordsSha256": "97627a72ab8e7f40a7ffd247b0a6346843edaef77473925bda85c3ef26c65f37"
+      },
+      {
+        "context": "restored-revision",
+        "games": 320,
+        "plies": 38092,
+        "profileHash": "08f66036deb767594385af3d5cfdb945d016465b46cbce88e1f0f4882f3c83eb",
+        "recordsSha256": "08eb330e57c0c0e01f05758d29dbbc10d82d00769290d1ab49594099700f1f98"
+      }
+    ],
+    "searchesStarted": 0,
+    "historicalProcessManifestsSupplied": false,
+    "interpretation": "Legal replay verifies saved moves, SAN, positions and results under their canonical profiles; historical native process identities remain unverified."
+  },
+  "native": {
+    "restore": {
+      "engineName": "Fairy-Stockfish 230826",
+      "pieceValues": {
+        "version": 1,
+        "pieces": {
+          "P": {
+            "rawMg": 126,
+            "rawEg": 208,
+            "captureMg": 126,
+            "captureEg": 208,
+            "evalMg": 126,
+            "evalEg": 208
+          },
+          "p": {
+            "rawMg": 126,
+            "rawEg": 208,
+            "captureMg": 126,
+            "captureEg": 208,
+            "evalMg": 126,
+            "evalEg": 208
+          },
+          "N": {
+            "rawMg": 781,
+            "rawEg": 854,
+            "captureMg": 781,
+            "captureEg": 854,
+            "evalMg": 781,
+            "evalEg": 854
+          },
+          "n": {
+            "rawMg": 781,
+            "rawEg": 854,
+            "captureMg": 781,
+            "captureEg": 854,
+            "evalMg": 781,
+            "evalEg": 854
+          },
+          "B": {
+            "rawMg": 825,
+            "rawEg": 915,
+            "captureMg": 825,
+            "captureEg": 915,
+            "evalMg": 825,
+            "evalEg": 915
+          },
+          "b": {
+            "rawMg": 825,
+            "rawEg": 915,
+            "captureMg": 825,
+            "captureEg": 915,
+            "evalMg": 825,
+            "evalEg": 915
+          },
+          "R": {
+            "rawMg": 1276,
+            "rawEg": 1380,
+            "captureMg": 1276,
+            "captureEg": 1380,
+            "evalMg": 1276,
+            "evalEg": 1380
+          },
+          "r": {
+            "rawMg": 1276,
+            "rawEg": 1380,
+            "captureMg": 1276,
+            "captureEg": 1380,
+            "evalMg": 1276,
+            "evalEg": 1380
+          },
+          "Q": {
+            "rawMg": 2538,
+            "rawEg": 2682,
+            "captureMg": 2538,
+            "captureEg": 2682,
+            "evalMg": 2538,
+            "evalEg": 2682
+          },
+          "q": {
+            "rawMg": 2538,
+            "rawEg": 2682,
+            "captureMg": 2538,
+            "captureEg": 2682,
+            "evalMg": 2538,
+            "evalEg": 2682
+          },
+          "A": {
+            "rawMg": 1742,
+            "rawEg": 1769,
+            "captureMg": 1742,
+            "captureEg": 1769,
+            "evalMg": 1742,
+            "evalEg": 1769
+          },
+          "a": {
+            "rawMg": 1742,
+            "rawEg": 1769,
+            "captureMg": 1742,
+            "captureEg": 1769,
+            "evalMg": 1742,
+            "evalEg": 1769
+          },
+          "C": {
+            "rawMg": 1539,
+            "rawEg": 1582,
+            "captureMg": 1539,
+            "captureEg": 1582,
+            "evalMg": 1539,
+            "evalEg": 1582
+          },
+          "c": {
+            "rawMg": 1539,
+            "rawEg": 1582,
+            "captureMg": 1539,
+            "captureEg": 1582,
+            "evalMg": 1539,
+            "evalEg": 1582
+          },
+          "G": {
+            "rawMg": 1663,
+            "rawEg": 1877,
+            "captureMg": 1663,
+            "captureEg": 1877,
+            "evalMg": 1663,
+            "evalEg": 1877
+          },
+          "g": {
+            "rawMg": 1663,
+            "rawEg": 1877,
+            "captureMg": 1663,
+            "captureEg": 1877,
+            "evalMg": 1663,
+            "evalEg": 1877
+          },
+          "D": {
+            "rawMg": 1618,
+            "rawEg": 1635,
+            "captureMg": 1618,
+            "captureEg": 1635,
+            "evalMg": 1618,
+            "evalEg": 1635
+          },
+          "d": {
+            "rawMg": 1618,
+            "rawEg": 1635,
+            "captureMg": 1618,
+            "captureEg": 1635,
+            "evalMg": 1618,
+            "evalEg": 1635
+          },
+          "E": {
+            "rawMg": 2240,
+            "rawEg": 2297,
+            "captureMg": 2240,
+            "captureEg": 2297,
+            "evalMg": 2240,
+            "evalEg": 2297
+          },
+          "e": {
+            "rawMg": 2240,
+            "rawEg": 2297,
+            "captureMg": 2240,
+            "captureEg": 2297,
+            "evalMg": 2240,
+            "evalEg": 2297
+          },
+          "J": {
+            "rawMg": 1858,
+            "rawEg": 1903,
+            "captureMg": 1858,
+            "captureEg": 1903,
+            "evalMg": 1858,
+            "evalEg": 1903
+          },
+          "j": {
+            "rawMg": 1858,
+            "rawEg": 1903,
+            "captureMg": 1858,
+            "captureEg": 1903,
+            "evalMg": 1858,
+            "evalEg": 1903
+          },
+          "F": {
+            "rawMg": 2413,
+            "rawEg": 2531,
+            "captureMg": 2413,
+            "captureEg": 2531,
+            "evalMg": 2413,
+            "evalEg": 2531
+          },
+          "f": {
+            "rawMg": 2413,
+            "rawEg": 2531,
+            "captureMg": 2413,
+            "captureEg": 2531,
+            "evalMg": 2413,
+            "evalEg": 2531
+          },
+          "U": {
+            "rawMg": 3738,
+            "rawEg": 3875,
+            "captureMg": 3738,
+            "captureEg": 3875,
+            "evalMg": 3738,
+            "evalEg": 3875
+          },
+          "u": {
+            "rawMg": 3738,
+            "rawEg": 3875,
+            "captureMg": 3738,
+            "captureEg": 3875,
+            "evalMg": 3738,
+            "evalEg": 3875
+          },
+          "H": {
+            "rawMg": 2240,
+            "rawEg": 2413,
+            "captureMg": 2240,
+            "captureEg": 2413,
+            "evalMg": 2240,
+            "evalEg": 2413
+          },
+          "h": {
+            "rawMg": 2240,
+            "rawEg": 2413,
+            "captureMg": 2240,
+            "captureEg": 2413,
+            "evalMg": 2240,
+            "evalEg": 2413
+          },
+          "O": {
+            "rawMg": 1904,
+            "rawEg": 1959,
+            "captureMg": 1904,
+            "captureEg": 1959,
+            "evalMg": 1904,
+            "evalEg": 1959
+          },
+          "o": {
+            "rawMg": 1904,
+            "rawEg": 1959,
+            "captureMg": 1904,
+            "captureEg": 1959,
+            "evalMg": 1904,
+            "evalEg": 1959
+          },
+          "K": {
+            "rawMg": 0,
+            "rawEg": 0,
+            "captureMg": 0,
+            "captureEg": 0,
+            "evalMg": 0,
+            "evalEg": 0
+          },
+          "k": {
+            "rawMg": 0,
+            "rawEg": 0,
+            "captureMg": 0,
+            "captureEg": 0,
+            "evalMg": 0,
+            "evalEg": 0
+          }
+        }
+      },
+      "startingPositions": 192,
+      "capabilityProbes": 90,
+      "roleProbes": 2,
+      "compatibility": {
+        "passed": true,
+        "profileIdentical": true,
+        "oldAllocationsPreserved": true,
+        "inventoryMatches": true,
+        "archivedPreflightInventoryMatches": true,
+        "amazonStrongestUnchanged": true,
+        "comparedPieceTypes": 16,
+        "comparedColorEntries": 32,
+        "comparedValueFields": 192,
+        "currentPieceTypes": 16,
+        "sourceProfileHash": "08f66036deb767594385af3d5cfdb945d016465b46cbce88e1f0f4882f3c83eb",
+        "sourceGames": 320,
+        "candidateOpeningIds": [
+          "reference-001",
+          "reference-002",
+          "reference-003"
+        ],
+        "historicalCollectionManifestSupplied": false,
+        "historicalProcessIdentityVerified": false,
+        "staticEvaluation": {
+          "positions": 10,
+          "matching": true,
+          "comparisonBasis": "Identical canonical profile with fresh diagnostics; historical process traces were not supplied.",
+          "sha256": "e23497e6ce9cf92b8221caa6c066610037db9b034756e54d2ed4bc584790739c",
+          "samples": [
+            {
+              "gameId": "revision-001-bishop-short-side-v-amazon-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "rnbuk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNAQK2R b KQkq - 0 1",
+              "fenSha256": "b508b42177ae880753e580118b88c4d936e8ce6620fe3968898edf3a85ee15aa",
+              "traceSha256": "95508d929de011a3c93f0085023928da6bc1fa713c8762f7386aee1c2930ad18"
+            },
+            {
+              "gameId": "revision-001-bishop-short-side-v-camel-knight-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "rnaqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RGBQK2R b KQkq - 0 1",
+              "fenSha256": "1adaa800ca5e2d753742cf4934608edf93fb252b77e3ab00e0447489bd9b5049",
+              "traceSha256": "28d72252f7c1e807f6d1334aa8d8ccf35cbf6257effa6f93e91a535d0f382ee2"
+            },
+            {
+              "gameId": "revision-001-bishop-short-side-v-camel-knight-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "rgbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNAQK2R b KQkq - 0 1",
+              "fenSha256": "10bd241bb50f7862408175ee2c0c5766bb155af6aa71e9d59150352ce901fefc",
+              "traceSha256": "2d669dcc7d326490791e5a0dd33cf9a38f674f7b10564e4adaf379e2c437d0db"
+            },
+            {
+              "gameId": "revision-001-bishop-short-side-v-amazon-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "rnaqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNBUK2R b KQkq - 0 1",
+              "fenSha256": "ea9baa81f426d3166304d728cf42a355afba4732c97a2fee61725e727bab70c3",
+              "traceSha256": "4b7d92663a25ba876abe5d8c244efdcb7137a4cc91bf6c56002c42bfc74f1330"
+            },
+            {
+              "gameId": "revision-002-bishop-short-side-v-amazon-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1bukbnr/ppppppp1/n7/7p/3P4/6PN/PPP1PP1P/RNBQKA1R b KQkq - 0 1",
+              "fenSha256": "970a612e54a6c9207cdb4b77cc8d4ab9bc3e522761704f68697d7169b5565c6f",
+              "traceSha256": "4ad41e530d927a336dac10fc6f51a147a4aa5f1d8d72cb209e39c829d04fb5ed"
+            },
+            {
+              "gameId": "revision-002-bishop-short-side-v-camel-knight-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1bqkanr/ppppppp1/n7/7p/3P4/6PG/PPP1PP1P/RNBQKB1R b KQkq - 0 1",
+              "fenSha256": "8550ebc8a6cc87d93d0cadbee7aaaa2fe5dbbac08193832e603a6e77215cceba",
+              "traceSha256": "f3e36963700b85e818ad86a0beab3b7c54e5852d73ce089e9a4fb9fef20250c5"
+            },
+            {
+              "gameId": "revision-002-bishop-short-side-v-camel-knight-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1bqkbgr/ppppppp1/n7/7p/3P4/6PN/PPP1PP1P/RNBQKA1R b KQkq - 0 1",
+              "fenSha256": "fca5f5e5e9e83d4860fe0b45ef27261ddfbb42be10dde15a03c841e98196a69e",
+              "traceSha256": "5b7c5e0de375b4ce31d83c3fb2a8a729a7c6d740791dbd401307a6342747b6fb"
+            },
+            {
+              "gameId": "revision-002-bishop-short-side-v-amazon-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1bqkanr/ppppppp1/n7/7p/3P4/6PN/PPP1PP1P/RNBUKB1R b KQkq - 0 1",
+              "fenSha256": "74211b1ba3e8c5d8bdc2e8eb2d143676c4e7a789aa9c3d4d1674ee7d588e11ce",
+              "traceSha256": "4a03138dcfa0d8efa5d2a6096df6305c97bafbf4a75c35d7235cbfc0ca37497a"
+            },
+            {
+              "gameId": "revision-003-bishop-short-side-v-amazon-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1bukbnr/pppppppp/8/4n3/8/4P1PB/PPPP1P1P/RNAQK1NR b KQkq - 0 1",
+              "fenSha256": "9d5c865bb90c3b38da6683fed6e163e9f2f248278c29d4310089326de1c8785d",
+              "traceSha256": "5faa8a1521fbed23d5c2fbe095884e695592a2c373b7a4e85d2c139ccee964e9"
+            },
+            {
+              "gameId": "revision-003-bishop-short-side-v-camel-knight-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1aqkbnr/pppppppp/8/4n3/8/4P1PB/PPPP1P1P/RGBQK1NR b KQkq - 0 1",
+              "fenSha256": "f150e1715c574071e6a3dad78739e0b767ec207e21e6568c02d489b3420b243d",
+              "traceSha256": "8ed81ecd45669b45595c86bad8b77c7b1973bff9c82da8b515613d182a983cf4"
+            }
+          ]
+        },
+        "legalMoves": {
+          "positions": 10,
+          "matching": true
+        },
+        "searchesStarted": 0,
+        "interpretation": "Fresh native values match the archived revision preflight under its identical canonical profile; sampled recovered histories pass native/browser legal and static diagnostics. The historical collection process manifest was not supplied."
+      },
+      "searchesStarted": 0
+    },
+    "compare": {
+      "engineName": "Fairy-Stockfish 230826",
+      "pieceValues": {
+        "version": 1,
+        "pieces": {
+          "P": {
+            "rawMg": 126,
+            "rawEg": 208,
+            "captureMg": 126,
+            "captureEg": 208,
+            "evalMg": 126,
+            "evalEg": 208
+          },
+          "p": {
+            "rawMg": 126,
+            "rawEg": 208,
+            "captureMg": 126,
+            "captureEg": 208,
+            "evalMg": 126,
+            "evalEg": 208
+          },
+          "N": {
+            "rawMg": 781,
+            "rawEg": 854,
+            "captureMg": 781,
+            "captureEg": 854,
+            "evalMg": 781,
+            "evalEg": 854
+          },
+          "n": {
+            "rawMg": 781,
+            "rawEg": 854,
+            "captureMg": 781,
+            "captureEg": 854,
+            "evalMg": 781,
+            "evalEg": 854
+          },
+          "B": {
+            "rawMg": 825,
+            "rawEg": 915,
+            "captureMg": 825,
+            "captureEg": 915,
+            "evalMg": 825,
+            "evalEg": 915
+          },
+          "b": {
+            "rawMg": 825,
+            "rawEg": 915,
+            "captureMg": 825,
+            "captureEg": 915,
+            "evalMg": 825,
+            "evalEg": 915
+          },
+          "R": {
+            "rawMg": 1276,
+            "rawEg": 1380,
+            "captureMg": 1276,
+            "captureEg": 1380,
+            "evalMg": 1276,
+            "evalEg": 1380
+          },
+          "r": {
+            "rawMg": 1276,
+            "rawEg": 1380,
+            "captureMg": 1276,
+            "captureEg": 1380,
+            "evalMg": 1276,
+            "evalEg": 1380
+          },
+          "Q": {
+            "rawMg": 2538,
+            "rawEg": 2682,
+            "captureMg": 2538,
+            "captureEg": 2682,
+            "evalMg": 2538,
+            "evalEg": 2682
+          },
+          "q": {
+            "rawMg": 2538,
+            "rawEg": 2682,
+            "captureMg": 2538,
+            "captureEg": 2682,
+            "evalMg": 2538,
+            "evalEg": 2682
+          },
+          "A": {
+            "rawMg": 1742,
+            "rawEg": 1769,
+            "captureMg": 1742,
+            "captureEg": 1769,
+            "evalMg": 1742,
+            "evalEg": 1769
+          },
+          "a": {
+            "rawMg": 1742,
+            "rawEg": 1769,
+            "captureMg": 1742,
+            "captureEg": 1769,
+            "evalMg": 1742,
+            "evalEg": 1769
+          },
+          "C": {
+            "rawMg": 1618,
+            "rawEg": 1635,
+            "captureMg": 1618,
+            "captureEg": 1635,
+            "evalMg": 1618,
+            "evalEg": 1635
+          },
+          "c": {
+            "rawMg": 1618,
+            "rawEg": 1635,
+            "captureMg": 1618,
+            "captureEg": 1635,
+            "evalMg": 1618,
+            "evalEg": 1635
+          },
+          "G": {
+            "rawMg": 1663,
+            "rawEg": 1877,
+            "captureMg": 1663,
+            "captureEg": 1877,
+            "evalMg": 1663,
+            "evalEg": 1877
+          },
+          "g": {
+            "rawMg": 1663,
+            "rawEg": 1877,
+            "captureMg": 1663,
+            "captureEg": 1877,
+            "evalMg": 1663,
+            "evalEg": 1877
+          },
+          "J": {
+            "rawMg": 1858,
+            "rawEg": 1903,
+            "captureMg": 1858,
+            "captureEg": 1903,
+            "evalMg": 1858,
+            "evalEg": 1903
+          },
+          "j": {
+            "rawMg": 1858,
+            "rawEg": 1903,
+            "captureMg": 1858,
+            "captureEg": 1903,
+            "evalMg": 1858,
+            "evalEg": 1903
+          },
+          "U": {
+            "rawMg": 3738,
+            "rawEg": 3875,
+            "captureMg": 3738,
+            "captureEg": 3875,
+            "evalMg": 3738,
+            "evalEg": 3875
+          },
+          "u": {
+            "rawMg": 3738,
+            "rawEg": 3875,
+            "captureMg": 3738,
+            "captureEg": 3875,
+            "evalMg": 3738,
+            "evalEg": 3875
+          },
+          "O": {
+            "rawMg": 1904,
+            "rawEg": 1959,
+            "captureMg": 1904,
+            "captureEg": 1959,
+            "evalMg": 1904,
+            "evalEg": 1959
+          },
+          "o": {
+            "rawMg": 1904,
+            "rawEg": 1959,
+            "captureMg": 1904,
+            "captureEg": 1959,
+            "evalMg": 1904,
+            "evalEg": 1959
+          },
+          "V": {
+            "rawMg": 1782,
+            "rawEg": 1756,
+            "captureMg": 1782,
+            "captureEg": 1756,
+            "evalMg": 1782,
+            "evalEg": 1756
+          },
+          "v": {
+            "rawMg": 1782,
+            "rawEg": 1756,
+            "captureMg": 1782,
+            "captureEg": 1756,
+            "evalMg": 1782,
+            "evalEg": 1756
+          },
+          "W": {
+            "rawMg": 2538,
+            "rawEg": 2682,
+            "captureMg": 2538,
+            "captureEg": 2682,
+            "evalMg": 2538,
+            "evalEg": 2682
+          },
+          "w": {
+            "rawMg": 2538,
+            "rawEg": 2682,
+            "captureMg": 2538,
+            "captureEg": 2682,
+            "evalMg": 2538,
+            "evalEg": 2682
+          },
+          "X": {
+            "rawMg": 1904,
+            "rawEg": 1932,
+            "captureMg": 1904,
+            "captureEg": 1932,
+            "evalMg": 1904,
+            "evalEg": 1932
+          },
+          "x": {
+            "rawMg": 1904,
+            "rawEg": 1932,
+            "captureMg": 1904,
+            "captureEg": 1932,
+            "evalMg": 1904,
+            "evalEg": 1932
+          },
+          "Y": {
+            "rawMg": 1734,
+            "rawEg": 1768,
+            "captureMg": 1734,
+            "captureEg": 1768,
+            "evalMg": 1734,
+            "evalEg": 1768
+          },
+          "y": {
+            "rawMg": 1734,
+            "rawEg": 1768,
+            "captureMg": 1734,
+            "captureEg": 1768,
+            "evalMg": 1734,
+            "evalEg": 1768
+          },
+          "Z": {
+            "rawMg": 2015,
+            "rawEg": 1918,
+            "captureMg": 2015,
+            "captureEg": 1918,
+            "evalMg": 2015,
+            "evalEg": 1918
+          },
+          "z": {
+            "rawMg": 2015,
+            "rawEg": 1918,
+            "captureMg": 2015,
+            "captureEg": 1918,
+            "evalMg": 2015,
+            "evalEg": 1918
+          },
+          "L": {
+            "rawMg": 2015,
+            "rawEg": 1918,
+            "captureMg": 2015,
+            "captureEg": 1918,
+            "evalMg": 2015,
+            "evalEg": 1918
+          },
+          "l": {
+            "rawMg": 2015,
+            "rawEg": 1918,
+            "captureMg": 2015,
+            "captureEg": 1918,
+            "evalMg": 2015,
+            "evalEg": 1918
+          },
+          "M": {
+            "rawMg": 1858,
+            "rawEg": 1903,
+            "captureMg": 1858,
+            "captureEg": 1903,
+            "evalMg": 1858,
+            "evalEg": 1903
+          },
+          "m": {
+            "rawMg": 1858,
+            "rawEg": 1903,
+            "captureMg": 1858,
+            "captureEg": 1903,
+            "evalMg": 1858,
+            "evalEg": 1903
+          },
+          "K": {
+            "rawMg": 0,
+            "rawEg": 0,
+            "captureMg": 0,
+            "captureEg": 0,
+            "evalMg": 0,
+            "evalEg": 0
+          },
+          "k": {
+            "rawMg": 0,
+            "rawEg": 0,
+            "captureMg": 0,
+            "captureEg": 0,
+            "evalMg": 0,
+            "evalEg": 0
+          }
+        }
+      },
+      "startingPositions": 1280,
+      "capabilityProbes": 120,
+      "roleProbes": 2,
+      "compatibility": {
+        "passed": true,
+        "profileIdentical": false,
+        "oldAllocationsPreserved": true,
+        "inventoryMatches": true,
+        "archivedPreflightInventoryMatches": true,
+        "amazonStrongestUnchanged": true,
+        "comparedPieceTypes": 18,
+        "comparedColorEntries": 36,
+        "comparedValueFields": 216,
+        "currentPieceTypes": 19,
+        "sourceProfileHash": "b2c0b54f4d98ce600f4d5c1c2deb92b3dfccdd657250b8307b7778a570dbecf7",
+        "sourceGames": 1280,
+        "candidateOpeningIds": [
+          "reference-001",
+          "reference-002",
+          "reference-003"
+        ],
+        "historicalCollectionManifestSupplied": false,
+        "historicalProcessIdentityVerified": false,
+        "staticEvaluation": {
+          "positions": 30,
+          "matching": true,
+          "comparisonBasis": "Exact equality of fresh native traces under the retained and expanded canonical profiles.",
+          "sha256": "e330448dd2064bc18ab12d2890ebbadd7bc0f61ea797cc28a198ec63f76cd5dc",
+          "samples": [
+            {
+              "gameId": "bishop-001-forward-jump-bishop-v-forward-bishop-rook-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "xnbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNCQK2R b KQkq - 0 1",
+              "fenSha256": "e744fc91af26d55976b224406fb393143741072a5aa6c9ea5f0f63c083ce91b0",
+              "traceSha256": "981987eb4d4dd5b259f5588202d9323cc82a00ce255146fc5bb37679ed50d3a1"
+            },
+            {
+              "gameId": "bishop-001-horizontal-bishop-v-forward-bishop-rook-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "rnjqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/XNBQK2R b KQkq - 0 1",
+              "fenSha256": "e7900b9fa6774011f80ed5b7f02051ff2abce57e66cd2d9d61041c79ad309d59",
+              "traceSha256": "e31faf423b43bd0269bb4f8864f576ad22153ea62c64c563a087362d4fa79775"
+            },
+            {
+              "gameId": "bishop-001-short-side-bishop-v-forward-bishop-rook-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "xnbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNAQK2R b KQkq - 0 1",
+              "fenSha256": "f885384e5c9be82c5051d0849c850a51758e3f0fc4b67f092eb60efc6013994b",
+              "traceSha256": "65022a9964cbc8d0a1468ea2d5fe3685bdc2930876989ed12cec7fabbcf39dc3"
+            },
+            {
+              "gameId": "bishop-001-through-rank-bishop-v-forward-bishop-rook-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "rnlqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/XNBQK2R b KQkq - 0 1",
+              "fenSha256": "1837d8019514ec17061f016eb183cac45c83580e428e0365d54beaffa2e2f09b",
+              "traceSha256": "1ca8f945eee7b401fd26cf013c60c93d31b9458ed3394c85af8d46476f778c87"
+            },
+            {
+              "gameId": "bishop-001-horizontal-bishop-v-forward-bishop-rook-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "xnbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNJQK2R b KQkq - 0 1",
+              "fenSha256": "165dfb83ef8b011503b9dacdc2b3bd31796ec8583ec50b5f28462e39f2514bbc",
+              "traceSha256": "9d56ac7d2d51260583c977c34fac1730f0ebf825e5f3235160c71afeca5c859d"
+            },
+            {
+              "gameId": "bishop-001-hurdle-rank-bishop-v-forward-bishop-rook-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "rnzqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/XNBQK2R b KQkq - 0 1",
+              "fenSha256": "b291a65188fee08596af69f83598f11871c7a6f280dc8c129de0f38d73c5893d",
+              "traceSha256": "1ca8f945eee7b401fd26cf013c60c93d31b9458ed3394c85af8d46476f778c87"
+            },
+            {
+              "gameId": "bishop-001-through-rank-bishop-v-forward-bishop-rook-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "xnbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNLQK2R b KQkq - 0 1",
+              "fenSha256": "c6dfed33ca4d6cabfd681a3ca9bd7c1660abfc220d6f12e26c985950dee89428",
+              "traceSha256": "5305dbdec32b8a5b0f47b884ffc8675c4573b1c3810b1b5cffbf10c3fd96c788"
+            },
+            {
+              "gameId": "bishop-001-forward-jump-bishop-v-forward-bishop-rook-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "rncqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/XNBQK2R b KQkq - 0 1",
+              "fenSha256": "d94602e654715a1dd8af7f0d614f796bff9d9a97c456399e55b3c6dccd3bc7a5",
+              "traceSha256": "97373c95c6c0c4d73b5af0432decf516f100b95c9bfdc2c4391ad1890daf54ea"
+            },
+            {
+              "gameId": "bishop-001-hurdle-rank-bishop-v-forward-bishop-rook-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "xnbqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/RNZQK2R b KQkq - 0 1",
+              "fenSha256": "7db2b9c86d4f74b4cba7b23ae78031b35cf704b94824322ee5e0f56b8aa3b211",
+              "traceSha256": "5305dbdec32b8a5b0f47b884ffc8675c4573b1c3810b1b5cffbf10c3fd96c788"
+            },
+            {
+              "gameId": "bishop-001-short-side-bishop-v-forward-bishop-rook-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "rnaqk1nr/pppp1ppp/4p3/8/1bB5/4P2N/PPPP1PPP/XNBQK2R b KQkq - 0 1",
+              "fenSha256": "1604b03ec6ce55be0d7b54c5343c6e8fdbd1f9a208b355c622bc934eb793ad0b",
+              "traceSha256": "018606ca7a5c8db52cfb2964651bf45f7fd73d858879ca54e60985b41253a24d"
+            },
+            {
+              "gameId": "bishop-002-forward-jump-bishop-v-forward-bishop-rook-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1bqkbnx/ppppppp1/n7/7p/3P4/6PN/PPP1PP1P/RNBQKC1R b KQkq - 0 1",
+              "fenSha256": "0b7636f2708965493a8cdec5415a134a9f027adb2610716113f2ad0ab89a9701",
+              "traceSha256": "06a0ebbc676f76cd6e559becac700089ca7f22bc9ebb619636e7a287feb6f3c1"
+            },
+            {
+              "gameId": "bishop-002-horizontal-bishop-v-forward-bishop-rook-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1bqkjnr/ppppppp1/n7/7p/3P4/6PN/PPP1PP1P/RNBQKB1X b KQkq - 0 1",
+              "fenSha256": "c2aec82360753e5db8cfd856b139c67dce1d61dd9cadb29ac2e019795db4ee56",
+              "traceSha256": "cee1f8875ff73fbfbadeabb94ab925ed61fbbfdef1087aeccc7ce78197dc0d13"
+            },
+            {
+              "gameId": "bishop-002-short-side-bishop-v-forward-bishop-rook-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1bqkbnx/ppppppp1/n7/7p/3P4/6PN/PPP1PP1P/RNBQKA1R b KQkq - 0 1",
+              "fenSha256": "d92c66fd5cf3e8a68d0a5cbc939e0c09854b362f8e6510c0cfd2e5b59f728fb6",
+              "traceSha256": "5081cdccc17d126f4e801a41646c8e653b35568f4fbce0463ba999ef7027ade4"
+            },
+            {
+              "gameId": "bishop-002-through-rank-bishop-v-forward-bishop-rook-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1bqklnr/ppppppp1/n7/7p/3P4/6PN/PPP1PP1P/RNBQKB1X b KQkq - 0 1",
+              "fenSha256": "81762da489477aba17c2c7139afbc7de74bc7c748af0644d4eb1b92c3578a24b",
+              "traceSha256": "b81dd55f5c6ae44f7b7b532b4c187a1b2f7ae4803f74ff370df418f7d7c6cfeb"
+            },
+            {
+              "gameId": "bishop-002-horizontal-bishop-v-forward-bishop-rook-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1bqkbnx/ppppppp1/n7/7p/3P4/6PN/PPP1PP1P/RNBQKJ1R b KQkq - 0 1",
+              "fenSha256": "25a9b9cb6bd4c29cd6d4401b939036a7b6546572197e2db7bf5805a657115c83",
+              "traceSha256": "c9a506fa352d8e98c1f5e0b45f28c86ddf0755d2d6bec3e526135604a8ad0315"
+            },
+            {
+              "gameId": "bishop-002-hurdle-rank-bishop-v-forward-bishop-rook-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1bqkznr/ppppppp1/n7/7p/3P4/6PN/PPP1PP1P/RNBQKB1X b KQkq - 0 1",
+              "fenSha256": "9bc551d2fb3431d8f4863e487c84d5f28b206d95d8c0956382a5fb8610892523",
+              "traceSha256": "b81dd55f5c6ae44f7b7b532b4c187a1b2f7ae4803f74ff370df418f7d7c6cfeb"
+            },
+            {
+              "gameId": "bishop-002-through-rank-bishop-v-forward-bishop-rook-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1bqkbnx/ppppppp1/n7/7p/3P4/6PN/PPP1PP1P/RNBQKL1R b KQkq - 0 1",
+              "fenSha256": "7e71bc07714d4e9cb3c41a54b3ee2659f1ab3499527ff499e96054f9aa045492",
+              "traceSha256": "e6f322b57ecb52add6d723979e9bed68af71b86e024b7f9d179525a735bd86f8"
+            },
+            {
+              "gameId": "bishop-002-forward-jump-bishop-v-forward-bishop-rook-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1bqkcnr/ppppppp1/n7/7p/3P4/6PN/PPP1PP1P/RNBQKB1X b KQkq - 0 1",
+              "fenSha256": "1f534e1ec257a6ebcb8553aa3634d9cfac556ed0d0b678b5d72f11a231a7a147",
+              "traceSha256": "2e47a07f28b860690b822072c25a50eeb1cc76ab345265ea5dcd48d450f7b393"
+            },
+            {
+              "gameId": "bishop-002-hurdle-rank-bishop-v-forward-bishop-rook-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1bqkbnx/ppppppp1/n7/7p/3P4/6PN/PPP1PP1P/RNBQKZ1R b KQkq - 0 1",
+              "fenSha256": "3c1f647f981cdd577f9bbaadc9ef65ff607c9cf86e131bb58421cfe48d51ea42",
+              "traceSha256": "e6f322b57ecb52add6d723979e9bed68af71b86e024b7f9d179525a735bd86f8"
+            },
+            {
+              "gameId": "bishop-002-short-side-bishop-v-forward-bishop-rook-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1bqkanr/ppppppp1/n7/7p/3P4/6PN/PPP1PP1P/RNBQKB1X b KQkq - 0 1",
+              "fenSha256": "2f03013cd6388483b26a785416dfc0cf443dfb840e569ea40e228c5fc3bfd4d7",
+              "traceSha256": "d719355278eac6981f1504973605f3a65246cf93573349bf72a0e947bd93797e"
+            },
+            {
+              "gameId": "bishop-003-forward-jump-bishop-v-forward-bishop-rook-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "x1bqkbnr/pppppppp/8/4n3/8/4P1PB/PPPP1P1P/RNCQK1NR b KQkq - 0 1",
+              "fenSha256": "f24f7c995f6c6ace1323cb7698703f6ad6b41b083ce6e8743253289fa9de3ec7",
+              "traceSha256": "93a6ca06d81029791551951b6dc4db27803caed8ca97c9db4d5961c1d45a3b7f"
+            },
+            {
+              "gameId": "bishop-003-horizontal-bishop-v-forward-bishop-rook-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1jqkbnr/pppppppp/8/4n3/8/4P1PB/PPPP1P1P/XNBQK1NR b KQkq - 0 1",
+              "fenSha256": "cbb60e5e6f367967f2ad0e8eecd005a8d071d78964b87013e47122ae97a9ad3a",
+              "traceSha256": "225661c7c0dd471c40e7d10736096aca0dd631d5bbd2ee86d39b064086d2a5c6"
+            },
+            {
+              "gameId": "bishop-003-short-side-bishop-v-forward-bishop-rook-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "x1bqkbnr/pppppppp/8/4n3/8/4P1PB/PPPP1P1P/RNAQK1NR b KQkq - 0 1",
+              "fenSha256": "28a66e8c54161d9a0c7e97e198aa169c43db4909a98ba4f957d124ead5d53273",
+              "traceSha256": "683090378380c6420c2d5f2df6d062aa31cf225cafe797f1f4cd15f765b5b666"
+            },
+            {
+              "gameId": "bishop-003-through-rank-bishop-v-forward-bishop-rook-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1lqkbnr/pppppppp/8/4n3/8/4P1PB/PPPP1P1P/XNBQK1NR b KQkq - 0 1",
+              "fenSha256": "521d31968051ca4578333f836adfdaa6d911bebb46dd4de1a97c0f368d57fc4c",
+              "traceSha256": "3a20995a0bf649b3ef22ff923e213d94bc1965a4a2a5779e5682db404ff7a619"
+            },
+            {
+              "gameId": "bishop-003-horizontal-bishop-v-forward-bishop-rook-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "x1bqkbnr/pppppppp/8/4n3/8/4P1PB/PPPP1P1P/RNJQK1NR b KQkq - 0 1",
+              "fenSha256": "d1b484828a56aedf230bd6b6390d570a24cc9239378a485d882d38a070846699",
+              "traceSha256": "74a661c685825892c50f957037e8dbdc8eedbdf0a6ea74a34bfc8d1da183b16d"
+            },
+            {
+              "gameId": "bishop-003-hurdle-rank-bishop-v-forward-bishop-rook-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1zqkbnr/pppppppp/8/4n3/8/4P1PB/PPPP1P1P/XNBQK1NR b KQkq - 0 1",
+              "fenSha256": "4b93be798e134aaa119a3ecb42ddd51d7fdb6c61abe12e1431f540c052e33dd4",
+              "traceSha256": "3a20995a0bf649b3ef22ff923e213d94bc1965a4a2a5779e5682db404ff7a619"
+            },
+            {
+              "gameId": "bishop-003-through-rank-bishop-v-forward-bishop-rook-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "x1bqkbnr/pppppppp/8/4n3/8/4P1PB/PPPP1P1P/RNLQK1NR b KQkq - 0 1",
+              "fenSha256": "1bf655fc72155a0058b9c6fff6299922ce1c5d25d22a3140d12e679dcef578f3",
+              "traceSha256": "5232319f6309d978e4e6d632c8c922e8fc9c2044be43ece6c6b110008a8acaca"
+            },
+            {
+              "gameId": "bishop-003-forward-jump-bishop-v-forward-bishop-rook-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1cqkbnr/pppppppp/8/4n3/8/4P1PB/PPPP1P1P/XNBQK1NR b KQkq - 0 1",
+              "fenSha256": "13bf6bf93117b893c90fbf665d9c74047bc874e2e6e9b31541067e4d1842d715",
+              "traceSha256": "53408f8ae976ff82a13b0e14e7758021a1c26a54f1b602460f2ccc3a5c46f1b9"
+            },
+            {
+              "gameId": "bishop-003-hurdle-rank-bishop-v-forward-bishop-rook-w",
+              "kind": "head",
+              "ply": 0,
+              "fen": "x1bqkbnr/pppppppp/8/4n3/8/4P1PB/PPPP1P1P/RNZQK1NR b KQkq - 0 1",
+              "fenSha256": "01cbc84aca4a7a48df1f67c375ce45db1dbd5ea56c074d148881db37a2dd0a20",
+              "traceSha256": "5232319f6309d978e4e6d632c8c922e8fc9c2044be43ece6c6b110008a8acaca"
+            },
+            {
+              "gameId": "bishop-003-short-side-bishop-v-forward-bishop-rook-b",
+              "kind": "head",
+              "ply": 0,
+              "fen": "r1aqkbnr/pppppppp/8/4n3/8/4P1PB/PPPP1P1P/XNBQK1NR b KQkq - 0 1",
+              "fenSha256": "023944fbe09bcddecd55be85b9aa8b1f7a61f406efab1bce77ce516b2079e73c",
+              "traceSha256": "84b4a0313d80c3eb2fbba91fac5aa12d7ecda69bf5c87cc0bde93e4631d28fdf"
+            }
+          ]
+        },
+        "legalMoves": {
+          "positions": 30,
+          "matching": true
+        },
+        "searchesStarted": 0,
+        "interpretation": "Fresh old/new native values match the archived bishop preflight for all retained types; bounded source positions match legal moves and static traces. The historical collection process manifest was not supplied; this is not a universal equivalence proof."
+      },
+      "searchesStarted": 0
+    }
+  },
+  "workflow": {
+    "rounds": [
+      {
+        "stage": "restore",
+        "targetPlies": 1,
+        "activeGames": 4,
+        "finishedGames": 0
+      },
+      {
+        "stage": "restore",
+        "targetPlies": 2,
+        "activeGames": 4,
+        "finishedGames": 0
+      }
+    ],
+    "jobs": 4,
+    "campaignBytesPreserved": true,
+    "stageManifestPreserved": true,
+    "savedPrefixesPreserved": true,
+    "comparisonProfileBoundedPrefix": {
+      "activeGames": 4,
+      "targetPlies": 1,
+      "finishedGames": 0
+    },
+    "offlineCliReturned": true,
+    "unavailableEnginePath": true,
+    "inheritedPairedGames": 832,
+    "completeExistingMatchups": 2,
+    "rawJournalsUnchanged": true,
+    "nextStageNotStarted": true,
+    "allLocksReleased": true,
+    "completedStudyGames": 0,
+    "preflightBasis": "Reused the exact source replay/native diagnostics from the completed zero-search preflight; actual UCI processes played bounded interrupted prefixes only."
+  },
+  "independentReview": {
+    "identityPins": true,
+    "sourceContextsAndColorPairs": true,
+    "cancellationAndResume": true,
+    "strictPlyCapAndTruncation": true,
+    "blockingIssuesRemaining": 0
+  },
+  "completedStudyGames": 0
+}

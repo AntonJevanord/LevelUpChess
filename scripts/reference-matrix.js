@@ -7,7 +7,7 @@ const HELP = `Four-reference matchup matrix (offline; no games or material fits)
   npm run material:matrix -- --bishop BISHOP-DIRECTORY-OR-REPORT --out DIRECTORY
   npm run material:matrix -- --bishop BISHOP-DIRECTORY-OR-REPORT --revisions REVISION-DIRECTORY-OR-JOURNAL --out DIRECTORY
 
-Defaults display the user-reported 640-game bishop checkpoint and preserve the
+Defaults display the completed 1,280-game bishop study and preserve the
 full historical bishop/QN/NC reported scores separately from recovered raw data.
 --revisions searches retained journals for missing original games, without
 replaying them. The gap inventory is not a launchable campaign. No engine,

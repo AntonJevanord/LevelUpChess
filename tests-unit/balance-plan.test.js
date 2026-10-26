@@ -176,7 +176,7 @@ test('schedule shuffles pair order and first color reproducibly from the uint32 
 test('checked-in experiments validate and budget-three cases have equal point costs', () => {
   const directory = path.join(__dirname, '../experiments/balance');
   const names = fs.readdirSync(directory).filter(name => name.endsWith('.json'));
-  assert.deepEqual(names.sort(), ['amazon-alternatives-roster.json', 'amazon-alternatives.json', 'amazon-revision-roster.json', 'amazon-revision.json', 'bishop-references.json', 'blue-rook-confirmation.json', 'budget-3-confirmation.json', 'budget-3.json', 'designs-smoke.json', 'level3-holdout.json', 'level3-roster.json', 'level3-round-robin.json', 'material-anchors.json', 'material-collection.json', 'material-estimate.json', 'material-study.json', 'outlier-effects.json', 'purple-material-handicaps.json', 'reference-panel.json', 'reference-revisions.json', 'revision-1-confirmation.json', 'revision-1-screen.json', 'rook-values-auto.json', 'rook-values-eight.json', 'rook-values-roster.json', 'simple-references.json', 'skill-sweep.json', 'smoke.json', 'upgrade-effects.json']);
+  assert.deepEqual(names.sort(), ['amazon-alternatives-roster.json', 'amazon-alternatives.json', 'amazon-revision-roster.json', 'amazon-revision.json', 'bishop-decision.json', 'bishop-references.json', 'blue-rook-confirmation.json', 'budget-3-confirmation.json', 'budget-3.json', 'designs-smoke.json', 'level3-holdout.json', 'level3-roster.json', 'level3-round-robin.json', 'material-anchors.json', 'material-collection.json', 'material-estimate.json', 'material-study.json', 'outlier-effects.json', 'purple-material-handicaps.json', 'reference-panel.json', 'reference-revisions.json', 'revision-1-confirmation.json', 'revision-1-screen.json', 'rook-values-auto.json', 'rook-values-eight.json', 'rook-values-roster.json', 'simple-references.json', 'skill-sweep.json', 'smoke.json', 'upgrade-effects.json']);
   // Rosters and the collection protocol have dedicated bounded validators.
   const { getCollectionProtocol } = require('../scripts/balance/material-collection-plan');
   assert.equal(getCollectionProtocol().settings.totalGames, 96);
@@ -190,7 +190,8 @@ test('checked-in experiments validate and budget-three cases have equal point co
   assert.equal(getSimpleProtocol().settings.totalGames, 3072);
   const { getBishopProtocol } = require('../scripts/balance/bishop-plan');
   assert.equal(getBishopProtocol().settings.totalGames, 1280);
-  for (const name of names.filter(name => !name.endsWith('-roster.json') && !['material-collection.json', 'material-study.json', 'reference-panel.json', 'reference-revisions.json', 'simple-references.json', 'bishop-references.json'].includes(name))) {
+  assert.equal(require('../scripts/balance/bishop-decision-plan').getDecisionProtocol().protocol.maxNewGames, 1472);
+  for (const name of names.filter(name => !name.endsWith('-roster.json') && !['material-collection.json', 'material-study.json', 'reference-panel.json', 'reference-revisions.json', 'simple-references.json', 'bishop-references.json', 'bishop-decision.json'].includes(name))) {
     const config = normalizeConfig(JSON.parse(fs.readFileSync(path.join(directory, name), 'utf8')));
     const schedule = makeSchedule(config);
     assert.equal(schedule.length, 2 * config.openings.length * config.comparisons.length * config.repetitions);

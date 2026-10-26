@@ -6,6 +6,8 @@ experiments/balance/results/*.uploaded-report.json -text
 experiments/balance/results/*.replay-source.json -text
 experiments/balance/results/*.expected-games.json -text
 experiments/balance/results/short-side-revision-recovery-001.audit.json -text
+experiments/balance/results/bishop-reference-001.audit.json -text
+experiments/balance/bishop-decision.json text eol=lf
 # Preserve original collection manifests used by reproducible result audits.
 experiments/balance/results/*.collection.json -text
 # Preserve the checksum of archived game subsets across Windows checkouts.

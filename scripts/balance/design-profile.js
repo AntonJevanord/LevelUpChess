@@ -189,6 +189,12 @@ function definitionProbes(definition, letter) {
     { name: 'quiet hops cannot capture or pass a second blocker', fen: position({ a1: 'K', h7: 'k', d4: type, e4: 'P', g4: 'p', c4: 'P', b4: 'P' }) },
     { name: 'diagonal blockers and forbidden vertical motion', fen: position({ a1: 'K', h7: 'k', d4: type, e5: 'P', d5: 'P', c4: 'P' }) },
   );
+  if (definition.id === 'bishop.purple@13') frames.push(
+    { name: 'first sideways leg blocks both wide knight directions', fen: position({ a1: 'K', h7: 'k', d4: type, e4: 'P', c4: 'P', f5: 'p', b3: 'p' }) },
+    { name: 'second sideways square is not the lame knight leg', fen: position({ a1: 'K', h7: 'k', d4: type, f4: 'P', b4: 'P', f5: 'p', b3: 'p' }) },
+    { name: 'enemy first leg can be captured sideways but blocks knight continuation', fen: position({ a1: 'K', h7: 'k', d4: type, e4: 'p', f5: 'p' }) },
+    { name: 'horizontal slides retain a two-square clear limit', fen: position({ a1: 'K', h7: 'k', d4: type, a4: 'p', f4: 'p' }) },
+  );
   if (['rook.purple@9', 'rook.purple@10', 'rook.purple@11'].includes(definition.id)) frames.push(
     { name: 'forward and backward diagonal ranges', fen: position({ a1: 'K', h7: 'k', d4: type, a7: 'p', g7: 'p', b2: 'p', f2: 'p' }) },
     { name: 'diagonal slides cannot cross blockers', fen: position({ a1: 'K', h7: 'k', d4: type, e5: 'P', f6: 'p', c3: 'p', b2: 'p' }) },
@@ -197,7 +203,7 @@ function definitionProbes(definition, letter) {
   // These new allocation hints have no historical movement identity. In
   // particular, l used to denote a rook; its castling fixtures do not apply
   // to a bishop that now borrows that free letter.
-  const inheritedProbes = ['bishop.purple@11', 'bishop.purple@12'].includes(definition.id)
+  const inheritedProbes = ['bishop.purple@11', 'bishop.purple@12', 'bishop.purple@13'].includes(definition.id)
     ? [] : legacyCapabilityProbes(definition.legacyType, 'levelup-v5');
   for (const legacy of inheritedProbes) {
     // Repeatable Twin jumps do not create initial-double en passant rights.

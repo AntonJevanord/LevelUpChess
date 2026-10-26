@@ -22,6 +22,7 @@ const PINNED = {
   'short-side-revision-recovery-001.audit.json': '908819f8abf13411ba49a143704ae1dbee8de4ab8bf1ffe44b1ccbf3a48f9230',
   'simple-reference-001.uploaded-report.json': 'c83a26ca3cf0ab33306bc7ad2481076b6585786538c6d90d7342e0b8f2c4c4dd',
   'reference-revisions-001.uploaded-report.md': 'cf4d138e6021f8740317f31e5f9db78470c9cb3890b34cb0195a7e5bccafe37a',
+  'bishop-reference-001.uploaded-report.json': '64b54f3a83f7fe74609fc8f96571edebcacf0006a71d824a648bcbfd20b5f1a5',
 };
 const SCORES = { '1-0': 1, '1/2-1/2': 0.5, '0-1': 0 };
 const FILES = ['matrix.md', 'matrix.json', 'gap-plan.json', 'recovered-head.games.jsonl'];
@@ -141,7 +142,7 @@ function parseReportedBishop(markdown, opponent, sourceId) {
 }
 function bishopObservation(input) {
   const file = input ? (fs.statSync(path.resolve(input)).isDirectory() ? path.join(path.resolve(input), 'bishop-report.json') : path.resolve(input))
-    : path.join(RESULTS, 'reference-matrix-640.observation.json');
+    : pinned('bishop-reference-001.uploaded-report.json').file;
   const bytes = fs.readFileSync(file), report = JSON.parse(bytes);
   const isObservation = report.format === 'levelup-reference-matrix-observation';
   let match;
@@ -152,9 +153,10 @@ function bishopObservation(input) {
     match = report.analysis?.predictions?.matchups?.find(row => pairKey(row.designA, row.designB) === pairKey(BISHOP, ROOK));
   } else fail('Use a bishop-reference report or the explicit checkpoint observation.');
   if (!match || pairKey(match.designA, match.designB) !== pairKey(BISHOP, ROOK)) fail('The bishop report has no short-side bishop versus RfB result.');
-  const sourceId = isObservation ? input ? 'local-bishop-observation' : 'bishop-observation-640' : 'bishop-local-report';
-  return { match: normalizeMatch({ ...match, sourceId, evidence: isObservation ? 'user-reported-checkpoint' : 'local-report-not-replayed-here' }),
-    source: { id: sourceId, file, sha256: sha(bytes), kind: isObservation ? 'user-reported-checkpoint' : 'bishop-report',
+  const sourceId = isObservation ? 'local-bishop-observation' : input ? 'bishop-local-report' : 'bishop-final-archive';
+  const evidence = isObservation ? 'user-reported-checkpoint' : input ? 'local-report-not-replayed-here' : 'archived-replay-audited-report';
+  return { match: normalizeMatch({ ...match, sourceId, evidence }),
+    source: { id: sourceId, file, sha256: sha(bytes), kind: evidence,
       checkpoint: report.checkpoint, rawGameReplayPerformedHere: false } };
 }
 function pairedRecovery(records, opponent) {
@@ -215,7 +217,7 @@ function makeReferenceMatrix({ bishop, revisions } = {}) {
     interpretation: 'Each cell is the row piece’s paired point score against the column piece. Draws count half. Historical reported totals and recovered raw subsets are separate evidence; different opening coverage is not averaged into a ranking.',
     limitations: [
       'The historical bishop/QN and bishop/NC reported scores use 256 games each; raw recovery may cover fewer games and yield different scores.',
-      'Default bishop/RfB is the transcribed 640-game checkpoint. Supply --bishop with the actual local report to refresh it.',
+      'Default bishop/RfB is the completed replay-audited 1280-game study. Explicit pasted observations remain labeled as reported data.',
       'This command starts no games, makes no material fits and performs no rule or engine replay. Imported journal metadata and history shape are checked against the original declared schedule.',
       'Different source profiles and checkpoints remain identified; this table does not establish universal equivalence or statistical independence.',
       'The active bishop collector and its raw files remain unchanged. Missing-game inventories do not authorize an automatic rerun or replace completed/truncated histories.',

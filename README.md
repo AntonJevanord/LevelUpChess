@@ -53,28 +53,27 @@ Open [prototypes/kings/index.html](prototypes/kings/index.html) to try the captu
 
 Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Bringing king choices into the main board's setup, engine play, and saves remains integration work. See the [prototype guide](prototypes/kings/README.md).
 
-## Version 16: bishops against the reference rook
+## Version 16: final focused bishop comparison
 
-The completed [simple-piece comparison](experiments/balance/results/simple-reference-001-review.md) supports `RfB` as a provisional reference alongside Amazon (`QN`) and Camel knight (`NC`): it scores **52.73% against Amazon and 50.98% against Camel**.
+The completed [five-bishop study](experiments/balance/results/bishop-reference-001.report.md) gives short-side bishop **53.32%** against `RfB`, and long quiet-hop bishop **46.29%**, each over 256 games. All 1,280 games completed without errors or truncations; 156,583 plies replay correctly.
 
-The [current experiment](experiments/balance/bishop-reference-plan.md) compares five bishops against `RfB`: original horizontal, short-side, forward-jump, and two rank bishops with quiet sideways hops. It schedules **1,280 new games with four jobs**, reusing all 5,760 original/simple records.
-
-```bat
-npm.cmd run material:bishops -- --out balance-results/bishop-references --jobs 4
-```
-
-Use a new folder; the retained games and openings are included. Reports at 320 / 640 / 1,280 new games print ordinary P/N/B/R/Q estimates, the queen–rook gap, upgrade bonuses and paired scores. P=1/Q=9 remain assumed anchors. New bishop estimates come from head-to-head and combined data; ordinary/single estimates for those designs remain unavailable. See the [guide](experiments/balance/bishop-reference-plan.md) for movements, stop/resume and offline reporting. The playable picker is unchanged.
-
-Build a small [four-piece matchup matrix](experiments/balance/reference-matrix-plan.md)
-from the latest bishop report without starting games or creating EPD exports:
+The [next bounded decision](experiments/balance/bishop-decision-plan.md) restores only missing short-side/Camel/Amazon cells, then compares long quiet-hop `BsRgmsR0` and blocked-wide-knight `BsR2nsN` bishops against fixed `RfB`, Camel and Amazon. It reuses 832 relevant games and plays **at most 1,472 new games with four jobs**.
 
 ```bat
-npm.cmd run material:matrix -- --bishop balance-results/bishop-references --out balance-results/reference-matrix
+npm.cmd run balance:bishop-decision -- --out balance-results/bishop-decision --jobs 4
 ```
 
-Add `--revisions balance-results/reference-revisions` if that older folder still
-exists. The tool separates reported scores from recovered raw-game coverage and
-lists missing bishop–Camel/Amazon games; it leaves the running collector unchanged.
+A retained `balance-results/reference-revisions/games.jsonl` is detected automatically; add `--revisions PATH` for another folder. Recovered cells reduce restoration. Comparison checkpoints at 320 / 640 / 1,280 save all nine paired matchup scores. No large EPD export or material refit is needed. Use `--resume` or `--report` with the same new folder; q stops now, g after active games, p after active pairs.
+
+`BsR2nsN` has bishop movement, clear horizontal slides up to two squares, and wide knight moves blocked by their first sideways leg: e4 blocks d4–f5; f4 does not. Existing definitions and the playable picker stay unchanged.
+
+The compact [four-piece matrix](experiments/balance/reference-matrix-plan.md) now defaults to the completed bishop results:
+
+```bat
+npm.cmd run material:matrix -- --out balance-results/reference-matrix
+```
+
+Its older full-report bishop/Camel/Amazon scores remain separate from recovered raw subsets. The new decision report combines actual retained and newly recreated results.
 
 ## Completed four-reference comparison
 
@@ -86,7 +85,7 @@ npm.cmd run material:references -- --report balance-results/reference-panel
 
 Camel knight scores 51.18% against Amazon. The bishop is strong across the basket, while the rook trails all three opponents. Material estimates give useful context, but equivalence between ordinary/single and head-to-head estimates remains inconclusive at ±0.5 pawn. Keep this run closed; no repeat is needed.
 
-The [4,608-game revision report](experiments/balance/results/reference-revisions-001-review.md) is also complete. Preserve its results; its original collector identity matches commit `f963a32`. Its missing final manifest/journal prevents pooling it with the current comparison. The completed simple-piece sources match commit `1cdc62f`; their [original protocol](experiments/balance/simple-reference-plan.md) remains available.
+The [4,608-game revision report](experiments/balance/results/reference-revisions-001-review.md) is also complete. Its original collector identity matches `f963a32`. Only the legally replayed short-side subset enters the new decision; the complete revision dataset remains unavailable for pooling. The completed simple-piece sources match `1cdc62f`; their [original protocol](experiments/balance/simple-reference-plan.md) remains available.
 
 The completed reference audit's original whole-file source hashes match commit `1658cc4`. Reproduce that historical audit on its matching checkout; additive candidate definitions in current source files intentionally change their hashes.
 

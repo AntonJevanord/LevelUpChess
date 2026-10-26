@@ -1,14 +1,15 @@
 # Next level-3 balance pass
 
-After the current five-bishop experiment, select a small roster for one capped
+After the current focused bishop decision, select a small roster for one capped
 head-to-head campaign. This is a planning note; it starts no new games and does
 not alter the running experiment.
 
 The [simple comparison](results/simple-reference-001-review.md) supports `RfB`
 alongside Camel and Amazon. The [four-piece matrix](reference-matrix-plan.md)
-adds short-side bishop provisionally: at the 640-game checkpoint it scores
-50.39% against `RfB`; older reported scores are 41.02% against Camel and 47.66%
-against Amazon. Finish the current run before freezing the final roster.
+adds short-side bishop provisionally: it scores 53.32% against `RfB` over
+256 games; older reported scores are 41.02% against Camel and 47.66% against
+Amazon. The [capped bishop decision](bishop-decision-plan.md) fills raw gaps and
+tests long quiet hop plus blocked wide knight before freezing the roster.
 
 ## Provisional roster
 
@@ -57,7 +58,7 @@ checks.
    requires a specific unresolved decision, rather than tighter numbers alone.
 
 All six pairings among the provisional horizontal bishop, rook, Camel and
-Amazon have reported results; bishop versus rook is still running. Raw recovery
+Amazon have reported results; bishop versus rook is complete. Raw recovery
 for the older bishop–Camel/Amazon comparisons currently covers 80 of 128 groups.
 Recover remaining histories before proposing replacement games; no core matchup
 needs an automatic repeat. Other entrants need their cross-family matchups.

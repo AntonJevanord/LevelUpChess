@@ -65,8 +65,10 @@ npm.cmd run material:matrix -- --bishop balance-results/bishop-references --revi
 ```
 
 The bishop argument reads `bishop-report.json`; a direct report file also
-works. Without it, the display explicitly uses the user's pasted 640-game
-checkpoint. The revision argument accepts a directory containing `games.jsonl`
+works. Without it, the display uses the completed, replay-audited 1,280-game
+bishop report (short side scores 53.32% against RfB). A pasted checkpoint file
+can still be supplied explicitly and remains labeled as reported data.
+The revision argument accepts a directory containing `games.jsonl`
 or a journal file. Inputs are read only, and no engine, Python, EPD export or
 material refit is needed. Outputs live in a separate matrix folder.
 
