@@ -1,5 +1,11 @@
 # Revision experiment: reported completion and valuation review
 
+Later archival update: the [complete retained journal](reference-revisions-retained-001.report.md)
+now supplies and legally replays all 4,608 games / 499,642 plies. The original
+process manifest and final JSON remain missing. The initial review below
+retains the evidence limits of its earlier partial upload; its reported
+material estimates have not been refitted.
+
 The user's [final Markdown report](reference-revisions-001.uploaded-report.md),
 received 2026-10-26, reports 4,608 new games complete: 7,295 completed outcomes
 across parent and extension, one inherited truncation, and no errors or aborted

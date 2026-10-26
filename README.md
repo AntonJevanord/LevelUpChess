@@ -86,7 +86,7 @@ npm.cmd run material:references -- --report balance-results/reference-panel
 
 Camel knight scores 51.18% against Amazon. The bishop is strong across the basket, while the rook trails all three opponents. Material estimates give useful context, but equivalence between ordinary/single and head-to-head estimates remains inconclusive at ±0.5 pawn. Keep this run closed; no repeat is needed.
 
-The [4,608-game revision report](experiments/balance/results/reference-revisions-001-review.md) is also complete. Its original collector identity matches `f963a32`. Only the legally replayed short-side subset enters the new decision; the complete revision dataset remains unavailable for pooling. The completed simple-piece sources match `1cdc62f`; their [original protocol](experiments/balance/simple-reference-plan.md) remains available.
+The [4,608-game revision report](experiments/balance/results/reference-revisions-001-review.md) is also complete. Its original collector identity matches `f963a32`. The [subsequently recovered full journal](experiments/balance/results/reference-revisions-retained-001.report.md) replays all 499,642 plies and closes the short-side bishop's historical raw-data gap. Original process manifests and final analysis JSON remain absent; no automatic pooling or new fit changes earlier estimates. The completed simple-piece sources match `1cdc62f`; their [original protocol](experiments/balance/simple-reference-plan.md) remains available.
 
 The completed reference audit's original whole-file source hashes match commit `1658cc4`. Reproduce that historical audit on its matching checkout; additive candidate definitions in current source files intentionally change their hashes.
 

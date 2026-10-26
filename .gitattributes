@@ -10,6 +10,8 @@ experiments/balance/results/bishop-reference-001.audit.json -text
 experiments/balance/bishop-decision.json text eol=lf
 experiments/designs/official-references-v16.json text eol=lf
 experiments/balance/results/bishop-decision-final-001.audit.json text eol=lf
+experiments/balance/results/reference-revisions-retained-001.audit.json text eol=lf
+experiments/balance/results/*.games.jsonl.gz -text
 # Preserve original collection manifests used by reproducible result audits.
 experiments/balance/results/*.collection.json -text
 # Preserve the checksum of archived game subsets across Windows checkouts.
