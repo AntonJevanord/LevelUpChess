@@ -183,12 +183,23 @@ function definitionProbes(definition, letter) {
     { name: 'unlimited horizontal lines and bishop diagonals', fen: position({ a1: 'K', h7: 'k', d4: type, a4: 'p', h4: 'p', b2: 'p', f6: 'p' }) },
     { name: 'horizontal blockers and no vertical rook movement', fen: position({ a1: 'K', h7: 'k', d4: type, e4: 'P', g4: 'p', d6: 'p' }) },
   );
+  if (['bishop.purple@11', 'bishop.purple@12'].includes(definition.id)) frames.push(
+    { name: 'friendly horizontal hurdle and landing distance', fen: position({ a1: 'K', h7: 'k', d4: type, e4: 'P' }) },
+    { name: 'enemy hurdle remains capturable by an ordinary slide', fen: position({ a1: 'K', h7: 'k', d4: type, c4: 'p', f4: 'p' }) },
+    { name: 'quiet hops cannot capture or pass a second blocker', fen: position({ a1: 'K', h7: 'k', d4: type, e4: 'P', g4: 'p', c4: 'P', b4: 'P' }) },
+    { name: 'diagonal blockers and forbidden vertical motion', fen: position({ a1: 'K', h7: 'k', d4: type, e5: 'P', d5: 'P', c4: 'P' }) },
+  );
   if (['rook.purple@9', 'rook.purple@10', 'rook.purple@11'].includes(definition.id)) frames.push(
     { name: 'forward and backward diagonal ranges', fen: position({ a1: 'K', h7: 'k', d4: type, a7: 'p', g7: 'p', b2: 'p', f2: 'p' }) },
     { name: 'diagonal slides cannot cross blockers', fen: position({ a1: 'K', h7: 'k', d4: type, e5: 'P', f6: 'p', c3: 'p', b2: 'p' }) },
   );
   if (definition.roles.castlingRook) frames.push({ name: 'both castling sides', fen: position({ e8: 'k', a1: type, e1: 'K', h1: type }, 'w', 'KQ') });
-  for (const legacy of legacyCapabilityProbes(definition.legacyType, 'levelup-v5')) {
+  // These new allocation hints have no historical movement identity. In
+  // particular, l used to denote a rook; its castling fixtures do not apply
+  // to a bishop that now borrows that free letter.
+  const inheritedProbes = ['bishop.purple@11', 'bishop.purple@12'].includes(definition.id)
+    ? [] : legacyCapabilityProbes(definition.legacyType, 'levelup-v5');
+  for (const legacy of inheritedProbes) {
     // Repeatable Twin jumps do not create initial-double en passant rights.
     if (definition.id === 'pawn.orange@2' && legacy.name === 'orange-pawn vulnerability to en passant') continue;
     frames.push({ name: legacy.name, fen: remap(legacy.fen, definition.legacyType, letter) });

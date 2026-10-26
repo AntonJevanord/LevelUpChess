@@ -6,19 +6,30 @@ These tools collect results; they do not assign measured values to pieces or cha
 
 Follow the [version-16 balancing strategy](docs/balancing-strategy.md): audit engine values, calibrate flagged cases separately, then compare surviving upgrades against fixed references. Material compensation can later provide approximate added-value ranges; Amazon scores alone do not establish pawn-equivalent values.
 
-## Version 16: simple-piece comparison
+## Version 16: bishops against RfB
 
-The [simple-piece plan](experiments/balance/simple-reference-plan.md) compares `BsR`, `RB`, `RfB` and `RB2` against fixed `QN`/`NC`: **3,072 new games**, four jobs, 128 inherited opening groups. Its 2,048 head-to-head and 1,024 ordinary-army games link to the original 2,688 records without replaying them.
+The [bishop comparison](experiments/balance/bishop-reference-plan.md) schedules **1,280 new games**: five bishop designs against the unchanged `RfB` rook, both colors on the same 128 positions. Four jobs and checkpoints at **320 / 640 / 1,280** are fixed. All 5,760 original/simple records are retained once, for a linked cap of 7,040. No ordinary control or unchanged QN/NC matchup is replayed.
 
 ```bat
-npm.cmd run material:simple -- --out balance-results/simple-references --jobs 4
-npm.cmd run material:simple -- --resume balance-results/simple-references
-npm.cmd run material:simple -- --report balance-results/simple-references
+npm.cmd run material:bishops -- --check
+npm.cmd run material:bishops -- --out balance-results/bishop-references --jobs 4
+npm.cmd run material:bishops -- --resume balance-results/bishop-references
+npm.cmd run material:bishops -- --report balance-results/bishop-references
 ```
 
-Reports at 768 / 1,536 / 3,072 new games print ordinary P/N/B/R/Q estimates and the queen–rook gap, with P=1/Q=9 labeled as assumptions. Markdown retains cohort estimates, conditional ranges and checkpoint history. The royal king has no material estimate. `RB` alone uses ordinary-queen native values MG2538/EG2682; every other type keeps automatic values. Movement/role checks, diagnostics and parent compatibility run before collection. Use a new folder; `--check` performs preflight only. The same q/g/p controls apply. See the plan for policy and inference limits.
+Compare `BsR2sN`, `BsWsN`, `BsR2fsN`, `BsRgmsR` and `BsRgmsR0`. The last two add quiet horizontal hops over one piece: immediate landing beyond the hurdle, or any empty landing beyond it before the next blocker. Their ordinary bishop and horizontal captures still stop at blockers. `RfB` retains normal castling.
 
-[Validation evidence](experiments/balance/results/simple-reference-preflight-001.json) records all 3,072 native starts, 68 movement/role probes, historical compatibility, interruption/resume and ordinary-value reporting. The full unit suite passes 785 checks, with 36 environment-dependent cases skipped. No completed campaign games were played in the cloud.
+Reports retain ordinary values, queen–rook gap, upgrade bonuses, complete color-pair scores and conditional ranges. P=1/Q=9 are assumptions. Four new bishop types appear only in head-to-head games, so their ordinary/single coefficients remain unavailable; removing their absent columns preserves the older designs' baseline fit. Head/combined estimates still require full rank. Whole-position resampling and validation keep inherited and new conditions together.
+
+Use a new folder; no book download is needed. **q / Ctrl+C** saves current prefixes and stops now, **g** finishes active games, and **p** finishes active pairs. Resume freezes the source, profile, policy and executable. Offline reporting needs no engine or Python. Preflight checks starts, movements, roles, values and bounded historical compatibility before collection. The playable picker is unchanged.
+
+## Completed simple-piece comparison
+
+The [review](experiments/balance/results/simple-reference-001-review.md) verifies all **3,072 new games**, with no errors, truncations or retries, and replays **336,140 legal plies**. The linked dataset contains 5,759 scored outcomes and the original panel's one unscored truncation. `RfB` scores **52.73% versus Amazon and 50.98% versus Camel**, supporting its use as an additional provisional reference. `BsR` is weak; `RB` is strong; `RB2` trails Camel at 42.97%.
+
+The supplied journal, dataset and JSON report are archived. Declared source/executable hashes match commit `1cdc62f`; the original simple `collection.json` was not supplied. A canonical descriptor supports replay but does not establish that missing manifest's checksum or historical native inventory. Current compatibility checks remain separate from historical attestation.
+
+The [original simple protocol](experiments/balance/simple-reference-plan.md) stays closed at 3,072 new games. Its sole explicit prior, ordinary-queen MG2538/EG2682 for `RB`, remains in the linked profile; other types retain automatic values. Preserve old files and checkpoints. Native parameters and outcome-fitted material use different scales, and fitted bonuses are learned from the same games as the matchup scores.
 
 ## Completed four-reference comparison
 

@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-simple-upload-audit",
+  "runId": "1827bb06-2ab9-444c-9606-45d7ad70ab11",
+  "recordedDate": "2026-10-26",
+  "collectionManifestAvailable": false,
+  "manifestReconstructedFromFrozenPlanForReplayOnly": true,
+  "checks": {
+    "journalHashMatchesReport": true,
+    "frozenProfileAndScheduleMatch": true,
+    "allRecordedMoveSanOutcomesReplay": true,
+    "extensionGameMetadataMatchesUploadedDataset": true,
+    "extensionCoverageMatchesReport": true,
+    "declaredSourceHashesMatch": true,
+    "bundledWindowsEngineHashMatchesDeclared": true
+  },
+  "historicalManifestHashVerifiable": false,
+  "historicalNativeInventoryIndependentlyVerifiable": false,
+  "sourceEntriesChecked": 32,
+  "uniqueSourceFilesChecked": 32,
+  "extension": {
+    "scheduledGames": 3072,
+    "studyScheduledGames": 3072,
+    "journalAttempts": 3072,
+    "observedGames": 3072,
+    "finalizedGames": 3072,
+    "remainingGames": 0,
+    "statusCounts": {
+      "completed": 3072,
+      "truncated": 0,
+      "aborted": 0,
+      "error": 0
+    },
+    "completedRecords": 3072,
+    "uniqueHistories": 3072,
+    "sampledGames": 3056,
+    "gamesWithoutSamples": 16,
+    "duplicateGames": [],
+    "samples": 27338,
+    "replayedPlies": 336140,
+    "candidates": 59252,
+    "excluded": {
+      "terminal": 615,
+      "windowEdge": 619,
+      "materialChange": 30680
+    },
+    "partialScoredPairs": 0,
+    "openingGroups": 128,
+    "blocks": 128,
+    "attemptStatusCounts": {
+      "completed": 3072,
+      "truncated": 0,
+      "aborted": 0,
+      "error": 0
+    },
+    "cohorts": {
+      "baseline": {
+        "distinctGames": 1024,
+        "sampledGames": 1019,
+        "samples": 8261,
+        "groups": 128,
+        "phases": {
+          "middlegame": 4092,
+          "endgame": 4169
+        }
+      },
+      "head": {
+        "distinctGames": 2048,
+        "sampledGames": 2037,
+        "samples": 19077,
+        "groups": 128,
+        "phases": {
+          "middlegame": 8385,
+          "endgame": 10692
+        }
+      },
+      "combined": {
+        "distinctGames": 3072,
+        "sampledGames": 3056,
+        "samples": 27338,
+        "groups": 128,
+        "phases": {
+          "middlegame": 12477,
+          "endgame": 14861
+        }
+      }
+    },
+    "materialSupport": {
+      "pawn": {
+        "samples": 16652,
+        "games": 2882,
+        "groups": 128,
+        "positiveGames": 1778,
+        "negativeGames": 1919
+      },
+      "knight": {
+        "samples": 10172,
+        "games": 2315,
+        "groups": 128,
+        "positiveGames": 1153,
+        "negativeGames": 1308
+      },
+      "bishop": {
+        "samples": 10941,
+        "games": 2337,
+        "groups": 128,
+        "positiveGames": 1345,
+        "negativeGames": 1164
+      },
+      "rook": {
+        "samples": 8431,
+        "games": 1995,
+        "groups": 128,
+        "positiveGames": 996,
+        "negativeGames": 1097
+      },
+      "queen": {
+        "samples": 4907,
+        "games": 1433,
+        "groups": 128,
+        "positiveGames": 697,
+        "negativeGames": 765
+      },
+      "bonus:bishop.purple@10": {
+        "samples": 3593,
+        "games": 688,
+        "groups": 128,
+        "positiveGames": 351,
+        "negativeGames": 337
+      },
+      "bonus:bishop.purple@4": {
+        "samples": 0,
+        "games": 0,
+        "groups": 0,
+        "positiveGames": 0,
+        "negativeGames": 0
+      },
+      "bonus:knight.purple@3": {
+        "samples": 3143,
+        "games": 769,
+        "groups": 128,
+        "positiveGames": 384,
+        "negativeGames": 385
+      },
+      "bonus:queen.purple@1": {
+        "samples": 4264,
+        "games": 956,
+        "groups": 128,
+        "positiveGames": 482,
+        "negativeGames": 474
+      },
+      "bonus:rook.purple@10": {
+        "samples": 3386,
+        "games": 681,
+        "groups": 128,
+        "positiveGames": 340,
+        "negativeGames": 341
+      },
+      "bonus:rook.purple@11": {
+        "samples": 3663,
+        "games": 717,
+        "groups": 128,
+        "positiveGames": 358,
+        "negativeGames": 359
+      },
+      "bonus:rook.purple@2": {
+        "samples": 0,
+        "games": 0,
+        "groups": 0,
+        "positiveGames": 0,
+        "negativeGames": 0
+      },
+      "bonus:rook.purple@9": {
+        "samples": 3432,
+        "games": 703,
+        "groups": 128,
+        "positiveGames": 345,
+        "negativeGames": 358
+      }
+    },
+    "phases": {
+      "middlegame": 12477,
+      "endgame": 14861
+    }
+  }
+}

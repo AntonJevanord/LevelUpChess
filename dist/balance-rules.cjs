@@ -447,7 +447,10 @@ var require_design_catalog = __commonJS({
       definition("bishop", "purple", 3, "BsR", "v", 16, 10),
       definition("rook", "purple", 3, "RB", "w", 17, 9),
       definition("rook", "purple", 3, "RfB", "x", 18, 10),
-      definition("rook", "purple", 3, "RB2", "y", 19, 11)
+      definition("rook", "purple", 3, "RB2", "y", 19, 11),
+      // Quiet horizontal hurdle hops; both are separate immutable test candidates.
+      definition("bishop", "purple", 3, "BsRgmsR", "z", 20, 11),
+      definition("bishop", "purple", 3, "BsRgmsR0", "l", 21, 12)
     ];
     var DESIGNS = Object.freeze(Object.fromEntries(definitions.map((design) => [design.id, design])));
     var LEGACY_DESIGN_IDS = Object.freeze(Object.fromEntries(definitions.filter((design) => design.revision === 1).map((design) => [design.legacyType, design.id])));

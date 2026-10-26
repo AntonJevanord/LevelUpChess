@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "id": "bishop-references-v16-001",
+  "seed": 42,
+  "bookPositions": 128,
+  "conditionsPerPosition": 10,
+  "totalGames": 1280,
+  "jobs": 4,
+  "checkpoints": [
+    320,
+    640,
+    1280
+  ],
+  "designIds": [
+    "bishop.purple@4",
+    "rook.purple@2",
+    "bishop.purple@10",
+    "rook.purple@9",
+    "rook.purple@10",
+    "rook.purple@11",
+    "knight.purple@3",
+    "queen.purple@1",
+    "bishop.purple@7",
+    "bishop.purple@9",
+    "bishop.purple@11",
+    "bishop.purple@12"
+  ],
+  "evaluation": {
+    "pieceValues": {
+      "rook.purple@9": {
+        "mg": 2538,
+        "eg": 2682
+      }
+    }
+  },
+  "engine": {
+    "nodes": 20000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400
+  },
+  "strength": {
+    "skill": 20
+  },
+  "sampling": {
+    "minPly": 16,
+    "stride": 5,
+    "stableBefore": 2,
+    "stableAfter": 2
+  },
+  "analysis": {
+    "anchors": {
+      "pawn": 1,
+      "queen": 9
+    },
+    "ridge": 0.001,
+    "bootstrap": 200,
+    "validationFolds": 5,
+    "agreementMargin": 0.5
+  },
+  "selection": "Reuse the exact 128 original positions and all 5760 original/simple records; append only five bishop candidates against the forward-bishop rook in both colors.",
+  "referenceIds": [
+    "rook.purple@10"
+  ],
+  "parent": {
+    "manifestFile": "experiments/balance/results/reference-panel-001.collection.json",
+    "manifestSha256": "534dd8c8688899b555757978fcf8a36fabd700416e6dd78b18e6e858d6871417",
+    "journalFile": "experiments/balance/results/reference-panel-001.games.jsonl",
+    "journalSha256": "3aaa7ea9dd70cb555e368849897d6c1dc67d6240b0091c5da5092fcb9b64ba49"
+  },
+  "simpleSource": {
+    "manifestFile": "experiments/balance/results/simple-reference-001.replay-source.json",
+    "manifestSha256": "c7313eb0330d637ea5105d2e44ad8dc93e11e26895ee59e828946dfcec0edd82",
+    "journalFile": "experiments/balance/results/simple-reference-001.games.jsonl",
+    "journalSha256": "8de913ef53c3023f525c80da572e6ad153d83d2651a96d3ccbbad10f5eea2b84",
+    "originalManifestSupplied": false
+  }
+}

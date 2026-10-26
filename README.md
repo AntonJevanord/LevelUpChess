@@ -53,15 +53,17 @@ Open [prototypes/kings/index.html](prototypes/kings/index.html) to try the captu
 
 Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Bringing king choices into the main board's setup, engine play, and saves remains integration work. See the [prototype guide](prototypes/kings/README.md).
 
-## Version 16: simple-piece comparison
+## Version 16: bishops against the reference rook
 
-The [simple-piece experiment](experiments/balance/simple-reference-plan.md) compares `BsR`, `RB`, `RfB` and `RB2` against Amazon (`QN`) and Camel knight (`NC`). It runs **3,072 new games with four jobs**: 2,048 head-to-head games and 1,024 ordinary-army games, reusing the original 2,688 reference records.
+The completed [simple-piece comparison](experiments/balance/results/simple-reference-001-review.md) supports `RfB` as a provisional reference alongside Amazon (`QN`) and Camel knight (`NC`): it scores **52.73% against Amazon and 50.98% against Camel**.
+
+The [next experiment](experiments/balance/bishop-reference-plan.md) compares five bishops against `RfB`: original horizontal, short-side, forward-jump, and two rank bishops with quiet sideways hops. It schedules **1,280 new games with four jobs**, reusing all 5,760 original/simple records.
 
 ```bat
-npm.cmd run material:simple -- --out balance-results/simple-references --jobs 4
+npm.cmd run material:bishops -- --out balance-results/bishop-references --jobs 4
 ```
 
-Use a new folder; no opening-book download is needed. Reports at 768 / 1,536 / 3,072 new games print ordinary P/N/B/R/Q estimates, the queen–rook gap and upgrade bonuses. P=1/Q=9 are assumed anchors. Only the queen-moving rook receives ordinary-queen native values; the others retain automatic values. See the [guide](experiments/balance/simple-reference-plan.md) for stop/resume and offline reporting.
+Use a new folder; the retained games and openings are included. Reports at 320 / 640 / 1,280 new games print ordinary P/N/B/R/Q estimates, the queen–rook gap, upgrade bonuses and paired scores. P=1/Q=9 remain assumed anchors. New bishop estimates come from head-to-head and combined data; ordinary/single estimates for those designs remain unavailable. See the [guide](experiments/balance/bishop-reference-plan.md) for movements, stop/resume and offline reporting. The playable picker is unchanged.
 
 ## Completed four-reference comparison
 
@@ -73,7 +75,7 @@ npm.cmd run material:references -- --report balance-results/reference-panel
 
 Camel knight scores 51.18% against Amazon. The bishop is strong across the basket, while the rook trails all three opponents. Material estimates give useful context, but equivalence between ordinary/single and head-to-head estimates remains inconclusive at ±0.5 pawn. Keep this run closed; no repeat is needed.
 
-The [4,608-game revision report](experiments/balance/results/reference-revisions-001-review.md) is also complete. Preserve its results; its original collector identity matches commit `f963a32`. The simple-piece experiment is a new collection with separate profiles and output files.
+The [4,608-game revision report](experiments/balance/results/reference-revisions-001-review.md) is also complete. Preserve its results; its original collector identity matches commit `f963a32`. Its missing final manifest/journal prevents pooling it with the current comparison. The completed simple-piece sources match commit `1cdc62f`; their [original protocol](experiments/balance/simple-reference-plan.md) remains available.
 
 The completed reference audit's original whole-file source hashes match commit `1658cc4`. Reproduce that historical audit on its matching checkout; additive candidate definitions in current source files intentionally change their hashes.
 

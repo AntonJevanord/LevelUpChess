@@ -2,6 +2,8 @@
 experiments/balance/results/*.summary.json -text
 experiments/balance/results/*.uploaded-summary.json -text
 experiments/balance/results/*.uploaded-dataset.json -text
+experiments/balance/results/*.uploaded-report.json -text
+experiments/balance/results/*.replay-source.json -text
 # Preserve original collection manifests used by reproducible result audits.
 experiments/balance/results/*.collection.json -text
 # Preserve the checksum of archived game subsets across Windows checkouts.
