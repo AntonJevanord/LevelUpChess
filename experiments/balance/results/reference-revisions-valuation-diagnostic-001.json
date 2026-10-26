@@ -1,0 +1,192 @@
+{
+  "engineSha256": "8ccde8596fb88aa7fbbf1020cc5afa52ef9d1887764275ea8e627ba0227e4f1e",
+  "searches": 0,
+  "profiles": {
+    "current": {
+      "profileHash": "08f66036deb767594385af3d5cfdb945d016465b46cbce88e1f0f4882f3c83eb",
+      "values": {
+        "ordinary-rook": {
+          "letter": "r",
+          "rawMg": 1276,
+          "rawEg": 1380,
+          "captureMg": 1276,
+          "captureEg": 1380,
+          "evalMg": 1276,
+          "evalEg": 1380
+        },
+        "ordinary-queen": {
+          "letter": "q",
+          "rawMg": 2538,
+          "rawEg": 2682,
+          "captureMg": 2538,
+          "captureEg": 2682,
+          "evalMg": 2538,
+          "evalEg": 2682
+        },
+        "queen.purple@1": {
+          "letter": "u",
+          "rawMg": 3738,
+          "rawEg": 3875,
+          "captureMg": 3738,
+          "captureEg": 3875,
+          "evalMg": 3738,
+          "evalEg": 3875
+        },
+        "rook.purple@2": {
+          "letter": "o",
+          "rawMg": 1904,
+          "rawEg": 1959,
+          "captureMg": 1904,
+          "captureEg": 1959,
+          "evalMg": 1904,
+          "evalEg": 1959
+        },
+        "rook.purple@6": {
+          "letter": "e",
+          "rawMg": 2240,
+          "rawEg": 2297,
+          "captureMg": 2240,
+          "captureEg": 2297,
+          "evalMg": 2240,
+          "evalEg": 2297
+        },
+        "rook.purple@7": {
+          "letter": "f",
+          "rawMg": 2413,
+          "rawEg": 2531,
+          "captureMg": 2413,
+          "captureEg": 2531,
+          "evalMg": 2413,
+          "evalEg": 2531
+        },
+        "rook.purple@8": {
+          "letter": "h",
+          "rawMg": 2240,
+          "rawEg": 2413,
+          "captureMg": 2240,
+          "captureEg": 2413,
+          "evalMg": 2240,
+          "evalEg": 2413
+        }
+      }
+    },
+    "blink-auto": {
+      "profileHash": "72dd54f04ae886775e7792a15bba586781394065201c062b1310916b24a32b34",
+      "values": {
+        "ordinary-rook": {
+          "letter": "r",
+          "rawMg": 1276,
+          "rawEg": 1380,
+          "captureMg": 1276,
+          "captureEg": 1380,
+          "evalMg": 1276,
+          "evalEg": 1380
+        },
+        "ordinary-queen": {
+          "letter": "q",
+          "rawMg": 2538,
+          "rawEg": 2682,
+          "captureMg": 2538,
+          "captureEg": 2682,
+          "evalMg": 2538,
+          "evalEg": 2682
+        },
+        "queen.purple@1": {
+          "letter": "u",
+          "rawMg": 3738,
+          "rawEg": 3875,
+          "captureMg": 3738,
+          "captureEg": 3875,
+          "evalMg": 3738,
+          "evalEg": 3875
+        },
+        "rook.purple@3": {
+          "letter": "o",
+          "rawMg": 3146,
+          "rawEg": 3944,
+          "captureMg": 3146,
+          "captureEg": 3944,
+          "evalMg": 3146,
+          "evalEg": 3944
+        },
+        "rook.purple@4": {
+          "letter": "a",
+          "rawMg": 3536,
+          "rawEg": 4370,
+          "captureMg": 3536,
+          "captureEg": 4370,
+          "evalMg": 3536,
+          "evalEg": 4370
+        },
+        "rook.purple@5": {
+          "letter": "c",
+          "rawMg": 4002,
+          "rawEg": 4877,
+          "captureMg": 4002,
+          "captureEg": 4877,
+          "evalMg": 4002,
+          "evalEg": 4877
+        }
+      }
+    },
+    "blink-eight": {
+      "profileHash": "efcb335d7f42158581d90757efb1e9b06e20c5aa9bdbbaaf16e7f3c0eb9cc3c4",
+      "values": {
+        "ordinary-rook": {
+          "letter": "r",
+          "rawMg": 1276,
+          "rawEg": 1380,
+          "captureMg": 1276,
+          "captureEg": 1380,
+          "evalMg": 1276,
+          "evalEg": 1380
+        },
+        "ordinary-queen": {
+          "letter": "q",
+          "rawMg": 2538,
+          "rawEg": 2682,
+          "captureMg": 2538,
+          "captureEg": 2682,
+          "evalMg": 2538,
+          "evalEg": 2682
+        },
+        "queen.purple@1": {
+          "letter": "u",
+          "rawMg": 3738,
+          "rawEg": 3875,
+          "captureMg": 3738,
+          "captureEg": 3875,
+          "evalMg": 3738,
+          "evalEg": 3875
+        },
+        "rook.purple@3": {
+          "letter": "o",
+          "rawMg": 2042,
+          "rawEg": 2208,
+          "captureMg": 2042,
+          "captureEg": 2208,
+          "evalMg": 2042,
+          "evalEg": 2208
+        },
+        "rook.purple@4": {
+          "letter": "a",
+          "rawMg": 2042,
+          "rawEg": 2208,
+          "captureMg": 2042,
+          "captureEg": 2208,
+          "evalMg": 2042,
+          "evalEg": 2208
+        },
+        "rook.purple@5": {
+          "letter": "c",
+          "rawMg": 2042,
+          "rawEg": 2208,
+          "captureMg": 2042,
+          "captureEg": 2208,
+          "evalMg": 2042,
+          "evalEg": 2208
+        }
+      }
+    }
+  }
+}

@@ -4,6 +4,11 @@ After the current bishop/rook experiment, select a small roster for one capped
 head-to-head campaign. This is a planning note; it starts no new games and does
 not alter the running experiment.
 
+The [reported completion and valuation review](results/reference-revisions-001-review.md)
+now closes that collection at its cap. Review the [simple reference ideas](simple-reference-ideas.md),
+including pure `BsR` and rook-to-queen, before freezing the next roster. They
+remain unscored candidates and do not automatically replace measured designs.
+
 ## Provisional roster
 
 | Purchase | Selection |
