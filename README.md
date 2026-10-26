@@ -74,7 +74,7 @@ The archived bishop command can refresh an existing local report without startin
 npm.cmd run balance:bishop-decision -- --report balance-results/bishop-decision
 ```
 
-The final upload supplies the completed decision report; its new-game journal and campaign manifests were not supplied. The separately uploaded journal duplicates the earlier five-bishop study. Preserve local raw files for later replay; this evidence limit does not require another run.
+The [complete upload audit](experiments/balance/results/bishop-decision-complete-001.audit.json) now verifies the journal and manifests: all 2,304 retained/new histories replay and all nine matchup scores/ranges reproduce exactly. A separate [offline material fit](experiments/balance/results/bishop-decision-material-001.report.md) uses the 1,280 new games only: Vanguard **8.01**, Unicorn **6.21**, Cruisader **6.81**, and Amazon **12.58** total pawn-equivalent points, under assumed P=1/Q=9. Reports retain uncertainty and earlier cohort estimates separately; no new games or reference changes.
 
 ## Completed four-reference comparison
 

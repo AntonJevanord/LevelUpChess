@@ -18,7 +18,15 @@ The [final decision](experiments/balance/results/bishop-decision-final-001.repor
 | Unicorn | 95 / 54 / 107 | 47.66% | 41.99%–53.32% |
 | Amazon | 116 / 33 / 107 | 51.76% | 46.29%–58.01% |
 
-These opening-group bootstrap ranges condition on the selected positions and recorded policies. They support the design choice; they are not a 95% guarantee of balance in all positions. The new outcomes are report-only evidence here: the uploaded journal is byte-identical to the earlier five-bishop/RfB journal. Keep the missing new journal, campaign and stage manifests as an archival follow-up, without rerunning games.
+These opening-group bootstrap ranges condition on the selected positions and recorded policies. They support the design choice; they are not a 95% guarantee of balance in all positions. The [complete upload audit](experiments/balance/results/bishop-decision-complete-001.audit.json) now replays all 2,304 retained/new histories and reproduces all nine original scores/ranges, with new collection/campaign identity checks.
+
+The [offline material fit](experiments/balance/results/bishop-decision-material-001.report.md) uses only the 1,280 new games, with assumed P=1/Q=9, game-balanced stable positions and 200 whole-opening resamples. Added bonuses are Vanguard **3.15**, Unicorn **3.17**, Cruisader **3.40**, and Amazon **3.58**; whole-piece estimates are **8.01 / 6.21 / 6.81 / 12.58**, respectively. The report retains conditional ranges, full-rank/validation checks and four games without eligible samples. Earlier broader fits remain separate; native values and purchase costs are unchanged.
+
+```bat
+node experiments/balance/results/bishop-decision-material-001.audit.cjs
+```
+
+This reproduces the analysis offline from the compressed archived inputs; no new matches are started.
 
 The [bounded protocol](experiments/balance/bishop-decision-plan.md) is closed. Its commands remain for reproduction; this offline command refreshes an existing local result directory:
 

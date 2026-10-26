@@ -1,0 +1,227 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-complete-bishop-decision-audit",
+  "recordedDate": "2026-10-27",
+  "inputs": {
+    "games": {
+      "file": "bishop-decision-complete-001.games.jsonl.gz",
+      "compressedBytes": 864975,
+      "compressedSha256": "32354a18094cb4480b8f2714458190432bd3bb2d43f863f48b0d6b59a0ca4e74",
+      "originalBytes": 4361009,
+      "originalSha256": "e36ae6d3e25901bd283c087380cc0a0d5cfef81953b60bf85a1b1e7e6b6377c8"
+    },
+    "collection": {
+      "file": "bishop-decision-complete-001.collection.json.gz",
+      "compressedBytes": 54831,
+      "compressedSha256": "286d129accc554ede1071c0deba6a096736f917f4f317697bf0f8284e60f5879",
+      "originalBytes": 1161297,
+      "originalSha256": "76eeb80950661b45c0642c7a72837042f2264e0a50571a57a6a92db1a83f335f"
+    },
+    "campaign": {
+      "file": "bishop-decision-complete-001.campaign.json.gz",
+      "compressedBytes": 873314,
+      "compressedSha256": "76095f1d6196cd7e913653d05512c1d53bccdfdbe008cb1354cdf98f9c24ae5c",
+      "originalBytes": 8873684,
+      "originalSha256": "efb180d7addbbb55f2c2267bf7e8c7e639145862486f9ec936df40dac0b43257"
+    }
+  },
+  "campaignRunId": "e4b5cce4-1868-4c2e-9c9e-a6a6bddaa24f",
+  "comparisonRunId": "68de8880-dd0c-42ae-9100-47bdead1d12e",
+  "sourceIdentity": {
+    "historicalCommit": "6eeb93957c289e2d03dff67f1e1eb14a1805d4f6",
+    "normalizedRunnerSources": 13,
+    "normalizedDecisionSources": 39,
+    "sourceDeclarationsSha256": "3d8bd4f47b5242c33352f1d233e1a0182ca0de02cd7e17ef35550e92e0f657fb",
+    "allDeclaredSourcesMatch": true,
+    "rulesBundle": {
+      "repositoryLfSha256": "318709e32e17919a3e0723bc63affe053dea39ad3109be8e825acb0ee9e89901",
+      "recordedWindowsCrlfSha256": "81bcacf1dbaebb42260155a1761df2f2fdee76a42dc389b1e4d28a28ab64bd62",
+      "onlyLineEndingsDiffer": true
+    },
+    "windowsEngineSha256": "848ad74c3fbc2684e57b42c581ee94e93e5ed832fb536846a37f9dddebbb8b16"
+  },
+  "checks": {
+    "uploadedManifestsAndCanonicalPlansAgree": true,
+    "allSourceEvidenceHashesMatch": true,
+    "newProfileRegistryAndEvaluationMatch": true,
+    "recordedNativeInventoriesAndCompatibilityPassed": true,
+    "newReferenceValueTablesMatchFrozenRoster": true,
+    "inheritedHistoriesMatchRawArchives": true,
+    "all2304RelevantHistoriesReplay": true,
+    "allNineScoresAndConditionalIntervalsReproduceUploadedMarkdown": true,
+    "historicalInheritedProcessManifestsSupplied": false,
+    "newNativeSearchesStarted": false,
+    "materialFitsComputedByThisAudit": false
+  },
+  "recordedNative": {
+    "startingPositions": 1280,
+    "capabilityProbes": 120,
+    "roleProbes": 2,
+    "compatibilityStaticPositions": 30,
+    "compatibilityLegalPositions": 30
+  },
+  "replayed": [
+    {
+      "context": "new-compare",
+      "games": 1280,
+      "completePairs": 640,
+      "legalPlies": 151488,
+      "profileHash": "c7e22b405a921e897c276f8a0d14a4aae631c25b9a675c62520ef8d103843faa",
+      "recordsSha256": "6ebb879b67d0e7d11655b423353d4d92ad5c1cb9cf756c7fcfcde2cbc5a9f148"
+    },
+    {
+      "context": "inherited-bishop",
+      "games": 512,
+      "completePairs": 256,
+      "legalPlies": 63713,
+      "profileHash": "b2c0b54f4d98ce600f4d5c1c2deb92b3dfccdd657250b8307b7778a570dbecf7",
+      "recordsSha256": "97627a72ab8e7f40a7ffd247b0a6346843edaef77473925bda85c3ef26c65f37"
+    },
+    {
+      "context": "restored-revision",
+      "games": 512,
+      "completePairs": 256,
+      "legalPlies": 60574,
+      "profileHash": "08f66036deb767594385af3d5cfdb945d016465b46cbce88e1f0f4882f3c83eb",
+      "recordsSha256": "9d49c90e41c515cfd7e5deef8f9615911e479b3872026a62e1c1962a67f31076"
+    }
+  ],
+  "relevantGames": 2304,
+  "legalPlies": 275775,
+  "regeneratedDecisionMarkdownSha256": "f9ce85502d5521a06ecabfc980ecdb5962439cc699f6fa3e6c3dfc8d4127e03a",
+  "matchups": [
+    {
+      "designA": "bishop.purple@7",
+      "designB": "rook.purple@10",
+      "games": 256,
+      "pairs": 128,
+      "wins": 114,
+      "draws": 45,
+      "losses": 97,
+      "score": 0.533203125,
+      "interval": {
+        "lower": 0.474609375,
+        "upper": 0.58984375
+      }
+    },
+    {
+      "designA": "bishop.purple@7",
+      "designB": "knight.purple@3",
+      "games": 256,
+      "pairs": 128,
+      "wins": 78,
+      "draws": 54,
+      "losses": 124,
+      "score": 0.41015625,
+      "interval": {
+        "lower": 0.357421875,
+        "upper": 0.47265625
+      }
+    },
+    {
+      "designA": "bishop.purple@7",
+      "designB": "queen.purple@1",
+      "games": 256,
+      "pairs": 128,
+      "wins": 103,
+      "draws": 38,
+      "losses": 115,
+      "score": 0.4765625,
+      "interval": {
+        "lower": 0.41796875,
+        "upper": 0.533203125
+      }
+    },
+    {
+      "designA": "bishop.purple@12",
+      "designB": "rook.purple@10",
+      "games": 256,
+      "pairs": 128,
+      "wins": 97,
+      "draws": 43,
+      "losses": 116,
+      "score": 0.462890625,
+      "interval": {
+        "lower": 0.421875,
+        "upper": 0.5234375
+      }
+    },
+    {
+      "designA": "bishop.purple@12",
+      "designB": "knight.purple@3",
+      "games": 256,
+      "pairs": 128,
+      "wins": 72,
+      "draws": 58,
+      "losses": 126,
+      "score": 0.39453125,
+      "interval": {
+        "lower": 0.34375,
+        "upper": 0.439453125
+      }
+    },
+    {
+      "designA": "bishop.purple@12",
+      "designB": "queen.purple@1",
+      "games": 256,
+      "pairs": 128,
+      "wins": 88,
+      "draws": 29,
+      "losses": 139,
+      "score": 0.400390625,
+      "interval": {
+        "lower": 0.337890625,
+        "upper": 0.46484375
+      }
+    },
+    {
+      "designA": "bishop.purple@13",
+      "designB": "rook.purple@10",
+      "games": 256,
+      "pairs": 128,
+      "wins": 112,
+      "draws": 42,
+      "losses": 102,
+      "score": 0.51953125,
+      "interval": {
+        "lower": 0.466796875,
+        "upper": 0.568359375
+      }
+    },
+    {
+      "designA": "bishop.purple@13",
+      "designB": "knight.purple@3",
+      "games": 256,
+      "pairs": 128,
+      "wins": 95,
+      "draws": 54,
+      "losses": 107,
+      "score": 0.4765625,
+      "interval": {
+        "lower": 0.419921875,
+        "upper": 0.533203125
+      }
+    },
+    {
+      "designA": "bishop.purple@13",
+      "designB": "queen.purple@1",
+      "games": 256,
+      "pairs": 128,
+      "wins": 116,
+      "draws": 33,
+      "losses": 107,
+      "score": 0.517578125,
+      "interval": {
+        "lower": 0.462890625,
+        "upper": 0.580078125
+      }
+    }
+  ],
+  "engineSearches": 0,
+  "newMatchGames": 0,
+  "limitations": [
+    "Recorded new-process source and engine identities match historical repository artifacts, including Windows CRLF rules bytes. Recorded diagnostics are verified for internal consistency; this audit does not rerun native diagnostics or search.",
+    "Historical inherited game process manifests remain absent. Raw identities, legal replay and bounded recorded compatibility do not establish universal process or search equivalence.",
+    "Reproduced intervals condition on the fixed 128 selected opening groups and recorded playing contexts; they are not universal balance guarantees."
+  ]
+}

@@ -1,5 +1,12 @@
 # Version 16 reference decision
 
+Archival update, 2026-10-27: the [complete upload audit](bishop-decision-complete-001.audit.json)
+now verifies all new/inherited histories and exactly reproduces all nine scores
+and conditional ranges. The earlier upload limitations below describe the
+initial files. The separate [offline material fit](bishop-decision-material-001.report.md)
+uses only the 1,280 new games; the reference designs and matchup scores are
+unchanged.
+
 Freeze **Vanguard** (`rook.purple@10`, `RfB`), **Unicorn**
 (`knight.purple@3`, `NC`), **Cruisader** (`bishop.purple@13`, `BsR2nsN`)
 and **Amazon** (`queen.purple@1`, `QN`) as the official level-3 reference
