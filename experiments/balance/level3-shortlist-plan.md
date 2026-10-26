@@ -1,84 +1,60 @@
 # Next level-3 balance pass
 
-After the current focused bishop decision, select a small roster for one capped
-head-to-head campaign. This is a planning note; it starts no new games and does
-not alter the running experiment.
+Version 16 is closed. The earlier candidate round-robin proposal is superseded
+by the [official fixed-reference policy](../../docs/official-references.md).
+This note schedules no games and declares no new budget.
 
-The [simple comparison](results/simple-reference-001-review.md) supports `RfB`
-alongside Camel and Amazon. The [four-piece matrix](reference-matrix-plan.md)
-adds short-side bishop provisionally: it scores 53.32% against `RfB` over
-256 games; older reported scores are 41.02% against Camel and 47.66% against
-Amazon. The [capped bishop decision](bishop-decision-plan.md) fills raw gaps and
-tests long quiet hop plus blocked wide knight before freezing the roster.
+## Frozen references and candidate pool
 
-## Provisional roster
-
-| Purchase | Selection |
+| Role | Purchase |
 | --- | --- |
-| Queen | Fixed Amazon, `queen.purple@1` |
-| Knight | Camel knight, `knight.purple@3` |
-| Horizontal bishop | Short-side `bishop.purple@7` provisionally; retain alternatives until the current run finishes |
-| Rook | Forward-bishop rook `rook.purple@10` (`RfB`) |
-| Mobile pawn | Ranging `pawn.purple@7` and/or Courier `pawn.purple@8` |
-| Rank pawn | Wide-knight version, `pawn.purple@9` |
-| Vertical bishop | Quiet-knight version, `bishop.purple@3` |
+| Reference rook | Vanguard, `rook.purple@10` (`RfB`) |
+| Reference knight | Unicorn, `knight.purple@3` (`NC`) |
+| Reference bishop | Cruisader, `bishop.purple@13` (`BsR2nsN`) |
+| Reference queen | Amazon, `queen.purple@1` (`QN`) |
+| Candidate mobile pawns | Ranging `pawn.purple@7` and/or Courier `pawn.purple@8` |
+| Candidate Rank pawn | Wide-knight version, `pawn.purple@9` |
+| Candidate Vertical bishop | Quiet-knight version, `bishop.purple@3` |
 
-That is at most eight designs. Human playtesting can reduce the roster before
-collection, especially if Ranging and Courier are too similar to retain both.
-Returning pawn remains optional if playtesting gives it a distinct useful role.
-Blink's unresolved evaluation sensitivity stays a separate deferred question.
+Use human playtesting to prune the candidate pool before collection, especially
+if Ranging and Courier are too similar. Returning pawn remains optional if it
+has a distinct useful role. Blink's evaluation sensitivity remains a separate
+deferred question. The reference roster needs no further match games.
 
-Keep extra-unit purchases outside this balance roster: guard knights, Twin
-pawns, split queens and queen companions. Preserve their historical definitions
-and results. The newer [finite-reserve proposal](../../prototypes/reserve-guards/README.md)
-explores deployment without starting congestion and with an ordinary royal
-king. Review its isolated playability while balancing the replacement roster.
-Only after that roster is settled, assess reserve king purchases through paired
-head-to-head games against those fixed equal-cost opponents. Freeze drop rules;
-material estimates remain secondary diagnostics. Reserves add no games to this
-campaign. Changed royal kings still need separate safety, mating and conversion
-checks.
+Keep guard knights, Twin pawns, split queens and queen companions outside this
+replacement-piece batch. Preserve their historical definitions and results.
+The [finite-reserve proposal](../../prototypes/reserve-guards/README.md) explores
+deployment without starting congestion and with an ordinary royal king. Assess
+reserve king purchases after the replacement roster is settled, using fixed
+opponents and explicit drop rules; material estimates remain secondary.
 
 ## Order and reuse
 
-1. Review the current results against both Camel and Amazon, together with added
-   material estimates and playtesting. Select readable bishop/rook revisions;
-   numerical closeness to exactly 50% is not the sole selection criterion.
-2. Begin the next campaign with the surviving pawns and Vertical bishop against
-   the fixed references under the current engine policy. Their promising older
-   results used different effort/evaluation/opening contexts and support a
-   shortlist, rather than automatic pooling into the current dataset.
-3. Fill the remaining shortlisted matchups. The first-stage games count toward
-   the final comparison matrix; no separate repeat screen is needed. Reuse old
-   games only when the exact designs, positions, search settings, values and
-   expanded-profile compatibility permit it. Reuse or add ordinary/single-upgrade
-   baselines as needed for material fitting, using the same outcome journals.
-4. Close at a declared cap, choose the enjoyable, reasonably matched survivors,
-   and move toward levels 1/2 and mixed six-point armies. Further collection
-   requires a specific unresolved decision, rather than tighter numbers alone.
-
-All six pairings among the provisional horizontal bishop, rook, Camel and
-Amazon have reported results; bishop versus rook is complete. Raw recovery
-for the older bishop–Camel/Amazon comparisons currently covers 80 of 128 groups.
-Recover remaining histories before proposing replacement games; no core matchup
-needs an automatic repeat. Other entrants need their cross-family matchups.
-
-With eight designs there are 28 pairings. Forty matched positions played in both
-upgrade colors give **2,240 head-to-head games before compatible reuse**. A final
-budget must also account for any new ordinary/single-upgrade games; freeze that
-budget, roster and stop rules after reviewing the running experiment.
+1. Branch from the tested version-16 closeout. Integrate the official names and
+   selected rules into a new playable library, preserving historical libraries.
+2. Playtest candidates for readability, enjoyment, counterplay, promotion,
+   castling and conversion. Give changed designs new immutable identities.
+3. Declare one capped candidate-versus-reference campaign. Each candidate faces
+   Vanguard, Unicorn, Cruisader and Amazon; experimental candidates do not face
+   one another. Freeze matched positions, complete color pairs, engine values,
+   search effort, checkpoints and a stopping decision before collection.
+4. Reuse compatible unchanged games with their original provenance. Older
+   results from different effort, evaluation or opening contexts support the
+   shortlist but do not automatically enter the new dataset. Reference scores
+   are not replayed merely because another candidate changes.
+5. Choose keep, revise, park or defer at the cap, then develop lower tiers.
+   Mixed six-point armies require a separate, explicit interaction question.
+   More games require a decision they could change, not tighter numbers alone.
 
 ## Decision criteria
 
-Use roughly 40%–60% point score across a varied equal-cost opponent basket as a
-working guide, with draws worth half a point. Inspect individual matchups,
-uncertainty, promotion/endgame behavior, readability, enjoyment and counterplay.
-Do not require every pairing to reach 50% or every confidence interval to fit
-inside the working band.
+Use roughly 40%–60% points score as a practical screen, with draws worth half a
+point. Inspect each reference matchup and its conditional uncertainty alongside
+any basket average. Promotion/endgame behavior, enjoyment and counterplay also
+matter. Do not require exactly 50% or every interval to fit inside the band.
 
-Fit material bonuses from the same games and compare them with the contextual
-Amazon bonus, about four on the assumed pawn-1/queen-9 scale. Use discrepancies
-to understand opponents and positions; do not automatically redesign a piece
-solely to force either metric to a target. Full-army tests matter after this
-single-purchase pass because combinations, duplicated abilities and king safety
-can change the value of a six-point army.
+Saved matchup outcomes remain unchanged when another candidate is redesigned.
+New data or a changed engine, policy or opening cohort can change an estimated
+rate; retain those contexts instead of treating percentages as universal piece
+properties. Material fitting is optional supporting analysis with a frozen
+dataset identity. It does not justify changing the evaluator to force a target.

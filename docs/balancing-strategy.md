@@ -1,10 +1,31 @@
 # Balancing strategy
 
-Stay on version 16 while separating engine evaluation from purchase balance.
-The goal is a useful, enjoyable set of upgrades with credible strength ranges,
-not an exact material number for every possible position.
+Version 16 is closed with four [official frozen references](official-references.md).
+Keep engine evaluation, purchase balance and measured outcomes separate. The goal
+is a useful, enjoyable set of upgrades with credible strength ranges.
 
-## Current evidence and stopping point
+## Fixed reference policy
+
+Vanguard `RfB`, Unicorn `NC`, Cruisader `BsR2nsN`, and Amazon `QN` are the fixed
+three-point reference purchases. Preserve their immutable design IDs, movement,
+deployment and declared evaluation context. A future reference change needs a
+new versioned benchmark; it must not rewrite previous scores.
+
+The [final bishop decision](../experiments/balance/results/bishop-decision-final-001.report.md)
+selects Cruisader: 51.95% against Vanguard, 47.66% against Unicorn and 51.76%
+against Amazon. Each matchup has 256 paired games. Its conditional 95% ranges
+span 41.99%–58.01% across opponents. That is sufficient for this design decision,
+without claiming universal equivalence or scheduling more bishop tests.
+
+Future experimental pieces face these references rather than one another.
+Keep separate candidate/reference scores so changing one candidate cannot alter
+another candidate's saved matchup outcomes. New data or a changed engine,
+evaluation policy or opening cohort can change an estimated rate; record those
+contexts. Reuse compatible unchanged games; refits and basket summaries must
+retain their dataset identity. Material estimates are
+optional supporting evidence, not a substitute for the direct matchup table.
+
+## Earlier evaluator sensitivity evidence
 
 The [400-game comparison](../experiments/balance/results/rook-values-comparison-001.md)
 is complete: 200 games per policy, no errors or truncations, and 20 shared scored
@@ -202,12 +223,11 @@ expects 64.01% for bishop against Camel: material-only values do not capture
 every matchup margin. Preserve both the coefficients and direct scores. No
 additional validation match campaign or truncation replay is required.
 
-Proceed with the [six-candidate revision proposal](../experiments/balance/reference-revision-proposal.md):
-three modest bishop nerfs and three rook buffs against unchanged Camel/Amazon.
-The proposed 5,504-game cap keeps 128 matched positions and separate/combined
-estimates. Implement fresh immutable IDs and schedule/report support, then run
-the normal movement/native and stop/resume checks before collection. Keep the
-new cohort and eight-type playing-policy context separate from completed studies.
+The later [revision experiment](../experiments/balance/reference-revision-proposal.md),
+[simple-piece study](../experiments/balance/simple-reference-plan.md), and
+[bishop decision](../experiments/balance/bishop-decision-plan.md) are also closed.
+Their original protocols and profiles remain historical evidence. The official
+roster above supersedes provisional reference choices and proposed round robins.
 
 For now, retain the ordinary/Amazon evaluation and movement definitions, use
 relative equal-cost comparisons and human feedback for design decisions, and
@@ -219,14 +239,16 @@ with control validity and label unvalidated outputs as contextual odds.
 1. **Play and inspect first.** Shortlist designs for readability, enjoyment and
    counterplay. Check promotion, en passant, castling, checks and representative
    mating or conversion positions before spending another match budget.
-2. **Use a small reference basket.** Keep Amazon fixed within a batch as one
-   level-3 upgrade benchmark. For shortlisted candidates, choose a contrasting
-   equal-cost purchase or combination that tests a relevant interaction. Avoid
-   repeating a full round robin or retesting unchanged designs without a question.
+2. **Use the frozen reference basket.** Test each shortlisted level-3 candidate
+   against Vanguard, Unicorn, Cruisader and Amazon. Do not schedule experimental
+   pieces against each other. For other tiers, declare appropriate fixed
+   reference packages and costs before collection. Reuse compatible unchanged
+   pairings instead of rerunning the reference roster.
 3. **Hold evaluation fixed.** Record engine, policy, movement revisions,
    deployment, openings and search effort. Swap colors and score complete pairs.
-   Treat 40%–60% against Amazon as a practical screening band, not absolute value
-   or certification. A score near 50% suggests comparable purchases in that setup.
+   Treat 40%–60% against references as a practical screening band, not absolute
+   value or certification. Examine the weakest and strongest matchup alongside
+   any basket average; a near-even average can hide a severe matchup weakness.
 4. **Estimate compensation for shortlisted purchases when useful.** Once the
    revised material method establishes a usable anchor, compare other purchases against
    ordinary material across several layouts and compare their added benefit

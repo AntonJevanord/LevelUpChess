@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "id": "official-references-v16-001",
+  "status": "frozen",
+  "level": 3,
+  "roster": [
+    {
+      "key": "vanguard",
+      "name": "Vanguard",
+      "aliases": [
+        "War Tower",
+        "Gold Rider"
+      ],
+      "id": "rook.purple@10",
+      "family": "rook",
+      "movement": "RfB",
+      "placement": "replace",
+      "level": 3,
+      "letter": "w",
+      "slot": 17,
+      "engineValue": {
+        "mg": 1904,
+        "eg": 1932
+      }
+    },
+    {
+      "key": "unicorn",
+      "name": "Unicorn",
+      "aliases": [
+        "Gnu",
+        "Wildebeest"
+      ],
+      "id": "knight.purple@3",
+      "family": "knight",
+      "movement": "NC",
+      "placement": "replace",
+      "level": 3,
+      "letter": "x",
+      "slot": 18,
+      "engineValue": {
+        "mg": 1663,
+        "eg": 1877
+      }
+    },
+    {
+      "key": "cruisader",
+      "name": "Cruisader",
+      "aliases": [
+        "Inquisitor",
+        "Boar rider"
+      ],
+      "id": "bishop.purple@13",
+      "family": "bishop",
+      "movement": "BsR2nsN",
+      "placement": "replace",
+      "level": 3,
+      "letter": "y",
+      "slot": 19,
+      "engineValue": {
+        "mg": 1858,
+        "eg": 1903
+      }
+    },
+    {
+      "key": "amazon",
+      "name": "Amazon",
+      "aliases": [
+        "Superqueen",
+        "Commander"
+      ],
+      "id": "queen.purple@1",
+      "family": "queen",
+      "movement": "QN",
+      "placement": "replace",
+      "level": 3,
+      "letter": "z",
+      "slot": 20,
+      "engineValue": {
+        "mg": 3738,
+        "eg": 3875
+      }
+    }
+  ],
+  "policy": {
+    "comparisons": "candidate-versus-reference",
+    "referenceChanges": "new-roster-version",
+    "evaluation": "preserve-measured-automatic-tables",
+    "material": "engine values are internal search units, not measured material prices",
+    "king": "ordinary-royal",
+    "promotion": "nbrq"
+  },
+  "playtest": {
+    "variant": "levelup-references-v16",
+    "castlingRooks": "wr",
+    "startFen": "wxyzkbnr/pppppppp/8/8/8/8/PPPPPPPP/WXYZKBNR w KQkq - 0 1"
+  }
+}

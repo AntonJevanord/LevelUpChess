@@ -53,27 +53,28 @@ Open [prototypes/kings/index.html](prototypes/kings/index.html) to try the captu
 
 Both kings use the selected level, and other pieces use standard chess rules. This separate local-play board includes practice positions, FEN loading, undo, and promotion choices. Bringing king choices into the main board's setup, engine play, and saves remains integration work. See the [prototype guide](prototypes/kings/README.md).
 
-## Version 16: final focused bishop comparison
+## Version 16 complete: official references
 
-The completed [five-bishop study](experiments/balance/results/bishop-reference-001.report.md) gives short-side bishop **53.32%** against `RfB`, and long quiet-hop bishop **46.29%**, each over 256 games. All 1,280 games completed without errors or truncations; 156,583 plies replay correctly.
+The reference roster is frozen. Each is a three-point replacement upgrade:
 
-The [next bounded decision](experiments/balance/bishop-decision-plan.md) restores only missing short-side/Camel/Amazon cells, then compares long quiet-hop `BsRgmsR0` and blocked-wide-knight `BsR2nsN` bishops against fixed `RfB`, Camel and Amazon. It reuses 832 relevant games and plays **at most 1,472 new games with four jobs**.
+| Name | Family | Movement |
+| --- | --- | --- |
+| Vanguard | Rook | Rook plus forward bishop rays (`RfB`) |
+| Unicorn | Knight | Knight plus camel jumps (`NC`) |
+| Cruisader | Bishop | Bishop, horizontal slides up to two squares, and blocked wide-knight moves (`BsR2nsN`) |
+| Amazon | Queen | Queen plus knight jumps (`QN`) |
+
+Cruisader scores **51.95% against Vanguard, 47.66% against Unicorn, and 51.76% against Amazon** in the [final decision report](experiments/balance/results/bishop-decision-final-001.report.md), with 256 paired games per matchup. Its wide-knight movement is blocked by the first sideways leg: e4 blocks d4–f5; f4 does not.
+
+See the [frozen roster and future testing policy](docs/official-references.md), [machine-readable snapshot](experiments/designs/official-references-v16.json), and [standalone playtesting INI](experiments/designs/official-references-v16.ini). Future candidates face these fixed references rather than each other. Version 16 needs no further match games; future roster and playable-picker work belongs to the next version.
+
+The archived bishop command can refresh an existing local report without starting games:
 
 ```bat
-npm.cmd run balance:bishop-decision -- --out balance-results/bishop-decision --jobs 4
+npm.cmd run balance:bishop-decision -- --report balance-results/bishop-decision
 ```
 
-A retained `balance-results/reference-revisions/games.jsonl` is detected automatically; add `--revisions PATH` for another folder. Recovered cells reduce restoration. Comparison checkpoints at 320 / 640 / 1,280 save all nine paired matchup scores. No large EPD export or material refit is needed. Use `--resume` or `--report` with the same new folder; q stops now, g after active games, p after active pairs.
-
-`BsR2nsN` has bishop movement, clear horizontal slides up to two squares, and wide knight moves blocked by their first sideways leg: e4 blocks d4–f5; f4 does not. Existing definitions and the playable picker stay unchanged.
-
-The compact [four-piece matrix](experiments/balance/reference-matrix-plan.md) now defaults to the completed bishop results:
-
-```bat
-npm.cmd run material:matrix -- --out balance-results/reference-matrix
-```
-
-Its older full-report bishop/Camel/Amazon scores remain separate from recovered raw subsets. The new decision report combines actual retained and newly recreated results.
+The final upload supplies the completed decision report; its new-game journal and campaign manifests were not supplied. The separately uploaded journal duplicates the earlier five-bishop study. Preserve local raw files for later replay; this evidence limit does not require another run.
 
 ## Completed four-reference comparison
 

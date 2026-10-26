@@ -4,31 +4,29 @@ Run paired engine games to compare upgrade armies, strength handicaps, and ordin
 
 These tools collect results; they do not assign measured values to pieces or change the game's movement rules.
 
-For a compact comparison of Short-side bishop, `RfB`, Camel and Amazon, use the
-[four-piece matrix](experiments/balance/reference-matrix-plan.md). It reads the
-latest bishop report, preserves report-only versus recovered-game evidence,
-and lists exact historical gaps without launching games or exporting EPDs.
+Version 16 is closed with four [official references](docs/official-references.md): **Vanguard** (`RfB`), **Unicorn** (`NC`), **Cruisader** (`BsR2nsN`), and **Amazon** (`QN`). Their movement, three-point cost, and stable design IDs are frozen in the [versioned snapshot](experiments/designs/official-references-v16.json). The [standalone INI](experiments/designs/official-references-v16.ini) uses w/x/y/z without changing any historical experiment allocation.
 
-Follow the [version-16 balancing strategy](docs/balancing-strategy.md): audit engine values, calibrate flagged cases separately, then compare surviving upgrades against fixed references. Material compensation can later provide approximate added-value ranges; Amazon scores alone do not establish pawn-equivalent values.
+Future experimental designs face the fixed reference basket; they do not face each other in an automatic round robin. Keep individual candidate/reference scores alongside any basket summary. Follow the [balancing strategy](docs/balancing-strategy.md) for evaluation policies, matched openings, reuse, game caps and stopping decisions.
 
-## Version 16: bounded bishop decision
+## Completed bishop decision
 
-The [completed bishop study](experiments/balance/results/bishop-reference-001.report.md) closes at 1,280 games: no errors/truncations/retries, 156,583 legally replayed plies. Short-side bishop scores 53.32% against RfB; long quiet-hop bishop scores 46.29%. Both remain candidates.
+The [final decision](experiments/balance/results/bishop-decision-final-001.report.md) reports all nine 256-game matchups complete: 1,152 scored color pairs. All 1,280 new comparison games finished without errors or truncations; retained historical games filled every restoration cell, so no replacement games were needed.
 
-The [follow-up](experiments/balance/bishop-decision-plan.md) uses two stages: up to 192 missing short-side/Camel/Amazon cells under the original profile, then 1,280 games testing long quiet hop against Camel/Amazon and `BsR2nsN` against all three references. Reuse both existing rook matchups and detect retained historical games before scheduling replacements. The maximum is 1,472 new games; no controls or existing matchups repeat.
+| Cruisader against | W / D / L | Points score | Conditional 95% range |
+| --- | --- | ---: | --- |
+| Vanguard | 112 / 42 / 102 | 51.95% | 46.68%–56.84% |
+| Unicorn | 95 / 54 / 107 | 47.66% | 41.99%–53.32% |
+| Amazon | 116 / 33 / 107 | 51.76% | 46.29%–58.01% |
+
+These opening-group bootstrap ranges condition on the selected positions and recorded policies. They support the design choice; they are not a 95% guarantee of balance in all positions. The new outcomes are report-only evidence here: the uploaded journal is byte-identical to the earlier five-bishop/RfB journal. Keep the missing new journal, campaign and stage manifests as an archival follow-up, without rerunning games.
+
+The [bounded protocol](experiments/balance/bishop-decision-plan.md) is closed. Its commands remain for reproduction; this offline command refreshes an existing local result directory:
 
 ```bat
-npm.cmd run balance:bishop-decision -- --check
-npm.cmd run balance:bishop-decision -- --out balance-results/bishop-decision --jobs 4
-npm.cmd run balance:bishop-decision -- --resume balance-results/bishop-decision
 npm.cmd run balance:bishop-decision -- --report balance-results/bishop-decision
 ```
 
-The standard old revision folder is detected automatically; `--revisions PATH` selects another. Keep Skill20, 20,000 nodes/move, one thread, 32MB hash, 400 plies and four workers. Both-color movement, castling, promotion, source histories, native values and sampled static behavior must pass before games start. The new bishop uses first-leg blocking: e4 blocks d4–f5; f4 does not. Only the inherited queen-moving rook retains its explicit queen-equivalent prior.
-
-After restoration, comparison reports freeze at 320/640/1,280 new comparison games. They combine actual raw outcomes into nine paired candidate/reference scores with conditional opening-block ranges, retaining source context, partial pairs and unscored truncations. No material refit, EPD or sampled-position export is generated. Choose a readable survivor at the cap, rather than automatically scheduling another bishop revision.
-
-The [original five-bishop protocol](experiments/balance/bishop-reference-plan.md) stays closed. Reproduce its uploaded analysis source identity on `cacd5b4`; the original process manifest/native inventory was not supplied. New headless definitions do not change the playable picker.
+Earlier reports retain their original names and profiles. The older [four-piece matrix](experiments/balance/reference-matrix-plan.md) concerns the short-side bishop; use the final decision closeout for the selected Cruisader. The playable picker remains unchanged.
 
 ## Completed simple-piece comparison
 
@@ -79,7 +77,7 @@ New-game progress stops at cumulative barriers **1,152 / 2,304 / 4,608**, each f
 
 **q / Ctrl+C** stops immediately with saved move prefixes, **g** finishes active games, and **p** finishes active pairs. Resume retains the four-job setting, engine, profile and source identity. Offline `--report` starts no engine games. Checkpoint uncertainty, cohort effects and matchup dependence govern design decisions; this batch does not automatically trigger another validation campaign.
 
-After this run, the [provisional level-3 shortlist](experiments/balance/level3-shortlist-plan.md) leads toward one capped round robin. Extra-unit upgrades are deferred. Freeze the final roster and budget after reviewing results; this planning note changes no active experiment settings.
+The [next level-3 shortlist](experiments/balance/level3-shortlist-plan.md) now follows the fixed-reference policy. Choose candidates through playtesting, then declare a capped candidate-versus-reference batch. Extra-unit upgrades remain deferred; no new games are scheduled by this note.
 
 ## Completed 1,152-game convergence study
 

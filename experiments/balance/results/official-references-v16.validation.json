@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "rosterVersion": "official-references-v16-001",
+  "engineSha256": "8ccde8596fb88aa7fbbf1020cc5afa52ef9d1887764275ea8e627ba0227e4f1e",
+  "ffishVersion": "0.7.10",
+  "standaloneSha256": "cc9118347e8f7bdfd95df48cc9805c0e629eae7184e9a09d5a472943b1c9cc20",
+  "historicalProfileHash": "c7e22b405a921e897c276f8a0d14a4aae631c25b9a675c62520ef8d103843faa",
+  "checks": {
+    "nativeBrowserLegalMoves": true,
+    "canonicalAndReorderedModifiersEqual": true,
+    "firstSidewaysLegOnlyBlocks": true,
+    "fourWideDirectionsBothColors": true,
+    "ordinaryCastlingKingSafety": true,
+    "ordinaryQrBnPromotion": true,
+    "ordinaryEnPassant": true,
+    "referenceValueTablesUnchanged": true,
+    "standardValueTablesUnchanged": true,
+    "compiledReferencePreflightBothColors": true
+  },
+  "standaloneProbePositions": 69,
+  "compiledProbePositions": 34,
+  "probePositions": 103,
+  "compiledProfileHash": "ab96122073ee834fc0592f33e65b022b8829ec652ef413a7d2f4adf5d6523f61",
+  "referenceDiagnosticBothColors": true,
+  "engineSearches": 0,
+  "completedMatchGames": 0,
+  "referenceMaterialTables": [
+    {
+      "id": "rook.purple@10",
+      "standaloneLetter": "w",
+      "historicalLetter": "x",
+      "values": {
+        "rawMg": 1904,
+        "rawEg": 1932,
+        "captureMg": 1904,
+        "captureEg": 1932,
+        "evalMg": 1904,
+        "evalEg": 1932
+      }
+    },
+    {
+      "id": "knight.purple@3",
+      "standaloneLetter": "x",
+      "historicalLetter": "g",
+      "values": {
+        "rawMg": 1663,
+        "rawEg": 1877,
+        "captureMg": 1663,
+        "captureEg": 1877,
+        "evalMg": 1663,
+        "evalEg": 1877
+      }
+    },
+    {
+      "id": "bishop.purple@13",
+      "standaloneLetter": "y",
+      "historicalLetter": "m",
+      "values": {
+        "rawMg": 1858,
+        "rawEg": 1903,
+        "captureMg": 1858,
+        "captureEg": 1903,
+        "evalMg": 1858,
+        "evalEg": 1903
+      }
+    },
+    {
+      "id": "queen.purple@1",
+      "standaloneLetter": "z",
+      "historicalLetter": "u",
+      "values": {
+        "rawMg": 3738,
+        "rawEg": 3875,
+        "captureMg": 3738,
+        "captureEg": 3875,
+        "evalMg": 3738,
+        "evalEg": 3875
+      }
+    }
+  ],
+  "limitations": [
+    "Bounded legal-move probes and diagnostic table equality do not establish universal search or evaluation equivalence.",
+    "Fitted material values and reference purchase costs are separate from these native tables."
+  ],
+  "standaloneFile": "experiments/designs/official-references-v16.ini",
+  "referenceDeclarationSha256": "0448230163f090c49c7bfbd0bc96685affc3ba8c85018ddd139b42f0756de5ef",
+  "windowsEngineSha256": "848ad74c3fbc2684e57b42c581ee94e93e5ed832fb536846a37f9dddebbb8b16",
+  "probeSummary": [
+    "Both colors of all four wide knight directions with clear paths, friendly/enemy first-leg blockers, friendly/enemy second-leg blockers and friendly/enemy landing squares.",
+    "Both colors of bishop diagonals and horizontal range/path blockers.",
+    "Both castling sides and royal transit-square safety in both colors.",
+    "Standard pawn QRBN promotions, en passant, and the supplied mixed-roster playtesting start.",
+    "Every one of the frozen compiled profile capability probes compared with native perft depth one."
+  ],
+  "unitTestValidation": {
+    "passed": 62,
+    "failed": 0,
+    "skipped": 0,
+    "fullSuiteRun": false,
+    "testFiles": [
+      "tests-unit/official-references.test.js",
+      "tests-unit/design-registry.test.js",
+      "tests-unit/bishop-decision-plan.test.js",
+      "tests-unit/reference-matrix.test.js",
+      "tests-unit/head-collection.test.js"
+    ]
+  },
+  "validationSourceSha256": {
+    "scripts/balance/official-references.js": "7563f98c3a3dad9e921d2362568e256cf3cb5d938959c50a19757d0c25749469",
+    "tests-unit/official-references.test.js": "1d10b292b5d3af803a322f9849bd865e77b86f8f7af9a1f06a19d80ff0af6451"
+  }
+}

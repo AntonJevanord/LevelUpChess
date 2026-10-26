@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 16 remains active. The original four-reference, revision and [simple-piece comparisons](experiments/balance/results/simple-reference-001-review.md) are closed. The [five-bishop comparison against RfB](experiments/balance/bishop-reference-plan.md) is closed. The [final focused bishop decision](experiments/balance/bishop-decision-plan.md) tests two alternatives and recreates only missing historical cells, capped at 1,472 new games. Use the [four-piece matrix](experiments/balance/reference-matrix-plan.md) for the completed reference scores. Earlier milestones are in [development history](docs/development-history.md).
+Version 16 is closed. **Vanguard, Unicorn, Cruisader and Amazon** are the [official frozen references](docs/official-references.md). The [final bishop decision](experiments/balance/results/bishop-decision-final-001.report.md) selects the blocked-wide-knight bishop; no more version-16 match games are needed. Future candidates face the fixed references rather than one another. Earlier milestones are in [development history](docs/development-history.md).
 
 Browser-save compatibility across releases is optional. Experiment definitions, identities, and results must remain reproducible.
 
@@ -128,7 +128,7 @@ Implement and verify the alternatives before starting the single declared batch.
 - [x] Verify that duplicate-free Blink @5 notation preserves legal moves at 9,543 recorded positions while changing the engine's automatic valuation. Identify incomplete INI override propagation in exchange heuristics.
 - [ ] Combine human feedback with the tentative shortlist; review evaluation consistency before a Blink movement nerf. Further valuation testing belongs to a separate declared experiment, preserving this completed batch.
 
-## Version 16 — Blink evaluation consistency
+## Version 16 — evaluation methods and frozen references (closed)
 
 Preserve movement IDs, Betza text, three-point prices, and the version-15 executable/results. Retain the frozen engine, runner and policy inputs for reproducing the closed batch; documentation and evidence updates retain its identity.
 
@@ -148,7 +148,7 @@ Preserve movement IDs, Betza text, three-point prices, and the version-15 execut
 - [ ] Verify parent and policy manifests against the bundled executable and source identities when supplied. Uploaded journals alone do not prove which Windows binary ran.
 - [x] Close the fixed 400-game question: establish sensitivity and explicitly defer authoritative Blink values and movement changes. Preserve prototypes, retract any balanced-Quiet inference, and queue no extension or universal target-value assignment.
 
-### After the current policy comparison
+### Completed method and reference work
 
 - [ ] Record actual automatic/explicit MG/EG values, provenance and confidence for shortlisted active designs; retain ordinary-piece defaults and royal semantics. Do not assign desired base-plus-level targets to every custom type.
 - [x] Design the [512-game material pilot](experiments/balance/material-estimate-plan.md): one 256-game queen-versus-rook odds control, then 64/128/256 cumulative Amazon games. Freeze reference evaluation, nominal pawn units, two removal layouts and 16 opening blocks; use no Blinks.
@@ -189,7 +189,7 @@ Preserve movement IDs, Betza text, three-point prices, and the version-15 execut
 - [x] Declare [three bishop nerfs and three rook buffs](experiments/balance/reference-revision-proposal.md) under fresh immutable IDs, retaining Camel/Amazon. Reuse the exact 128 parent positions and 2,688 records; schedule only 4,608 new candidate games with four jobs and cumulative checkpoints at 1,152 / 2,304 / 4,608. Keep the playable libraries unchanged.
 - [x] Complete linked collection/report support and verify new movements, castling, standard promotions, native values, parent compatibility and stop/resume. Preserve parent raw files and old-profile decoding; group inherited and new evidence by the same position IDs. [Validation evidence](experiments/balance/results/reference-revisions-preflight-001.json): 51 new checks, 736 full-suite passes and 36 environment-dependent skips; all 4,608 native starts and 90 movement/role probes; 48 matching historical static evaluations; two interrupted four-job invocations and natural offline-report exit. Zero completed extension games in the cloud. No validation match campaign or repeated unchanged matchup is needed.
 - [x] Place partial-pair notes below the new matchup table; preserve the original uploaded report. Reproduce historical whole-file source audits on matching commit `1658cc4`.
-- [ ] Review the completed 4,608-game linked experiment, finish the final-data audit when its manifest/journal/JSON are available, and select readable revisions. Keep collection closed at the declared cap without automatic additional games.
+- [ ] If the missing historical revision manifest/journal/JSON are recovered, finish their final-data audit. Candidate selection has moved to the completed bishop decision; this archive follow-up does not block version closure or require replaying games.
 - [x] Review the user's [first checkpoint tables](experiments/balance/results/reference-revisions-checkpoint-1152.md) against the same 32 parent openings. Keep the original bishop eligible; early rook results need broader coverage. Review again at 2,304 new games without changing active sources or scheduling a redesign.
 - [x] Receive the [completed 4,608-game Markdown report](experiments/balance/results/reference-revisions-001-review.md) and close collection at the cap. Final-report replay remains separate: the supplied extension journal covers 2,873 games and no extension manifest/final JSON was supplied.
 - [x] Audit rook exchanges from the supplied journals: 1,468 relevant games / 150,540 legal plies; matched ordinary-army scores and Amazon/ordinary-queen recaptures reproduced. Verify expected native values separately. More queen-for-rook exchanges do not establish engine mistakes; all new rook priors remain below ordinary queen and Amazon.
@@ -205,14 +205,24 @@ Preserve movement IDs, Betza text, three-point prices, and the version-15 execut
 - [x] Complete the offline [four-piece reference matrix](experiments/balance/results/reference-matrix-001.md) and [gap inventory](experiments/balance/results/reference-matrix-001.gap-plan.json). All 34 focused checks pass, including 18 new matrix cases; actual offline CLI refresh imports the retained journal without double-counting or modifying inputs. The running bishop collector's complete identity is unchanged. No new games or material fits.
 - [x] Declare the [final focused bishop comparison](experiments/balance/bishop-decision-plan.md): restore up to 192 missing short-side cells, test long quiet hop against Camel/Amazon (512 games), and test `BsR2nsN` against all three references (768). Auto-detect retained revision data, reuse both existing rook matchups, and cap new games at 1,472.
 - [x] Complete [bishop-decision validation](experiments/balance/results/bishop-decision-preflight-001.json): 78 new cases and 946 unique passing checks, 36 environment-dependent skips; all 1,472 native/browser starts, 210 movement/role probes and 40 retained static comparisons. Replay 832 relevant source histories / 101,805 plies. Two interrupted four-job restoration invocations and a comparison-profile prefix preserve identities and saved moves; actual offline CLI reporting releases all locks. Zero completed new study games in the cloud.
-- [ ] Run the bishop decision locally, recover retained old journals where available, and choose one survivor at its cap without another automatic bishop batch.
+- [x] Complete the local bishop decision: the final report contains all nine 256-game matchups, with 1,280 new comparison games and no restoration games, errors or truncations. Select blocked-wide-knight `bishop.purple@13` (`BsR2nsN`): 51.95% against RfB, 47.66% against NC and 51.76% against QN. Preserve conditional intervals and distinguish reported new outcomes from the duplicate historical journal.
+- [x] Freeze the [official version-16 roster](docs/official-references.md): Vanguard `rook.purple@10`, Unicorn `knight.purple@3`, Cruisader `bishop.purple@13`, and Amazon `queen.purple@1`, each costing three points. Add a machine-readable snapshot and standalone w/x/y/z INI while preserving historical definitions, allocations and results.
+- [x] Replace the proposed candidate round robin with fixed-reference comparisons. Future design changes receive new identities and face the unchanged reference basket; earlier measured scores keep their original context.
+- [x] Pass 62 focused closeout checks and [103 native/browser position checks](experiments/balance/results/official-references-v16.validation.json). Verify both notation orders, first-leg blocking, castling, promotion, en passant, and unchanged ordinary/reference value tables; no new match games.
+- [ ] Preserve the local final decision `compare/games.jsonl`, campaign/stage manifests and JSON reports when available. Their absence limits independent replay here; it does not call for another run.
 - [x] Keep extra-unit purchases outside the planned replacement-piece balance roster. Explore the user's [finite-reserve alternative](prototypes/reserve-guards/README.md) separately: an ordinary royal king plus a nonroyal pocket grant can avoid starting congestion and special king castling. Preserve historical definitions and results.
-- [ ] Review the [next level-3 shortlist](experiments/balance/level3-shortlist-plan.md): selected bishop/rook, Camel, Amazon, surviving mobile/Rank pawns and quiet-knight Vertical bishop. Use human playtesting to prune similar or less enjoyable options.
-- [ ] Declare one capped shortlist round robin after the current review. Its first stage assesses remaining entrants under the current policy and feeds the final matchup matrix. Reuse compatible games, fill missing pairings and collect only needed material baselines; keep older policy cohorts separate.
-- [ ] Human-playtest survivors and use a small, contrasting equal-cost reference set. Apply later compensation checks only to surviving designs whose approximate added-value range would change a design decision.
-- [ ] After choosing the level-3 roster, develop levels 1/2 and test mixed six-point armies for combinations and stacking. Assess royal king upgrades separately for mating and conversion before general balance testing.
+
 - [x] Validate the [isolated finite-reserve guard rules](prototypes/reserve-guards/validation.json): 56 mirrored WebAssembly fixtures, 18 state/round-trip checks, 58 exact native legal-move comparisons and six bounded engine replies, including forced drops and drop histories. Own-half deployment, capture, royal safety, castling, mate, undo, serialization and normal promotion/en passant pass. No balance games; the active collector identity is preserved.
 - [x] Defer reserve-grant balance testing until the nonroyal roster is settled. Prioritize paired head-to-head scores against varied fixed equal-cost opponents; extra-unit trade/sacrifice options and deployment effects make material estimates a secondary diagnostic.
+
+## Next version — candidates against frozen references
+
+- [ ] Branch from the tested version-16 closeout; keep the four official reference definitions and evidence fixed.
+- [ ] Add the official names and selected rules to a new playable library, then verify movement, castling, saves/PGN and engine play. Preserve historical libraries and immutable design definitions.
+- [ ] Human-playtest the surviving mobile/Rank pawns, Vertical bishop and other candidates for readability, enjoyment and counterplay. Use the updated [shortlist plan](experiments/balance/level3-shortlist-plan.md); its earlier candidate round-robin proposal is superseded.
+- [ ] Declare a capped candidate-versus-reference batch only after choosing the candidates. Reuse compatible scores; report each matchup separately and freeze engine values, openings, search effort and stopping criteria. Keep older policy cohorts separate. No candidate-versus-candidate schedule is needed.
+- [ ] Develop levels 1/2 with tier-appropriate fixed reference packages and test mixed six-point armies for combinations and stacking. Keep material estimates secondary and contextual.
+
 - [ ] If adopting reserves, add isolated playable reserve controls first, then versioned grant/deployment rules and drop-aware engine/history/save/PGN logs. After the nonroyal roster is settled, declare a capped head-to-head campaign with fixed drop/checking rules, costs and draw adjudication; retain deployment, exchange/endgame and opponent context. Pocket-aware material estimates can describe the same games without gating collection or setting the king purchase's target strength.
 
 ## Deferred work
@@ -222,7 +232,7 @@ Preserve movement IDs, Betza text, three-point prices, and the version-15 execut
 - [ ] Choose the king-upgrade direction after reserve playtesting. Keep capture-only royal changes archived while integrating the selected design with castling, checkmate and draw adjudication; retain one royal per side.
 - [ ] Agree on queen/rook conversion goals and a consistent dead-position policy; guard grants remain an alternative design.
 - [ ] Automatically split larger idea pools into capacity-bounded experiment groups; add general custom setups when a declared experiment needs them.
-- [ ] Consider a reusable four-reference parent variant (Knight-capture rook, Camel knight, Sideways bishop and Amazon) with up to 16 candidate slots when the next reference-panel question needs it. Generate matched test FENs separately; validate unique letters, promotion, castling and MG/EG policies before scored comparisons. Keep this sandbox separate from completed studies.
+- [x] Freeze a reusable four-reference parent variant (Vanguard, Unicorn, Cruisader and Amazon) with w/x/y/z in slots 17–20, leaving slots 1–16 for future candidates. Keep this sandbox separate from completed studies; future batch FENs, evaluation policies and native checks remain explicit.
 - [ ] Investigate ordinary/custom representation effects, material handicaps, wider openings, or evaluation overrides only for a concrete decision. Existing templates are optional research.
 - [ ] Consider random armies, additional art/themes, and online play after the local design workflow is useful.
 
