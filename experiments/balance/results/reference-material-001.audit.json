@@ -1,0 +1,2394 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-all-reference-material-audit",
+  "recordedDate": "2026-10-27",
+  "inputs": {
+    "reference-panel-001.collection.json": {
+      "archivedSha256": "534dd8c8688899b555757978fcf8a36fabd700416e6dd78b18e6e858d6871417",
+      "decodedSha256": "534dd8c8688899b555757978fcf8a36fabd700416e6dd78b18e6e858d6871417",
+      "decodedBytes": 2318667
+    },
+    "reference-panel-001.games.jsonl": {
+      "archivedSha256": "3aaa7ea9dd70cb555e368849897d6c1dc67d6240b0091c5da5092fcb9b64ba49",
+      "decodedSha256": "3aaa7ea9dd70cb555e368849897d6c1dc67d6240b0091c5da5092fcb9b64ba49",
+      "decodedBytes": 8638251
+    },
+    "simple-reference-001.replay-source.json": {
+      "archivedSha256": "c7313eb0330d637ea5105d2e44ad8dc93e11e26895ee59e828946dfcec0edd82",
+      "decodedSha256": "c7313eb0330d637ea5105d2e44ad8dc93e11e26895ee59e828946dfcec0edd82",
+      "decodedBytes": 2502902
+    },
+    "simple-reference-001.games.jsonl": {
+      "archivedSha256": "8de913ef53c3023f525c80da572e6ad153d83d2651a96d3ccbbad10f5eea2b84",
+      "decodedSha256": "8de913ef53c3023f525c80da572e6ad153d83d2651a96d3ccbbad10f5eea2b84",
+      "decodedBytes": 9941392
+    },
+    "simple-reference-preflight-001.json": {
+      "archivedSha256": "d4c87f8f7e56326e74d85b12663d9f692cd1bfecda90213e98b66aedcaf7444e",
+      "decodedSha256": "d4c87f8f7e56326e74d85b12663d9f692cd1bfecda90213e98b66aedcaf7444e",
+      "decodedBytes": 38340
+    },
+    "bishop-decision-complete-001.collection.json.gz": {
+      "archivedSha256": "286d129accc554ede1071c0deba6a096736f917f4f317697bf0f8284e60f5879",
+      "decodedSha256": "76eeb80950661b45c0642c7a72837042f2264e0a50571a57a6a92db1a83f335f",
+      "decodedBytes": 1161297
+    },
+    "bishop-decision-complete-001.games.jsonl.gz": {
+      "archivedSha256": "32354a18094cb4480b8f2714458190432bd3bb2d43f863f48b0d6b59a0ca4e74",
+      "decodedSha256": "e36ae6d3e25901bd283c087380cc0a0d5cfef81953b60bf85a1b1e7e6b6377c8",
+      "decodedBytes": 4361009
+    }
+  },
+  "analysisSources": {
+    "experiments/balance/results/reference-material-001.audit.cjs": "af74f572505e17b204029e65d3db90e35df117c6ff8658af5c7c1ad72fe3b95c",
+    "scripts/balance/reference-material-dataset.js": "4afe9bb6c2d11709011cf86f8c10ac538c385fb3b9440d2aee061dc17475768e",
+    "scripts/balance/decision-material-fit.js": "a6ff86d05cbeffc558e3ad81adbbb52c2ba8270a349778996f2b98c501f03cc8",
+    "scripts/balance/material-dataset.js": "bbd370206bc9370ea035ca7dea8c5a7545bdcaa8dcbb3345b5000f55260a8499",
+    "scripts/balance/reference-regression.js": "3b08f4f43ebd91973bd75da7eae85719af990e36464b0a9d59fa7fcaea024ec2",
+    "scripts/balance/bishop-analysis.js": "989019680c351134d87ed51030d917d9dd01e14b11309a0c0ad796baafc26393",
+    "scripts/balance/official-references.js": "7563f98c3a3dad9e921d2362568e256cf3cb5d938959c50a19757d0c25749469",
+    "experiments/designs/official-references-v16.json": "0448230163f090c49c7bfbd0bc96685affc3ba8c85018ddd139b42f0756de5ef",
+    "src/design-catalog.js": "e88a121a29901045300ce68e6ae3ba8c53fd535d02ed86bcff26a3a1d71e93ae",
+    "scripts/balance/design-registry.js": "de9ee5ba4ad2ea24098800be726e8cbdb4155a8f29b9e799ecabc20cb889c073",
+    "scripts/balance/design-profile.js": "d322715c4f24035e2ba3981fa4c45bb1f4e8eb0448a607ff727f6755a9499fa3",
+    "dist/balance-rules.cjs": "318709e32e17919a3e0723bc63affe053dea39ad3109be8e825acb0ee9e89901"
+  },
+  "sourceHashFormat": "SHA-256 of source text normalized to LF",
+  "compatibility": [
+    {
+      "id": "original-reference",
+      "profileHash": "f954b668baec85cd8427e2381ffef2fd79c6b62e89e2cddc7a15d0e6e9cb601c",
+      "referenceIdsPresent": [
+        "knight.purple@3",
+        "queen.purple@1"
+      ],
+      "engineSha256": "848ad74c3fbc2684e57b42c581ee94e93e5ed832fb536846a37f9dddebbb8b16",
+      "ordinaryAndReferenceValueTablesMatch": true,
+      "inventoryProvenance": "Recorded original collection native diagnostics."
+    },
+    {
+      "id": "simple-reference",
+      "profileHash": "b2aac772a3a6846b7738defbb33877f8dd44ade01d8b7b461010693d437340cd",
+      "referenceIdsPresent": [
+        "rook.purple@10",
+        "knight.purple@3",
+        "queen.purple@1"
+      ],
+      "engineSha256": "848ad74c3fbc2684e57b42c581ee94e93e5ed832fb536846a37f9dddebbb8b16",
+      "ordinaryAndReferenceValueTablesMatch": true,
+      "inventoryProvenance": "Archived compatibility preflight; original simple collection manifest/native inventory remain unavailable."
+    },
+    {
+      "id": "bishop-decision",
+      "profileHash": "c7e22b405a921e897c276f8a0d14a4aae631c25b9a675c62520ef8d103843faa",
+      "referenceIdsPresent": [
+        "rook.purple@10",
+        "knight.purple@3",
+        "bishop.purple@13",
+        "queen.purple@1"
+      ],
+      "engineSha256": "848ad74c3fbc2684e57b42c581ee94e93e5ed832fb536846a37f9dddebbb8b16",
+      "ordinaryAndReferenceValueTablesMatch": true,
+      "inventoryProvenance": "Recorded original collection native diagnostics."
+    }
+  ],
+  "selection": {
+    "inputRecords": 7040,
+    "referenceRecords": 1536,
+    "excludedOtherRecords": 5504,
+    "duplicateIdentityRecords": 0,
+    "duplicateHistoryRecords": 0,
+    "truncatedRecords": 1,
+    "unfinishedRecords": 0,
+    "completedWithoutPartner": 1,
+    "selectedGames": 1534,
+    "bySource": [
+      {
+        "id": "original-reference",
+        "inputRecords": 2688,
+        "referenceRecords": 256,
+        "excludedOtherRecords": 2432,
+        "duplicateIdentityRecords": 0,
+        "duplicateHistoryRecords": 0,
+        "truncatedRecords": 1,
+        "unfinishedRecords": 0,
+        "completedWithoutPartner": 1,
+        "selectedGames": 254,
+        "sourceIds": [
+          "original-reference"
+        ]
+      },
+      {
+        "id": "simple-reference",
+        "inputRecords": 3072,
+        "referenceRecords": 512,
+        "excludedOtherRecords": 2560,
+        "duplicateIdentityRecords": 0,
+        "duplicateHistoryRecords": 0,
+        "truncatedRecords": 0,
+        "unfinishedRecords": 0,
+        "completedWithoutPartner": 0,
+        "selectedGames": 512,
+        "sourceIds": [
+          "simple-reference"
+        ]
+      },
+      {
+        "id": "bishop-decision",
+        "inputRecords": 1280,
+        "referenceRecords": 768,
+        "excludedOtherRecords": 512,
+        "duplicateIdentityRecords": 0,
+        "duplicateHistoryRecords": 0,
+        "truncatedRecords": 0,
+        "unfinishedRecords": 0,
+        "completedWithoutPartner": 0,
+        "selectedGames": 768,
+        "sourceIds": [
+          "bishop-decision"
+        ]
+      }
+    ]
+  },
+  "coverage": {
+    "completedGames": 1534,
+    "completePairs": 767,
+    "sampledGames": 1526,
+    "gamesWithoutSamples": 8,
+    "sampledPairs": 767,
+    "sampledCompletePairs": 759,
+    "sampledPartialPairs": 8,
+    "pairsWithoutSamples": 0,
+    "replayedPlies": 176824,
+    "positionsReplayed": 178358,
+    "candidates": 31381,
+    "accepted": 15216,
+    "excluded": {
+      "terminal": 297,
+      "windowEdge": 315,
+      "materialChange": 15553
+    },
+    "phases": {
+      "middlegame": 6375,
+      "endgame": 8841
+    },
+    "groups": 128
+  },
+  "datasetSha256": "cef48dd7947caa6b53190636c69bf1ad295d259a2a64b0319f92a104fcb1e3e6",
+  "datasetHashFormat": "SHA-256 of JSON.stringify(replayed projected dataset)",
+  "sources": [
+    {
+      "id": "original-reference",
+      "identity": {
+        "rulesBundleSha256": "449c4f8d5a1740b62d557f530a94b1b5ebac64054a9cb9eed9833fc2da5940c6",
+        "engineSha256": "848ad74c3fbc2684e57b42c581ee94e93e5ed832fb536846a37f9dddebbb8b16",
+        "runnerSources": [
+          {
+            "file": "run.js",
+            "sha256": "c647fdbf81b5420a3928fcb21d7e8fcd865e703a8f64f9a2fca588b10e40c26e"
+          },
+          {
+            "file": "plan.js",
+            "sha256": "22ba39d61a152f38092cbc192bbb3b9dbeb011ba7a842aeeb95b1e3877d633d0"
+          },
+          {
+            "file": "stats.js",
+            "sha256": "dd55139112cc8fa89ae1ebcc7c1f81631e3aca44a6e01e3ad756f4b52766c5fc"
+          },
+          {
+            "file": "storage.js",
+            "sha256": "6ab2623e2877c3caec418c27fefa737d108cf0e0e8dab805caaa404d72c563fc"
+          },
+          {
+            "file": "uci.js",
+            "sha256": "fe0617deb68d7556d59cf0a0063f565be9a8867c4a7a2ba2643f763e36390088"
+          },
+          {
+            "file": "capabilities.js",
+            "sha256": "a5cc31921e7d88de8214a09fa888158dc285a3d5fba9682d5c3a91fb601c9086"
+          },
+          {
+            "file": "../engine-capabilities.js",
+            "sha256": "640389c60255577db149ba87acccd323fa4209d907fd2eaa8521a1805dbfd6d9"
+          },
+          {
+            "file": "files.js",
+            "sha256": "25cd2624c6e08fb674bf06c0a71614606d7d414fc0bacec881e69719f42feedc"
+          },
+          {
+            "file": "resume-compatibility.js",
+            "sha256": "d3034c734b56665a529632aa777fe30eb6679d339463481cbfe8bf22daa4c579"
+          },
+          {
+            "file": "design-registry.js",
+            "sha256": "de9ee5ba4ad2ea24098800be726e8cbdb4155a8f29b9e799ecabc20cb889c073"
+          },
+          {
+            "file": "design-profile.js",
+            "sha256": "dc69fe2c3f16b87cf9c7174a12ca8ce49b8ea73e15b4dff03df1185009bcb108"
+          },
+          {
+            "file": "evaluation.js",
+            "sha256": "3d6bbbd7ffa94816c269daf2e849710c0637869f0d3f2aabf869103eb3e23d1c"
+          },
+          {
+            "file": "../../src/design-catalog.js",
+            "sha256": "8727b6e765e2e57907cd2593e7f8a1e08c600a7081d132797b110cc48f9fcfa2"
+          }
+        ],
+        "runnerSha256": "73fb4b1f32d97c9c2c2987268f8d13bb81cbfdf5688d5404ecb0e185a4a45f97",
+        "referenceSources": [
+          {
+            "file": "scripts/reference-panel.js",
+            "sha256": "949a3f84d6eb7b9ac076ae11cd4fb320e9b4ee4c8fa2bb92106609792e4cf62d"
+          },
+          {
+            "file": "scripts/balance/reference-run.js",
+            "sha256": "8ad989b992fa790301b5acabcbd7dde9b5b67b5a69bc784d20fd9588050f801a"
+          },
+          {
+            "file": "scripts/balance/reference-plan.js",
+            "sha256": "94fdff04a688fb545bd54ee57b295facbda4342492c16dcc8b6176bb122e7dec"
+          },
+          {
+            "file": "scripts/balance/reference-collection-run.js",
+            "sha256": "07a9a75f14d18d28e4db991bc3513323629b960a1db81f03ae9a4e7fb6fc8cb3"
+          },
+          {
+            "file": "scripts/balance/reference-report.js",
+            "sha256": "8fff28b0ba4ba293757be390a86f157fdd6b51647cd229fdf48bf37837b79574"
+          },
+          {
+            "file": "scripts/balance/reference-dataset.js",
+            "sha256": "50fc494f6ad505f9bfb6ab93bc6c11e99fa21f1223ca2ea7fc31281bc0606d07"
+          },
+          {
+            "file": "scripts/balance/reference-regression.js",
+            "sha256": "3b08f4f43ebd91973bd75da7eae85719af990e36464b0a9d59fa7fcaea024ec2"
+          },
+          {
+            "file": "scripts/balance/reference-analysis.js",
+            "sha256": "94ffb85205ef1a384c17b38fe1dfabd2aa4739b74e6ecb506470a9760b1b7e1f"
+          },
+          {
+            "file": "scripts/balance/material-dataset.js",
+            "sha256": "bbd370206bc9370ea035ca7dea8c5a7545bdcaa8dcbb3345b5000f55260a8499"
+          },
+          {
+            "file": "scripts/balance/material-regression.js",
+            "sha256": "08a576bdb7b087b1932188285b19557ef08b2f7cc39b447359bc9c09412693ed"
+          },
+          {
+            "file": "scripts/material-collect.js",
+            "sha256": "6ac7a151353c7927c0b750e920c8ec7d0c65229b433103add776a84122be4979"
+          },
+          {
+            "file": "experiments/balance/reference-panel.json",
+            "sha256": "5bd06ec03c576f39ef7df8d564481b5db3906fbcc95f91d6747cb4f56357a569"
+          },
+          {
+            "file": "experiments/balance/results/material-collection-preflight-001.json",
+            "sha256": "8ba23279d021fdf2401d5d74b49b4b72e94a33d2b109403a78abed998e6891ee"
+          },
+          {
+            "file": "experiments/balance/results/material-study-preflight-001.json",
+            "sha256": "375e0d5b8189f04350a42f50f3d89aeff02d77a1e2f07cf502a3c4da173e312e"
+          }
+        ],
+        "collectorSha256": "1de9014f1d5a75dc938de31bec04bd06a73659d726b3b8b313667661a06320e2",
+        "referenceSha256": "1de9014f1d5a75dc938de31bec04bd06a73659d726b3b8b313667661a06320e2"
+      },
+      "metadata": {
+        "manifestRunId": "fdbc7887-daf3-4ce6-b33b-98e95bcfe7a9",
+        "originalManifestSupplied": true
+      },
+      "recordsSha256": "d804e95de686dc6b64c091f49dd3460028a472bfadc079130c3053be44c7c640",
+      "recordsHashFormat": "SHA-256 of JSON.stringify(records); not original journal bytes",
+      "games": 254,
+      "profileHash": "f954b668baec85cd8427e2381ffef2fd79c6b62e89e2cddc7a15d0e6e9cb601c",
+      "registryHash": "8ffe24875d86dcfba9880163d825e4761082cd178562b1e8f4978aec9afe7be0",
+      "variant": "levelup-design-d1f96407b3d5a0e02f63",
+      "recordedPolicy": {
+        "engine": {
+          "nodes": 20000,
+          "threads": 1,
+          "hashMb": 32,
+          "maxPlies": 400
+        },
+        "evaluation": null,
+        "whiteStrength": {
+          "skill": 20
+        },
+        "blackStrength": {
+          "skill": 20
+        },
+        "engineNames": {
+          "w": "Fairy-Stockfish 230826",
+          "b": "Fairy-Stockfish 230826"
+        }
+      },
+      "coverage": {
+        "completedGames": 254,
+        "completePairs": 127,
+        "sampledGames": 252,
+        "gamesWithoutSamples": 2,
+        "groups": 127,
+        "sampledPairs": 127,
+        "sampledCompletePairs": 125,
+        "sampledPartialPairs": 2,
+        "pairsWithoutSamples": 0,
+        "replayedPlies": 28251,
+        "positionsReplayed": 28505,
+        "candidates": 4993,
+        "accepted": 2382,
+        "excluded": {
+          "terminal": 52,
+          "windowEdge": 46,
+          "materialChange": 2513
+        },
+        "phases": {
+          "middlegame": 1039,
+          "endgame": 1343
+        }
+      }
+    },
+    {
+      "id": "simple-reference",
+      "identity": {
+        "rulesBundleSha256": "2fbf6ea1b1fc3c0b9a39ea91219bde384e7b83ecad3831ecb2a26e8b089c01eb",
+        "engineSha256": "848ad74c3fbc2684e57b42c581ee94e93e5ed832fb536846a37f9dddebbb8b16",
+        "runnerSources": [
+          {
+            "file": "run.js",
+            "sha256": "c647fdbf81b5420a3928fcb21d7e8fcd865e703a8f64f9a2fca588b10e40c26e"
+          },
+          {
+            "file": "plan.js",
+            "sha256": "22ba39d61a152f38092cbc192bbb3b9dbeb011ba7a842aeeb95b1e3877d633d0"
+          },
+          {
+            "file": "stats.js",
+            "sha256": "dd55139112cc8fa89ae1ebcc7c1f81631e3aca44a6e01e3ad756f4b52766c5fc"
+          },
+          {
+            "file": "storage.js",
+            "sha256": "6ab2623e2877c3caec418c27fefa737d108cf0e0e8dab805caaa404d72c563fc"
+          },
+          {
+            "file": "uci.js",
+            "sha256": "fe0617deb68d7556d59cf0a0063f565be9a8867c4a7a2ba2643f763e36390088"
+          },
+          {
+            "file": "capabilities.js",
+            "sha256": "a5cc31921e7d88de8214a09fa888158dc285a3d5fba9682d5c3a91fb601c9086"
+          },
+          {
+            "file": "../engine-capabilities.js",
+            "sha256": "640389c60255577db149ba87acccd323fa4209d907fd2eaa8521a1805dbfd6d9"
+          },
+          {
+            "file": "files.js",
+            "sha256": "25cd2624c6e08fb674bf06c0a71614606d7d414fc0bacec881e69719f42feedc"
+          },
+          {
+            "file": "resume-compatibility.js",
+            "sha256": "d3034c734b56665a529632aa777fe30eb6679d339463481cbfe8bf22daa4c579"
+          },
+          {
+            "file": "design-registry.js",
+            "sha256": "de9ee5ba4ad2ea24098800be726e8cbdb4155a8f29b9e799ecabc20cb889c073"
+          },
+          {
+            "file": "design-profile.js",
+            "sha256": "dd3bb138f98abcd77a0277b1a8b4af8813457b1de04d734ed4c0943c0ff8cc6f"
+          },
+          {
+            "file": "evaluation.js",
+            "sha256": "3d6bbbd7ffa94816c269daf2e849710c0637869f0d3f2aabf869103eb3e23d1c"
+          },
+          {
+            "file": "../../src/design-catalog.js",
+            "sha256": "73a68102ebfbd6e51ecf7cb624f0c0df2889160a116b09ad3ddb6974283f7dc3"
+          }
+        ],
+        "runnerSha256": "bfbfc9cfa25f39c357f96369b2d5f7dbf4e0c139fb355a071392ad925c293ed5",
+        "simpleSources": [
+          {
+            "file": "scripts/simple-references.js",
+            "sha256": "46f7d656f61e72699aea7cff2292961d7dad9d35330ce5d73f804357c378f8c2"
+          },
+          {
+            "file": "scripts/balance/simple-run.js",
+            "sha256": "449d5f15f6e01acc990ce76778cd1dbef7bf9a10658525c270eb2095049d40f6"
+          },
+          {
+            "file": "scripts/balance/simple-plan.js",
+            "sha256": "af2c0e324912bb99a6b825581663cb65599c5c82222e1ad703c7f8f5ee7e25ce"
+          },
+          {
+            "file": "scripts/balance/simple-collection-run.js",
+            "sha256": "bf7b4fdc653e18b8abd84765684a800aa7724b116ba687741d584373e086c8c4"
+          },
+          {
+            "file": "scripts/balance/simple-report.js",
+            "sha256": "146b5e3806b184ed6694045d0975aafd19031ba6232db77a9139c9185c065e68"
+          },
+          {
+            "file": "scripts/balance/simple-dataset.js",
+            "sha256": "5520aaa746973b0a29257df40993175ac85f8213bb033127990ba97e4efafefe"
+          },
+          {
+            "file": "scripts/balance/revision-compatibility.js",
+            "sha256": "b57c33adeaf4c59608778181adae1d2068d142fd6e060a5b5d5bb9318bcd4b06"
+          },
+          {
+            "file": "scripts/balance/reference-plan.js",
+            "sha256": "94fdff04a688fb545bd54ee57b295facbda4342492c16dcc8b6176bb122e7dec"
+          },
+          {
+            "file": "scripts/balance/reference-dataset.js",
+            "sha256": "50fc494f6ad505f9bfb6ab93bc6c11e99fa21f1223ca2ea7fc31281bc0606d07"
+          },
+          {
+            "file": "scripts/balance/reference-report.js",
+            "sha256": "8fff28b0ba4ba293757be390a86f157fdd6b51647cd229fdf48bf37837b79574"
+          },
+          {
+            "file": "experiments/balance/reference-panel.json",
+            "sha256": "5bd06ec03c576f39ef7df8d564481b5db3906fbcc95f91d6747cb4f56357a569"
+          },
+          {
+            "file": "scripts/balance/reference-regression.js",
+            "sha256": "3b08f4f43ebd91973bd75da7eae85719af990e36464b0a9d59fa7fcaea024ec2"
+          },
+          {
+            "file": "scripts/balance/reference-analysis.js",
+            "sha256": "94ffb85205ef1a384c17b38fe1dfabd2aa4739b74e6ecb506470a9760b1b7e1f"
+          },
+          {
+            "file": "scripts/balance/material-dataset.js",
+            "sha256": "bbd370206bc9370ea035ca7dea8c5a7545bdcaa8dcbb3345b5000f55260a8499"
+          },
+          {
+            "file": "scripts/balance/material-regression.js",
+            "sha256": "08a576bdb7b087b1932188285b19557ef08b2f7cc39b447359bc9c09412693ed"
+          },
+          {
+            "file": "scripts/material-collect.js",
+            "sha256": "6ac7a151353c7927c0b750e920c8ec7d0c65229b433103add776a84122be4979"
+          },
+          {
+            "file": "experiments/balance/simple-references.json",
+            "sha256": "de35d06d2f2e5f6abf6b50c15598d6fec9757a960b31c9a9950bbbf9136ab352"
+          },
+          {
+            "file": "experiments/balance/results/reference-panel-001.collection.json",
+            "sha256": "534dd8c8688899b555757978fcf8a36fabd700416e6dd78b18e6e858d6871417"
+          },
+          {
+            "file": "experiments/balance/results/reference-panel-001.games.jsonl",
+            "sha256": "3aaa7ea9dd70cb555e368849897d6c1dc67d6240b0091c5da5092fcb9b64ba49"
+          }
+        ],
+        "collectorSha256": "75925faf90e59f68a31fc9c9712a02998d939489a5f1dced44bb18ed75d8a3c7",
+        "simpleSha256": "75925faf90e59f68a31fc9c9712a02998d939489a5f1dced44bb18ed75d8a3c7"
+      },
+      "metadata": {
+        "manifestRunId": "1827bb06-2ab9-444c-9606-45d7ad70ab11",
+        "originalManifestSupplied": false
+      },
+      "recordsSha256": "58372075b469e68b2047874b342d857e6f651c5fe45bea954f076f520c23b655",
+      "recordsHashFormat": "SHA-256 of JSON.stringify(records); not original journal bytes",
+      "games": 512,
+      "profileHash": "b2aac772a3a6846b7738defbb33877f8dd44ade01d8b7b461010693d437340cd",
+      "registryHash": "df1a941c5140f0e51668e3a1dcbd21fd147ace005e48ca169fb9fcbfafbd26e7",
+      "variant": "levelup-design-e6e706d3b523c5cf9830",
+      "recordedPolicy": {
+        "engine": {
+          "nodes": 20000,
+          "threads": 1,
+          "hashMb": 32,
+          "maxPlies": 400
+        },
+        "evaluation": {
+          "pieceValues": {
+            "rook.purple@9": {
+              "mg": 2538,
+              "eg": 2682
+            }
+          }
+        },
+        "whiteStrength": {
+          "skill": 20
+        },
+        "blackStrength": {
+          "skill": 20
+        },
+        "engineNames": {
+          "w": "Fairy-Stockfish 230826",
+          "b": "Fairy-Stockfish 230826"
+        }
+      },
+      "coverage": {
+        "completedGames": 512,
+        "completePairs": 256,
+        "sampledGames": 508,
+        "gamesWithoutSamples": 4,
+        "groups": 128,
+        "sampledPairs": 256,
+        "sampledCompletePairs": 252,
+        "sampledPartialPairs": 4,
+        "pairsWithoutSamples": 0,
+        "replayedPlies": 57453,
+        "positionsReplayed": 57965,
+        "candidates": 10163,
+        "accepted": 4784,
+        "excluded": {
+          "terminal": 94,
+          "windowEdge": 108,
+          "materialChange": 5177
+        },
+        "phases": {
+          "middlegame": 2049,
+          "endgame": 2735
+        }
+      }
+    },
+    {
+      "id": "bishop-decision",
+      "identity": {
+        "rulesBundleSha256": "81bcacf1dbaebb42260155a1761df2f2fdee76a42dc389b1e4d28a28ab64bd62",
+        "engineSha256": "848ad74c3fbc2684e57b42c581ee94e93e5ed832fb536846a37f9dddebbb8b16",
+        "runnerSources": [
+          {
+            "file": "run.js",
+            "sha256": "c647fdbf81b5420a3928fcb21d7e8fcd865e703a8f64f9a2fca588b10e40c26e"
+          },
+          {
+            "file": "plan.js",
+            "sha256": "22ba39d61a152f38092cbc192bbb3b9dbeb011ba7a842aeeb95b1e3877d633d0"
+          },
+          {
+            "file": "stats.js",
+            "sha256": "dd55139112cc8fa89ae1ebcc7c1f81631e3aca44a6e01e3ad756f4b52766c5fc"
+          },
+          {
+            "file": "storage.js",
+            "sha256": "6ab2623e2877c3caec418c27fefa737d108cf0e0e8dab805caaa404d72c563fc"
+          },
+          {
+            "file": "uci.js",
+            "sha256": "fe0617deb68d7556d59cf0a0063f565be9a8867c4a7a2ba2643f763e36390088"
+          },
+          {
+            "file": "capabilities.js",
+            "sha256": "a5cc31921e7d88de8214a09fa888158dc285a3d5fba9682d5c3a91fb601c9086"
+          },
+          {
+            "file": "../engine-capabilities.js",
+            "sha256": "640389c60255577db149ba87acccd323fa4209d907fd2eaa8521a1805dbfd6d9"
+          },
+          {
+            "file": "files.js",
+            "sha256": "25cd2624c6e08fb674bf06c0a71614606d7d414fc0bacec881e69719f42feedc"
+          },
+          {
+            "file": "resume-compatibility.js",
+            "sha256": "d3034c734b56665a529632aa777fe30eb6679d339463481cbfe8bf22daa4c579"
+          },
+          {
+            "file": "design-registry.js",
+            "sha256": "de9ee5ba4ad2ea24098800be726e8cbdb4155a8f29b9e799ecabc20cb889c073"
+          },
+          {
+            "file": "design-profile.js",
+            "sha256": "d322715c4f24035e2ba3981fa4c45bb1f4e8eb0448a607ff727f6755a9499fa3"
+          },
+          {
+            "file": "evaluation.js",
+            "sha256": "3d6bbbd7ffa94816c269daf2e849710c0637869f0d3f2aabf869103eb3e23d1c"
+          },
+          {
+            "file": "../../src/design-catalog.js",
+            "sha256": "e88a121a29901045300ce68e6ae3ba8c53fd535d02ed86bcff26a3a1d71e93ae"
+          }
+        ],
+        "runnerSha256": "21c9ab0f6d3fb8df714b00e162b6d5f4ae9cf414bf49600b923364f7b2783635",
+        "decisionSources": [
+          {
+            "file": "scripts/bishop-decision.js",
+            "sha256": "ee58ba172e5b0229250d07d997a510f179d120ec9023785aaa85845f212445dc"
+          },
+          {
+            "file": "scripts/balance/bishop-decision-run.js",
+            "sha256": "065faa0b389342eb50378e4ed87c63cdccc4944efae07500892c98e4edc9ec0b"
+          },
+          {
+            "file": "scripts/balance/bishop-decision-plan.js",
+            "sha256": "cfe4da1972bf332b391d7d2e3b15fe8e561cfc7f7cd1a0f8d00d4cea636c2e43"
+          },
+          {
+            "file": "scripts/balance/head-collection.js",
+            "sha256": "6230ecfa588c503196b7302a92adc84c9eadb6b47a8fa08989590ceb137f0644"
+          },
+          {
+            "file": "scripts/balance/bishop-decision-preflight.js",
+            "sha256": "cea83b576ce47eb6ac4e00eaee1100fcc2796d429170750e29577bbfc86e1787"
+          },
+          {
+            "file": "scripts/balance/bishop-decision-evidence.js",
+            "sha256": "0f2228180c155d206cc557ceb7135e34d241796470abc8bfb20d94fe82228be2"
+          },
+          {
+            "file": "scripts/balance/bishop-decision-report.js",
+            "sha256": "ce7b3d065af30fed785fd9301df919e76bc3f1636d34ba560f1ca0017ddd11fd"
+          },
+          {
+            "file": "scripts/balance/reference-matrix.js",
+            "sha256": "7a848b340975ada99dfa8a36cc1d43788614595cbb072b81d17b3db19debf8f7"
+          },
+          {
+            "file": "scripts/balance/revision-compatibility.js",
+            "sha256": "b57c33adeaf4c59608778181adae1d2068d142fd6e060a5b5d5bb9318bcd4b06"
+          },
+          {
+            "file": "scripts/balance/revision-plan.js",
+            "sha256": "387e05adcbabc2fc734988fe929cfad68e8753f8579040757052cb42cf6c7e5d"
+          },
+          {
+            "file": "scripts/balance/bishop-plan.js",
+            "sha256": "85215244409f2cab419b02c9af9e8318f804e2340e22c16223e36cb1d5e5bf0a"
+          },
+          {
+            "file": "scripts/balance/bishop-source.js",
+            "sha256": "6365f2ccf10eabc35bb80138b4bc4ef64e12b8e3a2ba555d71667cca06c82b3a"
+          },
+          {
+            "file": "scripts/balance/simple-plan.js",
+            "sha256": "af2c0e324912bb99a6b825581663cb65599c5c82222e1ad703c7f8f5ee7e25ce"
+          },
+          {
+            "file": "scripts/balance/design-registry.js",
+            "sha256": "de9ee5ba4ad2ea24098800be726e8cbdb4155a8f29b9e799ecabc20cb889c073"
+          },
+          {
+            "file": "scripts/balance/simple-dataset.js",
+            "sha256": "5520aaa746973b0a29257df40993175ac85f8213bb033127990ba97e4efafefe"
+          },
+          {
+            "file": "scripts/balance/reference-dataset.js",
+            "sha256": "50fc494f6ad505f9bfb6ab93bc6c11e99fa21f1223ca2ea7fc31281bc0606d07"
+          },
+          {
+            "file": "scripts/balance/reference-plan.js",
+            "sha256": "94fdff04a688fb545bd54ee57b295facbda4342492c16dcc8b6176bb122e7dec"
+          },
+          {
+            "file": "scripts/balance/material-dataset.js",
+            "sha256": "bbd370206bc9370ea035ca7dea8c5a7545bdcaa8dcbb3345b5000f55260a8499"
+          },
+          {
+            "file": "scripts/balance/design-profile.js",
+            "sha256": "d322715c4f24035e2ba3981fa4c45bb1f4e8eb0448a607ff727f6755a9499fa3"
+          },
+          {
+            "file": "scripts/balance/evaluation.js",
+            "sha256": "3d6bbbd7ffa94816c269daf2e849710c0637869f0d3f2aabf869103eb3e23d1c"
+          },
+          {
+            "file": "src/design-catalog.js",
+            "sha256": "e88a121a29901045300ce68e6ae3ba8c53fd535d02ed86bcff26a3a1d71e93ae"
+          },
+          {
+            "file": "scripts/material-collect.js",
+            "sha256": "6ac7a151353c7927c0b750e920c8ec7d0c65229b433103add776a84122be4979"
+          },
+          {
+            "file": "experiments/balance/results/reference-revisions-preflight-001.json",
+            "sha256": "d10aeefcbd0d49de62d7b3ebe31cfa66a7befeba8af238de3ce8c944a2489004"
+          },
+          {
+            "file": "experiments/balance/results/bishop-reference-preflight-001.json",
+            "sha256": "fa39093193db46d29a08afea8acf26ba41db14212f36c7726815a3edd8a5a0d8"
+          },
+          {
+            "file": "experiments/balance/bishop-decision.json",
+            "sha256": "c1fed7bf7b223d5f168a155db2a2755605ba07a38c2d566824419eca66a8b50e"
+          },
+          {
+            "file": "experiments/balance/results/bishop-reference-001.games.jsonl",
+            "sha256": "a54f1b4bf55e7ad5259aa465285605d23f8a999a4f3f045a18d3cc6a58b910da"
+          },
+          {
+            "file": "experiments/balance/results/bishop-reference-001.uploaded-report.json",
+            "sha256": "64b54f3a83f7fe74609fc8f96571edebcacf0006a71d824a648bcbfd20b5f1a5"
+          },
+          {
+            "file": "experiments/balance/results/bishop-reference-001.audit.json",
+            "sha256": "4c0783cf60c7654a161879d0c667aa2195f89e3ea9461616b776db76a9589b93"
+          },
+          {
+            "file": "experiments/balance/results/short-side-revision-recovery-001.games.jsonl",
+            "sha256": "c5e3d9c38b14f354c4febda2fa35dfce1fc35b7cb76140191274ccb3e5dee7c0"
+          },
+          {
+            "file": "experiments/balance/results/reference-matrix.expected-games.json",
+            "sha256": "44f7d047c3d43aac01aa22e602fbf92ca380fef5241bd5a17fb9defc1042f8ad"
+          },
+          {
+            "file": "experiments/balance/bishop-references.json",
+            "sha256": "bf3fcbba5e238405a7114e276db38e3a1939b5f1fd73a9959d58dbfd1ca12f8f"
+          },
+          {
+            "file": "experiments/balance/simple-references.json",
+            "sha256": "de35d06d2f2e5f6abf6b50c15598d6fec9757a960b31c9a9950bbbf9136ab352"
+          },
+          {
+            "file": "experiments/balance/results/reference-panel-001.collection.json",
+            "sha256": "534dd8c8688899b555757978fcf8a36fabd700416e6dd78b18e6e858d6871417"
+          },
+          {
+            "file": "experiments/balance/results/reference-panel-001.games.jsonl",
+            "sha256": "3aaa7ea9dd70cb555e368849897d6c1dc67d6240b0091c5da5092fcb9b64ba49"
+          },
+          {
+            "file": "experiments/balance/results/simple-reference-001.replay-source.json",
+            "sha256": "c7313eb0330d637ea5105d2e44ad8dc93e11e26895ee59e828946dfcec0edd82"
+          },
+          {
+            "file": "experiments/balance/results/simple-reference-001.games.jsonl",
+            "sha256": "8de913ef53c3023f525c80da572e6ad153d83d2651a96d3ccbbad10f5eea2b84"
+          },
+          {
+            "file": "experiments/balance/results/simple-reference-001.uploaded-dataset.json",
+            "sha256": "00813eed16ac43f1193d3d26924cfd272d25a6348cc3610c8561e59077100696"
+          },
+          {
+            "file": "experiments/balance/results/simple-reference-001.uploaded-report.json",
+            "sha256": "c83a26ca3cf0ab33306bc7ad2481076b6585786538c6d90d7342e0b8f2c4c4dd"
+          },
+          {
+            "file": "experiments/balance/reference-revisions.json",
+            "sha256": "edd6194319482b6ada4be8f0feeab46a9797529fd93575a19b14ec746b781946"
+          }
+        ],
+        "collectorSha256": "cc78a24646dbfeca240c1f2dac33b433298b838a5476e1e0c3c8caba90b0f32c",
+        "decisionSha256": "cc78a24646dbfeca240c1f2dac33b433298b838a5476e1e0c3c8caba90b0f32c"
+      },
+      "metadata": {
+        "manifestRunId": "68de8880-dd0c-42ae-9100-47bdead1d12e",
+        "originalManifestSupplied": true
+      },
+      "recordsSha256": "8d1e5e2e1f13b2f5836d379a3674776fef8b25a8d03fbbd327561683cbde0c4f",
+      "recordsHashFormat": "SHA-256 of JSON.stringify(records); not original journal bytes",
+      "games": 768,
+      "profileHash": "c7e22b405a921e897c276f8a0d14a4aae631c25b9a675c62520ef8d103843faa",
+      "registryHash": "f22850b3442ca0023f17b2b5e223bf87a6fe5da110d0b6ea8cf8be47216ed4ee",
+      "variant": "levelup-design-f456398b5eac527d62fd",
+      "recordedPolicy": {
+        "engine": {
+          "nodes": 20000,
+          "threads": 1,
+          "hashMb": 32,
+          "maxPlies": 400
+        },
+        "evaluation": {
+          "pieceValues": {
+            "rook.purple@9": {
+              "mg": 2538,
+              "eg": 2682
+            }
+          }
+        },
+        "whiteStrength": {
+          "skill": 20
+        },
+        "blackStrength": {
+          "skill": 20
+        },
+        "engineNames": {
+          "w": "Fairy-Stockfish 230826",
+          "b": "Fairy-Stockfish 230826"
+        }
+      },
+      "coverage": {
+        "completedGames": 768,
+        "completePairs": 384,
+        "sampledGames": 766,
+        "gamesWithoutSamples": 2,
+        "groups": 128,
+        "sampledPairs": 384,
+        "sampledCompletePairs": 382,
+        "sampledPartialPairs": 2,
+        "pairsWithoutSamples": 0,
+        "replayedPlies": 91120,
+        "positionsReplayed": 91888,
+        "candidates": 16225,
+        "accepted": 8050,
+        "excluded": {
+          "terminal": 151,
+          "windowEdge": 161,
+          "materialChange": 7863
+        },
+        "phases": {
+          "middlegame": 3287,
+          "endgame": 4763
+        }
+      }
+    }
+  ],
+  "matchups": [
+    {
+      "designA": "knight.purple@3",
+      "designB": "queen.purple@1",
+      "games": 254,
+      "wins": 115,
+      "draws": 30,
+      "losses": 109,
+      "score": 0.5118110236220472
+    },
+    {
+      "designA": "rook.purple@10",
+      "designB": "knight.purple@3",
+      "games": 256,
+      "wins": 108,
+      "draws": 45,
+      "losses": 103,
+      "score": 0.509765625
+    },
+    {
+      "designA": "rook.purple@10",
+      "designB": "queen.purple@1",
+      "games": 256,
+      "wins": 120,
+      "draws": 30,
+      "losses": 106,
+      "score": 0.52734375
+    },
+    {
+      "designA": "bishop.purple@13",
+      "designB": "rook.purple@10",
+      "games": 256,
+      "wins": 112,
+      "draws": 42,
+      "losses": 102,
+      "score": 0.51953125
+    },
+    {
+      "designA": "bishop.purple@13",
+      "designB": "knight.purple@3",
+      "games": 256,
+      "wins": 95,
+      "draws": 54,
+      "losses": 107,
+      "score": 0.4765625
+    },
+    {
+      "designA": "bishop.purple@13",
+      "designB": "queen.purple@1",
+      "games": 256,
+      "wins": 116,
+      "draws": 33,
+      "losses": 107,
+      "score": 0.517578125
+    }
+  ],
+  "engineSearches": 0,
+  "newMatchGames": 0,
+  "result": {
+    "schemaVersion": 1,
+    "format": "levelup-decision-material-analysis",
+    "method": {
+      "cohort": "all-frozen-reference-head-to-head",
+      "anchors": {
+        "pawn": 1,
+        "queen": 9
+      },
+      "bootstrap": 200,
+      "seed": 42,
+      "validationFolds": 5,
+      "groups": [
+        "reference-001",
+        "reference-002",
+        "reference-003",
+        "reference-004",
+        "reference-005",
+        "reference-006",
+        "reference-007",
+        "reference-008",
+        "reference-009",
+        "reference-010",
+        "reference-011",
+        "reference-012",
+        "reference-013",
+        "reference-014",
+        "reference-015",
+        "reference-016",
+        "reference-017",
+        "reference-018",
+        "reference-019",
+        "reference-020",
+        "reference-021",
+        "reference-022",
+        "reference-023",
+        "reference-024",
+        "reference-025",
+        "reference-026",
+        "reference-027",
+        "reference-028",
+        "reference-029",
+        "reference-030",
+        "reference-031",
+        "reference-032",
+        "reference-033",
+        "reference-034",
+        "reference-035",
+        "reference-036",
+        "reference-037",
+        "reference-038",
+        "reference-039",
+        "reference-040",
+        "reference-041",
+        "reference-042",
+        "reference-043",
+        "reference-044",
+        "reference-045",
+        "reference-046",
+        "reference-047",
+        "reference-048",
+        "reference-049",
+        "reference-050",
+        "reference-051",
+        "reference-052",
+        "reference-053",
+        "reference-054",
+        "reference-055",
+        "reference-056",
+        "reference-057",
+        "reference-058",
+        "reference-059",
+        "reference-060",
+        "reference-061",
+        "reference-062",
+        "reference-063",
+        "reference-064",
+        "reference-065",
+        "reference-066",
+        "reference-067",
+        "reference-068",
+        "reference-069",
+        "reference-070",
+        "reference-071",
+        "reference-072",
+        "reference-073",
+        "reference-074",
+        "reference-075",
+        "reference-076",
+        "reference-077",
+        "reference-078",
+        "reference-079",
+        "reference-080",
+        "reference-081",
+        "reference-082",
+        "reference-083",
+        "reference-084",
+        "reference-085",
+        "reference-086",
+        "reference-087",
+        "reference-088",
+        "reference-089",
+        "reference-090",
+        "reference-091",
+        "reference-092",
+        "reference-093",
+        "reference-094",
+        "reference-095",
+        "reference-096",
+        "reference-097",
+        "reference-098",
+        "reference-099",
+        "reference-100",
+        "reference-101",
+        "reference-102",
+        "reference-103",
+        "reference-104",
+        "reference-105",
+        "reference-106",
+        "reference-107",
+        "reference-108",
+        "reference-109",
+        "reference-110",
+        "reference-111",
+        "reference-112",
+        "reference-113",
+        "reference-114",
+        "reference-115",
+        "reference-116",
+        "reference-117",
+        "reference-118",
+        "reference-119",
+        "reference-120",
+        "reference-121",
+        "reference-122",
+        "reference-123",
+        "reference-124",
+        "reference-125",
+        "reference-126",
+        "reference-127",
+        "reference-128"
+      ],
+      "groupCount": 128,
+      "bootstrapUniverse": "All completed-game opening groups, including groups without eligible sampled positions.",
+      "wholePieceIntervals": "Add ordinary family and upgrade bonus within each same normalized bootstrap refit, then take percentiles.",
+      "featureSelection": "Omit only structurally unobserved bonus columns; keep all ordinary and observed bonus columns.",
+      "historicalPooling": true,
+      "noNativeValuesChanged": true,
+      "sourceContexts": [
+        "original-reference",
+        "simple-reference",
+        "bishop-decision"
+      ]
+    },
+    "omittedFeatures": [],
+    "analysis": {
+      "schemaVersion": 1,
+      "method": {
+        "target": "expected final White score, W/D/L = 1/0.5/0",
+        "link": "fractional-logistic cross-entropy",
+        "intercept": "unpenalized",
+        "ridge": 0.001,
+        "ridgeScale": "mean game-weighted loss; penalty on standardized slopes",
+        "weighting": "each sampled game has unit total weight",
+        "bootstrapUnit": "whole selected-position block",
+        "minimumBootstrapGroups": 4,
+        "minimumNormalizationGroups": 8,
+        "normalizationThreshold": "Conservative reporting policy, not a confidence guarantee or a reason to generate more games automatically.",
+        "regularizationCaveat": "Ridge produces finite exploratory slopes even for some separated outcomes; absence of a perfect-classification flag does not exclude quasi-separation.",
+        "interpretation": "Exploratory outcome-predictive coefficients conditional on this selected dataset and playing policy; not intrinsic or causal piece values.",
+        "anchors": {
+          "pawn": 1,
+          "queen": 9
+        },
+        "anchorConstraint": "beta_queen = 9 * beta_pawn with positive fitted score conversion",
+        "anchorPenalty": "Both original pawn and queen standardized slopes retain their ridge penalties.",
+        "validationFolds": 5,
+        "validationAssignment": "sha256-group-id-modulo"
+      },
+      "coverage": {
+        "samples": 15216,
+        "games": 1526,
+        "pairs": 767,
+        "groups": 128,
+        "groupIds": [
+          "reference-001",
+          "reference-002",
+          "reference-003",
+          "reference-004",
+          "reference-005",
+          "reference-006",
+          "reference-007",
+          "reference-008",
+          "reference-009",
+          "reference-010",
+          "reference-011",
+          "reference-012",
+          "reference-013",
+          "reference-014",
+          "reference-015",
+          "reference-016",
+          "reference-017",
+          "reference-018",
+          "reference-019",
+          "reference-020",
+          "reference-021",
+          "reference-022",
+          "reference-023",
+          "reference-024",
+          "reference-025",
+          "reference-026",
+          "reference-027",
+          "reference-028",
+          "reference-029",
+          "reference-030",
+          "reference-031",
+          "reference-032",
+          "reference-033",
+          "reference-034",
+          "reference-035",
+          "reference-036",
+          "reference-037",
+          "reference-038",
+          "reference-039",
+          "reference-040",
+          "reference-041",
+          "reference-042",
+          "reference-043",
+          "reference-044",
+          "reference-045",
+          "reference-046",
+          "reference-047",
+          "reference-048",
+          "reference-049",
+          "reference-050",
+          "reference-051",
+          "reference-052",
+          "reference-053",
+          "reference-054",
+          "reference-055",
+          "reference-056",
+          "reference-057",
+          "reference-058",
+          "reference-059",
+          "reference-060",
+          "reference-061",
+          "reference-062",
+          "reference-063",
+          "reference-064",
+          "reference-065",
+          "reference-066",
+          "reference-067",
+          "reference-068",
+          "reference-069",
+          "reference-070",
+          "reference-071",
+          "reference-072",
+          "reference-073",
+          "reference-074",
+          "reference-075",
+          "reference-076",
+          "reference-077",
+          "reference-078",
+          "reference-079",
+          "reference-080",
+          "reference-081",
+          "reference-082",
+          "reference-083",
+          "reference-084",
+          "reference-085",
+          "reference-086",
+          "reference-087",
+          "reference-088",
+          "reference-089",
+          "reference-090",
+          "reference-091",
+          "reference-092",
+          "reference-093",
+          "reference-094",
+          "reference-095",
+          "reference-096",
+          "reference-097",
+          "reference-098",
+          "reference-099",
+          "reference-100",
+          "reference-101",
+          "reference-102",
+          "reference-103",
+          "reference-104",
+          "reference-105",
+          "reference-106",
+          "reference-107",
+          "reference-108",
+          "reference-109",
+          "reference-110",
+          "reference-111",
+          "reference-112",
+          "reference-113",
+          "reference-114",
+          "reference-115",
+          "reference-116",
+          "reference-117",
+          "reference-118",
+          "reference-119",
+          "reference-120",
+          "reference-121",
+          "reference-122",
+          "reference-123",
+          "reference-124",
+          "reference-125",
+          "reference-126",
+          "reference-127",
+          "reference-128"
+        ],
+        "drawGames": 234,
+        "features": [
+          {
+            "name": "pawn",
+            "min": -6,
+            "max": 6,
+            "nonzeroGames": 1436,
+            "groupsWithNonzero": 128
+          },
+          {
+            "name": "knight",
+            "min": -2,
+            "max": 2,
+            "nonzeroGames": 1141,
+            "groupsWithNonzero": 128
+          },
+          {
+            "name": "bishop",
+            "min": -2,
+            "max": 2,
+            "nonzeroGames": 1191,
+            "groupsWithNonzero": 128
+          },
+          {
+            "name": "rook",
+            "min": -2,
+            "max": 2,
+            "nonzeroGames": 988,
+            "groupsWithNonzero": 128
+          },
+          {
+            "name": "queen",
+            "min": -2,
+            "max": 2,
+            "nonzeroGames": 681,
+            "groupsWithNonzero": 128
+          },
+          {
+            "name": "tempo",
+            "min": -1,
+            "max": 1,
+            "nonzeroGames": 1526,
+            "groupsWithNonzero": 128
+          },
+          {
+            "name": "bonus:bishop.purple@13",
+            "min": -1,
+            "max": 1,
+            "nonzeroGames": 668,
+            "groupsWithNonzero": 128
+          },
+          {
+            "name": "bonus:knight.purple@3",
+            "min": -1,
+            "max": 1,
+            "nonzeroGames": 566,
+            "groupsWithNonzero": 128
+          },
+          {
+            "name": "bonus:queen.purple@1",
+            "min": -1,
+            "max": 1,
+            "nonzeroGames": 709,
+            "groupsWithNonzero": 128
+          },
+          {
+            "name": "bonus:rook.purple@10",
+            "min": -1,
+            "max": 1,
+            "nonzeroGames": 674,
+            "groupsWithNonzero": 128
+          }
+        ],
+        "anchorScaleSupport": {
+          "feature": "pawn+9*queen",
+          "nonzeroGames": 1448,
+          "groupsWithNonzero": 128
+        },
+        "allGameGroups": 128,
+        "zeroSampleGroups": []
+      },
+      "rank": {
+        "rank": 10,
+        "columns": 10,
+        "fullRank": true,
+        "dependentFeatures": [],
+        "minimumPivot": 0.558817499157815,
+        "correlations": [],
+        "originalColumns": 11,
+        "constraint": "beta_queen = 9 * beta_pawn",
+        "fixedRatios": {
+          "pawn": 1,
+          "queen": 9
+        }
+      },
+      "fit": {
+        "converged": true,
+        "reason": null,
+        "iterations": 6,
+        "intercept": -0.11349709815830866,
+        "coefficients": {
+          "pawn": 0.6111396207114059,
+          "knight": 1.75834708930597,
+          "bishop": 1.979485826913444,
+          "rook": 2.8904859625517507,
+          "queen": 5.500256586402654,
+          "tempo": 0.03140212425588983,
+          "bonus:bishop.purple@13": 1.994833921741267,
+          "bonus:knight.purple@3": 1.7248110716144138,
+          "bonus:queen.purple@1": 2.0582952444690097,
+          "bonus:rook.purple@10": 1.9065110240044045
+        },
+        "possibleSeparation": false,
+        "metrics": {
+          "brier": 0.1097006660128483,
+          "logLoss": 0.44032578596071204
+        }
+      },
+      "validation": {
+        "available": true,
+        "reason": null,
+        "unit": "whole-selected-position-block",
+        "strategy": "sha256-group-id-modulo",
+        "requestedFolds": 5,
+        "occupiedFolds": 5,
+        "folds": [
+          {
+            "fold": 0,
+            "trainingGroups": [
+              "reference-003",
+              "reference-005",
+              "reference-006",
+              "reference-007",
+              "reference-008",
+              "reference-009",
+              "reference-010",
+              "reference-011",
+              "reference-012",
+              "reference-013",
+              "reference-014",
+              "reference-015",
+              "reference-016",
+              "reference-017",
+              "reference-019",
+              "reference-020",
+              "reference-022",
+              "reference-023",
+              "reference-025",
+              "reference-026",
+              "reference-027",
+              "reference-029",
+              "reference-031",
+              "reference-033",
+              "reference-034",
+              "reference-036",
+              "reference-037",
+              "reference-038",
+              "reference-039",
+              "reference-040",
+              "reference-041",
+              "reference-042",
+              "reference-043",
+              "reference-044",
+              "reference-045",
+              "reference-046",
+              "reference-047",
+              "reference-048",
+              "reference-049",
+              "reference-050",
+              "reference-051",
+              "reference-052",
+              "reference-053",
+              "reference-054",
+              "reference-055",
+              "reference-056",
+              "reference-057",
+              "reference-058",
+              "reference-059",
+              "reference-060",
+              "reference-061",
+              "reference-062",
+              "reference-063",
+              "reference-064",
+              "reference-065",
+              "reference-066",
+              "reference-067",
+              "reference-068",
+              "reference-069",
+              "reference-070",
+              "reference-071",
+              "reference-074",
+              "reference-075",
+              "reference-076",
+              "reference-077",
+              "reference-079",
+              "reference-080",
+              "reference-081",
+              "reference-082",
+              "reference-083",
+              "reference-084",
+              "reference-085",
+              "reference-086",
+              "reference-087",
+              "reference-088",
+              "reference-089",
+              "reference-090",
+              "reference-091",
+              "reference-092",
+              "reference-093",
+              "reference-094",
+              "reference-095",
+              "reference-097",
+              "reference-098",
+              "reference-099",
+              "reference-103",
+              "reference-104",
+              "reference-105",
+              "reference-107",
+              "reference-108",
+              "reference-109",
+              "reference-110",
+              "reference-113",
+              "reference-115",
+              "reference-116",
+              "reference-120",
+              "reference-122",
+              "reference-124",
+              "reference-126",
+              "reference-127",
+              "reference-128"
+            ],
+            "testGroups": [
+              "reference-001",
+              "reference-002",
+              "reference-004",
+              "reference-018",
+              "reference-021",
+              "reference-024",
+              "reference-028",
+              "reference-030",
+              "reference-032",
+              "reference-035",
+              "reference-072",
+              "reference-073",
+              "reference-078",
+              "reference-096",
+              "reference-100",
+              "reference-101",
+              "reference-102",
+              "reference-106",
+              "reference-111",
+              "reference-112",
+              "reference-114",
+              "reference-117",
+              "reference-118",
+              "reference-119",
+              "reference-121",
+              "reference-123",
+              "reference-125"
+            ],
+            "trainingGames": 1202,
+            "testGames": 324,
+            "converged": true,
+            "fullRank": true,
+            "supported": true,
+            "metrics": {
+              "brier": 0.10273766045186195,
+              "logLoss": 0.4145422213737462
+            },
+            "baselineMetrics": {
+              "brier": 0.2089319108293147,
+              "logLoss": 0.681983124969705
+            }
+          },
+          {
+            "fold": 1,
+            "trainingGroups": [
+              "reference-001",
+              "reference-002",
+              "reference-003",
+              "reference-004",
+              "reference-005",
+              "reference-006",
+              "reference-007",
+              "reference-008",
+              "reference-009",
+              "reference-010",
+              "reference-012",
+              "reference-013",
+              "reference-014",
+              "reference-015",
+              "reference-016",
+              "reference-017",
+              "reference-018",
+              "reference-019",
+              "reference-021",
+              "reference-022",
+              "reference-023",
+              "reference-024",
+              "reference-025",
+              "reference-026",
+              "reference-028",
+              "reference-029",
+              "reference-030",
+              "reference-031",
+              "reference-032",
+              "reference-033",
+              "reference-034",
+              "reference-035",
+              "reference-036",
+              "reference-037",
+              "reference-039",
+              "reference-040",
+              "reference-042",
+              "reference-043",
+              "reference-044",
+              "reference-045",
+              "reference-046",
+              "reference-047",
+              "reference-048",
+              "reference-049",
+              "reference-051",
+              "reference-054",
+              "reference-055",
+              "reference-056",
+              "reference-058",
+              "reference-059",
+              "reference-060",
+              "reference-061",
+              "reference-064",
+              "reference-065",
+              "reference-066",
+              "reference-068",
+              "reference-069",
+              "reference-072",
+              "reference-073",
+              "reference-074",
+              "reference-075",
+              "reference-076",
+              "reference-077",
+              "reference-078",
+              "reference-079",
+              "reference-080",
+              "reference-081",
+              "reference-083",
+              "reference-084",
+              "reference-085",
+              "reference-086",
+              "reference-087",
+              "reference-088",
+              "reference-089",
+              "reference-092",
+              "reference-094",
+              "reference-095",
+              "reference-096",
+              "reference-097",
+              "reference-099",
+              "reference-100",
+              "reference-101",
+              "reference-102",
+              "reference-103",
+              "reference-104",
+              "reference-106",
+              "reference-107",
+              "reference-108",
+              "reference-109",
+              "reference-110",
+              "reference-111",
+              "reference-112",
+              "reference-114",
+              "reference-115",
+              "reference-116",
+              "reference-117",
+              "reference-118",
+              "reference-119",
+              "reference-120",
+              "reference-121",
+              "reference-122",
+              "reference-123",
+              "reference-124",
+              "reference-125",
+              "reference-126",
+              "reference-127",
+              "reference-128"
+            ],
+            "testGroups": [
+              "reference-011",
+              "reference-020",
+              "reference-027",
+              "reference-038",
+              "reference-041",
+              "reference-050",
+              "reference-052",
+              "reference-053",
+              "reference-057",
+              "reference-062",
+              "reference-063",
+              "reference-067",
+              "reference-070",
+              "reference-071",
+              "reference-082",
+              "reference-090",
+              "reference-091",
+              "reference-093",
+              "reference-098",
+              "reference-105",
+              "reference-113"
+            ],
+            "trainingGames": 1274,
+            "testGames": 252,
+            "converged": true,
+            "fullRank": true,
+            "supported": true,
+            "metrics": {
+              "brier": 0.10879375777959654,
+              "logLoss": 0.4457282684021546
+            },
+            "baselineMetrics": {
+              "brier": 0.20565979179177427,
+              "logLoss": 0.6897811530675817
+            }
+          },
+          {
+            "fold": 2,
+            "trainingGroups": [
+              "reference-001",
+              "reference-002",
+              "reference-003",
+              "reference-004",
+              "reference-005",
+              "reference-006",
+              "reference-008",
+              "reference-011",
+              "reference-012",
+              "reference-013",
+              "reference-018",
+              "reference-019",
+              "reference-020",
+              "reference-021",
+              "reference-022",
+              "reference-024",
+              "reference-026",
+              "reference-027",
+              "reference-028",
+              "reference-029",
+              "reference-030",
+              "reference-032",
+              "reference-033",
+              "reference-035",
+              "reference-036",
+              "reference-037",
+              "reference-038",
+              "reference-040",
+              "reference-041",
+              "reference-043",
+              "reference-044",
+              "reference-046",
+              "reference-047",
+              "reference-048",
+              "reference-049",
+              "reference-050",
+              "reference-051",
+              "reference-052",
+              "reference-053",
+              "reference-055",
+              "reference-056",
+              "reference-057",
+              "reference-058",
+              "reference-061",
+              "reference-062",
+              "reference-063",
+              "reference-064",
+              "reference-065",
+              "reference-066",
+              "reference-067",
+              "reference-068",
+              "reference-070",
+              "reference-071",
+              "reference-072",
+              "reference-073",
+              "reference-074",
+              "reference-077",
+              "reference-078",
+              "reference-079",
+              "reference-082",
+              "reference-083",
+              "reference-089",
+              "reference-090",
+              "reference-091",
+              "reference-093",
+              "reference-094",
+              "reference-095",
+              "reference-096",
+              "reference-097",
+              "reference-098",
+              "reference-100",
+              "reference-101",
+              "reference-102",
+              "reference-103",
+              "reference-104",
+              "reference-105",
+              "reference-106",
+              "reference-107",
+              "reference-109",
+              "reference-110",
+              "reference-111",
+              "reference-112",
+              "reference-113",
+              "reference-114",
+              "reference-117",
+              "reference-118",
+              "reference-119",
+              "reference-121",
+              "reference-122",
+              "reference-123",
+              "reference-124",
+              "reference-125",
+              "reference-126",
+              "reference-127",
+              "reference-128"
+            ],
+            "testGroups": [
+              "reference-007",
+              "reference-009",
+              "reference-010",
+              "reference-014",
+              "reference-015",
+              "reference-016",
+              "reference-017",
+              "reference-023",
+              "reference-025",
+              "reference-031",
+              "reference-034",
+              "reference-039",
+              "reference-042",
+              "reference-045",
+              "reference-054",
+              "reference-059",
+              "reference-060",
+              "reference-069",
+              "reference-075",
+              "reference-076",
+              "reference-080",
+              "reference-081",
+              "reference-084",
+              "reference-085",
+              "reference-086",
+              "reference-087",
+              "reference-088",
+              "reference-092",
+              "reference-099",
+              "reference-108",
+              "reference-115",
+              "reference-116",
+              "reference-120"
+            ],
+            "trainingGames": 1132,
+            "testGames": 394,
+            "converged": true,
+            "fullRank": true,
+            "supported": true,
+            "metrics": {
+              "brier": 0.11939370037710312,
+              "logLoss": 0.46097842284433155
+            },
+            "baselineMetrics": {
+              "brier": 0.21188095538289017,
+              "logLoss": 0.6892392984865278
+            }
+          },
+          {
+            "fold": 3,
+            "trainingGroups": [
+              "reference-001",
+              "reference-002",
+              "reference-003",
+              "reference-004",
+              "reference-007",
+              "reference-009",
+              "reference-010",
+              "reference-011",
+              "reference-013",
+              "reference-014",
+              "reference-015",
+              "reference-016",
+              "reference-017",
+              "reference-018",
+              "reference-019",
+              "reference-020",
+              "reference-021",
+              "reference-023",
+              "reference-024",
+              "reference-025",
+              "reference-026",
+              "reference-027",
+              "reference-028",
+              "reference-030",
+              "reference-031",
+              "reference-032",
+              "reference-034",
+              "reference-035",
+              "reference-038",
+              "reference-039",
+              "reference-041",
+              "reference-042",
+              "reference-045",
+              "reference-050",
+              "reference-051",
+              "reference-052",
+              "reference-053",
+              "reference-054",
+              "reference-056",
+              "reference-057",
+              "reference-059",
+              "reference-060",
+              "reference-062",
+              "reference-063",
+              "reference-064",
+              "reference-067",
+              "reference-068",
+              "reference-069",
+              "reference-070",
+              "reference-071",
+              "reference-072",
+              "reference-073",
+              "reference-075",
+              "reference-076",
+              "reference-077",
+              "reference-078",
+              "reference-080",
+              "reference-081",
+              "reference-082",
+              "reference-084",
+              "reference-085",
+              "reference-086",
+              "reference-087",
+              "reference-088",
+              "reference-090",
+              "reference-091",
+              "reference-092",
+              "reference-093",
+              "reference-096",
+              "reference-098",
+              "reference-099",
+              "reference-100",
+              "reference-101",
+              "reference-102",
+              "reference-103",
+              "reference-105",
+              "reference-106",
+              "reference-108",
+              "reference-109",
+              "reference-111",
+              "reference-112",
+              "reference-113",
+              "reference-114",
+              "reference-115",
+              "reference-116",
+              "reference-117",
+              "reference-118",
+              "reference-119",
+              "reference-120",
+              "reference-121",
+              "reference-123",
+              "reference-125",
+              "reference-126"
+            ],
+            "testGroups": [
+              "reference-005",
+              "reference-006",
+              "reference-008",
+              "reference-012",
+              "reference-022",
+              "reference-029",
+              "reference-033",
+              "reference-036",
+              "reference-037",
+              "reference-040",
+              "reference-043",
+              "reference-044",
+              "reference-046",
+              "reference-047",
+              "reference-048",
+              "reference-049",
+              "reference-055",
+              "reference-058",
+              "reference-061",
+              "reference-065",
+              "reference-066",
+              "reference-074",
+              "reference-079",
+              "reference-083",
+              "reference-089",
+              "reference-094",
+              "reference-095",
+              "reference-097",
+              "reference-104",
+              "reference-107",
+              "reference-110",
+              "reference-122",
+              "reference-124",
+              "reference-127",
+              "reference-128"
+            ],
+            "trainingGames": 1114,
+            "testGames": 412,
+            "converged": true,
+            "fullRank": true,
+            "supported": true,
+            "metrics": {
+              "brier": 0.11358358551110578,
+              "logLoss": 0.44617669439839636
+            },
+            "baselineMetrics": {
+              "brier": 0.2158366876439751,
+              "logLoss": 0.6976773270920178
+            }
+          },
+          {
+            "fold": 4,
+            "trainingGroups": [
+              "reference-001",
+              "reference-002",
+              "reference-004",
+              "reference-005",
+              "reference-006",
+              "reference-007",
+              "reference-008",
+              "reference-009",
+              "reference-010",
+              "reference-011",
+              "reference-012",
+              "reference-014",
+              "reference-015",
+              "reference-016",
+              "reference-017",
+              "reference-018",
+              "reference-020",
+              "reference-021",
+              "reference-022",
+              "reference-023",
+              "reference-024",
+              "reference-025",
+              "reference-027",
+              "reference-028",
+              "reference-029",
+              "reference-030",
+              "reference-031",
+              "reference-032",
+              "reference-033",
+              "reference-034",
+              "reference-035",
+              "reference-036",
+              "reference-037",
+              "reference-038",
+              "reference-039",
+              "reference-040",
+              "reference-041",
+              "reference-042",
+              "reference-043",
+              "reference-044",
+              "reference-045",
+              "reference-046",
+              "reference-047",
+              "reference-048",
+              "reference-049",
+              "reference-050",
+              "reference-052",
+              "reference-053",
+              "reference-054",
+              "reference-055",
+              "reference-057",
+              "reference-058",
+              "reference-059",
+              "reference-060",
+              "reference-061",
+              "reference-062",
+              "reference-063",
+              "reference-065",
+              "reference-066",
+              "reference-067",
+              "reference-069",
+              "reference-070",
+              "reference-071",
+              "reference-072",
+              "reference-073",
+              "reference-074",
+              "reference-075",
+              "reference-076",
+              "reference-078",
+              "reference-079",
+              "reference-080",
+              "reference-081",
+              "reference-082",
+              "reference-083",
+              "reference-084",
+              "reference-085",
+              "reference-086",
+              "reference-087",
+              "reference-088",
+              "reference-089",
+              "reference-090",
+              "reference-091",
+              "reference-092",
+              "reference-093",
+              "reference-094",
+              "reference-095",
+              "reference-096",
+              "reference-097",
+              "reference-098",
+              "reference-099",
+              "reference-100",
+              "reference-101",
+              "reference-102",
+              "reference-104",
+              "reference-105",
+              "reference-106",
+              "reference-107",
+              "reference-108",
+              "reference-110",
+              "reference-111",
+              "reference-112",
+              "reference-113",
+              "reference-114",
+              "reference-115",
+              "reference-116",
+              "reference-117",
+              "reference-118",
+              "reference-119",
+              "reference-120",
+              "reference-121",
+              "reference-122",
+              "reference-123",
+              "reference-124",
+              "reference-125",
+              "reference-127",
+              "reference-128"
+            ],
+            "testGroups": [
+              "reference-003",
+              "reference-013",
+              "reference-019",
+              "reference-026",
+              "reference-051",
+              "reference-056",
+              "reference-064",
+              "reference-068",
+              "reference-077",
+              "reference-103",
+              "reference-109",
+              "reference-126"
+            ],
+            "trainingGames": 1382,
+            "testGames": 144,
+            "converged": true,
+            "fullRank": true,
+            "supported": true,
+            "metrics": {
+              "brier": 0.10024581437029458,
+              "logLoss": 0.44281965772136406
+            },
+            "baselineMetrics": {
+              "brier": 0.19837509822962282,
+              "logLoss": 0.6871082970722845
+            }
+          }
+        ],
+        "metrics": {
+          "brier": 0.110731311530369,
+          "logLoss": 0.44289091138082
+        },
+        "baselineMetrics": {
+          "brier": 0.2100209911634836,
+          "logLoss": 0.6898652163874389
+        }
+      },
+      "bootstrap": {
+        "available": true,
+        "reason": null,
+        "requested": 200,
+        "completed": 200,
+        "seed": 42,
+        "confidence": 0.95,
+        "groupUnit": "whole-selected-position-block",
+        "minimumGroups": 4,
+        "groupCount": 128,
+        "rankDeficient": 0,
+        "nonconverged": 0,
+        "pawnNonpositive": 0,
+        "possibleSeparation": 0,
+        "validRatios": 200,
+        "pawnCoefficient": {
+          "lower": 0.5751374054857441,
+          "upper": 0.6484711235128731
+        },
+        "coefficientIntervals": {
+          "pawn": {
+            "lower": 0.5751374054857441,
+            "upper": 0.6484711235128731
+          },
+          "knight": {
+            "lower": 1.5897253158072941,
+            "upper": 1.914355031684877
+          },
+          "bishop": {
+            "lower": 1.8172857412386196,
+            "upper": 2.137130113753954
+          },
+          "rook": {
+            "lower": 2.7142352201711697,
+            "upper": 3.0722003426618447
+          },
+          "queen": {
+            "lower": 5.176236649371696,
+            "upper": 5.836240111615858
+          },
+          "tempo": {
+            "lower": -0.0048914066300947525,
+            "upper": 0.06788447208134483
+          },
+          "bonus:bishop.purple@13": {
+            "lower": 1.781172153697885,
+            "upper": 2.2223687313374016
+          },
+          "bonus:knight.purple@3": {
+            "lower": 1.5032052521707153,
+            "upper": 1.9160880309994808
+          },
+          "bonus:queen.purple@1": {
+            "lower": 1.8742721098220894,
+            "upper": 2.2679521471179984
+          },
+          "bonus:rook.purple@10": {
+            "lower": 1.7236819166249722,
+            "upper": 2.1002893555618454
+          }
+        },
+        "ratioIntervals": {
+          "pawn": {
+            "lower": 1,
+            "upper": 1
+          },
+          "knight": {
+            "lower": 2.648847672482094,
+            "upper": 3.1160759808308325
+          },
+          "bishop": {
+            "lower": 3.0171233139729,
+            "upper": 3.438551896223922
+          },
+          "rook": {
+            "lower": 4.515966636363828,
+            "upper": 4.993336437894394
+          },
+          "queen": {
+            "lower": 9,
+            "upper": 9
+          },
+          "tempo": {
+            "lower": -0.007942349319851508,
+            "upper": 0.11222990957980031
+          },
+          "bonus:bishop.purple@13": {
+            "lower": 2.9544337359717368,
+            "upper": 3.6423983535079323
+          },
+          "bonus:knight.purple@3": {
+            "lower": 2.4452995053774864,
+            "upper": 3.2040428082261925
+          },
+          "bonus:queen.purple@1": {
+            "lower": 3.0567808720079674,
+            "upper": 3.819170335984063
+          },
+          "bonus:rook.purple@10": {
+            "lower": 2.7631187949037908,
+            "upper": 3.518861388754538
+          }
+        },
+        "fixedRatios": {
+          "pawn": 1,
+          "queen": 9
+        },
+        "interpretation": "Conditional opening-block percentile ranges; failed fits are counted, and all games in each selected opening share one multiplicity."
+      },
+      "normalized": {
+        "available": true,
+        "reason": null,
+        "reasons": [],
+        "minimumGroups": 8,
+        "values": {
+          "pawn": 1,
+          "knight": 2.8771610115199873,
+          "bishop": 3.2390075194424393,
+          "rook": 4.729665471839379,
+          "queen": 9,
+          "tempo": 0.05138289711823254,
+          "bonus:bishop.purple@13": 3.264121412090991,
+          "bonus:knight.purple@3": 2.8222864516730604,
+          "bonus:queen.purple@1": 3.3679623685223046,
+          "bonus:rook.purple@10": 3.119599776210063
+        },
+        "fixedAnchors": {
+          "pawn": 1,
+          "queen": 9
+        },
+        "materialPriceTableSupported": false,
+        "interpretation": "Conditional fitted ratios under assumed pawn=1 and queen=9. Fixed anchors are assumptions, not measured values or uncertainty bounds."
+      },
+      "warnings": [
+        "Each source is replayed under its original rules and identity; pooled material estimates condition on declared cross-profile compatibility.",
+        "Source/process histories remain distinct even when search settings and relevant movement/value tables agree.",
+        "All selected games involve exact frozen reference revisions. Other experiments are excluded, not recoded as references.",
+        "Truncated games are unscored; completed games without a scored opposite-color partner are excluded.",
+        "All games in each opening group share bootstrap multiplicities; broader opening ancestry is unknown."
+      ],
+      "omittedFeatures": []
+    },
+    "estimates": {
+      "ordinary": {
+        "pawn": {
+          "value": 1,
+          "interval": null,
+          "assumed": true,
+          "available": true
+        },
+        "knight": {
+          "value": 2.8771610115199873,
+          "interval": {
+            "lower": 2.648847672482094,
+            "upper": 3.1160759808308325
+          },
+          "assumed": false,
+          "available": true
+        },
+        "bishop": {
+          "value": 3.2390075194424393,
+          "interval": {
+            "lower": 3.0171233139729,
+            "upper": 3.438551896223922
+          },
+          "assumed": false,
+          "available": true
+        },
+        "rook": {
+          "value": 4.729665471839379,
+          "interval": {
+            "lower": 4.515966636363828,
+            "upper": 4.993336437894394
+          },
+          "assumed": false,
+          "available": true
+        },
+        "queen": {
+          "value": 9,
+          "interval": null,
+          "assumed": true,
+          "available": true
+        }
+      },
+      "bonuses": {
+        "bishop.purple@13": {
+          "value": 3.264121412090991,
+          "interval": {
+            "lower": 2.9544337359717368,
+            "upper": 3.6423983535079323
+          },
+          "assumed": false,
+          "available": true
+        },
+        "knight.purple@3": {
+          "value": 2.8222864516730604,
+          "interval": {
+            "lower": 2.4452995053774864,
+            "upper": 3.2040428082261925
+          },
+          "assumed": false,
+          "available": true
+        },
+        "queen.purple@1": {
+          "value": 3.3679623685223046,
+          "interval": {
+            "lower": 3.0567808720079674,
+            "upper": 3.819170335984063
+          },
+          "assumed": false,
+          "available": true
+        },
+        "rook.purple@10": {
+          "value": 3.119599776210063,
+          "interval": {
+            "lower": 2.7631187949037908,
+            "upper": 3.518861388754538
+          },
+          "assumed": false,
+          "available": true
+        }
+      },
+      "tempo": {
+        "value": 0.05138289711823254,
+        "interval": {
+          "lower": -0.007942349319851508,
+          "upper": 0.11222990957980031
+        },
+        "assumed": false,
+        "available": true
+      }
+    },
+    "wholePieces": [
+      {
+        "id": "rook.purple@10",
+        "name": "Vanguard",
+        "family": "rook",
+        "available": true,
+        "reason": null,
+        "ordinary": 4.729665471839379,
+        "bonus": 3.119599776210063,
+        "value": 7.849265248049441,
+        "interval": {
+          "lower": 7.432651524406998,
+          "upper": 8.329504842886742
+        },
+        "validReplicates": 200
+      },
+      {
+        "id": "knight.purple@3",
+        "name": "Unicorn",
+        "family": "knight",
+        "available": true,
+        "reason": null,
+        "ordinary": 2.8771610115199873,
+        "bonus": 2.8222864516730604,
+        "value": 5.699447463193048,
+        "interval": {
+          "lower": 5.248593497724647,
+          "upper": 6.214848490889912
+        },
+        "validReplicates": 200
+      },
+      {
+        "id": "bishop.purple@13",
+        "name": "Cruisader",
+        "family": "bishop",
+        "available": true,
+        "reason": null,
+        "ordinary": 3.2390075194424393,
+        "bonus": 3.264121412090991,
+        "value": 6.50312893153343,
+        "interval": {
+          "lower": 6.13688426743024,
+          "upper": 6.936001966253547
+        },
+        "validReplicates": 200
+      },
+      {
+        "id": "queen.purple@1",
+        "name": "Amazon",
+        "family": "queen",
+        "available": true,
+        "reason": null,
+        "ordinary": 9,
+        "bonus": 3.3679623685223046,
+        "value": 12.367962368522305,
+        "interval": {
+          "lower": 12.056780872007968,
+          "upper": 12.819170335984063
+        },
+        "validReplicates": 200
+      }
+    ],
+    "warnings": [
+      "These outcome-fitted values condition on the selected opening positions and recorded engine/evaluation policy; they are not intrinsic piece prices.",
+      "The cohort has no ordinary/single-upgrade controls. Previous material fits remain separate; do not add their ordinary values to these bonuses.",
+      "Pawn=1 and queen=9 are assumptions. Whole-piece uncertainty uses joint refits, not sums of marginal interval endpoints.",
+      "Each source is replayed under its original rules and identity; pooled material estimates condition on declared cross-profile compatibility.",
+      "Source/process histories remain distinct even when search settings and relevant movement/value tables agree.",
+      "All selected games involve exact frozen reference revisions. Other experiments are excluded, not recoded as references.",
+      "Truncated games are unscored; completed games without a scored opposite-color partner are excluded.",
+      "All games in each opening group share bootstrap multiplicities; broader opening ancestry is unknown.",
+      "The pooled result retains three original rule/engine-source contexts; matching policies and bounded compatibility checks support conditional reuse, not universal equivalence."
+    ]
+  }
+}

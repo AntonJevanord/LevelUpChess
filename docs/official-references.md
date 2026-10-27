@@ -69,23 +69,34 @@ pooled or treated as one simultaneous confidence statement.
 
 ### Latest fitted material estimates
 
-The [new offline fit](../experiments/balance/results/bishop-decision-material-001.report.md)
-uses only the 1,280 new final-comparison games. Pawn = 1 and queen = 9 are
-assumptions. This fit estimates ordinary knight 3.04, bishop 3.42 and rook 4.86.
+The [all-reference fit](../experiments/balance/results/reference-material-001.report.md)
+uses all 1,534 usable color-paired games across the six exact reference matchups.
+Pawn = 1 and queen = 9 are assumptions. This fit estimates ordinary knight 2.88,
+bishop 3.24 and rook 4.73.
 
 | Reference | Added value | Added conditional 95% range | Whole piece | Whole conditional 95% range |
 | --- | ---: | --- | ---: | --- |
-| Vanguard | +3.15 | 2.74–3.70 | 8.01 | 7.49–8.71 |
-| Unicorn | +3.17 | 2.67–3.68 | 6.21 | 5.64–6.77 |
-| Cruisader | +3.40 | 3.04–3.76 | 6.81 | 6.44–7.28 |
-| Amazon | +3.58 | 3.10–3.97 | 12.58 | 12.10–12.97 |
+| Vanguard | +3.12 | 2.76–3.52 | 7.85 | 7.43–8.33 |
+| Unicorn | +2.82 | 2.45–3.20 | 5.70 | 5.25–6.21 |
+| Cruisader | +3.26 | 2.95–3.64 | 6.50 | 6.14–6.94 |
+| Amazon | +3.37 | 3.06–3.82 | 12.37 | 12.06–12.82 |
 
 Whole-piece values add the ordinary family and bonus from the same fit, before
 rounding. Their intervals use the sum within each same bootstrap refit.
 All 200 normalized resamples and five grouped validation folds pass; the
-anchored design has full rank. Sampling retains 13,344 material-stable positions
-from 1,276 games. Four games have no eligible positions, leaving four partially
-sampled pairs despite all 640 raw color pairs being complete.
+anchored design has full rank. Sampling retains 15,216 material-stable positions
+from 1,526 games. Eight games have no eligible positions, leaving eight partially
+sampled pairs despite all 767 raw color pairs being complete. Sources are
+replayed under their original profiles; shared openings, search settings and
+relevant value tables support conditional reuse while source identities remain
+separate. One truncated Unicorn/Amazon game and its completed unpaired partner
+remain excluded. The user chose to leave that study closed.
+
+The [previous 1,280-game fit](../experiments/balance/results/bishop-decision-material-001.report.md)
+also included the unselected long-hop bishop. It remains unchanged: Vanguard
+8.01, Unicorn 6.21, Cruisader 6.81 and Amazon 12.58. The new cohort includes only
+the frozen references; differences in fitted values do not change observed
+matchup scores or imply a design change.
 
 The [earlier broader fit](../experiments/balance/results/bishop-reference-001.report.md)
 remains separate: Vanguard +3.34 / total 7.98, Unicorn +3.48 / total 6.25, and
@@ -105,6 +116,11 @@ restores all 4,608 older revision histories and the short-side bishop's missing
 192 games. It predates Cruisader and supplies none of its decision games.
 
 ## Future experiments
+
+The [mixed-army and lower-tier plan](mixed-army-balance-plan.md) adds a proposed
+reference 2v2 pilot and starting-upgrade contribution ratings. Candidate screens
+keep the fixed reference basket; mixed-army tests address partnerships and tier
+economics without requiring a candidate round robin.
 
 1. Playtest a small set of candidates for readability, fun and counterplay.
 2. Give changed designs new immutable identities. Test candidates against the

@@ -13,6 +13,7 @@ experiments/balance/results/bishop-decision-final-001.audit.json text eol=lf
 experiments/balance/results/reference-revisions-retained-001.audit.json text eol=lf
 experiments/balance/results/bishop-decision-complete-001.audit.json text eol=lf
 experiments/balance/results/bishop-decision-material-001.audit.json text eol=lf
+experiments/balance/results/reference-material-001.audit.json text eol=lf
 experiments/balance/results/bishop-decision-complete-001.*.gz -text
 experiments/balance/results/*.games.jsonl.gz -text
 # Preserve original collection manifests used by reproducible result audits.

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-analysis-resource-baseline",
+  "recordedDate": "2026-10-27",
+  "command": "node experiments/balance/results/reference-material-001.audit.cjs",
+  "platform": "linux",
+  "node": "v24.19.0",
+  "scope": "entire offline all-reference replay and 200-resample fit",
+  "elapsedMs": 44265,
+  "peakRssKiB": 644164,
+  "peakRssMiB": 629.06640625,
+  "rssAtCompletionBytes": 641400832,
+  "analysisAuditSha256": "58adb170a150d58ff7780b7d229befb0e4aaee1a199d40a62da0920e75192eba",
+  "verification": "Full offline replay, 200-resample fit and exact artifact comparison passed.",
+  "newMatchGames": 0,
+  "limitations": [
+    "This is one cloud Linux measurement, not a benchmark of the user's Windows PC.",
+    "RSS includes the complete Node/WebAssembly analysis process; disk compression and documentation cleanup are separate.",
+    "No runtime memory optimization or speedup is claimed."
+  ]
+}
