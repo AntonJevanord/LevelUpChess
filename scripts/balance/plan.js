@@ -61,7 +61,7 @@ function uniqueId(entries, path) {
 }
 
 function normalizeArmy(input, path, schemaVersion) {
-  object(input, path, ['upgrades', 'remove']);
+  object(input, path, schemaVersion === 3 ? ['upgrades', 'remove', 'reserve'] : ['upgrades', 'remove']);
   const upgrades = defaulted(input.upgrades, {});
   object(upgrades, `${path}.upgrades`, [...WHITE_SLOTS]);
   const entries = Object.entries(upgrades).sort(([a], [b]) => a.localeCompare(b));
@@ -69,14 +69,34 @@ function normalizeArmy(input, path, schemaVersion) {
   for (const [square, choice] of entries) {
     if (schemaVersion === 1) integer(choice, `${path}.upgrades.${square}`, 0, 3);
     else {
-      if (square === 'e1') throw new Error(`${path}.upgrades.e1: dynamic king designs are not supported; use schemaVersion 1 for legacy kings.`);
+      if (square === 'e1') throw new Error(schemaVersion === 3
+        ? `${path}.upgrades.e1: keep the ordinary royal king and declare nonroyal grants in reserve.`
+        : `${path}.upgrades.e1: dynamic king designs are not supported; use schemaVersion 1 for legacy kings.`);
       const design = typeof choice === 'string' ? getDesign(choice) : undefined;
       if (!design) throw new Error(`${path}.upgrades.${square} must select a known stable design ID.`);
       if (design.family !== SLOT_FAMILIES[square]) throw new Error(`${path}.upgrades.${square} requires a ${SLOT_FAMILIES[square]} design.`);
       cost += design.level;
     }
   }
-  if (schemaVersion === 2 && cost > 6) throw new Error(`${path} may spend at most 6 upgrade points.`);
+  let reserve;
+  if (schemaVersion === 3) {
+    reserve = defaulted(input.reserve, []);
+    if (!Array.isArray(reserve) || reserve.length > 9) throw new Error(`${path}.reserve must contain at most 9 finite grant entries.`);
+    const seen = new Set();
+    reserve = reserve.map((entry, index) => {
+      const location = `${path}.reserve[${index}]`;
+      object(entry, location, ['id', 'count']);
+      const design = typeof entry.id === 'string' ? getDesign(entry.id) : undefined;
+      if (!design || design.family !== 'king' || design.placement !== 'reserve') throw new Error(`${location}.id must select a known nonroyal reserve grant.`);
+      if (seen.has(entry.id)) throw new Error(`${path}.reserve must not repeat grant IDs; use count for finite quantities.`);
+      seen.add(entry.id);
+      const count = integer(entry.count, `${location}.count`, 1, 9);
+      cost += design.level * count;
+      return { id: entry.id, count };
+    }).sort((a, b) => a.id.localeCompare(b.id));
+  }
+  const budget = schemaVersion === 3 ? 9 : 6;
+  if (schemaVersion >= 2 && cost > budget) throw new Error(`${path} may spend at most ${budget} upgrade points.`);
   const remove = defaulted(input.remove, []);
   if (!Array.isArray(remove) || remove.some(square => !WHITE_SLOTS.has(square) || square === 'e1')) {
     throw new Error(`${path}.remove must list ordinary starting squares other than the king.`);
@@ -85,7 +105,7 @@ function normalizeArmy(input, path, schemaVersion) {
   for (const square of remove) {
     if (upgrades[square]) throw new Error(`${path} cannot both upgrade and remove ${square}.`);
   }
-  return { upgrades: Object.fromEntries(entries.filter(([, level]) => level !== 0)), remove: [...remove].sort() };
+  return { upgrades: Object.fromEntries(entries.filter(([, level]) => level !== 0)), remove: [...remove].sort(), ...(schemaVersion === 3 ? { reserve } : {}) };
 }
 
 function normalizeStrength(input = { skill: 20 }, path) {
@@ -114,14 +134,15 @@ function normalizeEngine(input = {}) {
 
 function normalizeConfig(input) {
   object(input, 'config', ['schemaVersion', 'name', 'seed', 'repetitions', 'engine', 'openings', 'comparisons', 'evaluation']);
-  if (![1, 2].includes(input.schemaVersion)) throw new Error('schemaVersion must be 1 or 2.');
-  if (input.evaluation !== undefined && input.schemaVersion !== 2) throw new Error('evaluation requires schemaVersion 2 design IDs.');
+  if (![1, 2, 3].includes(input.schemaVersion)) throw new Error('schemaVersion must be 1, 2 or 3.');
+  if (input.evaluation !== undefined && input.schemaVersion === 1) throw new Error('evaluation requires schemaVersion 2 or 3 design IDs.');
   const openings = list(defaulted(input.openings, [{ id: 'start', moves: [] }]), 'openings', 100).map((opening, index) => {
     const path = `openings[${index}]`;
     object(opening, path, ['id', 'moves']);
     if (!Array.isArray(opening.moves) || opening.moves.length > 40) throw new Error(`${path}.moves must contain 0–40 UCI moves.`);
     const moves = opening.moves.map((move, moveIndex) => {
-      if (typeof move !== 'string' || !/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(move) || move.slice(0, 2) === move.slice(2, 4)) {
+      const drop = input.schemaVersion === 3 && typeof move === 'string' && /^[A-Z]@[a-h][1-8]$/.test(move);
+      if (typeof move !== 'string' || !drop && (!/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(move) || move.slice(0, 2) === move.slice(2, 4))) {
         throw new Error(`${path}.moves[${moveIndex}] must be a UCI coordinate move.`);
       }
       return move;
@@ -159,7 +180,7 @@ function normalizeConfig(input) {
     comparisons,
   };
   if (input.evaluation !== undefined) config.evaluation = normalizeEvaluation(input.evaluation,
-    comparisons.flatMap(comparison => [comparison.armyA, comparison.armyB].flatMap(army => Object.values(army.upgrades))));
+    comparisons.flatMap(comparison => [comparison.armyA, comparison.armyB].flatMap(army => [...Object.values(army.upgrades), ...(army.reserve || []).map(entry => entry.id)])));
   if (config.repetitions * openings.length * comparisons.length * 2 > MAX_GAMES) {
     throw new Error(`An experiment must schedule at most ${MAX_GAMES} games.`);
   }

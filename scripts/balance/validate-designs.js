@@ -25,7 +25,7 @@ function checkAbort(signal) {
  * playing games. Native checks use one temporary rules file and perft only. */
 async function validateDesignConfig(input, { enginePath, signal, onProgress = () => {}, standardOpeningSources = false } = {}) {
   checkAbort(signal);
-  if (input?.schemaVersion !== 2) throw new Error('Design validation requires a schemaVersion 2 configuration.');
+  if (![2, 3].includes(input?.schemaVersion)) throw new Error('Design validation requires a schemaVersion 2 or 3 configuration.');
   const config = normalizeConfig(input);
   const schedule = makeSchedule(config);
   const registry = createDesignRegistry(config);

@@ -17,6 +17,7 @@ function encodingFor(profile) {
   if (!profile || !isDeepStrictEqual(profile, compileDesignProfile(profile.registry, profile.evaluation))) {
     fail('Material export requires an intact compiled dynamic profile and frozen registry.');
   }
+  if (profile.roles.reserveTypes?.length) fail('Reserve grants require pocket-aware material analysis; use outcome reports for this experiment.');
   const ids = profile.registry.definitions.map(definition => definition.id).sort();
   const names = [...FAMILIES, 'tempo', ...ids.map(id => `bonus:${id}`)];
   const letters = new Map(Object.entries(ORDINARY).map(([letter, family]) => [letter, { family }]));

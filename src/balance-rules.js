@@ -137,7 +137,7 @@ async function loadProfileModule(variant, config, cacheKey) {
 }
 
 function designArmyChoices(input, definitions) {
-  const army = input && Object.hasOwn(input, 'upgrades') ? input : { upgrades: input };
+  const army = input && ['upgrades', 'reserve', 'remove'].some(key => Object.hasOwn(input, key)) ? input : { upgrades: input };
   const upgrades = army.upgrades === undefined ? {} : army.upgrades;
   if (!upgrades || typeof upgrades !== 'object' || Array.isArray(upgrades)) throw new Error('A design army must map starting squares to design IDs.');
   const choices = [];
@@ -145,17 +145,29 @@ function designArmyChoices(input, definitions) {
   for (const [square, id] of Object.entries(upgrades).sort(([a], [b]) => a.localeCompare(b))) {
     const slot = square === 'e1' ? { square: 'e1', family: 'king' } : PIECE_SLOTS.find(candidate => candidate.color === 'w' && candidate.square === square);
     const definition = definitions.get(id)?.definition;
+    if (square === 'e1' && army.reserve !== undefined) throw new Error('Reserve armies keep an ordinary king; declare grants in reserve.');
     if (square === 'e1' && definition?.placement !== 'reserve') throw new Error('Dynamic design experiments use ordinary kings.');
     if (!slot || !definition || definition.family !== slot.family) throw new Error(`Choose a registered ${slot?.family || 'piece'} design for ${square}.`);
     choices.push({ square, ...definitions.get(id) });
     cost += definition.level;
   }
-  const limit = [...definitions.values()].some(({ definition }) => definition.placement === 'reserve') ? 9 : 6;
+  const reserve = army.reserve === undefined ? [] : army.reserve;
+  if (!Array.isArray(reserve) || reserve.length > 9) throw new Error('Army reserve must contain at most 9 finite grant entries.');
+  const reserveIds = new Set();
+  const grants = reserve.map(entry => {
+    const selected = definitions.get(entry?.id);
+    if (!selected || selected.definition.family !== 'king' || selected.definition.placement !== 'reserve'
+      || !Number.isInteger(entry.count) || entry.count < 1 || entry.count > 9 || reserveIds.has(entry.id)) throw new Error('Army reserve requires distinct registered nonroyal grants and finite counts from 1 to 9.');
+    reserveIds.add(entry.id);
+    cost += selected.definition.level * entry.count;
+    return { ...selected, count: entry.count };
+  });
+  const limit = army.reserve !== undefined ? 9 : [...definitions.values()].some(({ definition }) => definition.placement === 'reserve') ? 9 : 6;
   if (cost > limit) throw new Error(`A dynamic design army may spend at most ${limit} upgrade points.`);
   const remove = army.remove === undefined ? [] : army.remove;
   if (!Array.isArray(remove) || remove.some(square => !ARMY_SQUARES.has(square) || square === 'e1') || new Set(remove).size !== remove.length) throw new Error('Removed material must list distinct non-king starting squares.');
   if (remove.some(square => Object.hasOwn(upgrades, square))) throw new Error('A removed starting piece cannot also be upgraded.');
-  return { choices, remove };
+  return { choices, remove, reserve: grants };
 }
 
 async function designMatchRules(input) {

@@ -99,7 +99,7 @@ function printSummary(summary) {
     console.log(`${comparison.comparisonId}: A score ${score}; ${comparison.paired.completePairs} complete pairs, ${estimate.uniqueOpenings} openings; ${comparison.statusCounts.truncated} truncated, ${comparison.statusCounts.error} errors.`);
   }
 }
-async function main(args = process.argv.slice(2)) {
+async function main(args = process.argv.slice(2), { comparisonNames = {} } = {}) {
   const options = parseArgs(args);
   if (options.help) { console.log(HELP); return; }
   for (const [flag, action] of [['stop-now', 'now'], ['stop-after-game', 'game'], ['stop-after-pair', 'pair']]) {
@@ -124,7 +124,7 @@ async function main(args = process.argv.slice(2)) {
   const root = path.resolve(__dirname, '..');
   if (process.platform !== 'win32' && !process.env.FAIRY_STOCKFISH_PATH) throw new Error('Set FAIRY_STOCKFISH_PATH to a compatible native engine on Linux/macOS. See BALANCE.md.');
   const enginePath = path.resolve(process.env.FAIRY_STOCKFISH_PATH || path.join(root, 'stockfish/fairy-stockfish-levelup_x86-64.exe'));
-  const formatProgress = createProgressFormatter(schedule, resume ? readProgressHistory(outDir, manifest) : []);
+  const formatProgress = createProgressFormatter(schedule, resume ? readProgressHistory(outDir, manifest) : [], comparisonNames);
   const controller = new AbortController(), controls = installControls(outDir, controller);
   console.log(`${resume ? 'Resuming' : 'Starting'} ${schedule.length} scheduled games with ${jobs} workers in ${outDir}`);
   console.log('q / Ctrl+C: stop all now; g: after active games; p: after active pairs.');

@@ -86,7 +86,7 @@ function snapshot(ids) {
 
 function createDesignRegistry(config) {
   object(config, 'Experiment');
-  if (config.schemaVersion !== 2) throw new Error('Design registries require experiment schemaVersion 2.');
+  if (![2, 3].includes(config.schemaVersion)) throw new Error('Design registries require experiment schemaVersion 2 or 3.');
   if (!Array.isArray(config.comparisons) || !config.comparisons.length) throw new Error('Design registries require comparisons.');
   const ids = [];
   for (const [index, comparison] of config.comparisons.entries()) {
@@ -97,6 +97,16 @@ function createDesignRegistry(config) {
       const upgrades = army.upgrades === undefined ? {} : army.upgrades;
       object(upgrades, `comparisons[${index}].${key}.upgrades`);
       ids.push(...Object.values(upgrades));
+      if (config.schemaVersion === 3) {
+        const reserve = army.reserve === undefined ? [] : army.reserve;
+        if (!Array.isArray(reserve)) throw new Error('Army reserve must be an array of finite grants.');
+        for (const entry of reserve) {
+          object(entry, 'Reserve grant', ['id', 'count']);
+          const design = getDesign(entry.id);
+          if (!design || design.family !== 'king' || design.placement !== 'reserve' || !Number.isInteger(entry.count) || entry.count < 1 || entry.count > 9) throw new Error('Reserve grants require known nonroyal designs and finite counts from 1 to 9.');
+          ids.push(entry.id);
+        }
+      }
     }
   }
   return snapshot(ids);

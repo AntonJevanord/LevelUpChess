@@ -2,7 +2,7 @@
 
 Version 16 is closed with four [official references](docs/official-references.md): Vanguard `RfB`, Unicorn `NC`, Cruisader `BsR2nsN` and Amazon `QN`. Each costs three upgrade points. Their definitions, roles and identities are frozen.
 
-Current evidence supports the reference choice. Future work adds combination and tier tests using the [mixed-army plan](docs/mixed-army-balance-plan.md); it does not reopen the completed bishop search.
+Current evidence supports the reference choice. The [version-17 experiments](docs/version17-experiments.md) add an eight-opening level-3 screen, reference 2v2 table and level-1 pawn/guard bundles. They do not reopen the completed bishop search or pool new contexts silently with older results.
 
 ## Current results
 

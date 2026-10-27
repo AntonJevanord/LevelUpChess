@@ -56,6 +56,15 @@ test('all White/Black results identify the correct purchase and contestant, incl
   }
 });
 
+test('trusted campaign labels name current references and bundles without changing scoring or generic defaults', () => {
+  const schedule = fixture();
+  const format = createProgressFormatter(schedule, [], { [COMPARISON]: { a: 'Unicorn', b: 'Three pawn grants' } });
+  const message = finish(schedule[1], '0-1');
+  assert.match(format(message), /Winner: A Unicorn \(Black\)/);
+  assert.match(format(message), /A Unicorn 1 - 0 B Three pawn grants/);
+  assert.match(createProgressFormatter(schedule)(message), /A Camel knight 1 - 0 B Blink rook/);
+});
+
 test('draws award half-points and a partial color pair still contributes to the explicitly live tally', () => {
   const schedule = fixture(), format = createProgressFormatter(schedule);
   const first = format(finish(schedule[0], '1/2-1/2'));

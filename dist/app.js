@@ -12766,7 +12766,13 @@
         for (const [color, army] of [["w", white], ["b", black]]) {
           const choices = army.choices || [];
           const remove = army.remove || [];
+          const reserve = army.reserve || [];
           if (!Array.isArray(choices) || !Array.isArray(remove) || new Set(choices.map((choice) => choice.square)).size !== choices.length) throw new Error("Deployment needs distinct starting choices.");
+          if (!Array.isArray(reserve)) throw new Error("Deployment needs a finite reserve array.");
+          for (const { definition, letter, count } of reserve) {
+            if (definition?.family !== "king" || definition.placement !== "reserve" || !profile.roles.reserveTypes?.includes(letter) || !Number.isInteger(count) || count < 1 || count > 9) throw new Error("Deployment needs registered nonroyal grants with finite quantities.");
+            pieces.pocket = (pieces.pocket || "") + colored(letter, color).repeat(count);
+          }
           for (const square of remove) {
             const target = relativeSquare(square, color);
             const piece = pieces.get(target);

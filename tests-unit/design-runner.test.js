@@ -86,7 +86,7 @@ test('schema 2 rejects unknown, numeric, wrong-family and royal choices before s
   const expensive = simple();
   expensive.comparisons[0].armyA.upgrades = { a2: 'pawn.purple@1', b2: 'pawn.purple@2', c2: 'pawn.blue@1' };
   assert.throws(() => normalizeConfig(expensive), /at most 6/);
-  assert.throws(() => normalizeConfig({ ...simple(), schemaVersion: 3 }), /schemaVersion/);
+  assert.throws(() => normalizeConfig({ ...simple(), schemaVersion: 4 }), /schemaVersion/);
 });
 
 test('limiting scheduled pairs preserves the full declared campaign registry and letters', native, async t => {

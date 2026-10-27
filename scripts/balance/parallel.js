@@ -79,7 +79,7 @@ function writeState(directory, state) {
 }
 
 function makeManifest(config, schedule, jobs, enginePath) {
-  if (config.schemaVersion !== 2) throw new Error('Parallel runs currently require schemaVersion 2 with ordinary kings.');
+  if (![2, 3].includes(config.schemaVersion)) throw new Error('Parallel runs require schemaVersion 2 or 3 with ordinary kings.');
   const canonical = new Map(makeSchedule(config).map(game => [game.id, game]));
   for (const game of schedule) if (!isDeepStrictEqual(game, canonical.get(game.id))) throw new Error('The parallel schedule does not match its declared configuration.');
   const partitions = partitionSchedule(schedule, jobs);

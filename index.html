@@ -34,7 +34,7 @@
 </style>
 </head>
 <body>
-  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 16 / THE REFERENCE ROSTER</span></header>
+  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 17 / BALANCE WORKSHOP</span></header>
   <main>
     <section class="intro"><span class="eyebrow">EVERY GREAT GAME STARTS HERE</span><h1>Your next move.</h1><p>Classic chess. Two players. One board.</p></section>
     <div class="game-layout">
@@ -12889,7 +12889,13 @@
         for (const [color, army] of [["w", white], ["b", black]]) {
           const choices = army.choices || [];
           const remove = army.remove || [];
+          const reserve = army.reserve || [];
           if (!Array.isArray(choices) || !Array.isArray(remove) || new Set(choices.map((choice) => choice.square)).size !== choices.length) throw new Error("Deployment needs distinct starting choices.");
+          if (!Array.isArray(reserve)) throw new Error("Deployment needs a finite reserve array.");
+          for (const { definition, letter, count } of reserve) {
+            if (definition?.family !== "king" || definition.placement !== "reserve" || !profile.roles.reserveTypes?.includes(letter) || !Number.isInteger(count) || count < 1 || count > 9) throw new Error("Deployment needs registered nonroyal grants with finite quantities.");
+            pieces.pocket = (pieces.pocket || "") + colored(letter, color).repeat(count);
+          }
           for (const square of remove) {
             const target = relativeSquare(square, color);
             const piece = pieces.get(target);

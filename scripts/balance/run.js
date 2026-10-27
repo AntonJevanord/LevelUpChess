@@ -160,7 +160,7 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
   try { ({ createMatchRules } = nodeRequire(rulesFile)); }
   catch (error) { throw new Error('Balance rules are not built. Run npm.cmd run build first.', { cause: error }); }
   const { rulesBundleSha256: bundleHash, engineSha256, runnerSources, runnerSha256 } = getRunIdentity(enginePath, rulesFile);
-  const dynamic = config.schemaVersion === 2;
+  const dynamic = config.schemaVersion === 2 || config.schemaVersion === 3;
   // Freeze one allocation for every declared comparison, including both
   // colors. A limited workflow run therefore keeps the full campaign letters.
   const registry = dynamic ? createDesignRegistry(config) : null;

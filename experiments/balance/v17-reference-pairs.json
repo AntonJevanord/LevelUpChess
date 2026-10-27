@@ -1,0 +1,429 @@
+{
+  "schemaVersion": 2,
+  "name": "Version 17: reference 2v2 pilot (240 games)",
+  "seed": 20261028,
+  "repetitions": 1,
+  "engine": {
+    "nodes": 20000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400
+  },
+  "openings": [
+    {
+      "id": "start",
+      "moves": []
+    },
+    {
+      "id": "open-e-pawns",
+      "moves": [
+        "e2e4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "open-d-pawns",
+      "moves": [
+        "d2d4",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "sicilian-prefix",
+      "moves": [
+        "e2e4",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "english-prefix",
+      "moves": [
+        "c2c4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "knights-prefix",
+      "moves": [
+        "g1f3",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "queenside-fianchetto",
+      "moves": [
+        "b2b3",
+        "b7b6"
+      ]
+    },
+    {
+      "id": "kingside-fianchetto",
+      "moves": [
+        "g2g3",
+        "g7g6"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "vanguard-unicorn-v-vanguard-cruisader",
+      "label": "Vanguard + Unicorn versus Vanguard + Cruisader",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@10",
+          "b1": "knight.purple@3"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "a1": "rook.purple@10",
+          "c1": "bishop.purple@13"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "vanguard-unicorn-v-vanguard-amazon",
+      "label": "Vanguard + Unicorn versus Vanguard + Amazon",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@10",
+          "b1": "knight.purple@3"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "a1": "rook.purple@10",
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "vanguard-unicorn-v-unicorn-cruisader",
+      "label": "Vanguard + Unicorn versus Unicorn + Cruisader",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@10",
+          "b1": "knight.purple@3"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.purple@3",
+          "c1": "bishop.purple@13"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "vanguard-unicorn-v-unicorn-amazon",
+      "label": "Vanguard + Unicorn versus Unicorn + Amazon",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@10",
+          "b1": "knight.purple@3"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.purple@3",
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "vanguard-unicorn-v-cruisader-amazon",
+      "label": "Vanguard + Unicorn versus Cruisader + Amazon",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@10",
+          "b1": "knight.purple@3"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c1": "bishop.purple@13",
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "vanguard-cruisader-v-vanguard-amazon",
+      "label": "Vanguard + Cruisader versus Vanguard + Amazon",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@10",
+          "c1": "bishop.purple@13"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "a1": "rook.purple@10",
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "vanguard-cruisader-v-unicorn-cruisader",
+      "label": "Vanguard + Cruisader versus Unicorn + Cruisader",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@10",
+          "c1": "bishop.purple@13"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.purple@3",
+          "c1": "bishop.purple@13"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "vanguard-cruisader-v-unicorn-amazon",
+      "label": "Vanguard + Cruisader versus Unicorn + Amazon",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@10",
+          "c1": "bishop.purple@13"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.purple@3",
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "vanguard-cruisader-v-cruisader-amazon",
+      "label": "Vanguard + Cruisader versus Cruisader + Amazon",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@10",
+          "c1": "bishop.purple@13"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c1": "bishop.purple@13",
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "vanguard-amazon-v-unicorn-cruisader",
+      "label": "Vanguard + Amazon versus Unicorn + Cruisader",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@10",
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.purple@3",
+          "c1": "bishop.purple@13"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "vanguard-amazon-v-unicorn-amazon",
+      "label": "Vanguard + Amazon versus Unicorn + Amazon",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@10",
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.purple@3",
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "vanguard-amazon-v-cruisader-amazon",
+      "label": "Vanguard + Amazon versus Cruisader + Amazon",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@10",
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c1": "bishop.purple@13",
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "unicorn-cruisader-v-unicorn-amazon",
+      "label": "Unicorn + Cruisader versus Unicorn + Amazon",
+      "armyA": {
+        "upgrades": {
+          "b1": "knight.purple@3",
+          "c1": "bishop.purple@13"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.purple@3",
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "unicorn-cruisader-v-cruisader-amazon",
+      "label": "Unicorn + Cruisader versus Cruisader + Amazon",
+      "armyA": {
+        "upgrades": {
+          "b1": "knight.purple@3",
+          "c1": "bishop.purple@13"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c1": "bishop.purple@13",
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "unicorn-amazon-v-cruisader-amazon",
+      "label": "Unicorn + Amazon versus Cruisader + Amazon",
+      "armyA": {
+        "upgrades": {
+          "b1": "knight.purple@3",
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c1": "bishop.purple@13",
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    }
+  ]
+}

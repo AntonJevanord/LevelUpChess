@@ -1,0 +1,10 @@
+[
+  { "id": "start", "moves": [] },
+  { "id": "open-e-pawns", "moves": ["e2e4", "e7e5"] },
+  { "id": "open-d-pawns", "moves": ["d2d4", "d7d5"] },
+  { "id": "sicilian-prefix", "moves": ["e2e4", "c7c5"] },
+  { "id": "english-prefix", "moves": ["c2c4", "e7e5"] },
+  { "id": "knights-prefix", "moves": ["g1f3", "g8f6"] },
+  { "id": "queenside-fianchetto", "moves": ["b2b3", "b7b6"] },
+  { "id": "kingside-fianchetto", "moves": ["g2g3", "g7g6"] }
+]

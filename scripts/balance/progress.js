@@ -17,13 +17,15 @@ const capitalize = text => text[0].toUpperCase() + text.slice(1);
 function armyName(army) {
   const upgrades = Object.entries(army.upgrades || {}).filter(([, choice]) => choice !== 0);
   const removed = army.remove || [];
+  const reserve = army.reserve || [];
   const label = (square, choice) => {
     if (typeof choice === 'number') return `Level ${choice} ${families.get(square) || 'piece'}`;
     const design = getDesign(choice);
     return names.get(choice) || (design ? `${capitalize(design.family)} level ${design.level} (${choice})` : choice);
   };
-  if (upgrades.length === 1 && !removed.length) return label(...upgrades[0]);
+  if (upgrades.length === 1 && !removed.length && !reserve.length) return label(...upgrades[0]);
   const pieces = upgrades.map(([square, choice]) => `${label(square, choice)} at ${square}`);
+  pieces.push(...reserve.map(({ id, count }) => `${count} × ${label('e1', id)} in reserve`));
   return (pieces.join(' + ') || 'Standard army') + (removed.length ? ` without ${removed.join(', ')}` : '');
 }
 
@@ -46,11 +48,12 @@ function readProgressHistory(directory, manifest) {
 }
 
 /** Presentation only: update counters from existing results, without file writes. */
-function createProgressFormatter(schedule, records = []) {
+function createProgressFormatter(schedule, records = [], comparisonNames = {}) {
   const games = new Map(schedule.map(game => [game.id, game]));
   const matchups = new Map(), completed = new Map();
   for (const game of schedule) if (!matchups.has(game.comparisonId)) {
-    matchups.set(game.comparisonId, { a: armyName(game.comparison.armyA), b: armyName(game.comparison.armyB), wins: 0, draws: 0, losses: 0 });
+    const display = Object.hasOwn(comparisonNames, game.comparisonId) ? comparisonNames[game.comparisonId] : null;
+    matchups.set(game.comparisonId, { a: display?.a || armyName(game.comparison.armyA), b: display?.b || armyName(game.comparison.armyB), wins: 0, draws: 0, losses: 0 });
   }
   const count = (state, score, delta) => { state[score === 1 ? 'wins' : score === 0.5 ? 'draws' : 'losses'] += delta; };
   const complete = (game, result) => {

@@ -67,7 +67,13 @@ The [reference guide](docs/official-references.md), [frozen declaration](experim
 
 The [all-reference material fit](experiments/balance/results/reference-material-001.report.md) uses 1,534 complete paired games across all six matchups. Under assumed pawn = 1 / queen = 9, whole-piece estimates are Vanguard **7.85**, Unicorn **5.70**, Cruisader **6.50** and Amazon **12.37**. These are conditional estimates, separate from purchase prices and engine evaluation values.
 
-Future candidates face the frozen references. Planned mixed-army tests will assess combinations and tier relationships; no new campaign is scheduled by these notes. The unfinished NC–Amazon game remains unscored. See [the balance guide](BALANCE.md), [next steps](TODO.md) and [mixed-army plan](docs/mixed-army-balance-plan.md).
+Future candidates face the frozen references. The unfinished NC–Amazon game remains unscored.
+
+## Version 17: three bounded experiments
+
+The [version-17 guide](docs/version17-experiments.md) declares an eight-opening level-3 screen (832 games), the reference 2v2 table (240 games), and pawn/guard bundle comparisons (240 games). Each runs separately through `npm.cmd run balance:v17`; check before starting and review each result before continuing. No scored campaign runs during setup.
+
+Finite reserve bundles now have an explicit balance army format. Outcome reports include them; the existing material estimator remains restricted to board-only experiments. See [the balance guide](BALANCE.md), [next steps](TODO.md) and [mixed-army plan](docs/mixed-army-balance-plan.md).
 
 ## Development
 

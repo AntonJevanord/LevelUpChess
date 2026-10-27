@@ -1,7 +1,7 @@
 # Next balance stage: combinations and lower tiers
 
 Version 16 freezes its four reference designs and adds a playable workshop with
-finite king reserves. This plan schedules no new games. Keep the unfinished Unicorn/Amazon game unscored; the user declined
+finite king reserves. Version 17 declares the [three initial experiments](version17-experiments.md): a level-3 screen, reference 2v2 table and level-1 pawn/guard bundles. Each requires an explicit launch. Keep the unfinished Unicorn/Amazon game unscored; the user declined
 a continuation. The [all-reference material fit](../experiments/balance/results/reference-material-001.report.md)
 uses the surviving complete pairs and preserves previous estimates separately.
 
@@ -33,11 +33,10 @@ Vanguard–Cruisader, Vanguard–Amazon, Unicorn–Cruisader, Unicorn–Amazon, 
 Cruisader–Amazon. These six armies fit ordinary starting slots and cost six
 points. They do not require a second starting queen or new custom positions.
 
-A proposed cap is **480 games**: 15 army matchups × 16 declared opening groups
-× two colors. Freeze the actual positions, member selection, search effort and
-checkpoints before collection. Validate every resulting position;
-vary legal home squares for duplicated ordinary families. No games start from
-this proposal alone.
+The initial cap is **240 games**: 15 army matchups × eight declared opening
+cases × two colors. The first pilot uses fixed ordinary home squares. Validate
+every position and preserve the declaration before collection; broader member
+placement is a later question. The command runs this experiment separately.
 
 Use the existing single-purchase evidence to help distinguish individual effects
 from partner effects. Begin with an additive prediction, then inspect held-out
@@ -114,8 +113,10 @@ one ordinary royal king. They are a laboratory bundle, not three royal kings
 or an automatic legal purchase in the current one-king setup. The
 [reserve prototype](../prototypes/reserve-guards/README.md) preserves the earlier
 rules study. Version 16 now supports playable pockets, legal drops, native engine
-replies, history, saves and PGN. The normal collection/material pipeline still
-needs an explicit reserve protocol and pocket-aware analysis.
+replies, history, saves and PGN. The version-17 runner accepts declared finite
+reserve bundles and preserves their drops through stop/resume and outcome
+reports. Material regression remains restricted to board-only cohorts until a
+pocket-aware method is declared.
 
 Before reserve balance games, declare the tested pocket quantities, drop regions,
 checking restrictions, capture behavior and bundle cost; validate collector logs
@@ -129,12 +130,11 @@ remain supporting analysis. Pawn testing can proceed before this integration.
 1. Close archival analysis and simplify active docs; preserve reproducibility.
 2. Branch version 17 from the tested playable closeout. Retain the version-16
    libraries and immutable definitions while developing mixed-army profiles.
-3. Add shared multi-upgrade army generation, deterministic batch manifests,
-   coverage summaries and a read-only army-rating fitter.
-4. Declare and validate the bounded reference 2v2 pilot; review model support
-   and partner effects before widening the roster.
-5. Playtest level-1 pawns, then declare their fixed-reference bundle tests and
-   tier-2/tier-3 bridges. Keep budgets and interpretation explicit.
+3. Run the 832-game level-3 screen against fixed references and review obvious
+   outliers before scheduling follow-ups.
+4. Run the 240-game reference 2v2 pilot and inspect partner effects.
+5. Run the 240-game level-1 pawn/guard bundles. Human-playtest the designs and
+   assess coverage before declaring tier-2/tier-3 bridges or an army-rating fit.
 6. Add adaptive batch selection only after a fixed schedule works; reserve
    exploratory games and shared reference anchors. Profiles must fit the
    engine's 20 custom-type limit, with at most 16 candidates beside the references.
