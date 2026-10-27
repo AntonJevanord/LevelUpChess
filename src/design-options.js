@@ -3,6 +3,14 @@
 const compiled = require('./playable-profile.json');
 const reference = require('./playable-reference-profile.json');
 const alternatives = require('./playable-alternatives-profile.json');
+const closeoutProfiles = [
+  require('./playable-v16-references-profile.json'),
+  require('./playable-v16-pawns-profile.json'),
+  require('./playable-v16-knights-profile.json'),
+  require('./playable-v16-bishops-profile.json'),
+  require('./playable-v16-rooks-profile.json'),
+  require('./playable-v16-queens-profile.json'),
+];
 const { PLAYABLE_LIBRARIES: libraries } = require('./playable-library');
 const { STANDARD_TYPES } = require('./design-catalog');
 const { pieceInfo } = require('./piece-catalog');
@@ -16,10 +24,10 @@ function freeze(value) {
 }
 
 const PLAYABLE_PROFILE = freeze(compiled);
-const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives]);
+const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles]);
 const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
 const EXPERIMENTAL_VARIANTS = freeze(PLAYABLE_PROFILES.map(profile => profile.variant));
-const PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES[index].variant })));
+const PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES[index].variant, ...(library.generation ? { generation: library.generation } : {}) })));
 function getPlayableProfile(variant = EXPERIMENTAL_VARIANT) { return PLAYABLE_PROFILES.find(profile => profile.variant === variant); }
 function isExperimentalVariant(variant) { return EXPERIMENTAL_VARIANTS.includes(variant); }
 const metadata = {
@@ -64,12 +72,55 @@ const metadata = {
   'bishop.purple@6': ['Long-sideways bishop', 'Normal bishop moves plus horizontal moves and captures of any clear distance. Also jump two files sideways and one rank forward or backward, including captures.'],
   'rook.purple@5': ['Diagonal-blink rook', 'Normal rook moves and captures, plus diagonal captures one or two clear squares away. Without capturing, also jump to any empty square within three squares horizontally and vertically, crossing intervening pieces.'],
   'queen.purple@5': ['Queen and forward companion', 'Keep your ordinary queen and add a capturable companion on your second rank, pushing your own pawn stack forward within your half. The companion moves one square in any direction and captures forward or sideways, including forward diagonals. It cannot capture backward. It is not royal; only the ordinary king must avoid check.'],
+  'rook.purple@10': ['Vanguard', 'Normal rook moves, plus clear diagonal moves and captures forward.'],
+  'bishop.purple@13': ['Cruisader', 'Normal bishop moves, plus clear horizontal moves up to two squares. Also move or capture two files sideways and one rank forward or backward if the first sideways square is empty.'],
+  'pawn.blue@2': ['Bishop pawn', 'Move one square forward, or move or capture one square diagonally forward. A clear initial two-step is available from your home two ranks. Visiting an empty en-passant target diagonally is a quiet move and leaves the bypassed pawn.'],
+  'pawn.orange@3': ['Knight pawn', 'Normal pawn moves and captures, plus forward knight jumps: one or two files sideways and two or one ranks forward, including captures.'],
+  'pawn.purple@11': ['Rook pawn', 'Move any clear distance orthogonally without capturing. Capture one or two clear squares diagonally forward.'],
+  'pawn.blue@3': ['Returning pawn', 'Move one clear square backward, or one or two clear squares forward without capturing. Capture one square diagonally forward.'],
+  'pawn.orange@4': ['King pawn', 'Move one square in any direction, or capture one square diagonally in any direction. A clear initial two-step forward is available. Visiting an empty en-passant target diagonally is a quiet move and leaves the bypassed pawn.'],
+  'pawn.purple@12': ['Queen pawn', 'Move or capture up to two clear squares straight or diagonally forward. Move up to two clear squares straight or diagonally backward without capturing. No sideways moves. Visiting an empty en-passant target is a quiet move and leaves the bypassed pawn.'],
+  'knight.blue@2': ['Positional knight', 'Normal knight jumps, plus any clear horizontal move without capturing.'],
+  'knight.orange@3': ['Dabada knight', 'Normal knight jumps, plus one-square sideways steps and two-square sideways jumps, including captures.'],
+  'knight.purple@4': ['Nightrider', 'Repeat knight jumps in the same direction, stopping at an occupied landing square. Intervening squares between knight landings do not block it.'],
+  'knight.blue@3': ['Climbing knight', 'Normal knight jumps, plus a one-square forward or backward step, including captures.'],
+  'knight.orange@4': ['Long-range knight', 'Normal knight jumps, plus two-square diagonal jumps, including captures.'],
+  'knight.purple@5': ['Princess knight', 'Normal knight jumps, plus one-square steps in any direction, including captures.'],
+  'knight.purple@6': ['Grid knight', 'Normal knight jumps, plus one-square orthogonal steps and three-square orthogonal jumps, including captures.'],
+  'bishop.blue@2': ['Hopping bishop', 'Normal bishop moves. Also hop diagonally over exactly one piece to the empty square immediately beyond it, without capturing.'],
+  'bishop.orange@2': ['Tall-knight bishop', 'Normal bishop moves, plus knight jumps two ranks forward or backward and one file sideways, including captures.'],
+  'bishop.purple@14': ['Mating bishop', 'Normal bishop moves. Also capture with one-square orthogonal steps, knight jumps, two-square orthogonal jumps, or two-square diagonal jumps. These extra moves require a capture.'],
+  'bishop.blue@3': ['Wazzap bishop', 'Normal bishop moves, plus one-square sideways steps, including captures.'],
+  'bishop.orange@3': ['Free Boar bishop', 'Normal bishop moves, plus horizontal rook moves and captures.'],
+  'bishop.purple@15': ['Vertical bishop', 'Normal bishop moves, plus vertical one-square steps, tall knight jumps and tall zebra jumps (three ranks and two files), including captures.'],
+  'bishop.purple@16': ['Archbishop', 'Normal bishop moves and knight jumps, including captures.'],
+  'rook.blue@2': ['Ghost rook', 'Normal rook moves. Also hop along a rank or file over exactly one piece and land on any empty square beyond it before the next blocker, without capturing.'],
+  'rook.orange@2': ['Blink rook', 'Normal rook moves and captures. Also jump to any empty square within three files and three ranks, without capturing.'],
+  'rook.purple@12': ['Ranged rook', 'Normal rook moves and camel jumps (three squares in one direction and one at right angles), including captures.'],
+  'rook.blue@3': ['Pawn rook', 'Normal rook moves, plus one-square forward diagonal captures.'],
+  'rook.orange@3': ['Knight-capture rook', 'Normal rook moves, plus capture-only knight jumps.'],
+  'rook.purple@13': ['Side rook', 'Normal rook moves, plus one-square diagonal steps, wide knight jumps and wide camel jumps, including captures. Wide jumps travel two or three files sideways and one rank forward or backward.'],
+  'queen.blue@2': ['Advancing queen', 'Normal queen moves, plus quiet forward knight jumps.'],
+  'queen.orange@2': ['Box queen', 'Normal queen moves, plus quiet jumps to squares three files or three ranks away within a three-square box.'],
+  'queen.purple@6': ['Sideways queen', 'Normal queen moves, plus wide knight and camel jumps (two or three files sideways and one rank forward or backward), including captures.'],
+  'queen.purple@7': ['X-ray queen', 'Normal queen moves. Also hop diagonally over exactly one piece and land anywhere beyond it before the next blocker, including capturing that next blocker.'],
+  'queen.purple@8': ['Zebra queen', 'Normal queen moves and zebra jumps (three squares in one direction and two at right angles), including captures.'],
+  'king.reserve-pawn@1': ['Pawn grant', 'Add a nonroyal guard that moves or captures one square straight forward.'],
+  'king.reserve-bishop@1': ['Bishop grant', 'Add a nonroyal guard that moves or captures one square diagonally.'],
+  'king.reserve-rook@1': ['Rook grant', 'Add a nonroyal guard that moves or captures one or two clear squares orthogonally.'],
+  'king.reserve-king@1': ['King grant', 'Add a nonroyal guard that moves or captures one square in any direction.'],
+  'king.reserve-knight@1': ['Knight grant', 'Add a nonroyal guard with normal king steps and quiet knight jumps.'],
+  'king.reserve-queen@1': ['Queen grant', 'Add a nonroyal guard that moves or captures up to two clear squares in any queen direction.'],
+  'king.reserve-okapi@1': ['Okapi grant', 'Add a nonroyal guard with knight and zebra jumps, including captures.'],
+  'king.reserve-princess@1': ['Princess grant', 'Add a nonroyal guard with king steps and knight jumps, including captures.'],
+  'king.reserve-true-queen@1': ['True queen grant', 'Add a nonroyal guard with normal queen moves and captures.'],
 };
 
 const definitions = [...new Map(PLAYABLE_PROFILES.flatMap(profile => profile.registry.definitions).map(definition => [definition.id, definition])).values()];
 const DESIGN_OPTIONS = freeze(definitions.map(definition => {
   const [name, movement] = metadata[definition.id];
-  const suffix = definition.family === 'pawn' ? ' Promotes to a standard queen, rook, bishop, or knight.'
+  const suffix = definition.placement === 'reserve' ? ' It starts in reserve; drop it on an empty square in your own four ranks as a turn. Checking drops are forbidden. Your ordinary royal king keeps its normal moves and castling.'
+    : definition.family === 'pawn' ? ' Promotes to a standard queen, rook, bishop, or knight.'
     : definition.family === 'rook' ? ' Can castle under the usual rules.' : '';
   return {
     id: definition.id,
@@ -77,14 +128,20 @@ const DESIGN_OPTIONS = freeze(definitions.map(definition => {
     level: definition.level,
     name,
     description: movement + suffix,
-    status: definition.id === 'rook.purple@1' ? 'retired' : definition.id === 'pawn.purple@2' ? 'parked' : definition.revision > 1 ? 'experimental' : 'reference',
+    status: definition.id === 'rook.purple@1' ? 'retired' : definition.id === 'pawn.purple@2' ? 'parked' : definition.revision > 1 || definition.placement === 'reserve' ? 'experimental' : 'reference',
   };
 }));
 const optionsById = Object.fromEntries(DESIGN_OPTIONS.map(option => [option.id, option]));
+const officialNames = { 'rook.purple@10': 'Vanguard', 'knight.purple@3': 'Unicorn', 'bishop.purple@13': 'Cruisader', 'queen.purple@1': 'Amazon' };
+function optionInProfile(option, profile) {
+  if (!option) return option;
+  const current = closeoutProfiles.some(candidate => candidate.variant === profile.variant);
+  return current && officialNames[option.id] ? { ...option, name: officialNames[option.id], status: 'reference' } : option;
+}
 function getDesignOptions(variant = EXPERIMENTAL_VARIANT) {
   const profile = getPlayableProfile(variant);
   if (!profile) return [];
-  return profile.registry.definitions.map(definition => optionsById[definition.id]).filter(option => option.status !== 'retired');
+  return profile.registry.definitions.map(definition => optionInProfile(optionsById[definition.id], profile)).filter(option => option.status !== 'retired');
 }
 
 /** Resolve glyphs and labels through the actual profile, never legacy letters. */
@@ -94,7 +151,7 @@ function pieceInfoForProfile(profile, type) {
   if (!profile) return pieceInfo(type);
   const definition = profile?.definitionsByLetter?.[type];
   if (!definition) return Object.values(STANDARD_TYPES).includes(type) ? pieceInfo(type) : undefined;
-  const option = optionsById[definition.id];
+  const option = optionInProfile(optionsById[definition.id], profile);
   const standard = pieceInfo(STANDARD_TYPES[definition.family]);
   if (!option || !standard) return undefined;
   return {
@@ -105,7 +162,7 @@ function pieceInfoForProfile(profile, type) {
     family: definition.family,
     level: definition.level,
     cost: definition.level,
-    accent: ['', 'green', 'cyan', 'red'][definition.level],
+    accent: ['', 'green', 'cyan', 'red', 'violet', 'orange', 'pink', 'teal', 'gold', 'silver'][definition.level],
     symbols: standard.symbols,
     description: option.description,
     status: option.status,

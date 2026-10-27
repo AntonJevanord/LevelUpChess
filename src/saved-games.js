@@ -3,7 +3,7 @@ import { VariantGame, CURRENT_VARIANT, PIECE_VARIANT, SUPPORTED_VARIANTS, initVa
 import { ChessClock } from './clock';
 import { UPGRADE_BUDGETS, PIECE_BUDGETS } from './piece-catalog';
 import { isExperimentalVariant, getProfileSnapshot, validateProfileSnapshot } from './design-options';
-import { designSetupFromChoices, loadDesignSetup } from './design-setup';
+import { designSetupFromChoices, loadDesignSetup, designBudgetLimit } from './design-setup';
 
 export const SAVE_KEY = 'levelupchess.saved-game.v1';
 export const MAX_PGN_SIZE = 256 * 1024;
@@ -40,7 +40,7 @@ export function exportPgn(game) {
 export function makeSave(game, settings, clock) {
   const experimental = isExperimentalVariant(game.variant);
   const budget = settings.upgradeBudget ?? 6;
-  if (experimental && !UPGRADE_BUDGETS.includes(budget)) throw new Error('Choose an experimental budget from 1 to 6.');
+  if (experimental && (!Number.isInteger(budget) || budget < 1 || budget > designBudgetLimit(game.profile))) throw new Error(`Choose an experimental budget from 1 to ${designBudgetLimit(game.profile)}.`);
   return {
     version: experimental ? 2 : 1,
     savedAt: new Date().toISOString(),
@@ -56,7 +56,7 @@ function startingDesignSetup(game, budget) {
   let setup;
   try {
     const choices = loadDesignSetup(fen, game.profile);
-    setup = designSetupFromChoices(choices, 6, game.profile);
+    setup = designSetupFromChoices(choices, designBudgetLimit(game.profile), game.profile);
   } catch { return null; }
   // Imported study positions need not describe a standard starting army.
   if (setup.fen !== fen) return null;
@@ -75,11 +75,11 @@ export async function parseSave(text) {
   try {
     const experimental = isExperimentalVariant(game.variant);
     if (experimental !== (data.version === 2)) throw new Error('The saved game rules do not match its format.');
-    const budgets = game.variant === CURRENT_VARIANT ? PIECE_BUDGETS : game.variant === PIECE_VARIANT ? PIECE_BUDGETS.filter(budget => budget <= 39) : UPGRADE_BUDGETS;
+    const budgets = experimental ? Array.from({ length: designBudgetLimit(game.profile) }, (_, index) => index + 1) : game.variant === CURRENT_VARIANT ? PIECE_BUDGETS : game.variant === PIECE_VARIANT ? PIECE_BUDGETS.filter(budget => budget <= 39) : UPGRADE_BUDGETS;
     if (settings.upgradeBudget !== undefined && !budgets.includes(settings.upgradeBudget)) throw new Error('The saved game settings are damaged.');
     if (experimental) {
       validateProfileSnapshot(data.profile, game.variant);
-      if (!UPGRADE_BUDGETS.includes(settings.upgradeBudget)) throw new Error('The saved game budget is damaged.');
+      if (!budgets.includes(settings.upgradeBudget)) throw new Error('The saved game budget is damaged.');
       const expected = startingDesignSetup(game, settings.upgradeBudget);
       if (expected === null) {
         if (data.setup !== null) throw new Error('The saved starting choices do not match the game.');

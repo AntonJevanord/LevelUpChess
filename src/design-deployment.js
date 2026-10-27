@@ -8,7 +8,7 @@ const { pieceMap } = require('./profile-fen');
 const relativeSquare = (square, color) => color === 'w' ? square : square[0] + (9 - Number(square[1]));
 const colored = (type, color) => color === 'w' ? type.toUpperCase() : type;
 const own = (piece, color) => typeof piece === 'string' && piece === colored(piece.toLowerCase(), color);
-const relativeSlots = new Map(PIECE_SLOTS.filter(slot => slot.color === 'w').map(slot => [slot.square, slot]));
+const relativeSlots = new Map([...PIECE_SLOTS.filter(slot => slot.color === 'w'), { square: 'e1', family: 'king' }].map(slot => [slot.square, slot]));
 
 function sourceFor(pieces, square, definition, color) {
   const slot = relativeSlots.get(square);
@@ -40,6 +40,8 @@ function insertPawnStack(pieces, target, letter, color, pawnTypes) {
 function deployDesignArmies(profile, white = {}, black = {}, initialPieces = pieceMap(START_FEN)) {
   if (!(initialPieces instanceof Map)) throw new Error('Deployment needs a starting piece map.');
   const pieces = new Map(initialPieces);
+  if (Object.hasOwn(initialPieces, 'pocket')) pieces.pocket = initialPieces.pocket;
+  else if (profile.roles.reserveTypes) pieces.pocket = '';
   const pawnTypes = new Set(profile.roles.pawnTypes.filter(type => !profile.roles.royalTypes.includes(type)));
   for (const [color, army] of [['w', white], ['b', black]]) {
     const choices = army.choices || [];
@@ -56,6 +58,11 @@ function deployDesignArmies(profile, white = {}, black = {}, initialPieces = pie
     const extras = [];
     for (const { square, definition, letter } of ordered) {
       sourceFor(pieces, square, definition, color);
+      if (definition.placement === 'reserve') {
+        if (definition.family !== 'king' || square !== 'e1' || !profile.roles.reserveTypes?.includes(letter)) throw new Error('A reserve grant must be selected on its own royal king.');
+        pieces.pocket = (pieces.pocket || '') + colored(letter, color);
+        continue;
+      }
       if (['extra', 'insert', 'split'].includes(definition.placement)) {
         extras.push({ square, definition, letter });
         continue;
@@ -90,6 +97,13 @@ function deployDesignArmies(profile, white = {}, black = {}, initialPieces = pie
 function recoverDesignChoices(initialPieces, profile) {
   const pieces = new Map(initialPieces);
   const result = Object.fromEntries(PIECE_SLOTS.map(slot => [slot.square, '']));
+  if (profile.roles.reserveTypes) {
+    for (const [color, square] of [['w', 'e1'], ['b', 'e8']]) {
+      const pocket = [...(initialPieces.pocket || '')].filter(type => own(type, color));
+      const definition = pocket.length === 1 ? profile.definitionsByLetter[pocket[0].toLowerCase()] : undefined;
+      result[square] = definition?.family === 'king' && definition.placement === 'reserve' && pieces.get(square) === colored('k', color) ? definition.id : '';
+    }
+  }
   const definitions = profile.registry.allocations.map(allocation => ({ ...allocation, definition: profile.definitionsByLetter[allocation.letter] }));
   const pawnTypes = new Set(profile.roles.pawnTypes.filter(type => !profile.roles.royalTypes.includes(type)));
   // Undo insertion before inspecting the pawns' canonical second rank. A split

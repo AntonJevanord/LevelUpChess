@@ -203,7 +203,7 @@ function definitionProbes(definition, letter) {
   // These new allocation hints have no historical movement identity. In
   // particular, l used to denote a rook; its castling fixtures do not apply
   // to a bishop that now borrows that free letter.
-  const inheritedProbes = ['bishop.purple@11', 'bishop.purple@12', 'bishop.purple@13'].includes(definition.id)
+  const inheritedProbes = definition.inheritLegacyProbes === false || definition.family === 'king' || ['bishop.purple@11', 'bishop.purple@12', 'bishop.purple@13'].includes(definition.id)
     ? [] : legacyCapabilityProbes(definition.legacyType, 'levelup-v5');
   for (const legacy of inheritedProbes) {
     // Repeatable Twin jumps do not create initial-double en passant rights.
@@ -232,6 +232,8 @@ function compileDesignProfile(input, evaluation) {
     initialPawnLeaps: { p: 2 },
     initialLandingLeaps: {},
   };
+  const reserveTypes = registry.allocations.filter(({ id }) => byId[id].placement === 'reserve').map(({ letter }) => letter).sort();
+  if (reserveTypes.length) roles.reserveTypes = reserveTypes;
   for (const { id, letter } of registry.allocations) {
     const definition = byId[id];
     if (definition.roles.pawn) {
@@ -253,10 +255,23 @@ function compileDesignProfile(input, evaluation) {
     `pawnTypes = ${roles.pawnTypes.join('')}`,
     `enPassantTypes = ${roles.enPassantTypes.join('')}`,
     'promotionPieceTypes = nbrq',
+    ...(reserveTypes.length ? [
+      '# Finite nonroyal king grants: deployment spends a turn; captures disappear.',
+      'twoBoards = false',
+      'pieceDrops = true',
+      'capturesToHand = false',
+      'mustDrop = false',
+      'dropChecks = false',
+      'dropRegionWhite = *1 *2 *3 *4',
+      'dropRegionBlack = *5 *6 *7 *8',
+    ] : []),
     `startFen = ${START_FEN}`,
     '',
   ].join('\n');
   const probes = registry.allocations.flatMap(({ id, letter }) => definitionProbes(byId[id], letter));
+  if (reserveTypes.length) for (const letter of reserveTypes) {
+    for (const [turn, type] of [['w', letter.toUpperCase()], ['b', letter]]) probes.push({ name: `${byId[registry.allocations.find(a => a.letter === letter).id].id}: finite ${turn} reserve deployment`, fen: `7k/8/8/8/8/8/8/K7[${type}] ${turn} - - 0 1` });
+  }
   for (const turn of ['w', 'b']) probes.push({ name: `ordinary ${turn === 'w' ? 'White' : 'Black'} king castling`, fen: `r3k2r/8/8/8/8/8/8/R3K2R ${turn} KQkq - 0 1` });
   const capabilityProbes = [...new Map(probes.map(probe => [probe.fen, probe])).values()];
   return freeze({

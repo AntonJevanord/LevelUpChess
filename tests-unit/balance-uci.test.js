@@ -131,6 +131,31 @@ test('perft waits for both readyok and the asynchronous move list', async t => {
   assert.equal(fake.commands.at(-1), 'isready');
 });
 
+test('finite reserve UCI drops survive search history, principal variations and perft parsing', async t => {
+  const fake = fakeEngine(t, {
+    move: 'A@e4',
+    onCommand(command, { emit }) {
+      if (command === 'go perft 1') {
+        emit(['A@e4: 1', 'a2a3: 1', 'A@e4: 1', 'Nodes searched: 2']);
+        return false;
+      }
+      if (command.startsWith('go nodes ')) {
+        emit(['info depth 1 score cp 1 nodes 5 pv A@e4 e7e5', 'bestmove A@e4']);
+        return false;
+      }
+    },
+  });
+  const engine = client();
+  t.after(() => engine.close());
+  await engine.start();
+  assert.deepEqual(await engine.perft({ fen: FEN }), ['A@e4', 'a2a3']);
+  const reply = await engine.search({ fen: FEN, moves: ['A@d4', 'e7e5'], nodes: 16 });
+  assert.equal(reply.move, 'A@e4');
+  assert.deepEqual(reply.info.pv, ['A@e4', 'e7e5']);
+  assert.ok(fake.commands.includes(`position fen ${FEN} moves A@d4 e7e5`));
+  await assert.rejects(engine.search({ fen: FEN, moves: ['A@e9'], nodes: 16 }), /Invalid move history/);
+});
+
 test('Elo uses the advertised bounds and enables strength limiting', async t => {
   const fake = fakeEngine(t);
   const engine = client({ options: { elo: 1800 } });

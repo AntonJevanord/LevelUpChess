@@ -63,7 +63,7 @@ async function experimentalCapabilityProbes(fen, variant = playableProfile.varia
       return profile.capabilityProbes.filter(probe => ids.some(id => probe.name.startsWith(`${id}:`)) || probe.name.startsWith('ordinary ')).map(probe => {
         const board = new VariantGame(probe.fen, profile.variant);
         try {
-          return { ...probe, required: board.moves({ verbose: true }).map(move => move.from + move.to + (move.promotion || '')).sort(), forbidden: [], exact: true };
+          return { ...probe, required: board.moves({ verbose: true }).map(move => move.uci || move.from + move.to + (move.promotion || '')).sort(), forbidden: [], exact: true };
         } finally { board.dispose(); }
       });
     })();
@@ -178,7 +178,7 @@ async function engineRequest(input = {}) {
         if (phase === 'variant-options' && line.startsWith('option name UCI_Variant ') && line.split(' var ').slice(1).includes(variant)) advertisedVariant = true;
         if (phase === 'ready' && line.startsWith(`info string variant ${variant} `)) selectedVariant = true;
         if (phase === 'probe') {
-          const move = line.match(/^([a-h][1-8][a-h][1-8][a-z]*):\s+1$/);
+          const move = line.match(/^([a-h][1-8][a-h][1-8][a-z]*|[A-Za-z]@[a-h][1-8]):\s+1$/);
           if (move) probeMoves.add(move[1]);
           if (/^Nodes searched:\s*\d+$/.test(line)) { probeDone = true; completeProbe(); continue; }
         }
@@ -202,9 +202,10 @@ async function engineRequest(input = {}) {
           completeProbe();
         } else if (line.startsWith('bestmove ') && phase === 'search') {
           const move = line.split(/\s+/)[1];
-          if (!/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(move || '')) { finish(new Error('Engine returned no playable move.')); continue; }
+          const drop = /^[A-Za-z]@[a-h][1-8]$/.test(move || '');
+          if (!drop && !/^[a-h][1-8][a-h][1-8][qrbn]?$/.test(move || '')) { finish(new Error('Engine returned no playable move.')); continue; }
           try {
-            if (!position.move({ from: move.slice(0, 2), to: move.slice(2, 4), promotion: move[4] })) throw new Error();
+            if (!position.move(drop ? { drop: move[0].toLowerCase(), to: move.slice(2) } : { from: move.slice(0, 2), to: move.slice(2, 4), promotion: move[4] })) throw new Error();
             finish(null, { name, move });
           } catch { finish(new Error('Engine returned an illegal move.')); }
         }

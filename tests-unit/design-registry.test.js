@@ -111,7 +111,8 @@ test('a curated 20-design library fits while the complete catalog exceeds letter
   for (const id of ['pawn.purple@7', 'pawn.purple@8', 'pawn.purple@9', 'pawn.purple@5', 'pawn.orange@2', 'knight.purple@2', 'bishop.purple@3', 'bishop.purple@4', 'rook.purple@4', 'queen.purple@4']) assert.ok(PLAYABLE_DESIGN_IDS.includes(id));
   for (const id of ['rook.purple@1', 'queen.purple@2', 'pawn.purple@1', 'pawn.purple@3', 'pawn.purple@4']) assert.ok(!PLAYABLE_DESIGN_IDS.includes(id));
   for (const library of PLAYABLE_LIBRARIES) {
-    assert.equal(allocateDesigns(library.designIds).length, 20);
+    assert.equal(allocateDesigns(library.designIds).length, library.designIds.length);
+    assert.ok(library.designIds.length <= 20);
     assert.deepEqual(restoreDesignRegistry(clone(registry(library.designIds))), registry(library.designIds));
   }
   const capacityError = new RegExp(`need ${designIds.length} custom letters; only 20 are available`);

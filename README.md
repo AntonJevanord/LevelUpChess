@@ -1,6 +1,6 @@
 # LevelUp Chess
 
-Chess with upgradeable pieces. Build an army within a shared budget, then play locally or against Fairy Stockfish. Levels 1, 2 and 3 cost that many upgrade points.
+Chess with upgradeable pieces. Build an army within a shared budget, then play locally or against Fairy Stockfish. Purchase costs equal the displayed levels; they are not material values.
 
 ## Play locally
 
@@ -8,9 +8,11 @@ Download `index.html` and open it in Chrome, Edge or Firefox. It contains the bo
 
 Select a piece and a highlighted destination. Arrow keys move focus; Enter or Space selects. The board supports legal moves, checkmate, castling, en passant, promotion, history, undo and board flip.
 
-Under **Rules**, choose **Experiments · Design alternatives**, select designs, then press **New game**. Each side has a 1–6 point budget. **Clear White**, **Clear Black** and **Clear both** reset draft armies. Library changes preserve the current game until **New game**.
+Under **Rules**, choose **Version 16 · References** or a family workshop. Click a starting piece to choose its upgrade beside the board, then press **Start game**. **Edit armies** reopens setup; **Return to game** keeps the current game. Changes apply only when starting a game. **Clear White**, **Clear Black** and **Clear both** reset draft armies.
 
-Experimental libraries include pawn, knight, bishop, rook and queen alternatives. Levels use green/cyan/red accents and separate White/Black piece colors. See [exact movement and deployment rules](variants/README.md); historical libraries retain their earlier definitions.
+The new libraries allow a 1–9 point budget per side. Each includes the four frozen references and nine king grants; family workshops add pawn, knight, bishop, rook or queen candidates. This keeps each library within the engine's 20-custom-piece limit. Historical libraries retain their previous rules and 1–6 point budgets. See the [version-16 playtest roster](docs/playtest-roster-v16.md) and [historical rules](variants/README.md).
+
+Select the king during setup to buy one nonroyal reserve guard. Starting the game keeps the ordinary royal king and places the guard in reserve. Click a reserve piece, then a highlighted empty square in your own half. A drop spends a turn and cannot give check; captured pieces disappear rather than refill reserves. All ordinary king safety and castling rules still apply.
 
 ## Play Fairy Stockfish
 
@@ -48,9 +50,11 @@ Choose untimed or a clock preset before **New game**. **Start clock** begins tim
 
 Browser saves belong to the current browser and site address. Use PGN when moving between direct-file and server play. New releases may require fresh saves. Checkmate, stalemate, repetition and the fifty-move rule end games automatically; experimental low-material limits are documented in the [rules guide](variants/README.md).
 
-## Version 16: frozen references
+## Version 16: frozen references and playtest roster
 
-Version 16 is complete. These are the official three-point replacement upgrades:
+The playable closeout is tagged `v0.16.3`. Mixed-army experiments belong to version 17.
+
+These are the official three-point replacement upgrades, available in every new playtest library:
 
 | Reference | Family | Movement |
 | --- | --- | --- |
@@ -59,7 +63,7 @@ Version 16 is complete. These are the official three-point replacement upgrades:
 | Cruisader | Bishop | `BsR2nsN` |
 | Amazon | Queen | `QN` |
 
-The [reference guide](docs/official-references.md), [frozen declaration](experiments/designs/official-references-v16.json) and [standalone INI](experiments/designs/official-references-v16.ini) preserve their exact identities. Integrating this roster into a new playable library is next-version work.
+The [reference guide](docs/official-references.md), [frozen declaration](experiments/designs/official-references-v16.json) and [standalone INI](experiments/designs/official-references-v16.ini) preserve their exact identities. New workshop candidates and reserve prices are provisional; adding them does not change the frozen references or historical evidence.
 
 The [all-reference material fit](experiments/balance/results/reference-material-001.report.md) uses 1,534 complete paired games across all six matchups. Under assumed pawn = 1 / queen = 9, whole-piece estimates are Vanguard **7.85**, Unicorn **5.70**, Cruisader **6.50** and Amazon **12.37**. These are conditional estimates, separate from purchase prices and engine evaluation values.
 

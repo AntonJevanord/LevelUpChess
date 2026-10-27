@@ -11,7 +11,7 @@ import designOptions from './design-options.js';
 import profileFen from './profile-fen.js';
 
 const { PLAYABLE_PROFILE, PLAYABLE_PROFILES, EXPERIMENTAL_VARIANTS, getPlayableProfile, isExperimentalVariant, getProfileSnapshot, pieceInfoForProfile, encodeProfileSnapshot, decodeProfileSnapshot } = designOptions;
-const { checkedBoard } = profileFen;
+const { checkedBoard, pocketLetters } = profileFen;
 
 export const VARIANT = 'levelup-knight';
 export const PIECE_VARIANT = 'levelup';
@@ -60,7 +60,7 @@ export function initVariantRules(variant) {
 }
 
 function boardPieces(fen) {
-  return fen.split(' ')[0].split('/').map((rank, row) => {
+  return fen.split(' ')[0].replace(/\[[A-Za-z]*\]$/, '').split('/').map((rank, row) => {
     const pieces = [];
     for (const character of rank) {
       if (/^[1-8]$/.test(character)) {
@@ -245,22 +245,39 @@ export class VariantGame {
   fen() { return this._board.fen(); }
   turn() { return this._board.turn() ? 'w' : 'b'; }
   board() { return boardPieces(this.fen()); }
+  pockets() {
+    const result = { w: [], b: [] };
+    for (const character of pocketLetters(this.fen())) {
+      const color = character === character.toUpperCase() ? 'w' : 'b';
+      const type = character.toLowerCase();
+      const existing = result[color].find(piece => piece.type === type);
+      if (existing) existing.count++;
+      else result[color].push({ type, color, count: 1 });
+    }
+    return result;
+  }
 
   get(square) {
     if (!SQUARE.test(square)) return undefined;
     return this.board()[8 - Number(square[1])][square.charCodeAt(0) - 97] || undefined;
   }
 
-  moves({ square, verbose = false } = {}) {
+  moves({ square, drop, verbose = false } = {}) {
     if (square !== undefined && !SQUARE.test(square)) return [];
+    if (drop !== undefined && !/^[a-z]$/i.test(drop)) return [];
     const before = this.fen();
     const pieces = boardPieces(before);
     const at = location => pieces[8 - Number(location[1])][location.charCodeAt(0) - 97];
     return this._board.legalMoves().split(' ').filter(Boolean)
       .filter(uci => square === undefined || uci.slice(0, 2) === square)
+      .filter(uci => drop === undefined || uci[1] === '@' && uci[0].toLowerCase() === drop.toLowerCase())
       .map(uci => {
         const san = this._board.sanMove(uci);
         if (!verbose) return san;
+        if (uci[1] === '@') {
+          const type = uci[0].toLowerCase();
+          return { color: this.turn(), piece: type, from: type + '@', to: uci.slice(2, 4), drop: type, uci, san, before, flags: 'd' };
+        }
         const from = uci.slice(0, 2);
         const to = uci.slice(2, 4);
         const piece = at(from);
@@ -274,7 +291,7 @@ export class VariantGame {
         else if (piece.type === 'p' && Math.abs(Number(from[1]) - Number(to[1])) === 2) flags = 'b';
         if (promotion) flags = flags.replace('n', '') + 'p';
         return {
-          color: piece.color, piece: piece.type, from, to, san, before, flags,
+          color: piece.color, piece: piece.type, from, to, uci, san, before, flags,
           ...(promotion ? { promotion } : {}),
           ...(captured ? { captured: captured.type } : {}),
         };
@@ -284,10 +301,10 @@ export class VariantGame {
   move(request) {
     const legal = this.moves({ verbose: true });
     const move = typeof request === 'string'
-      ? legal.find(candidate => candidate.san === canonicalSan(request))
-      : legal.find(candidate => candidate.from === request?.from && candidate.to === request?.to && candidate.promotion === request?.promotion);
+      ? legal.find(candidate => candidate.san === canonicalSan(request) || candidate.uci === request)
+      : legal.find(candidate => (request?.drop ? candidate.drop === request.drop.toLowerCase() : candidate.from === request?.from) && candidate.to === request?.to && candidate.promotion === request?.promotion);
     if (!move) throw new Error('That move is not legal in this position.');
-    const uci = move.from + move.to + (move.promotion || '');
+    const uci = move.uci;
     if (!this._board.push(uci)) throw new Error('The upgrade rules rejected that move.');
     const recorded = { ...move, after: this.fen() };
     this._records.push(recorded);
@@ -320,7 +337,7 @@ export class VariantGame {
   isInsufficientMaterial() {
     // The experiment profile deliberately keeps uncommon minor-piece endings
     // playable: ordinary material heuristics can miss new mating attacks.
-    if (this.profile) return !this.isCheckmate() && this.board().flat().filter(Boolean).length === 2;
+    if (this.profile) return !this.isCheckmate() && this.board().flat().filter(Boolean).length === 2 && !pocketLetters(this.fen());
     if (this._board.isInsufficientMaterial()) return true;
     // Fairy Stockfish conservatively treats custom pieces as mating material.
     // E attacks exactly like N, and H like B: their extra steps cannot capture.

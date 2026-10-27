@@ -68,11 +68,12 @@ test('experimental capability selection follows active immutable IDs and require
   assert.ok(pairProbes.some(probe => probe.name.startsWith('knight.purple@2:')));
   assert.ok(pairProbes.every(probe => /^(pawn\.orange@2:|knight\.purple@2:|ordinary )/.test(probe.name)));
   for (const other of profiles.filter(value => value.variant !== profile.variant)) {
-    const otherFen = `7k/8/8/5n2/3${letter('rook.purple@2', other)}4/8/8/7K w - - 0 1`;
+    const sharedRook = other.registry.definitions.find(definition => definition.family === 'rook' && definition.placement !== 'reserve');
+    const otherFen = `8/7k/8/5n2/3${letter(sharedRook.id, other)}4/8/8/7K w - - 0 1`;
     const otherProbes = await experimentalCapabilityProbes(otherFen, other.variant);
     assert.notEqual(otherProbes, probes, 'each library owns its cached expected moves');
     assert.equal(await experimentalCapabilityProbes(otherFen, other.variant), otherProbes);
-    assert.ok(otherProbes.every(probe => probe.name.startsWith('rook.purple@2:') || probe.name.startsWith('ordinary ')));
+    assert.ok(otherProbes.every(probe => probe.name.startsWith(`${sharedRook.id}:`) || probe.name.startsWith('ordinary ')));
     const changed = profile.registry.allocations.find(allocation =>
       other.registry.allocations.some(item => item.letter === allocation.letter && item.id !== allocation.id));
     assert.ok(changed, 'each library deliberately reuses a letter for a different design');
@@ -145,16 +146,20 @@ test('the native engine can reply legally in every library, including alternativ
     'knight.purple@3', 'bishop.purple@3', 'bishop.purple@4', 'rook.purple@4', 'queen.purple@4']
     .map(id => `7k/8/8/8/8/4${letter(id)}3/8/7K w - - 0 1`);
   const positions = [rookFen, ...pieces, pairedArmyFen()].map(fen => ({ fen, profile }));
-  for (const other of profiles.filter(value => value.variant !== profile.variant)) {
+  for (const other of profiles.slice(1, 3)) {
     const activeIds = other === profiles[1] ? ['pawn.purple@6']
       : ['pawn.purple@10', 'bishop.purple@5', 'bishop.purple@6', 'rook.purple@5', 'queen.purple@5'];
     for (const id of activeIds) positions.push({ profile: other, fen: `7k/8/8/8/8/4${letter(id, other)}3/8/7K w - - 0 1` });
+  }
+  for (const other of profiles.slice(3)) {
+    const guard = other.registry.definitions.find(definition => definition.placement === 'reserve');
+    positions.push({ profile: other, fen: `7k/8/8/8/8/8/8/K7[${letter(guard.id, other)}] w - - 0 1` });
   }
   for (const { fen, profile: value } of positions) {
     const metadata = identityFor(value);
     const board = await createPosition(fen, value.variant, metadata);
     try {
-      const legal = board.moves({ verbose: true }).map(move => move.from + move.to + (move.promotion || ''));
+      const legal = board.moves({ verbose: true }).map(move => move.uci || move.from + move.to + (move.promotion || ''));
       const result = await engineRequest({ ...metadata, fen, difficulty: 'easy' });
       assert.ok(legal.includes(result.move), result.move);
     } finally { board.dispose(); }

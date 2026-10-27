@@ -12,7 +12,7 @@ let compiled;
 /** Each curated library fits the picker; games never reassign its types. */
 function getPlayableProfiles() {
   if (!compiled) {
-    const squareFor = { pawn: 'd2', knight: 'b1', bishop: 'c1', rook: 'a1', queen: 'd1' };
+    const squareFor = { pawn: 'd2', knight: 'b1', bishop: 'c1', rook: 'a1', queen: 'd1', king: 'e1' };
     compiled = Object.freeze(PLAYABLE_LIBRARIES.map(library => {
       const comparisons = library.designIds.map(id => {
         const design = getDesign(id);

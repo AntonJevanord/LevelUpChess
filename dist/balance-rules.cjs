@@ -257,8 +257,18 @@ var require_profile_fen = __commonJS({
   "src/profile-fen.js"(exports2, module2) {
     "use strict";
     var ROYALS2 = ["v", "w", "x", "y"];
+    function pocketLetters2(fen) {
+      const placement = typeof fen === "string" ? fen.trim().split(/\s+/)[0] : "";
+      const match = placement.match(/\[([A-Za-z]*)\]$/);
+      if (placement.includes("[") || placement.includes("]")) {
+        if (!match || placement.slice(0, match.index).includes("[") || placement.slice(0, match.index).includes("]")) throw new Error("Invalid reserve pocket.");
+      }
+      return match?.[1] || "";
+    }
     function pieceMap2(fen) {
-      const placement = fen.split(" ")[0].split("/");
+      if (typeof fen !== "string") throw new Error("Invalid balance starting FEN.");
+      const pocket = pocketLetters2(fen);
+      const placement = fen.split(" ")[0].replace(/\[[A-Za-z]*\]$/, "").split("/");
       if (placement.length !== 8) throw new Error("Invalid balance starting FEN.");
       const pieces = /* @__PURE__ */ new Map();
       placement.forEach((row, index) => {
@@ -272,6 +282,7 @@ var require_profile_fen = __commonJS({
         }
         if (file !== 8) throw new Error("Invalid balance starting FEN.");
       });
+      if (fen.split(" ")[0].includes("[")) pieces.pocket = pocket;
       return pieces;
     }
     function placementFromMap2(pieces) {
@@ -288,7 +299,7 @@ var require_profile_fen = __commonJS({
           result += piece;
         }
         return result + (empty || "");
-      }).join("/");
+      }).join("/") + (Object.hasOwn(pieces, "pocket") ? `[${pieces.pocket}]` : "");
     }
     function validEp(fen, pieces, roles) {
       const fields = fen.split(" ");
@@ -340,6 +351,9 @@ var require_profile_fen = __commonJS({
       const fields = fen.split(" ");
       if (fields.length !== 6 || !["w", "b"].includes(fields[1]) || !/^\d+$/.test(fields[4]) || !/^[1-9]\d*$/.test(fields[5])) throw new Error("Invalid balance starting FEN.");
       const pieces = pieceMap2(fen);
+      const pocket = pocketLetters2(fen);
+      if (fields[0].includes("[") && !roles?.reserveTypes) throw new Error("This profile does not support reserve pockets.");
+      if ([...pocket].some((type) => !roles?.reserveTypes?.includes(type.toLowerCase()))) throw new Error("The pocket contains an unsupported reserve piece.");
       const royals = [...pieces.values()].filter((piece) => roles ? roles.royalTypes.includes(piece.toLowerCase()) : /[kvwxy]/i.test(piece));
       const symmetric = whiteKing === blackKing;
       if (royals.length !== 2 || !royals.includes(symmetric ? "K" : ROYALS2[whiteKing].toUpperCase()) || !royals.includes(symmetric ? "k" : ROYALS2[blackKing])) throw new Error("A balance position must contain exactly one selected royal king per side.");
@@ -356,7 +370,7 @@ var require_profile_fen = __commonJS({
       }
       return new module3.Board(variant, fen);
     }
-    module2.exports = { ROYALS: ROYALS2, pieceMap: pieceMap2, placementFromMap: placementFromMap2, checkedBoard: checkedBoard2 };
+    module2.exports = { ROYALS: ROYALS2, pieceMap: pieceMap2, placementFromMap: placementFromMap2, pocketLetters: pocketLetters2, checkedBoard: checkedBoard2 };
   }
 });
 
@@ -387,6 +401,9 @@ var require_design_catalog = __commonJS({
         ...placement === "insert" ? { extraSquare: { b1: "b2", g1: "g2" } } : {},
         ...extraSquare ? { extraSquare } : {}
       });
+    }
+    function rosterDefinition(...args) {
+      return freeze({ ...definition(...args), inheritLegacyProbes: false });
     }
     var definitions = [
       definition("knight", "blue", 1, "NmW", "e", 1),
@@ -451,10 +468,56 @@ var require_design_catalog = __commonJS({
       // Quiet horizontal hurdle hops; both are separate immutable test candidates.
       definition("bishop", "purple", 3, "BsRgmsR", "z", 20, 11),
       definition("bishop", "purple", 3, "BsRgmsR0", "l", 21, 12),
-      definition("bishop", "purple", 3, "BsR2nsN", "m", 22, 13)
+      definition("bishop", "purple", 3, "BsR2nsN", "m", 22, 13),
+      // Version-16 playable roster. Previous experiments retain their exact IDs,
+      // prices, rules and placements; these are unbalanced playtest candidates.
+      rosterDefinition("pawn", "blue", 1, "fmWfeFifmnD", "a", 1, 2),
+      rosterDefinition("pawn", "orange", 2, "fmWfceFifmnDfhN", "c", 2, 3),
+      rosterDefinition("pawn", "purple", 3, "fceF2mR", "d", 3, 11),
+      rosterDefinition("pawn", "blue", 1, "bmWfmW2fceF", "e", 4, 3),
+      rosterDefinition("pawn", "orange", 2, "mWeFifmnD", "f", 5, 4),
+      rosterDefinition("pawn", "purple", 3, "feQ2bmQ2", "g", 6, 12),
+      rosterDefinition("knight", "blue", 1, "NsmR", "a", 1, 2),
+      rosterDefinition("knight", "orange", 2, "NsWsD", "c", 2, 3),
+      rosterDefinition("knight", "purple", 3, "N0", "d", 3, 4),
+      rosterDefinition("knight", "blue", 1, "NvW", "e", 4, 3),
+      rosterDefinition("knight", "orange", 2, "NA", "f", 5, 4),
+      rosterDefinition("knight", "purple", 3, "NK", "g", 6, 5),
+      rosterDefinition("knight", "purple", 3, "NWH", "l", 10, 6),
+      rosterDefinition("bishop", "blue", 1, "BgmB", "a", 1, 2),
+      rosterDefinition("bishop", "orange", 2, "BvN", "c", 2, 2),
+      rosterDefinition("bishop", "purple", 3, "BcWcNcDcA", "d", 3, 14),
+      rosterDefinition("bishop", "blue", 1, "BsW", "e", 4, 3),
+      rosterDefinition("bishop", "orange", 2, "BsR", "f", 5, 3),
+      rosterDefinition("bishop", "purple", 3, "BvWvNvZ", "g", 6, 15),
+      rosterDefinition("bishop", "purple", 3, "BN", "l", 10, 16),
+      rosterDefinition("rook", "blue", 1, "RgmR0", "a", 1, 2),
+      rosterDefinition("rook", "orange", 2, "RmFmDmAmHmGmNmCmZ", "c", 2, 2),
+      rosterDefinition("rook", "purple", 3, "RC", "d", 3, 12),
+      rosterDefinition("rook", "blue", 1, "RceF", "e", 4, 3),
+      rosterDefinition("rook", "orange", 2, "RcN", "f", 5, 3),
+      rosterDefinition("rook", "purple", 3, "RFsNsC", "g", 6, 13),
+      rosterDefinition("queen", "blue", 1, "QmfhN", "e", 4, 2),
+      rosterDefinition("queen", "orange", 2, "QmHmCmZmG", "f", 5, 2),
+      rosterDefinition("queen", "purple", 3, "QsNsC", "d", 3, 6),
+      rosterDefinition("queen", "purple", 3, "QgB0", "g", 6, 7),
+      rosterDefinition("queen", "purple", 3, "QZ", "l", 10, 8),
+      // A king purchase grants one nonroyal reserve piece. The ordinary royal
+      // king stays on e1/e8, including its normal safety and castling rules.
+      ...[
+        ["pawn", "fW"],
+        ["bishop", "F"],
+        ["rook", "W2"],
+        ["king", "K"],
+        ["knight", "KmN"],
+        ["queen", "K2"],
+        ["okapi", "NZ"],
+        ["princess", "KN"],
+        ["true-queen", "Q"]
+      ].map(([name, movement], index) => rosterDefinition("king", `reserve-${name}`, index + 1, movement, "acdefghij"[index], index + 1, 1, "reserve"))
     ];
     var DESIGNS = Object.freeze(Object.fromEntries(definitions.map((design) => [design.id, design])));
-    var LEGACY_DESIGN_IDS = Object.freeze(Object.fromEntries(definitions.filter((design) => design.revision === 1).map((design) => [design.legacyType, design.id])));
+    var LEGACY_DESIGN_IDS = Object.freeze(Object.fromEntries(definitions.filter((design) => design.revision === 1 && design.family !== "king").map((design) => [design.legacyType, design.id])));
     function getDesign(id) {
       return typeof id === "string" && Object.hasOwn(DESIGNS, id) ? DESIGNS[id] : void 0;
     }
@@ -473,7 +536,7 @@ var require_design_deployment = __commonJS({
     var relativeSquare = (square, color) => color === "w" ? square : square[0] + (9 - Number(square[1]));
     var colored = (type, color) => color === "w" ? type.toUpperCase() : type;
     var own = (piece, color) => typeof piece === "string" && piece === colored(piece.toLowerCase(), color);
-    var relativeSlots = new Map(PIECE_SLOTS2.filter((slot) => slot.color === "w").map((slot) => [slot.square, slot]));
+    var relativeSlots = new Map([...PIECE_SLOTS2.filter((slot) => slot.color === "w"), { square: "e1", family: "king" }].map((slot) => [slot.square, slot]));
     function sourceFor(pieces, square, definition, color) {
       const slot = relativeSlots.get(square);
       if (!slot || slot.family !== definition.family || pieces.get(relativeSquare(square, color)) !== colored(STANDARD_TYPES[definition.family], color)) {
@@ -500,6 +563,8 @@ var require_design_deployment = __commonJS({
     function deployDesignArmies2(profile, white = {}, black = {}, initialPieces = pieceMap2(START_FEN)) {
       if (!(initialPieces instanceof Map)) throw new Error("Deployment needs a starting piece map.");
       const pieces = new Map(initialPieces);
+      if (Object.hasOwn(initialPieces, "pocket")) pieces.pocket = initialPieces.pocket;
+      else if (profile.roles.reserveTypes) pieces.pocket = "";
       const pawnTypes = new Set(profile.roles.pawnTypes.filter((type) => !profile.roles.royalTypes.includes(type)));
       for (const [color, army] of [["w", white], ["b", black]]) {
         const choices = army.choices || [];
@@ -515,6 +580,11 @@ var require_design_deployment = __commonJS({
         const extras = [];
         for (const { square, definition, letter } of ordered) {
           sourceFor(pieces, square, definition, color);
+          if (definition.placement === "reserve") {
+            if (definition.family !== "king" || square !== "e1" || !profile.roles.reserveTypes?.includes(letter)) throw new Error("A reserve grant must be selected on its own royal king.");
+            pieces.pocket = (pieces.pocket || "") + colored(letter, color);
+            continue;
+          }
           if (["extra", "insert", "split"].includes(definition.placement)) {
             extras.push({ square, definition, letter });
             continue;
@@ -545,6 +615,13 @@ var require_design_deployment = __commonJS({
     function recoverDesignChoices(initialPieces, profile) {
       const pieces = new Map(initialPieces);
       const result = Object.fromEntries(PIECE_SLOTS2.map((slot) => [slot.square, ""]));
+      if (profile.roles.reserveTypes) {
+        for (const [color, square] of [["w", "e1"], ["b", "e8"]]) {
+          const pocket = [...initialPieces.pocket || ""].filter((type) => own(type, color));
+          const definition = pocket.length === 1 ? profile.definitionsByLetter[pocket[0].toLowerCase()] : void 0;
+          result[square] = definition?.family === "king" && definition.placement === "reserve" && pieces.get(square) === colored("k", color) ? definition.id : "";
+        }
+      }
       const definitions = profile.registry.allocations.map((allocation) => ({ ...allocation, definition: profile.definitionsByLetter[allocation.letter] }));
       const pawnTypes = new Set(profile.roles.pawnTypes.filter((type) => !profile.roles.royalTypes.includes(type)));
       for (const slot of PIECE_SLOTS2.filter((slot2) => slot2.family !== "pawn")) {
@@ -5205,7 +5282,7 @@ var import_design_deployment = __toESM(require_design_deployment());
 var { pieceSetupFromLevels } = import_piece_setup.default;
 var { PIECE_SLOTS } = import_piece_catalog.default;
 var ARMY_SQUARES = /* @__PURE__ */ new Set([...PIECE_SLOTS.filter((slot) => slot.color === "w").map((slot) => slot.square), "e1"]);
-var { ROYALS, pieceMap, placementFromMap, checkedBoard } = import_profile_fen.default;
+var { ROYALS, pieceMap, placementFromMap, pocketLetters, checkedBoard } = import_profile_fen.default;
 var { deployDesignArmies } = import_design_deployment.default;
 var ROYAL_MOVES = ["K", "KcsD", "KcD", "KcDcA"];
 var profileCache = /* @__PURE__ */ new Map();
@@ -5294,7 +5371,7 @@ function wrapBoard(raw, whiteKing, blackKing) {
     outcome() {
       const board = alive();
       if (board.numberLegalMoves() === 0) return board.isCheck() ? { result: board.turn() ? "0-1" : "1-0", reason: "checkmate" } : { result: "1/2-1/2", reason: "stalemate" };
-      if (whiteKing === blackKing && pieceMap(board.fen()).size === 2) return { result: "1/2-1/2", reason: "insufficient-material" };
+      if (whiteKing === blackKing && pieceMap(board.fen()).size === 2 && !pocketLetters(board.fen())) return { result: "1/2-1/2", reason: "insufficient-material" };
       if ((repetitions.get(positionKey(board)) || 0) >= 3) return { result: "1/2-1/2", reason: "threefold-repetition" };
       if (board.halfmoveClock() >= 100) return { result: "1/2-1/2", reason: "fifty-move-rule" };
       return null;
@@ -5331,14 +5408,15 @@ function designArmyChoices(input, definitions) {
   const choices = [];
   let cost = 0;
   for (const [square, id] of Object.entries(upgrades).sort(([a], [b]) => a.localeCompare(b))) {
-    const slot = PIECE_SLOTS.find((candidate) => candidate.color === "w" && candidate.square === square);
+    const slot = square === "e1" ? { square: "e1", family: "king" } : PIECE_SLOTS.find((candidate) => candidate.color === "w" && candidate.square === square);
     const definition = definitions.get(id)?.definition;
-    if (square === "e1") throw new Error("Dynamic design experiments use ordinary kings.");
+    if (square === "e1" && definition?.placement !== "reserve") throw new Error("Dynamic design experiments use ordinary kings.");
     if (!slot || !definition || definition.family !== slot.family) throw new Error(`Choose a registered ${slot?.family || "piece"} design for ${square}.`);
     choices.push({ square, ...definitions.get(id) });
     cost += definition.level;
   }
-  if (cost > 6) throw new Error("A dynamic design army may spend at most 6 upgrade points.");
+  const limit = [...definitions.values()].some(({ definition }) => definition.placement === "reserve") ? 9 : 6;
+  if (cost > limit) throw new Error(`A dynamic design army may spend at most ${limit} upgrade points.`);
   const remove = army.remove === void 0 ? [] : army.remove;
   if (!Array.isArray(remove) || remove.some((square) => !ARMY_SQUARES.has(square) || square === "e1") || new Set(remove).size !== remove.length) throw new Error("Removed material must list distinct non-king starting squares.");
   if (remove.some((square) => Object.hasOwn(upgrades, square))) throw new Error("A removed starting piece cannot also be upgraded.");

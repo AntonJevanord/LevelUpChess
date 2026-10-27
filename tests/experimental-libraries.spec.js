@@ -45,8 +45,8 @@ test('Camel knight costs three points, shares a six-point army with Blink, and k
 });
 
 test('switching libraries keeps shared choices, clears unavailable choices, and leaves the current board intact', async ({ page }) => {
-  await expect(page.locator(`#game-mode option[value="${workshop.variant}"]`)).toHaveText('Experiments · Rebalance workshop');
-  await expect(page.locator(`#game-mode option[value="${reference.variant}"]`)).toHaveText('Experiments · First prototypes (archive)');
+  await expect(page.locator(`#game-mode option[value="${workshop.variant}"]`)).toHaveText('Archive · Rebalance workshop');
+  await expect(page.locator(`#game-mode option[value="${reference.variant}"]`)).toHaveText('Archive · First prototypes (archive)');
   await page.selectOption('#game-mode', workshop.variant);
   await choose(page, 'pawn', 'a2', 'pawn.purple@5');
   await choose(page, 'queen', 'd1', 'queen.purple@4');

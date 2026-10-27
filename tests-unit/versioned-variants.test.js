@@ -163,8 +163,10 @@ test('a failed cross-version PGN import preserves the original rules, position, 
 
 test('known PGN variant names accept the case variants supported by earlier saves', t => {
   for (const variant of SUPPORTED_VARIANTS) {
-    const instance = game(t, purpleFen, variant);
-    instance.move('Gd6');
+    // Custom letters belong to their own profile; use an ordinary knight to
+    // isolate the variant-name round trip across all historical and new maps.
+    const instance = game(t, '7k/8/8/8/3N4/8/8/K7 w - - 0 1', variant);
+    instance.move('Ne6');
     const restored = game(t);
     restored.loadPgn(instance.pgn().replace(`[Variant "${variant}"]`, `[Variant "${variant.toUpperCase()}"]`));
     assert.equal(restored.variant, variant);

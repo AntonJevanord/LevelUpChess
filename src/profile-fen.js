@@ -3,8 +3,19 @@
 // Role-aware validation shared by experiments and the playable design profile.
 const ROYALS = ['v', 'w', 'x', 'y'];
 
+function pocketLetters(fen) {
+  const placement = typeof fen === 'string' ? fen.trim().split(/\s+/)[0] : '';
+  const match = placement.match(/\[([A-Za-z]*)\]$/);
+  if (placement.includes('[') || placement.includes(']')) {
+    if (!match || placement.slice(0, match.index).includes('[') || placement.slice(0, match.index).includes(']')) throw new Error('Invalid reserve pocket.');
+  }
+  return match?.[1] || '';
+}
+
 function pieceMap(fen) {
-  const placement = fen.split(' ')[0].split('/');
+  if (typeof fen !== 'string') throw new Error('Invalid balance starting FEN.');
+  const pocket = pocketLetters(fen);
+  const placement = fen.split(' ')[0].replace(/\[[A-Za-z]*\]$/, '').split('/');
   if (placement.length !== 8) throw new Error('Invalid balance starting FEN.');
   const pieces = new Map();
   placement.forEach((row, index) => {
@@ -18,6 +29,7 @@ function pieceMap(fen) {
     }
     if (file !== 8) throw new Error('Invalid balance starting FEN.');
   });
+  if (fen.split(' ')[0].includes('[')) pieces.pocket = pocket;
   return pieces;
 }
 
@@ -32,7 +44,7 @@ function placementFromMap(pieces) {
       result += piece;
     }
     return result + (empty || '');
-  }).join('/');
+  }).join('/') + (Object.hasOwn(pieces, 'pocket') ? `[${pieces.pocket}]` : '');
 }
 
 function validEp(fen, pieces, roles) {
@@ -90,6 +102,9 @@ function checkedBoard(module, variant, input, whiteKing, blackKing, roles) {
   const fields = fen.split(' ');
   if (fields.length !== 6 || !['w', 'b'].includes(fields[1]) || !/^\d+$/.test(fields[4]) || !/^[1-9]\d*$/.test(fields[5])) throw new Error('Invalid balance starting FEN.');
   const pieces = pieceMap(fen);
+  const pocket = pocketLetters(fen);
+  if (fields[0].includes('[') && !roles?.reserveTypes) throw new Error('This profile does not support reserve pockets.');
+  if ([...pocket].some(type => !roles?.reserveTypes?.includes(type.toLowerCase()))) throw new Error('The pocket contains an unsupported reserve piece.');
   // The generic pseudo-royal FEN validator accepts missing/extra royal pieces.
   // A balance position must have exactly its selected royal for each color.
   const royals = [...pieces.values()].filter(piece => roles ? roles.royalTypes.includes(piece.toLowerCase()) : /[kvwxy]/i.test(piece));
@@ -107,4 +122,4 @@ function checkedBoard(module, variant, input, whiteKing, blackKing, roles) {
   return new module.Board(variant, fen);
 }
 
-module.exports = { ROYALS, pieceMap, placementFromMap, checkedBoard };
+module.exports = { ROYALS, pieceMap, placementFromMap, pocketLetters, checkedBoard };

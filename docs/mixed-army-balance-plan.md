@@ -1,7 +1,7 @@
 # Next balance stage: combinations and lower tiers
 
-Version 16 and its four reference designs stay closed. This plan schedules no
-new games. Keep the unfinished Unicorn/Amazon game unscored; the user declined
+Version 16 freezes its four reference designs and adds a playable workshop with
+finite king reserves. This plan schedules no new games. Keep the unfinished Unicorn/Amazon game unscored; the user declined
 a continuation. The [all-reference material fit](../experiments/balance/results/reference-material-001.report.md)
 uses the surviving complete pairs and preserves previous estimates separately.
 
@@ -112,12 +112,14 @@ three-point package baseline without requiring all level-1 families first.
 Three level-1 king grants mean **three nonroyal guards in reserve**, retaining
 one ordinary royal king. They are a laboratory bundle, not three royal kings
 or an automatic legal purchase in the current one-king setup. The
-[reserve prototype](../prototypes/reserve-guards/README.md) is isolated; normal
-collection/material logs are not yet pocket-aware.
+[reserve prototype](../prototypes/reserve-guards/README.md) preserves the earlier
+rules study. Version 16 now supports playable pockets, legal drops, native engine
+replies, history, saves and PGN. The normal collection/material pipeline still
+needs an explicit reserve protocol and pocket-aware analysis.
 
-Before reserve balance games, integrate finite pocket quantities, legal drop
-regions, checking-drop restrictions, capture-to-pocket behavior, drop-aware
-history/save/engine logging and the bundle's cost. Rate the whole grant ability,
+Before reserve balance games, declare the tested pocket quantities, drop regions,
+checking restrictions, capture behavior and bundle cost; validate collector logs
+and reports against those rules. Rate the whole grant ability,
 including its deployment tempo, rather than assigning it the board piece's
 material price. Prioritize head-to-head outcomes; pocket material estimates
 remain supporting analysis. Pawn testing can proceed before this integration.
@@ -125,8 +127,8 @@ remain supporting analysis. Pawn testing can proceed before this integration.
 ## 6. Implementation order
 
 1. Close archival analysis and simplify active docs; preserve reproducibility.
-2. Branch from the tested milestone and expose official names/rules in a new
-   playable library, retaining old libraries.
+2. Branch version 17 from the tested playable closeout. Retain the version-16
+   libraries and immutable definitions while developing mixed-army profiles.
 3. Add shared multi-upgrade army generation, deterministic batch manifests,
    coverage summaries and a read-only army-rating fitter.
 4. Declare and validate the bounded reference 2v2 pilot; review model support
@@ -136,7 +138,8 @@ remain supporting analysis. Pawn testing can proceed before this integration.
 6. Add adaptive batch selection only after a fixed schedule works; reserve
    exploratory games and shared reference anchors. Profiles must fit the
    engine's 20 custom-type limit, with at most 16 candidates beside the references.
-7. Integrate reserve grants before their separately declared outcome tests.
+7. Extend collection and analysis for reserves before their separately declared
+   outcome tests; retain the playable one-guard purchase and ordinary royal king.
 
 No completed pair is rerun merely because another candidate changes. Further
 games require a stated decision and a cap, rather than tighter numbers alone.

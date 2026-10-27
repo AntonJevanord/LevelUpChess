@@ -1,7 +1,7 @@
 const childProcess = require('node:child_process');
 const { StringDecoder } = require('node:string_decoder');
 
-const MOVE = /^[a-h][1-8][a-h][1-8][a-z]?$/;
+const MOVE = /^(?:[a-h][1-8][a-h][1-8][a-z]?|[A-Z]@[a-h][1-8])$/;
 const MAX_LINE = 65536;
 const MAX_OUTPUT = 8 * 1024 * 1024;
 
@@ -276,7 +276,7 @@ class UciEngine {
       let ready = false;
       let complete = false;
       return this._exchange([`position fen ${fen}`, 'go perft 1', 'isready'], (line, done) => {
-        const move = line.match(/^([a-h][1-8][a-h][1-8][a-z]?):\s+1$/);
+        const move = line.match(/^((?:[a-h][1-8][a-h][1-8][a-z]?|[A-Z]@[a-h][1-8])):\s+1$/);
         if (move) moves.add(move[1]);
         if (/^Nodes searched:\s*\d+$/.test(line)) complete = true;
         if (line === 'readyok') ready = true;

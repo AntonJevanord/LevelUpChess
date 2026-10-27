@@ -29,6 +29,12 @@ function definition(family, color, level, movement, legacyType, legacySlot, revi
   });
 }
 
+function rosterDefinition(...args) {
+  // Allocation hints do not identify historical behavior. In particular, a
+  // new rook borrowing "a" must not inherit that letter's old pawn fixtures.
+  return freeze({ ...definition(...args), inheritLegacyProbes: false });
+}
+
 const definitions = [
   definition('knight', 'blue', 1, 'NmW', 'e', 1),
   definition('knight', 'orange', 2, 'NsD', 'f', 2),
@@ -93,10 +99,50 @@ const definitions = [
   definition('bishop', 'purple', 3, 'BsRgmsR', 'z', 20, 11),
   definition('bishop', 'purple', 3, 'BsRgmsR0', 'l', 21, 12),
   definition('bishop', 'purple', 3, 'BsR2nsN', 'm', 22, 13),
+  // Version-16 playable roster. Previous experiments retain their exact IDs,
+  // prices, rules and placements; these are unbalanced playtest candidates.
+  rosterDefinition('pawn', 'blue', 1, 'fmWfeFifmnD', 'a', 1, 2),
+  rosterDefinition('pawn', 'orange', 2, 'fmWfceFifmnDfhN', 'c', 2, 3),
+  rosterDefinition('pawn', 'purple', 3, 'fceF2mR', 'd', 3, 11),
+  rosterDefinition('pawn', 'blue', 1, 'bmWfmW2fceF', 'e', 4, 3),
+  rosterDefinition('pawn', 'orange', 2, 'mWeFifmnD', 'f', 5, 4),
+  rosterDefinition('pawn', 'purple', 3, 'feQ2bmQ2', 'g', 6, 12),
+  rosterDefinition('knight', 'blue', 1, 'NsmR', 'a', 1, 2),
+  rosterDefinition('knight', 'orange', 2, 'NsWsD', 'c', 2, 3),
+  rosterDefinition('knight', 'purple', 3, 'N0', 'd', 3, 4),
+  rosterDefinition('knight', 'blue', 1, 'NvW', 'e', 4, 3),
+  rosterDefinition('knight', 'orange', 2, 'NA', 'f', 5, 4),
+  rosterDefinition('knight', 'purple', 3, 'NK', 'g', 6, 5),
+  rosterDefinition('knight', 'purple', 3, 'NWH', 'l', 10, 6),
+  rosterDefinition('bishop', 'blue', 1, 'BgmB', 'a', 1, 2),
+  rosterDefinition('bishop', 'orange', 2, 'BvN', 'c', 2, 2),
+  rosterDefinition('bishop', 'purple', 3, 'BcWcNcDcA', 'd', 3, 14),
+  rosterDefinition('bishop', 'blue', 1, 'BsW', 'e', 4, 3),
+  rosterDefinition('bishop', 'orange', 2, 'BsR', 'f', 5, 3),
+  rosterDefinition('bishop', 'purple', 3, 'BvWvNvZ', 'g', 6, 15),
+  rosterDefinition('bishop', 'purple', 3, 'BN', 'l', 10, 16),
+  rosterDefinition('rook', 'blue', 1, 'RgmR0', 'a', 1, 2),
+  rosterDefinition('rook', 'orange', 2, 'RmFmDmAmHmGmNmCmZ', 'c', 2, 2),
+  rosterDefinition('rook', 'purple', 3, 'RC', 'd', 3, 12),
+  rosterDefinition('rook', 'blue', 1, 'RceF', 'e', 4, 3),
+  rosterDefinition('rook', 'orange', 2, 'RcN', 'f', 5, 3),
+  rosterDefinition('rook', 'purple', 3, 'RFsNsC', 'g', 6, 13),
+  rosterDefinition('queen', 'blue', 1, 'QmfhN', 'e', 4, 2),
+  rosterDefinition('queen', 'orange', 2, 'QmHmCmZmG', 'f', 5, 2),
+  rosterDefinition('queen', 'purple', 3, 'QsNsC', 'd', 3, 6),
+  rosterDefinition('queen', 'purple', 3, 'QgB0', 'g', 6, 7),
+  rosterDefinition('queen', 'purple', 3, 'QZ', 'l', 10, 8),
+  // A king purchase grants one nonroyal reserve piece. The ordinary royal
+  // king stays on e1/e8, including its normal safety and castling rules.
+  ...[
+    ['pawn', 'fW'], ['bishop', 'F'], ['rook', 'W2'], ['king', 'K'],
+    ['knight', 'KmN'], ['queen', 'K2'], ['okapi', 'NZ'],
+    ['princess', 'KN'], ['true-queen', 'Q'],
+  ].map(([name, movement], index) => rosterDefinition('king', `reserve-${name}`, index + 1, movement, 'acdefghij'[index], index + 1, 1, 'reserve')),
 ];
 
 const DESIGNS = Object.freeze(Object.fromEntries(definitions.map(design => [design.id, design])));
-const LEGACY_DESIGN_IDS = Object.freeze(Object.fromEntries(definitions.filter(design => design.revision === 1).map(design => [design.legacyType, design.id])));
+const LEGACY_DESIGN_IDS = Object.freeze(Object.fromEntries(definitions.filter(design => design.revision === 1 && design.family !== 'king').map(design => [design.legacyType, design.id])));
 
 function getDesign(id) {
   return typeof id === 'string' && Object.hasOwn(DESIGNS, id) ? DESIGNS[id] : undefined;

@@ -45,7 +45,7 @@ test.beforeAll(() => initVariantRules(alternatives.variant));
 test.beforeEach(async ({ page }) => { await page.goto('http://127.0.0.1:4173'); });
 
 test('Design alternatives offers both designs in each pair and can place different revisions against each other', async ({ page }) => {
-  await expect(page.locator(`#game-mode option[value="${alternatives.variant}"]`)).toHaveText('Experiments · Design alternatives');
+  await expect(page.locator(`#game-mode option[value="${alternatives.variant}"]`)).toHaveText('Archive · Design alternatives');
   await page.selectOption('#game-mode', alternatives.variant);
   const groups = {
     pawn: ['pawn.purple@7', 'pawn.purple@8', 'pawn.purple@9', 'pawn.purple@10'],

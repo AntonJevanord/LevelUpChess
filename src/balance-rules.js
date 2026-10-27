@@ -12,7 +12,7 @@ import designDeployment from './design-deployment.js';
 const { pieceSetupFromLevels } = pieceSetup;
 const { PIECE_SLOTS } = pieceCatalog;
 const ARMY_SQUARES = new Set([...PIECE_SLOTS.filter(slot => slot.color === 'w').map(slot => slot.square), 'e1']);
-const { ROYALS, pieceMap, placementFromMap, checkedBoard } = profileFen;
+const { ROYALS, pieceMap, placementFromMap, pocketLetters, checkedBoard } = profileFen;
 const { deployDesignArmies } = designDeployment;
 const ROYAL_MOVES = ['K', 'KcsD', 'KcD', 'KcDcA'];
 // Each module owns global movement tables. Cache only two profiles; existing
@@ -109,7 +109,7 @@ function wrapBoard(raw, whiteKing, blackKing) {
       if (board.numberLegalMoves() === 0) return board.isCheck()
         ? { result: board.turn() ? '0-1' : '1-0', reason: 'checkmate' }
         : { result: '1/2-1/2', reason: 'stalemate' };
-      if (whiteKing === blackKing && pieceMap(board.fen()).size === 2) return { result: '1/2-1/2', reason: 'insufficient-material' };
+      if (whiteKing === blackKing && pieceMap(board.fen()).size === 2 && !pocketLetters(board.fen())) return { result: '1/2-1/2', reason: 'insufficient-material' };
       if ((repetitions.get(positionKey(board)) || 0) >= 3) return { result: '1/2-1/2', reason: 'threefold-repetition' };
       if (board.halfmoveClock() >= 100) return { result: '1/2-1/2', reason: 'fifty-move-rule' };
       return null;
@@ -143,14 +143,15 @@ function designArmyChoices(input, definitions) {
   const choices = [];
   let cost = 0;
   for (const [square, id] of Object.entries(upgrades).sort(([a], [b]) => a.localeCompare(b))) {
-    const slot = PIECE_SLOTS.find(candidate => candidate.color === 'w' && candidate.square === square);
+    const slot = square === 'e1' ? { square: 'e1', family: 'king' } : PIECE_SLOTS.find(candidate => candidate.color === 'w' && candidate.square === square);
     const definition = definitions.get(id)?.definition;
-    if (square === 'e1') throw new Error('Dynamic design experiments use ordinary kings.');
+    if (square === 'e1' && definition?.placement !== 'reserve') throw new Error('Dynamic design experiments use ordinary kings.');
     if (!slot || !definition || definition.family !== slot.family) throw new Error(`Choose a registered ${slot?.family || 'piece'} design for ${square}.`);
     choices.push({ square, ...definitions.get(id) });
     cost += definition.level;
   }
-  if (cost > 6) throw new Error('A dynamic design army may spend at most 6 upgrade points.');
+  const limit = [...definitions.values()].some(({ definition }) => definition.placement === 'reserve') ? 9 : 6;
+  if (cost > limit) throw new Error(`A dynamic design army may spend at most ${limit} upgrade points.`);
   const remove = army.remove === undefined ? [] : army.remove;
   if (!Array.isArray(remove) || remove.some(square => !ARMY_SQUARES.has(square) || square === 'e1') || new Set(remove).size !== remove.length) throw new Error('Removed material must list distinct non-king starting squares.');
   if (remove.some(square => Object.hasOwn(upgrades, square))) throw new Error('A removed starting piece cannot also be upgraded.');
