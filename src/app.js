@@ -192,6 +192,9 @@ function updateSetup() {
   document.querySelector('#setup-toolbar').hidden = !boardSetup;
   document.querySelector('#legacy-design-controls').hidden = boardSetup;
   document.querySelector('#king-grant-costs').hidden = !boardSetup;
+  document.querySelector('#workshop-palette').hidden = !boardSetup;
+  document.querySelector('#workshop-palette-help').hidden = !boardSetup;
+  document.querySelector('#archive-palette').hidden = boardSetup;
   document.querySelector('#experimental-library-help').textContent = boardSetup ? 'Each workshop shares Vanguard, Unicorn, Cruisader and Amazon, plus king grants. Other designs and prices are provisional.' : 'Choose named alternatives for the next game. Shared selections carry between libraries; unavailable choices reset.';
   const experimentalLimit = designBudgetLimit(setupProfile());
   experimentalBudget.max = String(experimentalLimit);
@@ -286,11 +289,13 @@ function renderSetupPicker() {
   list.replaceChildren();
   if (!slot) return;
   const select = document.querySelector(`#experimental-upgrade-${slot.square}`);
-  const choices = [{ id: '', level: 0, name: slot.family === 'king' ? 'No reserve grant' : `Standard ${slot.family}`, description: slot.family === 'king' ? 'Keep your ordinary royal king, without a reserve purchase.' : `Ordinary ${slot.family} movement.` }, ...getDesignOptions(gameMode.value).filter(option => option.family === slot.family).sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))];
+  const primaryAccent = option => ['green', 'yellow', 'red'].includes(option.accent) ? 0 : 1;
+  const choices = [{ id: '', level: 0, name: slot.family === 'king' ? 'No reserve grant' : `Standard ${slot.family}`, description: slot.family === 'king' ? 'Keep your ordinary royal king, without a reserve purchase.' : `Ordinary ${slot.family} movement.` }, ...getDesignOptions(gameMode.value).filter(option => option.family === slot.family).sort((a, b) => a.level - b.level || primaryAccent(a) - primaryAccent(b) || a.name.localeCompare(b.name))];
   for (const choice of choices) {
     const button = document.createElement('button');
     button.type = 'button';
     button.dataset.upgradeId = choice.id;
+    if (choice.accent) button.dataset.accent = choice.accent;
     button.className = 'upgrade-choice';
     button.setAttribute('aria-pressed', String(choice.id === select.value));
     const title = document.createElement('strong');
@@ -343,6 +348,7 @@ function renderPockets() {
       button.className = 'pocket-piece';
       button.dataset.pocketColor = color;
       button.dataset.pocketType = entry.type;
+      button.dataset.accent = info.accent;
       button.setAttribute('aria-label', `${side(color)} ${info.name}, ${entry.count} in reserve`);
       button.setAttribute('aria-pressed', String(selectedDrop === entry.type && color === game.turn()));
       button.title = info.description;

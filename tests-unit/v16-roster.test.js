@@ -82,3 +82,36 @@ test('new candidates preserve the proposed movement, price and single-piece depl
   assert.equal(getDesign('rook.orange@3').level, 2);
   assert.equal(getDesign('rook.purple@2').level, 3, 'historical knight-capture rook price is retained');
 });
+
+test('workshop colors distinguish variants without changing references, profiles or archived colors', () => {
+  const expected = {
+    'pawn.blue@2': 'green', 'pawn.blue@3': 'blue',
+    'pawn.orange@3': 'yellow', 'pawn.orange@4': 'orange',
+    'pawn.purple@11': 'red', 'pawn.purple@12': 'purple',
+    'knight.blue@2': 'green', 'knight.blue@3': 'blue',
+    'knight.orange@3': 'yellow', 'knight.orange@4': 'orange',
+    'knight.purple@4': 'purple', 'knight.purple@5': 'purple', 'knight.purple@6': 'purple',
+    ...Object.fromEntries(OFFICIAL_REFERENCE_DESIGN_IDS.map(id => [id, 'red'])),
+  };
+  for (const library of libraries) {
+    const profile = profileFor(library);
+    const before = JSON.stringify(profile);
+    const options = getDesignOptions(profile.variant);
+    for (const [id, accent] of Object.entries(expected)) {
+      const option = options.find(candidate => candidate.id === id);
+      if (!option) continue;
+      assert.equal(option.accent, accent, library.id + ': ' + id);
+      const letter = profile.registry.allocations.find(allocation => allocation.id === id).letter;
+      assert.equal(pieceInfoForProfile(profile, letter).accent, accent);
+      assert.equal(pieceInfoForProfile(profile, letter.toUpperCase()).accent, accent);
+    }
+    for (const [index, id] of RESERVE_DESIGN_IDS.entries()) {
+      assert.equal(options.find(candidate => candidate.id === id).accent,
+        ['green', 'yellow', 'red', 'violet', 'orange', 'pink', 'teal', 'gold', 'silver'][index]);
+    }
+    assert.equal(JSON.stringify(profile), before, 'display metadata must not mutate the frozen profile');
+  }
+  const archived = profiles[0];
+  const knight = archived.registry.allocations.find(allocation => allocation.id === 'knight.orange@1');
+  assert.equal(pieceInfoForProfile(archived, knight.letter).accent, 'cyan');
+});

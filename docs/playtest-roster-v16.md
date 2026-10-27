@@ -16,6 +16,12 @@ The references are frozen. Other designs and all reserve prices are provisional.
 Purchase cost is distinct from material value or an engine evaluation parameter.
 This roster adds playtest options; it schedules no balance games.
 
+Colors distinguish alternatives within a level: the first option is green at
+level 1, yellow at level 2 and red at level 3. Other options use blue, orange and
+purple respectively, repeating that second color when needed. All four frozen
+references are red. These colors appear on the board, in upgrade choices and in
+reserve markers; the level badge and design name still identify each piece.
+
 ## Replacement candidates
 
 Movement strings below are exact catalog definitions. The picker describes them

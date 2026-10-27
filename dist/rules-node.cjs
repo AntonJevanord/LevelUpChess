@@ -12228,7 +12228,7 @@ var require_design_options = __commonJS({
       require_playable_v16_rooks_profile(),
       require_playable_v16_queens_profile()
     ];
-    var { PLAYABLE_LIBRARIES: libraries } = require_playable_library();
+    var { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS } = require_playable_library();
     var { STANDARD_TYPES } = require_design_catalog();
     var { pieceInfo } = require_piece_catalog();
     function freeze(value) {
@@ -12349,10 +12349,23 @@ var require_design_options = __commonJS({
     }));
     var optionsById = Object.fromEntries(DESIGN_OPTIONS.map((option) => [option.id, option]));
     var officialNames = { "rook.purple@10": "Vanguard", "knight.purple@3": "Unicorn", "bishop.purple@13": "Cruisader", "queen.purple@1": "Amazon" };
+    var historicalAccents = ["", "green", "cyan", "red", "violet", "orange", "pink", "teal", "gold", "silver"];
+    var variantAccents = { 1: ["green", "blue"], 2: ["yellow", "orange"], 3: ["red", "purple"] };
+    var workshopAccents = {};
+    var coloredGroups = /* @__PURE__ */ new Set();
+    for (const id of /* @__PURE__ */ new Set([...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(V16_CANDIDATES).flat(), ...RESERVE_DESIGN_IDS])) {
+      const option = optionsById[id];
+      const group = `${option.family}:${option.level}`;
+      const pair = variantAccents[option.level];
+      workshopAccents[id] = pair ? pair[coloredGroups.has(group) ? 1 : 0] : historicalAccents[option.level];
+      coloredGroups.add(group);
+    }
+    Object.freeze(workshopAccents);
     function optionInProfile(option, profile) {
       if (!option) return option;
       const current = closeoutProfiles.some((candidate) => candidate.variant === profile.variant);
-      return current && officialNames[option.id] ? { ...option, name: officialNames[option.id], status: "reference" } : option;
+      if (!current) return option;
+      return { ...option, accent: workshopAccents[option.id], ...officialNames[option.id] ? { name: officialNames[option.id], status: "reference" } : {} };
     }
     function getDesignOptions(variant = EXPERIMENTAL_VARIANT2) {
       const profile = getPlayableProfile2(variant);
@@ -12376,7 +12389,7 @@ var require_design_options = __commonJS({
         family: definition.family,
         level: definition.level,
         cost: definition.level,
-        accent: ["", "green", "cyan", "red", "violet", "orange", "pink", "teal", "gold", "silver"][definition.level],
+        accent: option.accent || historicalAccents[definition.level],
         symbols: standard.symbols,
         description: option.description,
         status: option.status

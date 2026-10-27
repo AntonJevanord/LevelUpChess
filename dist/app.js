@@ -12224,7 +12224,7 @@
         require_playable_v16_rooks_profile(),
         require_playable_v16_queens_profile()
       ];
-      var { PLAYABLE_LIBRARIES: libraries } = require_playable_library();
+      var { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS } = require_playable_library();
       var { STANDARD_TYPES } = require_design_catalog();
       var { pieceInfo: pieceInfo2 } = require_piece_catalog();
       function freeze(value) {
@@ -12345,10 +12345,23 @@
       }));
       var optionsById = Object.fromEntries(DESIGN_OPTIONS2.map((option) => [option.id, option]));
       var officialNames = { "rook.purple@10": "Vanguard", "knight.purple@3": "Unicorn", "bishop.purple@13": "Cruisader", "queen.purple@1": "Amazon" };
+      var historicalAccents = ["", "green", "cyan", "red", "violet", "orange", "pink", "teal", "gold", "silver"];
+      var variantAccents = { 1: ["green", "blue"], 2: ["yellow", "orange"], 3: ["red", "purple"] };
+      var workshopAccents = {};
+      var coloredGroups = /* @__PURE__ */ new Set();
+      for (const id of /* @__PURE__ */ new Set([...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(V16_CANDIDATES).flat(), ...RESERVE_DESIGN_IDS])) {
+        const option = optionsById[id];
+        const group = `${option.family}:${option.level}`;
+        const pair = variantAccents[option.level];
+        workshopAccents[id] = pair ? pair[coloredGroups.has(group) ? 1 : 0] : historicalAccents[option.level];
+        coloredGroups.add(group);
+      }
+      Object.freeze(workshopAccents);
       function optionInProfile(option, profile) {
         if (!option) return option;
         const current = closeoutProfiles.some((candidate) => candidate.variant === profile.variant);
-        return current && officialNames[option.id] ? { ...option, name: officialNames[option.id], status: "reference" } : option;
+        if (!current) return option;
+        return { ...option, accent: workshopAccents[option.id], ...officialNames[option.id] ? { name: officialNames[option.id], status: "reference" } : {} };
       }
       function getDesignOptions2(variant = EXPERIMENTAL_VARIANT2) {
         const profile = getPlayableProfile3(variant);
@@ -12372,7 +12385,7 @@
           family: definition.family,
           level: definition.level,
           cost: definition.level,
-          accent: ["", "green", "cyan", "red", "violet", "orange", "pink", "teal", "gold", "silver"][definition.level],
+          accent: option.accent || historicalAccents[definition.level],
           symbols: standard.symbols,
           description: option.description,
           status: option.status
@@ -21839,6 +21852,9 @@
     document.querySelector("#setup-toolbar").hidden = !boardSetup;
     document.querySelector("#legacy-design-controls").hidden = boardSetup;
     document.querySelector("#king-grant-costs").hidden = !boardSetup;
+    document.querySelector("#workshop-palette").hidden = !boardSetup;
+    document.querySelector("#workshop-palette-help").hidden = !boardSetup;
+    document.querySelector("#archive-palette").hidden = boardSetup;
     document.querySelector("#experimental-library-help").textContent = boardSetup ? "Each workshop shares Vanguard, Unicorn, Cruisader and Amazon, plus king grants. Other designs and prices are provisional." : "Choose named alternatives for the next game. Shared selections carry between libraries; unavailable choices reset.";
     const experimentalLimit = (0, import_design_setup2.designBudgetLimit)(setupProfile());
     experimentalBudget.max = String(experimentalLimit);
@@ -21923,11 +21939,13 @@
     list.replaceChildren();
     if (!slot) return;
     const select = document.querySelector(`#experimental-upgrade-${slot.square}`);
-    const choices = [{ id: "", level: 0, name: slot.family === "king" ? "No reserve grant" : `Standard ${slot.family}`, description: slot.family === "king" ? "Keep your ordinary royal king, without a reserve purchase." : `Ordinary ${slot.family} movement.` }, ...(0, import_design_options3.getDesignOptions)(gameMode.value).filter((option) => option.family === slot.family).sort((a, b) => a.level - b.level || a.name.localeCompare(b.name))];
+    const primaryAccent = (option) => ["green", "yellow", "red"].includes(option.accent) ? 0 : 1;
+    const choices = [{ id: "", level: 0, name: slot.family === "king" ? "No reserve grant" : `Standard ${slot.family}`, description: slot.family === "king" ? "Keep your ordinary royal king, without a reserve purchase." : `Ordinary ${slot.family} movement.` }, ...(0, import_design_options3.getDesignOptions)(gameMode.value).filter((option) => option.family === slot.family).sort((a, b) => a.level - b.level || primaryAccent(a) - primaryAccent(b) || a.name.localeCompare(b.name))];
     for (const choice of choices) {
       const button = document.createElement("button");
       button.type = "button";
       button.dataset.upgradeId = choice.id;
+      if (choice.accent) button.dataset.accent = choice.accent;
       button.className = "upgrade-choice";
       button.setAttribute("aria-pressed", String(choice.id === select.value));
       const title = document.createElement("strong");
@@ -21978,6 +21996,7 @@
         button.className = "pocket-piece";
         button.dataset.pocketColor = color;
         button.dataset.pocketType = entry.type;
+        button.dataset.accent = info.accent;
         button.setAttribute("aria-label", `${side(color)} ${info.name}, ${entry.count} in reserve`);
         button.setAttribute("aria-pressed", String(selectedDrop === entry.type && color === game.turn()));
         button.title = info.description;
