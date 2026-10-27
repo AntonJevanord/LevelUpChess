@@ -8,7 +8,7 @@ Download `index.html` and open it in Chrome, Edge or Firefox. It contains the bo
 
 Select a piece and a highlighted destination. Arrow keys move focus; Enter or Space selects. The board supports legal moves, checkmate, castling, en passant, promotion, history, undo and board flip.
 
-Under **Rules**, choose **Version 16 · References** or a family workshop. Click a starting piece to choose its upgrade beside the board, then press **Start game**. **Edit armies** reopens setup; **Return to game** keeps the current game. Changes apply only when starting a game. **Clear White**, **Clear Black** and **Clear both** reset draft armies.
+Under **Rules**, choose **Version 16 · King workshop** or another family workshop. Click a starting piece to choose its upgrade beside the board, then press **Start game**. **Edit armies** reopens setup; **Return to game** keeps the current game. Changes apply only when starting a game. **Clear White**, **Clear Black** and **Clear both** reset draft armies.
 
 The new libraries allow a 1–9 point budget per side. Each includes the four frozen references and nine king grants; family workshops add pawn, knight, bishop, rook or queen candidates. This keeps each library within the engine's 20-custom-piece limit. Historical libraries retain their previous rules and 1–6 point budgets. See the [version-16 playtest roster](docs/playtest-roster-v16.md) and [historical rules](variants/README.md).
 
@@ -52,7 +52,7 @@ Browser saves belong to the current browser and site address. Use PGN when movin
 
 ## Version 16: frozen references and playtest roster
 
-The playable closeout is tagged `v0.16.3`. Mixed-army experiments belong to version 17.
+The playable closeout with UI fixes is tagged `v0.16.4`. Mixed-army experiments belong to version 17.
 
 These are the official three-point replacement upgrades, available in every new playtest library:
 

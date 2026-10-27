@@ -1,6 +1,6 @@
 {
   "name": "levelupchess",
-  "version": "0.16.3",
+  "version": "0.16.4",
   "private": true,
   "description": "Local chess and a foundation for upgradeable pieces.",
   "scripts": {

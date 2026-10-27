@@ -27,7 +27,7 @@ const PLAYABLE_PROFILE = freeze(compiled);
 const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles]);
 const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
 const EXPERIMENTAL_VARIANTS = freeze(PLAYABLE_PROFILES.map(profile => profile.variant));
-const PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES[index].variant, ...(library.generation ? { generation: library.generation } : {}) })));
+const PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES[index].variant, ...(library.generation ? { generation: library.generation } : {}), ...(library.focusFamily ? { focusFamily: library.focusFamily } : {}) })));
 function getPlayableProfile(variant = EXPERIMENTAL_VARIANT) { return PLAYABLE_PROFILES.find(profile => profile.variant === variant); }
 function isExperimentalVariant(variant) { return EXPERIMENTAL_VARIANTS.includes(variant); }
 const metadata = {

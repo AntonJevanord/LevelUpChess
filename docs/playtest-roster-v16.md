@@ -1,11 +1,12 @@
 # Version-16 playtest roster
 
-Under **Rules**, select **Version 16 references** or a family workshop. Click a
+Under **Rules**, select **King workshop** or another family workshop. Click a
 starting piece, choose its upgrade beside the board, and press **Start game**.
 **Edit armies** changes draft selections; **Return to game** preserves the active
 game. Clear buttons reset either or both draft armies.
 
-Every new library includes Vanguard `RfB`, Unicorn `NC`, Cruisader `BsR2nsN`
+The King workshop opens the king's grant choices directly. Every new library
+includes Vanguard `RfB`, Unicorn `NC`, Cruisader `BsR2nsN`
 and Amazon `QN`, each costing three upgrade points, plus all nine king grants.
 Workshops add candidates from one family so each profile fits Fairy Stockfish's
 20-custom-piece limit. Shared selections carry between libraries; unavailable

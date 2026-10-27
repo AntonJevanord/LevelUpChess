@@ -62,8 +62,9 @@ const V16_CANDIDATES = Object.freeze({
 });
 const closeoutLibrary = (group, candidates = []) => Object.freeze({
   id: `v16-${group}`,
-  name: group === 'references' ? 'Version 16 references' : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
+  name: group === 'references' ? 'King workshop' : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
   generation: 16,
+  ...(group === 'references' ? { focusFamily: 'king' } : {}),
   designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...candidates, ...RESERVE_DESIGN_IDS]),
   json: `src/playable-v16-${group}-profile.json`,
   ini: `variants/levelup-playable-v16-${group}.ini`,

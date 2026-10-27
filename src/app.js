@@ -39,7 +39,7 @@ const experimentalOption = gameMode.querySelector('option[value=levelup-experime
 experimentalOption.replaceWith(...[...PLAYABLE_LIBRARIES].sort((a, b) => Number(b.id.startsWith('v16-')) - Number(a.id.startsWith('v16-'))).map(library => {
   const option = document.createElement('option');
   option.value = library.variant;
-  option.textContent = library.id === 'v16-references' ? 'Version 16 · References' : `${library.id.startsWith('v16-') ? 'Version 16' : 'Archive'} · ${library.name}`;
+  option.textContent = `${library.id.startsWith('v16-') ? 'Version 16' : 'Archive'} · ${library.name}`;
   return option;
 }));
 const designOptions = new Map(DESIGN_OPTIONS.map(option => [option.id, option]));
@@ -255,6 +255,16 @@ function setSetupEditing(value) {
   render();
 }
 document.querySelector('#setup-mode').onclick = () => setSetupEditing(!editingSetup);
+
+// A tall setup panel must scroll far enough to expose the board's bottom rank.
+// Measure the entire column so toolbars, clocks and wrapping reserves count too.
+const boardArea = document.querySelector('.board-area');
+function updateBoardStickyOffset() {
+  boardArea.style.setProperty('--board-sticky-top', `${Math.min(18, window.innerHeight - boardArea.offsetHeight - 18)}px`);
+}
+new ResizeObserver(updateBoardStickyOffset).observe(boardArea);
+window.addEventListener('resize', updateBoardStickyOffset);
+updateBoardStickyOffset();
 
 function renderSetupPicker() {
   const panel = document.querySelector('#setup-picker');
@@ -981,6 +991,11 @@ setInterval(settleClock, 100);
 gameMode.onchange = () => {
   updateSetup();
   setSetupEditing(usesBoardSetup());
+  const library = PLAYABLE_LIBRARIES.find(library => library.variant === gameMode.value);
+  if (editingSetup && library?.focusFamily === 'king') {
+    setupSquare = 'e1';
+    render();
+  }
 };
 upgradeBudget.onchange = updateSetup;
 pieceBudget.oninput = updateSetup;

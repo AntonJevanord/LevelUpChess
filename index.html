@@ -25,7 +25,7 @@
 
 .army-reset-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}.army-reset-actions button{flex:1;min-width:80px;font-size:12px;padding:9px 5px}#army-reset-status:empty{display:none}
 
-.setup-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px;margin-bottom:18px;border:1px solid #c5db9533;border-radius:10px;background:#202e24}.setup-toolbar strong{font-size:14px}.setup-toolbar p{font-size:11px;line-height:1.5;margin:4px 0 0}.setup-toolbar button{flex-shrink:0}.setup-board{border-color:#98ad70}.setup-board .square:has(.piece):hover{box-shadow:inset 0 0 0 4px #d5e89b}.setup-picker{border-color:#c5db9540}.setup-picker h2{font-size:19px}.setup-picker>p{font-size:12px}#setup-upgrades{display:flex;flex-direction:column;gap:8px;max-height:480px;overflow:auto;margin-top:14px}.upgrade-choice{text-align:left;width:100%}.upgrade-choice strong{display:block;font-size:12px}.upgrade-choice span{display:block;color:var(--muted);font-size:11px;line-height:1.55;margin-top:5px}.upgrade-choice[aria-pressed=true]{border-color:var(--accent);background:#344632}.upgrade-choice[aria-pressed=true] strong{color:var(--accent)}.pocket{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:10px 12px;background:#1b2521;border:1px solid #ffffff18;border-radius:8px}.pocket-label,.pocket-empty{font-size:11px;color:var(--muted)}.pocket-label{font-weight:700;margin-right:4px}.pocket-piece[aria-pressed=true]{border-color:#edbd56;background:#405137}#pocket-top{margin-bottom:10px}#pocket-bottom{margin-top:10px}.piece.upgraded.gold{filter:drop-shadow(0 0 3px #f0cb66);text-shadow:0 1px 2px #513f1b,1px 0 #735b26,-1px 0 #735b26}.piece-level.gold{background:#765a20}.square:has(.upgraded.gold){box-shadow:inset 0 0 0 2px #e6c66dc0}@media(max-width:760px){.setup-picker{order:-1}#setup-upgrades{max-height:350px}.setup-toolbar{gap:10px}.setup-toolbar p{max-width:260px}}@media(min-width:761px){.board-area:has(.setup-board){position:sticky;top:18px;align-self:start}}
+.setup-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 16px;margin-bottom:18px;border:1px solid #c5db9533;border-radius:10px;background:#202e24}.setup-toolbar strong{font-size:14px}.setup-toolbar p{font-size:11px;line-height:1.5;margin:4px 0 0}.setup-toolbar button{flex-shrink:0}.setup-board{border-color:#98ad70}.setup-board .square:has(.piece):hover{box-shadow:inset 0 0 0 4px #d5e89b}.setup-picker{border-color:#c5db9540}.setup-picker h2{font-size:19px}.setup-picker>p{font-size:12px}#setup-upgrades{display:flex;flex-direction:column;gap:8px;max-height:480px;overflow:auto;margin-top:14px}.upgrade-choice{text-align:left;width:100%}.upgrade-choice strong{display:block;font-size:12px}.upgrade-choice span{display:block;color:var(--muted);font-size:11px;line-height:1.55;margin-top:5px}.upgrade-choice[aria-pressed=true]{border-color:var(--accent);background:#344632}.upgrade-choice[aria-pressed=true] strong{color:var(--accent)}.pocket{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:10px 12px;background:#1b2521;border:1px solid #ffffff18;border-radius:8px}.pocket-label,.pocket-empty{font-size:11px;color:var(--muted)}.pocket-label{font-weight:700;margin-right:4px}.pocket-piece[aria-pressed=true]{border-color:#edbd56;background:#405137}#pocket-top{margin-bottom:10px}#pocket-bottom{margin-top:10px}.piece.upgraded.gold{filter:drop-shadow(0 0 3px #f0cb66);text-shadow:0 1px 2px #513f1b,1px 0 #735b26,-1px 0 #735b26}.piece-level.gold{background:#765a20}.square:has(.upgraded.gold){box-shadow:inset 0 0 0 2px #e6c66dc0}@media(max-width:760px){.setup-picker{order:-1}#setup-upgrades{max-height:350px}.setup-toolbar{gap:10px}.setup-toolbar p{max-width:260px}}@media(min-width:761px){.board-area:has(.setup-board){position:sticky;top:var(--board-sticky-top,18px);align-self:start}}
 
 .violet{--guard-tint:#b594e8;--guard-badge:#67458c}.pink{--guard-tint:#ed9fc6;--guard-badge:#82415d}.teal{--guard-tint:#76d9bc;--guard-badge:#216855}.silver{--guard-tint:#d1dce1;--guard-badge:#52616c}.piece.upgraded:is(.violet,.pink,.teal,.silver){filter:drop-shadow(0 0 3px var(--guard-tint));text-shadow:0 1px 2px #263a38,1px 0 #263a38,-1px 0 #263a38}.piece-level:is(.violet,.pink,.teal,.silver){background:var(--guard-badge)}.square:has(.upgraded:is(.violet,.pink,.teal,.silver)){box-shadow:inset 0 0 0 2px #c1d3d480}
 
@@ -12082,8 +12082,9 @@
       });
       var closeoutLibrary = (group, candidates = []) => Object.freeze({
         id: `v16-${group}`,
-        name: group === "references" ? "Version 16 references" : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
+        name: group === "references" ? "King workshop" : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
         generation: 16,
+        ...group === "references" ? { focusFamily: "king" } : {},
         designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...candidates, ...RESERVE_DESIGN_IDS]),
         json: `src/playable-v16-${group}-profile.json`,
         ini: `variants/levelup-playable-v16-${group}.ini`
@@ -12356,7 +12357,7 @@
       var PLAYABLE_PROFILES2 = freeze([PLAYABLE_PROFILE2, reference, alternatives, ...closeoutProfiles]);
       var EXPERIMENTAL_VARIANT2 = PLAYABLE_PROFILE2.variant;
       var EXPERIMENTAL_VARIANTS2 = freeze(PLAYABLE_PROFILES2.map((profile) => profile.variant));
-      var PLAYABLE_LIBRARIES2 = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES2[index].variant, ...library.generation ? { generation: library.generation } : {} })));
+      var PLAYABLE_LIBRARIES2 = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES2[index].variant, ...library.generation ? { generation: library.generation } : {}, ...library.focusFamily ? { focusFamily: library.focusFamily } : {} })));
       function getPlayableProfile3(variant = EXPERIMENTAL_VARIANT2) {
         return PLAYABLE_PROFILES2.find((profile) => profile.variant === variant);
       }
@@ -21804,7 +21805,7 @@
   experimentalOption.replaceWith(...[...import_design_options3.PLAYABLE_LIBRARIES].sort((a, b) => Number(b.id.startsWith("v16-")) - Number(a.id.startsWith("v16-"))).map((library) => {
     const option = document.createElement("option");
     option.value = library.variant;
-    option.textContent = library.id === "v16-references" ? "Version 16 \xB7 References" : `${library.id.startsWith("v16-") ? "Version 16" : "Archive"} \xB7 ${library.name}`;
+    option.textContent = `${library.id.startsWith("v16-") ? "Version 16" : "Archive"} \xB7 ${library.name}`;
     return option;
   }));
   var designOptions2 = new Map(import_design_options3.DESIGN_OPTIONS.map((option) => [option.id, option]));
@@ -22016,6 +22017,13 @@
     render();
   }
   document.querySelector("#setup-mode").onclick = () => setSetupEditing(!editingSetup);
+  var boardArea = document.querySelector(".board-area");
+  function updateBoardStickyOffset() {
+    boardArea.style.setProperty("--board-sticky-top", `${Math.min(18, window.innerHeight - boardArea.offsetHeight - 18)}px`);
+  }
+  new ResizeObserver(updateBoardStickyOffset).observe(boardArea);
+  window.addEventListener("resize", updateBoardStickyOffset);
+  updateBoardStickyOffset();
   function renderSetupPicker() {
     const panel = document.querySelector("#setup-picker");
     panel.hidden = !editingSetup;
@@ -22793,6 +22801,11 @@
   gameMode.onchange = () => {
     updateSetup();
     setSetupEditing(usesBoardSetup());
+    const library = import_design_options3.PLAYABLE_LIBRARIES.find((library2) => library2.variant === gameMode.value);
+    if (editingSetup && library?.focusFamily === "king") {
+      setupSquare = "e1";
+      render();
+    }
   };
   upgradeBudget.onchange = updateSetup;
   pieceBudget.oninput = updateSetup;

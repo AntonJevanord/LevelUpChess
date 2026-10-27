@@ -11967,8 +11967,9 @@ var require_playable_library = __commonJS({
     });
     var closeoutLibrary = (group, candidates = []) => Object.freeze({
       id: `v16-${group}`,
-      name: group === "references" ? "Version 16 references" : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
+      name: group === "references" ? "King workshop" : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
       generation: 16,
+      ...group === "references" ? { focusFamily: "king" } : {},
       designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...candidates, ...RESERVE_DESIGN_IDS]),
       json: `src/playable-v16-${group}-profile.json`,
       ini: `variants/levelup-playable-v16-${group}.ini`
@@ -12241,7 +12242,7 @@ var require_design_options = __commonJS({
     var PLAYABLE_PROFILES2 = freeze([PLAYABLE_PROFILE2, reference, alternatives, ...closeoutProfiles]);
     var EXPERIMENTAL_VARIANT2 = PLAYABLE_PROFILE2.variant;
     var EXPERIMENTAL_VARIANTS2 = freeze(PLAYABLE_PROFILES2.map((profile) => profile.variant));
-    var PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES2[index].variant, ...library.generation ? { generation: library.generation } : {} })));
+    var PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES2[index].variant, ...library.generation ? { generation: library.generation } : {}, ...library.focusFamily ? { focusFamily: library.focusFamily } : {} })));
     function getPlayableProfile2(variant = EXPERIMENTAL_VARIANT2) {
       return PLAYABLE_PROFILES2.find((profile) => profile.variant === variant);
     }

@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 16 is closed as `v0.16.3`. The four references and completed evidence remain fixed. Version 17 will begin mixed-army testing; this roadmap starts no balance run.
+Version 16 is closed with UI follow-up `v0.16.4`. The four references and completed evidence remain fixed. Version 17 will begin mixed-army testing; this roadmap starts no balance run.
 
 ## Completed foundation
 
@@ -22,6 +22,8 @@ Version 16 is closed as `v0.16.3`. The four references and completed evidence re
 
 - [x] Add official names/rules and immutable family-workshop candidates to new playable libraries; retain historical libraries and profiles.
 - [x] Add board-click upgrade selection and a setup preview; retain the current game until starting the selected armies.
+- [x] Expose king grants through a named King workshop using the unchanged reference profile.
+- [x] Let short desktop viewports scroll past the setup toolbar to reveal the bottom rank; recheck after resizing and flipping.
 - [x] Add king purchases costing 1–9: keep the ordinary royal king and grant one finite reserve piece, with own-half drops and no checking drops.
 - [x] Complete movement, royal safety, castling, promotion, native-engine, undo, clock, save and PGN checks for the new libraries, including ten browser regressions and a native forced drop.
 - [x] Push the tested closeout and tag `v0.16.3`; keep version 16 intact when branching version 17.

@@ -11963,8 +11963,9 @@
       });
       var closeoutLibrary = (group, candidates = []) => Object.freeze({
         id: `v16-${group}`,
-        name: group === "references" ? "Version 16 references" : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
+        name: group === "references" ? "King workshop" : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
         generation: 16,
+        ...group === "references" ? { focusFamily: "king" } : {},
         designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...candidates, ...RESERVE_DESIGN_IDS]),
         json: `src/playable-v16-${group}-profile.json`,
         ini: `variants/levelup-playable-v16-${group}.ini`
@@ -12237,7 +12238,7 @@
       var PLAYABLE_PROFILES2 = freeze([PLAYABLE_PROFILE2, reference, alternatives, ...closeoutProfiles]);
       var EXPERIMENTAL_VARIANT2 = PLAYABLE_PROFILE2.variant;
       var EXPERIMENTAL_VARIANTS2 = freeze(PLAYABLE_PROFILES2.map((profile) => profile.variant));
-      var PLAYABLE_LIBRARIES2 = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES2[index].variant, ...library.generation ? { generation: library.generation } : {} })));
+      var PLAYABLE_LIBRARIES2 = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES2[index].variant, ...library.generation ? { generation: library.generation } : {}, ...library.focusFamily ? { focusFamily: library.focusFamily } : {} })));
       function getPlayableProfile3(variant = EXPERIMENTAL_VARIANT2) {
         return PLAYABLE_PROFILES2.find((profile) => profile.variant === variant);
       }
@@ -21685,7 +21686,7 @@
   experimentalOption.replaceWith(...[...import_design_options3.PLAYABLE_LIBRARIES].sort((a, b) => Number(b.id.startsWith("v16-")) - Number(a.id.startsWith("v16-"))).map((library) => {
     const option = document.createElement("option");
     option.value = library.variant;
-    option.textContent = library.id === "v16-references" ? "Version 16 \xB7 References" : `${library.id.startsWith("v16-") ? "Version 16" : "Archive"} \xB7 ${library.name}`;
+    option.textContent = `${library.id.startsWith("v16-") ? "Version 16" : "Archive"} \xB7 ${library.name}`;
     return option;
   }));
   var designOptions2 = new Map(import_design_options3.DESIGN_OPTIONS.map((option) => [option.id, option]));
@@ -21897,6 +21898,13 @@
     render();
   }
   document.querySelector("#setup-mode").onclick = () => setSetupEditing(!editingSetup);
+  var boardArea = document.querySelector(".board-area");
+  function updateBoardStickyOffset() {
+    boardArea.style.setProperty("--board-sticky-top", `${Math.min(18, window.innerHeight - boardArea.offsetHeight - 18)}px`);
+  }
+  new ResizeObserver(updateBoardStickyOffset).observe(boardArea);
+  window.addEventListener("resize", updateBoardStickyOffset);
+  updateBoardStickyOffset();
   function renderSetupPicker() {
     const panel = document.querySelector("#setup-picker");
     panel.hidden = !editingSetup;
@@ -22674,6 +22682,11 @@
   gameMode.onchange = () => {
     updateSetup();
     setSetupEditing(usesBoardSetup());
+    const library = import_design_options3.PLAYABLE_LIBRARIES.find((library2) => library2.variant === gameMode.value);
+    if (editingSetup && library?.focusFamily === "king") {
+      setupSquare = "e1";
+      render();
+    }
   };
   upgradeBudget.onchange = updateSetup;
   pieceBudget.oninput = updateSetup;
