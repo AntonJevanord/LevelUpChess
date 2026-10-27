@@ -55,9 +55,9 @@
           <div id="experimental-settings" hidden>
             <p id="experimental-library-help" class="engine-help">Choose a library to try its named designs. Balance and prices are provisional.</p>
             <div id="archive-palette" class="experimental-legend" aria-label="Upgrade levels"><span class="green-text">L1 · 1 point</span><span class="cyan-text">L2 · 2 points</span><span class="red-text">L3 · 3 points</span></div>
-            <div id="workshop-palette" class="experimental-legend" aria-label="Workshop upgrade colors" hidden><span aria-label="Level 1: green and blue, 1 point"><i class="color-dot green" aria-hidden="true"></i><i class="color-dot blue" aria-hidden="true"></i>L1 · 1 point</span><span aria-label="Level 2: yellow and orange, 2 points"><i class="color-dot yellow" aria-hidden="true"></i><i class="color-dot orange" aria-hidden="true"></i>L2 · 2 points</span><span aria-label="Level 3: red and purple, 3 points"><i class="color-dot red" aria-hidden="true"></i><i class="color-dot purple" aria-hidden="true"></i>L3 · 3 points</span></div>
-            <p id="workshop-palette-help" class="engine-help" hidden>First options use green, yellow and red. Alternatives use blue, orange and purple. The four references are red.</p>
-            <p id="king-grant-costs" class="engine-help" hidden>King grants cost 1–9 points, matching their numbered levels.</p>
+            <div id="workshop-palette" class="experimental-legend" aria-label="Replacement upgrade colors" hidden><span aria-label="Level 1: green and blue, 1 point"><i class="color-dot green" aria-hidden="true"></i><i class="color-dot blue" aria-hidden="true"></i>L1 · 1 point</span><span aria-label="Level 2: yellow and orange, 2 points"><i class="color-dot yellow" aria-hidden="true"></i><i class="color-dot orange" aria-hidden="true"></i>L2 · 2 points</span><span aria-label="Level 3: red and purple, 3 points"><i class="color-dot red" aria-hidden="true"></i><i class="color-dot purple" aria-hidden="true"></i>L3 · 3 points</span></div>
+            <p id="workshop-palette-help" class="engine-help" hidden>First replacement options use green, yellow and red. Alternatives use blue, orange and purple. The four references are red.</p>
+            <p id="king-grant-costs" class="engine-help" hidden>King grants cost 1–9 points. Their colors run blue/green, yellow/orange, purple/red, then teal, gold and silver.</p>
             <label for="experimental-budget">Budget per side (1–6)</label><input id="experimental-budget" type="number" min="1" max="6" step="1" value="6">
             <p id="experimental-status" role="status" aria-live="polite"></p>
             <div id="legacy-design-controls"><label for="experimental-family">Choose a piece family</label><select id="experimental-family"><option value="pawn">Pawns</option><option value="knight">Knights</option><option value="bishop">Bishops</option><option value="queen">Queens</option><option value="rook" selected>Rooks</option><option value="king">King grants</option></select>
@@ -12470,15 +12470,19 @@
       var officialNames = { "rook.purple@10": "Vanguard", "knight.purple@3": "Unicorn", "bishop.purple@13": "Cruisader", "queen.purple@1": "Amazon" };
       var historicalAccents = ["", "green", "cyan", "red", "violet", "orange", "pink", "teal", "gold", "silver"];
       var variantAccents = { 1: ["green", "blue"], 2: ["yellow", "orange"], 3: ["red", "purple"] };
+      var kingGrantAccents = ["blue", "green", "yellow", "orange", "purple", "red", "teal", "gold", "silver"];
       var workshopAccents = {};
       var coloredGroups = /* @__PURE__ */ new Set();
-      for (const id of /* @__PURE__ */ new Set([...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(V16_CANDIDATES).flat(), ...RESERVE_DESIGN_IDS])) {
+      for (const id of /* @__PURE__ */ new Set([...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(V16_CANDIDATES).flat()])) {
         const option = optionsById[id];
         const group = `${option.family}:${option.level}`;
         const pair = variantAccents[option.level];
         workshopAccents[id] = pair ? pair[coloredGroups.has(group) ? 1 : 0] : historicalAccents[option.level];
         coloredGroups.add(group);
       }
+      RESERVE_DESIGN_IDS.forEach((id, index) => {
+        workshopAccents[id] = kingGrantAccents[index];
+      });
       Object.freeze(workshopAccents);
       function optionInProfile(option, profile) {
         if (!option) return option;

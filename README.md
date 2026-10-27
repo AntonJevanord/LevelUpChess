@@ -52,7 +52,7 @@ Browser saves belong to the current browser and site address. Use PGN when movin
 
 ## Version 16: frozen references and playtest roster
 
-The playable closeout with UI fixes is tagged `v0.16.5`. Mixed-army experiments belong to version 17.
+The playable closeout with UI fixes is tagged `v0.16.6`. Mixed-army experiments belong to version 17.
 
 These are the official three-point replacement upgrades, available in every new playtest library:
 

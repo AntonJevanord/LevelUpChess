@@ -12347,15 +12347,19 @@
       var officialNames = { "rook.purple@10": "Vanguard", "knight.purple@3": "Unicorn", "bishop.purple@13": "Cruisader", "queen.purple@1": "Amazon" };
       var historicalAccents = ["", "green", "cyan", "red", "violet", "orange", "pink", "teal", "gold", "silver"];
       var variantAccents = { 1: ["green", "blue"], 2: ["yellow", "orange"], 3: ["red", "purple"] };
+      var kingGrantAccents = ["blue", "green", "yellow", "orange", "purple", "red", "teal", "gold", "silver"];
       var workshopAccents = {};
       var coloredGroups = /* @__PURE__ */ new Set();
-      for (const id of /* @__PURE__ */ new Set([...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(V16_CANDIDATES).flat(), ...RESERVE_DESIGN_IDS])) {
+      for (const id of /* @__PURE__ */ new Set([...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(V16_CANDIDATES).flat()])) {
         const option = optionsById[id];
         const group = `${option.family}:${option.level}`;
         const pair = variantAccents[option.level];
         workshopAccents[id] = pair ? pair[coloredGroups.has(group) ? 1 : 0] : historicalAccents[option.level];
         coloredGroups.add(group);
       }
+      RESERVE_DESIGN_IDS.forEach((id, index) => {
+        workshopAccents[id] = kingGrantAccents[index];
+      });
       Object.freeze(workshopAccents);
       function optionInProfile(option, profile) {
         if (!option) return option;

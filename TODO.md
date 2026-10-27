@@ -1,6 +1,6 @@
 # Roadmap
 
-Version 16 is closed with UI follow-up `v0.16.5`. The four references and completed evidence remain fixed. Version 17 will begin mixed-army testing; this roadmap starts no balance run.
+Version 16 is closed with UI follow-up `v0.16.6`. The four references and completed evidence remain fixed. Version 17 will begin mixed-army testing; this roadmap starts no balance run.
 
 ## Completed foundation
 
@@ -25,6 +25,7 @@ Version 16 is closed with UI follow-up `v0.16.5`. The four references and comple
 - [x] Expose king grants through a named King workshop using the unchanged reference profile.
 - [x] Let short desktop viewports scroll past the setup toolbar to reveal the bottom rank; recheck after resizing and flipping.
 - [x] Give first level-1/2/3 options green/yellow/red accents and alternatives blue/orange/purple accents; keep the four references red across workshops.
+- [x] Keep king costs 1–9 while coloring their sequence blue/green, yellow/orange, purple/red, then teal/gold/silver.
 - [x] Add king purchases costing 1–9: keep the ordinary royal king and grant one finite reserve piece, with own-half drops and no checking drops.
 - [x] Complete movement, royal safety, castling, promotion, native-engine, undo, clock, save and PGN checks for the new libraries, including ten browser regressions and a native forced drop.
 - [x] Push the tested closeout and tag `v0.16.3`; keep version 16 intact when branching version 17.

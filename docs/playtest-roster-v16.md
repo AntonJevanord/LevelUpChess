@@ -16,7 +16,7 @@ The references are frozen. Other designs and all reserve prices are provisional.
 Purchase cost is distinct from material value or an engine evaluation parameter.
 This roster adds playtest options; it schedules no balance games.
 
-Colors distinguish alternatives within a level: the first option is green at
+Replacement colors distinguish alternatives within a level: the first option is green at
 level 1, yellow at level 2 and red at level 3. Other options use blue, orange and
 purple respectively, repeating that second color when needed. All four frozen
 references are red. These colors appear on the board, in upgrade choices and in
@@ -51,6 +51,8 @@ initial two-square moves in every orthogonal direction.
 Select the starting king to buy one grant. The setup preview marks that purchase;
 starting the game retains the ordinary royal king and puts the nonroyal guard in
 the pocket. Guard costs follow the requested numbered levels, **1 through 9**.
+Their color sequence is blue, green, yellow, orange, purple, red, teal, gold and
+silver. These paired colors do not change their individual costs.
 
 | Cost | Grant | Guard movement |
 | ---: | --- | --- |
