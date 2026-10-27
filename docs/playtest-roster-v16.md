@@ -51,7 +51,7 @@ initial two-square moves in every orthogonal direction.
 Select the starting king to buy one grant. The setup preview marks that purchase;
 starting the game retains the ordinary royal king and puts the nonroyal guard in
 the pocket. Guard costs follow the requested numbered levels, **1 through 9**.
-Their color sequence is blue, green, yellow, orange, purple, red, teal, gold and
+Their color sequence is blue, green, yellow, orange, red, purple, teal, gold and
 silver. These paired colors do not change their individual costs.
 
 | Cost | Grant | Guard movement |

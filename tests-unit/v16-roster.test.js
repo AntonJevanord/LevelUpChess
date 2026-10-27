@@ -106,7 +106,7 @@ test('workshop colors distinguish variants without changing references, profiles
       assert.equal(pieceInfoForProfile(profile, letter.toUpperCase()).accent, accent);
     }
     for (const [index, id] of RESERVE_DESIGN_IDS.entries()) {
-      const accent = ['blue', 'green', 'yellow', 'orange', 'purple', 'red', 'teal', 'gold', 'silver'][index];
+      const accent = ['blue', 'green', 'yellow', 'orange', 'red', 'purple', 'teal', 'gold', 'silver'][index];
       const option = options.find(candidate => candidate.id === id);
       assert.equal(option.level, index + 1, 'color pairing must not change grant costs');
       assert.equal(option.accent, accent);

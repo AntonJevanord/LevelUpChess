@@ -135,7 +135,7 @@ const optionsById = Object.fromEntries(DESIGN_OPTIONS.map(option => [option.id, 
 const officialNames = { 'rook.purple@10': 'Vanguard', 'knight.purple@3': 'Unicorn', 'bishop.purple@13': 'Cruisader', 'queen.purple@1': 'Amazon' };
 const historicalAccents = ['', 'green', 'cyan', 'red', 'violet', 'orange', 'pink', 'teal', 'gold', 'silver'];
 const variantAccents = { 1: ['green', 'blue'], 2: ['yellow', 'orange'], 3: ['red', 'purple'] };
-const kingGrantAccents = ['blue', 'green', 'yellow', 'orange', 'purple', 'red', 'teal', 'gold', 'silver'];
+const kingGrantAccents = ['blue', 'green', 'yellow', 'orange', 'red', 'purple', 'teal', 'gold', 'silver'];
 // Colors follow declared designs, not allocated letters or profile sorting.
 // References occupy the first level-three option in their own piece family.
 const workshopAccents = {};
