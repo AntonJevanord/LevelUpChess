@@ -1,0 +1,11 @@
+purchase_key,purchase,movement,upgrade_points,vanguard_score,vanguard_games,unicorn_score,unicorn_games,cruisader_score,cruisader_games,amazon_score,amazon_games,reference_overall_score,reference_games,shared_reference_cases,reference_wins,reference_draws,reference_losses,two_step_score,two_step_games,original_reference_score,new_reference_score
+two-step-pawns,Three two-step pawns,fmW2fceF2,3,0.484375,64,0.578125,64,0.4453125,64,0.53125,64,0.509765625,256,32,111,39,106,,0,0.50390625,0.515625
+king-step-pawns,Three king-step pawns,mWFifmnD,3,0.4296875,64,0.47580645161290325,62,0.421875,64,0.59375,64,0.4838709677419355,248,31,103,34,111,0.515625,64,0.44166666666666665,0.5234375
+full-diagonal-pawns,Three full-diagonal pawns,FfmWifmnD,3,0.34375,64,0.46875,64,0.34375,64,0.390625,64,0.38671875,256,32,85,28,143,0.5703125,64,0.34765625,0.42578125
+support-pawns,Three Support pawns,fmWfceFifmnDsW,3,0.296875,64,0.2734375,64,0.234375,64,0.3359375,64,0.28515625,256,32,51,44,161,0.25,64,0.2421875,0.328125
+mobile-forward-grants,Three mobile-forward grants,fWmfF,3,0.4765625,64,0.484375,64,0.4140625,64,0.421875,64,0.44921875,256,32,84,62,110,0.6083333333333333,60,0.43359375,0.46484375
+scout-grants,Three Scout grants,fWbmF,3,0.5625,64,0.484375,64,0.2890625,64,0.4765625,64,0.453125,256,32,94,44,118,0.4838709677419355,62,0.46484375,0.44140625
+capture-forward-grants,Three capture-forward grants,cfWmfF,3,0.5390625,64,0.4453125,64,0.34375,64,0.3359375,64,0.416015625,256,32,86,41,129,0.703125,64,0.421875,0.41015625
+long-forward-grants,Three long-forward grants,fW2,3,0.6015625,64,0.65625,64,0.609375,64,0.625,64,0.623046875,256,32,140,39,77,0.703125,64,0.55859375,0.6875
+pawn-like-grants,Three pawn-like grants,fmWfceF,3,0.703125,64,0.5546875,64,0.5234375,64,0.671875,64,0.61328125,256,32,126,62,68,0.782258064516129,62,0.63671875,0.58984375
+grid-bishop,Grid bishop,BDC,3,0.671875,64,0.609375,64,0.6171875,64,0.5234375,64,0.60546875,256,32,138,34,84,0.7265625,64,0.5859375,0.625

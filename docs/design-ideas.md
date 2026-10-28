@@ -1,19 +1,21 @@
 # Design shortlist
 
-Support pawn and Scout guard are now one-point research candidates in the
-[mobility batch](version17-mobility.md). The completed
-[640-game supplement](../experiments/balance/results/v17-mobility-additions-001.report.md)
-supports parking Support: its three-pawn purchase scored 28.52% against references
-and 25.00% against two-step pawns. Scout remains a playtest candidate at one point:
-45.31% against references and 48.39% against two-step pawns, with a repeated weak
-Cruisader matchup. Their definitions and prices remain unchanged; neither has
-been promoted into the playable workshops.
-The bishop and rook remain ideas for later prototypes, outside that game budget.
+The [completed mobility review](../experiments/balance/results/v17-mobility-001.report.md)
+supports playtesting two-step and king-step pawns, mobile-forward grants and
+Scout grants. Mobile-forward grants have the narrowest spread against the four
+references; Scout offers a different retreat ability but a weak Cruisader matchup.
+These are provisional one-point candidates, not confirmed material values.
+
+Park Support and full-diagonal pawns rather than repeat their unchanged tests.
+Support scored 28.52% against references and 25.00% against two-step pawns;
+Scout scored 45.31% and 48.39%. Neither has been promoted into the playable
+workshops. The bishop and rook ideas below remain outside the completed budget;
+human playtesting the shortlist comes before another large experiment.
 
 | Idea | Tentative movement | Identity and question |
 | --- | --- | --- |
-| Scout guard | `fWbmF` | Move/capture one forward; retreat quietly on backward diagonals. Can a guard remain useful by changing files through retreat rather than gaining more capture targets? |
-| Support pawn | `fmWfceFifmnDsW` | Ordinary forward movement/captures and clear home double, plus one-square sideways moves and captures. Helps nearby pawn chains without the old rank pawn's unlimited sideways range. |
+| Scout guard | `fWbmF` | Playtest candidate: move/capture one forward and retreat quietly on backward diagonals. Check whether its file changes and Cruisader weakness allow enjoyable counterplay. |
+| Support pawn | `fmWfceFifmnDsW` | Parked after testing: ordinary forward movement/captures and clear home double, plus sideways steps and captures, did not provide enough strength in the three-pawn purchase. |
 | Travelling bishop | `BmC` | Bishop captures; quiet camel jumps cross blockers while retaining its square color. Tests development and repositioning rather than another capture compound. |
 | Sidestep rook | `RmB2` | Ordinary rook attacks, with quiet clear diagonal slides up to two squares. A simpler positional alternative to a rook with many teleporting jumps. |
 

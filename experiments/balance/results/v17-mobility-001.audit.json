@@ -1,0 +1,2926 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-v17-mobility-combined-evidence",
+  "recordedDate": "2026-10-28",
+  "provenance": {
+    "originalManifestsSupplied": false,
+    "nativePreflightSupplied": false,
+    "engineSha256": null,
+    "legalMovesIndependentlyReplayed": false,
+    "descriptorKind": "compatible outcome projection, not a runnable or original run manifest",
+    "limitations": [
+      "Each exact journal is validated under its original declaration, schedule, registry and profile before semantic outcome selection; raw record and pair identities remain unchanged.",
+      "Original manifests and native preflight proofs were not supplied; reconstructed declarations do not attest to original engine binaries or native value tables.",
+      "No independent move replay, terminal-position certification, material fit, individual-piece Elo or population confidence interval is claimed.",
+      "The thirty-two fixed short prefixes remain related descriptive test cases. A target band is a design criterion, not demonstrated balance equivalence."
+    ]
+  },
+  "method": {
+    "overall": "Equal frozen-reference means over shared fully completed cases across all four references; draws count half a point.",
+    "cells": "Each individual matchup retains all its complete color pairs, even when another opponent lacks that case.",
+    "baseline": "Three two-step pawns are a separate equal-cost matchup, excluded from reference Overall; there is no baseline self matchup.",
+    "colors": "Physical White/Black summaries use exactly the same shared reference cases and game count as Overall.",
+    "historicalReuse": "640 design-focus games plus 128 two-step-pawn reference games; no changed candidate reuses predecessor outcomes."
+  },
+  "counts": {
+    "scheduledGames": 3136,
+    "finalizedGames": 3136,
+    "completedGames": 3131,
+    "truncatedGames": 5,
+    "pairedGames": 3126,
+    "completePairs": 1563,
+    "errors": 0,
+    "historicalGamesReused": 768,
+    "mobilityScheduledGames": 2368,
+    "mobilityCompletedGames": 2363,
+    "newMatchGames": 0,
+    "engineSearches": 0
+  },
+  "sources": [
+    {
+      "experiment": "design-focus",
+      "source": {
+        "journal": {
+          "archiveFile": "v17-focus-001.games.jsonl.gz",
+          "archivedSha256": "565cdb4a3031980d90418a5a72e735e39ee788781a53dd8d2237841b8fdf8d67",
+          "originalName": "games.jsonl",
+          "sha256": "8b44db63c4f2b270653aa76aa37dfdf4f6e8eb7bae00e3ccdac87e291ac55bbd",
+          "bytes": 2233082
+        },
+        "uploadedReport": {
+          "archiveFile": "v17-focus-001.uploaded-report.md.gz",
+          "archivedSha256": "fa189e7258630dc54550f6f7a1cf16d5159717819ab8ca36ba3a459cfb51634c",
+          "originalName": "v17-report.md",
+          "sha256": "281ef71bf4336c1be2f226b026a933d8daf958ffc3481fef80ed5015df9cfb64",
+          "bytes": 4184
+        }
+      },
+      "declaration": {
+        "configSha256": "5305aa9bb04ea2ab433bd929010b01cc1abb4f79c23db34065e8093343f7c06c",
+        "registryHash": "acb5460da2b76ef40f2ec201b8c274005bad44914807eb47926ee881fe7225e4",
+        "profileHash": "87444b5ffda6dbbd3d4f89e4b9eb62126affc2c99c498366e38a1f94592599da",
+        "scheduleSha256": "b5ed1481cdf7cdbf885536a0b7787e085efcb4e2865668fddeb76ecee2cd99eb",
+        "scheduledGames": 640,
+        "reportReproducedExactly": false
+      },
+      "originalProfileHash": "87444b5ffda6dbbd3d4f89e4b9eb62126affc2c99c498366e38a1f94592599da",
+      "originalRegistryHash": "acb5460da2b76ef40f2ec201b8c274005bad44914807eb47926ee881fe7225e4",
+      "inputGames": 640,
+      "selectedGames": 640,
+      "historical": true,
+      "selectedComparisonIds": [
+        "full-diagonal-pawns-v-amazon",
+        "full-diagonal-pawns-v-cruisader",
+        "full-diagonal-pawns-v-two-step-pawns",
+        "full-diagonal-pawns-v-unicorn",
+        "full-diagonal-pawns-v-vanguard",
+        "grid-bishop-v-amazon",
+        "grid-bishop-v-cruisader",
+        "grid-bishop-v-two-step-pawns",
+        "grid-bishop-v-unicorn",
+        "grid-bishop-v-vanguard",
+        "long-forward-grants-v-amazon",
+        "long-forward-grants-v-cruisader",
+        "long-forward-grants-v-two-step-pawns",
+        "long-forward-grants-v-unicorn",
+        "long-forward-grants-v-vanguard",
+        "pawn-like-grants-v-amazon",
+        "pawn-like-grants-v-cruisader",
+        "pawn-like-grants-v-two-step-pawns",
+        "pawn-like-grants-v-unicorn",
+        "pawn-like-grants-v-vanguard"
+      ],
+      "selectedRecordIdsSha256": "e662746c15c9bcaf72ddaf3494371189649ed6364855ad856a9eaa65963c2cf5",
+      "selectedPairIdsSha256": "ff526f79746d42103d690facdbac244f3687699e261591e91cb3a74f34d07050"
+    },
+    {
+      "experiment": "pawn-grants-revisions",
+      "source": {
+        "journal": {
+          "archiveFile": "v17-followup-001.pawn-grants-revisions.games.jsonl.gz",
+          "archivedSha256": "9a91b6cce5e36c7022e2a55a5496976d7dfa78882498c62b7a12a5bda8fd2be5",
+          "originalName": "games.jsonl",
+          "sha256": "4f27e263ac401895ba77c109e9bbbc4a7a7bf95436ac45651c64553dcea792e8",
+          "bytes": 1297013
+        },
+        "uploadedReport": {
+          "archiveFile": "v17-followup-001.pawn-grants-revisions.uploaded-report.md.gz",
+          "archivedSha256": "eb1f232d7a1a87956c2193705fcd7a85b1c243d64e84c58498cb855c5e4785dc",
+          "originalName": "v17-report.md",
+          "sha256": "db55dd9b830997b74ddf9f959e1857230f9772eda32174b455c9d1361dce2fc2",
+          "bytes": 3236
+        }
+      },
+      "declaration": {
+        "configSha256": "4b27346bd18ed05308a9082f6bf409e9e0a68ba3ed35f46b464f6523f09ae469",
+        "registryHash": "7682c72a4c91ba84b3d0dbab5ecdc4617417433dca52cd6a7ef7bba0eb0f2b8c",
+        "profileHash": "54de68690cc1335e035706f4f3d328a79e33f9ec886f8ee6be3d8e3fdfe75738",
+        "scheduleSha256": "a96e34e76a11e736f5e57778f444f0a69f3ffaf6f2a34017d782d0dd291f794e",
+        "scheduledGames": 384,
+        "reportReproducedExactly": true
+      },
+      "originalProfileHash": "54de68690cc1335e035706f4f3d328a79e33f9ec886f8ee6be3d8e3fdfe75738",
+      "originalRegistryHash": "7682c72a4c91ba84b3d0dbab5ecdc4617417433dca52cd6a7ef7bba0eb0f2b8c",
+      "inputGames": 384,
+      "selectedGames": 128,
+      "historical": true,
+      "selectedComparisonIds": [
+        "two-step-pawns-v-amazon",
+        "two-step-pawns-v-cruisader",
+        "two-step-pawns-v-unicorn",
+        "two-step-pawns-v-vanguard"
+      ],
+      "selectedRecordIdsSha256": "9efba34cde1aca3c69e84d9e4d598ce9d3e27ce998ce4602bc91b390299f04c7",
+      "selectedPairIdsSha256": "f74ea52f91e190c96497f107f31492c7aeac7e818b4f8d1ee927bc1e3aa0af21"
+    },
+    {
+      "experiment": "mobility-confirm",
+      "source": {
+        "archiveFile": "v17-mobility-001.mobility-confirm.games.jsonl.gz",
+        "archivedSha256": "919ef6a377b37d48b6ffaf66ee9f52d29793c2c6673728bc83bd77df68569e6f",
+        "originalName": "games.jsonl",
+        "sha256": "ad8a05a2c0bc9d3d8a467a42f7203a2ac7df3144704cde5cdba55cc0f2281dad",
+        "bytes": 2663656
+      },
+      "declaration": {
+        "configSha256": "31bbeeb2b63a578233883cdd4ed4eaa506d5f6eb2a1f8210b6f64d248c8ed483",
+        "registryHash": "acb5460da2b76ef40f2ec201b8c274005bad44914807eb47926ee881fe7225e4",
+        "profileHash": "87444b5ffda6dbbd3d4f89e4b9eb62126affc2c99c498366e38a1f94592599da",
+        "scheduleSha256": "fff19c361757d94b448ab6f19d266a3a8915f0529c151b12fe95038ff1b1ab28",
+        "scheduledGames": 768,
+        "uploadedReportSupplied": false,
+        "reportReproducedExactly": false
+      },
+      "originalProfileHash": "87444b5ffda6dbbd3d4f89e4b9eb62126affc2c99c498366e38a1f94592599da",
+      "originalRegistryHash": "acb5460da2b76ef40f2ec201b8c274005bad44914807eb47926ee881fe7225e4",
+      "inputGames": 768,
+      "selectedGames": 768,
+      "historical": false,
+      "selectedComparisonIds": [
+        "full-diagonal-pawns-v-amazon",
+        "full-diagonal-pawns-v-cruisader",
+        "full-diagonal-pawns-v-two-step-pawns",
+        "full-diagonal-pawns-v-unicorn",
+        "full-diagonal-pawns-v-vanguard",
+        "grid-bishop-v-amazon",
+        "grid-bishop-v-cruisader",
+        "grid-bishop-v-two-step-pawns",
+        "grid-bishop-v-unicorn",
+        "grid-bishop-v-vanguard",
+        "long-forward-grants-v-amazon",
+        "long-forward-grants-v-cruisader",
+        "long-forward-grants-v-two-step-pawns",
+        "long-forward-grants-v-unicorn",
+        "long-forward-grants-v-vanguard",
+        "pawn-like-grants-v-amazon",
+        "pawn-like-grants-v-cruisader",
+        "pawn-like-grants-v-two-step-pawns",
+        "pawn-like-grants-v-unicorn",
+        "pawn-like-grants-v-vanguard",
+        "two-step-pawns-v-amazon",
+        "two-step-pawns-v-cruisader",
+        "two-step-pawns-v-unicorn",
+        "two-step-pawns-v-vanguard"
+      ],
+      "selectedRecordIdsSha256": "5ddee97375437dc5f3e08dd92cd85ce10995fc2fd27d3372b109606b35b3ee7d",
+      "selectedPairIdsSha256": "ce89a954a61c6664da9f0aff6b089fbb23818c82789a6c08fdc452ce5286726a"
+    },
+    {
+      "experiment": "mobility-revisions",
+      "source": {
+        "archiveFile": "v17-mobility-001.mobility-revisions.games.jsonl.gz",
+        "archivedSha256": "9baeb9c313475e5be3b71115144074c2efc4cd5059e24100ed96659b66468a65",
+        "originalName": "games.jsonl",
+        "sha256": "d6cff6c74508775bcd14db2c18e87db530845723a76457dce9ccff08aa2faa6f",
+        "bytes": 3468589
+      },
+      "declaration": {
+        "configSha256": "b3fca37dbde8f489aefd7efaafd68ab50efd0808dbff35937494f147666c6a39",
+        "registryHash": "8a6791bb1f0e54efe593ef78c5612e838b392ba94660125bd37fae30c509ca42",
+        "profileHash": "bb820893fb03e28f575fe126e1cfeacd3b06c1ea0530d14e7ece2a37cf7eacb3",
+        "scheduleSha256": "52da4c3626e5fa3db0414c3e42feb453f8123b7359a247f93a5889721a6a878b",
+        "scheduledGames": 960,
+        "uploadedReportSupplied": false,
+        "reportReproducedExactly": false
+      },
+      "originalProfileHash": "bb820893fb03e28f575fe126e1cfeacd3b06c1ea0530d14e7ece2a37cf7eacb3",
+      "originalRegistryHash": "8a6791bb1f0e54efe593ef78c5612e838b392ba94660125bd37fae30c509ca42",
+      "inputGames": 960,
+      "selectedGames": 960,
+      "historical": false,
+      "selectedComparisonIds": [
+        "capture-forward-grants-v-amazon",
+        "capture-forward-grants-v-cruisader",
+        "capture-forward-grants-v-two-step-pawns",
+        "capture-forward-grants-v-unicorn",
+        "capture-forward-grants-v-vanguard",
+        "king-step-pawns-v-amazon",
+        "king-step-pawns-v-cruisader",
+        "king-step-pawns-v-two-step-pawns",
+        "king-step-pawns-v-unicorn",
+        "king-step-pawns-v-vanguard",
+        "mobile-forward-grants-v-amazon",
+        "mobile-forward-grants-v-cruisader",
+        "mobile-forward-grants-v-two-step-pawns",
+        "mobile-forward-grants-v-unicorn",
+        "mobile-forward-grants-v-vanguard"
+      ],
+      "selectedRecordIdsSha256": "2bd5657b38bf019748e019dcee85b0775e5b7492cd8ab7d22287934b27018625",
+      "selectedPairIdsSha256": "496c57e060e1ed6c27104767e9babd1598c04dffa2224abfa64d0f7e0567e1a0"
+    },
+    {
+      "experiment": "mobility-additions",
+      "source": {
+        "journal": {
+          "archiveFile": "v17-mobility-additions-001.games.jsonl.gz",
+          "archivedSha256": "2e56b2659ec8e726a125b2a253c47b47374d4813306971ada9bbd14618f423ec",
+          "originalName": "games.jsonl",
+          "sha256": "8065aa8cf7e98d64cd00d38a15d452c602dc2b2b905f496fa71f69698f73e58b",
+          "bytes": 2288730
+        },
+        "uploadedReport": {
+          "archiveFile": "v17-mobility-additions-001.uploaded-report.md.gz",
+          "archivedSha256": "ba2ff24b04038efbac8c4769db3237898872fe630e92120a4b37ad6218e503cd",
+          "originalName": "v17-report.md",
+          "sha256": "1ece54afc61b9b68f2960db20616f8be1e7e0be723dc6e418e6665e4193d9f0c",
+          "bytes": 2954
+        }
+      },
+      "declaration": {
+        "configSha256": "73138d647d42b765236bc6630a9afbe5653a966c790448a77edf6678d654f4a9",
+        "registryHash": "4ffab82875c055aaa6af11412cb652d29d0920c01d659a0373e516f80c294ee0",
+        "profileHash": "92a589b55fed6a797a6996df79861f3014f00cac3ebb82e6ba97c4ce6d4a6dc9",
+        "scheduleSha256": "c853295537e033032b0b465f0b6540681bc6f0a16d91fd7042ff2edbb4dc8dea",
+        "scheduledGames": 640,
+        "reportReproducedExactly": true
+      },
+      "originalProfileHash": "92a589b55fed6a797a6996df79861f3014f00cac3ebb82e6ba97c4ce6d4a6dc9",
+      "originalRegistryHash": "4ffab82875c055aaa6af11412cb652d29d0920c01d659a0373e516f80c294ee0",
+      "inputGames": 640,
+      "selectedGames": 640,
+      "historical": false,
+      "selectedComparisonIds": [
+        "scout-grants-v-amazon",
+        "scout-grants-v-cruisader",
+        "scout-grants-v-two-step-pawns",
+        "scout-grants-v-unicorn",
+        "scout-grants-v-vanguard",
+        "support-pawns-v-amazon",
+        "support-pawns-v-cruisader",
+        "support-pawns-v-two-step-pawns",
+        "support-pawns-v-unicorn",
+        "support-pawns-v-vanguard"
+      ],
+      "selectedRecordIdsSha256": "716ac5a2aa85cbf71b514bc0a568ff6c147e7fa87990d2a5434c33641134d2ff",
+      "selectedPairIdsSha256": "de263ad72e0b6af71a72917bba5b2dc7b570c79dd357ab95fe22ea2c9595779c"
+    }
+  ],
+  "rows": [
+    {
+      "key": "two-step-pawns",
+      "label": "Three two-step pawns",
+      "designIds": [
+        "pawn.blue@5"
+      ],
+      "movements": [
+        "fmW2fceF2"
+      ],
+      "purchasePoints": 3,
+      "score": 0.509765625,
+      "games": 256,
+      "wins": 111,
+      "draws": 39,
+      "losses": 106,
+      "openingCoverage": {
+        "shared": 32,
+        "total": 32,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen",
+          "mobility-caro-kann",
+          "mobility-queens-pawn-e6",
+          "mobility-english-nf6",
+          "mobility-reti-c5",
+          "mobility-kings-fianchetto-e5",
+          "mobility-queens-fianchetto-d5",
+          "mobility-alekhine",
+          "mobility-queens-pawn-c6",
+          "mobility-english-e6",
+          "mobility-reti-e6",
+          "mobility-queens-fianchetto-nf6",
+          "mobility-kings-fianchetto-nf6",
+          "mobility-modern",
+          "mobility-queens-pawn-g6",
+          "mobility-english-g6",
+          "mobility-reti-g6"
+        ],
+        "repetitions": 1
+      },
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 64,
+          "wins": 26,
+          "draws": 10,
+          "losses": 28,
+          "score": 0.484375
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 64,
+          "wins": 32,
+          "draws": 10,
+          "losses": 22,
+          "score": 0.578125
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 64,
+          "wins": 24,
+          "draws": 9,
+          "losses": 31,
+          "score": 0.4453125
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 64,
+          "wins": 29,
+          "draws": 10,
+          "losses": 25,
+          "score": 0.53125
+        }
+      ],
+      "referenceCells": [
+        {
+          "columnKey": "vanguard",
+          "comparisonId": "two-step-pawns-v-vanguard",
+          "score": 0.484375,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 26,
+          "draws": 10,
+          "losses": 28,
+          "inverted": false
+        },
+        {
+          "columnKey": "unicorn",
+          "comparisonId": "two-step-pawns-v-unicorn",
+          "score": 0.578125,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 32,
+          "draws": 10,
+          "losses": 22,
+          "inverted": false
+        },
+        {
+          "columnKey": "cruisader",
+          "comparisonId": "two-step-pawns-v-cruisader",
+          "score": 0.4453125,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 24,
+          "draws": 9,
+          "losses": 31,
+          "inverted": false
+        },
+        {
+          "columnKey": "amazon",
+          "comparisonId": "two-step-pawns-v-amazon",
+          "score": 0.53125,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 29,
+          "draws": 10,
+          "losses": 25,
+          "inverted": false
+        }
+      ],
+      "baseline": {
+        "games": 0,
+        "completePairs": 0,
+        "openings": 0,
+        "wins": 0,
+        "draws": 0,
+        "losses": 0,
+        "score": null
+      },
+      "physicalColors": [
+        {
+          "key": "w",
+          "games": 128,
+          "score": 0.56640625
+        },
+        {
+          "key": "b",
+          "games": 128,
+          "score": 0.453125
+        }
+      ],
+      "cohorts": {
+        "original-sixteen": {
+          "score": 0.50390625,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 12,
+              "draws": 6,
+              "losses": 14,
+              "score": 0.46875
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 16,
+              "draws": 2,
+              "losses": 14,
+              "score": 0.53125
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 11,
+              "draws": 5,
+              "losses": 16,
+              "score": 0.421875
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 16,
+              "draws": 6,
+              "losses": 10,
+              "score": 0.59375
+            }
+          ],
+          "baselineScore": null,
+          "baselineGames": 0
+        },
+        "new-sixteen": {
+          "score": 0.515625,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 14,
+              "draws": 4,
+              "losses": 14,
+              "score": 0.5
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 16,
+              "draws": 8,
+              "losses": 8,
+              "score": 0.625
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 13,
+              "draws": 4,
+              "losses": 15,
+              "score": 0.46875
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 13,
+              "draws": 4,
+              "losses": 15,
+              "score": 0.46875
+            }
+          ],
+          "baselineScore": null,
+          "baselineGames": 0
+        }
+      }
+    },
+    {
+      "key": "king-step-pawns",
+      "label": "Three king-step pawns",
+      "designIds": [
+        "pawn.blue@7"
+      ],
+      "movements": [
+        "mWFifmnD"
+      ],
+      "purchasePoints": 3,
+      "score": 0.4838709677419355,
+      "games": 248,
+      "wins": 103,
+      "draws": 34,
+      "losses": 111,
+      "openingCoverage": {
+        "shared": 31,
+        "total": 32,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen",
+          "mobility-caro-kann",
+          "mobility-queens-pawn-e6",
+          "mobility-english-nf6",
+          "mobility-reti-c5",
+          "mobility-kings-fianchetto-e5",
+          "mobility-queens-fianchetto-d5",
+          "mobility-alekhine",
+          "mobility-queens-pawn-c6",
+          "mobility-english-e6",
+          "mobility-reti-e6",
+          "mobility-queens-fianchetto-nf6",
+          "mobility-kings-fianchetto-nf6",
+          "mobility-modern",
+          "mobility-queens-pawn-g6",
+          "mobility-english-g6",
+          "mobility-reti-g6"
+        ],
+        "repetitions": 1
+      },
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 62,
+          "wins": 23,
+          "draws": 7,
+          "losses": 32,
+          "score": 0.4274193548387097
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 62,
+          "wins": 27,
+          "draws": 5,
+          "losses": 30,
+          "score": 0.47580645161290325
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 62,
+          "wins": 22,
+          "draws": 10,
+          "losses": 30,
+          "score": 0.43548387096774194
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 62,
+          "wins": 31,
+          "draws": 12,
+          "losses": 19,
+          "score": 0.5967741935483871
+        }
+      ],
+      "referenceCells": [
+        {
+          "columnKey": "vanguard",
+          "comparisonId": "king-step-pawns-v-vanguard",
+          "score": 0.4296875,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 24,
+          "draws": 7,
+          "losses": 33,
+          "inverted": false
+        },
+        {
+          "columnKey": "unicorn",
+          "comparisonId": "king-step-pawns-v-unicorn",
+          "score": 0.47580645161290325,
+          "pairedGames": 62,
+          "completePairs": 31,
+          "openings": 31,
+          "wins": 27,
+          "draws": 5,
+          "losses": 30,
+          "inverted": false
+        },
+        {
+          "columnKey": "cruisader",
+          "comparisonId": "king-step-pawns-v-cruisader",
+          "score": 0.421875,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 22,
+          "draws": 10,
+          "losses": 32,
+          "inverted": false
+        },
+        {
+          "columnKey": "amazon",
+          "comparisonId": "king-step-pawns-v-amazon",
+          "score": 0.59375,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 32,
+          "draws": 12,
+          "losses": 20,
+          "inverted": false
+        }
+      ],
+      "baseline": {
+        "games": 64,
+        "completePairs": 32,
+        "openings": 32,
+        "wins": 30,
+        "draws": 6,
+        "losses": 28,
+        "score": 0.515625
+      },
+      "physicalColors": [
+        {
+          "key": "w",
+          "games": 124,
+          "score": 0.5161290322580645
+        },
+        {
+          "key": "b",
+          "games": 124,
+          "score": 0.45161290322580644
+        }
+      ],
+      "cohorts": {
+        "original-sixteen": {
+          "score": 0.44166666666666665,
+          "games": 120,
+          "sharedCases": 15,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 30,
+              "wins": 9,
+              "draws": 4,
+              "losses": 17,
+              "score": 0.36666666666666664
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 30,
+              "wins": 15,
+              "draws": 2,
+              "losses": 13,
+              "score": 0.5333333333333333
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 30,
+              "wins": 7,
+              "draws": 6,
+              "losses": 17,
+              "score": 0.3333333333333333
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 30,
+              "wins": 12,
+              "draws": 8,
+              "losses": 10,
+              "score": 0.5333333333333333
+            }
+          ],
+          "baselineScore": 0.484375,
+          "baselineGames": 32
+        },
+        "new-sixteen": {
+          "score": 0.5234375,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 14,
+              "draws": 3,
+              "losses": 15,
+              "score": 0.484375
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 12,
+              "draws": 3,
+              "losses": 17,
+              "score": 0.421875
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 15,
+              "draws": 4,
+              "losses": 13,
+              "score": 0.53125
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 19,
+              "draws": 4,
+              "losses": 9,
+              "score": 0.65625
+            }
+          ],
+          "baselineScore": 0.546875,
+          "baselineGames": 32
+        }
+      }
+    },
+    {
+      "key": "full-diagonal-pawns",
+      "label": "Three full-diagonal pawns",
+      "designIds": [
+        "pawn.blue@6"
+      ],
+      "movements": [
+        "FfmWifmnD"
+      ],
+      "purchasePoints": 3,
+      "score": 0.38671875,
+      "games": 256,
+      "wins": 85,
+      "draws": 28,
+      "losses": 143,
+      "openingCoverage": {
+        "shared": 32,
+        "total": 32,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen",
+          "mobility-caro-kann",
+          "mobility-queens-pawn-e6",
+          "mobility-english-nf6",
+          "mobility-reti-c5",
+          "mobility-kings-fianchetto-e5",
+          "mobility-queens-fianchetto-d5",
+          "mobility-alekhine",
+          "mobility-queens-pawn-c6",
+          "mobility-english-e6",
+          "mobility-reti-e6",
+          "mobility-queens-fianchetto-nf6",
+          "mobility-kings-fianchetto-nf6",
+          "mobility-modern",
+          "mobility-queens-pawn-g6",
+          "mobility-english-g6",
+          "mobility-reti-g6"
+        ],
+        "repetitions": 1
+      },
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 64,
+          "wins": 18,
+          "draws": 8,
+          "losses": 38,
+          "score": 0.34375
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 64,
+          "wins": 25,
+          "draws": 10,
+          "losses": 29,
+          "score": 0.46875
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 64,
+          "wins": 19,
+          "draws": 6,
+          "losses": 39,
+          "score": 0.34375
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 64,
+          "wins": 23,
+          "draws": 4,
+          "losses": 37,
+          "score": 0.390625
+        }
+      ],
+      "referenceCells": [
+        {
+          "columnKey": "vanguard",
+          "comparisonId": "full-diagonal-pawns-v-vanguard",
+          "score": 0.34375,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 18,
+          "draws": 8,
+          "losses": 38,
+          "inverted": false
+        },
+        {
+          "columnKey": "unicorn",
+          "comparisonId": "full-diagonal-pawns-v-unicorn",
+          "score": 0.46875,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 25,
+          "draws": 10,
+          "losses": 29,
+          "inverted": false
+        },
+        {
+          "columnKey": "cruisader",
+          "comparisonId": "full-diagonal-pawns-v-cruisader",
+          "score": 0.34375,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 19,
+          "draws": 6,
+          "losses": 39,
+          "inverted": false
+        },
+        {
+          "columnKey": "amazon",
+          "comparisonId": "full-diagonal-pawns-v-amazon",
+          "score": 0.390625,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 23,
+          "draws": 4,
+          "losses": 37,
+          "inverted": false
+        }
+      ],
+      "baseline": {
+        "games": 64,
+        "completePairs": 32,
+        "openings": 32,
+        "wins": 32,
+        "draws": 9,
+        "losses": 23,
+        "score": 0.5703125
+      },
+      "physicalColors": [
+        {
+          "key": "w",
+          "games": 128,
+          "score": 0.41015625
+        },
+        {
+          "key": "b",
+          "games": 128,
+          "score": 0.36328125
+        }
+      ],
+      "cohorts": {
+        "original-sixteen": {
+          "score": 0.34765625,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 9,
+              "draws": 1,
+              "losses": 22,
+              "score": 0.296875
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 15,
+              "draws": 6,
+              "losses": 11,
+              "score": 0.5625
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 6,
+              "draws": 2,
+              "losses": 24,
+              "score": 0.21875
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 9,
+              "draws": 2,
+              "losses": 21,
+              "score": 0.3125
+            }
+          ],
+          "baselineScore": 0.484375,
+          "baselineGames": 32
+        },
+        "new-sixteen": {
+          "score": 0.42578125,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 9,
+              "draws": 7,
+              "losses": 16,
+              "score": 0.390625
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 10,
+              "draws": 4,
+              "losses": 18,
+              "score": 0.375
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 13,
+              "draws": 4,
+              "losses": 15,
+              "score": 0.46875
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 14,
+              "draws": 2,
+              "losses": 16,
+              "score": 0.46875
+            }
+          ],
+          "baselineScore": 0.65625,
+          "baselineGames": 32
+        }
+      }
+    },
+    {
+      "key": "support-pawns",
+      "label": "Three Support pawns",
+      "designIds": [
+        "pawn.blue@8"
+      ],
+      "movements": [
+        "fmWfceFifmnDsW"
+      ],
+      "purchasePoints": 3,
+      "score": 0.28515625,
+      "games": 256,
+      "wins": 51,
+      "draws": 44,
+      "losses": 161,
+      "openingCoverage": {
+        "shared": 32,
+        "total": 32,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen",
+          "mobility-caro-kann",
+          "mobility-queens-pawn-e6",
+          "mobility-english-nf6",
+          "mobility-reti-c5",
+          "mobility-kings-fianchetto-e5",
+          "mobility-queens-fianchetto-d5",
+          "mobility-alekhine",
+          "mobility-queens-pawn-c6",
+          "mobility-english-e6",
+          "mobility-reti-e6",
+          "mobility-queens-fianchetto-nf6",
+          "mobility-kings-fianchetto-nf6",
+          "mobility-modern",
+          "mobility-queens-pawn-g6",
+          "mobility-english-g6",
+          "mobility-reti-g6"
+        ],
+        "repetitions": 1
+      },
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 64,
+          "wins": 14,
+          "draws": 10,
+          "losses": 40,
+          "score": 0.296875
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 64,
+          "wins": 11,
+          "draws": 13,
+          "losses": 40,
+          "score": 0.2734375
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 64,
+          "wins": 10,
+          "draws": 10,
+          "losses": 44,
+          "score": 0.234375
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 64,
+          "wins": 16,
+          "draws": 11,
+          "losses": 37,
+          "score": 0.3359375
+        }
+      ],
+      "referenceCells": [
+        {
+          "columnKey": "vanguard",
+          "comparisonId": "support-pawns-v-vanguard",
+          "score": 0.296875,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 14,
+          "draws": 10,
+          "losses": 40,
+          "inverted": false
+        },
+        {
+          "columnKey": "unicorn",
+          "comparisonId": "support-pawns-v-unicorn",
+          "score": 0.2734375,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 11,
+          "draws": 13,
+          "losses": 40,
+          "inverted": false
+        },
+        {
+          "columnKey": "cruisader",
+          "comparisonId": "support-pawns-v-cruisader",
+          "score": 0.234375,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 10,
+          "draws": 10,
+          "losses": 44,
+          "inverted": false
+        },
+        {
+          "columnKey": "amazon",
+          "comparisonId": "support-pawns-v-amazon",
+          "score": 0.3359375,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 16,
+          "draws": 11,
+          "losses": 37,
+          "inverted": false
+        }
+      ],
+      "baseline": {
+        "games": 64,
+        "completePairs": 32,
+        "openings": 32,
+        "wins": 11,
+        "draws": 10,
+        "losses": 43,
+        "score": 0.25
+      },
+      "physicalColors": [
+        {
+          "key": "w",
+          "games": 128,
+          "score": 0.3046875
+        },
+        {
+          "key": "b",
+          "games": 128,
+          "score": 0.265625
+        }
+      ],
+      "cohorts": {
+        "original-sixteen": {
+          "score": 0.2421875,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 8,
+              "draws": 4,
+              "losses": 20,
+              "score": 0.3125
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 5,
+              "draws": 5,
+              "losses": 22,
+              "score": 0.234375
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 3,
+              "draws": 5,
+              "losses": 24,
+              "score": 0.171875
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 5,
+              "draws": 6,
+              "losses": 21,
+              "score": 0.25
+            }
+          ],
+          "baselineScore": 0.234375,
+          "baselineGames": 32
+        },
+        "new-sixteen": {
+          "score": 0.328125,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 6,
+              "draws": 6,
+              "losses": 20,
+              "score": 0.28125
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 6,
+              "draws": 8,
+              "losses": 18,
+              "score": 0.3125
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 7,
+              "draws": 5,
+              "losses": 20,
+              "score": 0.296875
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 11,
+              "draws": 5,
+              "losses": 16,
+              "score": 0.421875
+            }
+          ],
+          "baselineScore": 0.265625,
+          "baselineGames": 32
+        }
+      }
+    },
+    {
+      "key": "mobile-forward-grants",
+      "label": "Three mobile-forward grants",
+      "designIds": [
+        "king.reserve-pawn@6"
+      ],
+      "movements": [
+        "fWmfF"
+      ],
+      "purchasePoints": 3,
+      "score": 0.44921875,
+      "games": 256,
+      "wins": 84,
+      "draws": 62,
+      "losses": 110,
+      "openingCoverage": {
+        "shared": 32,
+        "total": 32,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen",
+          "mobility-caro-kann",
+          "mobility-queens-pawn-e6",
+          "mobility-english-nf6",
+          "mobility-reti-c5",
+          "mobility-kings-fianchetto-e5",
+          "mobility-queens-fianchetto-d5",
+          "mobility-alekhine",
+          "mobility-queens-pawn-c6",
+          "mobility-english-e6",
+          "mobility-reti-e6",
+          "mobility-queens-fianchetto-nf6",
+          "mobility-kings-fianchetto-nf6",
+          "mobility-modern",
+          "mobility-queens-pawn-g6",
+          "mobility-english-g6",
+          "mobility-reti-g6"
+        ],
+        "repetitions": 1
+      },
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 64,
+          "wins": 22,
+          "draws": 17,
+          "losses": 25,
+          "score": 0.4765625
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 64,
+          "wins": 23,
+          "draws": 16,
+          "losses": 25,
+          "score": 0.484375
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 64,
+          "wins": 21,
+          "draws": 11,
+          "losses": 32,
+          "score": 0.4140625
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 64,
+          "wins": 18,
+          "draws": 18,
+          "losses": 28,
+          "score": 0.421875
+        }
+      ],
+      "referenceCells": [
+        {
+          "columnKey": "vanguard",
+          "comparisonId": "mobile-forward-grants-v-vanguard",
+          "score": 0.4765625,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 22,
+          "draws": 17,
+          "losses": 25,
+          "inverted": false
+        },
+        {
+          "columnKey": "unicorn",
+          "comparisonId": "mobile-forward-grants-v-unicorn",
+          "score": 0.484375,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 23,
+          "draws": 16,
+          "losses": 25,
+          "inverted": false
+        },
+        {
+          "columnKey": "cruisader",
+          "comparisonId": "mobile-forward-grants-v-cruisader",
+          "score": 0.4140625,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 21,
+          "draws": 11,
+          "losses": 32,
+          "inverted": false
+        },
+        {
+          "columnKey": "amazon",
+          "comparisonId": "mobile-forward-grants-v-amazon",
+          "score": 0.421875,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 18,
+          "draws": 18,
+          "losses": 28,
+          "inverted": false
+        }
+      ],
+      "baseline": {
+        "games": 60,
+        "completePairs": 30,
+        "openings": 30,
+        "wins": 33,
+        "draws": 7,
+        "losses": 20,
+        "score": 0.6083333333333333
+      },
+      "physicalColors": [
+        {
+          "key": "w",
+          "games": 128,
+          "score": 0.4765625
+        },
+        {
+          "key": "b",
+          "games": 128,
+          "score": 0.421875
+        }
+      ],
+      "cohorts": {
+        "original-sixteen": {
+          "score": 0.43359375,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 12,
+              "draws": 8,
+              "losses": 12,
+              "score": 0.5
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 12,
+              "draws": 9,
+              "losses": 11,
+              "score": 0.515625
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 9,
+              "draws": 8,
+              "losses": 15,
+              "score": 0.40625
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 5,
+              "draws": 10,
+              "losses": 17,
+              "score": 0.3125
+            }
+          ],
+          "baselineScore": 0.6333333333333333,
+          "baselineGames": 30
+        },
+        "new-sixteen": {
+          "score": 0.46484375,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 10,
+              "draws": 9,
+              "losses": 13,
+              "score": 0.453125
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 11,
+              "draws": 7,
+              "losses": 14,
+              "score": 0.453125
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 12,
+              "draws": 3,
+              "losses": 17,
+              "score": 0.421875
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 13,
+              "draws": 8,
+              "losses": 11,
+              "score": 0.53125
+            }
+          ],
+          "baselineScore": 0.5833333333333334,
+          "baselineGames": 30
+        }
+      }
+    },
+    {
+      "key": "scout-grants",
+      "label": "Three Scout grants",
+      "designIds": [
+        "king.reserve-pawn@7"
+      ],
+      "movements": [
+        "fWbmF"
+      ],
+      "purchasePoints": 3,
+      "score": 0.453125,
+      "games": 256,
+      "wins": 94,
+      "draws": 44,
+      "losses": 118,
+      "openingCoverage": {
+        "shared": 32,
+        "total": 32,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen",
+          "mobility-caro-kann",
+          "mobility-queens-pawn-e6",
+          "mobility-english-nf6",
+          "mobility-reti-c5",
+          "mobility-kings-fianchetto-e5",
+          "mobility-queens-fianchetto-d5",
+          "mobility-alekhine",
+          "mobility-queens-pawn-c6",
+          "mobility-english-e6",
+          "mobility-reti-e6",
+          "mobility-queens-fianchetto-nf6",
+          "mobility-kings-fianchetto-nf6",
+          "mobility-modern",
+          "mobility-queens-pawn-g6",
+          "mobility-english-g6",
+          "mobility-reti-g6"
+        ],
+        "repetitions": 1
+      },
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 64,
+          "wins": 29,
+          "draws": 14,
+          "losses": 21,
+          "score": 0.5625
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 64,
+          "wins": 27,
+          "draws": 8,
+          "losses": 29,
+          "score": 0.484375
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 64,
+          "wins": 14,
+          "draws": 9,
+          "losses": 41,
+          "score": 0.2890625
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 64,
+          "wins": 24,
+          "draws": 13,
+          "losses": 27,
+          "score": 0.4765625
+        }
+      ],
+      "referenceCells": [
+        {
+          "columnKey": "vanguard",
+          "comparisonId": "scout-grants-v-vanguard",
+          "score": 0.5625,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 29,
+          "draws": 14,
+          "losses": 21,
+          "inverted": false
+        },
+        {
+          "columnKey": "unicorn",
+          "comparisonId": "scout-grants-v-unicorn",
+          "score": 0.484375,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 27,
+          "draws": 8,
+          "losses": 29,
+          "inverted": false
+        },
+        {
+          "columnKey": "cruisader",
+          "comparisonId": "scout-grants-v-cruisader",
+          "score": 0.2890625,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 14,
+          "draws": 9,
+          "losses": 41,
+          "inverted": false
+        },
+        {
+          "columnKey": "amazon",
+          "comparisonId": "scout-grants-v-amazon",
+          "score": 0.4765625,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 24,
+          "draws": 13,
+          "losses": 27,
+          "inverted": false
+        }
+      ],
+      "baseline": {
+        "games": 62,
+        "completePairs": 31,
+        "openings": 31,
+        "wins": 23,
+        "draws": 14,
+        "losses": 25,
+        "score": 0.4838709677419355
+      },
+      "physicalColors": [
+        {
+          "key": "w",
+          "games": 128,
+          "score": 0.5234375
+        },
+        {
+          "key": "b",
+          "games": 128,
+          "score": 0.3828125
+        }
+      ],
+      "cohorts": {
+        "original-sixteen": {
+          "score": 0.46484375,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 15,
+              "draws": 5,
+              "losses": 12,
+              "score": 0.546875
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 13,
+              "draws": 5,
+              "losses": 14,
+              "score": 0.484375
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 5,
+              "draws": 6,
+              "losses": 21,
+              "score": 0.25
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 15,
+              "draws": 7,
+              "losses": 10,
+              "score": 0.578125
+            }
+          ],
+          "baselineScore": 0.5,
+          "baselineGames": 30
+        },
+        "new-sixteen": {
+          "score": 0.44140625,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 14,
+              "draws": 9,
+              "losses": 9,
+              "score": 0.578125
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 14,
+              "draws": 3,
+              "losses": 15,
+              "score": 0.484375
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 9,
+              "draws": 3,
+              "losses": 20,
+              "score": 0.328125
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 9,
+              "draws": 6,
+              "losses": 17,
+              "score": 0.375
+            }
+          ],
+          "baselineScore": 0.46875,
+          "baselineGames": 32
+        }
+      }
+    },
+    {
+      "key": "capture-forward-grants",
+      "label": "Three capture-forward grants",
+      "designIds": [
+        "king.reserve-pawn@5"
+      ],
+      "movements": [
+        "cfWmfF"
+      ],
+      "purchasePoints": 3,
+      "score": 0.416015625,
+      "games": 256,
+      "wins": 86,
+      "draws": 41,
+      "losses": 129,
+      "openingCoverage": {
+        "shared": 32,
+        "total": 32,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen",
+          "mobility-caro-kann",
+          "mobility-queens-pawn-e6",
+          "mobility-english-nf6",
+          "mobility-reti-c5",
+          "mobility-kings-fianchetto-e5",
+          "mobility-queens-fianchetto-d5",
+          "mobility-alekhine",
+          "mobility-queens-pawn-c6",
+          "mobility-english-e6",
+          "mobility-reti-e6",
+          "mobility-queens-fianchetto-nf6",
+          "mobility-kings-fianchetto-nf6",
+          "mobility-modern",
+          "mobility-queens-pawn-g6",
+          "mobility-english-g6",
+          "mobility-reti-g6"
+        ],
+        "repetitions": 1
+      },
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 64,
+          "wins": 31,
+          "draws": 7,
+          "losses": 26,
+          "score": 0.5390625
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 64,
+          "wins": 22,
+          "draws": 13,
+          "losses": 29,
+          "score": 0.4453125
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 64,
+          "wins": 18,
+          "draws": 8,
+          "losses": 38,
+          "score": 0.34375
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 64,
+          "wins": 15,
+          "draws": 13,
+          "losses": 36,
+          "score": 0.3359375
+        }
+      ],
+      "referenceCells": [
+        {
+          "columnKey": "vanguard",
+          "comparisonId": "capture-forward-grants-v-vanguard",
+          "score": 0.5390625,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 31,
+          "draws": 7,
+          "losses": 26,
+          "inverted": false
+        },
+        {
+          "columnKey": "unicorn",
+          "comparisonId": "capture-forward-grants-v-unicorn",
+          "score": 0.4453125,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 22,
+          "draws": 13,
+          "losses": 29,
+          "inverted": false
+        },
+        {
+          "columnKey": "cruisader",
+          "comparisonId": "capture-forward-grants-v-cruisader",
+          "score": 0.34375,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 18,
+          "draws": 8,
+          "losses": 38,
+          "inverted": false
+        },
+        {
+          "columnKey": "amazon",
+          "comparisonId": "capture-forward-grants-v-amazon",
+          "score": 0.3359375,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 15,
+          "draws": 13,
+          "losses": 36,
+          "inverted": false
+        }
+      ],
+      "baseline": {
+        "games": 64,
+        "completePairs": 32,
+        "openings": 32,
+        "wins": 41,
+        "draws": 8,
+        "losses": 15,
+        "score": 0.703125
+      },
+      "physicalColors": [
+        {
+          "key": "w",
+          "games": 128,
+          "score": 0.44921875
+        },
+        {
+          "key": "b",
+          "games": 128,
+          "score": 0.3828125
+        }
+      ],
+      "cohorts": {
+        "original-sixteen": {
+          "score": 0.421875,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 15,
+              "draws": 4,
+              "losses": 13,
+              "score": 0.53125
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 11,
+              "draws": 6,
+              "losses": 15,
+              "score": 0.4375
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 9,
+              "draws": 4,
+              "losses": 19,
+              "score": 0.34375
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 9,
+              "draws": 6,
+              "losses": 17,
+              "score": 0.375
+            }
+          ],
+          "baselineScore": 0.625,
+          "baselineGames": 32
+        },
+        "new-sixteen": {
+          "score": 0.41015625,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 16,
+              "draws": 3,
+              "losses": 13,
+              "score": 0.546875
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 11,
+              "draws": 7,
+              "losses": 14,
+              "score": 0.453125
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 9,
+              "draws": 4,
+              "losses": 19,
+              "score": 0.34375
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 6,
+              "draws": 7,
+              "losses": 19,
+              "score": 0.296875
+            }
+          ],
+          "baselineScore": 0.78125,
+          "baselineGames": 32
+        }
+      }
+    },
+    {
+      "key": "long-forward-grants",
+      "label": "Three long-forward grants",
+      "designIds": [
+        "king.reserve-pawn@3"
+      ],
+      "movements": [
+        "fW2"
+      ],
+      "purchasePoints": 3,
+      "score": 0.623046875,
+      "games": 256,
+      "wins": 140,
+      "draws": 39,
+      "losses": 77,
+      "openingCoverage": {
+        "shared": 32,
+        "total": 32,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen",
+          "mobility-caro-kann",
+          "mobility-queens-pawn-e6",
+          "mobility-english-nf6",
+          "mobility-reti-c5",
+          "mobility-kings-fianchetto-e5",
+          "mobility-queens-fianchetto-d5",
+          "mobility-alekhine",
+          "mobility-queens-pawn-c6",
+          "mobility-english-e6",
+          "mobility-reti-e6",
+          "mobility-queens-fianchetto-nf6",
+          "mobility-kings-fianchetto-nf6",
+          "mobility-modern",
+          "mobility-queens-pawn-g6",
+          "mobility-english-g6",
+          "mobility-reti-g6"
+        ],
+        "repetitions": 1
+      },
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 64,
+          "wins": 33,
+          "draws": 11,
+          "losses": 20,
+          "score": 0.6015625
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 64,
+          "wins": 38,
+          "draws": 8,
+          "losses": 18,
+          "score": 0.65625
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 64,
+          "wins": 33,
+          "draws": 12,
+          "losses": 19,
+          "score": 0.609375
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 64,
+          "wins": 36,
+          "draws": 8,
+          "losses": 20,
+          "score": 0.625
+        }
+      ],
+      "referenceCells": [
+        {
+          "columnKey": "vanguard",
+          "comparisonId": "long-forward-grants-v-vanguard",
+          "score": 0.6015625,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 33,
+          "draws": 11,
+          "losses": 20,
+          "inverted": false
+        },
+        {
+          "columnKey": "unicorn",
+          "comparisonId": "long-forward-grants-v-unicorn",
+          "score": 0.65625,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 38,
+          "draws": 8,
+          "losses": 18,
+          "inverted": false
+        },
+        {
+          "columnKey": "cruisader",
+          "comparisonId": "long-forward-grants-v-cruisader",
+          "score": 0.609375,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 33,
+          "draws": 12,
+          "losses": 19,
+          "inverted": false
+        },
+        {
+          "columnKey": "amazon",
+          "comparisonId": "long-forward-grants-v-amazon",
+          "score": 0.625,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 36,
+          "draws": 8,
+          "losses": 20,
+          "inverted": false
+        }
+      ],
+      "baseline": {
+        "games": 64,
+        "completePairs": 32,
+        "openings": 32,
+        "wins": 39,
+        "draws": 12,
+        "losses": 13,
+        "score": 0.703125
+      },
+      "physicalColors": [
+        {
+          "key": "w",
+          "games": 128,
+          "score": 0.6875
+        },
+        {
+          "key": "b",
+          "games": 128,
+          "score": 0.55859375
+        }
+      ],
+      "cohorts": {
+        "original-sixteen": {
+          "score": 0.55859375,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 15,
+              "draws": 3,
+              "losses": 14,
+              "score": 0.515625
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 19,
+              "draws": 3,
+              "losses": 10,
+              "score": 0.640625
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 13,
+              "draws": 7,
+              "losses": 12,
+              "score": 0.515625
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 16,
+              "draws": 4,
+              "losses": 12,
+              "score": 0.5625
+            }
+          ],
+          "baselineScore": 0.71875,
+          "baselineGames": 32
+        },
+        "new-sixteen": {
+          "score": 0.6875,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 18,
+              "draws": 8,
+              "losses": 6,
+              "score": 0.6875
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 19,
+              "draws": 5,
+              "losses": 8,
+              "score": 0.671875
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 20,
+              "draws": 5,
+              "losses": 7,
+              "score": 0.703125
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 20,
+              "draws": 4,
+              "losses": 8,
+              "score": 0.6875
+            }
+          ],
+          "baselineScore": 0.6875,
+          "baselineGames": 32
+        }
+      }
+    },
+    {
+      "key": "pawn-like-grants",
+      "label": "Three pawn-like grants",
+      "designIds": [
+        "king.reserve-pawn@4"
+      ],
+      "movements": [
+        "fmWfceF"
+      ],
+      "purchasePoints": 3,
+      "score": 0.61328125,
+      "games": 256,
+      "wins": 126,
+      "draws": 62,
+      "losses": 68,
+      "openingCoverage": {
+        "shared": 32,
+        "total": 32,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen",
+          "mobility-caro-kann",
+          "mobility-queens-pawn-e6",
+          "mobility-english-nf6",
+          "mobility-reti-c5",
+          "mobility-kings-fianchetto-e5",
+          "mobility-queens-fianchetto-d5",
+          "mobility-alekhine",
+          "mobility-queens-pawn-c6",
+          "mobility-english-e6",
+          "mobility-reti-e6",
+          "mobility-queens-fianchetto-nf6",
+          "mobility-kings-fianchetto-nf6",
+          "mobility-modern",
+          "mobility-queens-pawn-g6",
+          "mobility-english-g6",
+          "mobility-reti-g6"
+        ],
+        "repetitions": 1
+      },
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 64,
+          "wins": 38,
+          "draws": 14,
+          "losses": 12,
+          "score": 0.703125
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 64,
+          "wins": 25,
+          "draws": 21,
+          "losses": 18,
+          "score": 0.5546875
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 64,
+          "wins": 28,
+          "draws": 11,
+          "losses": 25,
+          "score": 0.5234375
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 64,
+          "wins": 35,
+          "draws": 16,
+          "losses": 13,
+          "score": 0.671875
+        }
+      ],
+      "referenceCells": [
+        {
+          "columnKey": "vanguard",
+          "comparisonId": "pawn-like-grants-v-vanguard",
+          "score": 0.703125,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 38,
+          "draws": 14,
+          "losses": 12,
+          "inverted": false
+        },
+        {
+          "columnKey": "unicorn",
+          "comparisonId": "pawn-like-grants-v-unicorn",
+          "score": 0.5546875,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 25,
+          "draws": 21,
+          "losses": 18,
+          "inverted": false
+        },
+        {
+          "columnKey": "cruisader",
+          "comparisonId": "pawn-like-grants-v-cruisader",
+          "score": 0.5234375,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 28,
+          "draws": 11,
+          "losses": 25,
+          "inverted": false
+        },
+        {
+          "columnKey": "amazon",
+          "comparisonId": "pawn-like-grants-v-amazon",
+          "score": 0.671875,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 35,
+          "draws": 16,
+          "losses": 13,
+          "inverted": false
+        }
+      ],
+      "baseline": {
+        "games": 62,
+        "completePairs": 31,
+        "openings": 31,
+        "wins": 45,
+        "draws": 7,
+        "losses": 10,
+        "score": 0.782258064516129
+      },
+      "physicalColors": [
+        {
+          "key": "w",
+          "games": 128,
+          "score": 0.625
+        },
+        {
+          "key": "b",
+          "games": 128,
+          "score": 0.6015625
+        }
+      ],
+      "cohorts": {
+        "original-sixteen": {
+          "score": 0.63671875,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 22,
+              "draws": 5,
+              "losses": 5,
+              "score": 0.765625
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 13,
+              "draws": 10,
+              "losses": 9,
+              "score": 0.5625
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 12,
+              "draws": 7,
+              "losses": 13,
+              "score": 0.484375
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 19,
+              "draws": 9,
+              "losses": 4,
+              "score": 0.734375
+            }
+          ],
+          "baselineScore": 0.71875,
+          "baselineGames": 32
+        },
+        "new-sixteen": {
+          "score": 0.58984375,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 16,
+              "draws": 9,
+              "losses": 7,
+              "score": 0.640625
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 12,
+              "draws": 11,
+              "losses": 9,
+              "score": 0.546875
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 16,
+              "draws": 4,
+              "losses": 12,
+              "score": 0.5625
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 16,
+              "draws": 7,
+              "losses": 9,
+              "score": 0.609375
+            }
+          ],
+          "baselineScore": 0.85,
+          "baselineGames": 30
+        }
+      }
+    },
+    {
+      "key": "grid-bishop",
+      "label": "Grid bishop",
+      "designIds": [
+        "bishop.purple@19"
+      ],
+      "movements": [
+        "BDC"
+      ],
+      "purchasePoints": 3,
+      "score": 0.60546875,
+      "games": 256,
+      "wins": 138,
+      "draws": 34,
+      "losses": 84,
+      "openingCoverage": {
+        "shared": 32,
+        "total": 32,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen",
+          "mobility-caro-kann",
+          "mobility-queens-pawn-e6",
+          "mobility-english-nf6",
+          "mobility-reti-c5",
+          "mobility-kings-fianchetto-e5",
+          "mobility-queens-fianchetto-d5",
+          "mobility-alekhine",
+          "mobility-queens-pawn-c6",
+          "mobility-english-e6",
+          "mobility-reti-e6",
+          "mobility-queens-fianchetto-nf6",
+          "mobility-kings-fianchetto-nf6",
+          "mobility-modern",
+          "mobility-queens-pawn-g6",
+          "mobility-english-g6",
+          "mobility-reti-g6"
+        ],
+        "repetitions": 1
+      },
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 64,
+          "wins": 40,
+          "draws": 6,
+          "losses": 18,
+          "score": 0.671875
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 64,
+          "wins": 33,
+          "draws": 12,
+          "losses": 19,
+          "score": 0.609375
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 64,
+          "wins": 36,
+          "draws": 7,
+          "losses": 21,
+          "score": 0.6171875
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 64,
+          "wins": 29,
+          "draws": 9,
+          "losses": 26,
+          "score": 0.5234375
+        }
+      ],
+      "referenceCells": [
+        {
+          "columnKey": "vanguard",
+          "comparisonId": "grid-bishop-v-vanguard",
+          "score": 0.671875,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 40,
+          "draws": 6,
+          "losses": 18,
+          "inverted": false
+        },
+        {
+          "columnKey": "unicorn",
+          "comparisonId": "grid-bishop-v-unicorn",
+          "score": 0.609375,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 33,
+          "draws": 12,
+          "losses": 19,
+          "inverted": false
+        },
+        {
+          "columnKey": "cruisader",
+          "comparisonId": "grid-bishop-v-cruisader",
+          "score": 0.6171875,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 36,
+          "draws": 7,
+          "losses": 21,
+          "inverted": false
+        },
+        {
+          "columnKey": "amazon",
+          "comparisonId": "grid-bishop-v-amazon",
+          "score": 0.5234375,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "openings": 32,
+          "wins": 29,
+          "draws": 9,
+          "losses": 26,
+          "inverted": false
+        }
+      ],
+      "baseline": {
+        "games": 64,
+        "completePairs": 32,
+        "openings": 32,
+        "wins": 42,
+        "draws": 9,
+        "losses": 13,
+        "score": 0.7265625
+      },
+      "physicalColors": [
+        {
+          "key": "w",
+          "games": 128,
+          "score": 0.6640625
+        },
+        {
+          "key": "b",
+          "games": 128,
+          "score": 0.546875
+        }
+      ],
+      "cohorts": {
+        "original-sixteen": {
+          "score": 0.5859375,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 17,
+              "draws": 4,
+              "losses": 11,
+              "score": 0.59375
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 16,
+              "draws": 8,
+              "losses": 8,
+              "score": 0.625
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 19,
+              "draws": 3,
+              "losses": 10,
+              "score": 0.640625
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 13,
+              "draws": 5,
+              "losses": 14,
+              "score": 0.484375
+            }
+          ],
+          "baselineScore": 0.765625,
+          "baselineGames": 32
+        },
+        "new-sixteen": {
+          "score": 0.625,
+          "games": 128,
+          "sharedCases": 16,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "label": "Vanguard",
+              "games": 32,
+              "wins": 23,
+              "draws": 2,
+              "losses": 7,
+              "score": 0.75
+            },
+            {
+              "key": "unicorn",
+              "label": "Unicorn",
+              "games": 32,
+              "wins": 17,
+              "draws": 4,
+              "losses": 11,
+              "score": 0.59375
+            },
+            {
+              "key": "cruisader",
+              "label": "Cruisader",
+              "games": 32,
+              "wins": 17,
+              "draws": 4,
+              "losses": 11,
+              "score": 0.59375
+            },
+            {
+              "key": "amazon",
+              "label": "Amazon",
+              "games": 32,
+              "wins": 16,
+              "draws": 4,
+              "losses": 12,
+              "score": 0.5625
+            }
+          ],
+          "baselineScore": 0.6875,
+          "baselineGames": 32
+        }
+      }
+    }
+  ],
+  "truncations": [
+    {
+      "source": "mobility-confirm",
+      "id": "c33_pawn-like-grants-v-two-step-pawns_o16_mobility-reti-g6_r1_w",
+      "pairId": "c33_pawn-like-grants-v-two-step-pawns_o16_mobility-reti-g6_r1",
+      "comparisonId": "pawn-like-grants-v-two-step-pawns",
+      "openingId": "mobility-reti-g6",
+      "aColor": "w",
+      "reason": "max-plies",
+      "totalPlies": 400,
+      "finalFen": "1C6/8/1k6/8/8/8/1K6/8[] w - - 95 201",
+      "excludedCompletedPartner": {
+        "id": "c33_pawn-like-grants-v-two-step-pawns_o16_mobility-reti-g6_r1_b",
+        "aColor": "b",
+        "result": "0-1",
+        "totalPlies": 152
+      }
+    },
+    {
+      "source": "mobility-revisions",
+      "id": "c38_mobile-forward-grants-v-two-step-pawns_o20_mobility-english-nf6_r1_w",
+      "pairId": "c38_mobile-forward-grants-v-two-step-pawns_o20_mobility-english-nf6_r1",
+      "comparisonId": "mobile-forward-grants-v-two-step-pawns",
+      "openingId": "mobility-english-nf6",
+      "aColor": "w",
+      "reason": "max-plies",
+      "totalPlies": 400,
+      "finalFen": "8/2k5/7K/8/8/2b5/8/1B6[] w - - 80 201",
+      "excludedCompletedPartner": {
+        "id": "c38_mobile-forward-grants-v-two-step-pawns_o20_mobility-english-nf6_r1_b",
+        "aColor": "b",
+        "result": "1-0",
+        "totalPlies": 73
+      }
+    },
+    {
+      "source": "mobility-revisions",
+      "id": "c38_mobile-forward-grants-v-two-step-pawns_o13_followup-reti_r1_w",
+      "pairId": "c38_mobile-forward-grants-v-two-step-pawns_o13_followup-reti_r1",
+      "comparisonId": "mobile-forward-grants-v-two-step-pawns",
+      "openingId": "followup-reti",
+      "aColor": "w",
+      "reason": "max-plies",
+      "totalPlies": 400,
+      "finalFen": "8/8/K7/8/8/8/3k4/bB6[] w - - 80 201",
+      "excludedCompletedPartner": {
+        "id": "c38_mobile-forward-grants-v-two-step-pawns_o13_followup-reti_r1_b",
+        "aColor": "b",
+        "result": "0-1",
+        "totalPlies": 116
+      }
+    },
+    {
+      "source": "mobility-revisions",
+      "id": "c25_king-step-pawns-v-unicorn_o14_english-prefix_r1_b",
+      "pairId": "c25_king-step-pawns-v-unicorn_o14_english-prefix_r1",
+      "comparisonId": "king-step-pawns-v-unicorn",
+      "openingId": "english-prefix",
+      "aColor": "b",
+      "reason": "max-plies",
+      "totalPlies": 400,
+      "finalFen": "8/8/8/8/8/K7/2kb4/8[] w - - 48 201",
+      "excludedCompletedPartner": {
+        "id": "c25_king-step-pawns-v-unicorn_o14_english-prefix_r1_w",
+        "aColor": "w",
+        "result": "1-0",
+        "totalPlies": 171
+      }
+    },
+    {
+      "source": "mobility-additions",
+      "id": "c29_scout-grants-v-two-step-pawns_o28_followup-symmetrical-english_r1_w",
+      "pairId": "c29_scout-grants-v-two-step-pawns_o28_followup-symmetrical-english_r1",
+      "comparisonId": "scout-grants-v-two-step-pawns",
+      "openingId": "followup-symmetrical-english",
+      "aColor": "w",
+      "reason": "max-plies",
+      "totalPlies": 400,
+      "finalFen": "6R1/5k2/8/8/r7/3KA3/8/8[] w - - 52 201",
+      "excludedCompletedPartner": {
+        "id": "c29_scout-grants-v-two-step-pawns_o28_followup-symmetrical-english_r1_b",
+        "aColor": "b",
+        "result": "0-1",
+        "totalPlies": 118
+      }
+    }
+  ]
+}

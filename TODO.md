@@ -56,9 +56,10 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Prepare `mobility-confirm` (768 games) and `mobility-revisions` (960), with equal three-point armies and separate reference/baseline scores.
 - [x] Add Support pawn and Scout guard as immutable one-point trials; create fresh `mobility-expanded` (1,600) and additions-only (640) options without changing the original 960-game declaration.
 - [x] Archive and review the [Support/Scout supplement](experiments/balance/results/v17-mobility-additions-001.report.md): 639 completed games, one unscored truncation and no errors. Park Support; retain Scout for playtesting with a Cruisader matchup flag. Reuse the two resubmitted historical archives without adding their games again.
-- [ ] Collect results for `mobility-confirm` (768) and `mobility-revisions` (960); the latest upload contained the older level-three follow-ups instead. Check existing run folders before starting anything. The 640-game supplement is complete; do not run `mobility-expanded` alongside these campaigns.
-- [ ] Combine compatible archived sixteen-case results with new confirmation results, keeping sources, cohorts, colors and changed IDs explicit.
-- [ ] Review repeated direct purchase counters alongside the reference basket and human counterplay; do not force every equal-cost matchup to 50%.
+- [x] Complete and archive `mobility-confirm` (768) and `mobility-revisions` (960). Together with the supplement, 2,368 games finalized: 2,363 completed, five unscored truncations and no errors. Do not run the overlapping `mobility-expanded` campaign.
+- [x] Publish the [combined thirty-two-start report](experiments/balance/results/v17-mobility-001.report.md), reusing 640 design-focus games and 128 compatible two-step-pawn reference games with explicit sources, cohorts, colors and immutable IDs.
+- [x] Review repeated direct purchase counters alongside the reference basket; preserve their separate scores rather than force every equal-cost matchup to 50%.
+- [ ] Expose two-step and king-step pawns, mobile-forward grants and Scout grants in an optional playtest workshop, preserving existing libraries. Assess readability and counterplay before freezing level-1 references or selecting replacements. Park Support/full-diagonal pawns; retain the older strong grants as research and Grid bishop at level 3. No larger batch is needed before playtesting.
 - [x] Record a [small design shortlist](docs/design-ideas.md) separately from the declared game budget.
 
 ## After reviewing these results
