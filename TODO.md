@@ -32,8 +32,12 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Prepare two stronger level-1 pawn candidates and an `fF` grant alternative; retain ordinary promotion and finite reserve rules.
 - [x] Add offline reuse of the first eight cases for unchanged candidates, with old/new cohort scores and no mixing of revised IDs.
 - [x] Add overall reference scores and shared-opening coverage to Markdown reports; keep direct bundle scores separate and refresh the three initial reports.
-- [ ] Run `level3-confirm` (576 games), `level3-revisions` (640) and `pawn-grants-revisions` (384) separately; cap the batch at 1,600 new games.
-- [ ] Review pooled 40–60% targets, matchup flags, cohort and color effects using the [follow-up criteria and commands](docs/version17-followups.md).
+- [x] Complete and archive `level3-confirm` (576 games), `level3-revisions` (640) and `pawn-grants-revisions` (384): 1,600 completed games with no missing pairs.
+- [x] Publish the [combined sixteen-start percentages](experiments/balance/results/v17-followup-001.report.md), with unchanged IDs reusing the original eight cases and revisions kept separate.
+- [x] Include the percentage beside W/D/L in the overall summary; retain the existing score calculation and archive renderers.
+- [x] Review pooled targets alongside replicated opponent differences; verify an actual forced Amazon trade in the Mating-bishop games.
+- [ ] Human-playtest `BDC` and guard ideas `fmWfceF` / `fW2`, then declare a focused test if appropriate. See the [second-screen decisions](docs/version17-second-review.md); no third campaign is scheduled yet.
+- [ ] Retain the promising two-step pawn and backward-capture Rook pawn for playtesting; park the weak quiet-diagonal pawn and review Archbishop/Ranged-rook matchups before choosing further changes.
 - [ ] Promote successful research alternatives into the playable workshops only after outcome review and human playtesting.
 
 ## After reviewing these results

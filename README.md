@@ -71,7 +71,9 @@ Future candidates face the frozen references. The unfinished NC–Amazon game re
 
 ## Version 17: balance experiments
 
-The [initial version-17 experiments](docs/version17-experiments.md) completed 1,312 games. The [follow-up plan](docs/version17-followups.md) adds eight opening cases for unchanged pieces, five level-3 alternatives, and three pawn/guard alternatives, capped at 1,600 new games. Each campaign runs separately through `npm.cmd run balance:v17`. The offline `balance:v17:review` command reuses archived first-batch games for unchanged pieces. Research alternatives do not yet change the playable workshops.
+The initial screens and follow-ups completed **2,912 games**. The [combined report](experiments/balance/results/v17-followup-001.report.md) gives sixteen-start matchup percentages for fourteen level-3 designs, plus pawn/grant results. The [second-screen review](docs/version17-second-review.md) records design recommendations and unresolved matchups. Research alternatives do not yet change the playable workshops.
+
+The [initial protocols](docs/version17-experiments.md) and [follow-up commands](docs/version17-followups.md) remain available. `balance:v17:review` combines compatible first- and second-batch outcomes without rerunning games. Overall summary tables show percentages beside W/D/L; draws count half a point.
 
 Finite reserve bundles now have an explicit balance army format. Outcome reports include them; the existing material estimator remains restricted to board-only experiments. See [the balance guide](BALANCE.md), [next steps](TODO.md) and [mixed-army plan](docs/mixed-army-balance-plan.md).
 

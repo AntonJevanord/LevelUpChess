@@ -1,5 +1,8 @@
 # Version-17 follow-ups
 
+This batch is complete. See the [combined sixteen-start percentages](../experiments/balance/results/v17-followup-001.report.md)
+and [second-screen decisions](version17-second-review.md) before starting further games.
+
 The first three experiments completed all **1,312 games**, with no errors or
 truncations. The [archived analysis](../experiments/balance/results/v17-screen-001.report.md)
 preserves the uploaded journals and reports. The four reference definitions,
@@ -59,7 +62,7 @@ threshold is a confidence interval or a mechanical pass/fail rule.
 These criteria are declared for the follow-up, after seeing the initial screen.
 The fixed opening cases limit generalization even after doubling their count.
 
-Every matchup matrix also shows **Overall score**. For replacement and pawn/
+Every matchup matrix and overall W/D/L summary also shows **Overall score**. For replacement and pawn/
 grant panels it averages the four references; direct bundle matchups do not
 enter that average. Reference 2v2 teams average their five opponents. Draws
 count half a point. During an unfinished run, the overall column uses opening

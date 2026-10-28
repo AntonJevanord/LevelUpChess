@@ -1,0 +1,33 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const { loadFollowupEvidence } = require('../scripts/balance/v17-followup-evidence');
+const { createMatchRules } = require('../dist/balance-rules.cjs');
+const { pieceMap } = require('../src/profile-fen');
+
+test('an archived Mating bishop check forces an Amazon trade for two bishops', async t => {
+  const source = loadFollowupEvidence('level3-revisions');
+  const game = source.records.find(record => record.id === 'c25_bishop-purple-17-v-amazon_o14_knights-prefix_r1_b');
+  assert.ok(game);
+  const rules = await createMatchRules({ profile: source.profile });
+  const board = rules.createBoard(game.startFen);
+  t.after(() => board.dispose());
+  for (const move of game.moves.slice(0, 41)) assert.equal(board.push(move), true, move);
+  const allocation = id => source.profile.registry.allocations.find(item => item.id === id).letter;
+  const before = pieceMap(board.fen());
+  assert.equal(before.get('e5'), allocation('bishop.purple@17'));
+  assert.equal(before.get('f1'), allocation('queen.purple@1').toUpperCase());
+  assert.equal(before.get('g1'), 'K');
+  assert.equal(before.get('d6'), 'b');
+  assert.deepEqual(game.moves.slice(41, 45), ['e5h2', 'f1h2', 'd6h2', 'g1h2']);
+  assert.equal(board.push('e5h2'), true);
+  assert.deepEqual(board.moves(), ['f1h2'], 'the Amazon capture is the sole legal response to check');
+  for (const move of ['f1h2', 'd6h2', 'g1h2']) assert.equal(board.push(move), true);
+  const after = pieceMap(board.fen());
+  assert.equal(after.get('h2'), 'K');
+  assert.ok(![...after.values()].includes(allocation('bishop.purple@17')));
+  assert.ok(![...after.values()].includes(allocation('queen.purple@1').toUpperCase()));
+  assert.ok(![...after.values()].includes('b'), 'Black spends the ordinary bishop as well');
+  for (const move of game.moves.slice(45)) assert.equal(board.push(move), true, move);
+  assert.equal(board.fen(), game.finalFen);
+  assert.equal(game.result, '0-1');
+});

@@ -16,11 +16,11 @@ Matrix entries are the row army’s score; a blank dash means no scored pair or 
 
 Overall score gives each fixed reference equal weight; reference 2v2 teams instead weight all other scheduled teams equally. Direct pawn/grant bundle matches are excluded from reference averages. Draws count half a point. Only opening cases with every scheduled repetition and both colors completed against every included opponent contribute. Other completed games remain in individual matchup cells; overall stays pending until at least one case is shared.
 
-| Overall row | Included games | W / D / L | Opponents | Shared cases |
-| --- | ---: | :--- | ---: | ---: |
-| Three Bishop pawns | 64 | 11 / 9 / 44 | 4 | 8/8 |
-| Three Returning pawns | 64 | 10 / 5 / 49 | 4 | 8/8 |
-| Three pawn grants | 64 | 24 / 5 / 35 | 4 | 8/8 |
+| Overall row | Included games | W / D / L | Overall score | Opponents | Shared cases |
+| --- | ---: | :--- | ---: | ---: | ---: |
+| Three Bishop pawns | 64 | 11 / 9 / 44 | 24.22% | 4 | 8/8 |
+| Three Returning pawns | 64 | 10 / 5 / 49 | 19.53% | 4 | 8/8 |
+| Three pawn grants | 64 | 24 / 5 / 35 | 41.41% | 4 | 8/8 |
 
 | A versus B | Paired games | A W / D / L | A score | Complete pairs | Openings | Truncated attempts | Errors |
 | --- | ---: | :--- | ---: | ---: | ---: | ---: | ---: |

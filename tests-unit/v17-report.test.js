@@ -127,7 +127,7 @@ test('overall scores weight four reference opponents equally and exclude direct 
   assert.equal(result.comparisons.find(comparison => comparison.bKey === 'bundle').score, 0);
   assert.match(renderV17Report(result), /Overall score \(cases\)/);
   assert.match(renderV17Report(result), /62\.50% \(1\/2\)/);
-  assert.match(renderV17Report(result), /\| Candidate \| 8 \| 4 \/ 2 \/ 2 \| 4 \| 1\/2 \|/);
+  assert.match(renderV17Report(result), /\| Candidate \| 8 \| 4 \/ 2 \/ 2 \| 62\.50% \| 4 \| 1\/2 \|/);
   assert.doesNotMatch(renderV17Report(result, { includeOverall: false }), /Overall score|Overall row/);
 });
 
@@ -155,6 +155,7 @@ test('pending overall requires a common case and excludes incomplete or truncate
   assert.equal(result.overall.rows[0].score, null);
   assert.equal(result.overall.rows[0].games, 0);
   assert.match(renderV17Report(result), /pending \(0\/2\)/);
+  assert.match(renderV17Report(result), /\| Candidate \| 0 \| 0 \/ 0 \/ 0 \| pending \| 4 \| 0\/2 \|/);
   const amazonStart = panel.pairFor('amazon', 'start', 1);
   records.push(amazonStart[0], { ...amazonStart[1], status: 'truncated', result: '*', reason: 'max-plies' });
   result = panel.create(records);
@@ -165,6 +166,21 @@ test('pending overall requires a common case and excludes incomplete or truncate
   assert.equal(result.overall.rows[0].score, 1);
   assert.equal(result.overall.rows[0].games, 8);
   assert.equal(result.overall.rows[0].openingCoverage.shared, 1);
+});
+
+test('overall WDL tables print the score percentage and can reproduce the pre-column layout', () => {
+  const result = report(pair('1-0', '1/2-1/2'));
+  const current = renderV17Report(result), legacy = renderV17Report(result, { includeOverallSummaryScore: false });
+  assert.match(current, /\| Overall row \| Included games \| W \/ D \/ L \| Overall score \| Opponents \| Shared cases \|/);
+  assert.match(current, /\| Vanguard \+ Unicorn \| 2 \| 1 \/ 1 \/ 0 \| 75\.00% \| 1 \| 1\/2 \|/);
+  assert.match(current, /\| Cruisader \+ Amazon \| 2 \| 0 \/ 1 \/ 1 \| 25\.00% \| 1 \| 1\/2 \|/);
+  assert.match(legacy, /\| Overall row \| Included games \| W \/ D \/ L \| Opponents \| Shared cases \|/);
+  assert.match(legacy, /\| Vanguard \+ Unicorn \| 2 \| 1 \/ 1 \/ 0 \| 1 \| 1\/2 \|/);
+  assert.doesNotMatch(legacy, /W \/ D \/ L \| Overall score/);
+  assert.equal(current.split('\n').find(line => line.startsWith('| Row army /')),
+    legacy.split('\n').find(line => line.startsWith('| Row army /')), 'the matrix retains its existing overall column');
+  assert.equal(renderV17Report(result, { includeOverall: false }),
+    renderV17Report(result, { includeOverall: false, includeOverallSummaryScore: false }));
 });
 
 test('all configured repetitions must finish with distinct repetition identities before a case contributes', () => {

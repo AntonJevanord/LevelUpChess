@@ -26,21 +26,21 @@ Matrix entries are the row army’s score; a blank dash means no scored pair or 
 
 Overall score gives each fixed reference equal weight; reference 2v2 teams instead weight all other scheduled teams equally. Direct pawn/grant bundle matches are excluded from reference averages. Draws count half a point. Only opening cases with every scheduled repetition and both colors completed against every included opponent contribute. Other completed games remain in individual matchup cells; overall stays pending until at least one case is shared.
 
-| Overall row | Included games | W / D / L | Opponents | Shared cases |
-| --- | ---: | :--- | ---: | ---: |
-| Rook pawn | 64 | 15 / 12 / 37 | 4 | 8/8 |
-| Queen pawn | 64 | 32 / 6 / 26 | 4 | 8/8 |
-| Nightrider | 64 | 26 / 11 / 27 | 4 | 8/8 |
-| Princess knight | 64 | 33 / 11 / 20 | 4 | 8/8 |
-| Grid knight | 64 | 30 / 14 / 20 | 4 | 8/8 |
-| Mating bishop | 64 | 50 / 5 / 9 | 4 | 8/8 |
-| Vertical bishop | 64 | 48 / 6 / 10 | 4 | 8/8 |
-| Archbishop | 64 | 33 / 11 / 20 | 4 | 8/8 |
-| Ranged rook | 64 | 28 / 12 / 24 | 4 | 8/8 |
-| Side rook | 64 | 40 / 6 / 18 | 4 | 8/8 |
-| Sideways queen | 64 | 21 / 13 / 30 | 4 | 8/8 |
-| X-ray queen | 64 | 29 / 16 / 19 | 4 | 8/8 |
-| Zebra queen | 64 | 17 / 16 / 31 | 4 | 8/8 |
+| Overall row | Included games | W / D / L | Overall score | Opponents | Shared cases |
+| --- | ---: | :--- | ---: | ---: | ---: |
+| Rook pawn | 64 | 15 / 12 / 37 | 32.81% | 4 | 8/8 |
+| Queen pawn | 64 | 32 / 6 / 26 | 54.69% | 4 | 8/8 |
+| Nightrider | 64 | 26 / 11 / 27 | 49.22% | 4 | 8/8 |
+| Princess knight | 64 | 33 / 11 / 20 | 60.16% | 4 | 8/8 |
+| Grid knight | 64 | 30 / 14 / 20 | 57.81% | 4 | 8/8 |
+| Mating bishop | 64 | 50 / 5 / 9 | 82.03% | 4 | 8/8 |
+| Vertical bishop | 64 | 48 / 6 / 10 | 79.69% | 4 | 8/8 |
+| Archbishop | 64 | 33 / 11 / 20 | 60.16% | 4 | 8/8 |
+| Ranged rook | 64 | 28 / 12 / 24 | 53.13% | 4 | 8/8 |
+| Side rook | 64 | 40 / 6 / 18 | 67.19% | 4 | 8/8 |
+| Sideways queen | 64 | 21 / 13 / 30 | 42.97% | 4 | 8/8 |
+| X-ray queen | 64 | 29 / 16 / 19 | 57.81% | 4 | 8/8 |
+| Zebra queen | 64 | 17 / 16 / 31 | 39.06% | 4 | 8/8 |
 
 | A versus B | Paired games | A W / D / L | A score | Complete pairs | Openings | Truncated attempts | Errors |
 | --- | ---: | :--- | ---: | ---: | ---: | ---: | ---: |

@@ -2,7 +2,7 @@
 
 Version 16 is closed with four [official references](docs/official-references.md): Vanguard `RfB`, Unicorn `NC`, Cruisader `BsR2nsN` and Amazon `QN`. Each costs three upgrade points. Their definitions, roles and identities are frozen.
 
-The [initial version-17 experiments](docs/version17-experiments.md) completed 1,312 games. Their [archived outcome analysis](experiments/balance/results/v17-screen-001.report.md) identifies four clear level-3 revision signals and weak level-1 pawn bundles. The [follow-up plan](docs/version17-followups.md) caps new play at 1,600 games and reuses the first eight openings only for unchanged designs. References and historical outcomes stay fixed.
+The initial version-17 screens and follow-ups completed **2,912 games**. The [combined sixteen-start report](experiments/balance/results/v17-followup-001.report.md) reuses the first eight cases only for unchanged designs and keeps revised IDs separate. The [second-screen decisions](docs/version17-second-review.md) consider overall scores, replicated matchups and human-facing tactics. References and historical outcomes stay fixed.
 
 ## Current results
 

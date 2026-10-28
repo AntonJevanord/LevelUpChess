@@ -19,14 +19,14 @@ Matrix entries are the row army’s score; a blank dash means no scored pair or 
 
 Overall score gives each fixed reference equal weight; reference 2v2 teams instead weight all other scheduled teams equally. Direct pawn/grant bundle matches are excluded from reference averages. Draws count half a point. Only opening cases with every scheduled repetition and both colors completed against every included opponent contribute. Other completed games remain in individual matchup cells; overall stays pending until at least one case is shared.
 
-| Overall row | Included games | W / D / L | Opponents | Shared cases |
-| --- | ---: | :--- | ---: | ---: |
-| Vanguard + Unicorn | 80 | 31 / 11 / 38 | 5 | 8/8 |
-| Vanguard + Cruisader | 80 | 34 / 10 / 36 | 5 | 8/8 |
-| Vanguard + Amazon | 80 | 45 / 6 / 29 | 5 | 8/8 |
-| Unicorn + Cruisader | 80 | 28 / 15 / 37 | 5 | 8/8 |
-| Unicorn + Amazon | 80 | 33 / 15 / 32 | 5 | 8/8 |
-| Cruisader + Amazon | 80 | 33 / 15 / 32 | 5 | 8/8 |
+| Overall row | Included games | W / D / L | Overall score | Opponents | Shared cases |
+| --- | ---: | :--- | ---: | ---: | ---: |
+| Vanguard + Unicorn | 80 | 31 / 11 / 38 | 45.63% | 5 | 8/8 |
+| Vanguard + Cruisader | 80 | 34 / 10 / 36 | 48.75% | 5 | 8/8 |
+| Vanguard + Amazon | 80 | 45 / 6 / 29 | 60.00% | 5 | 8/8 |
+| Unicorn + Cruisader | 80 | 28 / 15 / 37 | 44.38% | 5 | 8/8 |
+| Unicorn + Amazon | 80 | 33 / 15 / 32 | 50.63% | 5 | 8/8 |
+| Cruisader + Amazon | 80 | 33 / 15 / 32 | 50.63% | 5 | 8/8 |
 
 | A versus B | Paired games | A W / D / L | A score | Complete pairs | Openings | Truncated attempts | Errors |
 | --- | ---: | :--- | ---: | ---: | ---: | ---: | ---: |

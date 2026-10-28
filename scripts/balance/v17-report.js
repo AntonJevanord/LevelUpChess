@@ -185,7 +185,7 @@ function createV17Report({ experiment, config, metadata, records, manifest } = {
   };
 }
 
-function renderV17Report(report, { includeOverall = true } = {}) {
+function renderV17Report(report, { includeOverall = true, includeOverallSummaryScore = true } = {}) {
   const overall = includeOverall && report.overall ? new Map(report.overall.rows.map(row => [row.key, row])) : null;
   const overallCell = row => {
     const summary = overall.get(row.key);
@@ -199,9 +199,9 @@ function renderV17Report(report, { includeOverall = true } = {}) {
     'Matrix entries are the row army’s score; a blank dash means no scored pair or no scheduled matchup.', '',
     ...(overall ? [
       'Overall score gives each fixed reference equal weight; reference 2v2 teams instead weight all other scheduled teams equally. Direct pawn/grant bundle matches are excluded from reference averages. Draws count half a point. Only opening cases with every scheduled repetition and both colors completed against every included opponent contribute. Other completed games remain in individual matchup cells; overall stays pending until at least one case is shared.', '',
-      '| Overall row | Included games | W / D / L | Opponents | Shared cases |',
-      '| --- | ---: | :--- | ---: | ---: |',
-      ...report.overall.rows.map(row => `| ${markdown(row.label)} | ${row.games} | ${row.wins} / ${row.draws} / ${row.losses} | ${row.opponents.length} | ${row.openingCoverage.shared}/${row.openingCoverage.total} |`), '',
+      '| Overall row | Included games | W / D / L |' + (includeOverallSummaryScore ? ' Overall score |' : '') + ' Opponents | Shared cases |',
+      '| --- | ---: | :--- |' + (includeOverallSummaryScore ? ' ---: |' : '') + ' ---: | ---: |',
+      ...report.overall.rows.map(row => `| ${markdown(row.label)} | ${row.games} | ${row.wins} / ${row.draws} / ${row.losses} |${includeOverallSummaryScore ? ` ${row.score === null ? 'pending' : percent(row.score)} |` : ''} ${row.opponents.length} | ${row.openingCoverage.shared}/${row.openingCoverage.total} |`), '',
     ] : []),
     '| A versus B | Paired games | A W / D / L | A score | Complete pairs | Openings | Truncated attempts | Errors |',
     '| --- | ---: | :--- | ---: | ---: | ---: | ---: | ---: |',

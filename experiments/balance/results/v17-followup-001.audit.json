@@ -1,0 +1,2395 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-v17-followup-evidence",
+  "recordedDate": "2026-10-28",
+  "provenance": {
+    "originalManifestSupplied": false,
+    "nativePreflightSupplied": false,
+    "engineSha256": null,
+    "legalMovesIndependentlyReplayed": false,
+    "descriptorKind": "derived declaration compatibility descriptor",
+    "limitations": [
+      "Original run.json and v17-preflight.json were not uploaded. Reconstructed declarations check recorded identities and settings; they do not attest to original engine binaries or native value tables.",
+      "The audit summarizes recorded completed outcomes without independently replaying moves or certifying terminal positions. It fits no material values or Elo.",
+      "The sixteen fixed, related opening cases support descriptive comparisons, not population confidence intervals or demonstrated balance equivalence."
+    ]
+  },
+  "method": {
+    "score": "(wins + draws / 2) / scored games",
+    "opponentWeight": "four fixed references equally",
+    "openingWeight": "sixteen fixed cases equally; every case has both colors against all four references",
+    "historicalReuse": "Only nine unchanged immutable designs reuse the archived original eight cases; revised designs keep separate outcomes.",
+    "interval": "No confidence interval, material fit or Elo estimate is claimed."
+  },
+  "sources": [
+    {
+      "experiment": "level3-revisions",
+      "source": {
+        "journal": {
+          "archiveFile": "v17-followup-001.level3-revisions.games.jsonl.gz",
+          "archivedSha256": "6c85981f6702befb7784ec558d7ce6e85ce7879a8de450382ab3c3ebc92663a2",
+          "originalName": "games.jsonl",
+          "sha256": "bf65a753ab2fe95e8ceb13f3f64333fec1cd235b5ae2da932fa9dc20d6bbf759",
+          "bytes": 2155189
+        },
+        "uploadedReport": {
+          "archiveFile": "v17-followup-001.level3-revisions.uploaded-report.md.gz",
+          "archivedSha256": "d5d3a04cc371c7724b9d210a644cb00276f998b43e3963b21041c6bb56cefee7",
+          "originalName": "v17-report.md",
+          "sha256": "376aeb69e305b39d5951806c3ff2b471ea1d49945ccccc1347dc35c1fa047c7d",
+          "bytes": 4343
+        }
+      },
+      "declaration": {
+        "configSha256": "3c5b2969f7716b694ce0702472389f055e3b09a0fd95f605b8a3c65190dacb5b",
+        "registryHash": "39bf148d667fbc099cfe835c3aabf3c5dee764d7e9f35eb29311f8693e2edfc0",
+        "profileHash": "d922295787a47ea639148b06207f097264109309e6f65b845356c0ffdb341fed",
+        "scheduleSha256": "75abaec74318045a174b8daf91d76059850a329cf93911eab9b478e87f3fd943",
+        "scheduledGames": 640,
+        "reportReproducedExactly": true
+      },
+      "progress": {
+        "attempts": 640,
+        "duplicateCopiesIgnored": 0,
+        "finalizedGames": 640,
+        "completedGames": 640,
+        "pairedGames": 640,
+        "completePairs": 320
+      },
+      "provenance": {
+        "originalManifestSupplied": false,
+        "nativePreflightSupplied": false,
+        "engineSha256": null,
+        "legalMovesIndependentlyReplayed": false,
+        "descriptorKind": "derived declaration compatibility descriptor",
+        "limitations": [
+          "Original run.json and v17-preflight.json were not uploaded. Reconstructed declarations check recorded identities and settings; they do not attest to original engine binaries or native value tables.",
+          "The audit summarizes recorded completed outcomes without independently replaying moves or certifying terminal positions. It fits no material values or Elo.",
+          "The sixteen fixed, related opening cases support descriptive comparisons, not population confidence intervals or demonstrated balance equivalence."
+        ]
+      }
+    },
+    {
+      "experiment": "level3-confirm",
+      "source": {
+        "journal": {
+          "archiveFile": "v17-followup-001.level3-confirm.games.jsonl.gz",
+          "archivedSha256": "9eea9676acf1947cc1070b873750302354c9c40fdb5608b5ce05327e51a0fd2b",
+          "originalName": "games.jsonl",
+          "sha256": "8570022efdf0b1e70551a933b8e778294e59d0b87912037e801ae9bd9c6b3653",
+          "bytes": 1907891
+        },
+        "uploadedReport": {
+          "archiveFile": "v17-followup-001.level3-confirm.uploaded-report.md.gz",
+          "archivedSha256": "d212bc3e9887882b0f0b65779b2796768e5dfe28da6c66865e06e0cd02a22f08",
+          "originalName": "v17-report.md",
+          "sha256": "5d359677df1f2fdd58f6b765059ef83f93a166b1c0446f36618d808cb7888558",
+          "bytes": 5348
+        }
+      },
+      "declaration": {
+        "configSha256": "afc30087918f42183fc6528bb6de96391efdc0a213d0a6d340b0fb26fd04a4c2",
+        "registryHash": "7c613b0b1b671eab8e2f94d2abd0798c611ce00805934b1a25a1dd70287f9bbe",
+        "profileHash": "7cde1067d14a6940d61c1706829e9cdc3abf3010693bfe7295aba03cca5e5452",
+        "scheduleSha256": "9084fc49094c2a382af4720b8acd18798bd4ece2d71dc93bf688ddb2bacf2e25",
+        "scheduledGames": 576,
+        "reportReproducedExactly": true
+      },
+      "progress": {
+        "attempts": 576,
+        "duplicateCopiesIgnored": 0,
+        "finalizedGames": 576,
+        "completedGames": 576,
+        "pairedGames": 576,
+        "completePairs": 288
+      },
+      "provenance": {
+        "originalManifestSupplied": false,
+        "nativePreflightSupplied": false,
+        "engineSha256": null,
+        "legalMovesIndependentlyReplayed": false,
+        "descriptorKind": "derived declaration compatibility descriptor",
+        "limitations": [
+          "Original run.json and v17-preflight.json were not uploaded. Reconstructed declarations check recorded identities and settings; they do not attest to original engine binaries or native value tables.",
+          "The audit summarizes recorded completed outcomes without independently replaying moves or certifying terminal positions. It fits no material values or Elo.",
+          "The sixteen fixed, related opening cases support descriptive comparisons, not population confidence intervals or demonstrated balance equivalence."
+        ]
+      }
+    },
+    {
+      "experiment": "pawn-grants-revisions",
+      "source": {
+        "journal": {
+          "archiveFile": "v17-followup-001.pawn-grants-revisions.games.jsonl.gz",
+          "archivedSha256": "9a91b6cce5e36c7022e2a55a5496976d7dfa78882498c62b7a12a5bda8fd2be5",
+          "originalName": "games.jsonl",
+          "sha256": "4f27e263ac401895ba77c109e9bbbc4a7a7bf95436ac45651c64553dcea792e8",
+          "bytes": 1297013
+        },
+        "uploadedReport": {
+          "archiveFile": "v17-followup-001.pawn-grants-revisions.uploaded-report.md.gz",
+          "archivedSha256": "eb1f232d7a1a87956c2193705fcd7a85b1c243d64e84c58498cb855c5e4785dc",
+          "originalName": "v17-report.md",
+          "sha256": "db55dd9b830997b74ddf9f959e1857230f9772eda32174b455c9d1361dce2fc2",
+          "bytes": 3236
+        }
+      },
+      "declaration": {
+        "configSha256": "4b27346bd18ed05308a9082f6bf409e9e0a68ba3ed35f46b464f6523f09ae469",
+        "registryHash": "7682c72a4c91ba84b3d0dbab5ecdc4617417433dca52cd6a7ef7bba0eb0f2b8c",
+        "profileHash": "54de68690cc1335e035706f4f3d328a79e33f9ec886f8ee6be3d8e3fdfe75738",
+        "scheduleSha256": "a96e34e76a11e736f5e57778f444f0a69f3ffaf6f2a34017d782d0dd291f794e",
+        "scheduledGames": 384,
+        "reportReproducedExactly": true
+      },
+      "progress": {
+        "attempts": 384,
+        "duplicateCopiesIgnored": 0,
+        "finalizedGames": 384,
+        "completedGames": 384,
+        "pairedGames": 384,
+        "completePairs": 192
+      },
+      "provenance": {
+        "originalManifestSupplied": false,
+        "nativePreflightSupplied": false,
+        "engineSha256": null,
+        "legalMovesIndependentlyReplayed": false,
+        "descriptorKind": "derived declaration compatibility descriptor",
+        "limitations": [
+          "Original run.json and v17-preflight.json were not uploaded. Reconstructed declarations check recorded identities and settings; they do not attest to original engine binaries or native value tables.",
+          "The audit summarizes recorded completed outcomes without independently replaying moves or certifying terminal positions. It fits no material values or Elo.",
+          "The sixteen fixed, related opening cases support descriptive comparisons, not population confidence intervals or demonstrated balance equivalence."
+        ]
+      }
+    }
+  ],
+  "initialSource": {
+    "source": {
+      "journal": {
+        "archiveFile": "v17-screen-001.level3.games.jsonl.gz",
+        "archivedSha256": "73cb45f5e4c6ad9b3453d9282fd2cee9bd3d7bf86d35fd3f1ba1e726ea10058f",
+        "originalName": "games.jsonl",
+        "sha256": "aba44b4801c03ae50b01dab878f742fa7193455c8a0692d5b8f409aaf2b1697f",
+        "bytes": 2733335
+      },
+      "uploadedReport": {
+        "archiveFile": "v17-screen-001.level3.uploaded-report.md.gz",
+        "archivedSha256": "1b2af644010b26328325be26d14f2b25e0efcfee60fe708739286b93d150d95e",
+        "originalName": "v17-report.md",
+        "sha256": "d68801386447e5f9f1df9442921a6b36b4183d09cbbc1bba298761ae191b50d3",
+        "bytes": 5505
+      }
+    },
+    "declaration": {
+      "configSha256": "ff387bbf03c1fa21836e8d32345cf0d5e29580306d57f43df07d849a761950be",
+      "registryHash": "af5b18a5a3c9b2800b4d78a2cd95ce0efb8058e572cde1763e7334b50d0ac675",
+      "profileHash": "641846d94fe804d0a559596ae7f228c11c8d979eedb5660b9c57f9337cc75418",
+      "scheduleSha256": "3764c67cb4144e55d363158ad37678023f91e46d8cd00ff776385b88e10bccf3",
+      "scheduledGames": 832,
+      "reportReproducedExactly": true
+    },
+    "provenance": {
+      "originalManifestSupplied": false,
+      "nativePreflightSupplied": false,
+      "engineSha256": null,
+      "legalMovesIndependentlyReplayed": false,
+      "descriptorKind": "derived declaration compatibility descriptor",
+      "limitations": [
+        "The original run.json and v17-preflight.json were not uploaded; reconstructed declarations do not attest to the original process, executable or native value tables.",
+        "Recorded identities, search settings and result summaries match the declared protocols; engine names are recorded strings, not binary provenance.",
+        "The audit does not independently replay legal moves or certify terminal positions, and does not fit material values or Elo.",
+        "Eight fixed related opening cases support descriptive screening, not population confidence intervals; leave-one-opening-out ranges measure sensitivity only."
+      ]
+    }
+  },
+  "counts": {
+    "newlyUploadedCompletedGames": 1600,
+    "historicalGamesReused": 576,
+    "distinctScoredGames": 2176,
+    "level3Games": 1792,
+    "pawnGrantGames": 384,
+    "engineSearches": 0,
+    "newMatchGames": 0
+  },
+  "level3": [
+    {
+      "key": "pawn-purple-12",
+      "label": "Queen pawn",
+      "designIds": [
+        "pawn.purple@12"
+      ],
+      "movements": [
+        "feQ2bmQ2"
+      ],
+      "games": 128,
+      "wins": 69,
+      "draws": 12,
+      "losses": 47,
+      "score": 0.5859375,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 15,
+          "draws": 5,
+          "losses": 12,
+          "score": 0.546875
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 16,
+          "draws": 3,
+          "losses": 13,
+          "score": 0.546875
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 19,
+          "draws": 2,
+          "losses": 11,
+          "score": 0.625
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 19,
+          "draws": 2,
+          "losses": 11,
+          "score": 0.625
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.546875,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.53125
+            },
+            {
+              "key": "unicorn",
+              "score": 0.59375
+            },
+            {
+              "key": "cruisader",
+              "score": 0.5
+            },
+            {
+              "key": "amazon",
+              "score": 0.5625
+            }
+          ],
+          "games": 64,
+          "wins": 32,
+          "draws": 6,
+          "losses": 26
+        },
+        "newEight": {
+          "score": 0.625,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.5625
+            },
+            {
+              "key": "unicorn",
+              "score": 0.5
+            },
+            {
+              "key": "cruisader",
+              "score": 0.75
+            },
+            {
+              "key": "amazon",
+              "score": 0.6875
+            }
+          ],
+          "games": 64,
+          "wins": 37,
+          "draws": 6,
+          "losses": 21
+        }
+      }
+    },
+    {
+      "key": "knight-purple-4",
+      "label": "Nightrider",
+      "designIds": [
+        "knight.purple@4"
+      ],
+      "movements": [
+        "N0"
+      ],
+      "games": 128,
+      "wins": 53,
+      "draws": 17,
+      "losses": 58,
+      "score": 0.48046875,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 16,
+          "draws": 2,
+          "losses": 14,
+          "score": 0.53125
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 14,
+          "draws": 6,
+          "losses": 12,
+          "score": 0.53125
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 12,
+          "draws": 7,
+          "losses": 13,
+          "score": 0.484375
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 11,
+          "draws": 2,
+          "losses": 19,
+          "score": 0.375
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.4921875,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.5625
+            },
+            {
+              "key": "unicorn",
+              "score": 0.5
+            },
+            {
+              "key": "cruisader",
+              "score": 0.59375
+            },
+            {
+              "key": "amazon",
+              "score": 0.3125
+            }
+          ],
+          "games": 64,
+          "wins": 26,
+          "draws": 11,
+          "losses": 27
+        },
+        "newEight": {
+          "score": 0.46875,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.5
+            },
+            {
+              "key": "unicorn",
+              "score": 0.5625
+            },
+            {
+              "key": "cruisader",
+              "score": 0.375
+            },
+            {
+              "key": "amazon",
+              "score": 0.4375
+            }
+          ],
+          "games": 64,
+          "wins": 27,
+          "draws": 6,
+          "losses": 31
+        }
+      }
+    },
+    {
+      "key": "knight-purple-5",
+      "label": "Princess knight",
+      "designIds": [
+        "knight.purple@5"
+      ],
+      "movements": [
+        "NK"
+      ],
+      "games": 128,
+      "wins": 63,
+      "draws": 24,
+      "losses": 41,
+      "score": 0.5859375,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 20,
+          "draws": 4,
+          "losses": 8,
+          "score": 0.6875
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 14,
+          "draws": 11,
+          "losses": 7,
+          "score": 0.609375
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 11,
+          "draws": 5,
+          "losses": 16,
+          "score": 0.421875
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 18,
+          "draws": 4,
+          "losses": 10,
+          "score": 0.625
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.6015625,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.625
+            },
+            {
+              "key": "unicorn",
+              "score": 0.65625
+            },
+            {
+              "key": "cruisader",
+              "score": 0.40625
+            },
+            {
+              "key": "amazon",
+              "score": 0.71875
+            }
+          ],
+          "games": 64,
+          "wins": 33,
+          "draws": 11,
+          "losses": 20
+        },
+        "newEight": {
+          "score": 0.5703125,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.75
+            },
+            {
+              "key": "unicorn",
+              "score": 0.5625
+            },
+            {
+              "key": "cruisader",
+              "score": 0.4375
+            },
+            {
+              "key": "amazon",
+              "score": 0.53125
+            }
+          ],
+          "games": 64,
+          "wins": 30,
+          "draws": 13,
+          "losses": 21
+        }
+      }
+    },
+    {
+      "key": "knight-purple-6",
+      "label": "Grid knight",
+      "designIds": [
+        "knight.purple@6"
+      ],
+      "movements": [
+        "NWH"
+      ],
+      "games": 128,
+      "wins": 57,
+      "draws": 26,
+      "losses": 45,
+      "score": 0.546875,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 18,
+          "draws": 7,
+          "losses": 7,
+          "score": 0.671875
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 10,
+          "draws": 7,
+          "losses": 15,
+          "score": 0.421875
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 12,
+          "draws": 9,
+          "losses": 11,
+          "score": 0.515625
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 17,
+          "draws": 3,
+          "losses": 12,
+          "score": 0.578125
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.578125,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.6875
+            },
+            {
+              "key": "unicorn",
+              "score": 0.5
+            },
+            {
+              "key": "cruisader",
+              "score": 0.5625
+            },
+            {
+              "key": "amazon",
+              "score": 0.5625
+            }
+          ],
+          "games": 64,
+          "wins": 30,
+          "draws": 14,
+          "losses": 20
+        },
+        "newEight": {
+          "score": 0.515625,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.65625
+            },
+            {
+              "key": "unicorn",
+              "score": 0.34375
+            },
+            {
+              "key": "cruisader",
+              "score": 0.46875
+            },
+            {
+              "key": "amazon",
+              "score": 0.59375
+            }
+          ],
+          "games": 64,
+          "wins": 27,
+          "draws": 12,
+          "losses": 25
+        }
+      }
+    },
+    {
+      "key": "bishop-purple-16",
+      "label": "Archbishop",
+      "designIds": [
+        "bishop.purple@16"
+      ],
+      "movements": [
+        "BN"
+      ],
+      "games": 128,
+      "wins": 72,
+      "draws": 20,
+      "losses": 36,
+      "score": 0.640625,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 16,
+          "draws": 5,
+          "losses": 11,
+          "score": 0.578125
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 17,
+          "draws": 6,
+          "losses": 9,
+          "score": 0.625
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 15,
+          "draws": 7,
+          "losses": 10,
+          "score": 0.578125
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 24,
+          "draws": 2,
+          "losses": 6,
+          "score": 0.78125
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.6015625,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.46875
+            },
+            {
+              "key": "unicorn",
+              "score": 0.625
+            },
+            {
+              "key": "cruisader",
+              "score": 0.5625
+            },
+            {
+              "key": "amazon",
+              "score": 0.75
+            }
+          ],
+          "games": 64,
+          "wins": 33,
+          "draws": 11,
+          "losses": 20
+        },
+        "newEight": {
+          "score": 0.6796875,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.6875
+            },
+            {
+              "key": "unicorn",
+              "score": 0.625
+            },
+            {
+              "key": "cruisader",
+              "score": 0.59375
+            },
+            {
+              "key": "amazon",
+              "score": 0.8125
+            }
+          ],
+          "games": 64,
+          "wins": 39,
+          "draws": 9,
+          "losses": 16
+        }
+      }
+    },
+    {
+      "key": "rook-purple-12",
+      "label": "Ranged rook",
+      "designIds": [
+        "rook.purple@12"
+      ],
+      "movements": [
+        "RC"
+      ],
+      "games": 128,
+      "wins": 63,
+      "draws": 27,
+      "losses": 38,
+      "score": 0.59765625,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 11,
+          "draws": 8,
+          "losses": 13,
+          "score": 0.46875
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 17,
+          "draws": 5,
+          "losses": 10,
+          "score": 0.609375
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 12,
+          "draws": 12,
+          "losses": 8,
+          "score": 0.5625
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 23,
+          "draws": 2,
+          "losses": 7,
+          "score": 0.75
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.53125,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.34375
+            },
+            {
+              "key": "unicorn",
+              "score": 0.5
+            },
+            {
+              "key": "cruisader",
+              "score": 0.5625
+            },
+            {
+              "key": "amazon",
+              "score": 0.71875
+            }
+          ],
+          "games": 64,
+          "wins": 28,
+          "draws": 12,
+          "losses": 24
+        },
+        "newEight": {
+          "score": 0.6640625,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.59375
+            },
+            {
+              "key": "unicorn",
+              "score": 0.71875
+            },
+            {
+              "key": "cruisader",
+              "score": 0.5625
+            },
+            {
+              "key": "amazon",
+              "score": 0.78125
+            }
+          ],
+          "games": 64,
+          "wins": 35,
+          "draws": 15,
+          "losses": 14
+        }
+      }
+    },
+    {
+      "key": "queen-purple-6",
+      "label": "Sideways queen",
+      "designIds": [
+        "queen.purple@6"
+      ],
+      "movements": [
+        "QsNsC"
+      ],
+      "games": 128,
+      "wins": 41,
+      "draws": 27,
+      "losses": 60,
+      "score": 0.42578125,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 7,
+          "draws": 4,
+          "losses": 21,
+          "score": 0.28125
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 15,
+          "draws": 5,
+          "losses": 12,
+          "score": 0.546875
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 12,
+          "draws": 5,
+          "losses": 15,
+          "score": 0.453125
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 7,
+          "draws": 13,
+          "losses": 12,
+          "score": 0.421875
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.4296875,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.25
+            },
+            {
+              "key": "unicorn",
+              "score": 0.5625
+            },
+            {
+              "key": "cruisader",
+              "score": 0.40625
+            },
+            {
+              "key": "amazon",
+              "score": 0.5
+            }
+          ],
+          "games": 64,
+          "wins": 21,
+          "draws": 13,
+          "losses": 30
+        },
+        "newEight": {
+          "score": 0.421875,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.3125
+            },
+            {
+              "key": "unicorn",
+              "score": 0.53125
+            },
+            {
+              "key": "cruisader",
+              "score": 0.5
+            },
+            {
+              "key": "amazon",
+              "score": 0.34375
+            }
+          ],
+          "games": 64,
+          "wins": 20,
+          "draws": 14,
+          "losses": 30
+        }
+      }
+    },
+    {
+      "key": "queen-purple-7",
+      "label": "X-ray queen",
+      "designIds": [
+        "queen.purple@7"
+      ],
+      "movements": [
+        "QgB0"
+      ],
+      "games": 128,
+      "wins": 59,
+      "draws": 27,
+      "losses": 42,
+      "score": 0.56640625,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 19,
+          "draws": 5,
+          "losses": 8,
+          "score": 0.671875
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 14,
+          "draws": 7,
+          "losses": 11,
+          "score": 0.546875
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 11,
+          "draws": 8,
+          "losses": 13,
+          "score": 0.46875
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 15,
+          "draws": 7,
+          "losses": 10,
+          "score": 0.578125
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.578125,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.75
+            },
+            {
+              "key": "unicorn",
+              "score": 0.5625
+            },
+            {
+              "key": "cruisader",
+              "score": 0.34375
+            },
+            {
+              "key": "amazon",
+              "score": 0.65625
+            }
+          ],
+          "games": 64,
+          "wins": 29,
+          "draws": 16,
+          "losses": 19
+        },
+        "newEight": {
+          "score": 0.5546875,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.59375
+            },
+            {
+              "key": "unicorn",
+              "score": 0.53125
+            },
+            {
+              "key": "cruisader",
+              "score": 0.59375
+            },
+            {
+              "key": "amazon",
+              "score": 0.5
+            }
+          ],
+          "games": 64,
+          "wins": 30,
+          "draws": 11,
+          "losses": 23
+        }
+      }
+    },
+    {
+      "key": "queen-purple-8",
+      "label": "Zebra queen",
+      "designIds": [
+        "queen.purple@8"
+      ],
+      "movements": [
+        "QZ"
+      ],
+      "games": 128,
+      "wins": 38,
+      "draws": 32,
+      "losses": 58,
+      "score": 0.421875,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 9,
+          "draws": 8,
+          "losses": 15,
+          "score": 0.40625
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 11,
+          "draws": 4,
+          "losses": 17,
+          "score": 0.40625
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 8,
+          "draws": 7,
+          "losses": 17,
+          "score": 0.359375
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 10,
+          "draws": 13,
+          "losses": 9,
+          "score": 0.515625
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.390625,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.46875
+            },
+            {
+              "key": "unicorn",
+              "score": 0.34375
+            },
+            {
+              "key": "cruisader",
+              "score": 0.28125
+            },
+            {
+              "key": "amazon",
+              "score": 0.46875
+            }
+          ],
+          "games": 64,
+          "wins": 17,
+          "draws": 16,
+          "losses": 31
+        },
+        "newEight": {
+          "score": 0.453125,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.34375
+            },
+            {
+              "key": "unicorn",
+              "score": 0.46875
+            },
+            {
+              "key": "cruisader",
+              "score": 0.4375
+            },
+            {
+              "key": "amazon",
+              "score": 0.5625
+            }
+          ],
+          "games": 64,
+          "wins": 21,
+          "draws": 16,
+          "losses": 27
+        }
+      }
+    },
+    {
+      "key": "pawn-purple-7",
+      "label": "Rook pawn: backward captures",
+      "designIds": [
+        "pawn.purple@7"
+      ],
+      "movements": [
+        "mRceB2"
+      ],
+      "games": 128,
+      "wins": 46,
+      "draws": 26,
+      "losses": 56,
+      "score": 0.4609375,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 13,
+          "draws": 5,
+          "losses": 14,
+          "score": 0.484375
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 13,
+          "draws": 6,
+          "losses": 13,
+          "score": 0.5
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 11,
+          "draws": 8,
+          "losses": 13,
+          "score": 0.46875
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 9,
+          "draws": 7,
+          "losses": 16,
+          "score": 0.390625
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.4609375,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.34375
+            },
+            {
+              "key": "unicorn",
+              "score": 0.53125
+            },
+            {
+              "key": "cruisader",
+              "score": 0.5
+            },
+            {
+              "key": "amazon",
+              "score": 0.46875
+            }
+          ],
+          "games": 64,
+          "wins": 22,
+          "draws": 15,
+          "losses": 27
+        },
+        "newEight": {
+          "score": 0.4609375,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.625
+            },
+            {
+              "key": "unicorn",
+              "score": 0.46875
+            },
+            {
+              "key": "cruisader",
+              "score": 0.4375
+            },
+            {
+              "key": "amazon",
+              "score": 0.3125
+            }
+          ],
+          "games": 64,
+          "wins": 24,
+          "draws": 11,
+          "losses": 29
+        }
+      }
+    },
+    {
+      "key": "pawn-purple-13",
+      "label": "Rook pawn: long forward captures",
+      "designIds": [
+        "pawn.purple@13"
+      ],
+      "movements": [
+        "mRcfB"
+      ],
+      "games": 128,
+      "wins": 46,
+      "draws": 20,
+      "losses": 62,
+      "score": 0.4375,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 10,
+          "draws": 6,
+          "losses": 16,
+          "score": 0.40625
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 16,
+          "draws": 6,
+          "losses": 10,
+          "score": 0.59375
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 11,
+          "draws": 2,
+          "losses": 19,
+          "score": 0.375
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 9,
+          "draws": 6,
+          "losses": 17,
+          "score": 0.375
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.4296875,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.4375
+            },
+            {
+              "key": "unicorn",
+              "score": 0.59375
+            },
+            {
+              "key": "cruisader",
+              "score": 0.3125
+            },
+            {
+              "key": "amazon",
+              "score": 0.375
+            }
+          ],
+          "games": 64,
+          "wins": 22,
+          "draws": 11,
+          "losses": 31
+        },
+        "newEight": {
+          "score": 0.4453125,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.375
+            },
+            {
+              "key": "unicorn",
+              "score": 0.59375
+            },
+            {
+              "key": "cruisader",
+              "score": 0.4375
+            },
+            {
+              "key": "amazon",
+              "score": 0.375
+            }
+          ],
+          "games": 64,
+          "wins": 24,
+          "draws": 9,
+          "losses": 31
+        }
+      }
+    },
+    {
+      "key": "bishop-purple-17",
+      "label": "Mating bishop: short capture set",
+      "designIds": [
+        "bishop.purple@17"
+      ],
+      "movements": [
+        "BcWcN"
+      ],
+      "games": 128,
+      "wins": 63,
+      "draws": 19,
+      "losses": 46,
+      "score": 0.56640625,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 12,
+          "draws": 5,
+          "losses": 15,
+          "score": 0.453125
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 18,
+          "draws": 3,
+          "losses": 11,
+          "score": 0.609375
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 12,
+          "draws": 6,
+          "losses": 14,
+          "score": 0.46875
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 21,
+          "draws": 5,
+          "losses": 6,
+          "score": 0.734375
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.5625,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.5
+            },
+            {
+              "key": "unicorn",
+              "score": 0.59375
+            },
+            {
+              "key": "cruisader",
+              "score": 0.5
+            },
+            {
+              "key": "amazon",
+              "score": 0.65625
+            }
+          ],
+          "games": 64,
+          "wins": 31,
+          "draws": 10,
+          "losses": 23
+        },
+        "newEight": {
+          "score": 0.5703125,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.40625
+            },
+            {
+              "key": "unicorn",
+              "score": 0.625
+            },
+            {
+              "key": "cruisader",
+              "score": 0.4375
+            },
+            {
+              "key": "amazon",
+              "score": 0.8125
+            }
+          ],
+          "games": 64,
+          "wins": 32,
+          "draws": 9,
+          "losses": 23
+        }
+      }
+    },
+    {
+      "key": "bishop-purple-18",
+      "label": "Vertical bishop: no zebra",
+      "designIds": [
+        "bishop.purple@18"
+      ],
+      "movements": [
+        "BvWvN"
+      ],
+      "games": 128,
+      "wins": 52,
+      "draws": 19,
+      "losses": 57,
+      "score": 0.48046875,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 9,
+          "draws": 4,
+          "losses": 19,
+          "score": 0.34375
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 14,
+          "draws": 7,
+          "losses": 11,
+          "score": 0.546875
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 12,
+          "draws": 6,
+          "losses": 14,
+          "score": 0.46875
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 17,
+          "draws": 2,
+          "losses": 13,
+          "score": 0.5625
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.4921875,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.4375
+            },
+            {
+              "key": "unicorn",
+              "score": 0.53125
+            },
+            {
+              "key": "cruisader",
+              "score": 0.46875
+            },
+            {
+              "key": "amazon",
+              "score": 0.53125
+            }
+          ],
+          "games": 64,
+          "wins": 28,
+          "draws": 7,
+          "losses": 29
+        },
+        "newEight": {
+          "score": 0.46875,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.25
+            },
+            {
+              "key": "unicorn",
+              "score": 0.5625
+            },
+            {
+              "key": "cruisader",
+              "score": 0.46875
+            },
+            {
+              "key": "amazon",
+              "score": 0.59375
+            }
+          ],
+          "games": 64,
+          "wins": 24,
+          "draws": 12,
+          "losses": 28
+        }
+      }
+    },
+    {
+      "key": "rook-purple-14",
+      "label": "Side rook: quiet camel",
+      "designIds": [
+        "rook.purple@14"
+      ],
+      "movements": [
+        "RFsNmsC"
+      ],
+      "games": 128,
+      "wins": 57,
+      "draws": 24,
+      "losses": 47,
+      "score": 0.5390625,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 16,
+          "draws": 8,
+          "losses": 8,
+          "score": 0.625
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 14,
+          "draws": 4,
+          "losses": 14,
+          "score": 0.5
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 9,
+          "draws": 7,
+          "losses": 16,
+          "score": 0.390625
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 18,
+          "draws": 5,
+          "losses": 9,
+          "score": 0.640625
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.5546875,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.75
+            },
+            {
+              "key": "unicorn",
+              "score": 0.53125
+            },
+            {
+              "key": "cruisader",
+              "score": 0.34375
+            },
+            {
+              "key": "amazon",
+              "score": 0.59375
+            }
+          ],
+          "games": 64,
+          "wins": 31,
+          "draws": 9,
+          "losses": 24
+        },
+        "newEight": {
+          "score": 0.5234375,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.5
+            },
+            {
+              "key": "unicorn",
+              "score": 0.46875
+            },
+            {
+              "key": "cruisader",
+              "score": 0.4375
+            },
+            {
+              "key": "amazon",
+              "score": 0.6875
+            }
+          ],
+          "games": 64,
+          "wins": 26,
+          "draws": 15,
+          "losses": 23
+        }
+      }
+    }
+  ],
+  "pawnGrants": [
+    {
+      "key": "quiet-diagonal-pawns",
+      "label": "Three quiet-diagonal pawns",
+      "designIds": [
+        "pawn.blue@4"
+      ],
+      "movements": [
+        "mFfmWfceFifmnD"
+      ],
+      "games": 128,
+      "wins": 27,
+      "draws": 9,
+      "losses": 92,
+      "score": 0.24609375,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 3,
+          "draws": 5,
+          "losses": 24,
+          "score": 0.171875
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 10,
+          "draws": 3,
+          "losses": 19,
+          "score": 0.359375
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 8,
+          "draws": 0,
+          "losses": 24,
+          "score": 0.25
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 6,
+          "draws": 1,
+          "losses": 25,
+          "score": 0.203125
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.2421875,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.1875
+            },
+            {
+              "key": "unicorn",
+              "score": 0.28125
+            },
+            {
+              "key": "cruisader",
+              "score": 0.3125
+            },
+            {
+              "key": "amazon",
+              "score": 0.1875
+            }
+          ],
+          "games": 64,
+          "wins": 12,
+          "draws": 7,
+          "losses": 45
+        },
+        "newEight": {
+          "score": 0.25,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.15625
+            },
+            {
+              "key": "unicorn",
+              "score": 0.4375
+            },
+            {
+              "key": "cruisader",
+              "score": 0.1875
+            },
+            {
+              "key": "amazon",
+              "score": 0.21875
+            }
+          ],
+          "games": 64,
+          "wins": 15,
+          "draws": 2,
+          "losses": 47
+        }
+      }
+    },
+    {
+      "key": "two-step-pawns",
+      "label": "Three two-step pawns",
+      "designIds": [
+        "pawn.blue@5"
+      ],
+      "movements": [
+        "fmW2fceF2"
+      ],
+      "games": 128,
+      "wins": 55,
+      "draws": 19,
+      "losses": 54,
+      "score": 0.50390625,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 12,
+          "draws": 6,
+          "losses": 14,
+          "score": 0.46875
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 16,
+          "draws": 2,
+          "losses": 14,
+          "score": 0.53125
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 11,
+          "draws": 5,
+          "losses": 16,
+          "score": 0.421875
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 16,
+          "draws": 6,
+          "losses": 10,
+          "score": 0.59375
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.5,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.375
+            },
+            {
+              "key": "unicorn",
+              "score": 0.5
+            },
+            {
+              "key": "cruisader",
+              "score": 0.5
+            },
+            {
+              "key": "amazon",
+              "score": 0.625
+            }
+          ],
+          "games": 64,
+          "wins": 28,
+          "draws": 8,
+          "losses": 28
+        },
+        "newEight": {
+          "score": 0.5078125,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.5625
+            },
+            {
+              "key": "unicorn",
+              "score": 0.5625
+            },
+            {
+              "key": "cruisader",
+              "score": 0.34375
+            },
+            {
+              "key": "amazon",
+              "score": 0.5625
+            }
+          ],
+          "games": 64,
+          "wins": 27,
+          "draws": 11,
+          "losses": 26
+        }
+      }
+    },
+    {
+      "key": "diagonal-pawn-grants",
+      "label": "Three diagonal pawn grants",
+      "designIds": [
+        "king.reserve-pawn@2"
+      ],
+      "movements": [
+        "fF"
+      ],
+      "games": 128,
+      "wins": 67,
+      "draws": 27,
+      "losses": 34,
+      "score": 0.62890625,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 32,
+          "wins": 18,
+          "draws": 8,
+          "losses": 6,
+          "score": 0.6875
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 32,
+          "wins": 16,
+          "draws": 7,
+          "losses": 9,
+          "score": 0.609375
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 32,
+          "wins": 15,
+          "draws": 5,
+          "losses": 12,
+          "score": 0.546875
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 32,
+          "wins": 18,
+          "draws": 7,
+          "losses": 7,
+          "score": 0.671875
+        }
+      ],
+      "openingCoverage": {
+        "shared": 16,
+        "total": 16,
+        "openingIds": [
+          "start",
+          "open-e-pawns",
+          "open-d-pawns",
+          "sicilian-prefix",
+          "english-prefix",
+          "knights-prefix",
+          "queenside-fianchetto",
+          "kingside-fianchetto",
+          "followup-french",
+          "followup-indian",
+          "followup-reti",
+          "followup-symmetrical-english",
+          "followup-scandinavian",
+          "followup-dutch",
+          "followup-kings-indian-attack",
+          "followup-larsen"
+        ],
+        "repetitions": 1
+      },
+      "cohorts": {
+        "originalEight": {
+          "score": 0.578125,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.59375
+            },
+            {
+              "key": "unicorn",
+              "score": 0.625
+            },
+            {
+              "key": "cruisader",
+              "score": 0.5625
+            },
+            {
+              "key": "amazon",
+              "score": 0.53125
+            }
+          ],
+          "games": 64,
+          "wins": 30,
+          "draws": 14,
+          "losses": 20
+        },
+        "newEight": {
+          "score": 0.6796875,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "score": 0.78125
+            },
+            {
+              "key": "unicorn",
+              "score": 0.59375
+            },
+            {
+              "key": "cruisader",
+              "score": 0.53125
+            },
+            {
+              "key": "amazon",
+              "score": 0.8125
+            }
+          ],
+          "games": 64,
+          "wins": 37,
+          "draws": 13,
+          "losses": 14
+        }
+      }
+    }
+  ]
+}
