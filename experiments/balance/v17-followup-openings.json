@@ -1,0 +1,10 @@
+[
+  { "id": "followup-french", "moves": ["e2e4", "e7e6"] },
+  { "id": "followup-indian", "moves": ["d2d4", "g8f6"] },
+  { "id": "followup-reti", "moves": ["g1f3", "d7d5"] },
+  { "id": "followup-symmetrical-english", "moves": ["c2c4", "c7c5"] },
+  { "id": "followup-scandinavian", "moves": ["e2e4", "d7d5"] },
+  { "id": "followup-dutch", "moves": ["d2d4", "f7f5"] },
+  { "id": "followup-kings-indian-attack", "moves": ["g2g3", "d7d5"] },
+  { "id": "followup-larsen", "moves": ["b2b3", "e7e5"] }
+]

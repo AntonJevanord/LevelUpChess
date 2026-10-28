@@ -1,0 +1,565 @@
+{
+  "schemaVersion": 2,
+  "name": "Version 17: level-three revisions on sixteen starts (640 games)",
+  "seed": 20261028,
+  "repetitions": 1,
+  "engine": {
+    "nodes": 20000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400
+  },
+  "openings": [
+    {
+      "id": "start",
+      "moves": []
+    },
+    {
+      "id": "open-e-pawns",
+      "moves": [
+        "e2e4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "open-d-pawns",
+      "moves": [
+        "d2d4",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "sicilian-prefix",
+      "moves": [
+        "e2e4",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "english-prefix",
+      "moves": [
+        "c2c4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "knights-prefix",
+      "moves": [
+        "g1f3",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "queenside-fianchetto",
+      "moves": [
+        "b2b3",
+        "b7b6"
+      ]
+    },
+    {
+      "id": "kingside-fianchetto",
+      "moves": [
+        "g2g3",
+        "g7g6"
+      ]
+    },
+    {
+      "id": "followup-french",
+      "moves": [
+        "e2e4",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "followup-indian",
+      "moves": [
+        "d2d4",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "followup-reti",
+      "moves": [
+        "g1f3",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "followup-symmetrical-english",
+      "moves": [
+        "c2c4",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "followup-scandinavian",
+      "moves": [
+        "e2e4",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "followup-dutch",
+      "moves": [
+        "d2d4",
+        "f7f5"
+      ]
+    },
+    {
+      "id": "followup-kings-indian-attack",
+      "moves": [
+        "g2g3",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "followup-larsen",
+      "moves": [
+        "b2b3",
+        "e7e5"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "pawn-purple-7-v-vanguard",
+      "label": "Rook pawn: backward captures versus Vanguard",
+      "armyA": {
+        "upgrades": {
+          "d2": "pawn.purple@7"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "a1": "rook.purple@10"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-purple-7-v-unicorn",
+      "label": "Rook pawn: backward captures versus Unicorn",
+      "armyA": {
+        "upgrades": {
+          "d2": "pawn.purple@7"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.purple@3"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-purple-7-v-cruisader",
+      "label": "Rook pawn: backward captures versus Cruisader",
+      "armyA": {
+        "upgrades": {
+          "d2": "pawn.purple@7"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c1": "bishop.purple@13"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-purple-7-v-amazon",
+      "label": "Rook pawn: backward captures versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "d2": "pawn.purple@7"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-purple-13-v-vanguard",
+      "label": "Rook pawn: long forward captures versus Vanguard",
+      "armyA": {
+        "upgrades": {
+          "d2": "pawn.purple@13"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "a1": "rook.purple@10"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-purple-13-v-unicorn",
+      "label": "Rook pawn: long forward captures versus Unicorn",
+      "armyA": {
+        "upgrades": {
+          "d2": "pawn.purple@13"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.purple@3"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-purple-13-v-cruisader",
+      "label": "Rook pawn: long forward captures versus Cruisader",
+      "armyA": {
+        "upgrades": {
+          "d2": "pawn.purple@13"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c1": "bishop.purple@13"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-purple-13-v-amazon",
+      "label": "Rook pawn: long forward captures versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "d2": "pawn.purple@13"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "bishop-purple-17-v-vanguard",
+      "label": "Mating bishop: short capture set versus Vanguard",
+      "armyA": {
+        "upgrades": {
+          "c1": "bishop.purple@17"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "a1": "rook.purple@10"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "bishop-purple-17-v-unicorn",
+      "label": "Mating bishop: short capture set versus Unicorn",
+      "armyA": {
+        "upgrades": {
+          "c1": "bishop.purple@17"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.purple@3"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "bishop-purple-17-v-cruisader",
+      "label": "Mating bishop: short capture set versus Cruisader",
+      "armyA": {
+        "upgrades": {
+          "c1": "bishop.purple@17"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c1": "bishop.purple@13"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "bishop-purple-17-v-amazon",
+      "label": "Mating bishop: short capture set versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "c1": "bishop.purple@17"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "bishop-purple-18-v-vanguard",
+      "label": "Vertical bishop: no zebra versus Vanguard",
+      "armyA": {
+        "upgrades": {
+          "c1": "bishop.purple@18"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "a1": "rook.purple@10"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "bishop-purple-18-v-unicorn",
+      "label": "Vertical bishop: no zebra versus Unicorn",
+      "armyA": {
+        "upgrades": {
+          "c1": "bishop.purple@18"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.purple@3"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "bishop-purple-18-v-cruisader",
+      "label": "Vertical bishop: no zebra versus Cruisader",
+      "armyA": {
+        "upgrades": {
+          "c1": "bishop.purple@18"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c1": "bishop.purple@13"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "bishop-purple-18-v-amazon",
+      "label": "Vertical bishop: no zebra versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "c1": "bishop.purple@18"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rook-purple-14-v-vanguard",
+      "label": "Side rook: quiet camel versus Vanguard",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@14"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "a1": "rook.purple@10"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rook-purple-14-v-unicorn",
+      "label": "Side rook: quiet camel versus Unicorn",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@14"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.purple@3"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rook-purple-14-v-cruisader",
+      "label": "Side rook: quiet camel versus Cruisader",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@14"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c1": "bishop.purple@13"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rook-purple-14-v-amazon",
+      "label": "Side rook: quiet camel versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.purple@14"
+        },
+        "remove": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    }
+  ]
+}

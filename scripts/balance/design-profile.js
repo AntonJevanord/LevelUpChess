@@ -64,7 +64,7 @@ function definitionProbes(definition, letter) {
   if (definition.roles.pawn) frames.push({ name: 'mandatory standard promotion', fen: position({ a1: 'K', h6: 'k', b7: type }) });
   // New pawn candidates need fixtures for the abilities that distinguish them;
   // keep earlier registries' probe lists unchanged for archived experiments.
-  if (definition.family === 'pawn' && definition.revision >= 3) {
+  if (definition.family === 'pawn' && definition.revision >= 3 && !['pawn.blue@4', 'pawn.blue@5', 'pawn.purple@13'].includes(definition.id)) {
     frames.push({ name: definition.revision === 5 ? 'quiet forward visit to an en passant target' : 'standard en passant capture', fen: position({ h1: 'K', h8: 'k', c5: type, d5: 'p' }, 'w', '-', 'd6') });
     if (definition.revision === 3) frames.push({
       name: 'forward capture range and forbidden backward captures',
@@ -198,6 +198,37 @@ function definitionProbes(definition, letter) {
   if (['rook.purple@9', 'rook.purple@10', 'rook.purple@11'].includes(definition.id)) frames.push(
     { name: 'forward and backward diagonal ranges', fen: position({ a1: 'K', h7: 'k', d4: type, a7: 'p', g7: 'p', b2: 'p', f2: 'p' }) },
     { name: 'diagonal slides cannot cross blockers', fen: position({ a1: 'K', h7: 'k', d4: type, e5: 'P', f6: 'p', c3: 'p', b2: 'p' }) },
+  );
+  // Follow-up definitions receive exact-ID fixtures so archived profiles retain
+  // their original probes and hashes when the research catalog grows.
+  if (definition.id === 'pawn.purple@13') frames.push(
+    { name: 'standard forward en passant capture', fen: position({ h1: 'K', h8: 'k', c5: type, d5: 'p' }, 'w', '-', 'd6') },
+    { name: 'unlimited forward captures but quiet-only backward movement', fen: position({ h1: 'K', h8: 'k', d4: type, a7: 'p', g7: 'p', b2: 'p', f2: 'p' }) },
+    { name: 'forward diagonal captures require a clear path', fen: position({ h1: 'K', h8: 'k', d4: type, c5: 'P', e5: 'P', b6: 'p', f6: 'p' }) },
+  );
+  if (definition.id === 'pawn.blue@4') frames.push(
+    { name: 'backward diagonal steps are quiet only', fen: position({ h1: 'K', h8: 'k', d4: type, c3: 'p', e3: 'p', c5: 'p', e5: 'p' }) },
+    { name: 'quiet forward diagonal EP visit leaves the bypassed pawn', fen: position({ h1: 'K', h8: 'k', c5: type, d5: 'p' }, 'w', '-', 'd6') },
+    { name: 'initial forward double cannot jump its intermediate blocker', fen: position({ h1: 'K', h8: 'k', d2: type, d3: 'P' }) },
+  );
+  if (definition.id === 'pawn.blue@5') frames.push(
+    { name: 'standard forward en passant capture', fen: position({ h1: 'K', h8: 'k', c5: type, d5: 'p' }, 'w', '-', 'd6') },
+    { name: 'repeatable clear double advance and two-square forward captures', fen: position({ h1: 'K', h8: 'k', d4: type, b6: 'p', f6: 'p', b2: 'p', f2: 'p', g7: 'p' }) },
+    { name: 'both two-square paths stop at intermediate blockers', fen: position({ h1: 'K', h8: 'k', d4: type, d5: 'P', c5: 'P', e5: 'P', b6: 'p', f6: 'p' }) },
+  );
+  if (definition.id === 'bishop.purple@17') frames.push(
+    { name: 'orthogonal steps and knight leaps capture only', fen: position({ h1: 'K', h7: 'k', d4: type, c4: 'p', e4: 'p', d3: 'p', d5: 'p', b3: 'p', f5: 'p' }) },
+    { name: 'removed dabbaba and alfil captures remain forbidden', fen: position({ h1: 'K', h7: 'k', d4: type, c3: 'P', e5: 'P', d2: 'p', f4: 'p', b2: 'p', f6: 'p' }) },
+  );
+  if (definition.id === 'bishop.purple@18') frames.push(
+    { name: 'vertical steps and tall knight leaps without zebra reach', fen: position({ h1: 'K', h7: 'k', d4: type, c2: 'p', e6: 'p', b1: 'p', f7: 'p', b3: 'p', f5: 'p' }) },
+  );
+  if (definition.id === 'rook.purple@14') frames.push(
+    { name: 'wide camel jumps are quiet while wide knight jumps capture', fen: position({ h1: 'K', h8: 'k', d4: type, a3: 'p', g5: 'p', b3: 'p', f5: 'p', c3: 'p', e5: 'p' }) },
+    { name: 'quiet wide camel relocation crosses friendly blockers', fen: position({ h1: 'K', h8: 'k', d4: type, c4: 'P', e4: 'P', d3: 'P', d5: 'P' }) },
+  );
+  if (definition.id === 'king.reserve-pawn@2') frames.push(
+    { name: 'deployed forward diagonal guard captures without straight movement', fen: position({ h1: 'K', h8: 'k', d4: type, c5: 'p', e5: 'p', d5: 'p', c3: 'p', e3: 'p' }) },
   );
   if (definition.roles.castlingRook) frames.push({ name: 'both castling sides', fen: position({ e8: 'k', a1: type, e1: 'K', h1: type }, 'w', 'KQ') });
   // These new allocation hints have no historical movement identity. In

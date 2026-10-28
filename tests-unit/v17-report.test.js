@@ -93,3 +93,103 @@ test('a supplied manifest binds the report to frozen profile, schedule and engin
   ]) assert.throws(() => report([{ ...records[0], ...change }, records[1]], { manifest }), /frozen|context/);
   assert.throws(() => report(records, { manifest: { ...manifest, config: { ...config, seed: 9 } } }), /declared experiment/);
 });
+
+function referencePanel({ repetitions = 1, crossMatch = false } = {}) {
+  const keys = ['vanguard', 'unicorn', 'cruisader', 'amazon'];
+  const comparisons = keys.map(key => ({ id: `candidate-v-${key}`, label: `Candidate versus ${key}`,
+    armyA: { upgrades: {} }, armyB: { upgrades: {} }, strengthA: { skill: 20 }, strengthB: { skill: 20 } }));
+  const described = keys.map(key => ({ id: `candidate-v-${key}`, aKey: 'candidate', aLabel: 'Candidate', bKey: key, bLabel: key }));
+  if (crossMatch) {
+    comparisons.push({ ...comparisons[0], id: 'candidate-v-bundle', label: 'Candidate versus Other bundle' });
+    described.push({ id: 'candidate-v-bundle', aKey: 'candidate', aLabel: 'Candidate', bKey: 'bundle', bLabel: 'Other bundle' });
+  }
+  const declaration = { experiment: 'test-reference-panel', config: { ...config, repetitions, comparisons },
+    metadata: { kind: 'pawn-grants', symmetric: true, rows: [{ key: 'candidate', label: 'Candidate' }],
+      columns: [...keys.map(key => ({ key, label: key })), ...(crossMatch ? [{ key: 'bundle', label: 'Other bundle' }] : [])], comparisons: described } };
+  const pairFor = (opponent, openingId, score, repetition = 1) => ['w', 'b'].map(aColor => ({
+    id: `${opponent}-${openingId}-${repetition}-${aColor}`, pairId: `${opponent}-${openingId}-${repetition}`,
+    comparisonId: `candidate-v-${opponent}`, openingId, repetition, attempt: 1, aColor, status: 'completed',
+    result: score === 0.5 ? '1/2-1/2' : (score === 1) === (aColor === 'w') ? '1-0' : '0-1', reason: score === 0.5 ? 'stalemate' : 'checkmate',
+  }));
+  return { declaration, pairFor, keys, create: records => createV17Report({ ...declaration, records }) };
+}
+
+test('overall scores weight four reference opponents equally and exclude direct bundle matches', () => {
+  const panel = referencePanel({ crossMatch: true });
+  const records = panel.keys.flatMap((key, index) => panel.pairFor(key, 'start', [1, 0.5, 0, 1][index]));
+  records.push(...panel.pairFor('bundle', 'start', 0));
+  const result = panel.create(records), row = result.overall.rows[0];
+  assert.equal(row.score, 0.625);
+  assert.deepEqual([row.games, row.wins, row.draws, row.losses], [8, 4, 2, 2]);
+  assert.equal(row.opponents.length, 4);
+  assert.ok(row.opponents.every(opponent => opponent.key !== 'bundle'));
+  assert.deepEqual(row.openingCoverage, { shared: 1, total: 2, openingIds: ['start'], repetitions: 1 });
+  assert.equal(result.comparisons.find(comparison => comparison.bKey === 'bundle').score, 0);
+  assert.match(renderV17Report(result), /Overall score \(cases\)/);
+  assert.match(renderV17Report(result), /62\.50% \(1\/2\)/);
+  assert.match(renderV17Report(result), /\| Candidate \| 8 \| 4 \/ 2 \/ 2 \| 4 \| 1\/2 \|/);
+  assert.doesNotMatch(renderV17Report(result, { includeOverall: false }), /Overall score|Overall row/);
+});
+
+test('overall scores use only shared complete cases, so faster workers cannot change opponent or opening weights', () => {
+  const panel = referencePanel();
+  const records = panel.keys.flatMap((key, index) => panel.pairFor(key, 'start', [0, 0.5, 0, 1][index]));
+  const first = panel.create(records).overall.rows[0];
+  records.push(...panel.pairFor('vanguard', 'open-e', 1));
+  const result = panel.create(records), row = result.overall.rows[0];
+  assert.equal(row.score, 0.375);
+  assert.deepEqual(row, first);
+  assert.equal(result.comparisons.find(comparison => comparison.bKey === 'vanguard').score, 0.5);
+  assert.equal(result.progress.pairedGames, 10);
+  assert.equal(row.games, 8);
+  assert.equal(row.status, 'partial shared opening cases');
+  assert.deepEqual(panel.create([...records, ...structuredClone(records)]).overall, result.overall);
+});
+
+test('pending overall requires a common case and excludes incomplete or truncated color pairs', () => {
+  const panel = referencePanel();
+  const records = panel.keys.slice(0, 3).flatMap(key => panel.pairFor(key, 'start', 1));
+  records.push(...panel.pairFor('amazon', 'open-e', 1));
+  let result = panel.create(records);
+  assert.ok(result.comparisons.every(comparison => comparison.score === 1));
+  assert.equal(result.overall.rows[0].score, null);
+  assert.equal(result.overall.rows[0].games, 0);
+  assert.match(renderV17Report(result), /pending \(0\/2\)/);
+  const amazonStart = panel.pairFor('amazon', 'start', 1);
+  records.push(amazonStart[0], { ...amazonStart[1], status: 'truncated', result: '*', reason: 'max-plies' });
+  result = panel.create(records);
+  assert.equal(result.overall.rows[0].score, null);
+  assert.equal(result.overall.rows[0].openingCoverage.shared, 0);
+  const errorThenRetry = [...records.slice(0, -1), { ...amazonStart[1], status: 'error', result: '*', reason: 'interrupted' }, { ...amazonStart[1], attempt: 2 }];
+  result = panel.create(errorThenRetry);
+  assert.equal(result.overall.rows[0].score, 1);
+  assert.equal(result.overall.rows[0].games, 8);
+  assert.equal(result.overall.rows[0].openingCoverage.shared, 1);
+});
+
+test('all configured repetitions must finish with distinct repetition identities before a case contributes', () => {
+  const panel = referencePanel({ repetitions: 2 });
+  const records = panel.keys.flatMap(key => panel.pairFor(key, 'start', 1));
+  records.push(...panel.keys.slice(0, 3).flatMap(key => panel.pairFor(key, 'start', 0, 2)));
+  assert.equal(panel.create(records).overall.rows[0].score, null);
+  const last = panel.pairFor('amazon', 'start', 0, 2);
+  const result = panel.create([...records, ...last]);
+  assert.equal(result.overall.rows[0].score, 0.5);
+  assert.equal(result.overall.rows[0].games, 16);
+  assert.equal(result.overall.rows[0].openingCoverage.repetitions, 2);
+  assert.equal(panel.create([...records, ...last.map(record => ({ ...record, repetition: 1 }))]).overall.rows[0].score, null);
+});
+
+test('reference team overall scores invert either matchup side and include all five other scheduled teams', () => {
+  const evidence = require('../scripts/balance/v17-screen-evidence').loadScreenEvidence('reference-2v2');
+  const rows = evidence.report.overall.rows;
+  assert.equal(rows.length, 6);
+  assert.ok(rows.every(row => row.games === 80 && row.opponents.length === 5 && row.openingCoverage.shared === 8));
+  assert.ok(Math.abs(rows.find(row => row.label === 'Vanguard + Amazon').score - 0.6) < 1e-12);
+  for (const row of rows) for (const opponent of row.opponents) {
+    const inverse = rows.find(other => other.key === opponent.key).opponents.find(other => other.key === row.key);
+    assert.ok(Math.abs(opponent.score + inverse.score - 1) < 1e-12);
+    assert.equal(opponent.wins, inverse.losses);
+    assert.equal(opponent.draws, inverse.draws);
+  }
+});

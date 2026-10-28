@@ -139,6 +139,15 @@ const definitions = [
     ['knight', 'KmN'], ['queen', 'K2'], ['okapi', 'NZ'],
     ['princess', 'KN'], ['true-queen', 'Q'],
   ].map(([name, movement], index) => rosterDefinition('king', `reserve-${name}`, index + 1, movement, 'acdefghij'[index], index + 1, 1, 'reserve')),
+  // Version-17 research revisions are selected only by declared experiments.
+  // The playable version-16 libraries and every measured predecessor stay fixed.
+  rosterDefinition('pawn', 'purple', 3, 'mRcfB', 'd', 3, 13),
+  rosterDefinition('bishop', 'purple', 3, 'BcWcN', 'd', 3, 17),
+  rosterDefinition('bishop', 'purple', 3, 'BvWvN', 'g', 6, 18),
+  rosterDefinition('rook', 'purple', 3, 'RFsNmsC', 'g', 6, 14),
+  rosterDefinition('pawn', 'blue', 1, 'mFfmWfceFifmnD', 'a', 1, 4),
+  rosterDefinition('pawn', 'blue', 1, 'fmW2fceF2', 'e', 4, 5),
+  rosterDefinition('king', 'reserve-pawn', 1, 'fF', 'a', 1, 2, 'reserve'),
 ];
 
 const DESIGNS = Object.freeze(Object.fromEntries(definitions.map(design => [design.id, design])));

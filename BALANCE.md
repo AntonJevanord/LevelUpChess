@@ -2,7 +2,7 @@
 
 Version 16 is closed with four [official references](docs/official-references.md): Vanguard `RfB`, Unicorn `NC`, Cruisader `BsR2nsN` and Amazon `QN`. Each costs three upgrade points. Their definitions, roles and identities are frozen.
 
-Current evidence supports the reference choice. The [version-17 experiments](docs/version17-experiments.md) add an eight-opening level-3 screen, reference 2v2 table and level-1 pawn/guard bundles. They do not reopen the completed bishop search or pool new contexts silently with older results.
+The [initial version-17 experiments](docs/version17-experiments.md) completed 1,312 games. Their [archived outcome analysis](experiments/balance/results/v17-screen-001.report.md) identifies four clear level-3 revision signals and weak level-1 pawn bundles. The [follow-up plan](docs/version17-followups.md) caps new play at 1,600 games and reuses the first eight openings only for unchanged designs. References and historical outcomes stay fixed.
 
 ## Current results
 

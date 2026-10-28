@@ -11,6 +11,65 @@ const keyFor = (a, b) => JSON.stringify([a, b]);
 const percent = value => value === null ? '—' : `${(value * 100).toFixed(2)}%`;
 const markdown = value => String(value).replace(/[\r\n]/g, ' ').replace(/\|/g, '\\|');
 const csv = value => /[",\r\n]/.test(String(value)) ? `"${String(value).replace(/"/g, '""')}"` : String(value);
+const REFERENCE_KEYS = new Set(['vanguard', 'unicorn', 'cruisader', 'amazon']);
+const average = values => values.reduce((sum, value) => sum + value, 0) / values.length;
+const gameScore = record => record.result === '1/2-1/2' ? 0.5 : Number((record.result === '1-0') === (record.aColor === 'w'));
+
+/** Restrict overall scores to the same fully finished opening cases across
+ * opponents. A faster worker or an extra completed repetition adds no weight. */
+function overallScores(rows, config, metadata, latest) {
+  const completedPairs = new Map();
+  for (const record of latest.values()) {
+    if (record.status !== 'completed') continue;
+    const pair = completedPairs.get(record.pairId) || [];
+    pair.push(record); completedPairs.set(record.pairId, pair);
+  }
+  const pairs = [...completedPairs.values()].filter(pair => pair.length === 2 && pair[0].aColor !== pair[1].aColor);
+  const tally = scores => ({ games: scores.length, wins: scores.filter(value => value === 1).length,
+    draws: scores.filter(value => value === 0.5).length, losses: scores.filter(value => value === 0).length });
+  return {
+    method: 'Equal opponent means over shared fully completed opening cases; every configured repetition requires a complete color pair. Draws count half a point.',
+    rows: rows.map(row => {
+      const matches = metadata.comparisons.flatMap(comparison => comparison.aKey === row.key
+        ? [{ id: comparison.id, key: comparison.bKey, label: comparison.bLabel, inverted: false }]
+        : metadata.symmetric && comparison.bKey === row.key
+          ? [{ id: comparison.id, key: comparison.aKey, label: comparison.aLabel, inverted: true }] : []);
+      const references = matches.filter(opponent => REFERENCE_KEYS.has(opponent.key));
+      const targets = references.length ? references : matches;
+      const byOpponent = targets.map(opponent => {
+        const openings = new Map();
+        for (const pair of pairs.filter(pair => pair[0].comparisonId === opponent.id)) {
+          const opening = openings.get(pair[0].openingId) || [];
+          opening.push(pair); openings.set(pair[0].openingId, opening);
+        }
+        return { ...opponent, openings };
+      });
+      const fullyCompleted = (opponent, openingId) => {
+        const openingPairs = opponent.openings.get(openingId) || [];
+        if (openingPairs.length !== config.repetitions) return false;
+        if (config.repetitions === 1) return true; // Legacy toy records may omit repetition 1.
+        const repetitions = openingPairs.map(pair => pair[0].repetition === pair[1].repetition ? pair[0].repetition : null);
+        return new Set(repetitions).size === config.repetitions
+          && repetitions.every(repetition => Number.isSafeInteger(repetition) && repetition >= 1 && repetition <= config.repetitions);
+      };
+      const shared = config.openings.filter(opening => byOpponent.length
+        && byOpponent.every(opponent => fullyCompleted(opponent, opening.id))).map(opening => opening.id);
+      const opponents = byOpponent.map(opponent => {
+        const scores = shared.flatMap(openingId => opponent.openings.get(openingId)
+          .flatMap(pair => pair.map(record => opponent.inverted ? 1 - gameScore(record) : gameScore(record))));
+        const score = shared.length ? average(shared.map(openingId => average(opponent.openings.get(openingId)
+          .map(pair => average(pair.map(record => opponent.inverted ? 1 - gameScore(record) : gameScore(record))))))) : null;
+        return { key: opponent.key, label: opponent.label, ...tally(scores), score };
+      });
+      const totals = opponents.reduce((sum, opponent) => ({ games: sum.games + opponent.games, wins: sum.wins + opponent.wins,
+        draws: sum.draws + opponent.draws, losses: sum.losses + opponent.losses }), { games: 0, wins: 0, draws: 0, losses: 0 });
+      return { key: row.key, label: row.label, scope: references.length ? 'fixed-reference opponents only' : 'all scheduled opponents except self',
+        score: shared.length ? average(opponents.map(opponent => opponent.score)) : null, ...totals, opponents,
+        openingCoverage: { shared: shared.length, total: config.openings.length, openingIds: shared, repetitions: config.repetitions },
+        status: !shared.length ? 'pending shared opening cases' : shared.length === config.openings.length ? 'complete' : 'partial shared opening cases' };
+    }),
+  };
+}
 
 function axes(input, name) {
   if (!Array.isArray(input) || !input.length) throw new Error(`Report metadata requires ${name}.`);
@@ -114,6 +173,7 @@ function createV17Report({ experiment, config, metadata, records, manifest } = {
       pairedGames: comparisons.reduce((sum, comparison) => sum + comparison.pairedGames, 0),
       completePairs: comparisons.reduce((sum, comparison) => sum + comparison.completePairs, 0) },
     comparisons,
+    overall: overallScores(rows, config, metadata, latest),
     matrix: { perspective: 'row army score against column army; draws count half', columns,
       rows: rows.map(row => ({ ...row, cells: columns.map(column => ({ columnKey: column.key, ...(cells.get(keyFor(row.key, column.key)) || { comparisonId: null, score: null, pairedGames: 0, completePairs: 0, openings: 0, wins: 0, draws: 0, losses: 0, inverted: false }) })) })) },
     notes: [
@@ -125,13 +185,24 @@ function createV17Report({ experiment, config, metadata, records, manifest } = {
   };
 }
 
-function renderV17Report(report) {
+function renderV17Report(report, { includeOverall = true } = {}) {
+  const overall = includeOverall && report.overall ? new Map(report.overall.rows.map(row => [row.key, row])) : null;
+  const overallCell = row => {
+    const summary = overall.get(row.key);
+    return `${summary.score === null ? 'pending' : percent(summary.score)} (${summary.openingCoverage.shared}/${summary.openingCoverage.total})`;
+  };
   const lines = [`# ${markdown(report.name)}`, '', report.question ? markdown(report.question) : '', '',
     `Finalized games: ${report.progress.finalizedGames}/${report.scheduledGames}; scored complete pairs: ${report.progress.completePairs}.`, '',
-    '| Row army / column opponent | ' + report.matrix.columns.map(column => markdown(column.label)).join(' | ') + ' |',
-    '| --- | ' + report.matrix.columns.map(() => '---:').join(' | ') + ' |',
-    ...report.matrix.rows.map(row => '| ' + markdown(row.label) + ' | ' + row.cells.map(cell => percent(cell.score)).join(' | ') + ' |'), '',
+    '| Row army / column opponent | ' + report.matrix.columns.map(column => markdown(column.label)).join(' | ') + (overall ? ' | Overall score (cases)' : '') + ' |',
+    '| --- | ' + report.matrix.columns.map(() => '---:').join(' | ') + (overall ? ' | ---:' : '') + ' |',
+    ...report.matrix.rows.map(row => '| ' + markdown(row.label) + ' | ' + row.cells.map(cell => percent(cell.score)).join(' | ') + (overall ? ` | ${overallCell(row)}` : '') + ' |'), '',
     'Matrix entries are the row army’s score; a blank dash means no scored pair or no scheduled matchup.', '',
+    ...(overall ? [
+      'Overall score gives each fixed reference equal weight; reference 2v2 teams instead weight all other scheduled teams equally. Direct pawn/grant bundle matches are excluded from reference averages. Draws count half a point. Only opening cases with every scheduled repetition and both colors completed against every included opponent contribute. Other completed games remain in individual matchup cells; overall stays pending until at least one case is shared.', '',
+      '| Overall row | Included games | W / D / L | Opponents | Shared cases |',
+      '| --- | ---: | :--- | ---: | ---: |',
+      ...report.overall.rows.map(row => `| ${markdown(row.label)} | ${row.games} | ${row.wins} / ${row.draws} / ${row.losses} | ${row.opponents.length} | ${row.openingCoverage.shared}/${row.openingCoverage.total} |`), '',
+    ] : []),
     '| A versus B | Paired games | A W / D / L | A score | Complete pairs | Openings | Truncated attempts | Errors |',
     '| --- | ---: | :--- | ---: | ---: | ---: | ---: | ---: |',
     ...report.comparisons.map(comparison => `| ${markdown(comparison.aLabel)} / ${markdown(comparison.bLabel)} | ${comparison.pairedGames} | ${comparison.wins} / ${comparison.draws} / ${comparison.losses} | ${percent(comparison.score)} | ${comparison.completePairs}/${comparison.expectedPairs} | ${comparison.openings} | ${comparison.statusCounts.truncated} | ${comparison.statusCounts.error} |`), '',

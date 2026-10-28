@@ -9,6 +9,7 @@ const { getDesignOptions } = require('../../src/design-options');
 const { PLAYABLE_LIBRARIES, V16_CANDIDATES } = require('../../src/playable-library');
 const { getPlayableProfiles } = require('../playable-profile');
 const { getOfficialReferences } = require('./official-references');
+const followup = require('./v17-followup-plan');
 
 const ROOT = path.resolve(__dirname, '../..');
 const OPENINGS = require('../../experiments/balance/v17-openings.json');
@@ -18,8 +19,9 @@ const FILES = Object.freeze({
   level3: 'experiments/balance/v17-level3-screen.json',
   'reference-2v2': 'experiments/balance/v17-reference-pairs.json',
   'pawn-grants': 'experiments/balance/v17-pawn-grants.json',
+  ...followup.FILES,
 });
-const CAPS = Object.freeze({ level3: 832, 'reference-2v2': 240, 'pawn-grants': 240 });
+const CAPS = Object.freeze({ level3: 832, 'reference-2v2': 240, 'pawn-grants': 240, ...followup.CAPS });
 
 function freeze(value) {
   if (value && typeof value === 'object') {
@@ -78,6 +80,7 @@ function buildReferencePairs() {
 /** All three declarations are normal balance configurations consumed by the
  * existing paired runner. A changed protocol must use a new declaration. */
 function loadExperiment(experiment) {
+  if (Object.hasOwn(followup.FILES, experiment)) return followup.loadFollowup(experiment);
   const relative = FILES[experiment];
   if (!relative) throw new Error(`Choose an experiment: ${Object.keys(FILES).join(', ')}.`);
   const input = JSON.parse(fs.readFileSync(path.join(ROOT, relative), 'utf8'));

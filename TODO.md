@@ -1,7 +1,7 @@
 # Roadmap
 
-Version 16 is preserved at `v0.16.7`. Version 17 begins three bounded outcome
-experiments; the four reference definitions and completed evidence stay fixed.
+Version 16 is preserved at `v0.16.7`. The first version-17 screens are complete;
+the four reference definitions and completed evidence stay fixed.
 
 ## Version 17: prepare and run the initial experiments
 
@@ -12,9 +12,10 @@ experiments; the four reference definitions and completed evidence stay fixed.
 - [x] Keep old schema-1/2 meanings and saved experiment identities unchanged; reject reserves in the board-only material estimator.
 - [x] Finish the unified check/run/resume/report command, portable native-value proof and offline matchup tables.
 - [x] Verify all 1,312 army/opening positions against the native engine, reference value tables, bounded stop/resume and old-run compatibility. Play no scored cloud campaign during setup.
-- [ ] Run the level-3 screen locally, inspect outliers and truncations, then decide which designs need a revision.
-- [ ] Run the reference 2v2 table and inspect partner effects without assuming individual values add exactly.
-- [ ] Run the level-1 pawn/guard bundles; assess the purchase including placement and deployment tempo.
+- [x] Review all 832 level-3 games: revise Rook pawn, Mating/Vertical bishops and Side rook; retain nine candidates for eight new openings.
+- [x] Review all 240 reference 2v2 games; retain the pilot without changing references or assuming partner effects are established.
+- [x] Review all 240 level-1 bundle games; pawn upgrades underperform, while the grant remains uncertain.
+- [x] Preserve the six exact uploads as compressed evidence with reproducible outcome analysis; distinguish reconstructed declarations from missing original manifests.
 
 | Experiment | Games | Scope |
 | --- | ---: | --- |
@@ -22,9 +23,18 @@ experiments; the four reference definitions and completed evidence stay fixed.
 | `reference-2v2` | 240 | All 15 pairings of six distinct-family reference teams |
 | `pawn-grants` | 240 | Three pawn/guard bundles versus the references and each other |
 
-Use the [commands and exact setups](docs/version17-experiments.md). Each campaign
-requires its own output directory and explicit launch. Eight starts provide a
-screen for gross outliers; they do not establish precise balance.
+The [initial protocols](docs/version17-experiments.md) remain frozen. Eight starts
+provide a screen for gross outliers; they do not establish precise balance.
+
+## Version 17: second screen
+
+- [x] Declare eight new opening cases and five research-only level-3 alternatives, preserving every previous design ID and playable option.
+- [x] Prepare two stronger level-1 pawn candidates and an `fF` grant alternative; retain ordinary promotion and finite reserve rules.
+- [x] Add offline reuse of the first eight cases for unchanged candidates, with old/new cohort scores and no mixing of revised IDs.
+- [x] Add overall reference scores and shared-opening coverage to Markdown reports; keep direct bundle scores separate and refresh the three initial reports.
+- [ ] Run `level3-confirm` (576 games), `level3-revisions` (640) and `pawn-grants-revisions` (384) separately; cap the batch at 1,600 new games.
+- [ ] Review pooled 40–60% targets, matchup flags, cohort and color effects using the [follow-up criteria and commands](docs/version17-followups.md).
+- [ ] Promote successful research alternatives into the playable workshops only after outcome review and human playtesting.
 
 ## After reviewing these results
 

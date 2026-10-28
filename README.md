@@ -69,9 +69,9 @@ The [all-reference material fit](experiments/balance/results/reference-material-
 
 Future candidates face the frozen references. The unfinished NC–Amazon game remains unscored.
 
-## Version 17: three bounded experiments
+## Version 17: balance experiments
 
-The [version-17 guide](docs/version17-experiments.md) declares an eight-opening level-3 screen (832 games), the reference 2v2 table (240 games), and pawn/guard bundle comparisons (240 games). Each runs separately through `npm.cmd run balance:v17`; check before starting and review each result before continuing. No scored campaign runs during setup.
+The [initial version-17 experiments](docs/version17-experiments.md) completed 1,312 games. The [follow-up plan](docs/version17-followups.md) adds eight opening cases for unchanged pieces, five level-3 alternatives, and three pawn/guard alternatives, capped at 1,600 new games. Each campaign runs separately through `npm.cmd run balance:v17`. The offline `balance:v17:review` command reuses archived first-batch games for unchanged pieces. Research alternatives do not yet change the playable workshops.
 
 Finite reserve bundles now have an explicit balance army format. Outcome reports include them; the existing material estimator remains restricted to board-only experiments. See [the balance guide](BALANCE.md), [next steps](TODO.md) and [mixed-army plan](docs/mixed-army-balance-plan.md).
 

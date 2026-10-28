@@ -21,7 +21,7 @@ const { main: parallelMain } = require('./parallel-balance');
 const ROOT = path.resolve(__dirname, '..');
 const sha = value => createHash('sha256').update(value).digest('hex');
 const json = file => JSON.parse(fs.readFileSync(file, 'utf8'));
-const HELP = `Version 17: three independent, capped experiments
+const HELP = `Version 17: independent, capped experiments
 
   npm run balance:v17 -- --experiment level3 --check
   npm run balance:v17 -- --experiment reference-2v2 --check
@@ -30,8 +30,11 @@ const HELP = `Version 17: three independent, capped experiments
   npm run balance:v17 -- --experiment NAME --resume DIRECTORY
   npm run balance:v17 -- --experiment NAME --report DIRECTORY
 
-Experiments: level3 = 832 games; reference-2v2 = 240; pawn-grants = 240.
-Each uses eight fixed opening cases, complete color pairs and 20,000 nodes/move.
+Initial experiments: level3 = 832; reference-2v2 = 240; pawn-grants = 240 games.
+Follow-ups: level3-confirm = 576; level3-revisions = 640;
+pawn-grants-revisions = 384 games. See docs/version17-followups.md for designs.
+Unchanged pieces use eight new cases; revisions use all sixteen old/new cases.
+Every experiment uses complete color pairs and 20,000 nodes/move.
 Only the selected experiment runs. No follow-up or additional games start
 automatically. q/Ctrl+C stops now; g finishes active games; p finishes pairs.
 The existing parallel runner owns workers, journals, checkpoints and resume.
@@ -39,7 +42,7 @@ The existing parallel runner owns workers, journals, checkpoints and resume.
 --check validates every opening and native legal move set, including the four
 frozen reference value tables, without starting match games or writing results.
 --check --rules-only omits native checks. --report is offline and needs no engine.
-Reports use complete pairs only; eight fixed prefixes provide a coarse screen.
+Reports use complete pairs only; these fixed prefixes provide a coarse screen.
 On Linux/macOS set FAIRY_STOCKFISH_PATH to the compatible native executable.
 `;
 

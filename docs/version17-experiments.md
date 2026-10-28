@@ -1,5 +1,8 @@
 # Version-17 experiments
 
+All three initial campaigns are complete. Their declarations remain unchanged;
+use the [follow-up plan](version17-followups.md) for the second batch and results.
+
 Version 16 is preserved as branch `version_16` and tag `v0.16.7`. Version 17
 starts with three separate outcome experiments. Each command runs only the
 selected experiment; completing one does not launch the next.
