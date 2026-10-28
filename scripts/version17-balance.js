@@ -42,6 +42,10 @@ See docs/version17-mobility.md for the two separate launches and hypotheses.
 With Support pawn and Scout guard: mobility-expanded = 1600 games, replacing
 mobility-revisions; mobility-additions = 640 if that original run has started.
 Choose one path; running expanded plus revisions/additions duplicates games.
+Reference panel: panel-gap = 64; panel-level1 = 192;
+panel-level1-pairs = 960 games. These level-1-only stages check the frozen
+reference value tables in a separate diagnostic profile, without adding
+level-3 opponents to their match schedules.
 Every experiment uses complete color pairs and 20,000 nodes/move.
 Only the selected experiment runs. No follow-up or additional games start
 automatically. q/Ctrl+C stops now; g finishes active games; p finishes pairs.
@@ -85,23 +89,29 @@ function resolveEngine() {
  * proof. Temporary INI files are removed even when startup or validation fails. */
 async function checkExperiment(declaration, { enginePath, signal, onProgress = () => {}, validate = validateDesignConfig } = {}) {
   const config = declaration.config;
-  let directory, engine, referenceValues;
+  let directory, engine, referenceValues, referenceValueProfile;
   try {
     if (enginePath) {
       const registry = createDesignRegistry(config), profile = compileDesignProfile(registry, config.evaluation);
+      const standalone = declaration.metadata.referenceValueProfile === 'official-standalone';
+      const diagnostic = standalone ? getOfficialReferences().profile : profile;
       directory = fs.mkdtempSync(path.join(os.tmpdir(), 'levelup-v17-check-'));
       const variantPath = path.join(directory, 'profile.ini');
-      fs.writeFileSync(variantPath, profile.config);
-      engine = new UciEngine({ path: enginePath, variantPath, variant: profile.variant,
+      fs.writeFileSync(variantPath, diagnostic.config);
+      engine = new UciEngine({ path: enginePath, variantPath, variant: diagnostic.variant,
         options: { skill: 20, threads: config.engine.threads, hash: config.engine.hashMb } });
-      onProgress('Validation: checking all four frozen reference MG/EG value tables.');
+      onProgress(standalone
+        ? 'Validation: checking all four frozen reference MG/EG value tables in their standalone diagnostic profile; match armies remain level 1 only.'
+        : 'Validation: checking all four frozen reference MG/EG value tables.');
       await engine.start({ signal });
-      referenceValues = await requireOfficialReferenceValues(engine, profile, { signal });
+      referenceValues = await requireOfficialReferenceValues(engine, diagnostic, { signal });
+      if (standalone) referenceValueProfile = { variant: diagnostic.variant, hash: diagnostic.hash, registryHash: diagnostic.registryHash };
       await engine.close(); engine = null;
     }
     const validation = await validate(config, { ...(enginePath ? { enginePath } : {}), signal, onProgress, standardOpeningSources: true });
     return { ...validation, experiment: declaration.experiment,
-      configSha256: sha(JSON.stringify(config)), ...(referenceValues ? { referenceValues, engineSha256: sha(fs.readFileSync(enginePath)) } : {}) };
+      configSha256: sha(JSON.stringify(config)), ...(referenceValues ? { referenceValues, engineSha256: sha(fs.readFileSync(enginePath)),
+        ...(referenceValueProfile ? { referenceValueProfile } : {}) } : {}) };
   } finally {
     try { await engine?.close(); }
     finally { if (directory) fs.rmSync(directory, { recursive: true, force: true }); }
@@ -144,8 +154,17 @@ function validatePreflight(proof, declaration, { manifest, validation } = {}) {
   }
   const values = proof.validation.referenceValues;
   if (values?.version !== 1 || !values.pieces) throw new Error('The native preflight proof is missing its reference value inventory.');
+  const standalone = declaration.metadata.referenceValueProfile === 'official-standalone';
+  const diagnostic = standalone ? getOfficialReferences().profile : profile;
+  const expectedValueProfile = standalone
+    ? { variant: diagnostic.variant, hash: diagnostic.hash, registryHash: diagnostic.registryHash } : undefined;
+  if (!isDeepStrictEqual(proof.validation.referenceValueProfile, expectedValueProfile)) {
+    throw new Error('The native preflight proof changed its reference value profile.');
+  }
   for (const reference of getOfficialReferences().roster) {
-    const letter = registry.allocations.find(allocation => allocation.id === reference.id).letter;
+    const allocation = diagnostic.registry.allocations.find(allocation => allocation.id === reference.id);
+    if (!allocation) throw new Error('The native preflight proof is missing a frozen reference definition.');
+    const letter = allocation.letter;
     for (const type of [letter, letter.toUpperCase()]) for (const field of ['rawMg', 'rawEg', 'captureMg', 'captureEg', 'evalMg', 'evalEg']) {
       if (values.pieces[type]?.[field] !== reference.engineValue[field.endsWith('Mg') ? 'mg' : 'eg']) throw new Error('The native preflight proof changed a frozen reference value.');
     }
@@ -229,7 +248,9 @@ async function main(args = process.argv.slice(2), { run = parallelMain, check = 
   const options = parseArgs(args);
   if (options.help) { log(HELP); return; }
   const declaration = loadExperiment(options.experiment);
-  log(`${declaration.config.name}: ${declaration.metadata.scheduledGames} games; ${declaration.config.openings.length} opening cases; four frozen references.`);
+  log(declaration.metadata.referenceValueProfile === 'official-standalone'
+    ? `${declaration.config.name}: ${declaration.metadata.scheduledGames} games; ${declaration.config.openings.length} opening cases; level-1 armies only, ${declaration.metadata.upgradePoints} upgrade points per side.`
+    : `${declaration.config.name}: ${declaration.metadata.scheduledGames} games; ${declaration.config.openings.length} opening cases; four frozen references.`);
   if (declaration.metadata.baseline) log('Additional baseline: three two-step pawns. Overall score includes the four references only; the baseline has its own column.');
   if (declaration.metadata.alternativeTo) log(`Use this campaign instead of ${declaration.metadata.alternativeTo}. If the original revision campaign has started, finish it on its original checkout and use mobility-additions afterward.`);
   if (options.report) {

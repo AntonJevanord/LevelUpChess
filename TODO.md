@@ -63,6 +63,15 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [ ] Human-playtest the [current pawn and grant choices](docs/playtest-roster-v17.md) for readability and counterplay before freezing level-1 references. Scout remains a research alternative; assess it separately if needed. Park Support/full-diagonal pawns; retain the older strong grants as research and Grid bishop at level 3. No larger batch is needed before playtesting.
 - [x] Record a [small design shortlist](docs/design-ideas.md) separately from the declared game budget.
 
+## Version 17: complete reference panel
+
+- [x] Select Two-step pawn, King-step pawn and the `fWmfF` Pawn grant as the level-1 panel baselines; keep the four frozen level-3 definitions intact.
+- [x] Declare the [three panel stages](docs/reference-panel-v17.md): missing three-point cell (64 games), level-1 singles (192) and all six level-1 2v2 teams (960). No level-1 pair faces level 3.
+- [x] Reuse compatible completed cells with explicit source contexts; keep different purchase counts and historical opening cohorts separate.
+- [x] Record [human playtest feedback](docs/playtest-notes-v17.md), including defensive recapture threats that matter without being played.
+- [ ] Run the three stages once and refresh the panel report; preserve all run folders, native proofs and unscored truncations.
+- [ ] Review direct level-1 matchups and partnership effects before changing prices, movement or declaring another experiment.
+
 ## After reviewing these results
 
 - [ ] Human-playtest the [roster](docs/playtest-roster-v16.md) for readability, fun and counterplay. Changed movement or price gets a new immutable revision.
