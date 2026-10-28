@@ -64,7 +64,7 @@ function definitionProbes(definition, letter) {
   if (definition.roles.pawn) frames.push({ name: 'mandatory standard promotion', fen: position({ a1: 'K', h6: 'k', b7: type }) });
   // New pawn candidates need fixtures for the abilities that distinguish them;
   // keep earlier registries' probe lists unchanged for archived experiments.
-  if (definition.family === 'pawn' && definition.revision >= 3 && !['pawn.blue@4', 'pawn.blue@5', 'pawn.blue@6', 'pawn.blue@7', 'pawn.purple@13'].includes(definition.id)) {
+  if (definition.family === 'pawn' && definition.revision >= 3 && !['pawn.blue@4', 'pawn.blue@5', 'pawn.blue@6', 'pawn.blue@7', 'pawn.blue@8', 'pawn.purple@13'].includes(definition.id)) {
     frames.push({ name: definition.revision === 5 ? 'quiet forward visit to an en passant target' : 'standard en passant capture', fen: position({ h1: 'K', h8: 'k', c5: type, d5: 'p' }, 'w', '-', 'd6') });
     if (definition.revision === 3) frames.push({
       name: 'forward capture range and forbidden backward captures',
@@ -259,6 +259,18 @@ function definitionProbes(definition, letter) {
     { name: 'clear home-rank forward double and forbidden sideways double', fen: position({ h1: 'K', h8: 'k', d2: type }) },
     { name: 'home-rank double cannot jump its intermediate blocker', fen: position({ h1: 'K', h8: 'k', d2: type, d3: 'P' }) },
     { name: 'quiet diagonal EP visit retains the bypassed pawn', fen: position({ h1: 'K', h8: 'k', c5: type, d5: 'p' }, 'w', '-', 'd6') },
+  );
+  if (definition.id === 'pawn.blue@8') frames.push(
+    { name: 'adjacent sideways captures and forward diagonal captures without backward reach', fen: position({ h1: 'K', h8: 'k', d4: type, c4: 'p', e4: 'p', c5: 'p', e5: 'p', d5: 'p', c3: 'p', d3: 'p', e3: 'p' }) },
+    { name: 'sideways steps cannot jump beyond an adjacent friendly blocker', fen: position({ h1: 'K', h8: 'k', d4: type, c4: 'P', e4: 'P', b4: 'p', f4: 'p' }) },
+    { name: 'clear home double requires its intervening square', fen: position({ h1: 'K', h8: 'k', d2: type, d3: 'P' }) },
+    { name: 'ordinary forward diagonal en passant removes the bypassed pawn', fen: position({ h1: 'K', h8: 'k', c5: type, d5: 'p' }, 'w', '-', 'd6') },
+    { name: 'quiet sideways EP-target visit retains the bypassed pawn', fen: position({ h1: 'K', h8: 'k', c6: type, d5: 'p' }, 'w', '-', 'd6') },
+  );
+  if (definition.id === 'king.reserve-pawn@7') frames.push(
+    { name: 'forward move or capture and quiet backward diagonal retreats', fen: position({ h1: 'K', h8: 'k', d4: type, d5: 'p', c3: 'p', e3: 'p', c5: 'p', e5: 'p', d3: 'p' }) },
+    { name: 'backward diagonal retreat cannot capture an en-passant pawn', fen: position({ h1: 'K', h8: 'k', c7: type, d5: 'p' }, 'w', '-', 'd6') },
+    { name: 'nonroyal Scout never promotes', fen: position({ h1: 'K', h6: 'k', b7: type }) },
   );
   if (definition.roles.castlingRook) frames.push({ name: 'both castling sides', fen: position({ e8: 'k', a1: type, e1: 'K', h1: type }, 'w', 'KQ') });
   // These new allocation hints have no historical movement identity. In

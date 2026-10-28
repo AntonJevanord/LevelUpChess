@@ -54,7 +54,8 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Add immutable grant designs `cfWmfF` / `fWmfF` and the one-point king-step pawn `mWFifmnD`; preserve old movements and prices.
 - [x] Declare sixteen new short starting cases, preserving the reserve deployment delay and all previous case identities.
 - [x] Prepare `mobility-confirm` (768 games) and `mobility-revisions` (960), with equal three-point armies and separate reference/baseline scores.
-- [ ] Run the [1,728-game mobility batch](docs/version17-mobility.md) locally; existing purchases get only new cases, revised definitions get all thirty-two.
+- [x] Add Support pawn and Scout guard as immutable one-point trials; create fresh `mobility-expanded` (1,600) and additions-only (640) options without changing the original 960-game declaration.
+- [ ] Run the [expanded mobility batch](docs/version17-mobility.md): confirmation (768) plus expanded revisions (1,600), or finish the original revisions (960) and add only the supplement (640). Both paths total 2,368; do not duplicate them.
 - [ ] Combine compatible archived sixteen-case results with new confirmation results, keeping sources, cohorts, colors and changed IDs explicit.
 - [ ] Review repeated direct purchase counters alongside the reference basket and human counterplay; do not force every equal-cost matchup to 50%.
 - [x] Record a [small design shortlist](docs/design-ideas.md) separately from the declared game budget.

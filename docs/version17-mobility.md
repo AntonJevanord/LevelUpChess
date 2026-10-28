@@ -1,5 +1,10 @@
 # Version-17 mobility and capture batch
 
+Support pawn and Scout guard are now included as one-point trials. Use the
+expanded revision campaign for a fresh run, or the additions-only campaign
+after finishing an already-started original revision run. Both paths preserve
+the earlier declarations and produce the same intended matchup coverage.
+
 The [completed design-focus screen](../experiments/balance/results/v17-focus-001.report.md)
 contains 640 scored games. Grid bishop `BDC` scored 58.59% across references,
 with individual reference scores of 48.44–64.06%. Keep its level-3 definition
@@ -13,8 +18,10 @@ design question, rather than a necessary correction established by this screen.
 | Three capture-forward grants | `king.reserve-pawn@5` | `cfWmfF` | Does one straight capture target plus quiet forward-diagonal steps work well? |
 | Three mobile-forward grants | `king.reserve-pawn@6` | `fWmfF` | What changes when the same guard also gains a quiet straight-forward step? |
 | Three king-step pawns | `pawn.blue@7` | `mWFifmnD` | Do quiet orthogonal steps improve the full-diagonal-capture pawn? |
+| Three Support pawns | `pawn.blue@8` | `fmWfceFifmnDsW` | Do sideways movement and captures help ordinary pawn chains? |
+| Three Scout grants | `king.reserve-pawn@7` | `fWbmF` | Can quiet backward-diagonal retreats make a single forward capture target useful? |
 
-Both grant variants capture only one square straight forward and move quietly
+Capture-forward and mobile-forward grants capture only one square straight forward and move quietly
 one square diagonally forward. The second also moves quietly straight forward;
 this isolates the effect of extra quiet mobility. Their capture geometry is
 identical. These are three finite nonroyal reserves, with the existing own-half,
@@ -22,21 +29,36 @@ empty-square, nonchecking drop rules. Captures never refill reserves. Guards
 do not promote or capture en passant; a quiet diagonal visit leaves any
 bypassed pawn in place.
 
-The new pawn moves quietly like a king and captures only on the four adjacent
+The king-step pawn moves quietly like a king and captures only on the four adjacent
 diagonals. Its clear forward double step is available from its home two ranks,
 including after returning there. Promotion remains ordinary QRBN; its empty
 en-passant target visit follows the existing quiet-diagonal convention.
 This revisits the old level-2 King pawn's movement at a **one-point trial price**;
 the old `pawn.orange@4` identity and price remain unchanged.
 
-## Two bounded experiments
+Support pawns move quietly forward or one square sideways, capture one square
+sideways or diagonally forward, and retain the clear home-region forward double.
+They promote to ordinary QRBN. Ordinary diagonal en-passant captures remove the
+bypassed pawn; a quiet sideways visit to the target does not. Scout grants
+move/capture one square forward and retreat quietly one square diagonally
+backward. Their retreats cannot capture. They keep all finite reserve rules
+and never promote.
+
+## Choose one revision path
 
 | Experiment | New games | Contents |
 | --- | ---: | --- |
 | `mobility-confirm` | 768 | Four existing design-focus purchases versus five opponents on sixteen new starts (640), plus two-step-pawn baseline versus references on those starts (128) |
-| `mobility-revisions` | 960 | Three revised purchases versus five opponents on all thirty-two old/new starts |
+| `mobility-expanded` | 1,600 | All five revised purchases versus five opponents on all thirty-two old/new starts |
+| `mobility-additions` | 640 | Support pawns and Scout grants only, supplementing an original `mobility-revisions` run |
 
-Total cap: **1,728 new games**. The four existing purchases are Grid bishop,
+The expanded batch costs **2,368 new games**: confirmation (768) plus expanded
+revisions (1,600). The previous three-candidate `mobility-revisions` declaration
+remains 960 games. If that run has started, finish it and add only the 640 new
+games: 768 + 960 + 640 gives the same total. **Choose expanded or original plus
+additions; running both paths duplicates games.**
+
+The four existing purchases are Grid bishop,
 three full-diagonal pawns, three long-forward grants and three pawn-like grants.
 No old opening cell is replayed for an unchanged purchase. Their completed
 640 games and the baseline's completed 128 reference games remain archived for
@@ -78,13 +100,24 @@ These are design criteria, not confidence intervals or material values.
 
 ## Run on Windows
 
-Run the two campaigns sequentially, each in a new folder:
+Finish any active campaign before pulling the update. Its catalog and rules
+bundle are fingerprinted: an interrupted `v0.17.4` run must resume using that
+original checkout, not the updated one. No saved run is rewritten or migrated.
+
+For a fresh revision run, launch these campaigns sequentially in new folders:
 
 ```powershell
 git switch version_17
 git pull --ff-only
 npm.cmd run balance:v17 -- --experiment mobility-confirm --out balance-results/v17-mobility-confirm --jobs 4
-npm.cmd run balance:v17 -- --experiment mobility-revisions --out balance-results/v17-mobility-revisions --jobs 4
+npm.cmd run balance:v17 -- --experiment mobility-expanded --out balance-results/v17-mobility-expanded --jobs 4
+```
+
+If the original 960-game revision run has already started, finish it on its
+original checkout. Then update and run the supplement instead of expanded:
+
+```powershell
+npm.cmd run balance:v17 -- --experiment mobility-additions --out balance-results/v17-mobility-additions --jobs 4
 ```
 
 Every launch performs native preflight. Substitute `--check` for the output/job
@@ -98,5 +131,5 @@ Controls remain q / Ctrl+C to stop now, g after active games, p after active
 color pairs. Only the selected campaign runs. No playable options, reference
 definitions, old prices or historical outcomes change in this preparation.
 
-Further design ideas are kept in a [separate shortlist](design-ideas.md), outside
-this declared game budget.
+The bishop and rook ideas remain in the [separate shortlist](design-ideas.md),
+outside this declared game budget.

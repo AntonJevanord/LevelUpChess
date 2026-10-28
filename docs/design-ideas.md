@@ -1,9 +1,8 @@
 # Design shortlist
 
-These are ideas for later human prototypes, not declared candidates or measured
-values. They are excluded from the current mobility batch. Pick one or two
-with a concrete design question before adding further balance games; prices
-and levels would remain provisional.
+Support pawn and Scout guard are now one-point research candidates in the
+[expanded mobility batch](version17-mobility.md). Their prices remain provisional.
+The bishop and rook remain ideas for later prototypes, outside that game budget.
 
 | Idea | Tentative movement | Identity and question |
 | --- | --- | --- |
@@ -12,11 +11,10 @@ and levels would remain provisional.
 | Travelling bishop | `BmC` | Bishop captures; quiet camel jumps cross blockers while retaining its square color. Tests development and repositioning rather than another capture compound. |
 | Sidestep rook | `RmB2` | Ordinary rook attacks, with quiet clear diagonal slides up to two squares. A simpler positional alternative to a rook with many teleporting jumps. |
 
-My first choices are Scout guard and Support pawn: both have short descriptions
-and change where the piece can contribute. The bishop and rook offer similarly
-readable mobility experiments at a later tier. Movement strings describe the
-proposals; each would still need legal-move, blocker, promotion/drop and native
-capability checks before being registered as an immutable design.
+Scout guard is registered as `king.reserve-pawn@7`, Support pawn as `pawn.blue@8`.
+Both have legal-move, blocker, promotion/drop and native capability checks.
+The bishop and rook offer similarly readable mobility experiments at a later
+tier; they still need those checks before receiving immutable design IDs.
 
 Judge whether the extra move creates an interesting choice and understandable
 counterplay. Additional mobility is not automatically a small buff, and limiting

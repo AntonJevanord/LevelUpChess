@@ -39,6 +39,9 @@ See docs/version17-design-focus.md for the definitions and comparison setup.
 Mobility batch: mobility-confirm = 768; mobility-revisions = 960 games.
 Existing purchases use sixteen new cases; these revisions use all thirty-two.
 See docs/version17-mobility.md for the two separate launches and hypotheses.
+With Support pawn and Scout guard: mobility-expanded = 1600 games, replacing
+mobility-revisions; mobility-additions = 640 if that original run has started.
+Choose one path; running expanded plus revisions/additions duplicates games.
 Every experiment uses complete color pairs and 20,000 nodes/move.
 Only the selected experiment runs. No follow-up or additional games start
 automatically. q/Ctrl+C stops now; g finishes active games; p finishes pairs.
@@ -228,6 +231,7 @@ async function main(args = process.argv.slice(2), { run = parallelMain, check = 
   const declaration = loadExperiment(options.experiment);
   log(`${declaration.config.name}: ${declaration.metadata.scheduledGames} games; ${declaration.config.openings.length} opening cases; four frozen references.`);
   if (declaration.metadata.baseline) log('Additional baseline: three two-step pawns. Overall score includes the four references only; the baseline has its own column.');
+  if (declaration.metadata.alternativeTo) log(`Use this campaign instead of ${declaration.metadata.alternativeTo}. If the original revision campaign has started, finish it on its original checkout and use mobility-additions afterward.`);
   if (options.report) {
     const result = report(options.report, declaration);
     log(`Paired matchup table: ${result.files.markdown}\nJSON: ${result.files.json}\nCSV: ${result.files.csv}\nNo games started.`);

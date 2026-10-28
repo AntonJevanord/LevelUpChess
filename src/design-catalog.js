@@ -157,6 +157,9 @@ const definitions = [
   rosterDefinition('king', 'reserve-pawn', 1, 'cfWmfF', 'a', 1, 5, 'reserve'),
   rosterDefinition('king', 'reserve-pawn', 1, 'fWmfF', 'a', 1, 6, 'reserve'),
   rosterDefinition('pawn', 'blue', 1, 'mWFifmnD', 'a', 1, 7),
+  // Support-pawn and Scout-grant additions keep every measured design fixed.
+  rosterDefinition('pawn', 'blue', 1, 'fmWfceFifmnDsW', 'a', 1, 8),
+  rosterDefinition('king', 'reserve-pawn', 1, 'fWbmF', 'a', 1, 7, 'reserve'),
 ];
 
 const DESIGNS = Object.freeze(Object.fromEntries(definitions.map(design => [design.id, design])));

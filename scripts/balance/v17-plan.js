@@ -12,6 +12,7 @@ const { getOfficialReferences } = require('./official-references');
 const followup = require('./v17-followup-plan');
 const targeted = require('./v17-targeted-plan');
 const mobility = require('./v17-mobility-plan');
+const extras = require('./v17-mobility-extras-plan');
 
 const ROOT = path.resolve(__dirname, '../..');
 const OPENINGS = require('../../experiments/balance/v17-openings.json');
@@ -24,8 +25,9 @@ const FILES = Object.freeze({
   ...followup.FILES,
   ...targeted.FILES,
   ...mobility.FILES,
+  ...extras.FILES,
 });
-const CAPS = Object.freeze({ level3: 832, 'reference-2v2': 240, 'pawn-grants': 240, ...followup.CAPS, ...targeted.CAPS, ...mobility.CAPS });
+const CAPS = Object.freeze({ level3: 832, 'reference-2v2': 240, 'pawn-grants': 240, ...followup.CAPS, ...targeted.CAPS, ...mobility.CAPS, ...extras.CAPS });
 
 function freeze(value) {
   if (value && typeof value === 'object') {
@@ -84,6 +86,7 @@ function buildReferencePairs() {
 /** Declarations are normal balance configurations consumed by the
  * existing paired runner. A changed protocol must use a new declaration. */
 function loadExperiment(experiment) {
+  if (Object.hasOwn(extras.FILES, experiment)) return extras.loadExtras(experiment);
   if (Object.hasOwn(mobility.FILES, experiment)) return mobility.loadMobility(experiment);
   if (Object.hasOwn(targeted.FILES, experiment)) return targeted.loadTargeted(experiment);
   if (Object.hasOwn(followup.FILES, experiment)) return followup.loadFollowup(experiment);
