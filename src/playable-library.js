@@ -60,6 +60,17 @@ const V16_CANDIDATES = Object.freeze({
   rooks: Object.freeze(['rook.blue@2', 'rook.orange@2', 'rook.purple@12', 'rook.blue@3', 'rook.orange@3', 'rook.purple@13']),
   queens: Object.freeze(['queen.blue@2', 'queen.orange@2', 'queen.purple@6', 'queen.purple@7', 'queen.purple@8']),
 });
+const CURRENT_PLAYABLE_GENERATION = 17;
+const V17_RESERVE_DESIGN_IDS = Object.freeze([
+  'king.reserve-pawn@6', ...RESERVE_DESIGN_IDS.slice(1),
+]);
+const V17_CANDIDATES = Object.freeze({
+  ...V16_CANDIDATES,
+  pawns: Object.freeze([
+    'pawn.blue@5', 'pawn.blue@7', 'pawn.blue@2', 'pawn.blue@3',
+    'pawn.orange@3', 'pawn.purple@11', 'pawn.purple@12',
+  ]),
+});
 const closeoutLibrary = (group, candidates = []) => Object.freeze({
   id: `v16-${group}`,
   name: group === 'references' ? 'King workshop' : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
@@ -68,6 +79,15 @@ const closeoutLibrary = (group, candidates = []) => Object.freeze({
   designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...candidates, ...RESERVE_DESIGN_IDS]),
   json: `src/playable-v16-${group}-profile.json`,
   ini: `variants/levelup-playable-v16-${group}.ini`,
+});
+const currentLibrary = (group, candidates = []) => Object.freeze({
+  id: `v17-${group}`,
+  name: group === 'references' ? 'King workshop' : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
+  generation: CURRENT_PLAYABLE_GENERATION,
+  ...(group === 'references' ? { focusFamily: 'king' } : {}),
+  designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...candidates, ...V17_RESERVE_DESIGN_IDS]),
+  json: `src/playable-v17-${group}-profile.json`,
+  ini: `variants/levelup-playable-v17-${group}.ini`,
 });
 const PLAYABLE_LIBRARIES = Object.freeze([
   Object.freeze({ id: 'workshop', name: 'Rebalance workshop', designIds: PLAYABLE_DESIGN_IDS,
@@ -78,6 +98,8 @@ const PLAYABLE_LIBRARIES = Object.freeze([
     json: 'src/playable-alternatives-profile.json', ini: 'variants/levelup-playable-alternatives.ini' }),
   closeoutLibrary('references'),
   ...Object.entries(V16_CANDIDATES).map(([group, candidates]) => closeoutLibrary(group, candidates)),
+  currentLibrary('references'),
+  ...Object.entries(V17_CANDIDATES).map(([group, candidates]) => currentLibrary(group, candidates)),
 ]);
 
-module.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, PLAYABLE_LIBRARIES };
+module.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_RESERVE_DESIGN_IDS, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };

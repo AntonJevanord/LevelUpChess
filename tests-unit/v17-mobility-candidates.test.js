@@ -71,11 +71,12 @@ test.before(async () => {
 });
 test.after(() => { if (directory) fs.rmSync(directory, { recursive: true, force: true }); });
 
-test('three research alternatives keep prior behavior and playable selections fixed', () => {
+test('mobility alternatives keep prior behavior and historical playable selections fixed', () => {
   for (const [id, movement] of Object.entries(MOVEMENT)) {
     assert.equal(getDesign(id).movement, movement);
     assert.equal(getDesign(id).inheritLegacyProbes, false);
-    assert.ok(PLAYABLE_LIBRARIES.every(library => !library.designIds.includes(id)));
+    assert.ok(PLAYABLE_LIBRARIES.filter(library => library.generation !== 17).every(library => !library.designIds.includes(id)));
+    if (id === 'king.reserve-pawn@5') assert.ok(PLAYABLE_LIBRARIES.every(library => !library.designIds.includes(id)));
     assert.ok(profile.capabilityProbes.some(probe => probe.name.startsWith(id + ':')));
   }
   assert.equal(getDesign('king.reserve-pawn@3').movement, 'fW2');

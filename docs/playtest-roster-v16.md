@@ -1,5 +1,9 @@
 # Version-16 playtest roster
 
+This is the preserved Version 16 roster. Use the
+[Version 17 workshops](playtest-roster-v17.md) for the updated one-point pawns
+and Pawn grant.
+
 Under **Rules**, select **King workshop** or another family workshop. Click a
 starting piece, choose its upgrade beside the board, and press **Start game**.
 **Edit armies** changes draft selections; **Return to game** preserves the active

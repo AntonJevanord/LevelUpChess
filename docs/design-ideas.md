@@ -8,9 +8,11 @@ These are provisional one-point candidates, not confirmed material values.
 
 Park Support and full-diagonal pawns rather than repeat their unchanged tests.
 Support scored 28.52% against references and 25.00% against two-step pawns;
-Scout scored 45.31% and 48.39%. Neither has been promoted into the playable
-workshops. The bishop and rook ideas below remain outside the completed budget;
-human playtesting the shortlist comes before another large experiment.
+Scout scored 45.31% and 48.39%. Support and Scout remain outside the playable
+workshops. Two-step and King-step pawns and the mobile-forward Pawn grant are
+available in the [Version 17 workshops](playtest-roster-v17.md). The bishop and
+rook ideas below remain outside the completed budget; human playtesting the
+shortlist comes before another large experiment.
 
 | Idea | Tentative movement | Identity and question |
 | --- | --- | --- |

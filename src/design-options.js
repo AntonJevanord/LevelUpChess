@@ -11,7 +11,15 @@ const closeoutProfiles = [
   require('./playable-v16-rooks-profile.json'),
   require('./playable-v16-queens-profile.json'),
 ];
-const { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS } = require('./playable-library');
+const currentProfiles = [
+  require('./playable-v17-references-profile.json'),
+  require('./playable-v17-pawns-profile.json'),
+  require('./playable-v17-knights-profile.json'),
+  require('./playable-v17-bishops-profile.json'),
+  require('./playable-v17-rooks-profile.json'),
+  require('./playable-v17-queens-profile.json'),
+];
+const { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_RESERVE_DESIGN_IDS } = require('./playable-library');
 const { STANDARD_TYPES } = require('./design-catalog');
 const { pieceInfo } = require('./piece-catalog');
 
@@ -24,7 +32,7 @@ function freeze(value) {
 }
 
 const PLAYABLE_PROFILE = freeze(compiled);
-const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles]);
+const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles]);
 const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
 const EXPERIMENTAL_VARIANTS = freeze(PLAYABLE_PROFILES.map(profile => profile.variant));
 const PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES[index].variant, ...(library.generation ? { generation: library.generation } : {}), ...(library.focusFamily ? { focusFamily: library.focusFamily } : {}) })));
@@ -79,6 +87,8 @@ const metadata = {
   'pawn.purple@11': ['Rook pawn', 'Move any clear distance orthogonally without capturing. Capture one or two clear squares diagonally forward.'],
   'pawn.blue@3': ['Returning pawn', 'Move one clear square backward, or one or two clear squares forward without capturing. Capture one square diagonally forward.'],
   'pawn.orange@4': ['King pawn', 'Move one square in any direction, or capture one square diagonally in any direction. A clear initial two-step forward is available. Visiting an empty en-passant target diagonally is a quiet move and leaves the bypassed pawn.'],
+  'pawn.blue@5': ['Two-step pawn', 'Move one or two clear squares forward without capturing. Capture one or two clear squares diagonally forward. These moves cannot jump over a piece.'],
+  'pawn.blue@7': ['King-step pawn', 'Move one square in any direction without capturing, or capture one square diagonally in any direction. A clear two-square forward move is available from your home two ranks. Visiting an empty en-passant target diagonally is a quiet move and leaves the bypassed pawn.'],
   'pawn.purple@12': ['Queen pawn', 'Move or capture up to two clear squares straight or diagonally forward. Move up to two clear squares straight or diagonally backward without capturing. No sideways moves. Visiting an empty en-passant target is a quiet move and leaves the bypassed pawn.'],
   'knight.blue@2': ['Positional knight', 'Normal knight jumps, plus any clear horizontal move without capturing.'],
   'knight.orange@3': ['Dabada knight', 'Normal knight jumps, plus one-square sideways steps and two-square sideways jumps, including captures.'],
@@ -106,6 +116,7 @@ const metadata = {
   'queen.purple@7': ['X-ray queen', 'Normal queen moves. Also hop diagonally over exactly one piece and land anywhere beyond it before the next blocker, including capturing that next blocker.'],
   'queen.purple@8': ['Zebra queen', 'Normal queen moves and zebra jumps (three squares in one direction and two at right angles), including captures.'],
   'king.reserve-pawn@1': ['Pawn grant', 'Add a nonroyal guard that moves or captures one square straight forward.'],
+  'king.reserve-pawn@6': ['Pawn grant', 'Add a nonroyal guard that moves or captures one square straight forward, or moves one square diagonally forward without capturing.'],
   'king.reserve-bishop@1': ['Bishop grant', 'Add a nonroyal guard that moves or captures one square diagonally.'],
   'king.reserve-rook@1': ['Rook grant', 'Add a nonroyal guard that moves or captures one or two clear squares orthogonally.'],
   'king.reserve-king@1': ['King grant', 'Add a nonroyal guard that moves or captures one square in any direction.'],
@@ -138,23 +149,28 @@ const variantAccents = { 1: ['green', 'blue'], 2: ['yellow', 'orange'], 3: ['red
 const kingGrantAccents = ['blue', 'green', 'yellow', 'orange', 'red', 'purple', 'teal', 'gold', 'silver'];
 // Colors follow declared designs, not allocated letters or profile sorting.
 // References occupy the first level-three option in their own piece family.
-const workshopAccents = {};
-const coloredGroups = new Set();
-for (const id of new Set([...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(V16_CANDIDATES).flat()])) {
-  const option = optionsById[id];
-  const group = `${option.family}:${option.level}`;
-  const pair = variantAccents[option.level];
-  workshopAccents[id] = pair ? pair[coloredGroups.has(group) ? 1 : 0] : historicalAccents[option.level];
-  coloredGroups.add(group);
+function workshopAccentsFor(candidates, reserves) {
+  const accents = {};
+  const coloredGroups = new Set();
+  for (const id of new Set([...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(candidates).flat()])) {
+    const option = optionsById[id];
+    const group = `${option.family}:${option.level}`;
+    const pair = variantAccents[option.level];
+    accents[id] = pair ? pair[coloredGroups.has(group) ? 1 : 0] : historicalAccents[option.level];
+    coloredGroups.add(group);
+  }
+  // Grant costs remain 1–9; paired colors are a separate display sequence.
+  reserves.forEach((id, index) => { accents[id] = kingGrantAccents[index]; });
+  return Object.freeze(accents);
 }
-// Grant costs remain 1–9; their paired colors are a separate display sequence.
-RESERVE_DESIGN_IDS.forEach((id, index) => { workshopAccents[id] = kingGrantAccents[index]; });
-Object.freeze(workshopAccents);
+const workshopAccents = workshopAccentsFor(V16_CANDIDATES, RESERVE_DESIGN_IDS);
+const currentWorkshopAccents = workshopAccentsFor(V17_CANDIDATES, V17_RESERVE_DESIGN_IDS);
 function optionInProfile(option, profile) {
   if (!option) return option;
-  const current = closeoutProfiles.some(candidate => candidate.variant === profile.variant);
-  if (!current) return option;
-  return { ...option, accent: workshopAccents[option.id], ...(officialNames[option.id] ? { name: officialNames[option.id], status: 'reference' } : {}) };
+  const accents = currentProfiles.some(candidate => candidate.variant === profile.variant) ? currentWorkshopAccents
+    : closeoutProfiles.some(candidate => candidate.variant === profile.variant) ? workshopAccents : null;
+  if (!accents) return option;
+  return { ...option, accent: accents[option.id], ...(officialNames[option.id] ? { name: officialNames[option.id], status: 'reference' } : {}) };
 }
 function getDesignOptions(variant = EXPERIMENTAL_VARIANT) {
   const profile = getPlayableProfile(variant);

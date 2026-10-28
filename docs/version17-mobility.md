@@ -49,9 +49,12 @@ changing prices. Grid bishop is just above the 40–60% working target at 60.55%
 retain it at level 3 and assess counterplay before changing it. These results do
 not support downgrading it to level 2.
 
-No larger experiment is needed before human playtesting the shortlist. Movement,
-prices, playable workshops and frozen references remain unchanged. The declared
-protocols and original launch commands below are retained for reproducibility.
+No larger experiment is needed before human playtesting the shortlist. The
+[Version 17 workshops](playtest-roster-v17.md) now offer the one-point Two-step
+and King-step pawns and the `fWmfF` Pawn grant. Scout remains a research option.
+Older libraries, immutable research definitions and frozen references stay fixed.
+The declared protocols and original launch commands below are retained for
+reproducibility.
 
 Reproduce the offline combined analysis without starting games:
 

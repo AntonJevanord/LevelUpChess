@@ -515,8 +515,8 @@ var require_design_catalog = __commonJS({
         ["princess", "KN"],
         ["true-queen", "Q"]
       ].map(([name, movement], index) => rosterDefinition("king", `reserve-${name}`, index + 1, movement, "acdefghij"[index], index + 1, 1, "reserve")),
-      // Version-17 research revisions are selected only by declared experiments.
-      // The playable version-16 libraries and every measured predecessor stay fixed.
+      // Version-17 revisions keep the version-16 libraries and measured predecessors
+      // fixed. Current playable libraries explicitly select individual revisions.
       rosterDefinition("pawn", "purple", 3, "mRcfB", "d", 3, 13),
       rosterDefinition("bishop", "purple", 3, "BcWcN", "d", 3, 17),
       rosterDefinition("bishop", "purple", 3, "BvWvN", "g", 6, 18),
