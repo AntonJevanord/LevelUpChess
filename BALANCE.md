@@ -4,7 +4,7 @@ Version 16 is closed with four [official references](docs/official-references.md
 
 The initial version-17 screens and follow-ups completed **2,912 games**. The [combined sixteen-start report](experiments/balance/results/v17-followup-001.report.md) reuses the first eight cases only for unchanged designs and keeps revised IDs separate. The [second-screen decisions](docs/version17-second-review.md) consider overall scores, replicated matchups and human-facing tactics. References and historical outcomes stay fixed.
 
-The [640-game focused screen](docs/version17-design-focus.md) compares four new capture/guard designs with the references and three two-step pawns. Every army spends three upgrade points; the baseline has its own report column and is excluded from the four-reference overall score.
+The [640-game focused screen](experiments/balance/results/v17-focus-001.report.md) is complete. Its reference and direct pawn-bundle matchups motivate the [1,728-game mobility batch](docs/version17-mobility.md). Every army spends three upgrade points; the baseline has its own report column and is excluded from the four-reference overall score.
 
 ## Current results
 

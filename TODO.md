@@ -45,8 +45,19 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Declare `design-focus`: four three-point armies versus four level-3 references and three level-1 two-step pawns, on sixteen starts with both colors; cap at 640 games.
 - [x] Keep the two-step-pawn comparison separate from the four-reference Overall score; preserve all six completed protocols and playable libraries.
 - [x] Verify both-color captures, blockers, color restriction, ordinary promotion, finite nonchecking drops and native agreement at all 640 scheduled positions.
-- [ ] Run the [focused experiment](docs/version17-design-focus.md) locally, then compare each new purchase with the references and the two-step-pawn bundle.
+- [x] Complete and archive all 640 [focused games](experiments/balance/results/v17-focus-001.report.md); compare reference scores with the separate two-step-pawn matchups and both opening cohorts.
 - [ ] Human-playtest the capture patterns and grant mobility for readability and counterplay before choosing replacements.
+
+## Version 17: mobility confirmation and revisions
+
+- [x] Retain `BDC` at level 3 for confirmation; direct level-1 matchup scores alone do not establish a tier change.
+- [x] Add immutable grant designs `cfWmfF` / `fWmfF` and the one-point king-step pawn `mWFifmnD`; preserve old movements and prices.
+- [x] Declare sixteen new short starting cases, preserving the reserve deployment delay and all previous case identities.
+- [x] Prepare `mobility-confirm` (768 games) and `mobility-revisions` (960), with equal three-point armies and separate reference/baseline scores.
+- [ ] Run the [1,728-game mobility batch](docs/version17-mobility.md) locally; existing purchases get only new cases, revised definitions get all thirty-two.
+- [ ] Combine compatible archived sixteen-case results with new confirmation results, keeping sources, cohorts, colors and changed IDs explicit.
+- [ ] Review repeated direct purchase counters alongside the reference basket and human counterplay; do not force every equal-cost matchup to 50%.
+- [x] Record a [small design shortlist](docs/design-ideas.md) separately from the declared game budget.
 
 ## After reviewing these results
 

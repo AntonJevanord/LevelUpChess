@@ -1,5 +1,8 @@
 # Version-17 focused design screen
 
+This campaign is complete: [640-game results](../experiments/balance/results/v17-focus-001.report.md).
+Use the [mobility batch](version17-mobility.md) for the next bounded experiments.
+
 Test four new designs against the four frozen level-3 references and the
 promising level-1 two-step pawn. All armies spend **three upgrade points**:
 one level-3 bishop, three level-1 pawn upgrades, or three one-point reserve

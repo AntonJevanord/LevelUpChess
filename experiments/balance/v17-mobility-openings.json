@@ -1,0 +1,18 @@
+[
+  { "id": "mobility-caro-kann", "moves": ["e2e4", "c7c6"] },
+  { "id": "mobility-queens-pawn-e6", "moves": ["d2d4", "e7e6"] },
+  { "id": "mobility-english-nf6", "moves": ["c2c4", "g8f6"] },
+  { "id": "mobility-reti-c5", "moves": ["g1f3", "c7c5"] },
+  { "id": "mobility-kings-fianchetto-e5", "moves": ["g2g3", "e7e5"] },
+  { "id": "mobility-queens-fianchetto-d5", "moves": ["b2b3", "d7d5"] },
+  { "id": "mobility-alekhine", "moves": ["e2e4", "g8f6"] },
+  { "id": "mobility-queens-pawn-c6", "moves": ["d2d4", "c7c6"] },
+  { "id": "mobility-english-e6", "moves": ["c2c4", "e7e6"] },
+  { "id": "mobility-reti-e6", "moves": ["g1f3", "e7e6"] },
+  { "id": "mobility-queens-fianchetto-nf6", "moves": ["b2b3", "g8f6"] },
+  { "id": "mobility-kings-fianchetto-nf6", "moves": ["g2g3", "g8f6"] },
+  { "id": "mobility-modern", "moves": ["e2e4", "g7g6"] },
+  { "id": "mobility-queens-pawn-g6", "moves": ["d2d4", "g7g6"] },
+  { "id": "mobility-english-g6", "moves": ["c2c4", "g7g6"] },
+  { "id": "mobility-reti-g6", "moves": ["g1f3", "g7g6"] }
+]
