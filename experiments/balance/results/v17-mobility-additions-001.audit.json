@@ -1,0 +1,387 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-v17-mobility-additions-evidence",
+  "recordedDate": "2026-10-28",
+  "sources": {
+    "journal": {
+      "archiveFile": "v17-mobility-additions-001.games.jsonl.gz",
+      "archivedSha256": "2e56b2659ec8e726a125b2a253c47b47374d4813306971ada9bbd14618f423ec",
+      "originalName": "games.jsonl",
+      "sha256": "8065aa8cf7e98d64cd00d38a15d452c602dc2b2b905f496fa71f69698f73e58b",
+      "bytes": 2288730
+    },
+    "uploadedReport": {
+      "archiveFile": "v17-mobility-additions-001.uploaded-report.md.gz",
+      "archivedSha256": "ba2ff24b04038efbac8c4769db3237898872fe630e92120a4b37ad6218e503cd",
+      "originalName": "v17-report.md",
+      "sha256": "1ece54afc61b9b68f2960db20616f8be1e7e0be723dc6e418e6665e4193d9f0c",
+      "bytes": 2954
+    }
+  },
+  "provenance": {
+    "originalManifestSupplied": false,
+    "nativePreflightSupplied": false,
+    "engineSha256": null,
+    "legalMovesIndependentlyReplayed": false,
+    "descriptorKind": "derived declaration compatibility descriptor",
+    "limitations": [
+      "Original run.json and v17-preflight.json were not supplied; declaration compatibility does not attest to the original executable or native value tables.",
+      "The audit validates recorded identities and settings, not legal moves or terminal positions. No material values or Elo are fitted.",
+      "The thirty-two fixed, related short starts support descriptive screening, not population confidence intervals or demonstrated balance equivalence."
+    ]
+  },
+  "declaration": {
+    "configSha256": "73138d647d42b765236bc6630a9afbe5653a966c790448a77edf6678d654f4a9",
+    "registryHash": "4ffab82875c055aaa6af11412cb652d29d0920c01d659a0373e516f80c294ee0",
+    "profileHash": "92a589b55fed6a797a6996df79861f3014f00cac3ebb82e6ba97c4ce6d4a6dc9",
+    "scheduleSha256": "c853295537e033032b0b465f0b6540681bc6f0a16d91fd7042ff2edbb4dc8dea",
+    "scheduledGames": 640,
+    "reportReproducedExactly": true
+  },
+  "resubmittedSources": {
+    "level3-confirm": {
+      "sources": {
+        "journal": {
+          "archiveFile": "v17-followup-001.level3-confirm.games.jsonl.gz",
+          "archivedSha256": "9eea9676acf1947cc1070b873750302354c9c40fdb5608b5ce05327e51a0fd2b",
+          "originalName": "games.jsonl",
+          "sha256": "8570022efdf0b1e70551a933b8e778294e59d0b87912037e801ae9bd9c6b3653",
+          "bytes": 1907891
+        },
+        "uploadedReport": {
+          "archiveFile": "v17-followup-001.level3-confirm.uploaded-report.md.gz",
+          "archivedSha256": "d212bc3e9887882b0f0b65779b2796768e5dfe28da6c66865e06e0cd02a22f08",
+          "originalName": "v17-report.md",
+          "sha256": "5d359677df1f2fdd58f6b765059ef83f93a166b1c0446f36618d808cb7888558",
+          "bytes": 5348
+        }
+      },
+      "exactDuplicate": true,
+      "addedGames": 0
+    },
+    "level3-revisions": {
+      "sources": {
+        "journal": {
+          "archiveFile": "v17-followup-001.level3-revisions.games.jsonl.gz",
+          "archivedSha256": "6c85981f6702befb7784ec558d7ce6e85ce7879a8de450382ab3c3ebc92663a2",
+          "originalName": "games.jsonl",
+          "sha256": "bf65a753ab2fe95e8ceb13f3f64333fec1cd235b5ae2da932fa9dc20d6bbf759",
+          "bytes": 2155189
+        },
+        "uploadedReport": {
+          "archiveFile": "v17-followup-001.level3-revisions.uploaded-report.md.gz",
+          "archivedSha256": "d5d3a04cc371c7724b9d210a644cb00276f998b43e3963b21041c6bb56cefee7",
+          "originalName": "v17-report.md",
+          "sha256": "376aeb69e305b39d5951806c3ff2b471ea1d49945ccccc1347dc35c1fa047c7d",
+          "bytes": 4343
+        }
+      },
+      "exactDuplicate": true,
+      "addedGames": 0
+    }
+  },
+  "scope": "Only mobility-additions is new evidence in this upload batch. No mobility-confirm, mobility-revisions or mobility-expanded journal was supplied.",
+  "counts": {
+    "scheduledGames": 640,
+    "finalizedGames": 640,
+    "completedGames": 639,
+    "truncatedGames": 1,
+    "pairedGames": 638,
+    "completePairs": 319,
+    "excludedCompletedPartners": 1,
+    "errors": 0,
+    "newMatchGames": 0,
+    "engineSearches": 0
+  },
+  "rows": [
+    {
+      "key": "support-pawns",
+      "label": "Three Support pawns",
+      "designIds": [
+        "pawn.blue@8"
+      ],
+      "movements": [
+        "fmWfceFifmnDsW"
+      ],
+      "score": 0.28515625,
+      "games": 256,
+      "wins": 51,
+      "draws": 44,
+      "losses": 161,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 64,
+          "wins": 14,
+          "draws": 10,
+          "losses": 40,
+          "score": 0.296875
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 64,
+          "wins": 11,
+          "draws": 13,
+          "losses": 40,
+          "score": 0.2734375
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 64,
+          "wins": 10,
+          "draws": 10,
+          "losses": 44,
+          "score": 0.234375
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 64,
+          "wins": 16,
+          "draws": 11,
+          "losses": 37,
+          "score": 0.3359375
+        }
+      ],
+      "baseline": {
+        "games": 64,
+        "completePairs": 32,
+        "openings": 32,
+        "wins": 11,
+        "draws": 10,
+        "losses": 43,
+        "score": 0.25
+      },
+      "physicalColors": [
+        {
+          "key": "w",
+          "games": 128,
+          "score": 0.3046875
+        },
+        {
+          "key": "b",
+          "games": 128,
+          "score": 0.265625
+        }
+      ],
+      "cohorts": {
+        "original-sixteen": {
+          "referenceScore": 0.2421875,
+          "referenceGames": 128,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "games": 32,
+              "score": 0.3125
+            },
+            {
+              "key": "unicorn",
+              "games": 32,
+              "score": 0.234375
+            },
+            {
+              "key": "cruisader",
+              "games": 32,
+              "score": 0.171875
+            },
+            {
+              "key": "amazon",
+              "games": 32,
+              "score": 0.25
+            }
+          ],
+          "baselineScore": 0.234375,
+          "baselineGames": 32,
+          "baselinePairs": 16
+        },
+        "new-sixteen": {
+          "referenceScore": 0.328125,
+          "referenceGames": 128,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "games": 32,
+              "score": 0.28125
+            },
+            {
+              "key": "unicorn",
+              "games": 32,
+              "score": 0.3125
+            },
+            {
+              "key": "cruisader",
+              "games": 32,
+              "score": 0.296875
+            },
+            {
+              "key": "amazon",
+              "games": 32,
+              "score": 0.421875
+            }
+          ],
+          "baselineScore": 0.265625,
+          "baselineGames": 32,
+          "baselinePairs": 16
+        }
+      }
+    },
+    {
+      "key": "scout-grants",
+      "label": "Three Scout grants",
+      "designIds": [
+        "king.reserve-pawn@7"
+      ],
+      "movements": [
+        "fWbmF"
+      ],
+      "score": 0.453125,
+      "games": 256,
+      "wins": 94,
+      "draws": 44,
+      "losses": 118,
+      "opponents": [
+        {
+          "key": "vanguard",
+          "label": "Vanguard",
+          "games": 64,
+          "wins": 29,
+          "draws": 14,
+          "losses": 21,
+          "score": 0.5625
+        },
+        {
+          "key": "unicorn",
+          "label": "Unicorn",
+          "games": 64,
+          "wins": 27,
+          "draws": 8,
+          "losses": 29,
+          "score": 0.484375
+        },
+        {
+          "key": "cruisader",
+          "label": "Cruisader",
+          "games": 64,
+          "wins": 14,
+          "draws": 9,
+          "losses": 41,
+          "score": 0.2890625
+        },
+        {
+          "key": "amazon",
+          "label": "Amazon",
+          "games": 64,
+          "wins": 24,
+          "draws": 13,
+          "losses": 27,
+          "score": 0.4765625
+        }
+      ],
+      "baseline": {
+        "games": 62,
+        "completePairs": 31,
+        "openings": 31,
+        "wins": 23,
+        "draws": 14,
+        "losses": 25,
+        "score": 0.4838709677419355
+      },
+      "physicalColors": [
+        {
+          "key": "w",
+          "games": 128,
+          "score": 0.5234375
+        },
+        {
+          "key": "b",
+          "games": 128,
+          "score": 0.3828125
+        }
+      ],
+      "cohorts": {
+        "original-sixteen": {
+          "referenceScore": 0.46484375,
+          "referenceGames": 128,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "games": 32,
+              "score": 0.546875
+            },
+            {
+              "key": "unicorn",
+              "games": 32,
+              "score": 0.484375
+            },
+            {
+              "key": "cruisader",
+              "games": 32,
+              "score": 0.25
+            },
+            {
+              "key": "amazon",
+              "games": 32,
+              "score": 0.578125
+            }
+          ],
+          "baselineScore": 0.5,
+          "baselineGames": 30,
+          "baselinePairs": 15
+        },
+        "new-sixteen": {
+          "referenceScore": 0.44140625,
+          "referenceGames": 128,
+          "opponents": [
+            {
+              "key": "vanguard",
+              "games": 32,
+              "score": 0.578125
+            },
+            {
+              "key": "unicorn",
+              "games": 32,
+              "score": 0.484375
+            },
+            {
+              "key": "cruisader",
+              "games": 32,
+              "score": 0.328125
+            },
+            {
+              "key": "amazon",
+              "games": 32,
+              "score": 0.375
+            }
+          ],
+          "baselineScore": 0.46875,
+          "baselineGames": 32,
+          "baselinePairs": 16
+        }
+      }
+    }
+  ],
+  "truncations": [
+    {
+      "id": "c29_scout-grants-v-two-step-pawns_o28_followup-symmetrical-english_r1_w",
+      "pairId": "c29_scout-grants-v-two-step-pawns_o28_followup-symmetrical-english_r1",
+      "comparisonId": "scout-grants-v-two-step-pawns",
+      "openingId": "followup-symmetrical-english",
+      "aColor": "w",
+      "result": "*",
+      "reason": "max-plies",
+      "totalPlies": 400,
+      "finalFen": "6R1/5k2/8/8/r7/3KA3/8/8[] w - - 52 201",
+      "excludedCompletedPartner": {
+        "id": "c29_scout-grants-v-two-step-pawns_o28_followup-symmetrical-english_r1_b",
+        "aColor": "b",
+        "result": "0-1",
+        "reason": "checkmate",
+        "totalPlies": 118,
+        "scoreForA": 1
+      }
+    }
+  ]
+}

@@ -1,7 +1,13 @@
 # Design shortlist
 
 Support pawn and Scout guard are now one-point research candidates in the
-[expanded mobility batch](version17-mobility.md). Their prices remain provisional.
+[mobility batch](version17-mobility.md). The completed
+[640-game supplement](../experiments/balance/results/v17-mobility-additions-001.report.md)
+supports parking Support: its three-pawn purchase scored 28.52% against references
+and 25.00% against two-step pawns. Scout remains a playtest candidate at one point:
+45.31% against references and 48.39% against two-step pawns, with a repeated weak
+Cruisader matchup. Their definitions and prices remain unchanged; neither has
+been promoted into the playable workshops.
 The bishop and rook remain ideas for later prototypes, outside that game budget.
 
 | Idea | Tentative movement | Identity and question |

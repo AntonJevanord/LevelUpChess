@@ -55,7 +55,8 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Declare sixteen new short starting cases, preserving the reserve deployment delay and all previous case identities.
 - [x] Prepare `mobility-confirm` (768 games) and `mobility-revisions` (960), with equal three-point armies and separate reference/baseline scores.
 - [x] Add Support pawn and Scout guard as immutable one-point trials; create fresh `mobility-expanded` (1,600) and additions-only (640) options without changing the original 960-game declaration.
-- [ ] Run the [expanded mobility batch](docs/version17-mobility.md): confirmation (768) plus expanded revisions (1,600), or finish the original revisions (960) and add only the supplement (640). Both paths total 2,368; do not duplicate them.
+- [x] Archive and review the [Support/Scout supplement](experiments/balance/results/v17-mobility-additions-001.report.md): 639 completed games, one unscored truncation and no errors. Park Support; retain Scout for playtesting with a Cruisader matchup flag. Reuse the two resubmitted historical archives without adding their games again.
+- [ ] Collect results for `mobility-confirm` (768) and `mobility-revisions` (960); the latest upload contained the older level-three follow-ups instead. Check existing run folders before starting anything. The 640-game supplement is complete; do not run `mobility-expanded` alongside these campaigns.
 - [ ] Combine compatible archived sixteen-case results with new confirmation results, keeping sources, cohorts, colors and changed IDs explicit.
 - [ ] Review repeated direct purchase counters alongside the reference basket and human counterplay; do not force every equal-cost matchup to 50%.
 - [x] Record a [small design shortlist](docs/design-ideas.md) separately from the declared game budget.

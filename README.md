@@ -75,7 +75,7 @@ The initial screens and follow-ups completed **2,912 games**. The [combined repo
 
 The [initial protocols](docs/version17-experiments.md) and [follow-up commands](docs/version17-followups.md) remain available. `balance:v17:review` combines compatible first- and second-batch outcomes without rerunning games. Overall summary tables show percentages beside W/D/L; draws count half a point.
 
-The [640-game focused screen](experiments/balance/results/v17-focus-001.report.md) is complete. The [expanded mobility batch](docs/version17-mobility.md) confirms existing purchases and tests five revisions, including Support pawn and Scout guard, for 2,368 new games. An additions-only option preserves work from an already-started original revision run. The remaining [idea shortlist](docs/design-ideas.md) stays outside that budget.
+The [640-game focused screen](experiments/balance/results/v17-focus-001.report.md) is complete. The [Support/Scout supplement](experiments/balance/results/v17-mobility-additions-001.report.md) adds 639 completed games and one unscored truncation: Support pawns score 28.52% across references; Scout grants score 45.31%, with a weak Cruisader matchup. Park Support and retain Scout for playtesting. The other [mobility campaigns](docs/version17-mobility.md) remain pending evidence; two resubmitted level-three journals duplicate earlier results. The remaining [idea shortlist](docs/design-ideas.md) stays outside the declared budget.
 
 Finite reserve bundles now have an explicit balance army format. Outcome reports include them; the existing material estimator remains restricted to board-only experiments. See [the balance guide](BALANCE.md), [next steps](TODO.md) and [mixed-army plan](docs/mixed-army-balance-plan.md).
 

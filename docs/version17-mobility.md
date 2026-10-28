@@ -11,6 +11,39 @@ with individual reference scores of 48.44–64.06%. Keep its level-3 definition
 for confirmation. Removing Camel and trying `BD` at level 2 remains a later
 design question, rather than a necessary correction established by this screen.
 
+## Results received
+
+The [Support/Scout supplement](../experiments/balance/results/v17-mobility-additions-001.report.md)
+has finished: 639 completed games, one unscored 400-ply truncation and no errors.
+All four-reference matchups have complete color pairs. Scores count draws as
+half a point; every purchase costs three upgrade points.
+
+| Purchase | Reference overall | Three two-step pawns | References: original / new sixteen |
+| --- | ---: | ---: | ---: |
+| Three Support pawns | 28.52% | 25.00% | 24.22% / 32.81% |
+| Three Scout grants | 45.31% | 48.39% | 46.48% / 44.14% |
+
+Park Support rather than repeat its unchanged tests or immediately create another
+buff. It underperforms against every reference and the direct pawn baseline in
+both cohorts. Scout is worth human playtesting at its current one-point price.
+Its Cruisader score is 28.91% (25.00% / 32.81% by cohort), so keep that specific
+weakness visible rather than buffing all its other matchups automatically.
+
+The truncation belongs to Scout versus two-step pawns. Its completed color partner
+is also excluded from the paired baseline score, leaving 62 scored baseline games;
+reference averages are unaffected. Neither game needs replaying for this decision.
+
+Two other uploaded journals and their reports exactly duplicate the archived
+`level3-confirm` (576) and `level3-revisions` (640) follow-ups. They add no games.
+They are **not** `mobility-confirm` or `mobility-revisions`; results for those
+campaigns have not been supplied. Check the existing local folders before
+launching anything. Since the supplement is complete, use only the original
+960-game revision campaign for the other three candidates if it has not run;
+the expanded campaign would duplicate Support/Scout evidence.
+
+The declarations and alternative commands below remain available for reference.
+There is no new campaign, movement change or playable-roster change in this review.
+
 ## New revisions
 
 | Three-point purchase | Immutable ID | Movement | Question |
