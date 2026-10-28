@@ -10,6 +10,7 @@ const { PLAYABLE_LIBRARIES, V16_CANDIDATES } = require('../../src/playable-libra
 const { getPlayableProfiles } = require('../playable-profile');
 const { getOfficialReferences } = require('./official-references');
 const followup = require('./v17-followup-plan');
+const targeted = require('./v17-targeted-plan');
 
 const ROOT = path.resolve(__dirname, '../..');
 const OPENINGS = require('../../experiments/balance/v17-openings.json');
@@ -20,8 +21,9 @@ const FILES = Object.freeze({
   'reference-2v2': 'experiments/balance/v17-reference-pairs.json',
   'pawn-grants': 'experiments/balance/v17-pawn-grants.json',
   ...followup.FILES,
+  ...targeted.FILES,
 });
-const CAPS = Object.freeze({ level3: 832, 'reference-2v2': 240, 'pawn-grants': 240, ...followup.CAPS });
+const CAPS = Object.freeze({ level3: 832, 'reference-2v2': 240, 'pawn-grants': 240, ...followup.CAPS, ...targeted.CAPS });
 
 function freeze(value) {
   if (value && typeof value === 'object') {
@@ -77,9 +79,10 @@ function buildReferencePairs() {
   return config('Version 17: reference 2v2 pilot (240 games)', comparisons);
 }
 
-/** All three declarations are normal balance configurations consumed by the
+/** Declarations are normal balance configurations consumed by the
  * existing paired runner. A changed protocol must use a new declaration. */
 function loadExperiment(experiment) {
+  if (Object.hasOwn(targeted.FILES, experiment)) return targeted.loadTargeted(experiment);
   if (Object.hasOwn(followup.FILES, experiment)) return followup.loadFollowup(experiment);
   const relative = FILES[experiment];
   if (!relative) throw new Error(`Choose an experiment: ${Object.keys(FILES).join(', ')}.`);

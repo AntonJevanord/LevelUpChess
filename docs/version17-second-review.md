@@ -64,11 +64,13 @@ human playtesting can decide between them.
 
 ## Bounded next step
 
-Human-playtest the grid bishop and both guard ideas for clarity and counterplay.
-A subsequent focused screen of those three candidates against four references
-on the same sixteen starts would cost **384 games**. No whole-roster rerun is
-needed. Archbishop and Ranged rook remain separate matchup-review items; avoid
-adding arbitrary variants merely to fill a large campaign.
+The [next focused screen](version17-design-focus.md) now includes the grid
+bishop, both grant ideas and the user's full-diagonal-capture pawn
+`FfmWifmnD`. It adds three two-step pawns as a fifth opponent, keeping every
+army at three upgrade points. Four candidates × five opponents × sixteen
+starts × both colors gives **640 games**. No whole-roster rerun is needed.
+Human-playtest these designs for clarity and counterplay; Archbishop and Ranged
+rook remain separate matchup-review items.
 
 This review schedules no games and changes no playable definitions. The exact
 uploads, source hashes, cohort scores and full matchup percentages are retained

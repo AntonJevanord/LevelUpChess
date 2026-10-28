@@ -36,9 +36,17 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Publish the [combined sixteen-start percentages](experiments/balance/results/v17-followup-001.report.md), with unchanged IDs reusing the original eight cases and revisions kept separate.
 - [x] Include the percentage beside W/D/L in the overall summary; retain the existing score calculation and archive renderers.
 - [x] Review pooled targets alongside replicated opponent differences; verify an actual forced Amazon trade in the Mating-bishop games.
-- [ ] Human-playtest `BDC` and guard ideas `fmWfceF` / `fW2`, then declare a focused test if appropriate. See the [second-screen decisions](docs/version17-second-review.md); no third campaign is scheduled yet.
 - [ ] Retain the promising two-step pawn and backward-capture Rook pawn for playtesting; park the weak quiet-diagonal pawn and review Archbishop/Ranged-rook matchups before choosing further changes.
 - [ ] Promote successful research alternatives into the playable workshops only after outcome review and human playtesting.
+
+## Version 17: focused capture and grant screen
+
+- [x] Add immutable research definitions for Grid bishop `BDC`, full-diagonal pawn `FfmWifmnD`, long-forward grant `fW2` and pawn-like grant `fmWfceF`.
+- [x] Declare `design-focus`: four three-point armies versus four level-3 references and three level-1 two-step pawns, on sixteen starts with both colors; cap at 640 games.
+- [x] Keep the two-step-pawn comparison separate from the four-reference Overall score; preserve all six completed protocols and playable libraries.
+- [x] Verify both-color captures, blockers, color restriction, ordinary promotion, finite nonchecking drops and native agreement at all 640 scheduled positions.
+- [ ] Run the [focused experiment](docs/version17-design-focus.md) locally, then compare each new purchase with the references and the two-step-pawn bundle.
+- [ ] Human-playtest the capture patterns and grant mobility for readability and counterplay before choosing replacements.
 
 ## After reviewing these results
 

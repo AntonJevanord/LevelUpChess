@@ -148,6 +148,11 @@ const definitions = [
   rosterDefinition('pawn', 'blue', 1, 'mFfmWfceFifmnD', 'a', 1, 4),
   rosterDefinition('pawn', 'blue', 1, 'fmW2fceF2', 'e', 4, 5),
   rosterDefinition('king', 'reserve-pawn', 1, 'fF', 'a', 1, 2, 'reserve'),
+  // Focused capture/guard experiment; measured predecessors stay immutable.
+  rosterDefinition('bishop', 'purple', 3, 'BDC', 'd', 3, 19),
+  rosterDefinition('king', 'reserve-pawn', 1, 'fW2', 'a', 1, 3, 'reserve'),
+  rosterDefinition('king', 'reserve-pawn', 1, 'fmWfceF', 'a', 1, 4, 'reserve'),
+  rosterDefinition('pawn', 'blue', 1, 'FfmWifmnD', 'a', 1, 6),
 ];
 
 const DESIGNS = Object.freeze(Object.fromEntries(definitions.map(design => [design.id, design])));

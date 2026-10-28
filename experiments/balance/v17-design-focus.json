@@ -1,0 +1,653 @@
+{
+  "schemaVersion": 3,
+  "name": "Version 17: grid bishop, capture pawn and guard alternatives (640 games)",
+  "seed": 20261028,
+  "repetitions": 1,
+  "engine": {
+    "nodes": 20000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400
+  },
+  "openings": [
+    {
+      "id": "start",
+      "moves": []
+    },
+    {
+      "id": "open-e-pawns",
+      "moves": [
+        "e2e4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "open-d-pawns",
+      "moves": [
+        "d2d4",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "sicilian-prefix",
+      "moves": [
+        "e2e4",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "english-prefix",
+      "moves": [
+        "c2c4",
+        "e7e5"
+      ]
+    },
+    {
+      "id": "knights-prefix",
+      "moves": [
+        "g1f3",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "queenside-fianchetto",
+      "moves": [
+        "b2b3",
+        "b7b6"
+      ]
+    },
+    {
+      "id": "kingside-fianchetto",
+      "moves": [
+        "g2g3",
+        "g7g6"
+      ]
+    },
+    {
+      "id": "followup-french",
+      "moves": [
+        "e2e4",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "followup-indian",
+      "moves": [
+        "d2d4",
+        "g8f6"
+      ]
+    },
+    {
+      "id": "followup-reti",
+      "moves": [
+        "g1f3",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "followup-symmetrical-english",
+      "moves": [
+        "c2c4",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "followup-scandinavian",
+      "moves": [
+        "e2e4",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "followup-dutch",
+      "moves": [
+        "d2d4",
+        "f7f5"
+      ]
+    },
+    {
+      "id": "followup-kings-indian-attack",
+      "moves": [
+        "g2g3",
+        "d7d5"
+      ]
+    },
+    {
+      "id": "followup-larsen",
+      "moves": [
+        "b2b3",
+        "e7e5"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "grid-bishop-v-vanguard",
+      "label": "Grid bishop versus Vanguard",
+      "armyA": {
+        "upgrades": {
+          "c1": "bishop.purple@19"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "a1": "rook.purple@10"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "grid-bishop-v-unicorn",
+      "label": "Grid bishop versus Unicorn",
+      "armyA": {
+        "upgrades": {
+          "c1": "bishop.purple@19"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.purple@3"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "grid-bishop-v-cruisader",
+      "label": "Grid bishop versus Cruisader",
+      "armyA": {
+        "upgrades": {
+          "c1": "bishop.purple@19"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c1": "bishop.purple@13"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "grid-bishop-v-amazon",
+      "label": "Grid bishop versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "c1": "bishop.purple@19"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "grid-bishop-v-two-step-pawns",
+      "label": "Grid bishop versus Three two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c1": "bishop.purple@19"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "d2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "full-diagonal-pawns-v-vanguard",
+      "label": "Three full-diagonal pawns versus Vanguard",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.blue@6",
+          "d2": "pawn.blue@6",
+          "e2": "pawn.blue@6"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "a1": "rook.purple@10"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "full-diagonal-pawns-v-unicorn",
+      "label": "Three full-diagonal pawns versus Unicorn",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.blue@6",
+          "d2": "pawn.blue@6",
+          "e2": "pawn.blue@6"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.purple@3"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "full-diagonal-pawns-v-cruisader",
+      "label": "Three full-diagonal pawns versus Cruisader",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.blue@6",
+          "d2": "pawn.blue@6",
+          "e2": "pawn.blue@6"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c1": "bishop.purple@13"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "full-diagonal-pawns-v-amazon",
+      "label": "Three full-diagonal pawns versus Amazon",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.blue@6",
+          "d2": "pawn.blue@6",
+          "e2": "pawn.blue@6"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "full-diagonal-pawns-v-two-step-pawns",
+      "label": "Three full-diagonal pawns versus Three two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.blue@6",
+          "d2": "pawn.blue@6",
+          "e2": "pawn.blue@6"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "d2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "long-forward-grants-v-vanguard",
+      "label": "Three long-forward grants versus Vanguard",
+      "armyA": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@3",
+            "count": 3
+          }
+        ]
+      },
+      "armyB": {
+        "upgrades": {
+          "a1": "rook.purple@10"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "long-forward-grants-v-unicorn",
+      "label": "Three long-forward grants versus Unicorn",
+      "armyA": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@3",
+            "count": 3
+          }
+        ]
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.purple@3"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "long-forward-grants-v-cruisader",
+      "label": "Three long-forward grants versus Cruisader",
+      "armyA": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@3",
+            "count": 3
+          }
+        ]
+      },
+      "armyB": {
+        "upgrades": {
+          "c1": "bishop.purple@13"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "long-forward-grants-v-amazon",
+      "label": "Three long-forward grants versus Amazon",
+      "armyA": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@3",
+            "count": 3
+          }
+        ]
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "long-forward-grants-v-two-step-pawns",
+      "label": "Three long-forward grants versus Three two-step pawns",
+      "armyA": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@3",
+            "count": 3
+          }
+        ]
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "d2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-like-grants-v-vanguard",
+      "label": "Three pawn-like grants versus Vanguard",
+      "armyA": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@4",
+            "count": 3
+          }
+        ]
+      },
+      "armyB": {
+        "upgrades": {
+          "a1": "rook.purple@10"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-like-grants-v-unicorn",
+      "label": "Three pawn-like grants versus Unicorn",
+      "armyA": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@4",
+            "count": 3
+          }
+        ]
+      },
+      "armyB": {
+        "upgrades": {
+          "b1": "knight.purple@3"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-like-grants-v-cruisader",
+      "label": "Three pawn-like grants versus Cruisader",
+      "armyA": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@4",
+            "count": 3
+          }
+        ]
+      },
+      "armyB": {
+        "upgrades": {
+          "c1": "bishop.purple@13"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-like-grants-v-amazon",
+      "label": "Three pawn-like grants versus Amazon",
+      "armyA": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@4",
+            "count": 3
+          }
+        ]
+      },
+      "armyB": {
+        "upgrades": {
+          "d1": "queen.purple@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-like-grants-v-two-step-pawns",
+      "label": "Three pawn-like grants versus Three two-step pawns",
+      "armyA": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@4",
+            "count": 3
+          }
+        ]
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "d2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    }
+  ]
+}

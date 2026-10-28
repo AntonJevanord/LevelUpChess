@@ -75,6 +75,8 @@ The initial screens and follow-ups completed **2,912 games**. The [combined repo
 
 The [initial protocols](docs/version17-experiments.md) and [follow-up commands](docs/version17-followups.md) remain available. `balance:v17:review` combines compatible first- and second-batch outcomes without rerunning games. Overall summary tables show percentages beside W/D/L; draws count half a point.
 
+The next [focused screen](docs/version17-design-focus.md) tests Grid bishop `BDC`, full-diagonal pawn `FfmWifmnD` and two grant alternatives against the four references and a three-pawn two-step baseline. It is capped at 640 games and runs separately as `--experiment design-focus`.
+
 Finite reserve bundles now have an explicit balance army format. Outcome reports include them; the existing material estimator remains restricted to board-only experiments. See [the balance guide](BALANCE.md), [next steps](TODO.md) and [mixed-army plan](docs/mixed-army-balance-plan.md).
 
 ## Development
