@@ -1,0 +1,1896 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-v17-reference-panel-upload-evidence",
+  "recordedDate": "2026-11-01",
+  "sources": {
+    "gap": {
+      "journal": {
+        "archiveFile": "reference-panel-v17-002.gap.games.jsonl.gz",
+        "archivedSha256": "15184447bc355a1d7d8ca5c315f6fb0956d2746e545166f589c5936e79b301a0",
+        "originalName": "games.jsonl",
+        "sha256": "752fec69d88a61b48c6b1614c60b5c1a5f0ed3c3de13a49a649ccb82f5845ead",
+        "bytes": 245877
+      },
+      "uploadedReport": {
+        "archiveFile": "reference-panel-v17-002.gap.uploaded-report.md.gz",
+        "archivedSha256": "27eb02c665a99c22a0fe604e94aa7dbceff46ef792183cac954dbeb262ac82d2",
+        "originalName": "v17-report.md",
+        "sha256": "ba5cb25ab3d3a9d953e7a61e7bb86bd6490aee1499a5f2bd6fb06d5149bc3cd3",
+        "bytes": 2149
+      }
+    },
+    "singles": {
+      "journal": {
+        "archiveFile": "reference-panel-v17-002.singles.games.jsonl.gz",
+        "archivedSha256": "50d7c90e8c61f7cc993e89e55f040241576b5230d2e2e30f930a6f5a01b7dbc8",
+        "originalName": "games.jsonl",
+        "sha256": "c90be49515a92979ef4e4f38deaf41b39c6a422a7f44944f704ba4e434680bb7",
+        "bytes": 685765
+      },
+      "uploadedReport": {
+        "archiveFile": "reference-panel-v17-002.singles.uploaded-report.md.gz",
+        "archivedSha256": "b36f1bd9d701e4d8235ce024a2908e95d4cb519f231a441045b3cb597dcfc844",
+        "originalName": "v17-report.md",
+        "sha256": "f20a3ee838b24cb27c2e4f786b25fee90bc812c5b112ca968eea0899ad06b097",
+        "bytes": 2319
+      }
+    },
+    "pairs": {
+      "journal": {
+        "archiveFile": "reference-panel-v17-002.pairs.games.jsonl.gz",
+        "archivedSha256": "e99c92e7c9909e07adb76bf268052f9b6ea77ab7f619861009456109ff149169",
+        "originalName": "games.jsonl",
+        "sha256": "ffe55e4c7a4413a0230b53f429d8d96d8ccd7e1d214a382175bcbff8efd4e60d",
+        "bytes": 3622187
+      },
+      "uploadedReport": {
+        "archiveFile": "reference-panel-v17-002.pairs.uploaded-report.md.gz",
+        "archivedSha256": "754d0e804f87649a612aca3bf6dd9b0285dd2495c8476bba37e464e7b05ff60a",
+        "originalName": "v17-report.md",
+        "sha256": "2b3ca4cafc29a60addaa098ce8a7c0b37963faf638006d24db17df235519ddf5",
+        "bytes": 4695
+      }
+    }
+  },
+  "provenance": {
+    "originalManifestSupplied": false,
+    "nativePreflightSupplied": false,
+    "uploadedReportSupplied": true,
+    "engineSha256": null,
+    "legalMovesIndependentlyReplayed": false,
+    "descriptorKind": "derived declaration compatibility descriptor",
+    "limitations": [
+      "Original run.json, archived INI files and v17-preflight.json were not supplied. Reconstructed settings and profiles are compatibility checks, not original run provenance.",
+      "All recorded identities, starts, opening prefixes, search settings and outcome summaries match the declared protocols; recorded engine names do not attest to the executable or native material tables.",
+      "Moves and terminal positions are not independently replayed. No new games, material fit, Elo or population confidence interval is produced."
+    ]
+  },
+  "counts": {
+    "uploadedGames": 1216,
+    "completedGames": 1216,
+    "pairedGames": 1216,
+    "completePairs": 608,
+    "truncatedGames": 0,
+    "errors": 0,
+    "newMatchGames": 0,
+    "engineSearches": 0
+  },
+  "stages": [
+    {
+      "name": "gap",
+      "experiment": "panel-gap",
+      "source": {
+        "journal": {
+          "archiveFile": "reference-panel-v17-002.gap.games.jsonl.gz",
+          "archivedSha256": "15184447bc355a1d7d8ca5c315f6fb0956d2746e545166f589c5936e79b301a0",
+          "originalName": "games.jsonl",
+          "sha256": "752fec69d88a61b48c6b1614c60b5c1a5f0ed3c3de13a49a649ccb82f5845ead",
+          "bytes": 245877
+        },
+        "uploadedReport": {
+          "archiveFile": "reference-panel-v17-002.gap.uploaded-report.md.gz",
+          "archivedSha256": "27eb02c665a99c22a0fe604e94aa7dbceff46ef792183cac954dbeb262ac82d2",
+          "originalName": "v17-report.md",
+          "sha256": "ba5cb25ab3d3a9d953e7a61e7bb86bd6490aee1499a5f2bd6fb06d5149bc3cd3",
+          "bytes": 2149
+        }
+      },
+      "declaration": {
+        "configSha256": "04ed4235521cd0725f08a82054738af716545dc307f2584c9c7e667c312bfac8",
+        "registryHash": "5b0b74337c86c1c060b5761b55deeb49b1c8f03adeab82b3cd35c2463313d810",
+        "profileHash": "d6f7916102af7dc5c7d339e1397c4b14b37b8bc0396385de5c03cb18aff752d9",
+        "scheduleSha256": "a0c0d934d27279762fff807854e9bcfb4d28a430d78b5d04ec0e4cb356b95130",
+        "scheduledGames": 64,
+        "descriptorKind": "derived declaration compatibility descriptor",
+        "reportReproducedExactly": true
+      },
+      "progress": {
+        "attempts": 64,
+        "duplicateCopiesIgnored": 0,
+        "finalizedGames": 64,
+        "completedGames": 64,
+        "pairedGames": 64,
+        "completePairs": 32
+      },
+      "overall": {
+        "method": "Equal opponent means over shared fully completed opening cases; every configured repetition requires a complete color pair. Draws count half a point.",
+        "rows": [
+          {
+            "key": "king-step-pawns",
+            "label": "Three king-step pawns",
+            "scope": "all scheduled opponents except self",
+            "score": 0.5546875,
+            "games": 64,
+            "wins": 29,
+            "draws": 13,
+            "losses": 22,
+            "opponents": [
+              {
+                "key": "mobile-forward-grants",
+                "label": "Three mobile-forward grants",
+                "games": 64,
+                "wins": 29,
+                "draws": 13,
+                "losses": 22,
+                "score": 0.5546875
+              }
+            ],
+            "openingCoverage": {
+              "shared": 32,
+              "total": 32,
+              "openingIds": [
+                "start",
+                "open-e-pawns",
+                "open-d-pawns",
+                "sicilian-prefix",
+                "english-prefix",
+                "knights-prefix",
+                "queenside-fianchetto",
+                "kingside-fianchetto",
+                "followup-french",
+                "followup-indian",
+                "followup-reti",
+                "followup-symmetrical-english",
+                "followup-scandinavian",
+                "followup-dutch",
+                "followup-kings-indian-attack",
+                "followup-larsen",
+                "mobility-caro-kann",
+                "mobility-queens-pawn-e6",
+                "mobility-english-nf6",
+                "mobility-reti-c5",
+                "mobility-kings-fianchetto-e5",
+                "mobility-queens-fianchetto-d5",
+                "mobility-alekhine",
+                "mobility-queens-pawn-c6",
+                "mobility-english-e6",
+                "mobility-reti-e6",
+                "mobility-queens-fianchetto-nf6",
+                "mobility-kings-fianchetto-nf6",
+                "mobility-modern",
+                "mobility-queens-pawn-g6",
+                "mobility-english-g6",
+                "mobility-reti-g6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete"
+          },
+          {
+            "key": "mobile-forward-grants",
+            "label": "Three mobile-forward grants",
+            "scope": "all scheduled opponents except self",
+            "score": 0.4453125,
+            "games": 64,
+            "wins": 22,
+            "draws": 13,
+            "losses": 29,
+            "opponents": [
+              {
+                "key": "king-step-pawns",
+                "label": "Three king-step pawns",
+                "games": 64,
+                "wins": 22,
+                "draws": 13,
+                "losses": 29,
+                "score": 0.4453125
+              }
+            ],
+            "openingCoverage": {
+              "shared": 32,
+              "total": 32,
+              "openingIds": [
+                "start",
+                "open-e-pawns",
+                "open-d-pawns",
+                "sicilian-prefix",
+                "english-prefix",
+                "knights-prefix",
+                "queenside-fianchetto",
+                "kingside-fianchetto",
+                "followup-french",
+                "followup-indian",
+                "followup-reti",
+                "followup-symmetrical-english",
+                "followup-scandinavian",
+                "followup-dutch",
+                "followup-kings-indian-attack",
+                "followup-larsen",
+                "mobility-caro-kann",
+                "mobility-queens-pawn-e6",
+                "mobility-english-nf6",
+                "mobility-reti-c5",
+                "mobility-kings-fianchetto-e5",
+                "mobility-queens-fianchetto-d5",
+                "mobility-alekhine",
+                "mobility-queens-pawn-c6",
+                "mobility-english-e6",
+                "mobility-reti-e6",
+                "mobility-queens-fianchetto-nf6",
+                "mobility-kings-fianchetto-nf6",
+                "mobility-modern",
+                "mobility-queens-pawn-g6",
+                "mobility-english-g6",
+                "mobility-reti-g6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete"
+          }
+        ]
+      },
+      "comparisons": [
+        {
+          "id": "king-step-pawns-v-mobile-forward-grants",
+          "aKey": "king-step-pawns",
+          "aLabel": "Three king-step pawns",
+          "bKey": "mobile-forward-grants",
+          "bLabel": "Three mobile-forward grants",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 29,
+          "draws": 13,
+          "losses": 22,
+          "score": 0.5546875,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "singles",
+      "experiment": "panel-level1",
+      "source": {
+        "journal": {
+          "archiveFile": "reference-panel-v17-002.singles.games.jsonl.gz",
+          "archivedSha256": "50d7c90e8c61f7cc993e89e55f040241576b5230d2e2e30f930a6f5a01b7dbc8",
+          "originalName": "games.jsonl",
+          "sha256": "c90be49515a92979ef4e4f38deaf41b39c6a422a7f44944f704ba4e434680bb7",
+          "bytes": 685765
+        },
+        "uploadedReport": {
+          "archiveFile": "reference-panel-v17-002.singles.uploaded-report.md.gz",
+          "archivedSha256": "b36f1bd9d701e4d8235ce024a2908e95d4cb519f231a441045b3cb597dcfc844",
+          "originalName": "v17-report.md",
+          "sha256": "f20a3ee838b24cb27c2e4f786b25fee90bc812c5b112ca968eea0899ad06b097",
+          "bytes": 2319
+        }
+      },
+      "declaration": {
+        "configSha256": "6f6e890910c176c2df3dfe9aa6ee13237450caf3057b9a9d276fbf6d9c69644e",
+        "registryHash": "7186da6d0c4c33e8947af2f74bb8a9c2b221855c8eda9aa2edd80baddac659ee",
+        "profileHash": "edf4e7923ce09f93877b88ef244d9c9243fe783ce379cd26a6b998f61e096b17",
+        "scheduleSha256": "230fc026d01e90c499a64aace43b21a5fa1b740744b44243d478647087f399f8",
+        "scheduledGames": 192,
+        "descriptorKind": "derived declaration compatibility descriptor",
+        "reportReproducedExactly": true
+      },
+      "progress": {
+        "attempts": 192,
+        "duplicateCopiesIgnored": 0,
+        "finalizedGames": 192,
+        "completedGames": 192,
+        "pairedGames": 192,
+        "completePairs": 96
+      },
+      "overall": {
+        "method": "Equal opponent means over shared fully completed opening cases; every configured repetition requires a complete color pair. Draws count half a point.",
+        "rows": [
+          {
+            "key": "two-step-pawn",
+            "label": "Two-step pawn",
+            "scope": "all scheduled opponents except self",
+            "score": 0.48046875,
+            "games": 128,
+            "wins": 49,
+            "draws": 25,
+            "losses": 54,
+            "opponents": [
+              {
+                "key": "king-step-pawn",
+                "label": "King-step pawn",
+                "games": 64,
+                "wins": 27,
+                "draws": 11,
+                "losses": 26,
+                "score": 0.5078125
+              },
+              {
+                "key": "pawn-grant",
+                "label": "Pawn grant",
+                "games": 64,
+                "wins": 22,
+                "draws": 14,
+                "losses": 28,
+                "score": 0.453125
+              }
+            ],
+            "openingCoverage": {
+              "shared": 32,
+              "total": 32,
+              "openingIds": [
+                "start",
+                "open-e-pawns",
+                "open-d-pawns",
+                "sicilian-prefix",
+                "english-prefix",
+                "knights-prefix",
+                "queenside-fianchetto",
+                "kingside-fianchetto",
+                "followup-french",
+                "followup-indian",
+                "followup-reti",
+                "followup-symmetrical-english",
+                "followup-scandinavian",
+                "followup-dutch",
+                "followup-kings-indian-attack",
+                "followup-larsen",
+                "mobility-caro-kann",
+                "mobility-queens-pawn-e6",
+                "mobility-english-nf6",
+                "mobility-reti-c5",
+                "mobility-kings-fianchetto-e5",
+                "mobility-queens-fianchetto-d5",
+                "mobility-alekhine",
+                "mobility-queens-pawn-c6",
+                "mobility-english-e6",
+                "mobility-reti-e6",
+                "mobility-queens-fianchetto-nf6",
+                "mobility-kings-fianchetto-nf6",
+                "mobility-modern",
+                "mobility-queens-pawn-g6",
+                "mobility-english-g6",
+                "mobility-reti-g6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete"
+          },
+          {
+            "key": "king-step-pawn",
+            "label": "King-step pawn",
+            "scope": "all scheduled opponents except self",
+            "score": 0.53125,
+            "games": 128,
+            "wins": 57,
+            "draws": 22,
+            "losses": 49,
+            "opponents": [
+              {
+                "key": "two-step-pawn",
+                "label": "Two-step pawn",
+                "games": 64,
+                "wins": 26,
+                "draws": 11,
+                "losses": 27,
+                "score": 0.4921875
+              },
+              {
+                "key": "pawn-grant",
+                "label": "Pawn grant",
+                "games": 64,
+                "wins": 31,
+                "draws": 11,
+                "losses": 22,
+                "score": 0.5703125
+              }
+            ],
+            "openingCoverage": {
+              "shared": 32,
+              "total": 32,
+              "openingIds": [
+                "start",
+                "open-e-pawns",
+                "open-d-pawns",
+                "sicilian-prefix",
+                "english-prefix",
+                "knights-prefix",
+                "queenside-fianchetto",
+                "kingside-fianchetto",
+                "followup-french",
+                "followup-indian",
+                "followup-reti",
+                "followup-symmetrical-english",
+                "followup-scandinavian",
+                "followup-dutch",
+                "followup-kings-indian-attack",
+                "followup-larsen",
+                "mobility-caro-kann",
+                "mobility-queens-pawn-e6",
+                "mobility-english-nf6",
+                "mobility-reti-c5",
+                "mobility-kings-fianchetto-e5",
+                "mobility-queens-fianchetto-d5",
+                "mobility-alekhine",
+                "mobility-queens-pawn-c6",
+                "mobility-english-e6",
+                "mobility-reti-e6",
+                "mobility-queens-fianchetto-nf6",
+                "mobility-kings-fianchetto-nf6",
+                "mobility-modern",
+                "mobility-queens-pawn-g6",
+                "mobility-english-g6",
+                "mobility-reti-g6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete"
+          },
+          {
+            "key": "pawn-grant",
+            "label": "Pawn grant",
+            "scope": "all scheduled opponents except self",
+            "score": 0.48828125,
+            "games": 128,
+            "wins": 50,
+            "draws": 25,
+            "losses": 53,
+            "opponents": [
+              {
+                "key": "two-step-pawn",
+                "label": "Two-step pawn",
+                "games": 64,
+                "wins": 28,
+                "draws": 14,
+                "losses": 22,
+                "score": 0.546875
+              },
+              {
+                "key": "king-step-pawn",
+                "label": "King-step pawn",
+                "games": 64,
+                "wins": 22,
+                "draws": 11,
+                "losses": 31,
+                "score": 0.4296875
+              }
+            ],
+            "openingCoverage": {
+              "shared": 32,
+              "total": 32,
+              "openingIds": [
+                "start",
+                "open-e-pawns",
+                "open-d-pawns",
+                "sicilian-prefix",
+                "english-prefix",
+                "knights-prefix",
+                "queenside-fianchetto",
+                "kingside-fianchetto",
+                "followup-french",
+                "followup-indian",
+                "followup-reti",
+                "followup-symmetrical-english",
+                "followup-scandinavian",
+                "followup-dutch",
+                "followup-kings-indian-attack",
+                "followup-larsen",
+                "mobility-caro-kann",
+                "mobility-queens-pawn-e6",
+                "mobility-english-nf6",
+                "mobility-reti-c5",
+                "mobility-kings-fianchetto-e5",
+                "mobility-queens-fianchetto-d5",
+                "mobility-alekhine",
+                "mobility-queens-pawn-c6",
+                "mobility-english-e6",
+                "mobility-reti-e6",
+                "mobility-queens-fianchetto-nf6",
+                "mobility-kings-fianchetto-nf6",
+                "mobility-modern",
+                "mobility-queens-pawn-g6",
+                "mobility-english-g6",
+                "mobility-reti-g6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete"
+          }
+        ]
+      },
+      "comparisons": [
+        {
+          "id": "panel-level1-two-step-pawn-v-king-step-pawn",
+          "aKey": "two-step-pawn",
+          "aLabel": "Two-step pawn",
+          "bKey": "king-step-pawn",
+          "bLabel": "King-step pawn",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 27,
+          "draws": 11,
+          "losses": 26,
+          "score": 0.5078125,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "panel-level1-two-step-pawn-v-pawn-grant",
+          "aKey": "two-step-pawn",
+          "aLabel": "Two-step pawn",
+          "bKey": "pawn-grant",
+          "bLabel": "Pawn grant",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 22,
+          "draws": 14,
+          "losses": 28,
+          "score": 0.453125,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "panel-level1-king-step-pawn-v-pawn-grant",
+          "aKey": "king-step-pawn",
+          "aLabel": "King-step pawn",
+          "bKey": "pawn-grant",
+          "bLabel": "Pawn grant",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 31,
+          "draws": 11,
+          "losses": 22,
+          "score": 0.5703125,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        }
+      ]
+    },
+    {
+      "name": "pairs",
+      "experiment": "panel-level1-pairs",
+      "source": {
+        "journal": {
+          "archiveFile": "reference-panel-v17-002.pairs.games.jsonl.gz",
+          "archivedSha256": "e99c92e7c9909e07adb76bf268052f9b6ea77ab7f619861009456109ff149169",
+          "originalName": "games.jsonl",
+          "sha256": "ffe55e4c7a4413a0230b53f429d8d96d8ccd7e1d214a382175bcbff8efd4e60d",
+          "bytes": 3622187
+        },
+        "uploadedReport": {
+          "archiveFile": "reference-panel-v17-002.pairs.uploaded-report.md.gz",
+          "archivedSha256": "754d0e804f87649a612aca3bf6dd9b0285dd2495c8476bba37e464e7b05ff60a",
+          "originalName": "v17-report.md",
+          "sha256": "2b3ca4cafc29a60addaa098ce8a7c0b37963faf638006d24db17df235519ddf5",
+          "bytes": 4695
+        }
+      },
+      "declaration": {
+        "configSha256": "0781a68d03c751f3b8815ec1e46af376aec2f61c279e727ed275c67a3e9cb603",
+        "registryHash": "7186da6d0c4c33e8947af2f74bb8a9c2b221855c8eda9aa2edd80baddac659ee",
+        "profileHash": "edf4e7923ce09f93877b88ef244d9c9243fe783ce379cd26a6b998f61e096b17",
+        "scheduleSha256": "0c8b5ccff7ff922f54b4fe6b81f599d3bafaf010f2f7c52d86c08e9e9df035f7",
+        "scheduledGames": 960,
+        "descriptorKind": "derived declaration compatibility descriptor",
+        "reportReproducedExactly": true
+      },
+      "progress": {
+        "attempts": 960,
+        "duplicateCopiesIgnored": 0,
+        "finalizedGames": 960,
+        "completedGames": 960,
+        "pairedGames": 960,
+        "completePairs": 480
+      },
+      "overall": {
+        "method": "Equal opponent means over shared fully completed opening cases; every configured repetition requires a complete color pair. Draws count half a point.",
+        "rows": [
+          {
+            "key": "two-step-two-step",
+            "label": "Two-step pawn + Two-step pawn",
+            "scope": "all scheduled opponents except self",
+            "score": 0.3890625,
+            "games": 320,
+            "wins": 91,
+            "draws": 67,
+            "losses": 162,
+            "opponents": [
+              {
+                "key": "two-step-king-step",
+                "label": "Two-step pawn + King-step pawn",
+                "games": 64,
+                "wins": 18,
+                "draws": 18,
+                "losses": 28,
+                "score": 0.421875
+              },
+              {
+                "key": "two-step-grant",
+                "label": "Two-step pawn + Pawn grant",
+                "games": 64,
+                "wins": 15,
+                "draws": 16,
+                "losses": 33,
+                "score": 0.359375
+              },
+              {
+                "key": "king-step-king-step",
+                "label": "King-step pawn + King-step pawn",
+                "games": 64,
+                "wins": 21,
+                "draws": 11,
+                "losses": 32,
+                "score": 0.4140625
+              },
+              {
+                "key": "king-step-grant",
+                "label": "King-step pawn + Pawn grant",
+                "games": 64,
+                "wins": 12,
+                "draws": 13,
+                "losses": 39,
+                "score": 0.2890625
+              },
+              {
+                "key": "grant-grant",
+                "label": "Pawn grant + Pawn grant",
+                "games": 64,
+                "wins": 25,
+                "draws": 9,
+                "losses": 30,
+                "score": 0.4609375
+              }
+            ],
+            "openingCoverage": {
+              "shared": 32,
+              "total": 32,
+              "openingIds": [
+                "start",
+                "open-e-pawns",
+                "open-d-pawns",
+                "sicilian-prefix",
+                "english-prefix",
+                "knights-prefix",
+                "queenside-fianchetto",
+                "kingside-fianchetto",
+                "followup-french",
+                "followup-indian",
+                "followup-reti",
+                "followup-symmetrical-english",
+                "followup-scandinavian",
+                "followup-dutch",
+                "followup-kings-indian-attack",
+                "followup-larsen",
+                "mobility-caro-kann",
+                "mobility-queens-pawn-e6",
+                "mobility-english-nf6",
+                "mobility-reti-c5",
+                "mobility-kings-fianchetto-e5",
+                "mobility-queens-fianchetto-d5",
+                "mobility-alekhine",
+                "mobility-queens-pawn-c6",
+                "mobility-english-e6",
+                "mobility-reti-e6",
+                "mobility-queens-fianchetto-nf6",
+                "mobility-kings-fianchetto-nf6",
+                "mobility-modern",
+                "mobility-queens-pawn-g6",
+                "mobility-english-g6",
+                "mobility-reti-g6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete"
+          },
+          {
+            "key": "two-step-king-step",
+            "label": "Two-step pawn + King-step pawn",
+            "scope": "all scheduled opponents except self",
+            "score": 0.4625,
+            "games": 320,
+            "wins": 115,
+            "draws": 66,
+            "losses": 139,
+            "opponents": [
+              {
+                "key": "two-step-two-step",
+                "label": "Two-step pawn + Two-step pawn",
+                "games": 64,
+                "wins": 28,
+                "draws": 18,
+                "losses": 18,
+                "score": 0.578125
+              },
+              {
+                "key": "two-step-grant",
+                "label": "Two-step pawn + Pawn grant",
+                "games": 64,
+                "wins": 21,
+                "draws": 12,
+                "losses": 31,
+                "score": 0.421875
+              },
+              {
+                "key": "king-step-king-step",
+                "label": "King-step pawn + King-step pawn",
+                "games": 64,
+                "wins": 20,
+                "draws": 10,
+                "losses": 34,
+                "score": 0.390625
+              },
+              {
+                "key": "king-step-grant",
+                "label": "King-step pawn + Pawn grant",
+                "games": 64,
+                "wins": 17,
+                "draws": 11,
+                "losses": 36,
+                "score": 0.3515625
+              },
+              {
+                "key": "grant-grant",
+                "label": "Pawn grant + Pawn grant",
+                "games": 64,
+                "wins": 29,
+                "draws": 15,
+                "losses": 20,
+                "score": 0.5703125
+              }
+            ],
+            "openingCoverage": {
+              "shared": 32,
+              "total": 32,
+              "openingIds": [
+                "start",
+                "open-e-pawns",
+                "open-d-pawns",
+                "sicilian-prefix",
+                "english-prefix",
+                "knights-prefix",
+                "queenside-fianchetto",
+                "kingside-fianchetto",
+                "followup-french",
+                "followup-indian",
+                "followup-reti",
+                "followup-symmetrical-english",
+                "followup-scandinavian",
+                "followup-dutch",
+                "followup-kings-indian-attack",
+                "followup-larsen",
+                "mobility-caro-kann",
+                "mobility-queens-pawn-e6",
+                "mobility-english-nf6",
+                "mobility-reti-c5",
+                "mobility-kings-fianchetto-e5",
+                "mobility-queens-fianchetto-d5",
+                "mobility-alekhine",
+                "mobility-queens-pawn-c6",
+                "mobility-english-e6",
+                "mobility-reti-e6",
+                "mobility-queens-fianchetto-nf6",
+                "mobility-kings-fianchetto-nf6",
+                "mobility-modern",
+                "mobility-queens-pawn-g6",
+                "mobility-english-g6",
+                "mobility-reti-g6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete"
+          },
+          {
+            "key": "two-step-grant",
+            "label": "Two-step pawn + Pawn grant",
+            "scope": "all scheduled opponents except self",
+            "score": 0.4984375,
+            "games": 320,
+            "wins": 124,
+            "draws": 71,
+            "losses": 125,
+            "opponents": [
+              {
+                "key": "two-step-two-step",
+                "label": "Two-step pawn + Two-step pawn",
+                "games": 64,
+                "wins": 33,
+                "draws": 16,
+                "losses": 15,
+                "score": 0.640625
+              },
+              {
+                "key": "two-step-king-step",
+                "label": "Two-step pawn + King-step pawn",
+                "games": 64,
+                "wins": 31,
+                "draws": 12,
+                "losses": 21,
+                "score": 0.578125
+              },
+              {
+                "key": "king-step-king-step",
+                "label": "King-step pawn + King-step pawn",
+                "games": 64,
+                "wins": 23,
+                "draws": 14,
+                "losses": 27,
+                "score": 0.46875
+              },
+              {
+                "key": "king-step-grant",
+                "label": "King-step pawn + Pawn grant",
+                "games": 64,
+                "wins": 18,
+                "draws": 12,
+                "losses": 34,
+                "score": 0.375
+              },
+              {
+                "key": "grant-grant",
+                "label": "Pawn grant + Pawn grant",
+                "games": 64,
+                "wins": 19,
+                "draws": 17,
+                "losses": 28,
+                "score": 0.4296875
+              }
+            ],
+            "openingCoverage": {
+              "shared": 32,
+              "total": 32,
+              "openingIds": [
+                "start",
+                "open-e-pawns",
+                "open-d-pawns",
+                "sicilian-prefix",
+                "english-prefix",
+                "knights-prefix",
+                "queenside-fianchetto",
+                "kingside-fianchetto",
+                "followup-french",
+                "followup-indian",
+                "followup-reti",
+                "followup-symmetrical-english",
+                "followup-scandinavian",
+                "followup-dutch",
+                "followup-kings-indian-attack",
+                "followup-larsen",
+                "mobility-caro-kann",
+                "mobility-queens-pawn-e6",
+                "mobility-english-nf6",
+                "mobility-reti-c5",
+                "mobility-kings-fianchetto-e5",
+                "mobility-queens-fianchetto-d5",
+                "mobility-alekhine",
+                "mobility-queens-pawn-c6",
+                "mobility-english-e6",
+                "mobility-reti-e6",
+                "mobility-queens-fianchetto-nf6",
+                "mobility-kings-fianchetto-nf6",
+                "mobility-modern",
+                "mobility-queens-pawn-g6",
+                "mobility-english-g6",
+                "mobility-reti-g6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete"
+          },
+          {
+            "key": "king-step-king-step",
+            "label": "King-step pawn + King-step pawn",
+            "scope": "all scheduled opponents except self",
+            "score": 0.58125,
+            "games": 320,
+            "wins": 149,
+            "draws": 74,
+            "losses": 97,
+            "opponents": [
+              {
+                "key": "two-step-two-step",
+                "label": "Two-step pawn + Two-step pawn",
+                "games": 64,
+                "wins": 32,
+                "draws": 11,
+                "losses": 21,
+                "score": 0.5859375
+              },
+              {
+                "key": "two-step-king-step",
+                "label": "Two-step pawn + King-step pawn",
+                "games": 64,
+                "wins": 34,
+                "draws": 10,
+                "losses": 20,
+                "score": 0.609375
+              },
+              {
+                "key": "two-step-grant",
+                "label": "Two-step pawn + Pawn grant",
+                "games": 64,
+                "wins": 27,
+                "draws": 14,
+                "losses": 23,
+                "score": 0.53125
+              },
+              {
+                "key": "king-step-grant",
+                "label": "King-step pawn + Pawn grant",
+                "games": 64,
+                "wins": 28,
+                "draws": 20,
+                "losses": 16,
+                "score": 0.59375
+              },
+              {
+                "key": "grant-grant",
+                "label": "Pawn grant + Pawn grant",
+                "games": 64,
+                "wins": 28,
+                "draws": 19,
+                "losses": 17,
+                "score": 0.5859375
+              }
+            ],
+            "openingCoverage": {
+              "shared": 32,
+              "total": 32,
+              "openingIds": [
+                "start",
+                "open-e-pawns",
+                "open-d-pawns",
+                "sicilian-prefix",
+                "english-prefix",
+                "knights-prefix",
+                "queenside-fianchetto",
+                "kingside-fianchetto",
+                "followup-french",
+                "followup-indian",
+                "followup-reti",
+                "followup-symmetrical-english",
+                "followup-scandinavian",
+                "followup-dutch",
+                "followup-kings-indian-attack",
+                "followup-larsen",
+                "mobility-caro-kann",
+                "mobility-queens-pawn-e6",
+                "mobility-english-nf6",
+                "mobility-reti-c5",
+                "mobility-kings-fianchetto-e5",
+                "mobility-queens-fianchetto-d5",
+                "mobility-alekhine",
+                "mobility-queens-pawn-c6",
+                "mobility-english-e6",
+                "mobility-reti-e6",
+                "mobility-queens-fianchetto-nf6",
+                "mobility-kings-fianchetto-nf6",
+                "mobility-modern",
+                "mobility-queens-pawn-g6",
+                "mobility-english-g6",
+                "mobility-reti-g6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete"
+          },
+          {
+            "key": "king-step-grant",
+            "label": "King-step pawn + Pawn grant",
+            "scope": "all scheduled opponents except self",
+            "score": 0.6125,
+            "games": 320,
+            "wins": 163,
+            "draws": 66,
+            "losses": 91,
+            "opponents": [
+              {
+                "key": "two-step-two-step",
+                "label": "Two-step pawn + Two-step pawn",
+                "games": 64,
+                "wins": 39,
+                "draws": 13,
+                "losses": 12,
+                "score": 0.7109375
+              },
+              {
+                "key": "two-step-king-step",
+                "label": "Two-step pawn + King-step pawn",
+                "games": 64,
+                "wins": 36,
+                "draws": 11,
+                "losses": 17,
+                "score": 0.6484375
+              },
+              {
+                "key": "two-step-grant",
+                "label": "Two-step pawn + Pawn grant",
+                "games": 64,
+                "wins": 34,
+                "draws": 12,
+                "losses": 18,
+                "score": 0.625
+              },
+              {
+                "key": "king-step-king-step",
+                "label": "King-step pawn + King-step pawn",
+                "games": 64,
+                "wins": 16,
+                "draws": 20,
+                "losses": 28,
+                "score": 0.40625
+              },
+              {
+                "key": "grant-grant",
+                "label": "Pawn grant + Pawn grant",
+                "games": 64,
+                "wins": 38,
+                "draws": 10,
+                "losses": 16,
+                "score": 0.671875
+              }
+            ],
+            "openingCoverage": {
+              "shared": 32,
+              "total": 32,
+              "openingIds": [
+                "start",
+                "open-e-pawns",
+                "open-d-pawns",
+                "sicilian-prefix",
+                "english-prefix",
+                "knights-prefix",
+                "queenside-fianchetto",
+                "kingside-fianchetto",
+                "followup-french",
+                "followup-indian",
+                "followup-reti",
+                "followup-symmetrical-english",
+                "followup-scandinavian",
+                "followup-dutch",
+                "followup-kings-indian-attack",
+                "followup-larsen",
+                "mobility-caro-kann",
+                "mobility-queens-pawn-e6",
+                "mobility-english-nf6",
+                "mobility-reti-c5",
+                "mobility-kings-fianchetto-e5",
+                "mobility-queens-fianchetto-d5",
+                "mobility-alekhine",
+                "mobility-queens-pawn-c6",
+                "mobility-english-e6",
+                "mobility-reti-e6",
+                "mobility-queens-fianchetto-nf6",
+                "mobility-kings-fianchetto-nf6",
+                "mobility-modern",
+                "mobility-queens-pawn-g6",
+                "mobility-english-g6",
+                "mobility-reti-g6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete"
+          },
+          {
+            "key": "grant-grant",
+            "label": "Pawn grant + Pawn grant",
+            "scope": "all scheduled opponents except self",
+            "score": 0.45625,
+            "games": 320,
+            "wins": 111,
+            "draws": 70,
+            "losses": 139,
+            "opponents": [
+              {
+                "key": "two-step-two-step",
+                "label": "Two-step pawn + Two-step pawn",
+                "games": 64,
+                "wins": 30,
+                "draws": 9,
+                "losses": 25,
+                "score": 0.5390625
+              },
+              {
+                "key": "two-step-king-step",
+                "label": "Two-step pawn + King-step pawn",
+                "games": 64,
+                "wins": 20,
+                "draws": 15,
+                "losses": 29,
+                "score": 0.4296875
+              },
+              {
+                "key": "two-step-grant",
+                "label": "Two-step pawn + Pawn grant",
+                "games": 64,
+                "wins": 28,
+                "draws": 17,
+                "losses": 19,
+                "score": 0.5703125
+              },
+              {
+                "key": "king-step-king-step",
+                "label": "King-step pawn + King-step pawn",
+                "games": 64,
+                "wins": 17,
+                "draws": 19,
+                "losses": 28,
+                "score": 0.4140625
+              },
+              {
+                "key": "king-step-grant",
+                "label": "King-step pawn + Pawn grant",
+                "games": 64,
+                "wins": 16,
+                "draws": 10,
+                "losses": 38,
+                "score": 0.328125
+              }
+            ],
+            "openingCoverage": {
+              "shared": 32,
+              "total": 32,
+              "openingIds": [
+                "start",
+                "open-e-pawns",
+                "open-d-pawns",
+                "sicilian-prefix",
+                "english-prefix",
+                "knights-prefix",
+                "queenside-fianchetto",
+                "kingside-fianchetto",
+                "followup-french",
+                "followup-indian",
+                "followup-reti",
+                "followup-symmetrical-english",
+                "followup-scandinavian",
+                "followup-dutch",
+                "followup-kings-indian-attack",
+                "followup-larsen",
+                "mobility-caro-kann",
+                "mobility-queens-pawn-e6",
+                "mobility-english-nf6",
+                "mobility-reti-c5",
+                "mobility-kings-fianchetto-e5",
+                "mobility-queens-fianchetto-d5",
+                "mobility-alekhine",
+                "mobility-queens-pawn-c6",
+                "mobility-english-e6",
+                "mobility-reti-e6",
+                "mobility-queens-fianchetto-nf6",
+                "mobility-kings-fianchetto-nf6",
+                "mobility-modern",
+                "mobility-queens-pawn-g6",
+                "mobility-english-g6",
+                "mobility-reti-g6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete"
+          }
+        ]
+      },
+      "comparisons": [
+        {
+          "id": "panel-level1-pairs-two-step-two-step-v-two-step-king-step",
+          "aKey": "two-step-two-step",
+          "aLabel": "Two-step pawn + Two-step pawn",
+          "bKey": "two-step-king-step",
+          "bLabel": "Two-step pawn + King-step pawn",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 18,
+          "draws": 18,
+          "losses": 28,
+          "score": 0.421875,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "panel-level1-pairs-two-step-two-step-v-two-step-grant",
+          "aKey": "two-step-two-step",
+          "aLabel": "Two-step pawn + Two-step pawn",
+          "bKey": "two-step-grant",
+          "bLabel": "Two-step pawn + Pawn grant",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 15,
+          "draws": 16,
+          "losses": 33,
+          "score": 0.359375,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "panel-level1-pairs-two-step-two-step-v-king-step-king-step",
+          "aKey": "two-step-two-step",
+          "aLabel": "Two-step pawn + Two-step pawn",
+          "bKey": "king-step-king-step",
+          "bLabel": "King-step pawn + King-step pawn",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 21,
+          "draws": 11,
+          "losses": 32,
+          "score": 0.4140625,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "panel-level1-pairs-two-step-two-step-v-king-step-grant",
+          "aKey": "two-step-two-step",
+          "aLabel": "Two-step pawn + Two-step pawn",
+          "bKey": "king-step-grant",
+          "bLabel": "King-step pawn + Pawn grant",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 12,
+          "draws": 13,
+          "losses": 39,
+          "score": 0.2890625,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "panel-level1-pairs-two-step-two-step-v-grant-grant",
+          "aKey": "two-step-two-step",
+          "aLabel": "Two-step pawn + Two-step pawn",
+          "bKey": "grant-grant",
+          "bLabel": "Pawn grant + Pawn grant",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 25,
+          "draws": 9,
+          "losses": 30,
+          "score": 0.4609375,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "panel-level1-pairs-two-step-king-step-v-two-step-grant",
+          "aKey": "two-step-king-step",
+          "aLabel": "Two-step pawn + King-step pawn",
+          "bKey": "two-step-grant",
+          "bLabel": "Two-step pawn + Pawn grant",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 21,
+          "draws": 12,
+          "losses": 31,
+          "score": 0.421875,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "panel-level1-pairs-two-step-king-step-v-king-step-king-step",
+          "aKey": "two-step-king-step",
+          "aLabel": "Two-step pawn + King-step pawn",
+          "bKey": "king-step-king-step",
+          "bLabel": "King-step pawn + King-step pawn",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 20,
+          "draws": 10,
+          "losses": 34,
+          "score": 0.390625,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "panel-level1-pairs-two-step-king-step-v-king-step-grant",
+          "aKey": "two-step-king-step",
+          "aLabel": "Two-step pawn + King-step pawn",
+          "bKey": "king-step-grant",
+          "bLabel": "King-step pawn + Pawn grant",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 17,
+          "draws": 11,
+          "losses": 36,
+          "score": 0.3515625,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "panel-level1-pairs-two-step-king-step-v-grant-grant",
+          "aKey": "two-step-king-step",
+          "aLabel": "Two-step pawn + King-step pawn",
+          "bKey": "grant-grant",
+          "bLabel": "Pawn grant + Pawn grant",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 29,
+          "draws": 15,
+          "losses": 20,
+          "score": 0.5703125,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "panel-level1-pairs-two-step-grant-v-king-step-king-step",
+          "aKey": "two-step-grant",
+          "aLabel": "Two-step pawn + Pawn grant",
+          "bKey": "king-step-king-step",
+          "bLabel": "King-step pawn + King-step pawn",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 23,
+          "draws": 14,
+          "losses": 27,
+          "score": 0.46875,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "panel-level1-pairs-two-step-grant-v-king-step-grant",
+          "aKey": "two-step-grant",
+          "aLabel": "Two-step pawn + Pawn grant",
+          "bKey": "king-step-grant",
+          "bLabel": "King-step pawn + Pawn grant",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 18,
+          "draws": 12,
+          "losses": 34,
+          "score": 0.375,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "panel-level1-pairs-two-step-grant-v-grant-grant",
+          "aKey": "two-step-grant",
+          "aLabel": "Two-step pawn + Pawn grant",
+          "bKey": "grant-grant",
+          "bLabel": "Pawn grant + Pawn grant",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 19,
+          "draws": 17,
+          "losses": 28,
+          "score": 0.4296875,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "panel-level1-pairs-king-step-king-step-v-king-step-grant",
+          "aKey": "king-step-king-step",
+          "aLabel": "King-step pawn + King-step pawn",
+          "bKey": "king-step-grant",
+          "bLabel": "King-step pawn + Pawn grant",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 28,
+          "draws": 20,
+          "losses": 16,
+          "score": 0.59375,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "panel-level1-pairs-king-step-king-step-v-grant-grant",
+          "aKey": "king-step-king-step",
+          "aLabel": "King-step pawn + King-step pawn",
+          "bKey": "grant-grant",
+          "bLabel": "Pawn grant + Pawn grant",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 28,
+          "draws": 19,
+          "losses": 17,
+          "score": 0.5859375,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "panel-level1-pairs-king-step-grant-v-grant-grant",
+          "aKey": "king-step-grant",
+          "aLabel": "King-step pawn + Pawn grant",
+          "bKey": "grant-grant",
+          "bLabel": "Pawn grant + Pawn grant",
+          "scheduledGames": 64,
+          "expectedPairs": 32,
+          "attempts": 64,
+          "pairedGames": 64,
+          "completePairs": 32,
+          "partialPairs": 0,
+          "openings": 32,
+          "wins": 38,
+          "draws": 10,
+          "losses": 16,
+          "score": 0.671875,
+          "statusCounts": {
+            "completed": 64,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        }
+      ]
+    }
+  ],
+  "historicalPawnReview": {
+    "source": {
+      "journal": {
+        "archiveFile": "v17-screen-001.pawn-grants.games.jsonl.gz",
+        "archivedSha256": "0f948061c0e4f727badbcc5a69fccf1ab0a8104b6975c48e4a5be348e5c049a8",
+        "originalName": "games.jsonl",
+        "sha256": "f2106bb6355c0ed55ed3364da21eccdc040a77b8db1fb83de1226ed8df7558d0",
+        "bytes": 810819
+      },
+      "uploadedReport": {
+        "archiveFile": "v17-screen-001.pawn-grants.uploaded-report.md.gz",
+        "archivedSha256": "d7c98d3b4df2baeaca3e2bc84d3ed3df3e2cad0ed0dfec3de3ef1d19225f1d10",
+        "originalName": "v17-report.md",
+        "sha256": "69bd802be4d05652907f6d3fdf240b7ebe5af6c780e1511b8aec6391d5dbf0a4",
+        "bytes": 2681
+      }
+    },
+    "declaration": {
+      "configSha256": "d3959973372c69e1dd287ab8b552c4981f1dc2d6eb79c0d6126adbf78a0291ce",
+      "registryHash": "18c334e76029b533cfe54a2766cdfb5bd7720f9a02bc703926b53b8c46377a22",
+      "profileHash": "dd75c8d37d974c3aee2091c198803de4d10b86d3a4e68b520540b4d3ae68e552",
+      "scheduleSha256": "21dd957702b714bcaf99ab9ccde0113da300a66e6c08bcdf8c2d0b163d77f5f3",
+      "scheduledGames": 240,
+      "reportReproducedExactly": true
+    },
+    "provenance": {
+      "originalManifestSupplied": false,
+      "nativePreflightSupplied": false,
+      "engineSha256": null,
+      "legalMovesIndependentlyReplayed": false,
+      "descriptorKind": "derived declaration compatibility descriptor",
+      "limitations": [
+        "The original run.json and v17-preflight.json were not uploaded; reconstructed declarations do not attest to the original process, executable or native value tables.",
+        "Recorded identities, search settings and result summaries match the declared protocols; engine names are recorded strings, not binary provenance.",
+        "The audit does not independently replay legal moves or certify terminal positions, and does not fit material values or Elo.",
+        "Eight fixed related opening cases support descriptive screening, not population confidence intervals; leave-one-opening-out ranges measure sensitivity only."
+      ]
+    },
+    "scope": "Three identical one-point pawns versus one frozen level-three upgrade; eight short prefixes, both colors, 64 reference games per pawn design.",
+    "returningPawn": {
+      "designId": "pawn.blue@3",
+      "movement": "bmWfmW2fceF",
+      "key": "returning-pawns",
+      "label": "Three Returning pawns",
+      "scope": "four references only; direct bundle games excluded",
+      "games": 64,
+      "wins": 10,
+      "draws": 5,
+      "losses": 49,
+      "score": 0.1953125,
+      "physicalColors": [
+        {
+          "key": "b",
+          "games": 32,
+          "score": 0.171875
+        },
+        {
+          "key": "w",
+          "games": 32,
+          "score": 0.21875
+        }
+      ],
+      "openings": [
+        {
+          "key": "english-prefix",
+          "games": 8,
+          "score": 0.0625
+        },
+        {
+          "key": "kingside-fianchetto",
+          "games": 8,
+          "score": 0.125
+        },
+        {
+          "key": "knights-prefix",
+          "games": 8,
+          "score": 0
+        },
+        {
+          "key": "open-d-pawns",
+          "games": 8,
+          "score": 0.1875
+        },
+        {
+          "key": "open-e-pawns",
+          "games": 8,
+          "score": 0.4375
+        },
+        {
+          "key": "queenside-fianchetto",
+          "games": 8,
+          "score": 0.0625
+        },
+        {
+          "key": "sicilian-prefix",
+          "games": 8,
+          "score": 0.25
+        },
+        {
+          "key": "start",
+          "games": 8,
+          "score": 0.4375
+        }
+      ],
+      "opponents": [
+        {
+          "key": "amazon",
+          "games": 16,
+          "score": 0.0625
+        },
+        {
+          "key": "cruisader",
+          "games": 16,
+          "score": 0.1875
+        },
+        {
+          "key": "unicorn",
+          "games": 16,
+          "score": 0.1875
+        },
+        {
+          "key": "vanguard",
+          "games": 16,
+          "score": 0.34375
+        }
+      ],
+      "leaveOneOpeningOut": {
+        "lower": 0.16071428571428573,
+        "upper": 0.22321428571428573,
+        "omissions": [
+          {
+            "omitted": "english-prefix",
+            "score": 0.21428571428571427
+          },
+          {
+            "omitted": "kingside-fianchetto",
+            "score": 0.20535714285714285
+          },
+          {
+            "omitted": "knights-prefix",
+            "score": 0.22321428571428573
+          },
+          {
+            "omitted": "open-d-pawns",
+            "score": 0.19642857142857142
+          },
+          {
+            "omitted": "open-e-pawns",
+            "score": 0.16071428571428573
+          },
+          {
+            "omitted": "queenside-fianchetto",
+            "score": 0.21428571428571427
+          },
+          {
+            "omitted": "sicilian-prefix",
+            "score": 0.1875
+          },
+          {
+            "omitted": "start",
+            "score": 0.16071428571428573
+          }
+        ]
+      },
+      "flag": "coarse-low-outlier"
+    },
+    "bishopPawn": {
+      "designId": "pawn.blue@2",
+      "movement": "fmWfeFifmnD",
+      "key": "bishop-pawns",
+      "label": "Three Bishop pawns",
+      "scope": "four references only; direct bundle games excluded",
+      "games": 64,
+      "wins": 11,
+      "draws": 9,
+      "losses": 44,
+      "score": 0.2421875,
+      "physicalColors": [
+        {
+          "key": "b",
+          "games": 32,
+          "score": 0.203125
+        },
+        {
+          "key": "w",
+          "games": 32,
+          "score": 0.28125
+        }
+      ],
+      "openings": [
+        {
+          "key": "english-prefix",
+          "games": 8,
+          "score": 0.3125
+        },
+        {
+          "key": "kingside-fianchetto",
+          "games": 8,
+          "score": 0.3125
+        },
+        {
+          "key": "knights-prefix",
+          "games": 8,
+          "score": 0.1875
+        },
+        {
+          "key": "open-d-pawns",
+          "games": 8,
+          "score": 0.375
+        },
+        {
+          "key": "open-e-pawns",
+          "games": 8,
+          "score": 0.25
+        },
+        {
+          "key": "queenside-fianchetto",
+          "games": 8,
+          "score": 0.25
+        },
+        {
+          "key": "sicilian-prefix",
+          "games": 8,
+          "score": 0.1875
+        },
+        {
+          "key": "start",
+          "games": 8,
+          "score": 0.0625
+        }
+      ],
+      "opponents": [
+        {
+          "key": "amazon",
+          "games": 16,
+          "score": 0.40625
+        },
+        {
+          "key": "cruisader",
+          "games": 16,
+          "score": 0
+        },
+        {
+          "key": "unicorn",
+          "games": 16,
+          "score": 0.25
+        },
+        {
+          "key": "vanguard",
+          "games": 16,
+          "score": 0.3125
+        }
+      ],
+      "leaveOneOpeningOut": {
+        "lower": 0.22321428571428573,
+        "upper": 0.26785714285714285,
+        "omissions": [
+          {
+            "omitted": "english-prefix",
+            "score": 0.23214285714285715
+          },
+          {
+            "omitted": "kingside-fianchetto",
+            "score": 0.23214285714285715
+          },
+          {
+            "omitted": "knights-prefix",
+            "score": 0.25
+          },
+          {
+            "omitted": "open-d-pawns",
+            "score": 0.22321428571428573
+          },
+          {
+            "omitted": "open-e-pawns",
+            "score": 0.24107142857142858
+          },
+          {
+            "omitted": "queenside-fianchetto",
+            "score": 0.24107142857142858
+          },
+          {
+            "omitted": "sicilian-prefix",
+            "score": 0.25
+          },
+          {
+            "omitted": "start",
+            "score": 0.26785714285714285
+          }
+        ]
+      },
+      "flag": "coarse-low-outlier"
+    },
+    "interpretation": "Returning pawn underperformed in this old three-purchase screen and is parked unchanged. Bishop pawn also underperformed there; moving it to the two-point candidate pool is a new design decision, not a finding supported by these outcomes. Neither old screen compares against the newly selected level-one panel."
+  }
+}

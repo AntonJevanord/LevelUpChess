@@ -160,10 +160,13 @@ const definitions = [
   // Support-pawn and Scout-grant additions keep every measured design fixed.
   rosterDefinition('pawn', 'blue', 1, 'fmWfceFifmnDsW', 'a', 1, 8),
   rosterDefinition('king', 'reserve-pawn', 1, 'fWbmF', 'a', 1, 7, 'reserve'),
+  // New research brackets append definitions; every archived ID above remains
+  // byte-for-byte unchanged, including historical purchase prices.
+  ...require('./balance-designs-v17').NEW_DEFINITIONS,
 ];
 
 const DESIGNS = Object.freeze(Object.fromEntries(definitions.map(design => [design.id, design])));
-const LEGACY_DESIGN_IDS = Object.freeze(Object.fromEntries(definitions.filter(design => design.revision === 1 && design.family !== 'king').map(design => [design.legacyType, design.id])));
+const LEGACY_DESIGN_IDS = Object.freeze(Object.fromEntries(definitions.filter(design => design.revision === 1 && design.family !== 'king' && design.inheritLegacyProbes !== false).map(design => [design.legacyType, design.id])));
 
 function getDesign(id) {
   return typeof id === 'string' && Object.hasOwn(DESIGNS, id) ? DESIGNS[id] : undefined;

@@ -1,0 +1,885 @@
+{
+  "schemaVersion": 3,
+  "name": "Version 17: level-one rook and queen brackets (864 games)",
+  "seed": 20261101,
+  "repetitions": 1,
+  "engine": {
+    "nodes": 20000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400
+  },
+  "openings": [
+    {
+      "id": "bracket-pirc",
+      "moves": [
+        "e2e4",
+        "d7d6"
+      ]
+    },
+    {
+      "id": "bracket-queens-knight-defense",
+      "moves": [
+        "d2d4",
+        "b8c6"
+      ]
+    },
+    {
+      "id": "bracket-english-b6",
+      "moves": [
+        "c2c4",
+        "b7b6"
+      ]
+    },
+    {
+      "id": "bracket-reti-d6",
+      "moves": [
+        "g1f3",
+        "d7d6"
+      ]
+    },
+    {
+      "id": "bracket-larsen-e6",
+      "moves": [
+        "b2b3",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "bracket-kings-fianchetto-c5",
+      "moves": [
+        "g2g3",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "bracket-owens-defense",
+      "moves": [
+        "e2e4",
+        "b7b6"
+      ]
+    },
+    {
+      "id": "bracket-queens-pawn-d6",
+      "moves": [
+        "d2d4",
+        "d7d6"
+      ]
+    },
+    {
+      "id": "bracket-english-d6",
+      "moves": [
+        "c2c4",
+        "d7d6"
+      ]
+    },
+    {
+      "id": "bracket-reti-nc6",
+      "moves": [
+        "g1f3",
+        "b8c6"
+      ]
+    },
+    {
+      "id": "bracket-nimzowitsch",
+      "moves": [
+        "e2e4",
+        "b8c6"
+      ]
+    },
+    {
+      "id": "bracket-queens-pawn-b6",
+      "moves": [
+        "d2d4",
+        "b7b6"
+      ]
+    },
+    {
+      "id": "bracket-english-nc6",
+      "moves": [
+        "c2c4",
+        "b8c6"
+      ]
+    },
+    {
+      "id": "bracket-reti-b6",
+      "moves": [
+        "g1f3",
+        "b7b6"
+      ]
+    },
+    {
+      "id": "bracket-larsen-c5",
+      "moves": [
+        "b2b3",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "bracket-kings-fianchetto-e6",
+      "moves": [
+        "g2g3",
+        "e7e6"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "ghost-reduced-v-two-step-pawn-pair",
+      "label": "Ghost rook: reduced versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.ghost-reduced@1",
+          "h1": "rook.ghost-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "ghost-reduced-v-king-step-pawn-pair",
+      "label": "Ghost rook: reduced versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.ghost-reduced@1",
+          "h1": "rook.ghost-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "ghost-reduced-v-pawn-grant-pair",
+      "label": "Ghost rook: reduced versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.ghost-reduced@1",
+          "h1": "rook.ghost-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "ghost-current-v-two-step-pawn-pair",
+      "label": "Ghost rook: current versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.blue@2",
+          "h1": "rook.blue@2"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "ghost-current-v-king-step-pawn-pair",
+      "label": "Ghost rook: current versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.blue@2",
+          "h1": "rook.blue@2"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "ghost-current-v-pawn-grant-pair",
+      "label": "Ghost rook: current versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.blue@2",
+          "h1": "rook.blue@2"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "ghost-expanded-v-two-step-pawn-pair",
+      "label": "Ghost rook: expanded versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.ghost-expanded@1",
+          "h1": "rook.ghost-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "ghost-expanded-v-king-step-pawn-pair",
+      "label": "Ghost rook: expanded versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.ghost-expanded@1",
+          "h1": "rook.ghost-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "ghost-expanded-v-pawn-grant-pair",
+      "label": "Ghost rook: expanded versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.ghost-expanded@1",
+          "h1": "rook.ghost-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-rook-reduced-v-two-step-pawn-pair",
+      "label": "Pawn rook: reduced versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.pawn-rook-reduced@1",
+          "h1": "rook.pawn-rook-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-rook-reduced-v-king-step-pawn-pair",
+      "label": "Pawn rook: reduced versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.pawn-rook-reduced@1",
+          "h1": "rook.pawn-rook-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-rook-reduced-v-pawn-grant-pair",
+      "label": "Pawn rook: reduced versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.pawn-rook-reduced@1",
+          "h1": "rook.pawn-rook-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-rook-current-v-two-step-pawn-pair",
+      "label": "Pawn rook: current versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.blue@3",
+          "h1": "rook.blue@3"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-rook-current-v-king-step-pawn-pair",
+      "label": "Pawn rook: current versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.blue@3",
+          "h1": "rook.blue@3"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-rook-current-v-pawn-grant-pair",
+      "label": "Pawn rook: current versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.blue@3",
+          "h1": "rook.blue@3"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-rook-expanded-v-two-step-pawn-pair",
+      "label": "Pawn rook: expanded versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.pawn-rook-expanded@1",
+          "h1": "rook.pawn-rook-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-rook-expanded-v-king-step-pawn-pair",
+      "label": "Pawn rook: expanded versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.pawn-rook-expanded@1",
+          "h1": "rook.pawn-rook-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "pawn-rook-expanded-v-pawn-grant-pair",
+      "label": "Pawn rook: expanded versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "a1": "rook.pawn-rook-expanded@1",
+          "h1": "rook.pawn-rook-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "advancing-reduced-v-two-step-pawn-single",
+      "label": "Advancing queen: reduced versus Two-step pawn",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.advancing-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "advancing-reduced-v-king-step-pawn-single",
+      "label": "Advancing queen: reduced versus King-step pawn",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.advancing-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "advancing-reduced-v-pawn-grant-single",
+      "label": "Advancing queen: reduced versus Pawn grant",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.advancing-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 1
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "advancing-current-v-two-step-pawn-single",
+      "label": "Advancing queen: current versus Two-step pawn",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.blue@2"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "advancing-current-v-king-step-pawn-single",
+      "label": "Advancing queen: current versus King-step pawn",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.blue@2"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "advancing-current-v-pawn-grant-single",
+      "label": "Advancing queen: current versus Pawn grant",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.blue@2"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 1
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "advancing-expanded-v-two-step-pawn-single",
+      "label": "Advancing queen: expanded versus Two-step pawn",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.advancing-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "advancing-expanded-v-king-step-pawn-single",
+      "label": "Advancing queen: expanded versus King-step pawn",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.advancing-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "advancing-expanded-v-pawn-grant-single",
+      "label": "Advancing queen: expanded versus Pawn grant",
+      "armyA": {
+        "upgrades": {
+          "d1": "queen.advancing-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 1
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    }
+  ],
+  "evaluation": {
+    "pieceValues": {
+      "king.reserve-pawn@6": {
+        "mg": 152,
+        "eg": 183
+      },
+      "pawn.blue@5": {
+        "mg": 189,
+        "eg": 206
+      },
+      "pawn.blue@7": {
+        "mg": 503,
+        "eg": 592
+      },
+      "queen.advancing-expanded@1": {
+        "mg": 2771,
+        "eg": 2833
+      },
+      "queen.advancing-reduced@1": {
+        "mg": 2771,
+        "eg": 2833
+      },
+      "queen.blue@2": {
+        "mg": 2771,
+        "eg": 2833
+      },
+      "rook.blue@2": {
+        "mg": 1716,
+        "eg": 1636
+      },
+      "rook.blue@3": {
+        "mg": 1584,
+        "eg": 1636
+      },
+      "rook.ghost-expanded@1": {
+        "mg": 1716,
+        "eg": 1636
+      },
+      "rook.ghost-reduced@1": {
+        "mg": 1716,
+        "eg": 1636
+      },
+      "rook.pawn-rook-expanded@1": {
+        "mg": 1584,
+        "eg": 1636
+      },
+      "rook.pawn-rook-reduced@1": {
+        "mg": 1584,
+        "eg": 1636
+      }
+    }
+  }
+}

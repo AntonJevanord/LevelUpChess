@@ -60,7 +60,7 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Publish the [combined thirty-two-start report](experiments/balance/results/v17-mobility-001.report.md), reusing 640 design-focus games and 128 compatible two-step-pawn reference games with explicit sources, cohorts, colors and immutable IDs.
 - [x] Review repeated direct purchase counters alongside the reference basket; preserve their separate scores rather than force every equal-cost matchup to 50%.
 - [x] Add Version 17 workshops with one-point Two-step and King-step pawns and the `fWmfF` Pawn grant; preserve all older libraries and show current workshops first.
-- [ ] Human-playtest the [current pawn and grant choices](docs/playtest-roster-v17.md) for readability and counterplay before freezing level-1 references. Scout remains a research alternative; assess it separately if needed. Park Support/full-diagonal pawns; retain the older strong grants as research and Grid bishop at level 3. No larger batch is needed before playtesting.
+- [ ] Continue human playtesting of the [current pawn and grant choices](docs/playtest-roster-v17.md) for readability and counterplay before freezing permanent level-1 references. Scout remains a research alternative; park Support/full-diagonal pawns. Keep the older strong grants as research and Grid bishop at level 3.
 - [x] Record a [small design shortlist](docs/design-ideas.md) separately from the declared game budget.
 
 ## Version 17: complete reference panel
@@ -69,8 +69,22 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Declare the [three panel stages](docs/reference-panel-v17.md): missing three-point cell (64 games), level-1 singles (192) and all six level-1 2v2 teams (960). No level-1 pair faces level 3.
 - [x] Reuse compatible completed cells with explicit source contexts; keep different purchase counts and historical opening cohorts separate.
 - [x] Record [human playtest feedback](docs/playtest-notes-v17.md), including defensive recapture threats that matter without being played.
-- [ ] Run the three stages once and refresh the panel report; preserve all run folders, native proofs and unscored truncations.
-- [ ] Review direct level-1 matchups and partnership effects before changing prices, movement or declaring another experiment.
+- [x] Complete the three stages: all 1,216 games finished without errors or truncations. Archive the exact six uploads and publish the [complete panel](experiments/balance/results/reference-panel-v17-002.panel.md); distinguish reconstructed declarations from missing original run manifests/native proofs.
+- [x] Review direct level-1 matchups and partnership effects. Singles are close overall, while identical and mixed pairs differ; retain all three selected benchmarks and keep purchase budgets separate.
+
+## Version 17: movement brackets and level-3 confirmation
+
+- [x] Finish the [five bracket declarations](docs/balance-brackets-v17.md): `acceptance-minors` (1,152 games), `acceptance-majors` (864), `reference-pawns` (1,440), `reference-grants` (1,248) and `level3-confirmation` (2,048). Total: 6,752 games on sixteen new matched cases.
+- [x] Give level-1/2 candidates reduced, current and expanded versions under immutable IDs. Deduplicate identical `F`/`F2` grant treatments and split profiles within twenty custom types.
+- [x] Keep Two-step pawn, King-step pawn, Pawn grant and all four level-3 references fixed. Park Returning pawn after its 19.53% original bundle score; record Bishop pawn's old 24.22% score separately from its proposed new two-point price.
+- [x] Add the repriced Bishop pawn to a new playable pawn-workshop revision while preserving every older profile and its saved identity.
+- [x] Declare and verify common applied MG/EG values within each bracket, record automatic values, and preserve the frozen reference tables. Do not equate these units with material estimates or purchase points.
+- [x] Check both-color movement, blockers, home-rank abilities, actual en-passant removal, standard promotions, castling and finite grants; exclude unsupported `nC` behavior.
+- [x] Verify all scheduled positions and the new reports without playing scored cloud games. Show the first fixed eight cases, second eight and all sixteen with shared-case coverage and per-opponent scores.
+- [x] Add and verify a sequential launcher that freezes the five stages and jobs, skips only validated completions, and pauses the entire queue for immediate/game/pair stops.
+- [ ] Run the five stages on the user's PC through the sequential launcher or individually, with four jobs total. Preserve journals, manifests, native proofs and unscored outcomes; use the existing stop/resume controls.
+- [ ] Review bracket direction and repeated matchup concerns before selecting level-2 benchmarks. Confirm fourteen existing level-3 designs plus `BmN`/`BDmC`; retire the capture-heavy Mating bishop from this campaign.
+- [ ] After selecting level-2 anchors, declare the six-point bridge: three L2 purchases versus two identical non-Amazon L3 references. It is outside the current 6,752-game budget.
 
 ## After reviewing these results
 

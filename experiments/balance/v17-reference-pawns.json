@@ -1,0 +1,1359 @@
+{
+  "schemaVersion": 3,
+  "name": "Version 17: level-two pawn reference brackets (1440 games)",
+  "seed": 20261101,
+  "repetitions": 1,
+  "engine": {
+    "nodes": 20000,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400
+  },
+  "openings": [
+    {
+      "id": "bracket-pirc",
+      "moves": [
+        "e2e4",
+        "d7d6"
+      ]
+    },
+    {
+      "id": "bracket-queens-knight-defense",
+      "moves": [
+        "d2d4",
+        "b8c6"
+      ]
+    },
+    {
+      "id": "bracket-english-b6",
+      "moves": [
+        "c2c4",
+        "b7b6"
+      ]
+    },
+    {
+      "id": "bracket-reti-d6",
+      "moves": [
+        "g1f3",
+        "d7d6"
+      ]
+    },
+    {
+      "id": "bracket-larsen-e6",
+      "moves": [
+        "b2b3",
+        "e7e6"
+      ]
+    },
+    {
+      "id": "bracket-kings-fianchetto-c5",
+      "moves": [
+        "g2g3",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "bracket-owens-defense",
+      "moves": [
+        "e2e4",
+        "b7b6"
+      ]
+    },
+    {
+      "id": "bracket-queens-pawn-d6",
+      "moves": [
+        "d2d4",
+        "d7d6"
+      ]
+    },
+    {
+      "id": "bracket-english-d6",
+      "moves": [
+        "c2c4",
+        "d7d6"
+      ]
+    },
+    {
+      "id": "bracket-reti-nc6",
+      "moves": [
+        "g1f3",
+        "b8c6"
+      ]
+    },
+    {
+      "id": "bracket-nimzowitsch",
+      "moves": [
+        "e2e4",
+        "b8c6"
+      ]
+    },
+    {
+      "id": "bracket-queens-pawn-b6",
+      "moves": [
+        "d2d4",
+        "b7b6"
+      ]
+    },
+    {
+      "id": "bracket-english-nc6",
+      "moves": [
+        "c2c4",
+        "b8c6"
+      ]
+    },
+    {
+      "id": "bracket-reti-b6",
+      "moves": [
+        "g1f3",
+        "b7b6"
+      ]
+    },
+    {
+      "id": "bracket-larsen-c5",
+      "moves": [
+        "b2b3",
+        "c7c5"
+      ]
+    },
+    {
+      "id": "bracket-kings-fianchetto-e6",
+      "moves": [
+        "g2g3",
+        "e7e6"
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "bishop-step-reduced-v-two-step-pawn-pair",
+      "label": "Bishop pawn: reduced versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.bishop-step-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "bishop-step-reduced-v-king-step-pawn-pair",
+      "label": "Bishop pawn: reduced versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.bishop-step-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "bishop-step-reduced-v-pawn-grant-pair",
+      "label": "Bishop pawn: reduced versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.bishop-step-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "bishop-step-current-v-two-step-pawn-pair",
+      "label": "Bishop pawn: current versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.bishop-step-current@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "bishop-step-current-v-king-step-pawn-pair",
+      "label": "Bishop pawn: current versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.bishop-step-current@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "bishop-step-current-v-pawn-grant-pair",
+      "label": "Bishop pawn: current versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.bishop-step-current@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "bishop-step-expanded-v-two-step-pawn-pair",
+      "label": "Bishop pawn: expanded versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.bishop-step-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "bishop-step-expanded-v-king-step-pawn-pair",
+      "label": "Bishop pawn: expanded versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.bishop-step-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "bishop-step-expanded-v-pawn-grant-pair",
+      "label": "Bishop pawn: expanded versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.bishop-step-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "forward-knight-reduced-v-two-step-pawn-pair",
+      "label": "Forward Knight pawn: reduced versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.forward-knight-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "forward-knight-reduced-v-king-step-pawn-pair",
+      "label": "Forward Knight pawn: reduced versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.forward-knight-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "forward-knight-reduced-v-pawn-grant-pair",
+      "label": "Forward Knight pawn: reduced versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.forward-knight-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "forward-knight-current-v-two-step-pawn-pair",
+      "label": "Forward Knight pawn: current versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.orange@3"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "forward-knight-current-v-king-step-pawn-pair",
+      "label": "Forward Knight pawn: current versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.orange@3"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "forward-knight-current-v-pawn-grant-pair",
+      "label": "Forward Knight pawn: current versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.orange@3"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "forward-knight-expanded-v-two-step-pawn-pair",
+      "label": "Forward Knight pawn: expanded versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.forward-knight-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "forward-knight-expanded-v-king-step-pawn-pair",
+      "label": "Forward Knight pawn: expanded versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.forward-knight-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "forward-knight-expanded-v-pawn-grant-pair",
+      "label": "Forward Knight pawn: expanded versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.forward-knight-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "full-knight-reduced-v-two-step-pawn-pair",
+      "label": "Full Knight pawn: reduced versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.full-knight-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "full-knight-reduced-v-king-step-pawn-pair",
+      "label": "Full Knight pawn: reduced versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.full-knight-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "full-knight-reduced-v-pawn-grant-pair",
+      "label": "Full Knight pawn: reduced versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.full-knight-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "full-knight-current-v-two-step-pawn-pair",
+      "label": "Full Knight pawn: current versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.full-knight-current@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "full-knight-current-v-king-step-pawn-pair",
+      "label": "Full Knight pawn: current versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.full-knight-current@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "full-knight-current-v-pawn-grant-pair",
+      "label": "Full Knight pawn: current versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.full-knight-current@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "full-knight-expanded-v-two-step-pawn-pair",
+      "label": "Full Knight pawn: expanded versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.full-knight-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "full-knight-expanded-v-king-step-pawn-pair",
+      "label": "Full Knight pawn: expanded versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.full-knight-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "full-knight-expanded-v-pawn-grant-pair",
+      "label": "Full Knight pawn: expanded versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.full-knight-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rank-reduced-v-two-step-pawn-pair",
+      "label": "Rank pawn: reduced versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rank-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rank-reduced-v-king-step-pawn-pair",
+      "label": "Rank pawn: reduced versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rank-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rank-reduced-v-pawn-grant-pair",
+      "label": "Rank pawn: reduced versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rank-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rank-current-v-two-step-pawn-pair",
+      "label": "Rank pawn: current versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rank-current@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rank-current-v-king-step-pawn-pair",
+      "label": "Rank pawn: current versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rank-current@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rank-current-v-pawn-grant-pair",
+      "label": "Rank pawn: current versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rank-current@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rank-expanded-v-two-step-pawn-pair",
+      "label": "Rank pawn: expanded versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rank-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rank-expanded-v-king-step-pawn-pair",
+      "label": "Rank pawn: expanded versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rank-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rank-expanded-v-pawn-grant-pair",
+      "label": "Rank pawn: expanded versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rank-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rook-step-reduced-v-two-step-pawn-pair",
+      "label": "Rook pawn: reduced versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rook-step-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rook-step-reduced-v-king-step-pawn-pair",
+      "label": "Rook pawn: reduced versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rook-step-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rook-step-reduced-v-pawn-grant-pair",
+      "label": "Rook pawn: reduced versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rook-step-reduced@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rook-step-current-v-two-step-pawn-pair",
+      "label": "Rook pawn: current versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rook-step-current@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rook-step-current-v-king-step-pawn-pair",
+      "label": "Rook pawn: current versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rook-step-current@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rook-step-current-v-pawn-grant-pair",
+      "label": "Rook pawn: current versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rook-step-current@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rook-step-expanded-v-two-step-pawn-pair",
+      "label": "Rook pawn: expanded versus Two two-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rook-step-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@5",
+          "e2": "pawn.blue@5"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rook-step-expanded-v-king-step-pawn-pair",
+      "label": "Rook pawn: expanded versus Two king-step pawns",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rook-step-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {
+          "c2": "pawn.blue@7",
+          "e2": "pawn.blue@7"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    },
+    {
+      "id": "rook-step-expanded-v-pawn-grant-pair",
+      "label": "Rook pawn: expanded versus Two pawn grants",
+      "armyA": {
+        "upgrades": {
+          "c2": "pawn.rook-step-expanded@1"
+        },
+        "remove": [],
+        "reserve": []
+      },
+      "armyB": {
+        "upgrades": {},
+        "remove": [],
+        "reserve": [
+          {
+            "id": "king.reserve-pawn@6",
+            "count": 2
+          }
+        ]
+      },
+      "strengthA": {
+        "skill": 20
+      },
+      "strengthB": {
+        "skill": 20
+      }
+    }
+  ],
+  "evaluation": {
+    "pieceValues": {
+      "king.reserve-pawn@6": {
+        "mg": 152,
+        "eg": 183
+      },
+      "pawn.bishop-step-current@1": {
+        "mg": 214,
+        "eg": 245
+      },
+      "pawn.bishop-step-expanded@1": {
+        "mg": 214,
+        "eg": 245
+      },
+      "pawn.bishop-step-reduced@1": {
+        "mg": 214,
+        "eg": 245
+      },
+      "pawn.blue@5": {
+        "mg": 189,
+        "eg": 206
+      },
+      "pawn.blue@7": {
+        "mg": 503,
+        "eg": 592
+      },
+      "pawn.forward-knight-expanded@1": {
+        "mg": 536,
+        "eg": 592
+      },
+      "pawn.forward-knight-reduced@1": {
+        "mg": 536,
+        "eg": 592
+      },
+      "pawn.full-knight-current@1": {
+        "mg": 949,
+        "eg": 1056
+      },
+      "pawn.full-knight-expanded@1": {
+        "mg": 949,
+        "eg": 1056
+      },
+      "pawn.full-knight-reduced@1": {
+        "mg": 949,
+        "eg": 1056
+      },
+      "pawn.orange@3": {
+        "mg": 536,
+        "eg": 592
+      },
+      "pawn.rank-current@1": {
+        "mg": 773,
+        "eg": 808
+      },
+      "pawn.rank-expanded@1": {
+        "mg": 773,
+        "eg": 808
+      },
+      "pawn.rank-reduced@1": {
+        "mg": 773,
+        "eg": 808
+      },
+      "pawn.rook-step-current@1": {
+        "mg": 499,
+        "eg": 543
+      },
+      "pawn.rook-step-expanded@1": {
+        "mg": 499,
+        "eg": 543
+      },
+      "pawn.rook-step-reduced@1": {
+        "mg": 499,
+        "eg": 543
+      }
+    }
+  }
+}

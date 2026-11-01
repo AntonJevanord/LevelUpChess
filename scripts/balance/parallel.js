@@ -271,11 +271,15 @@ async function runParallel({ config: input, schedule: requestedSchedule, outDir,
     collect();
     poll = setInterval(() => { try { sendControl(shouldStop()); } catch (error) { firstError ||= error; sendControl('now'); } }, 100);
     await Promise.all(promises);
+    // A control can arrive after the last result but before worker exit. Do
+    // not lose it merely because the periodic control poll has not run yet.
+    sendControl(shouldStop());
     session.finishedAt = new Date().toISOString();
     session.elapsedMs = Date.parse(session.finishedAt) - Date.parse(session.startedAt);
     const summary = collect();
     if (firstError) throw firstError;
-    return { stopped: summary.nextIndex < schedule.length, nextIndex: summary.nextIndex, scheduledGames: schedule.length, summary, outDir: directory };
+    return { stopped: summary.nextIndex < schedule.length, ...(stop ? { stopRequested: stop } : {}),
+      nextIndex: summary.nextIndex, scheduledGames: schedule.length, summary, outDir: directory };
   } finally {
     clearInterval(poll); signal?.removeEventListener('abort', abort);
     try {

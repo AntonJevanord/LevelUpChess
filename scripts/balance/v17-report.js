@@ -163,7 +163,7 @@ function createV17Report({ experiment, config, metadata, records, manifest } = {
     if (metadata.symmetric) cells.set(keyFor(comparison.bKey, comparison.aKey), cell(true));
   }
   const scheduledGames = config.comparisons.length * expectedPairs * 2;
-  return {
+  const report = {
     schemaVersion: 1, format: 'levelup-v17-outcome-report', experiment, name: config.name,
     question: metadata.question || null, kind: metadata.kind || experiment, runId: manifest?.runId || null,
     scheduledGames,
@@ -183,6 +183,8 @@ function createV17Report({ experiment, config, metadata, records, manifest } = {
       'This report validates journal identities and summarizes recorded outcomes; it does not independently replay every move.',
     ],
   };
+  if (metadata.brackets !== undefined) report.bracketStudy = require('./v17-bracket-report').createBracketReport({ config, metadata, rows, latest, computeOverall: overallScores });
+  return report;
 }
 
 function renderV17Report(report, { includeOverall = true, includeOverallSummaryScore = true } = {}) {
@@ -206,6 +208,7 @@ function renderV17Report(report, { includeOverall = true, includeOverallSummaryS
     '| A versus B | Paired games | A W / D / L | A score | Complete pairs | Openings | Truncated attempts | Errors |',
     '| --- | ---: | :--- | ---: | ---: | ---: | ---: | ---: |',
     ...report.comparisons.map(comparison => `| ${markdown(comparison.aLabel)} / ${markdown(comparison.bLabel)} | ${comparison.pairedGames} | ${comparison.wins} / ${comparison.draws} / ${comparison.losses} | ${percent(comparison.score)} | ${comparison.completePairs}/${comparison.expectedPairs} | ${comparison.openings} | ${comparison.statusCounts.truncated} | ${comparison.statusCounts.error} |`), '',
+    ...(report.bracketStudy ? require('./v17-bracket-report').renderBracketReport(report.bracketStudy) : []),
     ...report.notes.map(note => `- ${note}`), '',
   ];
   return lines.filter((line, index) => line || lines[index - 1] !== '').join('\n');

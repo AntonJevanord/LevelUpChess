@@ -71,6 +71,13 @@ const V17_CANDIDATES = Object.freeze({
     'pawn.orange@3', 'pawn.purple@11', 'pawn.purple@12',
   ]),
 });
+// Repricing creates a new playable profile. The first version-17 workshop
+// remains available for its saved games and archived experiment definitions.
+const V17_REVISED_PAWN_CANDIDATES = Object.freeze([
+  'pawn.blue@5', 'pawn.blue@7',
+  'pawn.orange@3', 'pawn.bishop-step-current@1',
+  'pawn.purple@11', 'pawn.purple@12',
+]);
 const closeoutLibrary = (group, candidates = []) => Object.freeze({
   id: `v16-${group}`,
   name: group === 'references' ? 'King workshop' : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
@@ -82,12 +89,20 @@ const closeoutLibrary = (group, candidates = []) => Object.freeze({
 });
 const currentLibrary = (group, candidates = []) => Object.freeze({
   id: `v17-${group}`,
-  name: group === 'references' ? 'King workshop' : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
+  name: group === 'references' ? 'King workshop' : group === 'pawns' ? 'Pawn workshop (initial)' : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
   generation: CURRENT_PLAYABLE_GENERATION,
+  ...(group === 'pawns' ? { superseded: true } : {}),
   ...(group === 'references' ? { focusFamily: 'king' } : {}),
   designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...candidates, ...V17_RESERVE_DESIGN_IDS]),
   json: `src/playable-v17-${group}-profile.json`,
   ini: `variants/levelup-playable-v17-${group}.ini`,
+});
+const revisedPawnLibrary = Object.freeze({
+  id: 'v17-pawns-revised', name: 'Pawn workshop',
+  generation: CURRENT_PLAYABLE_GENERATION, edition: 2,
+  designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...V17_REVISED_PAWN_CANDIDATES, ...V17_RESERVE_DESIGN_IDS]),
+  json: 'src/playable-v17-pawns-revised-profile.json',
+  ini: 'variants/levelup-playable-v17-pawns-revised.ini',
 });
 const PLAYABLE_LIBRARIES = Object.freeze([
   Object.freeze({ id: 'workshop', name: 'Rebalance workshop', designIds: PLAYABLE_DESIGN_IDS,
@@ -100,6 +115,7 @@ const PLAYABLE_LIBRARIES = Object.freeze([
   ...Object.entries(V16_CANDIDATES).map(([group, candidates]) => closeoutLibrary(group, candidates)),
   currentLibrary('references'),
   ...Object.entries(V17_CANDIDATES).map(([group, candidates]) => currentLibrary(group, candidates)),
+  revisedPawnLibrary,
 ]);
 
-module.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_RESERVE_DESIGN_IDS, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };
+module.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_RESERVE_DESIGN_IDS, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };

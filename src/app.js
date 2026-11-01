@@ -36,7 +36,8 @@ const experimentalFamily = document.querySelector('#experimental-family');
 const armyResetSettings = document.querySelector('#army-reset-settings');
 const armyResetStatus = document.querySelector('#army-reset-status');
 const experimentalOption = gameMode.querySelector('option[value=levelup-experimental]');
-experimentalOption.replaceWith(...[...PLAYABLE_LIBRARIES].sort((a, b) => (b.generation || 0) - (a.generation || 0)).map(library => {
+experimentalOption.replaceWith(...[...PLAYABLE_LIBRARIES].sort((a, b) => (b.generation || 0) - (a.generation || 0)
+  || Number(Boolean(a.superseded)) - Number(Boolean(b.superseded)) || (b.edition || 0) - (a.edition || 0)).map(library => {
   const option = document.createElement('option');
   option.value = library.variant;
   option.textContent = `${library.generation ? `Version ${library.generation}` : 'Archive'} · ${library.name}`;

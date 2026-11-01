@@ -1,0 +1,1919 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-v17-bracket-values",
+  "calibratedDate": "2026-11-01",
+  "policy": "Current-design automatic raw MG/EG values, applied consistently to all six engine tables for every sibling. Shared diagonal grants use F as their common anchor. Existing references remain fixed. No values are fitted from game outcomes.",
+  "provenance": {
+    "engineSha256": "8ccde8596fb88aa7fbbf1020cc5afa52ef9d1887764275ea8e627ba0227e4f1e",
+    "platform": "linux",
+    "diagnostic": "levelupvalues version 1; no searches or match games",
+    "contexts": [
+      {
+        "variant": "levelup-design-6dfb14720c2e65cf4b88",
+        "profileHash": "23e3c3d1442cccadb697ea44dc4ae8784bda38637a5bfa34c312b1b7d12a04cd",
+        "registryHash": "223fcb2c80d23571504e3a8d42f69f8f8a532ae95562eadd506089c23cce2c44",
+        "config": "# Dynamic experiment profile. Meanings belong to the archived registry.\n[levelup-design-6dfb14720c2e65cf4b88:chess]\ncustomPiece1 = a:BgmB\ncustomPiece2 = c:BgmB0\ncustomPiece3 = d:BDC\ncustomPiece4 = e:BsW\ncustomPiece5 = f:BmA\ncustomPiece6 = g:BvWvN\ncustomPiece7 = h:BmN\ncustomPiece8 = i:BDmC\ncustomPiece9 = j:BsW2\ncustomPiece10 = l:BN\ncustomPiece11 = o:BsmW\ncustomPiece12 = s:fF\ncustomPiece13 = t:F3\ncustomPiece14 = u:F2\ncustomPiece15 = v:fW2\ncustomPiece16 = w:fW3\ncustomPiece17 = x:fW\ncustomPiece18 = y:W2\ncustomPiece19 = z:W3\ncustomPiece22 = m:BsR2nsN\npieceToCharTable = -\ncastlingRookPiece = r\ndoubleStepRegionWhite = *1 *2\ndoubleStepRegionBlack = *7 *8\npawnTypes = p\nenPassantTypes = p\npromotionPieceTypes = nbrq\n# Finite nonroyal king grants: deployment spends a turn; captures disappear.\ntwoBoards = false\npieceDrops = true\ncapturesToHand = false\nmustDrop = false\ndropChecks = false\ndropRegionWhite = *1 *2 *3 *4\ndropRegionBlack = *5 *6 *7 *8\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n",
+        "ids": [
+          "bishop.blue@2",
+          "bishop.blue@3",
+          "bishop.hopping-expanded@1",
+          "bishop.hopping-reduced@1",
+          "bishop.purple@13",
+          "bishop.purple@16",
+          "bishop.purple@18",
+          "bishop.purple@19",
+          "bishop.quiet-archbishop@1",
+          "bishop.quiet-camel-grid@1",
+          "bishop.wazzap-expanded@1",
+          "bishop.wazzap-reduced@1",
+          "king.grant-diagonal-forward@1",
+          "king.grant-diagonal-three@1",
+          "king.grant-diagonal-two@1",
+          "king.grant-forward-current@1",
+          "king.grant-forward-expanded@1",
+          "king.grant-forward-reduced@1",
+          "king.grant-orthogonal-current@1",
+          "king.grant-orthogonal-expanded@1"
+        ]
+      },
+      {
+        "variant": "levelup-design-e850c008c4340003073a",
+        "profileHash": "7a9ea2dd0432ee6e618aa967c5f1434f7177a082da3f99f0a64e67510bb5bb14",
+        "registryHash": "ea0f9c07085f307293516300b30aeca58e3fd04415caeeba8d35cf3dddf67c11",
+        "config": "# Dynamic experiment profile. Meanings belong to the archived registry.\n[levelup-design-e850c008c4340003073a:chess]\ncustomPiece1 = a:W\ncustomPiece2 = c:F\ncustomPiece3 = g:NC\ncustomPiece4 = e:NvW\ncustomPiece5 = f:fmWfceF\ncustomPiece6 = v:NK\ncustomPiece7 = h:fmW2fceF\ncustomPiece8 = i:fceF\ncustomPiece9 = j:fWmfF\ncustomPiece10 = l:NWH\ncustomPiece11 = m:NsmR\ncustomPiece12 = o:NvWvD\ncustomPiece13 = s:NfW\ncustomPiece14 = t:NmR\ncustomPiece15 = u:NsmR2\ncustomPiece16 = d:N0\ncustomPiece17 = w:fmWfeFifmnD\ncustomPiece18 = x:fmW2feFifmnD\ncustomPiece19 = y:fmWfcFifmnDifmF\ncustomPiece20 = z:fmW2fceF2\npieceToCharTable = -\ncastlingRookPiece = r\ndoubleStepRegionWhite = *1 *2\ndoubleStepRegionBlack = *7 *8\npawnTypes = pwxyz\nenPassantTypes = pwxyz\npromotionPieceTypes = nbrq\n# Finite nonroyal king grants: deployment spends a turn; captures disappear.\ntwoBoards = false\npieceDrops = true\ncapturesToHand = false\nmustDrop = false\ndropChecks = false\ndropRegionWhite = *1 *2 *3 *4\ndropRegionBlack = *5 *6 *7 *8\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n",
+        "ids": [
+          "king.grant-orthogonal-reduced@1",
+          "king.grant-pawnlike-current@1",
+          "king.grant-pawnlike-expanded@1",
+          "king.grant-pawnlike-reduced@1",
+          "king.reserve-bishop@1",
+          "king.reserve-pawn@6",
+          "knight.blue@2",
+          "knight.blue@3",
+          "knight.climbing-expanded@1",
+          "knight.climbing-reduced@1",
+          "knight.positional-expanded@1",
+          "knight.positional-reduced@1",
+          "knight.purple@3",
+          "knight.purple@4",
+          "knight.purple@5",
+          "knight.purple@6",
+          "pawn.bishop-step-current@1",
+          "pawn.bishop-step-expanded@1",
+          "pawn.bishop-step-reduced@1",
+          "pawn.blue@5"
+        ]
+      },
+      {
+        "variant": "levelup-design-0d6c2bc29c5c4857bae2",
+        "profileHash": "eb0457fb06338ba189cf12fbae860959e3d1969e0f9887550404ece160958b22",
+        "registryHash": "3c83adcf407033a9f3952566451d0cb8a4c1d251f570e5a3f89f22d42bbad12d",
+        "config": "# Dynamic experiment profile. Meanings belong to the archived registry.\n[levelup-design-0d6c2bc29c5c4857bae2:chess]\ncustomPiece1 = a:mWFifmnD\ncustomPiece2 = c:fmWfceFifmnDfhN\ncustomPiece3 = d:mRcfB\ncustomPiece4 = e:QmfhN\ncustomPiece5 = f:fmWfceFifmnDfhNmbW\ncustomPiece6 = g:feQ2bmQ2\ncustomPiece7 = h:fmWfceFifmnDmfhN\ncustomPiece8 = u:QN\ncustomPiece9 = i:fmWfceFifmnDN\ncustomPiece10 = j:fmWfceFifmnDNsmW\ncustomPiece11 = m:mRceB2\ncustomPiece12 = l:fmWfceFifmnDmNcfN\ncustomPiece13 = o:ifmnDmfWfceFsR\ncustomPiece14 = s:ifmnDmfW2fceFsR\ncustomPiece15 = t:ifmnDmfWfceFsR2\ncustomPiece16 = v:fceF2mR\ncustomPiece17 = w:fceF3mR\ncustomPiece18 = x:fceFmR\ncustomPiece19 = y:QmN\ncustomPiece20 = z:QimfhN\npieceToCharTable = -\ncastlingRookPiece = r\ndoubleStepRegionWhite = *1 *2\ndoubleStepRegionBlack = *7 *8\npawnTypes = pacdfghijlmostvwx\nenPassantTypes = pacdfghijlmostvwx\npromotionPieceTypes = nbrq\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n",
+        "ids": [
+          "pawn.blue@7",
+          "pawn.forward-knight-expanded@1",
+          "pawn.forward-knight-reduced@1",
+          "pawn.full-knight-current@1",
+          "pawn.full-knight-expanded@1",
+          "pawn.full-knight-reduced@1",
+          "pawn.orange@3",
+          "pawn.purple@12",
+          "pawn.purple@13",
+          "pawn.purple@7",
+          "pawn.rank-current@1",
+          "pawn.rank-expanded@1",
+          "pawn.rank-reduced@1",
+          "pawn.rook-step-current@1",
+          "pawn.rook-step-expanded@1",
+          "pawn.rook-step-reduced@1",
+          "queen.advancing-expanded@1",
+          "queen.advancing-reduced@1",
+          "queen.blue@2",
+          "queen.purple@1"
+        ]
+      },
+      {
+        "variant": "levelup-design-0eb0165d83b3db0a5dad",
+        "profileHash": "e86dff3eaf8528dec97c4c74657a87747e73a177d07f1ed7fc6e36aaea4bc99d",
+        "registryHash": "1ddce719d0b123c4df653dcf28d126972d8d76da97f6e47d8255d179e31ef9a4",
+        "config": "# Dynamic experiment profile. Meanings belong to the archived registry.\n[levelup-design-0eb0165d83b3db0a5dad:chess]\ncustomPiece1 = a:RgmR0\ncustomPiece2 = c:RgmQ0\ncustomPiece3 = d:QsNsC\ncustomPiece4 = e:RceF\ncustomPiece5 = f:RgmR\ncustomPiece6 = g:QgB0\ncustomPiece7 = h:RceF2\ncustomPiece8 = i:RfceF\ncustomPiece9 = j:RC\ncustomPiece10 = l:QZ\ncustomPiece11 = m:RFsNmsC\ncustomPiece18 = x:RfB\npieceToCharTable = -\ncastlingRookPiece = racefhijmx\ndoubleStepRegionWhite = *1 *2\ndoubleStepRegionBlack = *7 *8\npawnTypes = p\nenPassantTypes = p\npromotionPieceTypes = nbrq\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n",
+        "ids": [
+          "queen.purple@6",
+          "queen.purple@7",
+          "queen.purple@8",
+          "rook.blue@2",
+          "rook.blue@3",
+          "rook.ghost-expanded@1",
+          "rook.ghost-reduced@1",
+          "rook.pawn-rook-expanded@1",
+          "rook.pawn-rook-reduced@1",
+          "rook.purple@10",
+          "rook.purple@12",
+          "rook.purple@14"
+        ]
+      }
+    ]
+  },
+  "values": [
+    {
+      "id": "bishop.blue@2",
+      "valueGroup": "hopping",
+      "baseId": "bishop.blue@2",
+      "movement": "BgmB",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1480,
+        "eg": 1302
+      },
+      "automaticTables": {
+        "rawMg": 1480,
+        "rawEg": 1302,
+        "captureMg": 1480,
+        "captureEg": 1302,
+        "evalMg": 1480,
+        "evalEg": 1302
+      },
+      "context": 0,
+      "applied": {
+        "mg": 1480,
+        "eg": 1302
+      }
+    },
+    {
+      "id": "bishop.blue@3",
+      "valueGroup": "wazzap",
+      "baseId": "bishop.blue@3",
+      "movement": "BsW",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1277,
+        "eg": 1252
+      },
+      "automaticTables": {
+        "rawMg": 1277,
+        "rawEg": 1252,
+        "captureMg": 1277,
+        "captureEg": 1252,
+        "evalMg": 1277,
+        "evalEg": 1252
+      },
+      "context": 0,
+      "applied": {
+        "mg": 1277,
+        "eg": 1252
+      }
+    },
+    {
+      "id": "bishop.hopping-expanded@1",
+      "valueGroup": "hopping",
+      "baseId": "bishop.blue@2",
+      "movement": "BgmB0",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1480,
+        "eg": 1302
+      },
+      "automaticTables": {
+        "rawMg": 1480,
+        "rawEg": 1302,
+        "captureMg": 1480,
+        "captureEg": 1302,
+        "evalMg": 1480,
+        "evalEg": 1302
+      },
+      "context": 0,
+      "applied": {
+        "mg": 1480,
+        "eg": 1302
+      }
+    },
+    {
+      "id": "bishop.hopping-reduced@1",
+      "valueGroup": "hopping",
+      "baseId": "bishop.blue@2",
+      "movement": "BmA",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1203,
+        "eg": 1203
+      },
+      "automaticTables": {
+        "rawMg": 1203,
+        "rawEg": 1203,
+        "captureMg": 1203,
+        "captureEg": 1203,
+        "evalMg": 1203,
+        "evalEg": 1203
+      },
+      "context": 0,
+      "applied": {
+        "mg": 1480,
+        "eg": 1302
+      }
+    },
+    {
+      "id": "bishop.purple@13",
+      "valueGroup": "official:bishop.purple@13",
+      "baseId": "bishop.purple@13",
+      "movement": "BsR2nsN",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1858,
+        "eg": 1903
+      },
+      "automaticTables": {
+        "rawMg": 1858,
+        "rawEg": 1903,
+        "captureMg": 1858,
+        "captureEg": 1903,
+        "evalMg": 1858,
+        "evalEg": 1903
+      },
+      "context": 0,
+      "applied": {
+        "mg": 1858,
+        "eg": 1903
+      }
+    },
+    {
+      "id": "bishop.purple@16",
+      "valueGroup": "archbishop",
+      "baseId": "bishop.purple@16",
+      "movement": "BN",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1987,
+        "eg": 2042
+      },
+      "automaticTables": {
+        "rawMg": 1987,
+        "rawEg": 2042,
+        "captureMg": 1987,
+        "captureEg": 2042,
+        "evalMg": 1987,
+        "evalEg": 2042
+      },
+      "context": 0,
+      "applied": {
+        "mg": 1987,
+        "eg": 2042
+      }
+    },
+    {
+      "id": "bishop.purple@18",
+      "valueGroup": "level3:bishop.purple@18",
+      "baseId": "bishop.purple@18",
+      "movement": "BvWvN",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1742,
+        "eg": 1769
+      },
+      "automaticTables": {
+        "rawMg": 1742,
+        "rawEg": 1769,
+        "captureMg": 1742,
+        "captureEg": 1769,
+        "evalMg": 1742,
+        "evalEg": 1769
+      },
+      "context": 0,
+      "applied": {
+        "mg": 1742,
+        "eg": 1769
+      }
+    },
+    {
+      "id": "bishop.purple@19",
+      "valueGroup": "grid-bishop",
+      "baseId": "bishop.purple@19",
+      "movement": "BDC",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 2501,
+        "eg": 2620
+      },
+      "automaticTables": {
+        "rawMg": 2501,
+        "rawEg": 2620,
+        "captureMg": 2501,
+        "captureEg": 2620,
+        "evalMg": 2501,
+        "evalEg": 2620
+      },
+      "context": 0,
+      "applied": {
+        "mg": 2501,
+        "eg": 2620
+      }
+    },
+    {
+      "id": "bishop.quiet-archbishop@1",
+      "valueGroup": "archbishop",
+      "baseId": "bishop.purple@16",
+      "movement": "BmN",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1352,
+        "eg": 1403
+      },
+      "automaticTables": {
+        "rawMg": 1352,
+        "rawEg": 1403,
+        "captureMg": 1352,
+        "captureEg": 1403,
+        "evalMg": 1352,
+        "evalEg": 1403
+      },
+      "context": 0,
+      "applied": {
+        "mg": 1987,
+        "eg": 2042
+      }
+    },
+    {
+      "id": "bishop.quiet-camel-grid@1",
+      "valueGroup": "grid-bishop",
+      "baseId": "bishop.purple@19",
+      "movement": "BDmC",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1823,
+        "eg": 1932
+      },
+      "automaticTables": {
+        "rawMg": 1823,
+        "rawEg": 1932,
+        "captureMg": 1823,
+        "captureEg": 1932,
+        "evalMg": 1823,
+        "evalEg": 1932
+      },
+      "context": 0,
+      "applied": {
+        "mg": 2501,
+        "eg": 2620
+      }
+    },
+    {
+      "id": "bishop.wazzap-expanded@1",
+      "valueGroup": "wazzap",
+      "baseId": "bishop.blue@3",
+      "movement": "BsW2",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1385,
+        "eg": 1377
+      },
+      "automaticTables": {
+        "rawMg": 1385,
+        "rawEg": 1377,
+        "captureMg": 1385,
+        "captureEg": 1377,
+        "evalMg": 1385,
+        "evalEg": 1377
+      },
+      "context": 0,
+      "applied": {
+        "mg": 1277,
+        "eg": 1252
+      }
+    },
+    {
+      "id": "bishop.wazzap-reduced@1",
+      "valueGroup": "wazzap",
+      "baseId": "bishop.blue@3",
+      "movement": "BsmW",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1129,
+        "eg": 1105
+      },
+      "automaticTables": {
+        "rawMg": 1129,
+        "rawEg": 1105,
+        "captureMg": 1129,
+        "captureEg": 1105,
+        "evalMg": 1129,
+        "evalEg": 1105
+      },
+      "context": 0,
+      "applied": {
+        "mg": 1277,
+        "eg": 1252
+      }
+    },
+    {
+      "id": "king.grant-diagonal-forward@1",
+      "valueGroup": "grant-diagonal",
+      "baseId": "king.reserve-bishop@1",
+      "movement": "fF",
+      "level": 2,
+      "placement": "reserve",
+      "automatic": {
+        "mg": 183,
+        "eg": 204
+      },
+      "automaticTables": {
+        "rawMg": 183,
+        "rawEg": 204,
+        "captureMg": 183,
+        "captureEg": 204,
+        "evalMg": 183,
+        "evalEg": 204
+      },
+      "context": 0,
+      "applied": {
+        "mg": 373,
+        "eg": 416
+      }
+    },
+    {
+      "id": "king.grant-diagonal-three@1",
+      "valueGroup": "grant-diagonal",
+      "baseId": "king.reserve-bishop@1",
+      "movement": "F3",
+      "level": 2,
+      "placement": "reserve",
+      "automatic": {
+        "mg": 503,
+        "eg": 481
+      },
+      "automaticTables": {
+        "rawMg": 503,
+        "rawEg": 481,
+        "captureMg": 503,
+        "captureEg": 481,
+        "evalMg": 503,
+        "evalEg": 481
+      },
+      "context": 0,
+      "applied": {
+        "mg": 373,
+        "eg": 416
+      }
+    },
+    {
+      "id": "king.grant-diagonal-two@1",
+      "valueGroup": "grant-diagonal",
+      "baseId": "king.reserve-bishop@1",
+      "movement": "F2",
+      "level": 2,
+      "placement": "reserve",
+      "automatic": {
+        "mg": 366,
+        "eg": 350
+      },
+      "automaticTables": {
+        "rawMg": 366,
+        "rawEg": 350,
+        "captureMg": 366,
+        "captureEg": 350,
+        "evalMg": 366,
+        "evalEg": 350
+      },
+      "context": 0,
+      "applied": {
+        "mg": 373,
+        "eg": 416
+      }
+    },
+    {
+      "id": "king.grant-forward-current@1",
+      "valueGroup": "grant-forward",
+      "baseId": "king.grant-forward-current@1",
+      "movement": "fW2",
+      "level": 2,
+      "placement": "reserve",
+      "automatic": {
+        "mg": 134,
+        "eg": 151
+      },
+      "automaticTables": {
+        "rawMg": 134,
+        "rawEg": 151,
+        "captureMg": 134,
+        "captureEg": 151,
+        "evalMg": 134,
+        "evalEg": 151
+      },
+      "context": 0,
+      "applied": {
+        "mg": 134,
+        "eg": 151
+      }
+    },
+    {
+      "id": "king.grant-forward-expanded@1",
+      "valueGroup": "grant-forward",
+      "baseId": "king.grant-forward-current@1",
+      "movement": "fW3",
+      "level": 2,
+      "placement": "reserve",
+      "automatic": {
+        "mg": 166,
+        "eg": 182
+      },
+      "automaticTables": {
+        "rawMg": 166,
+        "rawEg": 182,
+        "captureMg": 166,
+        "captureEg": 182,
+        "evalMg": 166,
+        "evalEg": 182
+      },
+      "context": 0,
+      "applied": {
+        "mg": 134,
+        "eg": 151
+      }
+    },
+    {
+      "id": "king.grant-forward-reduced@1",
+      "valueGroup": "grant-forward",
+      "baseId": "king.grant-forward-current@1",
+      "movement": "fW",
+      "level": 2,
+      "placement": "reserve",
+      "automatic": {
+        "mg": 90,
+        "eg": 101
+      },
+      "automaticTables": {
+        "rawMg": 90,
+        "rawEg": 101,
+        "captureMg": 90,
+        "captureEg": 101,
+        "evalMg": 90,
+        "evalEg": 101
+      },
+      "context": 0,
+      "applied": {
+        "mg": 134,
+        "eg": 151
+      }
+    },
+    {
+      "id": "king.grant-orthogonal-current@1",
+      "valueGroup": "grant-orthogonal",
+      "baseId": "king.grant-orthogonal-current@1",
+      "movement": "W2",
+      "level": 2,
+      "placement": "reserve",
+      "automatic": {
+        "mg": 563,
+        "eg": 635
+      },
+      "automaticTables": {
+        "rawMg": 563,
+        "rawEg": 635,
+        "captureMg": 563,
+        "captureEg": 635,
+        "evalMg": 563,
+        "evalEg": 635
+      },
+      "context": 0,
+      "applied": {
+        "mg": 563,
+        "eg": 635
+      }
+    },
+    {
+      "id": "king.grant-orthogonal-expanded@1",
+      "valueGroup": "grant-orthogonal",
+      "baseId": "king.grant-orthogonal-current@1",
+      "movement": "W3",
+      "level": 2,
+      "placement": "reserve",
+      "automatic": {
+        "mg": 705,
+        "eg": 773
+      },
+      "automaticTables": {
+        "rawMg": 705,
+        "rawEg": 773,
+        "captureMg": 705,
+        "captureEg": 773,
+        "evalMg": 705,
+        "evalEg": 773
+      },
+      "context": 0,
+      "applied": {
+        "mg": 563,
+        "eg": 635
+      }
+    },
+    {
+      "id": "king.grant-orthogonal-reduced@1",
+      "valueGroup": "grant-orthogonal",
+      "baseId": "king.grant-orthogonal-current@1",
+      "movement": "W",
+      "level": 2,
+      "placement": "reserve",
+      "automatic": {
+        "mg": 373,
+        "eg": 416
+      },
+      "automaticTables": {
+        "rawMg": 373,
+        "rawEg": 416,
+        "captureMg": 373,
+        "captureEg": 416,
+        "evalMg": 373,
+        "evalEg": 416
+      },
+      "context": 1,
+      "applied": {
+        "mg": 563,
+        "eg": 635
+      }
+    },
+    {
+      "id": "king.grant-pawnlike-current@1",
+      "valueGroup": "grant-pawnlike",
+      "baseId": "king.grant-pawnlike-current@1",
+      "movement": "fmWfceF",
+      "level": 2,
+      "placement": "reserve",
+      "automatic": {
+        "mg": 152,
+        "eg": 162
+      },
+      "automaticTables": {
+        "rawMg": 152,
+        "rawEg": 162,
+        "captureMg": 152,
+        "captureEg": 162,
+        "evalMg": 152,
+        "evalEg": 162
+      },
+      "context": 1,
+      "applied": {
+        "mg": 152,
+        "eg": 162
+      }
+    },
+    {
+      "id": "king.grant-pawnlike-expanded@1",
+      "valueGroup": "grant-pawnlike",
+      "baseId": "king.grant-pawnlike-current@1",
+      "movement": "fmW2fceF",
+      "level": 2,
+      "placement": "reserve",
+      "automatic": {
+        "mg": 172,
+        "eg": 189
+      },
+      "automaticTables": {
+        "rawMg": 172,
+        "rawEg": 189,
+        "captureMg": 172,
+        "captureEg": 189,
+        "evalMg": 172,
+        "evalEg": 189
+      },
+      "context": 1,
+      "applied": {
+        "mg": 152,
+        "eg": 162
+      }
+    },
+    {
+      "id": "king.grant-pawnlike-reduced@1",
+      "valueGroup": "grant-pawnlike",
+      "baseId": "king.grant-pawnlike-current@1",
+      "movement": "fceF",
+      "level": 2,
+      "placement": "reserve",
+      "automatic": {
+        "mg": 121,
+        "eg": 121
+      },
+      "automaticTables": {
+        "rawMg": 121,
+        "rawEg": 121,
+        "captureMg": 121,
+        "captureEg": 121,
+        "evalMg": 121,
+        "evalEg": 121
+      },
+      "context": 1,
+      "applied": {
+        "mg": 152,
+        "eg": 162
+      }
+    },
+    {
+      "id": "king.reserve-bishop@1",
+      "valueGroup": "grant-diagonal",
+      "baseId": "king.reserve-bishop@1",
+      "movement": "F",
+      "level": 2,
+      "placement": "reserve",
+      "automatic": {
+        "mg": 373,
+        "eg": 416
+      },
+      "automaticTables": {
+        "rawMg": 373,
+        "rawEg": 416,
+        "captureMg": 373,
+        "captureEg": 416,
+        "evalMg": 373,
+        "evalEg": 416
+      },
+      "context": 1,
+      "applied": {
+        "mg": 373,
+        "eg": 416
+      }
+    },
+    {
+      "id": "king.reserve-pawn@6",
+      "valueGroup": "baseline:king.reserve-pawn@6",
+      "baseId": "king.reserve-pawn@6",
+      "movement": "fWmfF",
+      "level": 1,
+      "placement": "reserve",
+      "automatic": {
+        "mg": 152,
+        "eg": 183
+      },
+      "automaticTables": {
+        "rawMg": 152,
+        "rawEg": 183,
+        "captureMg": 152,
+        "captureEg": 183,
+        "evalMg": 152,
+        "evalEg": 183
+      },
+      "context": 1,
+      "applied": {
+        "mg": 152,
+        "eg": 183
+      }
+    },
+    {
+      "id": "knight.blue@2",
+      "valueGroup": "positional",
+      "baseId": "knight.blue@2",
+      "movement": "NsmR",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 972,
+        "eg": 1093
+      },
+      "automaticTables": {
+        "rawMg": 972,
+        "rawEg": 1093,
+        "captureMg": 972,
+        "captureEg": 1093,
+        "evalMg": 972,
+        "evalEg": 1093
+      },
+      "context": 1,
+      "applied": {
+        "mg": 972,
+        "eg": 1093
+      }
+    },
+    {
+      "id": "knight.blue@3",
+      "valueGroup": "climbing",
+      "baseId": "knight.blue@3",
+      "movement": "NvW",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 984,
+        "eg": 1105
+      },
+      "automaticTables": {
+        "rawMg": 984,
+        "rawEg": 1105,
+        "captureMg": 984,
+        "captureEg": 1105,
+        "evalMg": 984,
+        "evalEg": 1105
+      },
+      "context": 1,
+      "applied": {
+        "mg": 984,
+        "eg": 1105
+      }
+    },
+    {
+      "id": "knight.climbing-expanded@1",
+      "valueGroup": "climbing",
+      "baseId": "knight.blue@3",
+      "movement": "NvWvD",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1203,
+        "eg": 1352
+      },
+      "automaticTables": {
+        "rawMg": 1203,
+        "rawEg": 1352,
+        "captureMg": 1203,
+        "captureEg": 1352,
+        "evalMg": 1203,
+        "evalEg": 1352
+      },
+      "context": 1,
+      "applied": {
+        "mg": 984,
+        "eg": 1105
+      }
+    },
+    {
+      "id": "knight.climbing-reduced@1",
+      "valueGroup": "climbing",
+      "baseId": "knight.blue@3",
+      "movement": "NfW",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 878,
+        "eg": 984
+      },
+      "automaticTables": {
+        "rawMg": 878,
+        "rawEg": 984,
+        "captureMg": 878,
+        "captureEg": 984,
+        "evalMg": 878,
+        "evalEg": 984
+      },
+      "context": 1,
+      "applied": {
+        "mg": 984,
+        "eg": 1105
+      }
+    },
+    {
+      "id": "knight.positional-expanded@1",
+      "valueGroup": "positional",
+      "baseId": "knight.blue@2",
+      "movement": "NmR",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1178,
+        "eg": 1327
+      },
+      "automaticTables": {
+        "rawMg": 1178,
+        "rawEg": 1327,
+        "captureMg": 1178,
+        "captureEg": 1327,
+        "evalMg": 1178,
+        "evalEg": 1327
+      },
+      "context": 1,
+      "applied": {
+        "mg": 972,
+        "eg": 1093
+      }
+    },
+    {
+      "id": "knight.positional-reduced@1",
+      "valueGroup": "positional",
+      "baseId": "knight.blue@2",
+      "movement": "NsmR2",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 890,
+        "eg": 1024
+      },
+      "automaticTables": {
+        "rawMg": 890,
+        "rawEg": 1024,
+        "captureMg": 890,
+        "captureEg": 1024,
+        "evalMg": 890,
+        "evalEg": 1024
+      },
+      "context": 1,
+      "applied": {
+        "mg": 972,
+        "eg": 1093
+      }
+    },
+    {
+      "id": "knight.purple@3",
+      "valueGroup": "official:knight.purple@3",
+      "baseId": "knight.purple@3",
+      "movement": "NC",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1663,
+        "eg": 1877
+      },
+      "automaticTables": {
+        "rawMg": 1663,
+        "rawEg": 1877,
+        "captureMg": 1663,
+        "captureEg": 1877,
+        "evalMg": 1663,
+        "evalEg": 1877
+      },
+      "context": 1,
+      "applied": {
+        "mg": 1663,
+        "eg": 1877
+      }
+    },
+    {
+      "id": "knight.purple@4",
+      "valueGroup": "level3:knight.purple@4",
+      "baseId": "knight.purple@4",
+      "movement": "N0",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 2326,
+        "eg": 2211
+      },
+      "automaticTables": {
+        "rawMg": 2326,
+        "rawEg": 2211,
+        "captureMg": 2326,
+        "captureEg": 2211,
+        "evalMg": 2326,
+        "evalEg": 2211
+      },
+      "context": 1,
+      "applied": {
+        "mg": 2326,
+        "eg": 2211
+      }
+    },
+    {
+      "id": "knight.purple@5",
+      "valueGroup": "level3:knight.purple@5",
+      "baseId": "knight.purple@5",
+      "movement": "NK",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1663,
+        "eg": 1877
+      },
+      "automaticTables": {
+        "rawMg": 1663,
+        "rawEg": 1877,
+        "captureMg": 1663,
+        "captureEg": 1877,
+        "evalMg": 1663,
+        "evalEg": 1877
+      },
+      "context": 1,
+      "applied": {
+        "mg": 1663,
+        "eg": 1877
+      }
+    },
+    {
+      "id": "knight.purple@6",
+      "valueGroup": "level3:knight.purple@6",
+      "baseId": "knight.purple@6",
+      "movement": "NWH",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1663,
+        "eg": 1877
+      },
+      "automaticTables": {
+        "rawMg": 1663,
+        "rawEg": 1877,
+        "captureMg": 1663,
+        "captureEg": 1877,
+        "evalMg": 1663,
+        "evalEg": 1877
+      },
+      "context": 1,
+      "applied": {
+        "mg": 1663,
+        "eg": 1877
+      }
+    },
+    {
+      "id": "pawn.bishop-step-current@1",
+      "valueGroup": "bishop-step",
+      "baseId": "pawn.bishop-step-current@1",
+      "movement": "fmWfeFifmnD",
+      "level": 2,
+      "placement": "replace",
+      "automatic": {
+        "mg": 214,
+        "eg": 245
+      },
+      "automaticTables": {
+        "rawMg": 214,
+        "rawEg": 245,
+        "captureMg": 214,
+        "captureEg": 245,
+        "evalMg": 214,
+        "evalEg": 245
+      },
+      "context": 1,
+      "applied": {
+        "mg": 214,
+        "eg": 245
+      }
+    },
+    {
+      "id": "pawn.bishop-step-expanded@1",
+      "valueGroup": "bishop-step",
+      "baseId": "pawn.bishop-step-current@1",
+      "movement": "fmW2feFifmnD",
+      "level": 2,
+      "placement": "replace",
+      "automatic": {
+        "mg": 235,
+        "eg": 273
+      },
+      "automaticTables": {
+        "rawMg": 235,
+        "rawEg": 273,
+        "captureMg": 235,
+        "captureEg": 273,
+        "evalMg": 235,
+        "evalEg": 273
+      },
+      "context": 1,
+      "applied": {
+        "mg": 214,
+        "eg": 245
+      }
+    },
+    {
+      "id": "pawn.bishop-step-reduced@1",
+      "valueGroup": "bishop-step",
+      "baseId": "pawn.bishop-step-current@1",
+      "movement": "fmWfcFifmnDifmF",
+      "level": 2,
+      "placement": "replace",
+      "automatic": {
+        "mg": 152,
+        "eg": 162
+      },
+      "automaticTables": {
+        "rawMg": 152,
+        "rawEg": 162,
+        "captureMg": 152,
+        "captureEg": 162,
+        "evalMg": 152,
+        "evalEg": 162
+      },
+      "context": 1,
+      "applied": {
+        "mg": 214,
+        "eg": 245
+      }
+    },
+    {
+      "id": "pawn.blue@5",
+      "valueGroup": "baseline:pawn.blue@5",
+      "baseId": "pawn.blue@5",
+      "movement": "fmW2fceF2",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 189,
+        "eg": 206
+      },
+      "automaticTables": {
+        "rawMg": 189,
+        "rawEg": 206,
+        "captureMg": 189,
+        "captureEg": 206,
+        "evalMg": 189,
+        "evalEg": 206
+      },
+      "context": 1,
+      "applied": {
+        "mg": 189,
+        "eg": 206
+      }
+    },
+    {
+      "id": "pawn.blue@7",
+      "valueGroup": "baseline:pawn.blue@7",
+      "baseId": "pawn.blue@7",
+      "movement": "mWFifmnD",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 503,
+        "eg": 592
+      },
+      "automaticTables": {
+        "rawMg": 503,
+        "rawEg": 592,
+        "captureMg": 503,
+        "captureEg": 592,
+        "evalMg": 503,
+        "evalEg": 592
+      },
+      "context": 2,
+      "applied": {
+        "mg": 503,
+        "eg": 592
+      }
+    },
+    {
+      "id": "pawn.forward-knight-expanded@1",
+      "valueGroup": "forward-knight",
+      "baseId": "pawn.orange@3",
+      "movement": "fmWfceFifmnDfhNmbW",
+      "level": 2,
+      "placement": "replace",
+      "automatic": {
+        "mg": 569,
+        "eg": 637
+      },
+      "automaticTables": {
+        "rawMg": 569,
+        "rawEg": 637,
+        "captureMg": 569,
+        "captureEg": 637,
+        "evalMg": 569,
+        "evalEg": 637
+      },
+      "context": 2,
+      "applied": {
+        "mg": 536,
+        "eg": 592
+      }
+    },
+    {
+      "id": "pawn.forward-knight-reduced@1",
+      "valueGroup": "forward-knight",
+      "baseId": "pawn.orange@3",
+      "movement": "fmWfceFifmnDmfhN",
+      "level": 2,
+      "placement": "replace",
+      "automatic": {
+        "mg": 277,
+        "eg": 330
+      },
+      "automaticTables": {
+        "rawMg": 277,
+        "rawEg": 330,
+        "captureMg": 277,
+        "captureEg": 330,
+        "evalMg": 277,
+        "evalEg": 330
+      },
+      "context": 2,
+      "applied": {
+        "mg": 536,
+        "eg": 592
+      }
+    },
+    {
+      "id": "pawn.full-knight-current@1",
+      "valueGroup": "full-knight",
+      "baseId": "pawn.full-knight-current@1",
+      "movement": "fmWfceFifmnDN",
+      "level": 2,
+      "placement": "replace",
+      "automatic": {
+        "mg": 949,
+        "eg": 1056
+      },
+      "automaticTables": {
+        "rawMg": 949,
+        "rawEg": 1056,
+        "captureMg": 949,
+        "captureEg": 1056,
+        "evalMg": 949,
+        "evalEg": 1056
+      },
+      "context": 2,
+      "applied": {
+        "mg": 949,
+        "eg": 1056
+      }
+    },
+    {
+      "id": "pawn.full-knight-expanded@1",
+      "valueGroup": "full-knight",
+      "baseId": "pawn.full-knight-current@1",
+      "movement": "fmWfceFifmnDNsmW",
+      "level": 2,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1020,
+        "eg": 1153
+      },
+      "automaticTables": {
+        "rawMg": 1020,
+        "rawEg": 1153,
+        "captureMg": 1020,
+        "captureEg": 1153,
+        "evalMg": 1020,
+        "evalEg": 1153
+      },
+      "context": 2,
+      "applied": {
+        "mg": 949,
+        "eg": 1056
+      }
+    },
+    {
+      "id": "pawn.full-knight-reduced@1",
+      "valueGroup": "full-knight",
+      "baseId": "pawn.full-knight-current@1",
+      "movement": "fmWfceFifmnDmNcfN",
+      "level": 2,
+      "placement": "replace",
+      "automatic": {
+        "mg": 536,
+        "eg": 637
+      },
+      "automaticTables": {
+        "rawMg": 536,
+        "rawEg": 637,
+        "captureMg": 536,
+        "captureEg": 637,
+        "evalMg": 536,
+        "evalEg": 637
+      },
+      "context": 2,
+      "applied": {
+        "mg": 949,
+        "eg": 1056
+      }
+    },
+    {
+      "id": "pawn.orange@3",
+      "valueGroup": "forward-knight",
+      "baseId": "pawn.orange@3",
+      "movement": "fmWfceFifmnDfhN",
+      "level": 2,
+      "placement": "replace",
+      "automatic": {
+        "mg": 536,
+        "eg": 592
+      },
+      "automaticTables": {
+        "rawMg": 536,
+        "rawEg": 592,
+        "captureMg": 536,
+        "captureEg": 592,
+        "evalMg": 536,
+        "evalEg": 592
+      },
+      "context": 2,
+      "applied": {
+        "mg": 536,
+        "eg": 592
+      }
+    },
+    {
+      "id": "pawn.purple@12",
+      "valueGroup": "level3:pawn.purple@12",
+      "baseId": "pawn.purple@12",
+      "movement": "feQ2bmQ2",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 418,
+        "eg": 436
+      },
+      "automaticTables": {
+        "rawMg": 418,
+        "rawEg": 436,
+        "captureMg": 418,
+        "captureEg": 436,
+        "evalMg": 418,
+        "evalEg": 436
+      },
+      "context": 2,
+      "applied": {
+        "mg": 418,
+        "eg": 436
+      }
+    },
+    {
+      "id": "pawn.purple@13",
+      "valueGroup": "level3:pawn.purple@13",
+      "baseId": "pawn.purple@13",
+      "movement": "mRcfB",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 762,
+        "eg": 808
+      },
+      "automaticTables": {
+        "rawMg": 762,
+        "rawEg": 808,
+        "captureMg": 762,
+        "captureEg": 808,
+        "evalMg": 762,
+        "evalEg": 808
+      },
+      "context": 2,
+      "applied": {
+        "mg": 762,
+        "eg": 808
+      }
+    },
+    {
+      "id": "pawn.purple@7",
+      "valueGroup": "level3:pawn.purple@7",
+      "baseId": "pawn.purple@7",
+      "movement": "mRceB2",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 651,
+        "eg": 697
+      },
+      "automaticTables": {
+        "rawMg": 651,
+        "rawEg": 697,
+        "captureMg": 651,
+        "captureEg": 697,
+        "evalMg": 651,
+        "evalEg": 697
+      },
+      "context": 2,
+      "applied": {
+        "mg": 651,
+        "eg": 697
+      }
+    },
+    {
+      "id": "pawn.rank-current@1",
+      "valueGroup": "rank",
+      "baseId": "pawn.rank-current@1",
+      "movement": "ifmnDmfWfceFsR",
+      "level": 2,
+      "placement": "replace",
+      "automatic": {
+        "mg": 773,
+        "eg": 808
+      },
+      "automaticTables": {
+        "rawMg": 773,
+        "rawEg": 808,
+        "captureMg": 773,
+        "captureEg": 808,
+        "evalMg": 773,
+        "evalEg": 808
+      },
+      "context": 2,
+      "applied": {
+        "mg": 773,
+        "eg": 808
+      }
+    },
+    {
+      "id": "pawn.rank-expanded@1",
+      "valueGroup": "rank",
+      "baseId": "pawn.rank-current@1",
+      "movement": "ifmnDmfW2fceFsR",
+      "level": 2,
+      "placement": "replace",
+      "automatic": {
+        "mg": 796,
+        "eg": 838
+      },
+      "automaticTables": {
+        "rawMg": 796,
+        "rawEg": 838,
+        "captureMg": 796,
+        "captureEg": 838,
+        "evalMg": 796,
+        "evalEg": 838
+      },
+      "context": 2,
+      "applied": {
+        "mg": 773,
+        "eg": 808
+      }
+    },
+    {
+      "id": "pawn.rank-reduced@1",
+      "valueGroup": "rank",
+      "baseId": "pawn.rank-current@1",
+      "movement": "ifmnDmfWfceFsR2",
+      "level": 2,
+      "placement": "replace",
+      "automatic": {
+        "mg": 433,
+        "eg": 480
+      },
+      "automaticTables": {
+        "rawMg": 433,
+        "rawEg": 480,
+        "captureMg": 433,
+        "captureEg": 480,
+        "evalMg": 433,
+        "evalEg": 480
+      },
+      "context": 2,
+      "applied": {
+        "mg": 773,
+        "eg": 808
+      }
+    },
+    {
+      "id": "pawn.rook-step-current@1",
+      "valueGroup": "rook-step",
+      "baseId": "pawn.rook-step-current@1",
+      "movement": "fceF2mR",
+      "level": 2,
+      "placement": "replace",
+      "automatic": {
+        "mg": 499,
+        "eg": 543
+      },
+      "automaticTables": {
+        "rawMg": 499,
+        "rawEg": 543,
+        "captureMg": 499,
+        "captureEg": 543,
+        "evalMg": 499,
+        "evalEg": 543
+      },
+      "context": 2,
+      "applied": {
+        "mg": 499,
+        "eg": 543
+      }
+    },
+    {
+      "id": "pawn.rook-step-expanded@1",
+      "valueGroup": "rook-step",
+      "baseId": "pawn.rook-step-current@1",
+      "movement": "fceF3mR",
+      "level": 2,
+      "placement": "replace",
+      "automatic": {
+        "mg": 553,
+        "eg": 597
+      },
+      "automaticTables": {
+        "rawMg": 553,
+        "rawEg": 597,
+        "captureMg": 553,
+        "captureEg": 597,
+        "evalMg": 553,
+        "evalEg": 597
+      },
+      "context": 2,
+      "applied": {
+        "mg": 499,
+        "eg": 543
+      }
+    },
+    {
+      "id": "pawn.rook-step-reduced@1",
+      "valueGroup": "rook-step",
+      "baseId": "pawn.rook-step-current@1",
+      "movement": "fceFmR",
+      "level": 2,
+      "placement": "replace",
+      "automatic": {
+        "mg": 481,
+        "eg": 525
+      },
+      "automaticTables": {
+        "rawMg": 481,
+        "rawEg": 525,
+        "captureMg": 481,
+        "captureEg": 525,
+        "evalMg": 481,
+        "evalEg": 525
+      },
+      "context": 2,
+      "applied": {
+        "mg": 499,
+        "eg": 543
+      }
+    },
+    {
+      "id": "queen.advancing-expanded@1",
+      "valueGroup": "advancing",
+      "baseId": "queen.blue@2",
+      "movement": "QmN",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 2956,
+        "eg": 3082
+      },
+      "automaticTables": {
+        "rawMg": 2956,
+        "rawEg": 3082,
+        "captureMg": 2956,
+        "captureEg": 3082,
+        "evalMg": 2956,
+        "evalEg": 3082
+      },
+      "context": 2,
+      "applied": {
+        "mg": 2771,
+        "eg": 2833
+      }
+    },
+    {
+      "id": "queen.advancing-reduced@1",
+      "valueGroup": "advancing",
+      "baseId": "queen.blue@2",
+      "movement": "QimfhN",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 2590,
+        "eg": 2590
+      },
+      "automaticTables": {
+        "rawMg": 2590,
+        "rawEg": 2590,
+        "captureMg": 2590,
+        "captureEg": 2590,
+        "evalMg": 2590,
+        "evalEg": 2590
+      },
+      "context": 2,
+      "applied": {
+        "mg": 2771,
+        "eg": 2833
+      }
+    },
+    {
+      "id": "queen.blue@2",
+      "valueGroup": "advancing",
+      "baseId": "queen.blue@2",
+      "movement": "QmfhN",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 2771,
+        "eg": 2833
+      },
+      "automaticTables": {
+        "rawMg": 2771,
+        "rawEg": 2833,
+        "captureMg": 2771,
+        "captureEg": 2833,
+        "evalMg": 2771,
+        "evalEg": 2833
+      },
+      "context": 2,
+      "applied": {
+        "mg": 2771,
+        "eg": 2833
+      }
+    },
+    {
+      "id": "queen.purple@1",
+      "valueGroup": "official:queen.purple@1",
+      "baseId": "queen.purple@1",
+      "movement": "QN",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 3738,
+        "eg": 3875
+      },
+      "automaticTables": {
+        "rawMg": 3738,
+        "rawEg": 3875,
+        "captureMg": 3738,
+        "captureEg": 3875,
+        "evalMg": 3738,
+        "evalEg": 3875
+      },
+      "context": 2,
+      "applied": {
+        "mg": 3738,
+        "eg": 3875
+      }
+    },
+    {
+      "id": "queen.purple@6",
+      "valueGroup": "level3:queen.purple@6",
+      "baseId": "queen.purple@6",
+      "movement": "QsNsC",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 3738,
+        "eg": 3875
+      },
+      "automaticTables": {
+        "rawMg": 3738,
+        "rawEg": 3875,
+        "captureMg": 3738,
+        "captureEg": 3875,
+        "evalMg": 3738,
+        "evalEg": 3875
+      },
+      "context": 3,
+      "applied": {
+        "mg": 3738,
+        "eg": 3875
+      }
+    },
+    {
+      "id": "queen.purple@7",
+      "valueGroup": "level3:queen.purple@7",
+      "baseId": "queen.purple@7",
+      "movement": "QgB0",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 3772,
+        "eg": 3470
+      },
+      "automaticTables": {
+        "rawMg": 3772,
+        "rawEg": 3470,
+        "captureMg": 3772,
+        "captureEg": 3470,
+        "evalMg": 3772,
+        "evalEg": 3470
+      },
+      "context": 3,
+      "applied": {
+        "mg": 3772,
+        "eg": 3470
+      }
+    },
+    {
+      "id": "queen.purple@8",
+      "valueGroup": "level3:queen.purple@8",
+      "baseId": "queen.purple@8",
+      "movement": "QZ",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 3738,
+        "eg": 3875
+      },
+      "automaticTables": {
+        "rawMg": 3738,
+        "rawEg": 3875,
+        "captureMg": 3738,
+        "captureEg": 3875,
+        "evalMg": 3738,
+        "evalEg": 3875
+      },
+      "context": 3,
+      "applied": {
+        "mg": 3738,
+        "eg": 3875
+      }
+    },
+    {
+      "id": "rook.blue@2",
+      "valueGroup": "ghost",
+      "baseId": "rook.blue@2",
+      "movement": "RgmR0",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1716,
+        "eg": 1636
+      },
+      "automaticTables": {
+        "rawMg": 1716,
+        "rawEg": 1636,
+        "captureMg": 1716,
+        "captureEg": 1636,
+        "evalMg": 1716,
+        "evalEg": 1636
+      },
+      "context": 3,
+      "applied": {
+        "mg": 1716,
+        "eg": 1636
+      }
+    },
+    {
+      "id": "rook.blue@3",
+      "valueGroup": "pawn-rook",
+      "baseId": "rook.blue@3",
+      "movement": "RceF",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1584,
+        "eg": 1636
+      },
+      "automaticTables": {
+        "rawMg": 1584,
+        "rawEg": 1636,
+        "captureMg": 1584,
+        "captureEg": 1636,
+        "evalMg": 1584,
+        "evalEg": 1636
+      },
+      "context": 3,
+      "applied": {
+        "mg": 1584,
+        "eg": 1636
+      }
+    },
+    {
+      "id": "rook.ghost-expanded@1",
+      "valueGroup": "ghost",
+      "baseId": "rook.blue@2",
+      "movement": "RgmQ0",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 2183,
+        "eg": 1959
+      },
+      "automaticTables": {
+        "rawMg": 2183,
+        "rawEg": 1959,
+        "captureMg": 2183,
+        "captureEg": 1959,
+        "evalMg": 2183,
+        "evalEg": 1959
+      },
+      "context": 3,
+      "applied": {
+        "mg": 1716,
+        "eg": 1636
+      }
+    },
+    {
+      "id": "rook.ghost-reduced@1",
+      "valueGroup": "ghost",
+      "baseId": "rook.blue@2",
+      "movement": "RgmR",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1716,
+        "eg": 1636
+      },
+      "automaticTables": {
+        "rawMg": 1716,
+        "rawEg": 1636,
+        "captureMg": 1716,
+        "captureEg": 1636,
+        "evalMg": 1716,
+        "evalEg": 1636
+      },
+      "context": 3,
+      "applied": {
+        "mg": 1716,
+        "eg": 1636
+      }
+    },
+    {
+      "id": "rook.pawn-rook-expanded@1",
+      "valueGroup": "pawn-rook",
+      "baseId": "rook.blue@3",
+      "movement": "RceF2",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1627,
+        "eg": 1680
+      },
+      "automaticTables": {
+        "rawMg": 1627,
+        "rawEg": 1680,
+        "captureMg": 1627,
+        "captureEg": 1680,
+        "evalMg": 1627,
+        "evalEg": 1680
+      },
+      "context": 3,
+      "applied": {
+        "mg": 1584,
+        "eg": 1636
+      }
+    },
+    {
+      "id": "rook.pawn-rook-reduced@1",
+      "valueGroup": "pawn-rook",
+      "baseId": "rook.blue@3",
+      "movement": "RfceF",
+      "level": 1,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1429,
+        "eg": 1480
+      },
+      "automaticTables": {
+        "rawMg": 1429,
+        "rawEg": 1480,
+        "captureMg": 1429,
+        "captureEg": 1480,
+        "evalMg": 1429,
+        "evalEg": 1480
+      },
+      "context": 3,
+      "applied": {
+        "mg": 1584,
+        "eg": 1636
+      }
+    },
+    {
+      "id": "rook.purple@10",
+      "valueGroup": "official:rook.purple@10",
+      "baseId": "rook.purple@10",
+      "movement": "RfB",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 1904,
+        "eg": 1932
+      },
+      "automaticTables": {
+        "rawMg": 1904,
+        "rawEg": 1932,
+        "captureMg": 1904,
+        "captureEg": 1932,
+        "evalMg": 1904,
+        "evalEg": 1932
+      },
+      "context": 3,
+      "applied": {
+        "mg": 1904,
+        "eg": 1932
+      }
+    },
+    {
+      "id": "rook.purple@12",
+      "valueGroup": "level3:rook.purple@12",
+      "baseId": "rook.purple@12",
+      "movement": "RC",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 2240,
+        "eg": 2413
+      },
+      "automaticTables": {
+        "rawMg": 2240,
+        "rawEg": 2413,
+        "captureMg": 2240,
+        "captureEg": 2413,
+        "evalMg": 2240,
+        "evalEg": 2413
+      },
+      "context": 3,
+      "applied": {
+        "mg": 2240,
+        "eg": 2413
+      }
+    },
+    {
+      "id": "rook.purple@14",
+      "valueGroup": "level3:rook.purple@14",
+      "baseId": "rook.purple@14",
+      "movement": "RFsNmsC",
+      "level": 3,
+      "placement": "replace",
+      "automatic": {
+        "mg": 2413,
+        "eg": 2650
+      },
+      "automaticTables": {
+        "rawMg": 2413,
+        "rawEg": 2650,
+        "captureMg": 2413,
+        "captureEg": 2650,
+        "evalMg": 2413,
+        "evalEg": 2650
+      },
+      "context": 3,
+      "applied": {
+        "mg": 2413,
+        "eg": 2650
+      }
+    }
+  ]
+}

@@ -114,6 +114,7 @@ test('a stop before launch creates no workers and atomic state replacement toler
   t.after(() => { fs.renameSync = originalRename; fs.unlinkSync = originalUnlink; });
   const result = await run(configuration(), directory, { enginePath: process.execPath, shouldStop: () => 'game' });
   assert.equal(result.stopped, true);
+  assert.equal(result.stopRequested, 'game');
   assert.equal(result.nextIndex, 0);
   assert.ok(injected && retries >= 2);
   assert.equal(fs.existsSync(path.join(directory, 'workers')), false);
@@ -121,6 +122,20 @@ test('a stop before launch creates no workers and atomic state replacement toler
   assertUnlocked(directory);
   fs.writeFileSync(path.join(directory, 'parallel-state.json'), 'null');
   await assert.rejects(run(configuration(), directory, { resume: true, enginePath: process.execPath }), /session state/i);
+  assertUnlocked(directory);
+});
+
+test('a stop on the final fixture result survives full finalization for sequential controllers', native, async t => {
+  const directory = temporary(t), input = configuration({ nodes: 20, maxPlies: 2 });
+  const config = normalizeConfig({ ...input, comparisons: [input.comparisons[0]], openings: [input.openings[0]] });
+  let finished = 0, stop = null;
+  const result = await run(config, directory, { jobs: 1, shouldStop: () => stop,
+    onProgress(message) { if (message.includes('Finished ') && ++finished === 2) stop = 'pair'; } });
+  assert.equal(finished, 2);
+  assert.equal(result.nextIndex, 2);
+  assert.equal(result.stopped, false, 'all fixture slots finalized');
+  assert.equal(result.stopRequested, 'pair', 'the outer queue must still pause');
+  assert.equal(result.summary.statusCounts.truncated, 2, 'short protocol fixtures are not scored balance evidence');
   assertUnlocked(directory);
 });
 

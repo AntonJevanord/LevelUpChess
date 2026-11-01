@@ -23,7 +23,7 @@ function checkAbort(signal) {
 
 /** Validate a complete design campaign without opening a results store or
  * playing games. Native checks use one temporary rules file and perft only. */
-async function validateDesignConfig(input, { enginePath, signal, onProgress = () => {}, standardOpeningSources = false } = {}) {
+async function validateDesignConfig(input, { enginePath, signal, onProgress = () => {}, standardOpeningSources = false, includeValueInventory = false } = {}) {
   checkAbort(signal);
   if (![2, 3].includes(input?.schemaVersion)) throw new Error('Design validation requires a schemaVersion 2 or 3 configuration.');
   const config = normalizeConfig(input);
@@ -119,7 +119,11 @@ async function validateDesignConfig(input, { enginePath, signal, onProgress = ()
     checkAbort(signal);
     engine = makeEngine({ skill: 20 });
     await engine.start({ signal });
-    await requireManualValues(engine, profile, { signal });
+    const manualValues = await requireManualValues(engine, profile, { signal });
+    if (includeValueInventory) {
+      if (!manualValues) throw new Error('A value-inventory proof requires an explicit evaluation policy.');
+      result.manualValues = manualValues;
+    }
     const strengths = new Map(config.comparisons.flatMap(comparison => [comparison.strengthA, comparison.strengthB])
       .map(strength => [JSON.stringify(strength), strength]));
     strengths.delete(JSON.stringify({ skill: 20 }));

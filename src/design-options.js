@@ -19,7 +19,8 @@ const currentProfiles = [
   require('./playable-v17-rooks-profile.json'),
   require('./playable-v17-queens-profile.json'),
 ];
-const { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_RESERVE_DESIGN_IDS } = require('./playable-library');
+const revisedPawnProfile = require('./playable-v17-pawns-revised-profile.json');
+const { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_RESERVE_DESIGN_IDS } = require('./playable-library');
 const { STANDARD_TYPES } = require('./design-catalog');
 const { pieceInfo } = require('./piece-catalog');
 
@@ -32,10 +33,10 @@ function freeze(value) {
 }
 
 const PLAYABLE_PROFILE = freeze(compiled);
-const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles]);
+const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile]);
 const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
 const EXPERIMENTAL_VARIANTS = freeze(PLAYABLE_PROFILES.map(profile => profile.variant));
-const PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES[index].variant, ...(library.generation ? { generation: library.generation } : {}), ...(library.focusFamily ? { focusFamily: library.focusFamily } : {}) })));
+const PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES[index].variant, ...(library.generation ? { generation: library.generation } : {}), ...(library.focusFamily ? { focusFamily: library.focusFamily } : {}), ...(library.edition ? { edition: library.edition } : {}), ...(library.superseded ? { superseded: true } : {}) })));
 function getPlayableProfile(variant = EXPERIMENTAL_VARIANT) { return PLAYABLE_PROFILES.find(profile => profile.variant === variant); }
 function isExperimentalVariant(variant) { return EXPERIMENTAL_VARIANTS.includes(variant); }
 const metadata = {
@@ -83,6 +84,7 @@ const metadata = {
   'rook.purple@10': ['Vanguard', 'Normal rook moves, plus clear diagonal moves and captures forward.'],
   'bishop.purple@13': ['Cruisader', 'Normal bishop moves, plus clear horizontal moves up to two squares. Also move or capture two files sideways and one rank forward or backward if the first sideways square is empty.'],
   'pawn.blue@2': ['Bishop pawn', 'Move one square forward, or move or capture one square diagonally forward. A clear initial two-step is available from your home two ranks. Visiting an empty en-passant target diagonally is a quiet move and leaves the bypassed pawn.'],
+  'pawn.bishop-step-current@1': ['Bishop pawn', 'Move one square forward, or move or capture one square diagonally forward. A clear initial two-step is available from your home two ranks. Visiting an empty en-passant target diagonally is a quiet move and leaves the bypassed pawn.'],
   'pawn.orange@3': ['Knight pawn', 'Normal pawn moves and captures, plus forward knight jumps: one or two files sideways and two or one ranks forward, including captures.'],
   'pawn.purple@11': ['Rook pawn', 'Move any clear distance orthogonally without capturing. Capture one or two clear squares diagonally forward.'],
   'pawn.blue@3': ['Returning pawn', 'Move one clear square backward, or one or two clear squares forward without capturing. Capture one square diagonally forward.'],
@@ -107,7 +109,7 @@ const metadata = {
   'rook.blue@2': ['Ghost rook', 'Normal rook moves. Also hop along a rank or file over exactly one piece and land on any empty square beyond it before the next blocker, without capturing.'],
   'rook.orange@2': ['Blink rook', 'Normal rook moves and captures. Also jump to any empty square within three files and three ranks, without capturing.'],
   'rook.purple@12': ['Ranged rook', 'Normal rook moves and camel jumps (three squares in one direction and one at right angles), including captures.'],
-  'rook.blue@3': ['Pawn rook', 'Normal rook moves, plus one-square forward diagonal captures.'],
+  'rook.blue@3': ['Pawn rook', 'Normal rook moves, plus one-square diagonal captures in any direction.'],
   'rook.orange@3': ['Knight-capture rook', 'Normal rook moves, plus capture-only knight jumps.'],
   'rook.purple@13': ['Side rook', 'Normal rook moves, plus one-square diagonal steps, wide knight jumps and wide camel jumps, including captures. Wide jumps travel two or three files sideways and one rank forward or backward.'],
   'queen.blue@2': ['Advancing queen', 'Normal queen moves, plus quiet forward knight jumps.'],
@@ -139,7 +141,7 @@ const DESIGN_OPTIONS = freeze(definitions.map(definition => {
     level: definition.level,
     name,
     description: movement + suffix,
-    status: definition.id === 'rook.purple@1' ? 'retired' : definition.id === 'pawn.purple@2' ? 'parked' : definition.revision > 1 || definition.placement === 'reserve' ? 'experimental' : 'reference',
+    status: definition.id === 'rook.purple@1' ? 'retired' : definition.id === 'pawn.purple@2' ? 'parked' : definition.revision > 1 || definition.placement === 'reserve' || definition.id === 'pawn.bishop-step-current@1' ? 'experimental' : 'reference',
   };
 }));
 const optionsById = Object.fromEntries(DESIGN_OPTIONS.map(option => [option.id, option]));
@@ -165,9 +167,11 @@ function workshopAccentsFor(candidates, reserves) {
 }
 const workshopAccents = workshopAccentsFor(V16_CANDIDATES, RESERVE_DESIGN_IDS);
 const currentWorkshopAccents = workshopAccentsFor(V17_CANDIDATES, V17_RESERVE_DESIGN_IDS);
+const revisedPawnAccents = workshopAccentsFor({ ...V17_CANDIDATES, pawns: V17_REVISED_PAWN_CANDIDATES }, V17_RESERVE_DESIGN_IDS);
 function optionInProfile(option, profile) {
   if (!option) return option;
-  const accents = currentProfiles.some(candidate => candidate.variant === profile.variant) ? currentWorkshopAccents
+  const accents = revisedPawnProfile.variant === profile.variant ? revisedPawnAccents
+    : currentProfiles.some(candidate => candidate.variant === profile.variant) ? currentWorkshopAccents
     : closeoutProfiles.some(candidate => candidate.variant === profile.variant) ? workshopAccents : null;
   if (!accents) return option;
   return { ...option, accent: accents[option.id], ...(officialNames[option.id] ? { name: officialNames[option.id], status: 'reference' } : {}) };

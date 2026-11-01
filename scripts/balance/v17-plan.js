@@ -14,6 +14,7 @@ const targeted = require('./v17-targeted-plan');
 const mobility = require('./v17-mobility-plan');
 const extras = require('./v17-mobility-extras-plan');
 const referencePanel = require('./reference-panel-plan');
+const brackets = require('./v17-bracket-plan');
 
 const ROOT = path.resolve(__dirname, '../..');
 const OPENINGS = require('../../experiments/balance/v17-openings.json');
@@ -28,8 +29,9 @@ const FILES = Object.freeze({
   ...mobility.FILES,
   ...extras.FILES,
   ...referencePanel.FILES,
+  ...brackets.FILES,
 });
-const CAPS = Object.freeze({ level3: 832, 'reference-2v2': 240, 'pawn-grants': 240, ...followup.CAPS, ...targeted.CAPS, ...mobility.CAPS, ...extras.CAPS, ...referencePanel.CAPS });
+const CAPS = Object.freeze({ level3: 832, 'reference-2v2': 240, 'pawn-grants': 240, ...followup.CAPS, ...targeted.CAPS, ...mobility.CAPS, ...extras.CAPS, ...referencePanel.CAPS, ...brackets.CAPS });
 
 function freeze(value) {
   if (value && typeof value === 'object') {
@@ -88,6 +90,7 @@ function buildReferencePairs() {
 /** Declarations are normal balance configurations consumed by the
  * existing paired runner. A changed protocol must use a new declaration. */
 function loadExperiment(experiment) {
+  if (Object.hasOwn(brackets.FILES, experiment)) return brackets.loadBracket(experiment);
   if (Object.hasOwn(referencePanel.FILES, experiment)) return referencePanel.loadPanel(experiment);
   if (Object.hasOwn(extras.FILES, experiment)) return extras.loadExtras(experiment);
   if (Object.hasOwn(mobility.FILES, experiment)) return mobility.loadMobility(experiment);

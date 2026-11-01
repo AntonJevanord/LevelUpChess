@@ -1,0 +1,18 @@
+[
+  { "id": "bracket-pirc", "moves": ["e2e4", "d7d6"] },
+  { "id": "bracket-queens-knight-defense", "moves": ["d2d4", "b8c6"] },
+  { "id": "bracket-english-b6", "moves": ["c2c4", "b7b6"] },
+  { "id": "bracket-reti-d6", "moves": ["g1f3", "d7d6"] },
+  { "id": "bracket-larsen-e6", "moves": ["b2b3", "e7e6"] },
+  { "id": "bracket-kings-fianchetto-c5", "moves": ["g2g3", "c7c5"] },
+  { "id": "bracket-owens-defense", "moves": ["e2e4", "b7b6"] },
+  { "id": "bracket-queens-pawn-d6", "moves": ["d2d4", "d7d6"] },
+  { "id": "bracket-english-d6", "moves": ["c2c4", "d7d6"] },
+  { "id": "bracket-reti-nc6", "moves": ["g1f3", "b8c6"] },
+  { "id": "bracket-nimzowitsch", "moves": ["e2e4", "b8c6"] },
+  { "id": "bracket-queens-pawn-b6", "moves": ["d2d4", "b7b6"] },
+  { "id": "bracket-english-nc6", "moves": ["c2c4", "b8c6"] },
+  { "id": "bracket-reti-b6", "moves": ["g1f3", "b7b6"] },
+  { "id": "bracket-larsen-c5", "moves": ["b2b3", "c7c5"] },
+  { "id": "bracket-kings-fianchetto-e6", "moves": ["g2g3", "e7e6"] }
+]

@@ -46,6 +46,10 @@ Reference panel: panel-gap = 64; panel-level1 = 192;
 panel-level1-pairs = 960 games. These level-1-only stages check the frozen
 reference value tables in a separate diagnostic profile, without adding
 level-3 opponents to their match schedules.
+New brackets: acceptance-minors = 1152; acceptance-majors = 864;
+reference-pawns = 1440; reference-grants = 1248; level3-confirmation = 2048.
+These five independent runs total 6752 games. Sixteen new matched prefixes
+and fixed values within each bracket are declared in docs/balance-brackets-v17.md.
 Every experiment uses complete color pairs and 20,000 nodes/move.
 Only the selected experiment runs. No follow-up or additional games start
 automatically. q/Ctrl+C stops now; g finishes active games; p finishes pairs.
@@ -101,15 +105,17 @@ async function checkExperiment(declaration, { enginePath, signal, onProgress = (
       engine = new UciEngine({ path: enginePath, variantPath, variant: diagnostic.variant,
         options: { skill: 20, threads: config.engine.threads, hash: config.engine.hashMb } });
       onProgress(standalone
-        ? 'Validation: checking all four frozen reference MG/EG value tables in their standalone diagnostic profile; match armies remain level 1 only.'
+        ? 'Validation: checking all four frozen reference MG/EG value tables in their standalone diagnostic profile; match armies retain their declared purchase budgets.'
         : 'Validation: checking all four frozen reference MG/EG value tables.');
       await engine.start({ signal });
       referenceValues = await requireOfficialReferenceValues(engine, diagnostic, { signal });
       if (standalone) referenceValueProfile = { variant: diagnostic.variant, hash: diagnostic.hash, registryHash: diagnostic.registryHash };
       await engine.close(); engine = null;
     }
-    const validation = await validate(config, { ...(enginePath ? { enginePath } : {}), signal, onProgress, standardOpeningSources: true });
+    const validation = await validate(config, { ...(enginePath ? { enginePath } : {}), signal, onProgress, standardOpeningSources: true,
+      ...(declaration.metadata.evaluationAudit ? { includeValueInventory: true } : {}) });
     return { ...validation, experiment: declaration.experiment,
+      ...(declaration.metadata.evaluationAudit ? { bracketValueReceipt: declaration.metadata.evaluationAudit } : {}),
       configSha256: sha(JSON.stringify(config)), ...(referenceValues ? { referenceValues, engineSha256: sha(fs.readFileSync(enginePath)),
         ...(referenceValueProfile ? { referenceValueProfile } : {}) } : {}) };
   } finally {
@@ -168,6 +174,22 @@ function validatePreflight(proof, declaration, { manifest, validation } = {}) {
     for (const type of [letter, letter.toUpperCase()]) for (const field of ['rawMg', 'rawEg', 'captureMg', 'captureEg', 'evalMg', 'evalEg']) {
       if (values.pieces[type]?.[field] !== reference.engineValue[field.endsWith('Mg') ? 'mg' : 'eg']) throw new Error('The native preflight proof changed a frozen reference value.');
     }
+  }
+  if (declaration.metadata.evaluationAudit) {
+    if (!isDeepStrictEqual(proof.validation.bracketValueReceipt, declaration.metadata.evaluationAudit)) throw new Error('The native preflight proof changed its bracket valuation receipt.');
+    const actual = proof.validation.manualValues;
+    if (actual?.version !== 1 || !actual.pieces) throw new Error('The native preflight proof is missing applied bracket values.');
+    for (const allocation of registry.allocations) {
+      const expected = declaration.config.evaluation?.pieceValues?.[allocation.id];
+      if (!expected) throw new Error('The bracket policy does not cover every selected design.');
+      for (const letter of [allocation.letter, allocation.letter.toUpperCase()]) {
+        for (const field of ['rawMg', 'rawEg', 'captureMg', 'captureEg', 'evalMg', 'evalEg']) {
+          if (actual.pieces[letter]?.[field] !== expected[field.endsWith('Mg') ? 'mg' : 'eg']) throw new Error(`The native preflight proof changed an applied bracket value: ${allocation.id} ${letter} ${field}.`);
+        }
+      }
+    }
+  } else if (proof.validation.bracketValueReceipt !== undefined || proof.validation.manualValues !== undefined) {
+    throw new Error('An older experiment cannot acquire an undeclared bracket valuation proof.');
   }
   return proof;
 }
@@ -248,7 +270,9 @@ async function main(args = process.argv.slice(2), { run = parallelMain, check = 
   const options = parseArgs(args);
   if (options.help) { log(HELP); return; }
   const declaration = loadExperiment(options.experiment);
-  log(declaration.metadata.referenceValueProfile === 'official-standalone'
+  log(declaration.metadata.evaluationAudit
+    ? `${declaration.config.name}: ${declaration.metadata.scheduledGames} games; ${declaration.config.openings.length} opening cases; declared equal purchase budgets and fixed bracket MG/EG values.`
+    : declaration.metadata.referenceValueProfile === 'official-standalone'
     ? `${declaration.config.name}: ${declaration.metadata.scheduledGames} games; ${declaration.config.openings.length} opening cases; level-1 armies only, ${declaration.metadata.upgradePoints} upgrade points per side.`
     : `${declaration.config.name}: ${declaration.metadata.scheduledGames} games; ${declaration.config.openings.length} opening cases; four frozen references.`);
   if (declaration.metadata.baseline) log('Additional baseline: three two-step pawns. Overall score includes the four references only; the baseline has its own column.');

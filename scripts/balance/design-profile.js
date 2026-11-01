@@ -4,6 +4,7 @@ const { createHash } = require('node:crypto');
 const { restoreDesignRegistry } = require('./design-registry');
 const { capabilityProbes: legacyCapabilityProbes } = require('../engine-capabilities');
 const { normalizeEvaluation } = require('./evaluation');
+const { bracketProbes } = require('./v17-bracket-probes');
 
 const START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 const COMPILER_VERSION = 1;
@@ -272,6 +273,7 @@ function definitionProbes(definition, letter) {
     { name: 'backward diagonal retreat cannot capture an en-passant pawn', fen: position({ h1: 'K', h8: 'k', c7: type, d5: 'p' }, 'w', '-', 'd6') },
     { name: 'nonroyal Scout never promotes', fen: position({ h1: 'K', h6: 'k', b7: type }) },
   );
+  frames.push(...bracketProbes(definition, type, position));
   if (definition.roles.castlingRook) frames.push({ name: 'both castling sides', fen: position({ e8: 'k', a1: type, e1: 'K', h1: type }, 'w', 'KQ') });
   // These new allocation hints have no historical movement identity. In
   // particular, l used to denote a rook; its castling fixtures do not apply
