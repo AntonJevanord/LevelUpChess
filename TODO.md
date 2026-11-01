@@ -101,6 +101,8 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Replace per-move checkpoint writes with durable game boundaries, retaining clean-stop/error prefix recovery and crash-safe completed results. Verify the exact version-0.17.8 storage-only resume upgrade, including previously uncreated workers.
 - [x] Add an isolated synthetic-storage benchmark; retain identical result bytes and distinguish write reduction from full-game throughput.
 - [ ] Measure Windows games/hour and disk latency after the checkpoint update before changing any further performance settings.
+- [ ] Add a central queue for future runs: dispatch the next frozen color-swapped pair to each free worker. Preserve durable results, interrupted-pair recovery and q/g/p controls; keep existing static-shard campaigns resumable with their original assignments.
+- [ ] Separately benchmark one shared engine per game when both sides use identical settings: compare RAM, throughput and search behavior at the same node budget. Keep fresh-game resets and preserve the current two-engine protocol for existing runs.
 
 - [x] Freeze Vanguard `RfB`, Unicorn `NC`, Cruisader `BsR2nsN` and Amazon `QN`; preserve the [reference guide](docs/official-references.md), archived games and reproducible material fits.
 - [x] Leave the 400-ply NC–Amazon game unscored, without continuation or replacement.
