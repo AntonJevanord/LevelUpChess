@@ -13,6 +13,7 @@ const { openStore } = require('./storage');
 const { renameWithRetrySync, unlinkWithRetrySync } = require('./files');
 const { summarize } = require('./stats');
 const { shouldPrintProgress } = require('../balance');
+const { adaptParallelManifest, writeUpgradeReceipt } = require('./checkpoint-upgrade');
 
 const FINAL = new Set(['completed', 'truncated']);
 const STATUSES = new Set([...FINAL, 'aborted', 'error']);
@@ -113,6 +114,8 @@ async function runParallel({ config: input, schedule: requestedSchedule, outDir,
   const schedule = requestedSchedule || original?.schedule || makeSchedule(config);
   const requested = jobsValue(requestedJobs === undefined ? original?.parallel.jobs ?? 2 : requestedJobs);
   const generated = makeManifest(config, schedule, requested, enginePath);
+  const storageUpgrade = adaptParallelManifest(original, generated);
+  generated.manifest = storageUpgrade.manifest;
   const manifest = original || generated.manifest, jobs = manifest.parallel.jobs;
   if (original) {
     for (const field of ['config', 'schedule', 'configHash', 'rulesHash', 'engineSha256', 'rulesBundleSha256', 'runnerSha256', 'runnerSources', 'designRegistry', 'designProfile', 'rulesProfiles', 'parallel']) {
@@ -231,6 +234,7 @@ async function runParallel({ config: input, schedule: requestedSchedule, outDir,
     if (!fs.existsSync(ini)) fs.writeFileSync(ini, generated.profile.config, { flag: 'wx' });
     // Validate and collect existing journals before launching any new process.
     collect();
+    writeUpgradeReceipt(directory, storageUpgrade.receipt, { runId: store.manifest.runId });
     signal?.addEventListener('abort', abort);
     if (signal?.aborted) abort();
     sendControl(shouldStop());
@@ -264,7 +268,9 @@ async function runParallel({ config: input, schedule: requestedSchedule, outDir,
       });
       promises.push(promise);
       child.send({ type: 'start', options: { config, schedule: generated.partitions[index], outDir: workerDir,
-        resume: fs.existsSync(path.join(workerDir, 'run.json')), enginePath } }, error => { if (error) fail(error); });
+        resume: fs.existsSync(path.join(workerDir, 'run.json')), enginePath,
+        ...(storageUpgrade.receipt ? { checkpointParent: { directory, runId: manifest.runId, worker: shard.worker } } : {}),
+      } }, error => { if (error) fail(error); });
     }
     // Status should reflect the launched workers during their first games,
     // before any result is available to trigger another aggregate snapshot.

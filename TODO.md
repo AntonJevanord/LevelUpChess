@@ -82,7 +82,8 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Check both-color movement, blockers, home-rank abilities, actual en-passant removal, standard promotions, castling and finite grants; exclude unsupported `nC` behavior.
 - [x] Verify all scheduled positions and the new reports without playing scored cloud games. Show the first fixed eight cases, second eight and all sixteen with shared-case coverage and per-opponent scores.
 - [x] Add and verify a sequential launcher that freezes the five stages and jobs, skips only validated completions, and pauses the entire queue for immediate/game/pair stops.
-- [ ] Run the five stages on the user's PC through the sequential launcher or individually, with four jobs total. Preserve journals, manifests, native proofs and unscored outcomes; use the existing stop/resume controls.
+- [x] Complete and archive the [two level-1 acceptance stages](docs/v17-acceptance-review.md): all 2,016 games completed without retries, errors or truncations. Retain per-opponent and eight-case cohort results; no roster changes while level 2 runs.
+- [ ] Finish the level-2 pawn/grant stages and level-3 confirmation through the sequential launcher or individually, with four jobs total. Preserve journals, manifests, native proofs and unscored outcomes; use the existing stop/resume controls.
 - [ ] Review bracket direction and repeated matchup concerns before selecting level-2 benchmarks. Confirm fourteen existing level-3 designs plus `BmN`/`BDmC`; retire the capture-heavy Mating bishop from this campaign.
 - [ ] After selecting level-2 anchors, declare the six-point bridge: three L2 purchases versus two identical non-Amazon L3 references. It is outside the current 6,752-game budget.
 
@@ -96,6 +97,10 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [ ] Treat pocket-aware material regression as a separate method; reserve outcomes remain the primary balancing tool.
 
 ## Evidence and storage
+
+- [x] Replace per-move checkpoint writes with durable game boundaries, retaining clean-stop/error prefix recovery and crash-safe completed results. Verify the exact version-0.17.8 storage-only resume upgrade, including previously uncreated workers.
+- [x] Add an isolated synthetic-storage benchmark; retain identical result bytes and distinguish write reduction from full-game throughput.
+- [ ] Measure Windows games/hour and disk latency after the checkpoint update before changing any further performance settings.
 
 - [x] Freeze Vanguard `RfB`, Unicorn `NC`, Cruisader `BsR2nsN` and Amazon `QN`; preserve the [reference guide](docs/official-references.md), archived games and reproducible material fits.
 - [x] Leave the 400-ply NC–Amazon game unscored, without continuation or replacement.

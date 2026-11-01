@@ -114,8 +114,7 @@ test('one frozen original-library allocation supports cancellation and replay ac
     signal: controller.signal,
     onProgress(message) {
       if (/passed \d+ movement checks/.test(message)) checked++;
-      const checkpoint = fs.existsSync(path.join(dir, 'checkpoint.json')) ? json(dir, 'checkpoint.json') : null;
-      if (checkpoint?.current?.moves.length === 1) controller.abort();
+      if (message.startsWith('Game ') && message.includes(': ply 1,')) controller.abort();
     },
   });
   assert.equal(interrupted.stopped, true);
@@ -200,8 +199,8 @@ test('resume rejects checkpoint and interrupted journal references to another pr
   const controller = new AbortController();
   await run(config, dir, {
     signal: controller.signal,
-    onProgress() {
-      if (fs.existsSync(path.join(dir, 'checkpoint.json')) && json(dir, 'checkpoint.json').current?.moves.length === 1) controller.abort();
+    onProgress(message) {
+      if (message.startsWith('Game ') && message.includes(': ply 1,')) controller.abort();
     },
   });
   const checkpoint = read(dir, 'checkpoint.json');

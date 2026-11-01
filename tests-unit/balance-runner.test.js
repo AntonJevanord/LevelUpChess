@@ -148,7 +148,7 @@ for (const [mode, expectedGames] of [['game', 1], ['pair', 2]]) {
     let requested = null;
     const result = await run(config, directory, {
       shouldStop: () => requested,
-      onProgress() { if (checkpoint(directory)?.current) requested = mode; },
+      onProgress(message) { if (message.startsWith('Starting game ')) requested = mode; },
     });
     const attempts = records(directory);
     assert.equal(result.stopped, true);
@@ -166,22 +166,23 @@ for (const [mode, expectedGames] of [['game', 1], ['pair', 2]]) {
   });
 }
 
-test('aborting after a saved move preserves its history and resumes as an unscored retry', nativeOptions, async t => {
+test('aborting after a played move flushes its history and resumes as an unscored retry', nativeOptions, async t => {
   const directory = temporary(t);
   const config = configuration();
   const controller = new AbortController();
-  let saved;
+  let observedMove = false;
   const interrupted = await run(config, directory, {
     signal: controller.signal,
-    onProgress() {
-      const current = checkpoint(directory)?.current;
-      if (current?.moves.length === 1 && !controller.signal.aborted) {
-        saved = structuredClone(current);
+    onProgress(message) {
+      if (message.startsWith('Game ') && message.includes(': ply 1,') && !controller.signal.aborted) {
+        observedMove = true;
         controller.abort();
       }
     },
   });
-  assert.ok(saved, 'the progress callback must observe the first persisted move');
+  const saved = checkpoint(directory)?.current;
+  assert.ok(observedMove && saved, 'the clean stop must flush the first played move');
+  assert.equal(saved.moves.length, 1);
   assert.equal(interrupted.stopped, true);
   assert.equal(interrupted.nextIndex, 0);
   assert.equal(records(directory).length, 1);
@@ -234,6 +235,13 @@ test('historical runners are rejected while matching interrupted journal history
   const directory = temporary(t);
   const config = configuration({ repetitions: 2 });
   const rename = fs.renameSync;
+  const { UciEngine } = require('../scripts/balance/uci');
+  const search = UciEngine.prototype.search;
+  let startedGames = 0;
+  const failedSearch = t.mock.method(UciEngine.prototype, 'search', function(options) {
+    if (startedGames === 3 && options.moves.length === 1) throw new Error('Synthetic search failure before recovery checkpoint');
+    return search.call(this, options);
+  });
   t.mock.method(Atomics, 'wait', () => 'timed-out');
   const injected = t.mock.method(fs, 'renameSync', (from, to) => {
     if (path.basename(to) === 'checkpoint.json') {
@@ -246,14 +254,16 @@ test('historical runners are rejected while matching interrupted journal history
     }
     return rename(from, to);
   });
-  await assert.rejects(run(config, directory), error => error.code === 'EPERM');
+  await assert.rejects(run(config, directory, { onProgress(message) { if (message.startsWith('Starting game ')) startedGames++; } }),
+    error => /Synthetic search failure/.test(error.message) && error.recoveryError?.code === 'EPERM');
   injected.mock.restore();
+  failedSearch.mock.restore();
   const attempts = records(directory);
   assert.equal(attempts.length, 3);
   assert.deepEqual(attempts.map(attempt => attempt.status), ['truncated', 'truncated', 'error']);
   const saved = attempts[2];
   assert.equal(saved.moves.length, 1);
-  assert.deepEqual(checkpoint(directory).current.moves, []);
+  assert.equal(checkpoint(directory).current, null, 'failed recovery checkpoint leaves the previous completed-game boundary intact');
   assert.equal(fs.existsSync(path.join(directory, 'run.lock')), false);
 
   // Reconstruct the exact original source identity, as found in a pre-patch

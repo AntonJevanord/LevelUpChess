@@ -170,8 +170,9 @@ scored balance games were played during preparation.
 
 ## Run on Windows
 
-Finish any active old campaign before updating. In the new checkout, update once
-and install its dependencies:
+For the reviewed version-0.17.8 storage update, follow the [active-campaign
+upgrade guide](game-checkpoints-v17.md). For other updates, finish the active
+campaign first. In a new checkout, update once and install its dependencies:
 
 ```powershell
 Set-Location 'D:\Chess\LevelUpChess'

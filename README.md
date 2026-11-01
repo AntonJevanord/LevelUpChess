@@ -71,6 +71,10 @@ Future candidates face the frozen references. The unfinished NC–Amazon game re
 
 ## Version 17: balance experiments
 
+The [level-1 acceptance review](docs/v17-acceptance-review.md) archives all 2,016 completed games without errors or truncations. Current Wazzap bishop scored 52.60%; expanded Climbing knight scored 59.38%. Pawn rook averages hide matchup differences. Level-2 screening is running; these outcomes do not change the active roster or scheduled games.
+
+Version 0.17.9 saves normal checkpoints at game boundaries. Completed games stay durable and clean stops save the active prefix once. The [reviewed storage upgrade](docs/game-checkpoints-v17.md) can resume a version-0.17.8 campaign while preserving its original manifests and completed games.
+
 The initial screens and follow-ups completed **2,912 games**. The [combined report](experiments/balance/results/v17-followup-001.report.md) gives sixteen-start matchup percentages for fourteen level-3 designs, plus pawn/grant results. The [second-screen review](docs/version17-second-review.md) records design recommendations and unresolved matchups. Current workshop selections preserve each earlier research definition.
 
 The [initial protocols](docs/version17-experiments.md) and [follow-up commands](docs/version17-followups.md) remain available. `balance:v17:review` combines compatible first- and second-batch outcomes without rerunning games. Overall summary tables show percentages beside W/D/L; draws count half a point.

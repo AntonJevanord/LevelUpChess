@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-game-checkpoint-runtime-approval",
+  "name": "v0.17.8 to v0.17.9 game-boundary checkpoint writes",
+  "fromCommit": "4eff71ac69bf3639069d856a393a9711c5baa550",
+  "from": {
+    "runnerSha256": "4bce31cd6fc608ed9378a83f3592786935e91a58226a8541e8e4071880535bfa",
+    "runnerSources": [
+      {
+        "file": "run.js",
+        "sha256": "693388a51208deec396d561151fadaa601364df63b4dec58ebbc139e354d040e"
+      },
+      {
+        "file": "plan.js",
+        "sha256": "b1eaccc4def252862c6cb19ea332af10169efaeec9e578ac24f457ff59fc8133"
+      },
+      {
+        "file": "stats.js",
+        "sha256": "dd55139112cc8fa89ae1ebcc7c1f81631e3aca44a6e01e3ad756f4b52766c5fc"
+      },
+      {
+        "file": "storage.js",
+        "sha256": "6ab2623e2877c3caec418c27fefa737d108cf0e0e8dab805caaa404d72c563fc"
+      },
+      {
+        "file": "uci.js",
+        "sha256": "85ab926f2748225bcc37c59e6fb59520a94fadfc6c0c2c676dc4bd1a973eee19"
+      },
+      {
+        "file": "capabilities.js",
+        "sha256": "a5cc31921e7d88de8214a09fa888158dc285a3d5fba9682d5c3a91fb601c9086"
+      },
+      {
+        "file": "../engine-capabilities.js",
+        "sha256": "640389c60255577db149ba87acccd323fa4209d907fd2eaa8521a1805dbfd6d9"
+      },
+      {
+        "file": "files.js",
+        "sha256": "25cd2624c6e08fb674bf06c0a71614606d7d414fc0bacec881e69719f42feedc"
+      },
+      {
+        "file": "resume-compatibility.js",
+        "sha256": "d3034c734b56665a529632aa777fe30eb6679d339463481cbfe8bf22daa4c579"
+      },
+      {
+        "file": "design-registry.js",
+        "sha256": "4e664fe0dd5179baef36694dcb8b079566c93342a020549051be9269e6296ee0"
+      },
+      {
+        "file": "design-profile.js",
+        "sha256": "4c42b24d43d983df2e3c58e95ad4d8eec2d81036c518490c43fec552fc82a73c"
+      },
+      {
+        "file": "evaluation.js",
+        "sha256": "3d6bbbd7ffa94816c269daf2e849710c0637869f0d3f2aabf869103eb3e23d1c"
+      },
+      {
+        "file": "../../src/design-catalog.js",
+        "sha256": "b17190db3dc27ef0f00232649cafa607b40472eb65e8ecd131415694f4807aa2"
+      }
+    ],
+    "parallelSources": [
+      {
+        "file": "scripts/balance/parallel.js",
+        "sha256": "1250441456f6fbe8fd503a13bbbcca48c87de72e1c15dd79b16705fcc701d939"
+      },
+      {
+        "file": "scripts/balance/parallel-worker.js",
+        "sha256": "0993e3c70875ab72c1fe4c524246cd214a36e8e955887f7f4b0b7b229532af3c"
+      },
+      {
+        "file": "scripts/parallel-balance.js",
+        "sha256": "e5d44ae8190fad13b975b249b023a3dc8c7e9e5f81c2f2e4645e30904d58d302"
+      }
+    ]
+  },
+  "to": {
+    "runnerSha256": "8380e75e03e4b18bcbaa99eaf8886c4e0c8f213843b15925033673c07aa16319",
+    "runnerSources": [
+      {
+        "file": "run.js",
+        "sha256": "411fab593588b4b4e81f32bfe865e7a0347eddac59a287cf34b67338f0cbc3e3"
+      },
+      {
+        "file": "plan.js",
+        "sha256": "b1eaccc4def252862c6cb19ea332af10169efaeec9e578ac24f457ff59fc8133"
+      },
+      {
+        "file": "stats.js",
+        "sha256": "dd55139112cc8fa89ae1ebcc7c1f81631e3aca44a6e01e3ad756f4b52766c5fc"
+      },
+      {
+        "file": "storage.js",
+        "sha256": "6ab2623e2877c3caec418c27fefa737d108cf0e0e8dab805caaa404d72c563fc"
+      },
+      {
+        "file": "uci.js",
+        "sha256": "85ab926f2748225bcc37c59e6fb59520a94fadfc6c0c2c676dc4bd1a973eee19"
+      },
+      {
+        "file": "capabilities.js",
+        "sha256": "a5cc31921e7d88de8214a09fa888158dc285a3d5fba9682d5c3a91fb601c9086"
+      },
+      {
+        "file": "../engine-capabilities.js",
+        "sha256": "640389c60255577db149ba87acccd323fa4209d907fd2eaa8521a1805dbfd6d9"
+      },
+      {
+        "file": "files.js",
+        "sha256": "25cd2624c6e08fb674bf06c0a71614606d7d414fc0bacec881e69719f42feedc"
+      },
+      {
+        "file": "resume-compatibility.js",
+        "sha256": "d3034c734b56665a529632aa777fe30eb6679d339463481cbfe8bf22daa4c579"
+      },
+      {
+        "file": "design-registry.js",
+        "sha256": "4e664fe0dd5179baef36694dcb8b079566c93342a020549051be9269e6296ee0"
+      },
+      {
+        "file": "design-profile.js",
+        "sha256": "4c42b24d43d983df2e3c58e95ad4d8eec2d81036c518490c43fec552fc82a73c"
+      },
+      {
+        "file": "evaluation.js",
+        "sha256": "3d6bbbd7ffa94816c269daf2e849710c0637869f0d3f2aabf869103eb3e23d1c"
+      },
+      {
+        "file": "../../src/design-catalog.js",
+        "sha256": "b17190db3dc27ef0f00232649cafa607b40472eb65e8ecd131415694f4807aa2"
+      },
+      {
+        "file": "checkpoint-upgrade.js",
+        "sha256": "f89d7f04644b40872a8e7bea46b59a69cc591dd2d87ddd6704ca6de690d45bd7"
+      }
+    ],
+    "parallelSources": [
+      {
+        "file": "scripts/balance/parallel.js",
+        "sha256": "9e0ca377609bd8c443ef5bf5487bae186f46ea07eea219fe293ce32bb1f9d732"
+      },
+      {
+        "file": "scripts/balance/parallel-worker.js",
+        "sha256": "0993e3c70875ab72c1fe4c524246cd214a36e8e955887f7f4b0b7b229532af3c"
+      },
+      {
+        "file": "scripts/parallel-balance.js",
+        "sha256": "e5d44ae8190fad13b975b249b023a3dc8c7e9e5f81c2f2e4645e30904d58d302"
+      }
+    ]
+  }
+}

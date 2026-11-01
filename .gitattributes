@@ -33,3 +33,7 @@ experiments/balance/results/*.uploaded-report.md -text
 *.ini text eol=lf
 # Preserve pinned patch bytes; blank diff context lines contain a space marker.
 stockfish/patches/*.patch text eol=lf whitespace=-blank-at-eol
+scripts/balance/resume-approvals/*.json text eol=lf
+experiments/balance/results/v17-acceptance-001.*.json text eol=lf
+experiments/balance/results/v17-acceptance-001.*.md text eol=lf
+experiments/balance/results/v17-acceptance-001.*.gz -text

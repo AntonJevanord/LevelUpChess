@@ -10,6 +10,7 @@ const { checkCapabilities } = require('./capabilities');
 const { createDesignRegistry, restoreDesignRegistry } = require('./design-registry');
 const { compileDesignProfile } = require('./design-profile');
 const { requireManualValues } = require('./evaluation');
+const { identity: frozenIdentity, chooseRuntimeIdentity, verifyCheckpointParent, writeUpgradeReceipt } = require('./checkpoint-upgrade');
 
 const FINAL = new Set(['completed', 'truncated']);
 const sha256 = value => createHash('sha256').update(value).digest('hex');
@@ -19,7 +20,7 @@ const fingerprint = value => sha256(JSON.stringify(value));
 function getRunIdentity(enginePath, rulesFile = path.resolve(__dirname, '../../dist/balance-rules.cjs')) {
   const rulesBundleSha256 = sha256(fs.readFileSync(rulesFile));
   const engineSha256 = sha256(fs.readFileSync(enginePath));
-  const runnerSources = ['run.js', 'plan.js', 'stats.js', 'storage.js', 'uci.js', 'capabilities.js', '../engine-capabilities.js', 'files.js', 'resume-compatibility.js', 'design-registry.js', 'design-profile.js', 'evaluation.js', '../../src/design-catalog.js']
+  const runnerSources = ['run.js', 'plan.js', 'stats.js', 'storage.js', 'uci.js', 'capabilities.js', '../engine-capabilities.js', 'files.js', 'resume-compatibility.js', 'design-registry.js', 'design-profile.js', 'evaluation.js', '../../src/design-catalog.js', 'checkpoint-upgrade.js']
     .map(file => ({ file, sha256: sha256(fs.readFileSync(path.resolve(__dirname, file), 'utf8').replace(/\r\n/g, '\n')) }));
   return { rulesBundleSha256, engineSha256, runnerSources, runnerSha256: fingerprint(runnerSources) };
 }
@@ -146,7 +147,7 @@ function renderPgn(records, name) {
  * Sequential color-swapped matches. maxPlies includes forced opening plies.
  * Only rules-declared outcomes are scored; limits/errors/cancellation are '*'.
  */
-async function runMatches({ config, schedule, outDir, resume = false, enginePath, signal, shouldStop = () => null, onProgress = () => {} }) {
+async function runMatches({ config, schedule, outDir, resume = false, enginePath, signal, shouldStop = () => null, onProgress = () => {}, checkpointParent }) {
   if (!config || !Array.isArray(schedule) || !schedule.length) throw new Error('A normalized config and nonempty schedule are required.');
   const directory = path.resolve(outDir);
   const rulesFile = path.resolve(__dirname, '../../dist/balance-rules.cjs');
@@ -159,7 +160,12 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
   let createMatchRules;
   try { ({ createMatchRules } = nodeRequire(rulesFile)); }
   catch (error) { throw new Error('Balance rules are not built. Run npm.cmd run build first.', { cause: error }); }
-  const { rulesBundleSha256: bundleHash, engineSha256, runnerSources, runnerSha256 } = getRunIdentity(enginePath, rulesFile);
+  const actualIdentity = getRunIdentity(enginePath, rulesFile);
+  const original = resume ? JSON.parse(fs.readFileSync(path.join(directory, 'run.json'), 'utf8')) : null;
+  const inherited = checkpointParent ? verifyCheckpointParent({ directory, checkpointParent, config, schedule, actual: actualIdentity }) : null;
+  if (original && inherited && !isDeepStrictEqual(frozenIdentity(original), frozenIdentity(inherited))) throw new Error('Cannot resume: the worker identity differs from its frozen parent.');
+  const selectedRuntime = chooseRuntimeIdentity({ actual: actualIdentity, frozen: original || inherited });
+  const { rulesBundleSha256: bundleHash, engineSha256, runnerSources, runnerSha256 } = selectedRuntime.identity;
   const dynamic = config.schemaVersion === 2 || config.schemaVersion === 3;
   // Freeze one allocation for every declared comparison, including both
   // colors. A limited workflow run therefore keeps the full campaign letters.
@@ -249,8 +255,15 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
         ...(dynamic ? { profileHash: profile.profileHash, registryHash: profile.registryHash } : {}),
       })),
     };
+    if (inherited) {
+      // A child shard has its own configHash, but all movement, evaluation and
+      // frozen runtime identities must match the verified parent experiment.
+      for (const field of ['schemaVersion', 'config', 'rulesHash', 'engineSha256', 'rulesBundleSha256',
+        'runnerSha256', 'runnerSources', 'designRegistry', 'designProfile', 'rulesProfiles', 'plyLimitBasis']) {
+        if (!isDeepStrictEqual(manifest[field], inherited[field])) throw new Error(`Cannot inherit a worker identity: parent ${field} differs.`);
+      }
+    }
     if (resume) {
-      const original = JSON.parse(fs.readFileSync(path.join(directory, 'run.json'), 'utf8'));
       if (original.runnerSha256 !== runnerSha256) throw new Error('Cannot resume with a different runner version. Use the original branch or checkout for this run, or start a new run directory.');
       for (const field of ['configHash', 'rulesHash', 'engineSha256']) {
         if (original[field] !== manifest[field]) throw new Error(`Cannot resume: ${field} does not match the original run.`);
@@ -281,6 +294,10 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
       if (fs.existsSync(file)) {
         if (sha256(fs.readFileSync(file)) !== sha256(profile.config)) throw new Error(`Saved rules differ for ${profile.variant}; refusing to overwrite them.`);
       } else fs.writeFileSync(file, profile.config, { flag: 'wx' });
+    }
+    if (selectedRuntime.receipt) {
+      writeUpgradeReceipt(directory, selectedRuntime.receipt, { runId: store.manifest.runId });
+      onProgress('Resuming with the reviewed game-boundary storage update; original experiment identity and completed games are preserved.');
     }
     advance();
     const checkpoint = store.checkpoint;
@@ -359,7 +376,6 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
         ...designRefs,
       });
       try {
-        persistCurrent();
         onProgress(`Starting game ${index + 1}/${schedule.length}: ${game.id} (attempt ${attempt}).`);
         checkAbort(signal);
         let outcome = board.outcome();
@@ -388,7 +404,8 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
           moves.push(search.move);
           sans.push(san);
           lastInfo[color] = search.info;
-          persistCurrent();
+          // Keep live progress in memory. The completed-game journal is the
+          // durable boundary; clean cancellation/errors flush the prefix below.
           onProgress(`Game ${game.id}: ply ${moves.length}, ${search.move} (${san}).`);
           checkAbort(signal);
           outcome = board.outcome();
