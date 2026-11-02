@@ -620,6 +620,55 @@ var require_balance_designs_v17_revisions = __commonJS({
   }
 });
 
+// src/balance-designs-v17-mixed.js
+var require_balance_designs_v17_mixed = __commonJS({
+  "src/balance-designs-v17-mixed.js"(exports2, module2) {
+    "use strict";
+    function freeze(value) {
+      if (value && typeof value === "object") {
+        Object.values(value).forEach(freeze);
+        Object.freeze(value);
+      }
+      return value;
+    }
+    var NEW_DEFINITIONS = [{
+      id: "king.grant-wd-level3@1",
+      family: "king",
+      level: 3,
+      revision: 1,
+      movement: "WD",
+      legacyType: "a",
+      legacySlot: 1,
+      placement: "reserve",
+      roles: { pawn: false, castlingRook: false, enPassant: false },
+      inheritLegacyProbes: false
+    }];
+    function grantProbes(definition, type, position) {
+      if (definition.id !== "king.grant-wd-level3@1") return [];
+      return [
+        {
+          name: "orthogonal steps and two-square jumps with no longer or diagonal moves",
+          fen: position({ a1: "K", h7: "k", d4: type, d6: "p", f4: "p", d2: "p", b4: "p" })
+        },
+        {
+          name: "two-square orthogonal jumps cross friendly intermediate blockers",
+          fen: position({ a1: "K", h7: "k", d4: type, d5: "P", e4: "P", d3: "P", c4: "P", d6: "p", f4: "p", d2: "p", b4: "p" })
+        },
+        {
+          name: "finite nonroyal grant remains capturable",
+          fen: position({ a1: "K", h7: "k", d4: type, d8: "r" }, "b")
+        },
+        {
+          name: "non-pawn grant keeps ordinary nonpromotion at the last rank",
+          fen: position({ h1: "K", h6: "k", b7: type })
+        }
+      ];
+    }
+    freeze({ NEW_DEFINITIONS });
+    module2.exports = { NEW_DEFINITIONS, grantProbes };
+  }
+});
+
 // src/design-catalog.js
 var require_design_catalog = __commonJS({
   "src/design-catalog.js"(exports2, module2) {
@@ -785,7 +834,8 @@ var require_design_catalog = __commonJS({
       // New research brackets append definitions; every archived ID above remains
       // byte-for-byte unchanged, including historical purchase prices.
       ...require_balance_designs_v17().NEW_DEFINITIONS,
-      ...require_balance_designs_v17_revisions().NEW_DEFINITIONS
+      ...require_balance_designs_v17_revisions().NEW_DEFINITIONS,
+      ...require_balance_designs_v17_mixed().NEW_DEFINITIONS
     ];
     var DESIGNS = Object.freeze(Object.fromEntries(definitions.map((design) => [design.id, design])));
     var LEGACY_DESIGN_IDS = Object.freeze(Object.fromEntries(definitions.filter((design) => design.revision === 1 && design.family !== "king" && design.inheritLegacyProbes !== false).map((design) => [design.legacyType, design.id])));

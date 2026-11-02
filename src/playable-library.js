@@ -94,6 +94,17 @@ const V17_ROSTER_RESERVE_DESIGN_IDS = Object.freeze([
   'king.reserve-pawn@6', 'king.reserve-bishop@1',
   'king.grant-king-level3@1', 'king.grant-orthogonal-three-level3@1', 'king.grant-knight-level3@1',
 ]);
+const V17_CONFIRMED_CANDIDATES = Object.freeze({
+  pawns: Object.freeze(['pawn.blue@5', 'pawn.blue@7', 'pawn.orange@3', 'pawn.rank-current@1', 'pawn.purple@13', 'pawn.queen-sideways@1']),
+  knights: Object.freeze(['knight.purple@4']),
+  bishops: Object.freeze(['bishop.vertical-blocked@1']),
+  rooks: Object.freeze(['rook.purple@12']),
+  queens: Object.freeze(['queen.purple@7']),
+});
+const V17_CONFIRMED_RESERVE_DESIGN_IDS = Object.freeze([
+  'king.reserve-pawn@6', 'king.reserve-bishop@1',
+  'king.reserve-rook@1', 'king.grant-wd-level3@1', 'king.reserve-king@1',
+]);
 const closeoutLibrary = (group, candidates = []) => Object.freeze({
   id: `v16-${group}`,
   name: group === 'references' ? 'King workshop' : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
@@ -129,11 +140,19 @@ const selectedPawnLibrary = Object.freeze({
   ini: 'variants/levelup-playable-v17-pawns-selected.ini',
 });
 const rosterLibrary = Object.freeze({
-  id: 'v17-roster-trials', name: 'Roster and trials',
+  id: 'v17-roster-trials', name: 'Roster and trials (archive)',
   generation: CURRENT_PLAYABLE_GENERATION, edition: 4,
+  superseded: true,
   designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(V17_ROSTER_CANDIDATES).flat(), ...V17_ROSTER_RESERVE_DESIGN_IDS]),
   json: 'src/playable-v17-roster-trials-profile.json',
   ini: 'variants/levelup-playable-v17-roster-trials.ini',
+});
+const confirmedLibrary = Object.freeze({
+  id: 'v17-roster-confirmed', name: 'Roster and king trials',
+  generation: CURRENT_PLAYABLE_GENERATION, edition: 5,
+  designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(V17_CONFIRMED_CANDIDATES).flat(), ...V17_CONFIRMED_RESERVE_DESIGN_IDS]),
+  json: 'src/playable-v17-roster-confirmed-profile.json',
+  ini: 'variants/levelup-playable-v17-roster-confirmed.ini',
 });
 const PLAYABLE_LIBRARIES = Object.freeze([
   Object.freeze({ id: 'workshop', name: 'Rebalance workshop', designIds: PLAYABLE_DESIGN_IDS,
@@ -149,6 +168,7 @@ const PLAYABLE_LIBRARIES = Object.freeze([
   revisedPawnLibrary,
   selectedPawnLibrary,
   rosterLibrary,
+  confirmedLibrary,
 ]);
 
-module.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };
+module.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };

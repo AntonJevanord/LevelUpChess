@@ -1,71 +1,74 @@
-# Version-17 playable workshops
+# Version-17 playable roster
 
-Choose **Version 17 · Roster and trials** under Rules to try the selected roster
-and six new level-three trials together. Earlier family workshops remain available.
-Click a starting pawn, choose its upgrade beside the board, then start the game.
+Choose **Version 17 · Roster and king trials** under Rules. Click a starting
+piece and choose its upgrade beside the board. Changes apply when you start a
+game. Earlier family workshops and their eighteen saved profile identities
+remain available.
+
+## Level-one and level-two pawns
 
 | Cost | Pawn | Movement |
 | ---: | --- | --- |
-| 1 | Two-step pawn | `fmW2fceF2`: move one or two clear squares forward without capturing; capture one or two clear squares diagonally forward. Its two-step advance remains available after leaving the starting ranks. |
-| 1 | King-step pawn | `mWFifmnD`: move one square in any direction; capture one square diagonally in any direction. A clear two-square advance is available from the home two ranks. |
-| 2 | Knight pawn | `fmWfceFifmnDfhN`: ordinary pawn moves and captures, plus all forward knight jumps, including captures. |
-| 2 | Rank pawn | `ifmnDmfWfceFsR`: ordinary forward advances and diagonal captures, plus moves and captures any clear distance sideways. Its initial two-step needs a clear path. |
+| 1 | Two-step pawn | `fmW2fceF2`: move one or two clear squares forward; capture one or two clear squares diagonally forward. Two-step movement remains available after leaving home ranks. |
+| 1 | King-step pawn | `mWFifmnD`: move one square in any direction; capture one square diagonally in any direction. Initial clear two-step advance. |
+| 2 | Knight pawn | `fmWfceFifmnDfhN`: ordinary pawn advances/captures plus all four forward knight jumps, including captures. |
+| 2 | Rank pawn | `ifmnDmfWfceFsR`: ordinary forward advances/diagonal captures plus moves and captures any clear distance sideways. Initial clear two-step advance. |
 
-All four replace the selected pawn and promote to an ordinary queen, rook, bishop
-or knight. The King-step pawn's diagonal visit to an empty en-passant target is
-quiet and leaves the bypassed pawn; the Two-step pawn can capture en passant.
-The Two-step pawn is green; the King-step pawn is blue. Knight pawn is yellow;
-Rank pawn is orange. The two-point designs are the [selected working references](v17-level2-review.md);
-the next study checks direct matchups and stacking before permanent freezing.
+All four replace the chosen pawn and promote to ordinary Q/R/B/N. King-step's
+quiet diagonal visit to an empty en-passant target leaves the bypassed pawn;
+Two-step can capture en passant. Two-step is green, King-step blue, Knight yellow
+and Rank orange. The L2 definitions stay unchanged while the
+[mixed-package study](mixed-reference-validation-v17.md) checks partner and
+placement effects.
 
-The combined roster also retains three tested level-three designs:
+## Level-three roster
+
+The four red research references remain Vanguard `RfB`, Unicorn `NC`, Cruisader
+`BsR2nsN` and Amazon `QN`. The other selected choices are purple:
 
 | Piece | Movement | Behavior |
 | --- | :--- | --- |
-| Rook pawn | `mRcfB` | Move any clear distance orthogonally without capturing; capture any clear distance diagonally forward. Standard promotion remains. |
-| Vertical bishop | `BvWvN` | Normal bishop moves, vertical single steps and tall knight jumps, including captures. |
-| Ranged rook | `RC` | Normal rook moves and camel jumps, including captures. |
+| Rook pawn | `mRcfB` | Move any clear distance orthogonally without capturing; capture any clear distance diagonally forward. Standard promotion. |
+| Queen pawn | `mQ2cfQ2` | Move quietly up to two clear squares in any queen direction; capture straight or diagonally forward up to two squares. Sideways/backward moves cannot capture. Standard promotion. |
+| Nightrider | `N0` | Repeat knight leaps along a line, stopping at an occupied landing square. |
+| Vertical bishop | `BvW2vnN` | Normal bishop moves, clear vertical moves up to two squares, and tall knight moves blocked on their first vertical square. |
+| Ranged rook | `RC` | Normal rook moves plus camel jumps, including captures. |
+| X-ray queen | `QgB0` | Normal queen moves plus diagonal hops over one piece, landing before or capturing the next blocker if it is an enemy. Orthogonal moves cannot hop. |
 
-The four frozen references are red; other level-three pieces are purple.
-Nightrider remains available as an exploration option. The six trial choices are
-Blocked Vertical bishop `BvW2vnN`, Sideways Queen pawn `mQ2cfQ2`, Rook-ray queen
-`QgR0`, and three-point `K`/`W3`/`N` grants. The queen hops over one piece only
-on ranks and files; diagonal moves need a clear path. The full-X-ray `QgQ0`
-prototype is excluded after its forced opening mate was found.
+The [latest review](v17-roster-confirmation.md) confirms the bishop and Queen
+pawn. Nightrider and the diagonal-X-ray queen remain exploration choices.
+The stronger Rook-ray queen `QgR0` stays in the archived trial workshop. Full
+X-ray `QgQ0` is absent from every playable library because of its forced opening
+mate.
 
-The earlier **Pawn workshop (bishop trial)** retains Bishop pawn at cost two.
-It cannot capture en passant through its quiet diagonal move, but remains vulnerable to an
-ordinary pawn after its initial double advance. Its earlier low bundle score
-does not establish the new price. Returning pawn is parked in **Pawn workshop
-(initial)**, which retains its original profile.
+## King purchases and reserve grants
 
-Every **Version 17** workshop also updates the one-point **Pawn grant** to
-`fWmfF`: move or capture one square straight forward, or move one square
-diagonally forward **without capturing**. Select the king during setup to buy it.
-The ordinary royal king remains on the board; the nonroyal guard starts in reserve.
-Drop it onto an empty square in your own half, spending a turn and giving no check.
-The grant remains blue, cannot promote, and never refills the reserve when captured.
-The two-point **Bishop grant** (`F`, the selected Diagonal grant) is also a working reference:
-move or capture one square diagonally in any direction. It is green, nonroyal
-and color-bound after deployment. It follows the same finite-reserve drop rules.
-The new three-point grant trials are yellow and have distinct movement names.
-They do not reprice the historical guards. Use the King workshop for the other
-existing grants and costs.
+The ordinary royal king stays on the board. A purchase adds a finite nonroyal
+piece to reserve. Deployment spends a turn, uses an empty square in your own
+half and cannot give check. Captured guards disappear; reserves never refill,
+and guards do not promote.
 
-Current family workshops appear before Version 16 in the Rules menu. They keep
-the four frozen level-3 references and the other
-[version-16 roster choices](playtest-roster-v16.md). The combined roster
-contains twenty custom types. All seventeen earlier library profiles retain
-their original movements, costs and saved identities.
+| Cost | Grant | Movement | Color / status |
+| ---: | --- | :--- | --- |
+| 1 | Pawn grant | `fWmfF`: forward step/capture; quiet forward diagonal step | Blue |
+| 2 | Bishop grant | `F`: diagonal single steps/captures | Green |
+| 3 | Sliding Orthogonal grant | `W2`: clear orthogonal moves/captures up to two squares | Yellow / trial |
+| 3 | Jumping Orthogonal grant | `WD`: orthogonal one-step or two-square jump, including captures | Yellow / trial |
+| 4 | King grant | `K`: single steps/captures in all directions | Orange / candidate |
 
-The [combined mobility report](../experiments/balance/results/v17-mobility-001.report.md)
-explains the one-point shortlist. The [level-two review](v17-level2-review.md)
-records the later selection. The [384-game level-two check](level2-reference-validation-v17.md)
-and [768-game revision screen](level3-revisions-v17.md) follow the completed
-campaign. Historical experiments retain their original definitions and results.
+The four-point price is the existing historical King-grant identity, not a new
+balance finding. A dedicated four-point study remains pending. Other historical
+grants and costs remain in the King workshop.
 
-The checked-in `index.html` already includes the updated workshop. For later
-playable-only edits, `npm.cmd run build:playable` rebuilds the browser and its
-Node rules facade while keeping `dist/balance-rules.cjs` untouched. The full
-`build` command also regenerates research bundles, so finish an active frozen
-campaign before using it.
+## Build and history
+
+The checked-in `index.html` includes this roster. For playable-only edits,
+`npm.cmd run build:playable` rebuilds the browser and Node rules facade without
+rewriting `dist/balance-rules.cjs`. The full build also regenerates research
+bundles, so finish an active frozen campaign before using it.
+
+The [mobility report](../experiments/balance/results/v17-mobility-001.report.md),
+[L2 selection](v17-level2-review.md), [L3 confirmation](v17-level3-review.md) and
+[latest validation archive](../experiments/balance/results/v17-validation-001.report.md)
+retain the earlier decisions and results. Historical definitions and prices are
+preserved under their original IDs.

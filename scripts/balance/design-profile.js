@@ -6,6 +6,7 @@ const { capabilityProbes: legacyCapabilityProbes } = require('../engine-capabili
 const { normalizeEvaluation } = require('./evaluation');
 const { bracketProbes } = require('./v17-bracket-probes');
 const { revisionProbes } = require('../../src/balance-designs-v17-revisions');
+const { grantProbes } = require('../../src/balance-designs-v17-mixed');
 
 const START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 const COMPILER_VERSION = 1;
@@ -276,6 +277,7 @@ function definitionProbes(definition, letter) {
   );
   frames.push(...bracketProbes(definition, type, position));
   frames.push(...revisionProbes(definition, type, position));
+  frames.push(...grantProbes(definition, type, position));
   if (definition.roles.castlingRook) frames.push({ name: 'both castling sides', fen: position({ e8: 'k', a1: type, e1: 'K', h1: type }, 'w', 'KQ') });
   // These new allocation hints have no historical movement identity. In
   // particular, l used to denote a rook; its castling fixtures do not apply

@@ -1,0 +1,14 @@
+[
+  { "id": "mixed-queens-pawn", "moves": ["d2d4", "d7d5", "g1f3", "g8f6"] },
+  { "id": "mixed-open-game", "moves": ["e2e4", "e7e5", "g1f3", "b8c6"] },
+  { "id": "mixed-english", "moves": ["c2c4", "e7e5", "b1c3", "g8f6"] },
+  { "id": "mixed-french", "moves": ["e2e4", "e7e6", "d2d4", "d7d5"] },
+  { "id": "mixed-larsen", "moves": ["b2b3", "e7e5", "c1b2", "b8c6"] },
+  { "id": "mixed-kings-fianchetto", "moves": ["g2g3", "d7d5", "f1g2", "g8f6"] },
+  { "id": "mixed-indian", "moves": ["d2d4", "g8f6", "c2c4", "e7e6"] },
+  { "id": "mixed-sicilian", "moves": ["e2e4", "c7c5", "g1f3", "d7d6"] },
+  { "id": "mixed-reti", "moves": ["g1f3", "d7d5", "g2g3", "c7c5"] },
+  { "id": "mixed-caro-kann", "moves": ["e2e4", "c7c6", "d2d4", "d7d5"] },
+  { "id": "mixed-london", "moves": ["d2d4", "d7d5", "c1f4", "g8f6"] },
+  { "id": "mixed-queens-english", "moves": ["c2c4", "e7e6", "b1c3", "d7d5"] }
+]

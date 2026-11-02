@@ -8,7 +8,7 @@ const { defaultDesignChoices, designSetupFromChoices, loadDesignSetup } = requir
 const { pieceMap, placementFromMap, pocketLetters } = require('../src/profile-fen');
 const { createMatchRules } = require('../dist/balance-rules.cjs');
 
-const libraries = PLAYABLE_LIBRARIES.filter(library => library.generation === 17 && library.id !== 'v17-roster-trials');
+const libraries = PLAYABLE_LIBRARIES.filter(library => library.generation === 17 && !['v17-roster-trials', 'v17-roster-confirmed'].includes(library.id));
 const profiles = getPlayableProfiles();
 const profileFor = library => profiles[PLAYABLE_LIBRARIES.indexOf(library)];
 const pawnLibrary = libraries.find(library => library.id === 'v17-pawns');

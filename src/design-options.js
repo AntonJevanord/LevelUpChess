@@ -22,7 +22,8 @@ const currentProfiles = [
 const revisedPawnProfile = require('./playable-v17-pawns-revised-profile.json');
 const selectedPawnProfile = require('./playable-v17-pawns-selected-profile.json');
 const rosterProfile = require('./playable-v17-roster-trials-profile.json');
-const { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS } = require('./playable-library');
+const confirmedProfile = require('./playable-v17-roster-confirmed-profile.json');
+const { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS } = require('./playable-library');
 const { STANDARD_TYPES } = require('./design-catalog');
 const { pieceInfo } = require('./piece-catalog');
 
@@ -35,7 +36,7 @@ function freeze(value) {
 }
 
 const PLAYABLE_PROFILE = freeze(compiled);
-const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile, rosterProfile]);
+const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile, rosterProfile, confirmedProfile]);
 const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
 const EXPERIMENTAL_VARIANTS = freeze(PLAYABLE_PROFILES.map(profile => profile.variant));
 const PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES[index].variant, ...(library.generation ? { generation: library.generation } : {}), ...(library.focusFamily ? { focusFamily: library.focusFamily } : {}), ...(library.edition ? { edition: library.edition } : {}), ...(library.superseded ? { superseded: true } : {}) })));
@@ -138,6 +139,7 @@ const metadata = {
   'king.grant-king-level3@1': ['King-step grant', 'Add a nonroyal guard that moves or captures one square in any direction.'],
   'king.grant-orthogonal-three-level3@1': ['Three-step Orthogonal grant', 'Add a nonroyal guard that moves or captures up to three clear squares orthogonally. It cannot jump over pieces.'],
   'king.grant-knight-level3@1': ['Knight grant', 'Add a nonroyal guard with normal knight jumps, including captures. It has no king steps.'],
+  'king.grant-wd-level3@1': ['Jumping Orthogonal grant', 'Add a nonroyal guard that moves or captures one square orthogonally, or jumps exactly two squares orthogonally over intervening pieces.'],
 };
 
 const additionalExperimentalIds = new Set(['pawn.bishop-step-current@1', 'pawn.rank-current@1',
@@ -189,8 +191,25 @@ const rosterAccents = (() => {
   for (const id of V17_ROSTER_RESERVE_DESIGN_IDS) accents[id] = kingGrantAccents[optionsById[id].level - 1];
   return Object.freeze(accents);
 })();
+const confirmedAccents = (() => {
+  const accents = { ...workshopAccentsFor(V17_CONFIRMED_CANDIDATES, []) };
+  for (const id of Object.values(V17_CONFIRMED_CANDIDATES).flat()) if (optionsById[id].level === 3) accents[id] = 'purple';
+  for (const id of V17_CONFIRMED_RESERVE_DESIGN_IDS) accents[id] = kingGrantAccents[optionsById[id].level - 1];
+  return Object.freeze(accents);
+})();
+const confirmedNames = {
+  'bishop.vertical-blocked@1': 'Vertical bishop',
+  'pawn.queen-sideways@1': 'Queen pawn',
+  'king.reserve-rook@1': 'Sliding Orthogonal grant (trial)',
+  'king.grant-wd-level3@1': 'Jumping Orthogonal grant (trial)',
+  'king.reserve-king@1': 'King grant (four-point candidate)',
+};
+const confirmedKingTrials = new Set(['king.reserve-rook@1', 'king.grant-wd-level3@1', 'king.reserve-king@1']);
 function optionInProfile(option, profile) {
   if (!option) return option;
+  if (confirmedProfile.variant === profile.variant) return { ...option, accent: confirmedAccents[option.id],
+    name: officialNames[option.id] || confirmedNames[option.id] || option.name,
+    status: officialNames[option.id] ? 'reference' : confirmedKingTrials.has(option.id) ? 'experimental' : 'accepted' };
   const accents = rosterProfile.variant === profile.variant ? rosterAccents
     : selectedPawnProfile.variant === profile.variant ? selectedPawnAccents
     : revisedPawnProfile.variant === profile.variant ? revisedPawnAccents

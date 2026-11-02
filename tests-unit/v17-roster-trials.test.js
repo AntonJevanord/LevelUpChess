@@ -58,8 +58,8 @@ test.before(async () => {
 });
 test.after(() => { if (directory) fs.rmSync(directory, { recursive: true, force: true }); });
 
-test('the combined roster preserves all seventeen earlier profiles and is the first current library', () => {
-  assert.equal(PLAYABLE_LIBRARIES.length, 18);
+test('the archived trial roster preserves all seventeen earlier profiles and remains available', () => {
+  assert.equal(PLAYABLE_LIBRARIES.length, 19);
   assert.deepEqual(PLAYABLE_LIBRARIES.slice(0, 17).flatMap(item => [item.json, item.ini]), Object.keys(hashes));
   for (const [file, expected] of Object.entries(hashes)) {
     const bytes = fs.readFileSync(path.resolve(__dirname, '..', file), 'utf8').replace(/\r\n/g, '\n');
@@ -72,8 +72,9 @@ test('the combined roster preserves all seventeen earlier profiles and is the fi
   }
   const ordered = [...PLAYABLE_LIBRARIES].sort((a, b) => (b.generation || 0) - (a.generation || 0)
     || Number(Boolean(a.superseded)) - Number(Boolean(b.superseded)) || (b.edition || 0) - (a.edition || 0));
-  assert.equal(ordered[0].id, library.id);
-  assert.equal(library.name, 'Roster and trials'); assert.equal(library.edition, 4);
+  assert.ok(ordered.some(item => item.id === library.id));
+  assert.equal(library.name, 'Roster and trials (archive)'); assert.equal(library.edition, 4);
+  assert.equal(library.superseded, true);
 });
 
 test('twenty custom types include the accepted roster and every new trial with accurate prices, labels and colors', () => {

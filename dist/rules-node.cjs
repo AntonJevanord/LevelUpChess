@@ -23815,6 +23815,1520 @@ var require_playable_v17_roster_trials_profile = __commonJS({
   }
 });
 
+// src/playable-v17-roster-confirmed-profile.json
+var require_playable_v17_roster_confirmed_profile = __commonJS({
+  "src/playable-v17-roster-confirmed-profile.json"(exports2, module2) {
+    module2.exports = {
+      schemaVersion: 1,
+      variant: "levelup-design-d521bd7fddd4d8b623aa",
+      config: "# Dynamic experiment profile. Meanings belong to the archived registry.\n[levelup-design-d521bd7fddd4d8b623aa:chess]\ncustomPiece1 = a:BvW2vnN\ncustomPiece2 = c:F\ncustomPiece3 = d:W2\ncustomPiece4 = e:K\ncustomPiece5 = f:WD\ncustomPiece6 = w:QgB0\ncustomPiece7 = h:fWmfF\ncustomPiece8 = u:QN\ncustomPiece9 = g:NC\ncustomPiece10 = i:N0\ncustomPiece11 = j:fmW2fceF2\ncustomPiece12 = l:mWFifmnD\ncustomPiece13 = o:fmWfceFifmnDfhN\ncustomPiece14 = s:mRcfB\ncustomPiece15 = t:mQ2cfQ2\ncustomPiece16 = v:ifmnDmfWfceFsR\ncustomPiece17 = y:RC\ncustomPiece18 = x:RfB\ncustomPiece22 = m:BsR2nsN\npieceToCharTable = -\ncastlingRookPiece = rxy\ndoubleStepRegionWhite = *1 *2\ndoubleStepRegionBlack = *7 *8\npawnTypes = pjlostv\nenPassantTypes = pjlostv\npromotionPieceTypes = nbrq\n# Finite nonroyal king grants: deployment spends a turn; captures disappear.\ntwoBoards = false\npieceDrops = true\ncapturesToHand = false\nmustDrop = false\ndropChecks = false\ndropRegionWhite = *1 *2 *3 *4\ndropRegionBlack = *5 *6 *7 *8\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n",
+      registry: {
+        schemaVersion: 1,
+        definitions: [
+          {
+            id: "bishop.purple@13",
+            family: "bishop",
+            level: 3,
+            revision: 13,
+            movement: "BsR2nsN",
+            legacyType: "m",
+            legacySlot: 22,
+            placement: "replace",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            }
+          },
+          {
+            id: "bishop.vertical-blocked@1",
+            family: "bishop",
+            level: 3,
+            revision: 1,
+            movement: "BvW2vnN",
+            legacyType: "a",
+            legacySlot: 1,
+            placement: "replace",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "king.grant-wd-level3@1",
+            family: "king",
+            level: 3,
+            revision: 1,
+            movement: "WD",
+            legacyType: "a",
+            legacySlot: 1,
+            placement: "reserve",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "king.reserve-bishop@1",
+            family: "king",
+            level: 2,
+            revision: 1,
+            movement: "F",
+            legacyType: "c",
+            legacySlot: 2,
+            placement: "reserve",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "king.reserve-king@1",
+            family: "king",
+            level: 4,
+            revision: 1,
+            movement: "K",
+            legacyType: "e",
+            legacySlot: 4,
+            placement: "reserve",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "king.reserve-pawn@6",
+            family: "king",
+            level: 1,
+            revision: 6,
+            movement: "fWmfF",
+            legacyType: "a",
+            legacySlot: 1,
+            placement: "reserve",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "king.reserve-rook@1",
+            family: "king",
+            level: 3,
+            revision: 1,
+            movement: "W2",
+            legacyType: "d",
+            legacySlot: 3,
+            placement: "reserve",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "knight.purple@3",
+            family: "knight",
+            level: 3,
+            revision: 3,
+            movement: "NC",
+            legacyType: "g",
+            legacySlot: 3,
+            placement: "replace",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            }
+          },
+          {
+            id: "knight.purple@4",
+            family: "knight",
+            level: 3,
+            revision: 4,
+            movement: "N0",
+            legacyType: "d",
+            legacySlot: 3,
+            placement: "replace",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "pawn.blue@5",
+            family: "pawn",
+            level: 1,
+            revision: 5,
+            movement: "fmW2fceF2",
+            legacyType: "e",
+            legacySlot: 4,
+            placement: "replace",
+            roles: {
+              pawn: true,
+              castlingRook: false,
+              enPassant: true
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "pawn.blue@7",
+            family: "pawn",
+            level: 1,
+            revision: 7,
+            movement: "mWFifmnD",
+            legacyType: "a",
+            legacySlot: 1,
+            placement: "replace",
+            roles: {
+              pawn: true,
+              castlingRook: false,
+              enPassant: true
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "pawn.orange@3",
+            family: "pawn",
+            level: 2,
+            revision: 3,
+            movement: "fmWfceFifmnDfhN",
+            legacyType: "c",
+            legacySlot: 2,
+            placement: "replace",
+            roles: {
+              pawn: true,
+              castlingRook: false,
+              enPassant: true
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "pawn.purple@13",
+            family: "pawn",
+            level: 3,
+            revision: 13,
+            movement: "mRcfB",
+            legacyType: "d",
+            legacySlot: 3,
+            placement: "replace",
+            roles: {
+              pawn: true,
+              castlingRook: false,
+              enPassant: true
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "pawn.queen-sideways@1",
+            family: "pawn",
+            level: 3,
+            revision: 1,
+            movement: "mQ2cfQ2",
+            legacyType: "a",
+            legacySlot: 1,
+            placement: "replace",
+            roles: {
+              pawn: true,
+              castlingRook: false,
+              enPassant: true
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "pawn.rank-current@1",
+            family: "pawn",
+            level: 2,
+            revision: 1,
+            movement: "ifmnDmfWfceFsR",
+            legacyType: "a",
+            legacySlot: 1,
+            placement: "replace",
+            roles: {
+              pawn: true,
+              castlingRook: false,
+              enPassant: true
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "queen.purple@1",
+            family: "queen",
+            level: 3,
+            revision: 1,
+            movement: "QN",
+            legacyType: "u",
+            legacySlot: 8,
+            placement: "replace",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            }
+          },
+          {
+            id: "queen.purple@7",
+            family: "queen",
+            level: 3,
+            revision: 7,
+            movement: "QgB0",
+            legacyType: "g",
+            legacySlot: 6,
+            placement: "replace",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "rook.purple@10",
+            family: "rook",
+            level: 3,
+            revision: 10,
+            movement: "RfB",
+            legacyType: "x",
+            legacySlot: 18,
+            placement: "replace",
+            roles: {
+              pawn: false,
+              castlingRook: true,
+              enPassant: false
+            }
+          },
+          {
+            id: "rook.purple@12",
+            family: "rook",
+            level: 3,
+            revision: 12,
+            movement: "RC",
+            legacyType: "d",
+            legacySlot: 3,
+            placement: "replace",
+            roles: {
+              pawn: false,
+              castlingRook: true,
+              enPassant: false
+            },
+            inheritLegacyProbes: false
+          }
+        ],
+        allocations: [
+          {
+            id: "bishop.purple@13",
+            letter: "m",
+            slot: 22
+          },
+          {
+            id: "bishop.vertical-blocked@1",
+            letter: "a",
+            slot: 1
+          },
+          {
+            id: "king.grant-wd-level3@1",
+            letter: "f",
+            slot: 5
+          },
+          {
+            id: "king.reserve-bishop@1",
+            letter: "c",
+            slot: 2
+          },
+          {
+            id: "king.reserve-king@1",
+            letter: "e",
+            slot: 4
+          },
+          {
+            id: "king.reserve-pawn@6",
+            letter: "h",
+            slot: 7
+          },
+          {
+            id: "king.reserve-rook@1",
+            letter: "d",
+            slot: 3
+          },
+          {
+            id: "knight.purple@3",
+            letter: "g",
+            slot: 9
+          },
+          {
+            id: "knight.purple@4",
+            letter: "i",
+            slot: 10
+          },
+          {
+            id: "pawn.blue@5",
+            letter: "j",
+            slot: 11
+          },
+          {
+            id: "pawn.blue@7",
+            letter: "l",
+            slot: 12
+          },
+          {
+            id: "pawn.orange@3",
+            letter: "o",
+            slot: 13
+          },
+          {
+            id: "pawn.purple@13",
+            letter: "s",
+            slot: 14
+          },
+          {
+            id: "pawn.queen-sideways@1",
+            letter: "t",
+            slot: 15
+          },
+          {
+            id: "pawn.rank-current@1",
+            letter: "v",
+            slot: 16
+          },
+          {
+            id: "queen.purple@1",
+            letter: "u",
+            slot: 8
+          },
+          {
+            id: "queen.purple@7",
+            letter: "w",
+            slot: 6
+          },
+          {
+            id: "rook.purple@10",
+            letter: "x",
+            slot: 18
+          },
+          {
+            id: "rook.purple@12",
+            letter: "y",
+            slot: 17
+          }
+        ],
+        hash: "0106ccfb91a0c4076862791b45015749ae3545146966466729b42d1622d85f7a"
+      },
+      registryHash: "0106ccfb91a0c4076862791b45015749ae3545146966466729b42d1622d85f7a",
+      hash: "721fb5161d239d0290f7c8c4d7af4581c5d1998304943b149aff35b33416b1d8",
+      roles: {
+        pawnTypes: [
+          "p",
+          "j",
+          "l",
+          "o",
+          "s",
+          "t",
+          "v"
+        ],
+        enPassantTypes: [
+          "p",
+          "j",
+          "l",
+          "o",
+          "s",
+          "t",
+          "v"
+        ],
+        castlingRooks: [
+          "r",
+          "x",
+          "y"
+        ],
+        royalTypes: [
+          "k"
+        ],
+        initialPawnLeaps: {
+          p: 2,
+          l: 2,
+          o: 2,
+          v: 2
+        },
+        initialLandingLeaps: {},
+        reserveTypes: [
+          "c",
+          "d",
+          "e",
+          "f",
+          "h"
+        ]
+      },
+      definitionsByLetter: {
+        m: {
+          id: "bishop.purple@13",
+          family: "bishop",
+          level: 3,
+          revision: 13,
+          movement: "BsR2nsN",
+          legacyType: "m",
+          legacySlot: 22,
+          placement: "replace",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          }
+        },
+        a: {
+          id: "bishop.vertical-blocked@1",
+          family: "bishop",
+          level: 3,
+          revision: 1,
+          movement: "BvW2vnN",
+          legacyType: "a",
+          legacySlot: 1,
+          placement: "replace",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          },
+          inheritLegacyProbes: false
+        },
+        f: {
+          id: "king.grant-wd-level3@1",
+          family: "king",
+          level: 3,
+          revision: 1,
+          movement: "WD",
+          legacyType: "a",
+          legacySlot: 1,
+          placement: "reserve",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          },
+          inheritLegacyProbes: false
+        },
+        c: {
+          id: "king.reserve-bishop@1",
+          family: "king",
+          level: 2,
+          revision: 1,
+          movement: "F",
+          legacyType: "c",
+          legacySlot: 2,
+          placement: "reserve",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          },
+          inheritLegacyProbes: false
+        },
+        e: {
+          id: "king.reserve-king@1",
+          family: "king",
+          level: 4,
+          revision: 1,
+          movement: "K",
+          legacyType: "e",
+          legacySlot: 4,
+          placement: "reserve",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          },
+          inheritLegacyProbes: false
+        },
+        h: {
+          id: "king.reserve-pawn@6",
+          family: "king",
+          level: 1,
+          revision: 6,
+          movement: "fWmfF",
+          legacyType: "a",
+          legacySlot: 1,
+          placement: "reserve",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          },
+          inheritLegacyProbes: false
+        },
+        d: {
+          id: "king.reserve-rook@1",
+          family: "king",
+          level: 3,
+          revision: 1,
+          movement: "W2",
+          legacyType: "d",
+          legacySlot: 3,
+          placement: "reserve",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          },
+          inheritLegacyProbes: false
+        },
+        g: {
+          id: "knight.purple@3",
+          family: "knight",
+          level: 3,
+          revision: 3,
+          movement: "NC",
+          legacyType: "g",
+          legacySlot: 3,
+          placement: "replace",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          }
+        },
+        i: {
+          id: "knight.purple@4",
+          family: "knight",
+          level: 3,
+          revision: 4,
+          movement: "N0",
+          legacyType: "d",
+          legacySlot: 3,
+          placement: "replace",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          },
+          inheritLegacyProbes: false
+        },
+        j: {
+          id: "pawn.blue@5",
+          family: "pawn",
+          level: 1,
+          revision: 5,
+          movement: "fmW2fceF2",
+          legacyType: "e",
+          legacySlot: 4,
+          placement: "replace",
+          roles: {
+            pawn: true,
+            castlingRook: false,
+            enPassant: true
+          },
+          inheritLegacyProbes: false
+        },
+        l: {
+          id: "pawn.blue@7",
+          family: "pawn",
+          level: 1,
+          revision: 7,
+          movement: "mWFifmnD",
+          legacyType: "a",
+          legacySlot: 1,
+          placement: "replace",
+          roles: {
+            pawn: true,
+            castlingRook: false,
+            enPassant: true
+          },
+          inheritLegacyProbes: false
+        },
+        o: {
+          id: "pawn.orange@3",
+          family: "pawn",
+          level: 2,
+          revision: 3,
+          movement: "fmWfceFifmnDfhN",
+          legacyType: "c",
+          legacySlot: 2,
+          placement: "replace",
+          roles: {
+            pawn: true,
+            castlingRook: false,
+            enPassant: true
+          },
+          inheritLegacyProbes: false
+        },
+        s: {
+          id: "pawn.purple@13",
+          family: "pawn",
+          level: 3,
+          revision: 13,
+          movement: "mRcfB",
+          legacyType: "d",
+          legacySlot: 3,
+          placement: "replace",
+          roles: {
+            pawn: true,
+            castlingRook: false,
+            enPassant: true
+          },
+          inheritLegacyProbes: false
+        },
+        t: {
+          id: "pawn.queen-sideways@1",
+          family: "pawn",
+          level: 3,
+          revision: 1,
+          movement: "mQ2cfQ2",
+          legacyType: "a",
+          legacySlot: 1,
+          placement: "replace",
+          roles: {
+            pawn: true,
+            castlingRook: false,
+            enPassant: true
+          },
+          inheritLegacyProbes: false
+        },
+        v: {
+          id: "pawn.rank-current@1",
+          family: "pawn",
+          level: 2,
+          revision: 1,
+          movement: "ifmnDmfWfceFsR",
+          legacyType: "a",
+          legacySlot: 1,
+          placement: "replace",
+          roles: {
+            pawn: true,
+            castlingRook: false,
+            enPassant: true
+          },
+          inheritLegacyProbes: false
+        },
+        u: {
+          id: "queen.purple@1",
+          family: "queen",
+          level: 3,
+          revision: 1,
+          movement: "QN",
+          legacyType: "u",
+          legacySlot: 8,
+          placement: "replace",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          }
+        },
+        w: {
+          id: "queen.purple@7",
+          family: "queen",
+          level: 3,
+          revision: 7,
+          movement: "QgB0",
+          legacyType: "g",
+          legacySlot: 6,
+          placement: "replace",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          },
+          inheritLegacyProbes: false
+        },
+        x: {
+          id: "rook.purple@10",
+          family: "rook",
+          level: 3,
+          revision: 10,
+          movement: "RfB",
+          legacyType: "x",
+          legacySlot: 18,
+          placement: "replace",
+          roles: {
+            pawn: false,
+            castlingRook: true,
+            enPassant: false
+          }
+        },
+        y: {
+          id: "rook.purple@12",
+          family: "rook",
+          level: 3,
+          revision: 12,
+          movement: "RC",
+          legacyType: "d",
+          legacySlot: 3,
+          placement: "replace",
+          roles: {
+            pawn: false,
+            castlingRook: true,
+            enPassant: false
+          },
+          inheritLegacyProbes: false
+        }
+      },
+      capabilityProbes: [
+        {
+          name: "bishop.purple@13: White open movement and range",
+          fen: "8/7k/8/8/3M4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: Black open movement and range",
+          fen: "k7/8/8/3m4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPMPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpmpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: White first sideways leg blocks both wide knight directions",
+          fen: "8/7k/8/5p2/2PMP3/1p6/8/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: Black first sideways leg blocks both wide knight directions",
+          fen: "k7/8/1P6/2pmp3/5P2/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: White second sideways square is not the lame knight leg",
+          fen: "8/7k/8/5p2/1P1M1P2/1p6/8/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: Black second sideways square is not the lame knight leg",
+          fen: "k7/8/1P6/1p1m1p2/5P2/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: White enemy first leg can be captured sideways but blocks knight continuation",
+          fen: "8/7k/8/5p2/3Mp3/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: Black enemy first leg can be captured sideways but blocks knight continuation",
+          fen: "k7/8/8/3mP3/5P2/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: White horizontal slides retain a two-square clear limit",
+          fen: "8/7k/8/8/p2M1p2/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: Black horizontal slides retain a two-square clear limit",
+          fen: "k7/8/8/P2m1P2/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: White open movement and range",
+          fen: "8/7k/8/8/3A4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: Black open movement and range",
+          fen: "k7/8/8/3a4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPAPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpapP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: White tall knight is blocked on its first vertical leg",
+          fen: "8/7k/2p1p3/3P4/3A4/3P4/2p1p3/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: Black tall knight is blocked on its first vertical leg",
+          fen: "k7/2P1P3/3p4/3a4/3p4/2P1P3/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: White tall knight ignores the second vertical square",
+          fen: "8/7k/2pPp3/8/3A4/8/2pPp3/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: Black tall knight ignores the second vertical square",
+          fen: "k7/2PpP3/8/3a4/8/2PpP3/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: White vertical two-step is a clear-path slide and has no sideways counterpart",
+          fen: "8/7k/3p4/8/1p1A1p2/8/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: Black vertical two-step is a clear-path slide and has no sideways counterpart",
+          fen: "k7/3P4/8/1P1a1P2/8/3P4/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White open movement and range",
+          fen: "8/7k/8/8/3F4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black open movement and range",
+          fen: "k7/8/8/3f4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPFPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpfpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White orthogonal steps and two-square jumps with no longer or diagonal moves",
+          fen: "8/7k/3p4/8/1p1F1p2/8/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black orthogonal steps and two-square jumps with no longer or diagonal moves",
+          fen: "k7/3P4/8/1P1f1P2/8/3P4/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White two-square orthogonal jumps cross friendly intermediate blockers",
+          fen: "8/7k/3p4/3P4/1pPFPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black two-square orthogonal jumps cross friendly intermediate blockers",
+          fen: "k7/3P4/3p4/1PpfpP2/3p4/3P4/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White finite nonroyal grant remains capturable",
+          fen: "3r4/7k/8/8/3F4/8/8/K7 b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black finite nonroyal grant remains capturable",
+          fen: "k7/8/8/3f4/8/8/7K/3R4 w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White non-pawn grant keeps ordinary nonpromotion at the last rank",
+          fen: "8/1F6/7k/8/8/8/8/7K w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black non-pawn grant keeps ordinary nonpromotion at the last rank",
+          fen: "7k/8/8/8/8/7K/1f6/8 b - - 0 1"
+        },
+        {
+          name: "king.reserve-bishop@1: White open movement and range",
+          fen: "8/7k/8/8/3C4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "king.reserve-bishop@1: Black open movement and range",
+          fen: "k7/8/8/3c4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.reserve-bishop@1: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPCPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "king.reserve-bishop@1: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpcpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.reserve-king@1: White open movement and range",
+          fen: "8/7k/8/8/3E4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "king.reserve-king@1: Black open movement and range",
+          fen: "k7/8/8/3e4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.reserve-king@1: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPEPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "king.reserve-king@1: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpepP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.reserve-pawn@6: White open movement and range",
+          fen: "8/7k/8/8/3H4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "king.reserve-pawn@6: Black open movement and range",
+          fen: "k7/8/8/3h4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.reserve-pawn@6: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPHPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "king.reserve-pawn@6: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PphpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.reserve-pawn@6: White forward capture only with quiet forward diagonal relocation",
+          fen: "7k/8/8/2ppp3/3H4/3p4/8/7K w - - 0 1"
+        },
+        {
+          name: "king.reserve-pawn@6: Black forward capture only with quiet forward diagonal relocation",
+          fen: "7k/8/3P4/3h4/2PPP3/8/8/7K b - - 0 1"
+        },
+        {
+          name: "king.reserve-pawn@6: White quiet diagonal relocation cannot jump blockers or capture en passant",
+          fen: "7k/8/8/2Hp4/8/8/8/7K w - d6 0 1"
+        },
+        {
+          name: "king.reserve-pawn@6: Black quiet diagonal relocation cannot jump blockers or capture en passant",
+          fen: "7k/8/8/8/2hP4/8/8/7K b - d3 0 1"
+        },
+        {
+          name: "king.reserve-pawn@6: White clear quiet forward step differs between grant alternatives",
+          fen: "7k/8/8/8/3H4/8/8/7K w - - 0 1"
+        },
+        {
+          name: "king.reserve-pawn@6: Black clear quiet forward step differs between grant alternatives",
+          fen: "7k/8/8/3h4/8/8/8/7K b - - 0 1"
+        },
+        {
+          name: "king.reserve-pawn@6: White non-pawn grant never promotes on a diagonal last-rank visit",
+          fen: "8/1H6/7k/8/8/8/8/7K w - - 0 1"
+        },
+        {
+          name: "king.reserve-pawn@6: Black non-pawn grant never promotes on a diagonal last-rank visit",
+          fen: "7k/8/8/8/8/7K/1h6/8 b - - 0 1"
+        },
+        {
+          name: "king.reserve-rook@1: White open movement and range",
+          fen: "8/7k/8/8/3D4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "king.reserve-rook@1: Black open movement and range",
+          fen: "k7/8/8/3d4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.reserve-rook@1: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPDPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "king.reserve-rook@1: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpdpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "knight.purple@3: White open movement and range",
+          fen: "8/7k/8/8/3G4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "knight.purple@3: Black open movement and range",
+          fen: "k7/8/8/3g4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "knight.purple@3: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPGPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "knight.purple@3: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpgpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "knight.purple@3: White camel captures across blockers",
+          fen: "8/4p2k/8/3P2p1/3GP3/p7/8/K1p5 w - - 0 1"
+        },
+        {
+          name: "knight.purple@3: Black camel captures across blockers",
+          fen: "k1P5/8/P7/3gp3/3p2P1/8/4P2K/8 b - - 0 1"
+        },
+        {
+          name: "knight.purple@4: White open movement and range",
+          fen: "8/7k/8/8/3I4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "knight.purple@4: Black open movement and range",
+          fen: "k7/8/8/3i4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "knight.purple@4: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPIPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "knight.purple@4: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpipP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.blue@5: White open movement and range",
+          fen: "8/7k/8/8/3J4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.blue@5: Black open movement and range",
+          fen: "k7/8/8/3j4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.blue@5: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPJPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.blue@5: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpjpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.blue@5: White mandatory standard promotion",
+          fen: "8/1J6/7k/8/8/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.blue@5: Black mandatory standard promotion",
+          fen: "k7/8/8/8/8/7K/1j6/8 b - - 0 1"
+        },
+        {
+          name: "pawn.blue@5: White standard forward en passant capture",
+          fen: "7k/8/8/2Jp4/8/8/8/7K w - d6 0 1"
+        },
+        {
+          name: "pawn.blue@5: Black standard forward en passant capture",
+          fen: "7k/8/8/8/2jP4/8/8/7K b - d3 0 1"
+        },
+        {
+          name: "pawn.blue@5: White repeatable clear double advance and two-square forward captures",
+          fen: "7k/6p1/1p3p2/8/3J4/8/1p3p2/7K w - - 0 1"
+        },
+        {
+          name: "pawn.blue@5: Black repeatable clear double advance and two-square forward captures",
+          fen: "7k/1P3P2/8/3j4/8/1P3P2/6P1/7K b - - 0 1"
+        },
+        {
+          name: "pawn.blue@5: White both two-square paths stop at intermediate blockers",
+          fen: "7k/8/1p3p2/2PPP3/3J4/8/8/7K w - - 0 1"
+        },
+        {
+          name: "pawn.blue@5: Black both two-square paths stop at intermediate blockers",
+          fen: "7k/8/8/3j4/2ppp3/1P3P2/8/7K b - - 0 1"
+        },
+        {
+          name: "pawn.blue@7: White open movement and range",
+          fen: "8/7k/8/8/3L4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.blue@7: Black open movement and range",
+          fen: "k7/8/8/3l4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.blue@7: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPLPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.blue@7: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PplpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.blue@7: White initial movement across home-rank blockers",
+          fen: "8/7k/8/8/8/2pPp3/3L4/7K w - - 0 1"
+        },
+        {
+          name: "pawn.blue@7: Black initial movement across home-rank blockers",
+          fen: "7k/3l4/2PpP3/8/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.blue@7: White mandatory standard promotion",
+          fen: "8/1L6/7k/8/8/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.blue@7: Black mandatory standard promotion",
+          fen: "k7/8/8/8/8/7K/1l6/8 b - - 0 1"
+        },
+        {
+          name: "pawn.blue@7: White king-like quiet steps retain only diagonal captures",
+          fen: "7k/8/8/2ppp3/2pLp3/2ppp3/8/7K w - - 0 1"
+        },
+        {
+          name: "pawn.blue@7: Black king-like quiet steps retain only diagonal captures",
+          fen: "7k/8/2PPP3/2PlP3/2PPP3/8/8/7K b - - 0 1"
+        },
+        {
+          name: "pawn.blue@7: White clear home-rank forward double and forbidden sideways double",
+          fen: "7k/8/8/8/8/8/3L4/7K w - - 0 1"
+        },
+        {
+          name: "pawn.blue@7: Black clear home-rank forward double and forbidden sideways double",
+          fen: "7k/3l4/8/8/8/8/8/7K b - - 0 1"
+        },
+        {
+          name: "pawn.blue@7: White home-rank double cannot jump its intermediate blocker",
+          fen: "7k/8/8/8/8/3P4/3L4/7K w - - 0 1"
+        },
+        {
+          name: "pawn.blue@7: Black home-rank double cannot jump its intermediate blocker",
+          fen: "7k/3l4/3p4/8/8/8/8/7K b - - 0 1"
+        },
+        {
+          name: "pawn.blue@7: White quiet diagonal EP visit retains the bypassed pawn",
+          fen: "7k/8/8/2Lp4/8/8/8/7K w - d6 0 1"
+        },
+        {
+          name: "pawn.blue@7: Black quiet diagonal EP visit retains the bypassed pawn",
+          fen: "7k/8/8/8/2lP4/8/8/7K b - d3 0 1"
+        },
+        {
+          name: "pawn.orange@3: White open movement and range",
+          fen: "8/7k/8/8/3O4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.orange@3: Black open movement and range",
+          fen: "k7/8/8/3o4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.orange@3: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPOPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.orange@3: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpopP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.orange@3: White initial movement across home-rank blockers",
+          fen: "8/7k/8/8/8/2pPp3/3O4/7K w - - 0 1"
+        },
+        {
+          name: "pawn.orange@3: Black initial movement across home-rank blockers",
+          fen: "7k/3o4/2PpP3/8/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.orange@3: White mandatory standard promotion",
+          fen: "8/1O6/7k/8/8/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.orange@3: Black mandatory standard promotion",
+          fen: "k7/8/8/8/8/7K/1o6/8 b - - 0 1"
+        },
+        {
+          name: "pawn.orange@3: White standard en passant capture",
+          fen: "7k/8/8/2Op4/8/8/8/7K w - d6 0 1"
+        },
+        {
+          name: "pawn.orange@3: Black standard en passant capture",
+          fen: "7k/8/8/8/2oP4/8/8/7K b - d3 0 1"
+        },
+        {
+          name: "pawn.orange@3: White forward capture range and forbidden backward captures",
+          fen: "8/6pk/1p6/8/3O4/2p1p3/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.orange@3: Black forward capture range and forbidden backward captures",
+          fen: "k7/8/2P1P3/3o4/8/1P6/6PK/8 b - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: White open movement and range",
+          fen: "8/7k/8/8/3S4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: Black open movement and range",
+          fen: "k7/8/8/3s4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPSPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpspP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: White mandatory standard promotion",
+          fen: "8/1S6/7k/8/8/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: Black mandatory standard promotion",
+          fen: "k7/8/8/8/8/7K/1s6/8 b - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: White standard forward en passant capture",
+          fen: "7k/8/8/2Sp4/8/8/8/7K w - d6 0 1"
+        },
+        {
+          name: "pawn.purple@13: Black standard forward en passant capture",
+          fen: "7k/8/8/8/2sP4/8/8/7K b - d3 0 1"
+        },
+        {
+          name: "pawn.purple@13: White unlimited forward captures but quiet-only backward movement",
+          fen: "7k/p5p1/8/8/3S4/8/1p3p2/7K w - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: Black unlimited forward captures but quiet-only backward movement",
+          fen: "7k/1P3P2/8/3s4/8/8/P5P1/7K b - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: White forward diagonal captures require a clear path",
+          fen: "7k/8/1p3p2/2P1P3/3S4/8/8/7K w - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: Black forward diagonal captures require a clear path",
+          fen: "7k/8/8/3s4/2p1p3/1P3P2/8/7K b - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: White open movement and range",
+          fen: "8/7k/8/8/3T4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: Black open movement and range",
+          fen: "k7/8/8/3t4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPTPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PptpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: White mandatory standard promotion",
+          fen: "8/1T6/7k/8/8/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: Black mandatory standard promotion",
+          fen: "k7/8/8/8/8/7K/1t6/8 b - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: White two-square quiet queen range with forward-only captures",
+          fen: "8/7k/1p1p1p2/8/1p1T1p2/8/1p1p1p2/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: Black two-square quiet queen range with forward-only captures",
+          fen: "k7/1P1P1P2/8/1P1t1P2/8/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: White quiet sideways and backward slides require a clear intervening square",
+          fen: "8/7k/8/8/3TPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: Black quiet sideways and backward slides require a clear intervening square",
+          fen: "k7/3P4/3p4/3tpP2/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: White quiet EP-target visit keeps the bypassed pawn",
+          fen: "7k/8/8/2Tp4/8/8/8/7K w - d6 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: Black quiet EP-target visit keeps the bypassed pawn",
+          fen: "7k/8/8/8/2tP4/8/8/7K b - d3 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: White quiet and capturing forward promotions remain standard",
+          fen: "2r5/1T6/7k/8/8/8/8/7K w - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: Black quiet and capturing forward promotions remain standard",
+          fen: "7k/8/8/8/8/7K/1t6/2R5 b - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: White open movement and range",
+          fen: "8/7k/8/8/3V4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: Black open movement and range",
+          fen: "k7/8/8/3v4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPVPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpvpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: White initial movement across home-rank blockers",
+          fen: "8/7k/8/8/8/2pPp3/3V4/7K w - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: Black initial movement across home-rank blockers",
+          fen: "7k/3v4/2PpP3/8/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: White mandatory standard promotion",
+          fen: "8/1V6/7k/8/8/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: Black mandatory standard promotion",
+          fen: "k7/8/8/8/8/7K/1v6/8 b - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: White bracket capture directions versus quiet movement",
+          fen: "8/7k/4p3/2pppp2/2pVp3/1pppp3/2p5/7K w - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: Black bracket capture directions versus quiet movement",
+          fen: "7k/2P5/1PPPP3/2PvP3/2PPPP2/4P3/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: White bracket jumps and sliding paths around friendly blockers",
+          fen: "8/7k/5p2/2PPP1p1/2PVP3/p1PPP3/1p6/7K w - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: Black bracket jumps and sliding paths around friendly blockers",
+          fen: "7k/1P6/P1ppp3/2pvp3/2ppp1P1/5P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: White bracket clear home double and capture range",
+          fen: "8/7k/8/8/5p2/2p5/3V4/7K w - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: Black bracket clear home double and capture range",
+          fen: "7k/3v4/2P5/5P2/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: White bracket home double blocked on its intermediate square",
+          fen: "8/7k/8/8/8/3Pp3/3V4/7K w - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: Black bracket home double blocked on its intermediate square",
+          fen: "7k/3v4/3pP3/8/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: White bracket actual en passant removal or quiet overlapping visit",
+          fen: "7k/8/8/2Vp4/8/8/8/7K w - d6 0 1"
+        },
+        {
+          name: "pawn.rank-current@1: Black bracket actual en passant removal or quiet overlapping visit",
+          fen: "7k/8/8/8/2vP4/8/8/7K b - d3 0 1"
+        },
+        {
+          name: "queen.purple@1: White open movement and range",
+          fen: "8/7k/8/8/3U4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "queen.purple@1: Black open movement and range",
+          fen: "k7/8/8/3u4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "queen.purple@1: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPUPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "queen.purple@1: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpupP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "queen.purple@7: White open movement and range",
+          fen: "8/7k/8/8/3W4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "queen.purple@7: Black open movement and range",
+          fen: "k7/8/8/3w4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "queen.purple@7: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPWPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "queen.purple@7: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpwpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "rook.purple@10: White open movement and range",
+          fen: "8/7k/8/8/3X4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "rook.purple@10: Black open movement and range",
+          fen: "k7/8/8/3x4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "rook.purple@10: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPXPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "rook.purple@10: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpxpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "rook.purple@10: White forward and backward diagonal ranges",
+          fen: "8/p5pk/8/8/3X4/8/1p3p2/K7 w - - 0 1"
+        },
+        {
+          name: "rook.purple@10: Black forward and backward diagonal ranges",
+          fen: "k7/1P3P2/8/3x4/8/8/P5PK/8 b - - 0 1"
+        },
+        {
+          name: "rook.purple@10: White diagonal slides cannot cross blockers",
+          fen: "8/7k/5p2/4P3/3X4/2p5/1p6/K7 w - - 0 1"
+        },
+        {
+          name: "rook.purple@10: Black diagonal slides cannot cross blockers",
+          fen: "k7/1P6/2P5/3x4/4p3/5P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "rook.purple@10: White both castling sides",
+          fen: "4k3/8/8/8/8/8/8/X3K2X w KQ - 0 1"
+        },
+        {
+          name: "rook.purple@10: Black both castling sides",
+          fen: "x3k2x/8/8/8/8/8/8/4K3 b kq - 0 1"
+        },
+        {
+          name: "rook.purple@12: White open movement and range",
+          fen: "8/7k/8/8/3Y4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "rook.purple@12: Black open movement and range",
+          fen: "k7/8/8/3y4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "rook.purple@12: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPYPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "rook.purple@12: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpypP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "rook.purple@12: White both castling sides",
+          fen: "4k3/8/8/8/8/8/8/Y3K2Y w KQ - 0 1"
+        },
+        {
+          name: "rook.purple@12: Black both castling sides",
+          fen: "y3k2y/8/8/8/8/8/8/4K3 b kq - 0 1"
+        },
+        {
+          name: "king.reserve-bishop@1: finite w reserve deployment",
+          fen: "7k/8/8/8/8/8/8/K7[C] w - - 0 1"
+        },
+        {
+          name: "king.reserve-bishop@1: finite b reserve deployment",
+          fen: "7k/8/8/8/8/8/8/K7[c] b - - 0 1"
+        },
+        {
+          name: "king.reserve-rook@1: finite w reserve deployment",
+          fen: "7k/8/8/8/8/8/8/K7[D] w - - 0 1"
+        },
+        {
+          name: "king.reserve-rook@1: finite b reserve deployment",
+          fen: "7k/8/8/8/8/8/8/K7[d] b - - 0 1"
+        },
+        {
+          name: "king.reserve-king@1: finite w reserve deployment",
+          fen: "7k/8/8/8/8/8/8/K7[E] w - - 0 1"
+        },
+        {
+          name: "king.reserve-king@1: finite b reserve deployment",
+          fen: "7k/8/8/8/8/8/8/K7[e] b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: finite w reserve deployment",
+          fen: "7k/8/8/8/8/8/8/K7[F] w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: finite b reserve deployment",
+          fen: "7k/8/8/8/8/8/8/K7[f] b - - 0 1"
+        },
+        {
+          name: "king.reserve-pawn@6: finite w reserve deployment",
+          fen: "7k/8/8/8/8/8/8/K7[H] w - - 0 1"
+        },
+        {
+          name: "king.reserve-pawn@6: finite b reserve deployment",
+          fen: "7k/8/8/8/8/8/8/K7[h] b - - 0 1"
+        },
+        {
+          name: "ordinary White king castling",
+          fen: "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1"
+        },
+        {
+          name: "ordinary Black king castling",
+          fen: "r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1"
+        }
+      ]
+    };
+  }
+});
+
 // src/playable-library.js
 var require_playable_library = __commonJS({
   "src/playable-library.js"(exports2, module2) {
@@ -23956,6 +25470,20 @@ var require_playable_library = __commonJS({
       "king.grant-orthogonal-three-level3@1",
       "king.grant-knight-level3@1"
     ]);
+    var V17_CONFIRMED_CANDIDATES = Object.freeze({
+      pawns: Object.freeze(["pawn.blue@5", "pawn.blue@7", "pawn.orange@3", "pawn.rank-current@1", "pawn.purple@13", "pawn.queen-sideways@1"]),
+      knights: Object.freeze(["knight.purple@4"]),
+      bishops: Object.freeze(["bishop.vertical-blocked@1"]),
+      rooks: Object.freeze(["rook.purple@12"]),
+      queens: Object.freeze(["queen.purple@7"])
+    });
+    var V17_CONFIRMED_RESERVE_DESIGN_IDS = Object.freeze([
+      "king.reserve-pawn@6",
+      "king.reserve-bishop@1",
+      "king.reserve-rook@1",
+      "king.grant-wd-level3@1",
+      "king.reserve-king@1"
+    ]);
     var closeoutLibrary = (group, candidates = []) => Object.freeze({
       id: `v16-${group}`,
       name: group === "references" ? "King workshop" : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
@@ -23996,12 +25524,22 @@ var require_playable_library = __commonJS({
     });
     var rosterLibrary = Object.freeze({
       id: "v17-roster-trials",
-      name: "Roster and trials",
+      name: "Roster and trials (archive)",
       generation: CURRENT_PLAYABLE_GENERATION,
       edition: 4,
+      superseded: true,
       designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(V17_ROSTER_CANDIDATES).flat(), ...V17_ROSTER_RESERVE_DESIGN_IDS]),
       json: "src/playable-v17-roster-trials-profile.json",
       ini: "variants/levelup-playable-v17-roster-trials.ini"
+    });
+    var confirmedLibrary = Object.freeze({
+      id: "v17-roster-confirmed",
+      name: "Roster and king trials",
+      generation: CURRENT_PLAYABLE_GENERATION,
+      edition: 5,
+      designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(V17_CONFIRMED_CANDIDATES).flat(), ...V17_CONFIRMED_RESERVE_DESIGN_IDS]),
+      json: "src/playable-v17-roster-confirmed-profile.json",
+      ini: "variants/levelup-playable-v17-roster-confirmed.ini"
     });
     var PLAYABLE_LIBRARIES = Object.freeze([
       Object.freeze({
@@ -24031,9 +25569,10 @@ var require_playable_library = __commonJS({
       ...Object.entries(V17_CANDIDATES).map(([group, candidates]) => currentLibrary(group, candidates)),
       revisedPawnLibrary,
       selectedPawnLibrary,
-      rosterLibrary
+      rosterLibrary,
+      confirmedLibrary
     ]);
-    module2.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };
+    module2.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };
   }
 });
 
@@ -24283,6 +25822,55 @@ var require_balance_designs_v17_revisions = __commonJS({
   }
 });
 
+// src/balance-designs-v17-mixed.js
+var require_balance_designs_v17_mixed = __commonJS({
+  "src/balance-designs-v17-mixed.js"(exports2, module2) {
+    "use strict";
+    function freeze(value) {
+      if (value && typeof value === "object") {
+        Object.values(value).forEach(freeze);
+        Object.freeze(value);
+      }
+      return value;
+    }
+    var NEW_DEFINITIONS = [{
+      id: "king.grant-wd-level3@1",
+      family: "king",
+      level: 3,
+      revision: 1,
+      movement: "WD",
+      legacyType: "a",
+      legacySlot: 1,
+      placement: "reserve",
+      roles: { pawn: false, castlingRook: false, enPassant: false },
+      inheritLegacyProbes: false
+    }];
+    function grantProbes(definition, type, position) {
+      if (definition.id !== "king.grant-wd-level3@1") return [];
+      return [
+        {
+          name: "orthogonal steps and two-square jumps with no longer or diagonal moves",
+          fen: position({ a1: "K", h7: "k", d4: type, d6: "p", f4: "p", d2: "p", b4: "p" })
+        },
+        {
+          name: "two-square orthogonal jumps cross friendly intermediate blockers",
+          fen: position({ a1: "K", h7: "k", d4: type, d5: "P", e4: "P", d3: "P", c4: "P", d6: "p", f4: "p", d2: "p", b4: "p" })
+        },
+        {
+          name: "finite nonroyal grant remains capturable",
+          fen: position({ a1: "K", h7: "k", d4: type, d8: "r" }, "b")
+        },
+        {
+          name: "non-pawn grant keeps ordinary nonpromotion at the last rank",
+          fen: position({ h1: "K", h6: "k", b7: type })
+        }
+      ];
+    }
+    freeze({ NEW_DEFINITIONS });
+    module2.exports = { NEW_DEFINITIONS, grantProbes };
+  }
+});
+
 // src/design-catalog.js
 var require_design_catalog = __commonJS({
   "src/design-catalog.js"(exports2, module2) {
@@ -24448,7 +26036,8 @@ var require_design_catalog = __commonJS({
       // New research brackets append definitions; every archived ID above remains
       // byte-for-byte unchanged, including historical purchase prices.
       ...require_balance_designs_v17().NEW_DEFINITIONS,
-      ...require_balance_designs_v17_revisions().NEW_DEFINITIONS
+      ...require_balance_designs_v17_revisions().NEW_DEFINITIONS,
+      ...require_balance_designs_v17_mixed().NEW_DEFINITIONS
     ];
     var DESIGNS = Object.freeze(Object.fromEntries(definitions.map((design) => [design.id, design])));
     var LEGACY_DESIGN_IDS = Object.freeze(Object.fromEntries(definitions.filter((design) => design.revision === 1 && design.family !== "king" && design.inheritLegacyProbes !== false).map((design) => [design.legacyType, design.id])));
@@ -24544,7 +26133,8 @@ var require_design_options = __commonJS({
     var revisedPawnProfile = require_playable_v17_pawns_revised_profile();
     var selectedPawnProfile = require_playable_v17_pawns_selected_profile();
     var rosterProfile = require_playable_v17_roster_trials_profile();
-    var { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS } = require_playable_library();
+    var confirmedProfile = require_playable_v17_roster_confirmed_profile();
+    var { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS } = require_playable_library();
     var { STANDARD_TYPES } = require_design_catalog();
     var { pieceInfo } = require_piece_catalog();
     function freeze(value) {
@@ -24555,7 +26145,7 @@ var require_design_options = __commonJS({
       return value;
     }
     var PLAYABLE_PROFILE2 = freeze(compiled);
-    var PLAYABLE_PROFILES2 = freeze([PLAYABLE_PROFILE2, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile, rosterProfile]);
+    var PLAYABLE_PROFILES2 = freeze([PLAYABLE_PROFILE2, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile, rosterProfile, confirmedProfile]);
     var EXPERIMENTAL_VARIANT2 = PLAYABLE_PROFILE2.variant;
     var EXPERIMENTAL_VARIANTS2 = freeze(PLAYABLE_PROFILES2.map((profile) => profile.variant));
     var PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES2[index].variant, ...library.generation ? { generation: library.generation } : {}, ...library.focusFamily ? { focusFamily: library.focusFamily } : {}, ...library.edition ? { edition: library.edition } : {}, ...library.superseded ? { superseded: true } : {} })));
@@ -24661,7 +26251,8 @@ var require_design_options = __commonJS({
       "king.reserve-true-queen@1": ["True queen grant", "Add a nonroyal guard with normal queen moves and captures."],
       "king.grant-king-level3@1": ["King-step grant", "Add a nonroyal guard that moves or captures one square in any direction."],
       "king.grant-orthogonal-three-level3@1": ["Three-step Orthogonal grant", "Add a nonroyal guard that moves or captures up to three clear squares orthogonally. It cannot jump over pieces."],
-      "king.grant-knight-level3@1": ["Knight grant", "Add a nonroyal guard with normal knight jumps, including captures. It has no king steps."]
+      "king.grant-knight-level3@1": ["Knight grant", "Add a nonroyal guard with normal knight jumps, including captures. It has no king steps."],
+      "king.grant-wd-level3@1": ["Jumping Orthogonal grant", "Add a nonroyal guard that moves or captures one square orthogonally, or jumps exactly two squares orthogonally over intervening pieces."]
     };
     var additionalExperimentalIds = /* @__PURE__ */ new Set([
       "pawn.bishop-step-current@1",
@@ -24713,8 +26304,28 @@ var require_design_options = __commonJS({
       for (const id of V17_ROSTER_RESERVE_DESIGN_IDS) accents[id] = kingGrantAccents[optionsById[id].level - 1];
       return Object.freeze(accents);
     })();
+    var confirmedAccents = (() => {
+      const accents = { ...workshopAccentsFor(V17_CONFIRMED_CANDIDATES, []) };
+      for (const id of Object.values(V17_CONFIRMED_CANDIDATES).flat()) if (optionsById[id].level === 3) accents[id] = "purple";
+      for (const id of V17_CONFIRMED_RESERVE_DESIGN_IDS) accents[id] = kingGrantAccents[optionsById[id].level - 1];
+      return Object.freeze(accents);
+    })();
+    var confirmedNames = {
+      "bishop.vertical-blocked@1": "Vertical bishop",
+      "pawn.queen-sideways@1": "Queen pawn",
+      "king.reserve-rook@1": "Sliding Orthogonal grant (trial)",
+      "king.grant-wd-level3@1": "Jumping Orthogonal grant (trial)",
+      "king.reserve-king@1": "King grant (four-point candidate)"
+    };
+    var confirmedKingTrials = /* @__PURE__ */ new Set(["king.reserve-rook@1", "king.grant-wd-level3@1", "king.reserve-king@1"]);
     function optionInProfile(option, profile) {
       if (!option) return option;
+      if (confirmedProfile.variant === profile.variant) return {
+        ...option,
+        accent: confirmedAccents[option.id],
+        name: officialNames[option.id] || confirmedNames[option.id] || option.name,
+        status: officialNames[option.id] ? "reference" : confirmedKingTrials.has(option.id) ? "experimental" : "accepted"
+      };
       const accents = rosterProfile.variant === profile.variant ? rosterAccents : selectedPawnProfile.variant === profile.variant ? selectedPawnAccents : revisedPawnProfile.variant === profile.variant ? revisedPawnAccents : currentProfiles.some((candidate) => candidate.variant === profile.variant) ? currentWorkshopAccents : closeoutProfiles.some((candidate) => candidate.variant === profile.variant) ? workshopAccents : null;
       if (!accents) return option;
       return { ...option, accent: accents[option.id], ...officialNames[option.id] ? { name: officialNames[option.id], status: "reference" } : {} };

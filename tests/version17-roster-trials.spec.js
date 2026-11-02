@@ -21,10 +21,11 @@ async function start(page) {
 
 test.beforeAll(() => initVariantRules(library.variant));
 
-test('the combined roster appears first and offers accepted pieces plus three distinct three-point grants', async ({ page }) => {
+test('the archived roster retains its earlier pieces and three distinct three-point grant trials', async ({ page }) => {
   await page.goto('http://127.0.0.1:4173');
   const entries = await page.locator('#game-mode option').evaluateAll(options => options.map(option => ({ value: option.value, label: option.textContent })));
-  expect(entries.findIndex(item => item.value === library.variant)).toBeLessThan(entries.findIndex(item => item.label === 'Version 17 · Pawn workshop'));
+  expect(entries.findIndex(item => item.label === 'Version 17 · Roster and king trials')).toBeLessThan(entries.findIndex(item => item.value === library.variant));
+  expect(entries.find(item => item.value === library.variant).label).toBe('Version 17 · Roster and trials (archive)');
   expect(entries.some(item => item.label === 'Version 17 · Pawn workshop (bishop trial)')).toBe(true);
   await page.selectOption('#game-mode', library.variant);
   await page.locator('#experimental-budget').fill('9');

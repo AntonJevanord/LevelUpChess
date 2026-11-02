@@ -1,0 +1,4834 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-v17-validation-upload-evidence",
+  "recordedDate": "2026-11-02",
+  "sources": {
+    "trials": {
+      "journal": {
+        "archiveFile": "v17-validation-001.trials.games.jsonl.gz",
+        "archivedSha256": "c69d9a31ad6fb501bd270ec40989186fc83d6a01ec067f6936da99f50ff44fbf",
+        "originalName": "games.jsonl",
+        "sha256": "f4e705a3222cade6cd40e6785bd24b413ea0f23fca51fb3e9797f18ec9699cc4",
+        "bytes": 2953219
+      },
+      "uploadedReport": {
+        "archiveFile": "v17-validation-001.trials.uploaded-report.md.gz",
+        "archivedSha256": "8b980ec9842e368021f025e6152779af7799ae91cc4f6057ddc742039975f73b",
+        "originalName": "v17-report.md",
+        "sha256": "8c41323f7c6b8284e09d89fd83814b41f0ec150eadd4e43563625b7a1caef4d5",
+        "bytes": 8339
+      }
+    },
+    "bridge": {
+      "journal": {
+        "archiveFile": "v17-validation-001.bridge.games.jsonl.gz",
+        "archivedSha256": "ed2243e5d180632eca5179e6f4ba599368ce586009e79ad4a79898a8d568b6bb",
+        "originalName": "games.jsonl",
+        "sha256": "b801d3b4953ddd983fd7508cee013536293da9743102e7af57dd16b81584711a",
+        "bytes": 1426073
+      },
+      "uploadedReport": {
+        "archiveFile": "v17-validation-001.bridge.uploaded-report.md.gz",
+        "archivedSha256": "7bc3ed917bee72063265f7bd93d40114243a89b70446622f2cde75cbd685f110",
+        "originalName": "v17-report.md",
+        "sha256": "2b47c44663d7855c57d7ba971b0ec25506b38bd3388f304db3926753b090e162",
+        "bytes": 6931
+      }
+    }
+  },
+  "provenance": {
+    "originalManifestSupplied": false,
+    "nativePreflightSupplied": false,
+    "uploadedReportSupplied": true,
+    "engineSha256": null,
+    "legalMovesIndependentlyReplayed": false,
+    "descriptorKind": "derived declaration compatibility descriptor",
+    "limitations": [
+      "Original run.json, archived INI files and native-preflight proof were not supplied. Reconstructed declarations check compatibility, not original run provenance.",
+      "Recorded starts, identities, opening prefixes, search settings and outcomes match the declarations. Engine names and profile hashes do not attest the executable or native material tables.",
+      "Moves and terminal outcomes were not independently replayed. No games, engine searches, material fit, Elo or population confidence interval were produced."
+    ]
+  },
+  "counts": {
+    "uploadedGames": 1152,
+    "completedGames": 1152,
+    "pairedGames": 1152,
+    "completePairs": 576,
+    "truncatedGames": 0,
+    "excludedCompletedPartners": 0,
+    "errors": 0,
+    "retries": 0,
+    "newMatchGames": 0,
+    "engineSearches": 0
+  },
+  "stages": [
+    {
+      "name": "trials",
+      "experiment": "level3-revision-screen",
+      "source": {
+        "journal": {
+          "archiveFile": "v17-validation-001.trials.games.jsonl.gz",
+          "archivedSha256": "c69d9a31ad6fb501bd270ec40989186fc83d6a01ec067f6936da99f50ff44fbf",
+          "originalName": "games.jsonl",
+          "sha256": "f4e705a3222cade6cd40e6785bd24b413ea0f23fca51fb3e9797f18ec9699cc4",
+          "bytes": 2953219
+        },
+        "uploadedReport": {
+          "archiveFile": "v17-validation-001.trials.uploaded-report.md.gz",
+          "archivedSha256": "8b980ec9842e368021f025e6152779af7799ae91cc4f6057ddc742039975f73b",
+          "originalName": "v17-report.md",
+          "sha256": "8c41323f7c6b8284e09d89fd83814b41f0ec150eadd4e43563625b7a1caef4d5",
+          "bytes": 8339
+        }
+      },
+      "declaration": {
+        "configSha256": "c9a4cdc5bc74f67b39ad4d677f6c0d6515ea62f4cf25a1ae235aa002d5c9bb3d",
+        "metadataSha256": "983f4b97a396f49a5f34c5cd1d29e90db087fd3f4d3199bd72781ccd738ecaba",
+        "registryHash": "dcd63dcb45216de18413728092d73e87bd66c98154bc8571540f227e095d4627",
+        "profileHash": "408cd26628bfe04ad583cbfc558bde84319d88498a386dedce8fc82315f8f89d",
+        "scheduleSha256": "263edc7e90cdecf8ebda33deec2af4a992fe1acfef5c697f78f97a5274d3ba39",
+        "scheduledGames": 768,
+        "descriptorKind": "derived declaration compatibility descriptor",
+        "reportReproducedExactly": true
+      },
+      "engine": {
+        "nodes": 20000,
+        "threads": 1,
+        "hashMb": 32,
+        "maxPlies": 400
+      },
+      "recordedEngineNames": {
+        "w": "Fairy-Stockfish 230826",
+        "b": "Fairy-Stockfish 230826"
+      },
+      "evaluation": {
+        "pieceValues": {
+          "bishop.purple@13": {
+            "mg": 1858,
+            "eg": 1903
+          },
+          "bishop.vertical-blocked@1": {
+            "mg": 1742,
+            "eg": 1769
+          },
+          "king.grant-king-level3@1": {
+            "mg": 773,
+            "eg": 866
+          },
+          "king.grant-knight-level3@1": {
+            "mg": 773,
+            "eg": 866
+          },
+          "king.grant-orthogonal-three-level3@1": {
+            "mg": 563,
+            "eg": 635
+          },
+          "knight.purple@3": {
+            "mg": 1663,
+            "eg": 1877
+          },
+          "pawn.queen-sideways@1": {
+            "mg": 418,
+            "eg": 436
+          },
+          "queen.purple@1": {
+            "mg": 3738,
+            "eg": 3875
+          },
+          "queen.xray-rook@1": {
+            "mg": 3772,
+            "eg": 3470
+          },
+          "rook.purple@10": {
+            "mg": 1904,
+            "eg": 1932
+          }
+        }
+      },
+      "valueAudit": {
+        "provenance": {
+          "file": "experiments/designs/v17-level3-revision-values.json",
+          "sha256": "9507dbc13aec08c22562433852ffdb3bc5dea572835dab2ee342cf5729f0358f",
+          "policy": "Preserve the prior applied baseline for movement revisions and the three-step orthogonal grant. New three-point king-step and knight grants use their custom-piece automatic raw MG/EG values. Apply each declared pair to all six engine tables, preserving all four official reference pairs. No values are fitted from outcomes.",
+          "baseline": {
+            "file": "experiments/designs/v17-bracket-values.json",
+            "sha256": "205709189dcec631970253dbdf826669262e412c325764f47880acbfbd96d2f9",
+            "policy": "Current-design automatic raw MG/EG values, applied consistently to all six engine tables for every sibling. Shared diagonal grants use F as their common anchor. Existing references remain fixed. No values are fitted from game outcomes."
+          },
+          "engineSha256": "8ccde8596fb88aa7fbbf1020cc5afa52ef9d1887764275ea8e627ba0227e4f1e",
+          "calibratedDate": "2026-11-02",
+          "diagnostic": "levelupvalues version 1; no searches or match games"
+        },
+        "values": [
+          {
+            "id": "bishop.purple@13",
+            "valuePolicy": "preserve-official-reference",
+            "valueBaseId": "bishop.purple@13",
+            "movement": "BsR2nsN",
+            "family": "bishop",
+            "level": 3,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "context": 0,
+            "automatic": {
+              "mg": 1858,
+              "eg": 1903
+            },
+            "automaticTables": {
+              "rawMg": 1858,
+              "rawEg": 1903,
+              "captureMg": 1858,
+              "captureEg": 1903,
+              "evalMg": 1858,
+              "evalEg": 1903
+            },
+            "applied": {
+              "mg": 1858,
+              "eg": 1903
+            }
+          },
+          {
+            "id": "bishop.vertical-blocked@1",
+            "valuePolicy": "preserve-applied-baseline",
+            "valueBaseId": "bishop.purple@18",
+            "movement": "BvW2vnN",
+            "family": "bishop",
+            "level": 3,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "context": 0,
+            "automatic": {
+              "mg": 1858,
+              "eg": 1903
+            },
+            "automaticTables": {
+              "rawMg": 1858,
+              "rawEg": 1903,
+              "captureMg": 1858,
+              "captureEg": 1903,
+              "evalMg": 1858,
+              "evalEg": 1903
+            },
+            "applied": {
+              "mg": 1742,
+              "eg": 1769
+            }
+          },
+          {
+            "id": "king.grant-king-level3@1",
+            "valuePolicy": "measured-automatic-raw",
+            "valueBaseId": null,
+            "movement": "K",
+            "family": "king",
+            "level": 3,
+            "placement": "reserve",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "context": 0,
+            "automatic": {
+              "mg": 773,
+              "eg": 866
+            },
+            "automaticTables": {
+              "rawMg": 773,
+              "rawEg": 866,
+              "captureMg": 773,
+              "captureEg": 866,
+              "evalMg": 773,
+              "evalEg": 866
+            },
+            "applied": {
+              "mg": 773,
+              "eg": 866
+            }
+          },
+          {
+            "id": "king.grant-knight-level3@1",
+            "valuePolicy": "measured-automatic-raw",
+            "valueBaseId": null,
+            "movement": "N",
+            "family": "king",
+            "level": 3,
+            "placement": "reserve",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "context": 0,
+            "automatic": {
+              "mg": 773,
+              "eg": 866
+            },
+            "automaticTables": {
+              "rawMg": 773,
+              "rawEg": 866,
+              "captureMg": 773,
+              "captureEg": 866,
+              "evalMg": 773,
+              "evalEg": 866
+            },
+            "applied": {
+              "mg": 773,
+              "eg": 866
+            }
+          },
+          {
+            "id": "king.grant-orthogonal-three-level3@1",
+            "valuePolicy": "preserve-applied-baseline",
+            "valueBaseId": "king.grant-orthogonal-expanded@1",
+            "movement": "W3",
+            "family": "king",
+            "level": 3,
+            "placement": "reserve",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "context": 0,
+            "automatic": {
+              "mg": 705,
+              "eg": 773
+            },
+            "automaticTables": {
+              "rawMg": 705,
+              "rawEg": 773,
+              "captureMg": 705,
+              "captureEg": 773,
+              "evalMg": 705,
+              "evalEg": 773
+            },
+            "applied": {
+              "mg": 563,
+              "eg": 635
+            }
+          },
+          {
+            "id": "knight.purple@3",
+            "valuePolicy": "preserve-official-reference",
+            "valueBaseId": "knight.purple@3",
+            "movement": "NC",
+            "family": "knight",
+            "level": 3,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "context": 0,
+            "automatic": {
+              "mg": 1663,
+              "eg": 1877
+            },
+            "automaticTables": {
+              "rawMg": 1663,
+              "rawEg": 1877,
+              "captureMg": 1663,
+              "captureEg": 1877,
+              "evalMg": 1663,
+              "evalEg": 1877
+            },
+            "applied": {
+              "mg": 1663,
+              "eg": 1877
+            }
+          },
+          {
+            "id": "pawn.queen-sideways@1",
+            "valuePolicy": "preserve-applied-baseline",
+            "valueBaseId": "pawn.purple@12",
+            "movement": "mQ2cfQ2",
+            "family": "pawn",
+            "level": 3,
+            "placement": "replace",
+            "roles": {
+              "pawn": true,
+              "castlingRook": false,
+              "enPassant": true
+            },
+            "context": 0,
+            "automatic": {
+              "mg": 527,
+              "eg": 584
+            },
+            "automaticTables": {
+              "rawMg": 527,
+              "rawEg": 584,
+              "captureMg": 527,
+              "captureEg": 584,
+              "evalMg": 527,
+              "evalEg": 584
+            },
+            "applied": {
+              "mg": 418,
+              "eg": 436
+            }
+          },
+          {
+            "id": "queen.purple@1",
+            "valuePolicy": "preserve-official-reference",
+            "valueBaseId": "queen.purple@1",
+            "movement": "QN",
+            "family": "queen",
+            "level": 3,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "context": 0,
+            "automatic": {
+              "mg": 3738,
+              "eg": 3875
+            },
+            "automaticTables": {
+              "rawMg": 3738,
+              "rawEg": 3875,
+              "captureMg": 3738,
+              "captureEg": 3875,
+              "evalMg": 3738,
+              "evalEg": 3875
+            },
+            "applied": {
+              "mg": 3738,
+              "eg": 3875
+            }
+          },
+          {
+            "id": "queen.xray-rook@1",
+            "valuePolicy": "preserve-applied-baseline",
+            "valueBaseId": "queen.purple@7",
+            "movement": "QgR0",
+            "family": "queen",
+            "level": 3,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "context": 0,
+            "automatic": {
+              "mg": 3772,
+              "eg": 3470
+            },
+            "automaticTables": {
+              "rawMg": 3772,
+              "rawEg": 3470,
+              "captureMg": 3772,
+              "captureEg": 3470,
+              "evalMg": 3772,
+              "evalEg": 3470
+            },
+            "applied": {
+              "mg": 3772,
+              "eg": 3470
+            }
+          },
+          {
+            "id": "rook.purple@10",
+            "valuePolicy": "preserve-official-reference",
+            "valueBaseId": "rook.purple@10",
+            "movement": "RfB",
+            "family": "rook",
+            "level": 3,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": true,
+              "enPassant": false
+            },
+            "context": 0,
+            "automatic": {
+              "mg": 1904,
+              "eg": 1932
+            },
+            "automaticTables": {
+              "rawMg": 1904,
+              "rawEg": 1932,
+              "captureMg": 1904,
+              "captureEg": 1932,
+              "evalMg": 1904,
+              "evalEg": 1932
+            },
+            "applied": {
+              "mg": 1904,
+              "eg": 1932
+            }
+          }
+        ]
+      },
+      "openings": [
+        {
+          "id": "l2-bridge-old-benoni",
+          "moves": [
+            "d2d4",
+            "c7c5"
+          ]
+        },
+        {
+          "id": "l2-bridge-english-d5",
+          "moves": [
+            "c2c4",
+            "d7d5"
+          ]
+        },
+        {
+          "id": "l2-bridge-reti-c6",
+          "moves": [
+            "g1f3",
+            "c7c6"
+          ]
+        },
+        {
+          "id": "l2-bridge-van-geet-e5",
+          "moves": [
+            "b1c3",
+            "e7e5"
+          ]
+        },
+        {
+          "id": "l2-bridge-larsen-c6",
+          "moves": [
+            "b2b3",
+            "c7c6"
+          ]
+        },
+        {
+          "id": "l2-bridge-kings-fianchetto-c6",
+          "moves": [
+            "g2g3",
+            "c7c6"
+          ]
+        },
+        {
+          "id": "l2-bridge-larsen-d6",
+          "moves": [
+            "b2b3",
+            "d7d6"
+          ]
+        },
+        {
+          "id": "l2-bridge-kings-fianchetto-d6",
+          "moves": [
+            "g2g3",
+            "d7d6"
+          ]
+        },
+        {
+          "id": "l2-bridge-english-c6",
+          "moves": [
+            "c2c4",
+            "c7c6"
+          ]
+        },
+        {
+          "id": "l2-bridge-van-geet-d5",
+          "moves": [
+            "b1c3",
+            "d7d5"
+          ]
+        },
+        {
+          "id": "l2-bridge-van-geet-e6",
+          "moves": [
+            "b1c3",
+            "e7e6"
+          ]
+        },
+        {
+          "id": "l2-bridge-van-geet-g6",
+          "moves": [
+            "b1c3",
+            "g7g6"
+          ]
+        },
+        {
+          "id": "l2-bridge-larsen-nc6",
+          "moves": [
+            "b2b3",
+            "b8c6"
+          ]
+        },
+        {
+          "id": "l2-bridge-kings-fianchetto-nc6",
+          "moves": [
+            "g2g3",
+            "b8c6"
+          ]
+        },
+        {
+          "id": "l2-bridge-larsen-g6",
+          "moves": [
+            "b2b3",
+            "g7g6"
+          ]
+        },
+        {
+          "id": "l2-bridge-kings-fianchetto-b6",
+          "moves": [
+            "g2g3",
+            "b7b6"
+          ]
+        }
+      ],
+      "progress": {
+        "attempts": 768,
+        "duplicateCopiesIgnored": 0,
+        "finalizedGames": 768,
+        "completedGames": 768,
+        "pairedGames": 768,
+        "completePairs": 384
+      },
+      "upgradePoints": 3,
+      "trialDefinitions": [
+        {
+          "key": "vertical-blocked",
+          "label": "Blocked Vertical bishop",
+          "id": "bishop.vertical-blocked@1",
+          "family": "bishop",
+          "level": 3,
+          "movement": "BvW2vnN",
+          "placement": "replace",
+          "baseId": "bishop.purple@18",
+          "valueBaseId": "bishop.purple@18",
+          "valuePolicy": "preserve-applied-baseline"
+        },
+        {
+          "key": "queen-sideways",
+          "label": "Sideways Queen pawn",
+          "id": "pawn.queen-sideways@1",
+          "family": "pawn",
+          "level": 3,
+          "movement": "mQ2cfQ2",
+          "placement": "replace",
+          "baseId": "pawn.purple@12",
+          "valueBaseId": "pawn.purple@12",
+          "valuePolicy": "preserve-applied-baseline"
+        },
+        {
+          "key": "xray-rook",
+          "label": "Rook-ray queen",
+          "id": "queen.xray-rook@1",
+          "family": "queen",
+          "level": 3,
+          "movement": "QgR0",
+          "placement": "replace",
+          "baseId": "queen.purple@7",
+          "valueBaseId": "queen.purple@7",
+          "valuePolicy": "preserve-applied-baseline"
+        },
+        {
+          "key": "grant-king",
+          "label": "King grant (three points)",
+          "id": "king.grant-king-level3@1",
+          "family": "king",
+          "level": 3,
+          "movement": "K",
+          "placement": "reserve",
+          "baseId": "king.reserve-king@1",
+          "valueBaseId": null,
+          "valuePolicy": "measured-automatic-raw"
+        },
+        {
+          "key": "grant-orthogonal-three",
+          "label": "Three-step Orthogonal grant (three points)",
+          "id": "king.grant-orthogonal-three-level3@1",
+          "family": "king",
+          "level": 3,
+          "movement": "W3",
+          "placement": "reserve",
+          "baseId": "king.grant-orthogonal-expanded@1",
+          "valueBaseId": "king.grant-orthogonal-expanded@1",
+          "valuePolicy": "preserve-applied-baseline"
+        },
+        {
+          "key": "grant-knight",
+          "label": "Knight grant (three points)",
+          "id": "king.grant-knight-level3@1",
+          "family": "king",
+          "level": 3,
+          "movement": "N",
+          "placement": "reserve",
+          "baseId": null,
+          "valueBaseId": null,
+          "valuePolicy": "measured-automatic-raw"
+        }
+      ],
+      "comparisons": [
+        {
+          "id": "vertical-blocked-v-vanguard",
+          "aKey": "vertical-blocked",
+          "aLabel": "Blocked Vertical bishop",
+          "bKey": "vanguard",
+          "bLabel": "Vanguard",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 12,
+          "draws": 9,
+          "losses": 11,
+          "score": 0.515625,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "vertical-blocked-v-unicorn",
+          "aKey": "vertical-blocked",
+          "aLabel": "Blocked Vertical bishop",
+          "bKey": "unicorn",
+          "bLabel": "Unicorn",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 10,
+          "draws": 9,
+          "losses": 13,
+          "score": 0.453125,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "vertical-blocked-v-cruisader",
+          "aKey": "vertical-blocked",
+          "aLabel": "Blocked Vertical bishop",
+          "bKey": "cruisader",
+          "bLabel": "Cruisader",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 14,
+          "draws": 9,
+          "losses": 9,
+          "score": 0.578125,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "vertical-blocked-v-amazon",
+          "aKey": "vertical-blocked",
+          "aLabel": "Blocked Vertical bishop",
+          "bKey": "amazon",
+          "bLabel": "Amazon",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 12,
+          "draws": 5,
+          "losses": 15,
+          "score": 0.453125,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "queen-sideways-v-vanguard",
+          "aKey": "queen-sideways",
+          "aLabel": "Sideways Queen pawn",
+          "bKey": "vanguard",
+          "bLabel": "Vanguard",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 12,
+          "draws": 4,
+          "losses": 16,
+          "score": 0.4375,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "queen-sideways-v-unicorn",
+          "aKey": "queen-sideways",
+          "aLabel": "Sideways Queen pawn",
+          "bKey": "unicorn",
+          "bLabel": "Unicorn",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 16,
+          "draws": 6,
+          "losses": 10,
+          "score": 0.59375,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "queen-sideways-v-cruisader",
+          "aKey": "queen-sideways",
+          "aLabel": "Sideways Queen pawn",
+          "bKey": "cruisader",
+          "bLabel": "Cruisader",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 16,
+          "draws": 4,
+          "losses": 12,
+          "score": 0.5625,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "queen-sideways-v-amazon",
+          "aKey": "queen-sideways",
+          "aLabel": "Sideways Queen pawn",
+          "bKey": "amazon",
+          "bLabel": "Amazon",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 15,
+          "draws": 5,
+          "losses": 12,
+          "score": 0.546875,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "xray-rook-v-vanguard",
+          "aKey": "xray-rook",
+          "aLabel": "Rook-ray queen",
+          "bKey": "vanguard",
+          "bLabel": "Vanguard",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 17,
+          "draws": 5,
+          "losses": 10,
+          "score": 0.609375,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "xray-rook-v-unicorn",
+          "aKey": "xray-rook",
+          "aLabel": "Rook-ray queen",
+          "bKey": "unicorn",
+          "bLabel": "Unicorn",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 21,
+          "draws": 4,
+          "losses": 7,
+          "score": 0.71875,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "xray-rook-v-cruisader",
+          "aKey": "xray-rook",
+          "aLabel": "Rook-ray queen",
+          "bKey": "cruisader",
+          "bLabel": "Cruisader",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 22,
+          "draws": 3,
+          "losses": 7,
+          "score": 0.734375,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "xray-rook-v-amazon",
+          "aKey": "xray-rook",
+          "aLabel": "Rook-ray queen",
+          "bKey": "amazon",
+          "bLabel": "Amazon",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 12,
+          "draws": 12,
+          "losses": 8,
+          "score": 0.5625,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "grant-king-v-vanguard",
+          "aKey": "grant-king",
+          "aLabel": "King grant (three points)",
+          "bKey": "vanguard",
+          "bLabel": "Vanguard",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 18,
+          "draws": 3,
+          "losses": 11,
+          "score": 0.609375,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "grant-king-v-unicorn",
+          "aKey": "grant-king",
+          "aLabel": "King grant (three points)",
+          "bKey": "unicorn",
+          "bLabel": "Unicorn",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 20,
+          "draws": 2,
+          "losses": 10,
+          "score": 0.65625,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "grant-king-v-cruisader",
+          "aKey": "grant-king",
+          "aLabel": "King grant (three points)",
+          "bKey": "cruisader",
+          "bLabel": "Cruisader",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 21,
+          "draws": 3,
+          "losses": 8,
+          "score": 0.703125,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "grant-king-v-amazon",
+          "aKey": "grant-king",
+          "aLabel": "King grant (three points)",
+          "bKey": "amazon",
+          "bLabel": "Amazon",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 24,
+          "draws": 3,
+          "losses": 5,
+          "score": 0.796875,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "grant-orthogonal-three-v-vanguard",
+          "aKey": "grant-orthogonal-three",
+          "aLabel": "Three-step Orthogonal grant (three points)",
+          "bKey": "vanguard",
+          "bLabel": "Vanguard",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 21,
+          "draws": 0,
+          "losses": 11,
+          "score": 0.65625,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "grant-orthogonal-three-v-unicorn",
+          "aKey": "grant-orthogonal-three",
+          "aLabel": "Three-step Orthogonal grant (three points)",
+          "bKey": "unicorn",
+          "bLabel": "Unicorn",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 19,
+          "draws": 2,
+          "losses": 11,
+          "score": 0.625,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "grant-orthogonal-three-v-cruisader",
+          "aKey": "grant-orthogonal-three",
+          "aLabel": "Three-step Orthogonal grant (three points)",
+          "bKey": "cruisader",
+          "bLabel": "Cruisader",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 18,
+          "draws": 4,
+          "losses": 10,
+          "score": 0.625,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "grant-orthogonal-three-v-amazon",
+          "aKey": "grant-orthogonal-three",
+          "aLabel": "Three-step Orthogonal grant (three points)",
+          "bKey": "amazon",
+          "bLabel": "Amazon",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 14,
+          "draws": 7,
+          "losses": 11,
+          "score": 0.546875,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "grant-knight-v-vanguard",
+          "aKey": "grant-knight",
+          "aLabel": "Knight grant (three points)",
+          "bKey": "vanguard",
+          "bLabel": "Vanguard",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 21,
+          "draws": 3,
+          "losses": 8,
+          "score": 0.703125,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "grant-knight-v-unicorn",
+          "aKey": "grant-knight",
+          "aLabel": "Knight grant (three points)",
+          "bKey": "unicorn",
+          "bLabel": "Unicorn",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 17,
+          "draws": 2,
+          "losses": 13,
+          "score": 0.5625,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "grant-knight-v-cruisader",
+          "aKey": "grant-knight",
+          "aLabel": "Knight grant (three points)",
+          "bKey": "cruisader",
+          "bLabel": "Cruisader",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 15,
+          "draws": 6,
+          "losses": 11,
+          "score": 0.5625,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        },
+        {
+          "id": "grant-knight-v-amazon",
+          "aKey": "grant-knight",
+          "aLabel": "Knight grant (three points)",
+          "bKey": "amazon",
+          "bLabel": "Amazon",
+          "scheduledGames": 32,
+          "expectedPairs": 16,
+          "attempts": 32,
+          "pairedGames": 32,
+          "completePairs": 16,
+          "partialPairs": 0,
+          "openings": 16,
+          "wins": 20,
+          "draws": 2,
+          "losses": 10,
+          "score": 0.65625,
+          "statusCounts": {
+            "completed": 32,
+            "truncated": 0,
+            "aborted": 0,
+            "error": 0,
+            "unknown": 0
+          }
+        }
+      ],
+      "overall": {
+        "method": "Equal opponent means over shared fully completed opening cases; every configured repetition requires a complete color pair. Draws count half a point.",
+        "rows": [
+          {
+            "key": "vertical-blocked",
+            "label": "Blocked Vertical bishop",
+            "scope": "fixed-reference opponents only",
+            "score": 0.5,
+            "games": 128,
+            "wins": 48,
+            "draws": 32,
+            "losses": 48,
+            "opponents": [
+              {
+                "key": "vanguard",
+                "label": "Vanguard",
+                "games": 32,
+                "wins": 12,
+                "draws": 9,
+                "losses": 11,
+                "score": 0.515625
+              },
+              {
+                "key": "unicorn",
+                "label": "Unicorn",
+                "games": 32,
+                "wins": 10,
+                "draws": 9,
+                "losses": 13,
+                "score": 0.453125
+              },
+              {
+                "key": "cruisader",
+                "label": "Cruisader",
+                "games": 32,
+                "wins": 14,
+                "draws": 9,
+                "losses": 9,
+                "score": 0.578125
+              },
+              {
+                "key": "amazon",
+                "label": "Amazon",
+                "games": 32,
+                "wins": 12,
+                "draws": 5,
+                "losses": 15,
+                "score": 0.453125
+              }
+            ],
+            "openingCoverage": {
+              "shared": 16,
+              "total": 16,
+              "openingIds": [
+                "l2-bridge-old-benoni",
+                "l2-bridge-english-d5",
+                "l2-bridge-reti-c6",
+                "l2-bridge-van-geet-e5",
+                "l2-bridge-larsen-c6",
+                "l2-bridge-kings-fianchetto-c6",
+                "l2-bridge-larsen-d6",
+                "l2-bridge-kings-fianchetto-d6",
+                "l2-bridge-english-c6",
+                "l2-bridge-van-geet-d5",
+                "l2-bridge-van-geet-e6",
+                "l2-bridge-van-geet-g6",
+                "l2-bridge-larsen-nc6",
+                "l2-bridge-kings-fianchetto-nc6",
+                "l2-bridge-larsen-g6",
+                "l2-bridge-kings-fianchetto-b6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete",
+            "physicalColors": [
+              {
+                "color": "w",
+                "games": 64,
+                "wins": 25,
+                "draws": 16,
+                "losses": 23,
+                "score": 0.515625
+              },
+              {
+                "color": "b",
+                "games": 64,
+                "wins": 23,
+                "draws": 16,
+                "losses": 25,
+                "score": 0.484375
+              }
+            ]
+          },
+          {
+            "key": "queen-sideways",
+            "label": "Sideways Queen pawn",
+            "scope": "fixed-reference opponents only",
+            "score": 0.53515625,
+            "games": 128,
+            "wins": 59,
+            "draws": 19,
+            "losses": 50,
+            "opponents": [
+              {
+                "key": "vanguard",
+                "label": "Vanguard",
+                "games": 32,
+                "wins": 12,
+                "draws": 4,
+                "losses": 16,
+                "score": 0.4375
+              },
+              {
+                "key": "unicorn",
+                "label": "Unicorn",
+                "games": 32,
+                "wins": 16,
+                "draws": 6,
+                "losses": 10,
+                "score": 0.59375
+              },
+              {
+                "key": "cruisader",
+                "label": "Cruisader",
+                "games": 32,
+                "wins": 16,
+                "draws": 4,
+                "losses": 12,
+                "score": 0.5625
+              },
+              {
+                "key": "amazon",
+                "label": "Amazon",
+                "games": 32,
+                "wins": 15,
+                "draws": 5,
+                "losses": 12,
+                "score": 0.546875
+              }
+            ],
+            "openingCoverage": {
+              "shared": 16,
+              "total": 16,
+              "openingIds": [
+                "l2-bridge-old-benoni",
+                "l2-bridge-english-d5",
+                "l2-bridge-reti-c6",
+                "l2-bridge-van-geet-e5",
+                "l2-bridge-larsen-c6",
+                "l2-bridge-kings-fianchetto-c6",
+                "l2-bridge-larsen-d6",
+                "l2-bridge-kings-fianchetto-d6",
+                "l2-bridge-english-c6",
+                "l2-bridge-van-geet-d5",
+                "l2-bridge-van-geet-e6",
+                "l2-bridge-van-geet-g6",
+                "l2-bridge-larsen-nc6",
+                "l2-bridge-kings-fianchetto-nc6",
+                "l2-bridge-larsen-g6",
+                "l2-bridge-kings-fianchetto-b6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete",
+            "physicalColors": [
+              {
+                "color": "w",
+                "games": 64,
+                "wins": 30,
+                "draws": 10,
+                "losses": 24,
+                "score": 0.546875
+              },
+              {
+                "color": "b",
+                "games": 64,
+                "wins": 29,
+                "draws": 9,
+                "losses": 26,
+                "score": 0.5234375
+              }
+            ]
+          },
+          {
+            "key": "xray-rook",
+            "label": "Rook-ray queen",
+            "scope": "fixed-reference opponents only",
+            "score": 0.65625,
+            "games": 128,
+            "wins": 72,
+            "draws": 24,
+            "losses": 32,
+            "opponents": [
+              {
+                "key": "vanguard",
+                "label": "Vanguard",
+                "games": 32,
+                "wins": 17,
+                "draws": 5,
+                "losses": 10,
+                "score": 0.609375
+              },
+              {
+                "key": "unicorn",
+                "label": "Unicorn",
+                "games": 32,
+                "wins": 21,
+                "draws": 4,
+                "losses": 7,
+                "score": 0.71875
+              },
+              {
+                "key": "cruisader",
+                "label": "Cruisader",
+                "games": 32,
+                "wins": 22,
+                "draws": 3,
+                "losses": 7,
+                "score": 0.734375
+              },
+              {
+                "key": "amazon",
+                "label": "Amazon",
+                "games": 32,
+                "wins": 12,
+                "draws": 12,
+                "losses": 8,
+                "score": 0.5625
+              }
+            ],
+            "openingCoverage": {
+              "shared": 16,
+              "total": 16,
+              "openingIds": [
+                "l2-bridge-old-benoni",
+                "l2-bridge-english-d5",
+                "l2-bridge-reti-c6",
+                "l2-bridge-van-geet-e5",
+                "l2-bridge-larsen-c6",
+                "l2-bridge-kings-fianchetto-c6",
+                "l2-bridge-larsen-d6",
+                "l2-bridge-kings-fianchetto-d6",
+                "l2-bridge-english-c6",
+                "l2-bridge-van-geet-d5",
+                "l2-bridge-van-geet-e6",
+                "l2-bridge-van-geet-g6",
+                "l2-bridge-larsen-nc6",
+                "l2-bridge-kings-fianchetto-nc6",
+                "l2-bridge-larsen-g6",
+                "l2-bridge-kings-fianchetto-b6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete",
+            "physicalColors": [
+              {
+                "color": "w",
+                "games": 64,
+                "wins": 40,
+                "draws": 10,
+                "losses": 14,
+                "score": 0.703125
+              },
+              {
+                "color": "b",
+                "games": 64,
+                "wins": 32,
+                "draws": 14,
+                "losses": 18,
+                "score": 0.609375
+              }
+            ]
+          },
+          {
+            "key": "grant-king",
+            "label": "King grant (three points)",
+            "scope": "fixed-reference opponents only",
+            "score": 0.69140625,
+            "games": 128,
+            "wins": 83,
+            "draws": 11,
+            "losses": 34,
+            "opponents": [
+              {
+                "key": "vanguard",
+                "label": "Vanguard",
+                "games": 32,
+                "wins": 18,
+                "draws": 3,
+                "losses": 11,
+                "score": 0.609375
+              },
+              {
+                "key": "unicorn",
+                "label": "Unicorn",
+                "games": 32,
+                "wins": 20,
+                "draws": 2,
+                "losses": 10,
+                "score": 0.65625
+              },
+              {
+                "key": "cruisader",
+                "label": "Cruisader",
+                "games": 32,
+                "wins": 21,
+                "draws": 3,
+                "losses": 8,
+                "score": 0.703125
+              },
+              {
+                "key": "amazon",
+                "label": "Amazon",
+                "games": 32,
+                "wins": 24,
+                "draws": 3,
+                "losses": 5,
+                "score": 0.796875
+              }
+            ],
+            "openingCoverage": {
+              "shared": 16,
+              "total": 16,
+              "openingIds": [
+                "l2-bridge-old-benoni",
+                "l2-bridge-english-d5",
+                "l2-bridge-reti-c6",
+                "l2-bridge-van-geet-e5",
+                "l2-bridge-larsen-c6",
+                "l2-bridge-kings-fianchetto-c6",
+                "l2-bridge-larsen-d6",
+                "l2-bridge-kings-fianchetto-d6",
+                "l2-bridge-english-c6",
+                "l2-bridge-van-geet-d5",
+                "l2-bridge-van-geet-e6",
+                "l2-bridge-van-geet-g6",
+                "l2-bridge-larsen-nc6",
+                "l2-bridge-kings-fianchetto-nc6",
+                "l2-bridge-larsen-g6",
+                "l2-bridge-kings-fianchetto-b6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete",
+            "physicalColors": [
+              {
+                "color": "w",
+                "games": 64,
+                "wins": 48,
+                "draws": 2,
+                "losses": 14,
+                "score": 0.765625
+              },
+              {
+                "color": "b",
+                "games": 64,
+                "wins": 35,
+                "draws": 9,
+                "losses": 20,
+                "score": 0.6171875
+              }
+            ]
+          },
+          {
+            "key": "grant-orthogonal-three",
+            "label": "Three-step Orthogonal grant (three points)",
+            "scope": "fixed-reference opponents only",
+            "score": 0.61328125,
+            "games": 128,
+            "wins": 72,
+            "draws": 13,
+            "losses": 43,
+            "opponents": [
+              {
+                "key": "vanguard",
+                "label": "Vanguard",
+                "games": 32,
+                "wins": 21,
+                "draws": 0,
+                "losses": 11,
+                "score": 0.65625
+              },
+              {
+                "key": "unicorn",
+                "label": "Unicorn",
+                "games": 32,
+                "wins": 19,
+                "draws": 2,
+                "losses": 11,
+                "score": 0.625
+              },
+              {
+                "key": "cruisader",
+                "label": "Cruisader",
+                "games": 32,
+                "wins": 18,
+                "draws": 4,
+                "losses": 10,
+                "score": 0.625
+              },
+              {
+                "key": "amazon",
+                "label": "Amazon",
+                "games": 32,
+                "wins": 14,
+                "draws": 7,
+                "losses": 11,
+                "score": 0.546875
+              }
+            ],
+            "openingCoverage": {
+              "shared": 16,
+              "total": 16,
+              "openingIds": [
+                "l2-bridge-old-benoni",
+                "l2-bridge-english-d5",
+                "l2-bridge-reti-c6",
+                "l2-bridge-van-geet-e5",
+                "l2-bridge-larsen-c6",
+                "l2-bridge-kings-fianchetto-c6",
+                "l2-bridge-larsen-d6",
+                "l2-bridge-kings-fianchetto-d6",
+                "l2-bridge-english-c6",
+                "l2-bridge-van-geet-d5",
+                "l2-bridge-van-geet-e6",
+                "l2-bridge-van-geet-g6",
+                "l2-bridge-larsen-nc6",
+                "l2-bridge-kings-fianchetto-nc6",
+                "l2-bridge-larsen-g6",
+                "l2-bridge-kings-fianchetto-b6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete",
+            "physicalColors": [
+              {
+                "color": "w",
+                "games": 64,
+                "wins": 34,
+                "draws": 8,
+                "losses": 22,
+                "score": 0.59375
+              },
+              {
+                "color": "b",
+                "games": 64,
+                "wins": 38,
+                "draws": 5,
+                "losses": 21,
+                "score": 0.6328125
+              }
+            ]
+          },
+          {
+            "key": "grant-knight",
+            "label": "Knight grant (three points)",
+            "scope": "fixed-reference opponents only",
+            "score": 0.62109375,
+            "games": 128,
+            "wins": 73,
+            "draws": 13,
+            "losses": 42,
+            "opponents": [
+              {
+                "key": "vanguard",
+                "label": "Vanguard",
+                "games": 32,
+                "wins": 21,
+                "draws": 3,
+                "losses": 8,
+                "score": 0.703125
+              },
+              {
+                "key": "unicorn",
+                "label": "Unicorn",
+                "games": 32,
+                "wins": 17,
+                "draws": 2,
+                "losses": 13,
+                "score": 0.5625
+              },
+              {
+                "key": "cruisader",
+                "label": "Cruisader",
+                "games": 32,
+                "wins": 15,
+                "draws": 6,
+                "losses": 11,
+                "score": 0.5625
+              },
+              {
+                "key": "amazon",
+                "label": "Amazon",
+                "games": 32,
+                "wins": 20,
+                "draws": 2,
+                "losses": 10,
+                "score": 0.65625
+              }
+            ],
+            "openingCoverage": {
+              "shared": 16,
+              "total": 16,
+              "openingIds": [
+                "l2-bridge-old-benoni",
+                "l2-bridge-english-d5",
+                "l2-bridge-reti-c6",
+                "l2-bridge-van-geet-e5",
+                "l2-bridge-larsen-c6",
+                "l2-bridge-kings-fianchetto-c6",
+                "l2-bridge-larsen-d6",
+                "l2-bridge-kings-fianchetto-d6",
+                "l2-bridge-english-c6",
+                "l2-bridge-van-geet-d5",
+                "l2-bridge-van-geet-e6",
+                "l2-bridge-van-geet-g6",
+                "l2-bridge-larsen-nc6",
+                "l2-bridge-kings-fianchetto-nc6",
+                "l2-bridge-larsen-g6",
+                "l2-bridge-kings-fianchetto-b6"
+              ],
+              "repetitions": 1
+            },
+            "status": "complete",
+            "physicalColors": [
+              {
+                "color": "w",
+                "games": 64,
+                "wins": 36,
+                "draws": 7,
+                "losses": 21,
+                "score": 0.6171875
+              },
+              {
+                "color": "b",
+                "games": 64,
+                "wins": 37,
+                "draws": 6,
+                "losses": 21,
+                "score": 0.625
+              }
+            ]
+          }
+        ]
+      },
+      "cohorts": [
+        {
+          "id": "first-eight",
+          "overall": {
+            "method": "Equal opponent means over shared fully completed opening cases; every configured repetition requires a complete color pair. Draws count half a point.",
+            "rows": [
+              {
+                "key": "vertical-blocked",
+                "label": "Blocked Vertical bishop",
+                "scope": "fixed-reference opponents only",
+                "score": 0.5,
+                "games": 64,
+                "wins": 24,
+                "draws": 16,
+                "losses": 24,
+                "opponents": [
+                  {
+                    "key": "vanguard",
+                    "label": "Vanguard",
+                    "games": 16,
+                    "wins": 6,
+                    "draws": 4,
+                    "losses": 6,
+                    "score": 0.5
+                  },
+                  {
+                    "key": "unicorn",
+                    "label": "Unicorn",
+                    "games": 16,
+                    "wins": 6,
+                    "draws": 5,
+                    "losses": 5,
+                    "score": 0.53125
+                  },
+                  {
+                    "key": "cruisader",
+                    "label": "Cruisader",
+                    "games": 16,
+                    "wins": 6,
+                    "draws": 5,
+                    "losses": 5,
+                    "score": 0.53125
+                  },
+                  {
+                    "key": "amazon",
+                    "label": "Amazon",
+                    "games": 16,
+                    "wins": 6,
+                    "draws": 2,
+                    "losses": 8,
+                    "score": 0.4375
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 8,
+                  "total": 8,
+                  "openingIds": [
+                    "l2-bridge-old-benoni",
+                    "l2-bridge-english-d5",
+                    "l2-bridge-reti-c6",
+                    "l2-bridge-van-geet-e5",
+                    "l2-bridge-larsen-c6",
+                    "l2-bridge-kings-fianchetto-c6",
+                    "l2-bridge-larsen-d6",
+                    "l2-bridge-kings-fianchetto-d6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 32,
+                    "wins": 13,
+                    "draws": 7,
+                    "losses": 12,
+                    "score": 0.515625
+                  },
+                  {
+                    "color": "b",
+                    "games": 32,
+                    "wins": 11,
+                    "draws": 9,
+                    "losses": 12,
+                    "score": 0.484375
+                  }
+                ]
+              },
+              {
+                "key": "queen-sideways",
+                "label": "Sideways Queen pawn",
+                "scope": "fixed-reference opponents only",
+                "score": 0.53125,
+                "games": 64,
+                "wins": 30,
+                "draws": 8,
+                "losses": 26,
+                "opponents": [
+                  {
+                    "key": "vanguard",
+                    "label": "Vanguard",
+                    "games": 16,
+                    "wins": 6,
+                    "draws": 2,
+                    "losses": 8,
+                    "score": 0.4375
+                  },
+                  {
+                    "key": "unicorn",
+                    "label": "Unicorn",
+                    "games": 16,
+                    "wins": 11,
+                    "draws": 2,
+                    "losses": 3,
+                    "score": 0.75
+                  },
+                  {
+                    "key": "cruisader",
+                    "label": "Cruisader",
+                    "games": 16,
+                    "wins": 5,
+                    "draws": 3,
+                    "losses": 8,
+                    "score": 0.40625
+                  },
+                  {
+                    "key": "amazon",
+                    "label": "Amazon",
+                    "games": 16,
+                    "wins": 8,
+                    "draws": 1,
+                    "losses": 7,
+                    "score": 0.53125
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 8,
+                  "total": 8,
+                  "openingIds": [
+                    "l2-bridge-old-benoni",
+                    "l2-bridge-english-d5",
+                    "l2-bridge-reti-c6",
+                    "l2-bridge-van-geet-e5",
+                    "l2-bridge-larsen-c6",
+                    "l2-bridge-kings-fianchetto-c6",
+                    "l2-bridge-larsen-d6",
+                    "l2-bridge-kings-fianchetto-d6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 32,
+                    "wins": 15,
+                    "draws": 3,
+                    "losses": 14,
+                    "score": 0.515625
+                  },
+                  {
+                    "color": "b",
+                    "games": 32,
+                    "wins": 15,
+                    "draws": 5,
+                    "losses": 12,
+                    "score": 0.546875
+                  }
+                ]
+              },
+              {
+                "key": "xray-rook",
+                "label": "Rook-ray queen",
+                "scope": "fixed-reference opponents only",
+                "score": 0.6328125,
+                "games": 64,
+                "wins": 35,
+                "draws": 11,
+                "losses": 18,
+                "opponents": [
+                  {
+                    "key": "vanguard",
+                    "label": "Vanguard",
+                    "games": 16,
+                    "wins": 9,
+                    "draws": 2,
+                    "losses": 5,
+                    "score": 0.625
+                  },
+                  {
+                    "key": "unicorn",
+                    "label": "Unicorn",
+                    "games": 16,
+                    "wins": 10,
+                    "draws": 1,
+                    "losses": 5,
+                    "score": 0.65625
+                  },
+                  {
+                    "key": "cruisader",
+                    "label": "Cruisader",
+                    "games": 16,
+                    "wins": 11,
+                    "draws": 1,
+                    "losses": 4,
+                    "score": 0.71875
+                  },
+                  {
+                    "key": "amazon",
+                    "label": "Amazon",
+                    "games": 16,
+                    "wins": 5,
+                    "draws": 7,
+                    "losses": 4,
+                    "score": 0.53125
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 8,
+                  "total": 8,
+                  "openingIds": [
+                    "l2-bridge-old-benoni",
+                    "l2-bridge-english-d5",
+                    "l2-bridge-reti-c6",
+                    "l2-bridge-van-geet-e5",
+                    "l2-bridge-larsen-c6",
+                    "l2-bridge-kings-fianchetto-c6",
+                    "l2-bridge-larsen-d6",
+                    "l2-bridge-kings-fianchetto-d6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 32,
+                    "wins": 20,
+                    "draws": 4,
+                    "losses": 8,
+                    "score": 0.6875
+                  },
+                  {
+                    "color": "b",
+                    "games": 32,
+                    "wins": 15,
+                    "draws": 7,
+                    "losses": 10,
+                    "score": 0.578125
+                  }
+                ]
+              },
+              {
+                "key": "grant-king",
+                "label": "King grant (three points)",
+                "scope": "fixed-reference opponents only",
+                "score": 0.6953125,
+                "games": 64,
+                "wins": 41,
+                "draws": 7,
+                "losses": 16,
+                "opponents": [
+                  {
+                    "key": "vanguard",
+                    "label": "Vanguard",
+                    "games": 16,
+                    "wins": 10,
+                    "draws": 2,
+                    "losses": 4,
+                    "score": 0.6875
+                  },
+                  {
+                    "key": "unicorn",
+                    "label": "Unicorn",
+                    "games": 16,
+                    "wins": 10,
+                    "draws": 0,
+                    "losses": 6,
+                    "score": 0.625
+                  },
+                  {
+                    "key": "cruisader",
+                    "label": "Cruisader",
+                    "games": 16,
+                    "wins": 10,
+                    "draws": 3,
+                    "losses": 3,
+                    "score": 0.71875
+                  },
+                  {
+                    "key": "amazon",
+                    "label": "Amazon",
+                    "games": 16,
+                    "wins": 11,
+                    "draws": 2,
+                    "losses": 3,
+                    "score": 0.75
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 8,
+                  "total": 8,
+                  "openingIds": [
+                    "l2-bridge-old-benoni",
+                    "l2-bridge-english-d5",
+                    "l2-bridge-reti-c6",
+                    "l2-bridge-van-geet-e5",
+                    "l2-bridge-larsen-c6",
+                    "l2-bridge-kings-fianchetto-c6",
+                    "l2-bridge-larsen-d6",
+                    "l2-bridge-kings-fianchetto-d6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 32,
+                    "wins": 23,
+                    "draws": 1,
+                    "losses": 8,
+                    "score": 0.734375
+                  },
+                  {
+                    "color": "b",
+                    "games": 32,
+                    "wins": 18,
+                    "draws": 6,
+                    "losses": 8,
+                    "score": 0.65625
+                  }
+                ]
+              },
+              {
+                "key": "grant-orthogonal-three",
+                "label": "Three-step Orthogonal grant (three points)",
+                "scope": "fixed-reference opponents only",
+                "score": 0.6015625,
+                "games": 64,
+                "wins": 35,
+                "draws": 7,
+                "losses": 22,
+                "opponents": [
+                  {
+                    "key": "vanguard",
+                    "label": "Vanguard",
+                    "games": 16,
+                    "wins": 9,
+                    "draws": 0,
+                    "losses": 7,
+                    "score": 0.5625
+                  },
+                  {
+                    "key": "unicorn",
+                    "label": "Unicorn",
+                    "games": 16,
+                    "wins": 10,
+                    "draws": 0,
+                    "losses": 6,
+                    "score": 0.625
+                  },
+                  {
+                    "key": "cruisader",
+                    "label": "Cruisader",
+                    "games": 16,
+                    "wins": 10,
+                    "draws": 3,
+                    "losses": 3,
+                    "score": 0.71875
+                  },
+                  {
+                    "key": "amazon",
+                    "label": "Amazon",
+                    "games": 16,
+                    "wins": 6,
+                    "draws": 4,
+                    "losses": 6,
+                    "score": 0.5
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 8,
+                  "total": 8,
+                  "openingIds": [
+                    "l2-bridge-old-benoni",
+                    "l2-bridge-english-d5",
+                    "l2-bridge-reti-c6",
+                    "l2-bridge-van-geet-e5",
+                    "l2-bridge-larsen-c6",
+                    "l2-bridge-kings-fianchetto-c6",
+                    "l2-bridge-larsen-d6",
+                    "l2-bridge-kings-fianchetto-d6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 32,
+                    "wins": 17,
+                    "draws": 4,
+                    "losses": 11,
+                    "score": 0.59375
+                  },
+                  {
+                    "color": "b",
+                    "games": 32,
+                    "wins": 18,
+                    "draws": 3,
+                    "losses": 11,
+                    "score": 0.609375
+                  }
+                ]
+              },
+              {
+                "key": "grant-knight",
+                "label": "Knight grant (three points)",
+                "scope": "fixed-reference opponents only",
+                "score": 0.625,
+                "games": 64,
+                "wins": 38,
+                "draws": 4,
+                "losses": 22,
+                "opponents": [
+                  {
+                    "key": "vanguard",
+                    "label": "Vanguard",
+                    "games": 16,
+                    "wins": 10,
+                    "draws": 0,
+                    "losses": 6,
+                    "score": 0.625
+                  },
+                  {
+                    "key": "unicorn",
+                    "label": "Unicorn",
+                    "games": 16,
+                    "wins": 7,
+                    "draws": 1,
+                    "losses": 8,
+                    "score": 0.46875
+                  },
+                  {
+                    "key": "cruisader",
+                    "label": "Cruisader",
+                    "games": 16,
+                    "wins": 9,
+                    "draws": 2,
+                    "losses": 5,
+                    "score": 0.625
+                  },
+                  {
+                    "key": "amazon",
+                    "label": "Amazon",
+                    "games": 16,
+                    "wins": 12,
+                    "draws": 1,
+                    "losses": 3,
+                    "score": 0.78125
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 8,
+                  "total": 8,
+                  "openingIds": [
+                    "l2-bridge-old-benoni",
+                    "l2-bridge-english-d5",
+                    "l2-bridge-reti-c6",
+                    "l2-bridge-van-geet-e5",
+                    "l2-bridge-larsen-c6",
+                    "l2-bridge-kings-fianchetto-c6",
+                    "l2-bridge-larsen-d6",
+                    "l2-bridge-kings-fianchetto-d6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 32,
+                    "wins": 19,
+                    "draws": 3,
+                    "losses": 10,
+                    "score": 0.640625
+                  },
+                  {
+                    "color": "b",
+                    "games": 32,
+                    "wins": 19,
+                    "draws": 1,
+                    "losses": 12,
+                    "score": 0.609375
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "second-eight",
+          "overall": {
+            "method": "Equal opponent means over shared fully completed opening cases; every configured repetition requires a complete color pair. Draws count half a point.",
+            "rows": [
+              {
+                "key": "vertical-blocked",
+                "label": "Blocked Vertical bishop",
+                "scope": "fixed-reference opponents only",
+                "score": 0.5,
+                "games": 64,
+                "wins": 24,
+                "draws": 16,
+                "losses": 24,
+                "opponents": [
+                  {
+                    "key": "vanguard",
+                    "label": "Vanguard",
+                    "games": 16,
+                    "wins": 6,
+                    "draws": 5,
+                    "losses": 5,
+                    "score": 0.53125
+                  },
+                  {
+                    "key": "unicorn",
+                    "label": "Unicorn",
+                    "games": 16,
+                    "wins": 4,
+                    "draws": 4,
+                    "losses": 8,
+                    "score": 0.375
+                  },
+                  {
+                    "key": "cruisader",
+                    "label": "Cruisader",
+                    "games": 16,
+                    "wins": 8,
+                    "draws": 4,
+                    "losses": 4,
+                    "score": 0.625
+                  },
+                  {
+                    "key": "amazon",
+                    "label": "Amazon",
+                    "games": 16,
+                    "wins": 6,
+                    "draws": 3,
+                    "losses": 7,
+                    "score": 0.46875
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 8,
+                  "total": 8,
+                  "openingIds": [
+                    "l2-bridge-english-c6",
+                    "l2-bridge-van-geet-d5",
+                    "l2-bridge-van-geet-e6",
+                    "l2-bridge-van-geet-g6",
+                    "l2-bridge-larsen-nc6",
+                    "l2-bridge-kings-fianchetto-nc6",
+                    "l2-bridge-larsen-g6",
+                    "l2-bridge-kings-fianchetto-b6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 32,
+                    "wins": 12,
+                    "draws": 9,
+                    "losses": 11,
+                    "score": 0.515625
+                  },
+                  {
+                    "color": "b",
+                    "games": 32,
+                    "wins": 12,
+                    "draws": 7,
+                    "losses": 13,
+                    "score": 0.484375
+                  }
+                ]
+              },
+              {
+                "key": "queen-sideways",
+                "label": "Sideways Queen pawn",
+                "scope": "fixed-reference opponents only",
+                "score": 0.5390625,
+                "games": 64,
+                "wins": 29,
+                "draws": 11,
+                "losses": 24,
+                "opponents": [
+                  {
+                    "key": "vanguard",
+                    "label": "Vanguard",
+                    "games": 16,
+                    "wins": 6,
+                    "draws": 2,
+                    "losses": 8,
+                    "score": 0.4375
+                  },
+                  {
+                    "key": "unicorn",
+                    "label": "Unicorn",
+                    "games": 16,
+                    "wins": 5,
+                    "draws": 4,
+                    "losses": 7,
+                    "score": 0.4375
+                  },
+                  {
+                    "key": "cruisader",
+                    "label": "Cruisader",
+                    "games": 16,
+                    "wins": 11,
+                    "draws": 1,
+                    "losses": 4,
+                    "score": 0.71875
+                  },
+                  {
+                    "key": "amazon",
+                    "label": "Amazon",
+                    "games": 16,
+                    "wins": 7,
+                    "draws": 4,
+                    "losses": 5,
+                    "score": 0.5625
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 8,
+                  "total": 8,
+                  "openingIds": [
+                    "l2-bridge-english-c6",
+                    "l2-bridge-van-geet-d5",
+                    "l2-bridge-van-geet-e6",
+                    "l2-bridge-van-geet-g6",
+                    "l2-bridge-larsen-nc6",
+                    "l2-bridge-kings-fianchetto-nc6",
+                    "l2-bridge-larsen-g6",
+                    "l2-bridge-kings-fianchetto-b6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 32,
+                    "wins": 15,
+                    "draws": 7,
+                    "losses": 10,
+                    "score": 0.578125
+                  },
+                  {
+                    "color": "b",
+                    "games": 32,
+                    "wins": 14,
+                    "draws": 4,
+                    "losses": 14,
+                    "score": 0.5
+                  }
+                ]
+              },
+              {
+                "key": "xray-rook",
+                "label": "Rook-ray queen",
+                "scope": "fixed-reference opponents only",
+                "score": 0.6796875,
+                "games": 64,
+                "wins": 37,
+                "draws": 13,
+                "losses": 14,
+                "opponents": [
+                  {
+                    "key": "vanguard",
+                    "label": "Vanguard",
+                    "games": 16,
+                    "wins": 8,
+                    "draws": 3,
+                    "losses": 5,
+                    "score": 0.59375
+                  },
+                  {
+                    "key": "unicorn",
+                    "label": "Unicorn",
+                    "games": 16,
+                    "wins": 11,
+                    "draws": 3,
+                    "losses": 2,
+                    "score": 0.78125
+                  },
+                  {
+                    "key": "cruisader",
+                    "label": "Cruisader",
+                    "games": 16,
+                    "wins": 11,
+                    "draws": 2,
+                    "losses": 3,
+                    "score": 0.75
+                  },
+                  {
+                    "key": "amazon",
+                    "label": "Amazon",
+                    "games": 16,
+                    "wins": 7,
+                    "draws": 5,
+                    "losses": 4,
+                    "score": 0.59375
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 8,
+                  "total": 8,
+                  "openingIds": [
+                    "l2-bridge-english-c6",
+                    "l2-bridge-van-geet-d5",
+                    "l2-bridge-van-geet-e6",
+                    "l2-bridge-van-geet-g6",
+                    "l2-bridge-larsen-nc6",
+                    "l2-bridge-kings-fianchetto-nc6",
+                    "l2-bridge-larsen-g6",
+                    "l2-bridge-kings-fianchetto-b6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 32,
+                    "wins": 20,
+                    "draws": 6,
+                    "losses": 6,
+                    "score": 0.71875
+                  },
+                  {
+                    "color": "b",
+                    "games": 32,
+                    "wins": 17,
+                    "draws": 7,
+                    "losses": 8,
+                    "score": 0.640625
+                  }
+                ]
+              },
+              {
+                "key": "grant-king",
+                "label": "King grant (three points)",
+                "scope": "fixed-reference opponents only",
+                "score": 0.6875,
+                "games": 64,
+                "wins": 42,
+                "draws": 4,
+                "losses": 18,
+                "opponents": [
+                  {
+                    "key": "vanguard",
+                    "label": "Vanguard",
+                    "games": 16,
+                    "wins": 8,
+                    "draws": 1,
+                    "losses": 7,
+                    "score": 0.53125
+                  },
+                  {
+                    "key": "unicorn",
+                    "label": "Unicorn",
+                    "games": 16,
+                    "wins": 10,
+                    "draws": 2,
+                    "losses": 4,
+                    "score": 0.6875
+                  },
+                  {
+                    "key": "cruisader",
+                    "label": "Cruisader",
+                    "games": 16,
+                    "wins": 11,
+                    "draws": 0,
+                    "losses": 5,
+                    "score": 0.6875
+                  },
+                  {
+                    "key": "amazon",
+                    "label": "Amazon",
+                    "games": 16,
+                    "wins": 13,
+                    "draws": 1,
+                    "losses": 2,
+                    "score": 0.84375
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 8,
+                  "total": 8,
+                  "openingIds": [
+                    "l2-bridge-english-c6",
+                    "l2-bridge-van-geet-d5",
+                    "l2-bridge-van-geet-e6",
+                    "l2-bridge-van-geet-g6",
+                    "l2-bridge-larsen-nc6",
+                    "l2-bridge-kings-fianchetto-nc6",
+                    "l2-bridge-larsen-g6",
+                    "l2-bridge-kings-fianchetto-b6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 32,
+                    "wins": 25,
+                    "draws": 1,
+                    "losses": 6,
+                    "score": 0.796875
+                  },
+                  {
+                    "color": "b",
+                    "games": 32,
+                    "wins": 17,
+                    "draws": 3,
+                    "losses": 12,
+                    "score": 0.578125
+                  }
+                ]
+              },
+              {
+                "key": "grant-orthogonal-three",
+                "label": "Three-step Orthogonal grant (three points)",
+                "scope": "fixed-reference opponents only",
+                "score": 0.625,
+                "games": 64,
+                "wins": 37,
+                "draws": 6,
+                "losses": 21,
+                "opponents": [
+                  {
+                    "key": "vanguard",
+                    "label": "Vanguard",
+                    "games": 16,
+                    "wins": 12,
+                    "draws": 0,
+                    "losses": 4,
+                    "score": 0.75
+                  },
+                  {
+                    "key": "unicorn",
+                    "label": "Unicorn",
+                    "games": 16,
+                    "wins": 9,
+                    "draws": 2,
+                    "losses": 5,
+                    "score": 0.625
+                  },
+                  {
+                    "key": "cruisader",
+                    "label": "Cruisader",
+                    "games": 16,
+                    "wins": 8,
+                    "draws": 1,
+                    "losses": 7,
+                    "score": 0.53125
+                  },
+                  {
+                    "key": "amazon",
+                    "label": "Amazon",
+                    "games": 16,
+                    "wins": 8,
+                    "draws": 3,
+                    "losses": 5,
+                    "score": 0.59375
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 8,
+                  "total": 8,
+                  "openingIds": [
+                    "l2-bridge-english-c6",
+                    "l2-bridge-van-geet-d5",
+                    "l2-bridge-van-geet-e6",
+                    "l2-bridge-van-geet-g6",
+                    "l2-bridge-larsen-nc6",
+                    "l2-bridge-kings-fianchetto-nc6",
+                    "l2-bridge-larsen-g6",
+                    "l2-bridge-kings-fianchetto-b6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 32,
+                    "wins": 17,
+                    "draws": 4,
+                    "losses": 11,
+                    "score": 0.59375
+                  },
+                  {
+                    "color": "b",
+                    "games": 32,
+                    "wins": 20,
+                    "draws": 2,
+                    "losses": 10,
+                    "score": 0.65625
+                  }
+                ]
+              },
+              {
+                "key": "grant-knight",
+                "label": "Knight grant (three points)",
+                "scope": "fixed-reference opponents only",
+                "score": 0.6171875,
+                "games": 64,
+                "wins": 35,
+                "draws": 9,
+                "losses": 20,
+                "opponents": [
+                  {
+                    "key": "vanguard",
+                    "label": "Vanguard",
+                    "games": 16,
+                    "wins": 11,
+                    "draws": 3,
+                    "losses": 2,
+                    "score": 0.78125
+                  },
+                  {
+                    "key": "unicorn",
+                    "label": "Unicorn",
+                    "games": 16,
+                    "wins": 10,
+                    "draws": 1,
+                    "losses": 5,
+                    "score": 0.65625
+                  },
+                  {
+                    "key": "cruisader",
+                    "label": "Cruisader",
+                    "games": 16,
+                    "wins": 6,
+                    "draws": 4,
+                    "losses": 6,
+                    "score": 0.5
+                  },
+                  {
+                    "key": "amazon",
+                    "label": "Amazon",
+                    "games": 16,
+                    "wins": 8,
+                    "draws": 1,
+                    "losses": 7,
+                    "score": 0.53125
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 8,
+                  "total": 8,
+                  "openingIds": [
+                    "l2-bridge-english-c6",
+                    "l2-bridge-van-geet-d5",
+                    "l2-bridge-van-geet-e6",
+                    "l2-bridge-van-geet-g6",
+                    "l2-bridge-larsen-nc6",
+                    "l2-bridge-kings-fianchetto-nc6",
+                    "l2-bridge-larsen-g6",
+                    "l2-bridge-kings-fianchetto-b6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 32,
+                    "wins": 17,
+                    "draws": 4,
+                    "losses": 11,
+                    "score": 0.59375
+                  },
+                  {
+                    "color": "b",
+                    "games": 32,
+                    "wins": 18,
+                    "draws": 5,
+                    "losses": 9,
+                    "score": 0.640625
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "bridge",
+      "experiment": "level2-bridge",
+      "source": {
+        "journal": {
+          "archiveFile": "v17-validation-001.bridge.games.jsonl.gz",
+          "archivedSha256": "ed2243e5d180632eca5179e6f4ba599368ce586009e79ad4a79898a8d568b6bb",
+          "originalName": "games.jsonl",
+          "sha256": "b801d3b4953ddd983fd7508cee013536293da9743102e7af57dd16b81584711a",
+          "bytes": 1426073
+        },
+        "uploadedReport": {
+          "archiveFile": "v17-validation-001.bridge.uploaded-report.md.gz",
+          "archivedSha256": "7bc3ed917bee72063265f7bd93d40114243a89b70446622f2cde75cbd685f110",
+          "originalName": "v17-report.md",
+          "sha256": "2b47c44663d7855c57d7ba971b0ec25506b38bd3388f304db3926753b090e162",
+          "bytes": 6931
+        }
+      },
+      "declaration": {
+        "configSha256": "b9f6a7f0b6f43d87e4c27e4c9c4e1ea15fab1f99242c62fce2e76bb47a2ecba3",
+        "metadataSha256": "862ff3010a1a50324fdd2461e1eb01d5fae27ad35047ecf4e5327ee7c8a9c52d",
+        "registryHash": "897930f94e70c29de06e4c065783f66acb2971ef2101813de18d06f14e1935ed",
+        "profileHash": "adab8f4fd3daec92673f479a0cb1cbebc22026263ffe5ad80bef685cf178a91d",
+        "scheduleSha256": "c888215eeb9b2a312d9a7ae4cee0392ac0ed87262d930e74ceb9e28f4fe1cbc3",
+        "scheduledGames": 384,
+        "descriptorKind": "derived declaration compatibility descriptor",
+        "reportReproducedExactly": true
+      },
+      "engine": {
+        "nodes": 20000,
+        "threads": 1,
+        "hashMb": 32,
+        "maxPlies": 400
+      },
+      "recordedEngineNames": {
+        "w": "Fairy-Stockfish 230826",
+        "b": "Fairy-Stockfish 230826"
+      },
+      "evaluation": {
+        "pieceValues": {
+          "bishop.purple@13": {
+            "mg": 1858,
+            "eg": 1903
+          },
+          "king.reserve-bishop@1": {
+            "mg": 373,
+            "eg": 416
+          },
+          "knight.purple@3": {
+            "mg": 1663,
+            "eg": 1877
+          },
+          "pawn.orange@3": {
+            "mg": 536,
+            "eg": 592
+          },
+          "pawn.rank-current@1": {
+            "mg": 773,
+            "eg": 808
+          },
+          "rook.purple@10": {
+            "mg": 1904,
+            "eg": 1932
+          }
+        }
+      },
+      "valueAudit": {
+        "provenance": {
+          "file": "experiments/designs/v17-bracket-values.json",
+          "sha256": "205709189dcec631970253dbdf826669262e412c325764f47880acbfbd96d2f9",
+          "policy": "Current-design automatic raw MG/EG values, applied consistently to all six engine tables for every sibling. Shared diagonal grants use F as their common anchor. Existing references remain fixed. No values are fitted from game outcomes.",
+          "engineSha256": "8ccde8596fb88aa7fbbf1020cc5afa52ef9d1887764275ea8e627ba0227e4f1e",
+          "calibratedDate": "2026-11-01",
+          "diagnostic": "levelupvalues version 1; no searches or match games"
+        },
+        "values": [
+          {
+            "id": "bishop.purple@13",
+            "valueGroup": "official:bishop.purple@13",
+            "baseId": "bishop.purple@13",
+            "movement": "BsR2nsN",
+            "level": 3,
+            "placement": "replace",
+            "automatic": {
+              "mg": 1858,
+              "eg": 1903
+            },
+            "automaticTables": {
+              "rawMg": 1858,
+              "rawEg": 1903,
+              "captureMg": 1858,
+              "captureEg": 1903,
+              "evalMg": 1858,
+              "evalEg": 1903
+            },
+            "context": 0,
+            "applied": {
+              "mg": 1858,
+              "eg": 1903
+            }
+          },
+          {
+            "id": "king.reserve-bishop@1",
+            "valueGroup": "grant-diagonal",
+            "baseId": "king.reserve-bishop@1",
+            "movement": "F",
+            "level": 2,
+            "placement": "reserve",
+            "automatic": {
+              "mg": 373,
+              "eg": 416
+            },
+            "automaticTables": {
+              "rawMg": 373,
+              "rawEg": 416,
+              "captureMg": 373,
+              "captureEg": 416,
+              "evalMg": 373,
+              "evalEg": 416
+            },
+            "context": 1,
+            "applied": {
+              "mg": 373,
+              "eg": 416
+            }
+          },
+          {
+            "id": "knight.purple@3",
+            "valueGroup": "official:knight.purple@3",
+            "baseId": "knight.purple@3",
+            "movement": "NC",
+            "level": 3,
+            "placement": "replace",
+            "automatic": {
+              "mg": 1663,
+              "eg": 1877
+            },
+            "automaticTables": {
+              "rawMg": 1663,
+              "rawEg": 1877,
+              "captureMg": 1663,
+              "captureEg": 1877,
+              "evalMg": 1663,
+              "evalEg": 1877
+            },
+            "context": 1,
+            "applied": {
+              "mg": 1663,
+              "eg": 1877
+            }
+          },
+          {
+            "id": "pawn.orange@3",
+            "valueGroup": "forward-knight",
+            "baseId": "pawn.orange@3",
+            "movement": "fmWfceFifmnDfhN",
+            "level": 2,
+            "placement": "replace",
+            "automatic": {
+              "mg": 536,
+              "eg": 592
+            },
+            "automaticTables": {
+              "rawMg": 536,
+              "rawEg": 592,
+              "captureMg": 536,
+              "captureEg": 592,
+              "evalMg": 536,
+              "evalEg": 592
+            },
+            "context": 2,
+            "applied": {
+              "mg": 536,
+              "eg": 592
+            }
+          },
+          {
+            "id": "pawn.rank-current@1",
+            "valueGroup": "rank",
+            "baseId": "pawn.rank-current@1",
+            "movement": "ifmnDmfWfceFsR",
+            "level": 2,
+            "placement": "replace",
+            "automatic": {
+              "mg": 773,
+              "eg": 808
+            },
+            "automaticTables": {
+              "rawMg": 773,
+              "rawEg": 808,
+              "captureMg": 773,
+              "captureEg": 808,
+              "evalMg": 773,
+              "evalEg": 808
+            },
+            "context": 2,
+            "applied": {
+              "mg": 773,
+              "eg": 808
+            }
+          },
+          {
+            "id": "rook.purple@10",
+            "valueGroup": "official:rook.purple@10",
+            "baseId": "rook.purple@10",
+            "movement": "RfB",
+            "level": 3,
+            "placement": "replace",
+            "automatic": {
+              "mg": 1904,
+              "eg": 1932
+            },
+            "automaticTables": {
+              "rawMg": 1904,
+              "rawEg": 1932,
+              "captureMg": 1904,
+              "captureEg": 1932,
+              "evalMg": 1904,
+              "evalEg": 1932
+            },
+            "context": 3,
+            "applied": {
+              "mg": 1904,
+              "eg": 1932
+            }
+          }
+        ]
+      },
+      "openings": [
+        {
+          "id": "l2-bridge-old-benoni",
+          "moves": [
+            "d2d4",
+            "c7c5"
+          ]
+        },
+        {
+          "id": "l2-bridge-english-d5",
+          "moves": [
+            "c2c4",
+            "d7d5"
+          ]
+        },
+        {
+          "id": "l2-bridge-reti-c6",
+          "moves": [
+            "g1f3",
+            "c7c6"
+          ]
+        },
+        {
+          "id": "l2-bridge-van-geet-e5",
+          "moves": [
+            "b1c3",
+            "e7e5"
+          ]
+        },
+        {
+          "id": "l2-bridge-larsen-c6",
+          "moves": [
+            "b2b3",
+            "c7c6"
+          ]
+        },
+        {
+          "id": "l2-bridge-kings-fianchetto-c6",
+          "moves": [
+            "g2g3",
+            "c7c6"
+          ]
+        },
+        {
+          "id": "l2-bridge-larsen-d6",
+          "moves": [
+            "b2b3",
+            "d7d6"
+          ]
+        },
+        {
+          "id": "l2-bridge-kings-fianchetto-d6",
+          "moves": [
+            "g2g3",
+            "d7d6"
+          ]
+        },
+        {
+          "id": "l2-bridge-english-c6",
+          "moves": [
+            "c2c4",
+            "c7c6"
+          ]
+        },
+        {
+          "id": "l2-bridge-van-geet-d5",
+          "moves": [
+            "b1c3",
+            "d7d5"
+          ]
+        },
+        {
+          "id": "l2-bridge-van-geet-e6",
+          "moves": [
+            "b1c3",
+            "e7e6"
+          ]
+        },
+        {
+          "id": "l2-bridge-van-geet-g6",
+          "moves": [
+            "b1c3",
+            "g7g6"
+          ]
+        },
+        {
+          "id": "l2-bridge-larsen-nc6",
+          "moves": [
+            "b2b3",
+            "b8c6"
+          ]
+        },
+        {
+          "id": "l2-bridge-kings-fianchetto-nc6",
+          "moves": [
+            "g2g3",
+            "b8c6"
+          ]
+        },
+        {
+          "id": "l2-bridge-larsen-g6",
+          "moves": [
+            "b2b3",
+            "g7g6"
+          ]
+        },
+        {
+          "id": "l2-bridge-kings-fianchetto-b6",
+          "moves": [
+            "g2g3",
+            "b7b6"
+          ]
+        }
+      ],
+      "progress": {
+        "attempts": 384,
+        "duplicateCopiesIgnored": 0,
+        "finalizedGames": 384,
+        "completedGames": 384,
+        "pairedGames": 384,
+        "completePairs": 192
+      },
+      "panels": [
+        {
+          "id": "singles",
+          "budget": 2,
+          "scheduledGames": 96,
+          "progress": {
+            "attempts": 96,
+            "duplicateCopiesIgnored": 0,
+            "finalizedGames": 96,
+            "completedGames": 96,
+            "pairedGames": 96,
+            "completePairs": 48
+          },
+          "comparisons": [
+            {
+              "id": "forward-knight-pawn-single-v-rank-pawn-single",
+              "aKey": "forward-knight-pawn-single",
+              "aLabel": "Forward Knight pawn (one; 2 points)",
+              "bKey": "rank-pawn-single",
+              "bLabel": "Rank pawn (one; 2 points)",
+              "scheduledGames": 32,
+              "expectedPairs": 16,
+              "attempts": 32,
+              "pairedGames": 32,
+              "completePairs": 16,
+              "partialPairs": 0,
+              "openings": 16,
+              "wins": 15,
+              "draws": 9,
+              "losses": 8,
+              "score": 0.609375,
+              "statusCounts": {
+                "completed": 32,
+                "truncated": 0,
+                "aborted": 0,
+                "error": 0,
+                "unknown": 0
+              }
+            },
+            {
+              "id": "forward-knight-pawn-single-v-diagonal-grant-single",
+              "aKey": "forward-knight-pawn-single",
+              "aLabel": "Forward Knight pawn (one; 2 points)",
+              "bKey": "diagonal-grant-single",
+              "bLabel": "Diagonal grant (one; 2 points)",
+              "scheduledGames": 32,
+              "expectedPairs": 16,
+              "attempts": 32,
+              "pairedGames": 32,
+              "completePairs": 16,
+              "partialPairs": 0,
+              "openings": 16,
+              "wins": 16,
+              "draws": 8,
+              "losses": 8,
+              "score": 0.625,
+              "statusCounts": {
+                "completed": 32,
+                "truncated": 0,
+                "aborted": 0,
+                "error": 0,
+                "unknown": 0
+              }
+            },
+            {
+              "id": "rank-pawn-single-v-diagonal-grant-single",
+              "aKey": "rank-pawn-single",
+              "aLabel": "Rank pawn (one; 2 points)",
+              "bKey": "diagonal-grant-single",
+              "bLabel": "Diagonal grant (one; 2 points)",
+              "scheduledGames": 32,
+              "expectedPairs": 16,
+              "attempts": 32,
+              "pairedGames": 32,
+              "completePairs": 16,
+              "partialPairs": 0,
+              "openings": 16,
+              "wins": 12,
+              "draws": 7,
+              "losses": 13,
+              "score": 0.484375,
+              "statusCounts": {
+                "completed": 32,
+                "truncated": 0,
+                "aborted": 0,
+                "error": 0,
+                "unknown": 0
+              }
+            }
+          ],
+          "overall": {
+            "method": "Equal opponent means over shared fully completed opening cases; every configured repetition requires a complete color pair. Draws count half a point.",
+            "rows": [
+              {
+                "key": "forward-knight-pawn-single",
+                "label": "Forward Knight pawn (one; 2 points)",
+                "scope": "all scheduled opponents except self",
+                "score": 0.6171875,
+                "games": 64,
+                "wins": 31,
+                "draws": 17,
+                "losses": 16,
+                "opponents": [
+                  {
+                    "key": "rank-pawn-single",
+                    "label": "Rank pawn (one; 2 points)",
+                    "games": 32,
+                    "wins": 15,
+                    "draws": 9,
+                    "losses": 8,
+                    "score": 0.609375
+                  },
+                  {
+                    "key": "diagonal-grant-single",
+                    "label": "Diagonal grant (one; 2 points)",
+                    "games": 32,
+                    "wins": 16,
+                    "draws": 8,
+                    "losses": 8,
+                    "score": 0.625
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 16,
+                  "total": 16,
+                  "openingIds": [
+                    "l2-bridge-old-benoni",
+                    "l2-bridge-english-d5",
+                    "l2-bridge-reti-c6",
+                    "l2-bridge-van-geet-e5",
+                    "l2-bridge-larsen-c6",
+                    "l2-bridge-kings-fianchetto-c6",
+                    "l2-bridge-larsen-d6",
+                    "l2-bridge-kings-fianchetto-d6",
+                    "l2-bridge-english-c6",
+                    "l2-bridge-van-geet-d5",
+                    "l2-bridge-van-geet-e6",
+                    "l2-bridge-van-geet-g6",
+                    "l2-bridge-larsen-nc6",
+                    "l2-bridge-kings-fianchetto-nc6",
+                    "l2-bridge-larsen-g6",
+                    "l2-bridge-kings-fianchetto-b6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 32,
+                    "wins": 17,
+                    "draws": 10,
+                    "losses": 5,
+                    "score": 0.6875
+                  },
+                  {
+                    "color": "b",
+                    "games": 32,
+                    "wins": 14,
+                    "draws": 7,
+                    "losses": 11,
+                    "score": 0.546875
+                  }
+                ]
+              },
+              {
+                "key": "rank-pawn-single",
+                "label": "Rank pawn (one; 2 points)",
+                "scope": "all scheduled opponents except self",
+                "score": 0.4375,
+                "games": 64,
+                "wins": 20,
+                "draws": 16,
+                "losses": 28,
+                "opponents": [
+                  {
+                    "key": "forward-knight-pawn-single",
+                    "label": "Forward Knight pawn (one; 2 points)",
+                    "games": 32,
+                    "wins": 8,
+                    "draws": 9,
+                    "losses": 15,
+                    "score": 0.390625
+                  },
+                  {
+                    "key": "diagonal-grant-single",
+                    "label": "Diagonal grant (one; 2 points)",
+                    "games": 32,
+                    "wins": 12,
+                    "draws": 7,
+                    "losses": 13,
+                    "score": 0.484375
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 16,
+                  "total": 16,
+                  "openingIds": [
+                    "l2-bridge-old-benoni",
+                    "l2-bridge-english-d5",
+                    "l2-bridge-reti-c6",
+                    "l2-bridge-van-geet-e5",
+                    "l2-bridge-larsen-c6",
+                    "l2-bridge-kings-fianchetto-c6",
+                    "l2-bridge-larsen-d6",
+                    "l2-bridge-kings-fianchetto-d6",
+                    "l2-bridge-english-c6",
+                    "l2-bridge-van-geet-d5",
+                    "l2-bridge-van-geet-e6",
+                    "l2-bridge-van-geet-g6",
+                    "l2-bridge-larsen-nc6",
+                    "l2-bridge-kings-fianchetto-nc6",
+                    "l2-bridge-larsen-g6",
+                    "l2-bridge-kings-fianchetto-b6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 32,
+                    "wins": 12,
+                    "draws": 8,
+                    "losses": 12,
+                    "score": 0.5
+                  },
+                  {
+                    "color": "b",
+                    "games": 32,
+                    "wins": 8,
+                    "draws": 8,
+                    "losses": 16,
+                    "score": 0.375
+                  }
+                ]
+              },
+              {
+                "key": "diagonal-grant-single",
+                "label": "Diagonal grant (one; 2 points)",
+                "scope": "all scheduled opponents except self",
+                "score": 0.4453125,
+                "games": 64,
+                "wins": 21,
+                "draws": 15,
+                "losses": 28,
+                "opponents": [
+                  {
+                    "key": "forward-knight-pawn-single",
+                    "label": "Forward Knight pawn (one; 2 points)",
+                    "games": 32,
+                    "wins": 8,
+                    "draws": 8,
+                    "losses": 16,
+                    "score": 0.375
+                  },
+                  {
+                    "key": "rank-pawn-single",
+                    "label": "Rank pawn (one; 2 points)",
+                    "games": 32,
+                    "wins": 13,
+                    "draws": 7,
+                    "losses": 12,
+                    "score": 0.515625
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 16,
+                  "total": 16,
+                  "openingIds": [
+                    "l2-bridge-old-benoni",
+                    "l2-bridge-english-d5",
+                    "l2-bridge-reti-c6",
+                    "l2-bridge-van-geet-e5",
+                    "l2-bridge-larsen-c6",
+                    "l2-bridge-kings-fianchetto-c6",
+                    "l2-bridge-larsen-d6",
+                    "l2-bridge-kings-fianchetto-d6",
+                    "l2-bridge-english-c6",
+                    "l2-bridge-van-geet-d5",
+                    "l2-bridge-van-geet-e6",
+                    "l2-bridge-van-geet-g6",
+                    "l2-bridge-larsen-nc6",
+                    "l2-bridge-kings-fianchetto-nc6",
+                    "l2-bridge-larsen-g6",
+                    "l2-bridge-kings-fianchetto-b6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 32,
+                    "wins": 12,
+                    "draws": 6,
+                    "losses": 14,
+                    "score": 0.46875
+                  },
+                  {
+                    "color": "b",
+                    "games": 32,
+                    "wins": 9,
+                    "draws": 9,
+                    "losses": 14,
+                    "score": 0.421875
+                  }
+                ]
+              }
+            ]
+          },
+          "cohorts": [
+            {
+              "id": "first-eight",
+              "overall": {
+                "method": "Equal opponent means over shared fully completed opening cases; every configured repetition requires a complete color pair. Draws count half a point.",
+                "rows": [
+                  {
+                    "key": "forward-knight-pawn-single",
+                    "label": "Forward Knight pawn (one; 2 points)",
+                    "scope": "all scheduled opponents except self",
+                    "score": 0.65625,
+                    "games": 32,
+                    "wins": 18,
+                    "draws": 6,
+                    "losses": 8,
+                    "opponents": [
+                      {
+                        "key": "rank-pawn-single",
+                        "label": "Rank pawn (one; 2 points)",
+                        "games": 16,
+                        "wins": 9,
+                        "draws": 2,
+                        "losses": 5,
+                        "score": 0.625
+                      },
+                      {
+                        "key": "diagonal-grant-single",
+                        "label": "Diagonal grant (one; 2 points)",
+                        "games": 16,
+                        "wins": 9,
+                        "draws": 4,
+                        "losses": 3,
+                        "score": 0.6875
+                      }
+                    ],
+                    "openingCoverage": {
+                      "shared": 8,
+                      "total": 8,
+                      "openingIds": [
+                        "l2-bridge-old-benoni",
+                        "l2-bridge-english-d5",
+                        "l2-bridge-reti-c6",
+                        "l2-bridge-van-geet-e5",
+                        "l2-bridge-larsen-c6",
+                        "l2-bridge-kings-fianchetto-c6",
+                        "l2-bridge-larsen-d6",
+                        "l2-bridge-kings-fianchetto-d6"
+                      ],
+                      "repetitions": 1
+                    },
+                    "status": "complete",
+                    "physicalColors": [
+                      {
+                        "color": "w",
+                        "games": 16,
+                        "wins": 11,
+                        "draws": 3,
+                        "losses": 2,
+                        "score": 0.78125
+                      },
+                      {
+                        "color": "b",
+                        "games": 16,
+                        "wins": 7,
+                        "draws": 3,
+                        "losses": 6,
+                        "score": 0.53125
+                      }
+                    ]
+                  },
+                  {
+                    "key": "rank-pawn-single",
+                    "label": "Rank pawn (one; 2 points)",
+                    "scope": "all scheduled opponents except self",
+                    "score": 0.4375,
+                    "games": 32,
+                    "wins": 11,
+                    "draws": 6,
+                    "losses": 15,
+                    "opponents": [
+                      {
+                        "key": "forward-knight-pawn-single",
+                        "label": "Forward Knight pawn (one; 2 points)",
+                        "games": 16,
+                        "wins": 5,
+                        "draws": 2,
+                        "losses": 9,
+                        "score": 0.375
+                      },
+                      {
+                        "key": "diagonal-grant-single",
+                        "label": "Diagonal grant (one; 2 points)",
+                        "games": 16,
+                        "wins": 6,
+                        "draws": 4,
+                        "losses": 6,
+                        "score": 0.5
+                      }
+                    ],
+                    "openingCoverage": {
+                      "shared": 8,
+                      "total": 8,
+                      "openingIds": [
+                        "l2-bridge-old-benoni",
+                        "l2-bridge-english-d5",
+                        "l2-bridge-reti-c6",
+                        "l2-bridge-van-geet-e5",
+                        "l2-bridge-larsen-c6",
+                        "l2-bridge-kings-fianchetto-c6",
+                        "l2-bridge-larsen-d6",
+                        "l2-bridge-kings-fianchetto-d6"
+                      ],
+                      "repetitions": 1
+                    },
+                    "status": "complete",
+                    "physicalColors": [
+                      {
+                        "color": "w",
+                        "games": 16,
+                        "wins": 7,
+                        "draws": 5,
+                        "losses": 4,
+                        "score": 0.59375
+                      },
+                      {
+                        "color": "b",
+                        "games": 16,
+                        "wins": 4,
+                        "draws": 1,
+                        "losses": 11,
+                        "score": 0.28125
+                      }
+                    ]
+                  },
+                  {
+                    "key": "diagonal-grant-single",
+                    "label": "Diagonal grant (one; 2 points)",
+                    "scope": "all scheduled opponents except self",
+                    "score": 0.40625,
+                    "games": 32,
+                    "wins": 9,
+                    "draws": 8,
+                    "losses": 15,
+                    "opponents": [
+                      {
+                        "key": "forward-knight-pawn-single",
+                        "label": "Forward Knight pawn (one; 2 points)",
+                        "games": 16,
+                        "wins": 3,
+                        "draws": 4,
+                        "losses": 9,
+                        "score": 0.3125
+                      },
+                      {
+                        "key": "rank-pawn-single",
+                        "label": "Rank pawn (one; 2 points)",
+                        "games": 16,
+                        "wins": 6,
+                        "draws": 4,
+                        "losses": 6,
+                        "score": 0.5
+                      }
+                    ],
+                    "openingCoverage": {
+                      "shared": 8,
+                      "total": 8,
+                      "openingIds": [
+                        "l2-bridge-old-benoni",
+                        "l2-bridge-english-d5",
+                        "l2-bridge-reti-c6",
+                        "l2-bridge-van-geet-e5",
+                        "l2-bridge-larsen-c6",
+                        "l2-bridge-kings-fianchetto-c6",
+                        "l2-bridge-larsen-d6",
+                        "l2-bridge-kings-fianchetto-d6"
+                      ],
+                      "repetitions": 1
+                    },
+                    "status": "complete",
+                    "physicalColors": [
+                      {
+                        "color": "w",
+                        "games": 16,
+                        "wins": 6,
+                        "draws": 2,
+                        "losses": 8,
+                        "score": 0.4375
+                      },
+                      {
+                        "color": "b",
+                        "games": 16,
+                        "wins": 3,
+                        "draws": 6,
+                        "losses": 7,
+                        "score": 0.375
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "id": "second-eight",
+              "overall": {
+                "method": "Equal opponent means over shared fully completed opening cases; every configured repetition requires a complete color pair. Draws count half a point.",
+                "rows": [
+                  {
+                    "key": "forward-knight-pawn-single",
+                    "label": "Forward Knight pawn (one; 2 points)",
+                    "scope": "all scheduled opponents except self",
+                    "score": 0.578125,
+                    "games": 32,
+                    "wins": 13,
+                    "draws": 11,
+                    "losses": 8,
+                    "opponents": [
+                      {
+                        "key": "rank-pawn-single",
+                        "label": "Rank pawn (one; 2 points)",
+                        "games": 16,
+                        "wins": 6,
+                        "draws": 7,
+                        "losses": 3,
+                        "score": 0.59375
+                      },
+                      {
+                        "key": "diagonal-grant-single",
+                        "label": "Diagonal grant (one; 2 points)",
+                        "games": 16,
+                        "wins": 7,
+                        "draws": 4,
+                        "losses": 5,
+                        "score": 0.5625
+                      }
+                    ],
+                    "openingCoverage": {
+                      "shared": 8,
+                      "total": 8,
+                      "openingIds": [
+                        "l2-bridge-english-c6",
+                        "l2-bridge-van-geet-d5",
+                        "l2-bridge-van-geet-e6",
+                        "l2-bridge-van-geet-g6",
+                        "l2-bridge-larsen-nc6",
+                        "l2-bridge-kings-fianchetto-nc6",
+                        "l2-bridge-larsen-g6",
+                        "l2-bridge-kings-fianchetto-b6"
+                      ],
+                      "repetitions": 1
+                    },
+                    "status": "complete",
+                    "physicalColors": [
+                      {
+                        "color": "w",
+                        "games": 16,
+                        "wins": 6,
+                        "draws": 7,
+                        "losses": 3,
+                        "score": 0.59375
+                      },
+                      {
+                        "color": "b",
+                        "games": 16,
+                        "wins": 7,
+                        "draws": 4,
+                        "losses": 5,
+                        "score": 0.5625
+                      }
+                    ]
+                  },
+                  {
+                    "key": "rank-pawn-single",
+                    "label": "Rank pawn (one; 2 points)",
+                    "scope": "all scheduled opponents except self",
+                    "score": 0.4375,
+                    "games": 32,
+                    "wins": 9,
+                    "draws": 10,
+                    "losses": 13,
+                    "opponents": [
+                      {
+                        "key": "forward-knight-pawn-single",
+                        "label": "Forward Knight pawn (one; 2 points)",
+                        "games": 16,
+                        "wins": 3,
+                        "draws": 7,
+                        "losses": 6,
+                        "score": 0.40625
+                      },
+                      {
+                        "key": "diagonal-grant-single",
+                        "label": "Diagonal grant (one; 2 points)",
+                        "games": 16,
+                        "wins": 6,
+                        "draws": 3,
+                        "losses": 7,
+                        "score": 0.46875
+                      }
+                    ],
+                    "openingCoverage": {
+                      "shared": 8,
+                      "total": 8,
+                      "openingIds": [
+                        "l2-bridge-english-c6",
+                        "l2-bridge-van-geet-d5",
+                        "l2-bridge-van-geet-e6",
+                        "l2-bridge-van-geet-g6",
+                        "l2-bridge-larsen-nc6",
+                        "l2-bridge-kings-fianchetto-nc6",
+                        "l2-bridge-larsen-g6",
+                        "l2-bridge-kings-fianchetto-b6"
+                      ],
+                      "repetitions": 1
+                    },
+                    "status": "complete",
+                    "physicalColors": [
+                      {
+                        "color": "w",
+                        "games": 16,
+                        "wins": 5,
+                        "draws": 3,
+                        "losses": 8,
+                        "score": 0.40625
+                      },
+                      {
+                        "color": "b",
+                        "games": 16,
+                        "wins": 4,
+                        "draws": 7,
+                        "losses": 5,
+                        "score": 0.46875
+                      }
+                    ]
+                  },
+                  {
+                    "key": "diagonal-grant-single",
+                    "label": "Diagonal grant (one; 2 points)",
+                    "scope": "all scheduled opponents except self",
+                    "score": 0.484375,
+                    "games": 32,
+                    "wins": 12,
+                    "draws": 7,
+                    "losses": 13,
+                    "opponents": [
+                      {
+                        "key": "forward-knight-pawn-single",
+                        "label": "Forward Knight pawn (one; 2 points)",
+                        "games": 16,
+                        "wins": 5,
+                        "draws": 4,
+                        "losses": 7,
+                        "score": 0.4375
+                      },
+                      {
+                        "key": "rank-pawn-single",
+                        "label": "Rank pawn (one; 2 points)",
+                        "games": 16,
+                        "wins": 7,
+                        "draws": 3,
+                        "losses": 6,
+                        "score": 0.53125
+                      }
+                    ],
+                    "openingCoverage": {
+                      "shared": 8,
+                      "total": 8,
+                      "openingIds": [
+                        "l2-bridge-english-c6",
+                        "l2-bridge-van-geet-d5",
+                        "l2-bridge-van-geet-e6",
+                        "l2-bridge-van-geet-g6",
+                        "l2-bridge-larsen-nc6",
+                        "l2-bridge-kings-fianchetto-nc6",
+                        "l2-bridge-larsen-g6",
+                        "l2-bridge-kings-fianchetto-b6"
+                      ],
+                      "repetitions": 1
+                    },
+                    "status": "complete",
+                    "physicalColors": [
+                      {
+                        "color": "w",
+                        "games": 16,
+                        "wins": 6,
+                        "draws": 4,
+                        "losses": 6,
+                        "score": 0.5
+                      },
+                      {
+                        "color": "b",
+                        "games": 16,
+                        "wins": 6,
+                        "draws": 3,
+                        "losses": 7,
+                        "score": 0.46875
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "bridge",
+          "budget": 6,
+          "scheduledGames": 288,
+          "progress": {
+            "attempts": 288,
+            "duplicateCopiesIgnored": 0,
+            "finalizedGames": 288,
+            "completedGames": 288,
+            "pairedGames": 288,
+            "completePairs": 144
+          },
+          "comparisons": [
+            {
+              "id": "forward-knight-pawn-triple-v-vanguard",
+              "aKey": "forward-knight-pawn-triple",
+              "aLabel": "Forward Knight pawn (three; 6 points)",
+              "bKey": "vanguard",
+              "bLabel": "Vanguard (two; 6 points)",
+              "scheduledGames": 32,
+              "expectedPairs": 16,
+              "attempts": 32,
+              "pairedGames": 32,
+              "completePairs": 16,
+              "partialPairs": 0,
+              "openings": 16,
+              "wins": 21,
+              "draws": 2,
+              "losses": 9,
+              "score": 0.6875,
+              "statusCounts": {
+                "completed": 32,
+                "truncated": 0,
+                "aborted": 0,
+                "error": 0,
+                "unknown": 0
+              }
+            },
+            {
+              "id": "forward-knight-pawn-triple-v-unicorn",
+              "aKey": "forward-knight-pawn-triple",
+              "aLabel": "Forward Knight pawn (three; 6 points)",
+              "bKey": "unicorn",
+              "bLabel": "Unicorn (two; 6 points)",
+              "scheduledGames": 32,
+              "expectedPairs": 16,
+              "attempts": 32,
+              "pairedGames": 32,
+              "completePairs": 16,
+              "partialPairs": 0,
+              "openings": 16,
+              "wins": 23,
+              "draws": 3,
+              "losses": 6,
+              "score": 0.765625,
+              "statusCounts": {
+                "completed": 32,
+                "truncated": 0,
+                "aborted": 0,
+                "error": 0,
+                "unknown": 0
+              }
+            },
+            {
+              "id": "forward-knight-pawn-triple-v-cruisader",
+              "aKey": "forward-knight-pawn-triple",
+              "aLabel": "Forward Knight pawn (three; 6 points)",
+              "bKey": "cruisader",
+              "bLabel": "Cruisader (two; 6 points)",
+              "scheduledGames": 32,
+              "expectedPairs": 16,
+              "attempts": 32,
+              "pairedGames": 32,
+              "completePairs": 16,
+              "partialPairs": 0,
+              "openings": 16,
+              "wins": 17,
+              "draws": 2,
+              "losses": 13,
+              "score": 0.5625,
+              "statusCounts": {
+                "completed": 32,
+                "truncated": 0,
+                "aborted": 0,
+                "error": 0,
+                "unknown": 0
+              }
+            },
+            {
+              "id": "rank-pawn-triple-v-vanguard",
+              "aKey": "rank-pawn-triple",
+              "aLabel": "Rank pawn (three; 6 points)",
+              "bKey": "vanguard",
+              "bLabel": "Vanguard (two; 6 points)",
+              "scheduledGames": 32,
+              "expectedPairs": 16,
+              "attempts": 32,
+              "pairedGames": 32,
+              "completePairs": 16,
+              "partialPairs": 0,
+              "openings": 16,
+              "wins": 2,
+              "draws": 4,
+              "losses": 26,
+              "score": 0.125,
+              "statusCounts": {
+                "completed": 32,
+                "truncated": 0,
+                "aborted": 0,
+                "error": 0,
+                "unknown": 0
+              }
+            },
+            {
+              "id": "rank-pawn-triple-v-unicorn",
+              "aKey": "rank-pawn-triple",
+              "aLabel": "Rank pawn (three; 6 points)",
+              "bKey": "unicorn",
+              "bLabel": "Unicorn (two; 6 points)",
+              "scheduledGames": 32,
+              "expectedPairs": 16,
+              "attempts": 32,
+              "pairedGames": 32,
+              "completePairs": 16,
+              "partialPairs": 0,
+              "openings": 16,
+              "wins": 6,
+              "draws": 5,
+              "losses": 21,
+              "score": 0.265625,
+              "statusCounts": {
+                "completed": 32,
+                "truncated": 0,
+                "aborted": 0,
+                "error": 0,
+                "unknown": 0
+              }
+            },
+            {
+              "id": "rank-pawn-triple-v-cruisader",
+              "aKey": "rank-pawn-triple",
+              "aLabel": "Rank pawn (three; 6 points)",
+              "bKey": "cruisader",
+              "bLabel": "Cruisader (two; 6 points)",
+              "scheduledGames": 32,
+              "expectedPairs": 16,
+              "attempts": 32,
+              "pairedGames": 32,
+              "completePairs": 16,
+              "partialPairs": 0,
+              "openings": 16,
+              "wins": 7,
+              "draws": 4,
+              "losses": 21,
+              "score": 0.28125,
+              "statusCounts": {
+                "completed": 32,
+                "truncated": 0,
+                "aborted": 0,
+                "error": 0,
+                "unknown": 0
+              }
+            },
+            {
+              "id": "diagonal-grant-triple-v-vanguard",
+              "aKey": "diagonal-grant-triple",
+              "aLabel": "Diagonal grant (three; 6 points)",
+              "bKey": "vanguard",
+              "bLabel": "Vanguard (two; 6 points)",
+              "scheduledGames": 32,
+              "expectedPairs": 16,
+              "attempts": 32,
+              "pairedGames": 32,
+              "completePairs": 16,
+              "partialPairs": 0,
+              "openings": 16,
+              "wins": 21,
+              "draws": 2,
+              "losses": 9,
+              "score": 0.6875,
+              "statusCounts": {
+                "completed": 32,
+                "truncated": 0,
+                "aborted": 0,
+                "error": 0,
+                "unknown": 0
+              }
+            },
+            {
+              "id": "diagonal-grant-triple-v-unicorn",
+              "aKey": "diagonal-grant-triple",
+              "aLabel": "Diagonal grant (three; 6 points)",
+              "bKey": "unicorn",
+              "bLabel": "Unicorn (two; 6 points)",
+              "scheduledGames": 32,
+              "expectedPairs": 16,
+              "attempts": 32,
+              "pairedGames": 32,
+              "completePairs": 16,
+              "partialPairs": 0,
+              "openings": 16,
+              "wins": 15,
+              "draws": 2,
+              "losses": 15,
+              "score": 0.5,
+              "statusCounts": {
+                "completed": 32,
+                "truncated": 0,
+                "aborted": 0,
+                "error": 0,
+                "unknown": 0
+              }
+            },
+            {
+              "id": "diagonal-grant-triple-v-cruisader",
+              "aKey": "diagonal-grant-triple",
+              "aLabel": "Diagonal grant (three; 6 points)",
+              "bKey": "cruisader",
+              "bLabel": "Cruisader (two; 6 points)",
+              "scheduledGames": 32,
+              "expectedPairs": 16,
+              "attempts": 32,
+              "pairedGames": 32,
+              "completePairs": 16,
+              "partialPairs": 0,
+              "openings": 16,
+              "wins": 12,
+              "draws": 6,
+              "losses": 14,
+              "score": 0.46875,
+              "statusCounts": {
+                "completed": 32,
+                "truncated": 0,
+                "aborted": 0,
+                "error": 0,
+                "unknown": 0
+              }
+            }
+          ],
+          "overall": {
+            "method": "Equal opponent means over shared fully completed opening cases; every configured repetition requires a complete color pair. Draws count half a point.",
+            "rows": [
+              {
+                "key": "forward-knight-pawn-triple",
+                "label": "Forward Knight pawn (three; 6 points)",
+                "scope": "fixed-reference opponents only",
+                "score": 0.671875,
+                "games": 96,
+                "wins": 61,
+                "draws": 7,
+                "losses": 28,
+                "opponents": [
+                  {
+                    "key": "vanguard",
+                    "label": "Vanguard (two; 6 points)",
+                    "games": 32,
+                    "wins": 21,
+                    "draws": 2,
+                    "losses": 9,
+                    "score": 0.6875
+                  },
+                  {
+                    "key": "unicorn",
+                    "label": "Unicorn (two; 6 points)",
+                    "games": 32,
+                    "wins": 23,
+                    "draws": 3,
+                    "losses": 6,
+                    "score": 0.765625
+                  },
+                  {
+                    "key": "cruisader",
+                    "label": "Cruisader (two; 6 points)",
+                    "games": 32,
+                    "wins": 17,
+                    "draws": 2,
+                    "losses": 13,
+                    "score": 0.5625
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 16,
+                  "total": 16,
+                  "openingIds": [
+                    "l2-bridge-old-benoni",
+                    "l2-bridge-english-d5",
+                    "l2-bridge-reti-c6",
+                    "l2-bridge-van-geet-e5",
+                    "l2-bridge-larsen-c6",
+                    "l2-bridge-kings-fianchetto-c6",
+                    "l2-bridge-larsen-d6",
+                    "l2-bridge-kings-fianchetto-d6",
+                    "l2-bridge-english-c6",
+                    "l2-bridge-van-geet-d5",
+                    "l2-bridge-van-geet-e6",
+                    "l2-bridge-van-geet-g6",
+                    "l2-bridge-larsen-nc6",
+                    "l2-bridge-kings-fianchetto-nc6",
+                    "l2-bridge-larsen-g6",
+                    "l2-bridge-kings-fianchetto-b6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 48,
+                    "wins": 31,
+                    "draws": 4,
+                    "losses": 13,
+                    "score": 0.6875
+                  },
+                  {
+                    "color": "b",
+                    "games": 48,
+                    "wins": 30,
+                    "draws": 3,
+                    "losses": 15,
+                    "score": 0.65625
+                  }
+                ]
+              },
+              {
+                "key": "rank-pawn-triple",
+                "label": "Rank pawn (three; 6 points)",
+                "scope": "fixed-reference opponents only",
+                "score": 0.22395833333333334,
+                "games": 96,
+                "wins": 15,
+                "draws": 13,
+                "losses": 68,
+                "opponents": [
+                  {
+                    "key": "vanguard",
+                    "label": "Vanguard (two; 6 points)",
+                    "games": 32,
+                    "wins": 2,
+                    "draws": 4,
+                    "losses": 26,
+                    "score": 0.125
+                  },
+                  {
+                    "key": "unicorn",
+                    "label": "Unicorn (two; 6 points)",
+                    "games": 32,
+                    "wins": 6,
+                    "draws": 5,
+                    "losses": 21,
+                    "score": 0.265625
+                  },
+                  {
+                    "key": "cruisader",
+                    "label": "Cruisader (two; 6 points)",
+                    "games": 32,
+                    "wins": 7,
+                    "draws": 4,
+                    "losses": 21,
+                    "score": 0.28125
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 16,
+                  "total": 16,
+                  "openingIds": [
+                    "l2-bridge-old-benoni",
+                    "l2-bridge-english-d5",
+                    "l2-bridge-reti-c6",
+                    "l2-bridge-van-geet-e5",
+                    "l2-bridge-larsen-c6",
+                    "l2-bridge-kings-fianchetto-c6",
+                    "l2-bridge-larsen-d6",
+                    "l2-bridge-kings-fianchetto-d6",
+                    "l2-bridge-english-c6",
+                    "l2-bridge-van-geet-d5",
+                    "l2-bridge-van-geet-e6",
+                    "l2-bridge-van-geet-g6",
+                    "l2-bridge-larsen-nc6",
+                    "l2-bridge-kings-fianchetto-nc6",
+                    "l2-bridge-larsen-g6",
+                    "l2-bridge-kings-fianchetto-b6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 48,
+                    "wins": 11,
+                    "draws": 8,
+                    "losses": 29,
+                    "score": 0.3125
+                  },
+                  {
+                    "color": "b",
+                    "games": 48,
+                    "wins": 4,
+                    "draws": 5,
+                    "losses": 39,
+                    "score": 0.13541666666666666
+                  }
+                ]
+              },
+              {
+                "key": "diagonal-grant-triple",
+                "label": "Diagonal grant (three; 6 points)",
+                "scope": "fixed-reference opponents only",
+                "score": 0.5520833333333334,
+                "games": 96,
+                "wins": 48,
+                "draws": 10,
+                "losses": 38,
+                "opponents": [
+                  {
+                    "key": "vanguard",
+                    "label": "Vanguard (two; 6 points)",
+                    "games": 32,
+                    "wins": 21,
+                    "draws": 2,
+                    "losses": 9,
+                    "score": 0.6875
+                  },
+                  {
+                    "key": "unicorn",
+                    "label": "Unicorn (two; 6 points)",
+                    "games": 32,
+                    "wins": 15,
+                    "draws": 2,
+                    "losses": 15,
+                    "score": 0.5
+                  },
+                  {
+                    "key": "cruisader",
+                    "label": "Cruisader (two; 6 points)",
+                    "games": 32,
+                    "wins": 12,
+                    "draws": 6,
+                    "losses": 14,
+                    "score": 0.46875
+                  }
+                ],
+                "openingCoverage": {
+                  "shared": 16,
+                  "total": 16,
+                  "openingIds": [
+                    "l2-bridge-old-benoni",
+                    "l2-bridge-english-d5",
+                    "l2-bridge-reti-c6",
+                    "l2-bridge-van-geet-e5",
+                    "l2-bridge-larsen-c6",
+                    "l2-bridge-kings-fianchetto-c6",
+                    "l2-bridge-larsen-d6",
+                    "l2-bridge-kings-fianchetto-d6",
+                    "l2-bridge-english-c6",
+                    "l2-bridge-van-geet-d5",
+                    "l2-bridge-van-geet-e6",
+                    "l2-bridge-van-geet-g6",
+                    "l2-bridge-larsen-nc6",
+                    "l2-bridge-kings-fianchetto-nc6",
+                    "l2-bridge-larsen-g6",
+                    "l2-bridge-kings-fianchetto-b6"
+                  ],
+                  "repetitions": 1
+                },
+                "status": "complete",
+                "physicalColors": [
+                  {
+                    "color": "w",
+                    "games": 48,
+                    "wins": 29,
+                    "draws": 7,
+                    "losses": 12,
+                    "score": 0.6770833333333334
+                  },
+                  {
+                    "color": "b",
+                    "games": 48,
+                    "wins": 19,
+                    "draws": 3,
+                    "losses": 26,
+                    "score": 0.4270833333333333
+                  }
+                ]
+              }
+            ]
+          },
+          "cohorts": [
+            {
+              "id": "first-eight",
+              "overall": {
+                "method": "Equal opponent means over shared fully completed opening cases; every configured repetition requires a complete color pair. Draws count half a point.",
+                "rows": [
+                  {
+                    "key": "forward-knight-pawn-triple",
+                    "label": "Forward Knight pawn (three; 6 points)",
+                    "scope": "fixed-reference opponents only",
+                    "score": 0.65625,
+                    "games": 48,
+                    "wins": 29,
+                    "draws": 5,
+                    "losses": 14,
+                    "opponents": [
+                      {
+                        "key": "vanguard",
+                        "label": "Vanguard (two; 6 points)",
+                        "games": 16,
+                        "wins": 11,
+                        "draws": 1,
+                        "losses": 4,
+                        "score": 0.71875
+                      },
+                      {
+                        "key": "unicorn",
+                        "label": "Unicorn (two; 6 points)",
+                        "games": 16,
+                        "wins": 11,
+                        "draws": 2,
+                        "losses": 3,
+                        "score": 0.75
+                      },
+                      {
+                        "key": "cruisader",
+                        "label": "Cruisader (two; 6 points)",
+                        "games": 16,
+                        "wins": 7,
+                        "draws": 2,
+                        "losses": 7,
+                        "score": 0.5
+                      }
+                    ],
+                    "openingCoverage": {
+                      "shared": 8,
+                      "total": 8,
+                      "openingIds": [
+                        "l2-bridge-old-benoni",
+                        "l2-bridge-english-d5",
+                        "l2-bridge-reti-c6",
+                        "l2-bridge-van-geet-e5",
+                        "l2-bridge-larsen-c6",
+                        "l2-bridge-kings-fianchetto-c6",
+                        "l2-bridge-larsen-d6",
+                        "l2-bridge-kings-fianchetto-d6"
+                      ],
+                      "repetitions": 1
+                    },
+                    "status": "complete",
+                    "physicalColors": [
+                      {
+                        "color": "w",
+                        "games": 24,
+                        "wins": 14,
+                        "draws": 4,
+                        "losses": 6,
+                        "score": 0.6666666666666666
+                      },
+                      {
+                        "color": "b",
+                        "games": 24,
+                        "wins": 15,
+                        "draws": 1,
+                        "losses": 8,
+                        "score": 0.6458333333333334
+                      }
+                    ]
+                  },
+                  {
+                    "key": "rank-pawn-triple",
+                    "label": "Rank pawn (three; 6 points)",
+                    "scope": "fixed-reference opponents only",
+                    "score": 0.3020833333333333,
+                    "games": 48,
+                    "wins": 11,
+                    "draws": 7,
+                    "losses": 30,
+                    "opponents": [
+                      {
+                        "key": "vanguard",
+                        "label": "Vanguard (two; 6 points)",
+                        "games": 16,
+                        "wins": 2,
+                        "draws": 2,
+                        "losses": 12,
+                        "score": 0.1875
+                      },
+                      {
+                        "key": "unicorn",
+                        "label": "Unicorn (two; 6 points)",
+                        "games": 16,
+                        "wins": 4,
+                        "draws": 2,
+                        "losses": 10,
+                        "score": 0.3125
+                      },
+                      {
+                        "key": "cruisader",
+                        "label": "Cruisader (two; 6 points)",
+                        "games": 16,
+                        "wins": 5,
+                        "draws": 3,
+                        "losses": 8,
+                        "score": 0.40625
+                      }
+                    ],
+                    "openingCoverage": {
+                      "shared": 8,
+                      "total": 8,
+                      "openingIds": [
+                        "l2-bridge-old-benoni",
+                        "l2-bridge-english-d5",
+                        "l2-bridge-reti-c6",
+                        "l2-bridge-van-geet-e5",
+                        "l2-bridge-larsen-c6",
+                        "l2-bridge-kings-fianchetto-c6",
+                        "l2-bridge-larsen-d6",
+                        "l2-bridge-kings-fianchetto-d6"
+                      ],
+                      "repetitions": 1
+                    },
+                    "status": "complete",
+                    "physicalColors": [
+                      {
+                        "color": "w",
+                        "games": 24,
+                        "wins": 9,
+                        "draws": 4,
+                        "losses": 11,
+                        "score": 0.4583333333333333
+                      },
+                      {
+                        "color": "b",
+                        "games": 24,
+                        "wins": 2,
+                        "draws": 3,
+                        "losses": 19,
+                        "score": 0.14583333333333334
+                      }
+                    ]
+                  },
+                  {
+                    "key": "diagonal-grant-triple",
+                    "label": "Diagonal grant (three; 6 points)",
+                    "scope": "fixed-reference opponents only",
+                    "score": 0.4479166666666667,
+                    "games": 48,
+                    "wins": 19,
+                    "draws": 5,
+                    "losses": 24,
+                    "opponents": [
+                      {
+                        "key": "vanguard",
+                        "label": "Vanguard (two; 6 points)",
+                        "games": 16,
+                        "wins": 9,
+                        "draws": 1,
+                        "losses": 6,
+                        "score": 0.59375
+                      },
+                      {
+                        "key": "unicorn",
+                        "label": "Unicorn (two; 6 points)",
+                        "games": 16,
+                        "wins": 5,
+                        "draws": 1,
+                        "losses": 10,
+                        "score": 0.34375
+                      },
+                      {
+                        "key": "cruisader",
+                        "label": "Cruisader (two; 6 points)",
+                        "games": 16,
+                        "wins": 5,
+                        "draws": 3,
+                        "losses": 8,
+                        "score": 0.40625
+                      }
+                    ],
+                    "openingCoverage": {
+                      "shared": 8,
+                      "total": 8,
+                      "openingIds": [
+                        "l2-bridge-old-benoni",
+                        "l2-bridge-english-d5",
+                        "l2-bridge-reti-c6",
+                        "l2-bridge-van-geet-e5",
+                        "l2-bridge-larsen-c6",
+                        "l2-bridge-kings-fianchetto-c6",
+                        "l2-bridge-larsen-d6",
+                        "l2-bridge-kings-fianchetto-d6"
+                      ],
+                      "repetitions": 1
+                    },
+                    "status": "complete",
+                    "physicalColors": [
+                      {
+                        "color": "w",
+                        "games": 24,
+                        "wins": 13,
+                        "draws": 3,
+                        "losses": 8,
+                        "score": 0.6041666666666666
+                      },
+                      {
+                        "color": "b",
+                        "games": 24,
+                        "wins": 6,
+                        "draws": 2,
+                        "losses": 16,
+                        "score": 0.2916666666666667
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "id": "second-eight",
+              "overall": {
+                "method": "Equal opponent means over shared fully completed opening cases; every configured repetition requires a complete color pair. Draws count half a point.",
+                "rows": [
+                  {
+                    "key": "forward-knight-pawn-triple",
+                    "label": "Forward Knight pawn (three; 6 points)",
+                    "scope": "fixed-reference opponents only",
+                    "score": 0.6875,
+                    "games": 48,
+                    "wins": 32,
+                    "draws": 2,
+                    "losses": 14,
+                    "opponents": [
+                      {
+                        "key": "vanguard",
+                        "label": "Vanguard (two; 6 points)",
+                        "games": 16,
+                        "wins": 10,
+                        "draws": 1,
+                        "losses": 5,
+                        "score": 0.65625
+                      },
+                      {
+                        "key": "unicorn",
+                        "label": "Unicorn (two; 6 points)",
+                        "games": 16,
+                        "wins": 12,
+                        "draws": 1,
+                        "losses": 3,
+                        "score": 0.78125
+                      },
+                      {
+                        "key": "cruisader",
+                        "label": "Cruisader (two; 6 points)",
+                        "games": 16,
+                        "wins": 10,
+                        "draws": 0,
+                        "losses": 6,
+                        "score": 0.625
+                      }
+                    ],
+                    "openingCoverage": {
+                      "shared": 8,
+                      "total": 8,
+                      "openingIds": [
+                        "l2-bridge-english-c6",
+                        "l2-bridge-van-geet-d5",
+                        "l2-bridge-van-geet-e6",
+                        "l2-bridge-van-geet-g6",
+                        "l2-bridge-larsen-nc6",
+                        "l2-bridge-kings-fianchetto-nc6",
+                        "l2-bridge-larsen-g6",
+                        "l2-bridge-kings-fianchetto-b6"
+                      ],
+                      "repetitions": 1
+                    },
+                    "status": "complete",
+                    "physicalColors": [
+                      {
+                        "color": "w",
+                        "games": 24,
+                        "wins": 17,
+                        "draws": 0,
+                        "losses": 7,
+                        "score": 0.7083333333333334
+                      },
+                      {
+                        "color": "b",
+                        "games": 24,
+                        "wins": 15,
+                        "draws": 2,
+                        "losses": 7,
+                        "score": 0.6666666666666666
+                      }
+                    ]
+                  },
+                  {
+                    "key": "rank-pawn-triple",
+                    "label": "Rank pawn (three; 6 points)",
+                    "scope": "fixed-reference opponents only",
+                    "score": 0.14583333333333334,
+                    "games": 48,
+                    "wins": 4,
+                    "draws": 6,
+                    "losses": 38,
+                    "opponents": [
+                      {
+                        "key": "vanguard",
+                        "label": "Vanguard (two; 6 points)",
+                        "games": 16,
+                        "wins": 0,
+                        "draws": 2,
+                        "losses": 14,
+                        "score": 0.0625
+                      },
+                      {
+                        "key": "unicorn",
+                        "label": "Unicorn (two; 6 points)",
+                        "games": 16,
+                        "wins": 2,
+                        "draws": 3,
+                        "losses": 11,
+                        "score": 0.21875
+                      },
+                      {
+                        "key": "cruisader",
+                        "label": "Cruisader (two; 6 points)",
+                        "games": 16,
+                        "wins": 2,
+                        "draws": 1,
+                        "losses": 13,
+                        "score": 0.15625
+                      }
+                    ],
+                    "openingCoverage": {
+                      "shared": 8,
+                      "total": 8,
+                      "openingIds": [
+                        "l2-bridge-english-c6",
+                        "l2-bridge-van-geet-d5",
+                        "l2-bridge-van-geet-e6",
+                        "l2-bridge-van-geet-g6",
+                        "l2-bridge-larsen-nc6",
+                        "l2-bridge-kings-fianchetto-nc6",
+                        "l2-bridge-larsen-g6",
+                        "l2-bridge-kings-fianchetto-b6"
+                      ],
+                      "repetitions": 1
+                    },
+                    "status": "complete",
+                    "physicalColors": [
+                      {
+                        "color": "w",
+                        "games": 24,
+                        "wins": 2,
+                        "draws": 4,
+                        "losses": 18,
+                        "score": 0.16666666666666666
+                      },
+                      {
+                        "color": "b",
+                        "games": 24,
+                        "wins": 2,
+                        "draws": 2,
+                        "losses": 20,
+                        "score": 0.125
+                      }
+                    ]
+                  },
+                  {
+                    "key": "diagonal-grant-triple",
+                    "label": "Diagonal grant (three; 6 points)",
+                    "scope": "fixed-reference opponents only",
+                    "score": 0.65625,
+                    "games": 48,
+                    "wins": 29,
+                    "draws": 5,
+                    "losses": 14,
+                    "opponents": [
+                      {
+                        "key": "vanguard",
+                        "label": "Vanguard (two; 6 points)",
+                        "games": 16,
+                        "wins": 12,
+                        "draws": 1,
+                        "losses": 3,
+                        "score": 0.78125
+                      },
+                      {
+                        "key": "unicorn",
+                        "label": "Unicorn (two; 6 points)",
+                        "games": 16,
+                        "wins": 10,
+                        "draws": 1,
+                        "losses": 5,
+                        "score": 0.65625
+                      },
+                      {
+                        "key": "cruisader",
+                        "label": "Cruisader (two; 6 points)",
+                        "games": 16,
+                        "wins": 7,
+                        "draws": 3,
+                        "losses": 6,
+                        "score": 0.53125
+                      }
+                    ],
+                    "openingCoverage": {
+                      "shared": 8,
+                      "total": 8,
+                      "openingIds": [
+                        "l2-bridge-english-c6",
+                        "l2-bridge-van-geet-d5",
+                        "l2-bridge-van-geet-e6",
+                        "l2-bridge-van-geet-g6",
+                        "l2-bridge-larsen-nc6",
+                        "l2-bridge-kings-fianchetto-nc6",
+                        "l2-bridge-larsen-g6",
+                        "l2-bridge-kings-fianchetto-b6"
+                      ],
+                      "repetitions": 1
+                    },
+                    "status": "complete",
+                    "physicalColors": [
+                      {
+                        "color": "w",
+                        "games": 24,
+                        "wins": 16,
+                        "draws": 4,
+                        "losses": 4,
+                        "score": 0.75
+                      },
+                      {
+                        "color": "b",
+                        "games": 24,
+                        "wins": 13,
+                        "draws": 1,
+                        "losses": 10,
+                        "score": 0.5625
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -89,7 +89,7 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Complete and archive [level-3 confirmation](docs/v17-level3-review.md): all 2,048 games finalized, one unscored truncation and no errors/retries. All five campaign stages are finished: 6,752 finalized games.
 - [x] Retain tested Vertical bishop `BvWvN`, long-forward-capture Rook pawn `mRcfB` and Ranged rook `RC`; preserve the four frozen research references. Keep Nightrider as an exploration option without another unchanged run.
 - [x] Declare and preflight the [384-game selected-reference validation](docs/level2-reference-validation-v17.md): 96 direct level-two games and 288 six-point bridge games on sixteen fresh fixed cases, with separate reports for each budget.
-- [ ] Validate the selected level-2 references directly and through the six-point bridge: three L2 purchases versus two identical non-Amazon L3 references. Keep purchase budgets separate; this is outside the current 6,752-game budget.
+- [x] Complete and archive the 384-game level-two direct/bridge validation. Knight scores 61.72%/67.19%, Rank 43.75%/22.40% and F grant 44.53%/55.21% in their separate contexts; test mixed partners before redesigning the L2 pieces.
 
 ## Version 17: selected roster and targeted trials
 
@@ -98,7 +98,16 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Reject full X-ray `QgQ0` for forced `1.Qh5+ g6 2.Qe5#`. Preserve the negative fixture and exhaustively verify no starting mate in two for either color with the rook-only replacement.
 - [x] Declare and verify the [768-game targeted screen](docs/level3-revisions-v17.md), using the same unplayed sixteen-case holdout as the separate L2 validation. Preserve original search priors for movement revisions and W3; record native custom K/N values in a new receipt.
 - [x] Add the twenty-type Roster and trials workshop, preserving all seventeen earlier profile identities, with retained pieces and six labeled trials.
-- [ ] Run the 768-game screen and 384-game L2 validation separately with four workers total. Review repeated matchup/color concerns and human playtests; do not rerun unchanged sibling screens.
+- [x] Complete and archive all 1,152 follow-up games with no errors, retries or truncations; reproduce both reports and preserve opponent, cohort and color results.
+- [x] Confirm blocked Vertical bishop `BvW2vnN` and Queen pawn `mQ2cfQ2`. Retain Nightrider and diagonal-X-ray queen; park the stronger Rook-ray queen and three-point K/W3/N grants.
+
+## Version 17: mixed partners and orthogonal grants
+
+- [x] Add WD as an immutable three-point reserve grant. Compare its two-square jumps with existing W2 clear-path movement, preserving the shared W2 search prior and recording WD's automatic values separately.
+- [x] Add the nineteen-type Roster and king trials workshop with the confirmed pieces, W2/WD trials and original four-point King candidate; preserve all eighteen earlier profile identities.
+- [x] Declare the [1,824-game study](docs/mixed-reference-validation-v17.md): all nine L1+L2 teams versus four frozen L3 references, twelve matched four-ply openings, real c2/e2 placement variants and both colors. Deduplicate the grant-only layout; report logical partner means independently of game counts.
+- [ ] Run the 1,632 mixed-package games and 192 W2/WD games in the single declared study with four workers total; inspect partner, placement, opening and color effects before deciding L2 changes.
+- [ ] Test the King grant at its existing four-point price against declared four-point opposition, such as L1+L3 reference packages; do not relabel the old three-point results or infer a price from their percentage.
 
 ## After reviewing these results
 
