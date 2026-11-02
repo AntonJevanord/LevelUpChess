@@ -89,6 +89,8 @@ Sixteen complete panel cases and all 576 focused games are now archived. The [se
 
 The completed [Nightrider focus protocol](docs/nightrider-focus-v17.md) preserves its fresh `N0`, `N0cF` and `N0cW` results in an owned runtime. The requested `N0gN0` lacks a supported hopper generator in this engine. Wraith stays unchanged. `npm.cmd run balance:review-search` verifies the archived statistical review without starting games.
 
+The [targeted follow-ups](docs/targeted-followups-v17.md) prepare 2,304 Knight-pawn partner games, a 512-game Nightrider confirmation and 512 games for `RsCfC`/`RfhC` Cataphract restrictions. All use sixteen fresh cases and frozen reference opponents. Finish the active panel, then run one study at a time; each owns its runtime and keeps the current roster unchanged.
+
 Current playable names are **Herald**, **Ranger**, **Cataphract**, **Inquisitor**, **Wraith**, **Warden**, **Nightrider** and **Crusader**. Historical reports keep their original labels and rule identities.
 
 Earlier evidence remains in the [level-one acceptance review](docs/v17-acceptance-review.md), [level-two selection](docs/v17-level2-review.md), [level-three confirmation](docs/v17-level3-review.md), [mobility review](experiments/balance/results/v17-mobility-001.report.md) and [complete reference panel](experiments/balance/results/reference-panel-v17-002.panel.md). Reuse compatible outcomes and reserve further tests for repeated concerns that could change a design decision.
