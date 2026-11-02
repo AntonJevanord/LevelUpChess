@@ -66,4 +66,16 @@ friendly blockers, enemy blockers, captures and both colors in native and WASM
 rules before collecting scored games. Changed behavior gets a new revision;
 aliases never silently rewrite archived profiles or research identities.
 
+For new pawn definitions, write `e` after explicit capture modifiers: `fceF`,
+`fceN`. Keep pawn/en-passant variant roles alongside the notation and verify
+actual removal of the bypassed pawn. `fsN` is the wide forward component;
+`fN` is the tall forward component. The tested capture-only Knight-pawn
+prototype is `ifmnDfmWfceFfsNfceN`; its quiet-only counterpart ends in `fsNfmN`.
+See the [prototype fixtures](../prototypes/pawns/README.md). Frozen archived
+strings are not rewritten to apply a new spelling convention.
+
+The bundled engine does not implement knight-ray hopping for `gN0`, despite
+parsing the component and assigning it an automatic value. Verify supported
+runtime attacks as well as accepted notation before planning a balance run.
+
 Validation: `node --test tests-unit/betza-aliases.test.js`.

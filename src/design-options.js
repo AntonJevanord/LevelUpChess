@@ -204,11 +204,25 @@ const confirmedNames = {
   'king.grant-wd-level3@1': 'Jumping Orthogonal grant (trial)',
   'king.reserve-king@1': 'King grant (four-point candidate)',
 };
-const confirmedKingTrials = new Set(['king.reserve-rook@1', 'king.grant-wd-level3@1', 'king.reserve-king@1']);
+const confirmedKingTrials = new Set(['king.reserve-rook@1', 'king.reserve-king@1']);
+// Presentation aliases do not alter stored profiles or frozen research labels.
+// Earlier and superseded libraries keep the names used by their own studies.
+const currentNames = Object.freeze({
+  'pawn.queen-sideways@1': 'Herald',
+  'pawn.purple@13': 'Ranger',
+  'rook.purple@12': 'Cataphract',
+  'bishop.vertical-blocked@1': 'Inquisitor',
+  'queen.purple@7': 'Wraith',
+  'king.grant-wd-level3@1': 'Warden',
+  'knight.purple@4': 'Nightrider',
+  'bishop.purple@13': 'Crusader',
+});
+const namedCurrentVariants = new Set(PLAYABLE_LIBRARIES.filter(library => library.generation === 17 && !library.superseded).map(library => library.variant));
 function optionInProfile(option, profile) {
   if (!option) return option;
+  const currentName = namedCurrentVariants.has(profile.variant) ? currentNames[option.id] : undefined;
   if (confirmedProfile.variant === profile.variant) return { ...option, accent: confirmedAccents[option.id],
-    name: officialNames[option.id] || confirmedNames[option.id] || option.name,
+    name: currentName || officialNames[option.id] || confirmedNames[option.id] || option.name,
     status: officialNames[option.id] ? 'reference' : confirmedKingTrials.has(option.id) ? 'experimental' : 'accepted' };
   const accents = rosterProfile.variant === profile.variant ? rosterAccents
     : selectedPawnProfile.variant === profile.variant ? selectedPawnAccents
@@ -216,7 +230,8 @@ function optionInProfile(option, profile) {
     : currentProfiles.some(candidate => candidate.variant === profile.variant) ? currentWorkshopAccents
     : closeoutProfiles.some(candidate => candidate.variant === profile.variant) ? workshopAccents : null;
   if (!accents) return option;
-  return { ...option, accent: accents[option.id], ...(officialNames[option.id] ? { name: officialNames[option.id], status: 'reference' } : {}) };
+  return { ...option, accent: accents[option.id], ...(officialNames[option.id] ? { name: officialNames[option.id], status: 'reference' } : {}),
+    ...(currentName ? { name: currentName } : {}) };
 }
 function getDesignOptions(variant = EXPERIMENTAL_VARIANT) {
   const profile = getPlayableProfile(variant);

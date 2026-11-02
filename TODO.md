@@ -106,7 +106,7 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Add WD as an immutable three-point reserve grant. Compare its two-square jumps with existing W2 clear-path movement, preserving the shared W2 search prior and recording WD's automatic values separately.
 - [x] Add the nineteen-type Roster and king trials workshop with the confirmed pieces, W2/WD trials and original four-point King candidate; preserve all eighteen earlier profile identities.
 - [x] Declare the [1,824-game study](docs/mixed-reference-validation-v17.md): all nine L1+L2 teams versus four frozen L3 references, twelve matched four-ply openings, real c2/e2 placement variants and both colors. Deduplicate the grant-only layout; report logical partner means independently of game counts.
-- [ ] Run the 1,632 mixed-package games and 192 W2/WD games in the single declared study with four workers total; inspect partner, placement, opening and color effects before deciding L2 changes.
+- [x] Complete and archive all 1,824 mixed/grant games: 1,822 completed, two unscored truncations and 910 scored pairs. Reproduce the upload and review partners, placements, colors and matched WD/W2 uncertainty.
 - [ ] Test the King grant at its existing four-point price against declared four-point opposition, such as L1+L3 reference packages; do not relabel the old three-point results or infer a price from their percentage.
 
 ## Version 17: complete level-three panel
@@ -117,8 +117,20 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Add separate node-budget matrices, shared-case overall scores, physical colors and matched-opening search sensitivity; fit baseline/head/combined material estimates with ordinary values and joint whole-piece ranges.
 - [x] Preserve the active mixed campaign's catalog, runner and balance bundle. Keep grants outside the board-only material panel; distinguish proposed roster colors from current UI colors and frozen reference status.
 - [x] Verify all 7,040 distinct army/color/opening cases, native movement and value tables, cumulative continuation, copied/torn journals, bounded cancellation and Windows checkout checksums without playing scored cloud games.
-- [ ] Run the [first 2,640-game target](docs/level3-panel-v17.md) after pausing or finishing the mixed study. Review uncertainty and search effects before extending to 5,280 / 10,560 / 21,120 games; there is no 2,000-game cap.
+- [x] Archive the [first 2,640 collected games](docs/v17-mixed-panel-review.md), reproducing all three budgets exactly. Retain the actual requested32-opening target and note that dispersion tightens at 40k but widens again at 80k.
+- [ ] Finish the ongoing32-opening/10,560-game target before treating search-budget effects as stable. Its original catalog, controller and balance bundle remain fixed; there is no 2,000-game cap.
 - [ ] Review material rank, held-out prediction, ordinary anchors and cohort differences before considering any engine-value changes. Fixed priors and fitted material estimates remain separate.
+
+## Version 17: named roster and focused revisions
+
+- [x] Apply Herald, Ranger, Cataphract, Inquisitor, Wraith, Warden and corrected Crusader names in current setup/board labels while preserving all nineteen rule-profile identities and archived labels. Retain WD as the working three-point Warden; keep W2 and four-point King trials separate.
+- [x] Validate tall Knight-pawn capture-only `ifmnDfmWfceFfsNfceN` and quiet-only `ifmnDfmWfceFfsNfmN` prototypes. Preserve wide `fsN`, actual en-passant removal, home double advances and standard promotion; use `ce` on new explicit pawn capture components.
+- [ ] Compare both pawn revisions with the current Knight pawn under matched L1 partners and c/e placements before replacing its playable definition. Its mixed partner mean is 63.28% across all three partners.
+- [x] Demonstrate that `N0gN0` adds no supported hopping moves but inflates automatic valuation. Retain the negative source/engine fixtures and verify supported `N0cF` / `N0cW` alternatives.
+- [x] Prepare the [576-game Nightrider focus](docs/nightrider-focus-v17.md): fresh N0 control and both capture-step revisions, four frozen references, eight holdout cases outside the ongoing first 32, both colors and 20k/40k/80k budgets. Hold all three at 2326/2211.
+- [x] Add a verified owned runtime snapshot for new research definitions, preserving the active panel's source identity. Retain code/rule/dependency receipts, immutable resume, q/g/p queue stops and matched-control gain reports.
+- [x] Verify all 576 focused opening/color/budget cases with native rules and fixed value tables, prototype attacks and en-passant removal, a deliberately unscored worker/resume fixture, nineteen preserved profile identities and current browser labels.
+- [ ] Run the Nightrider focus after pausing or finishing the complete panel; review per-opponent gains and human counterplay before selecting a revision. Leave Wraith unchanged.
 
 ## After reviewing these results
 

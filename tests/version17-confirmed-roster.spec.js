@@ -38,12 +38,12 @@ test('the confirmed roster comes first with accepted pawn and bishop names and t
   await page.locator('#experimental-budget').fill('9');
   const picker = page.locator('#setup-picker');
   await square(page, 'c2').click();
-  await expect(picker.locator(`[data-upgrade-id="${ids.pawn}"]`)).toContainText('Queen pawn');
+  await expect(picker.locator(`[data-upgrade-id="${ids.pawn}"]`)).toContainText('Herald');
   await expect(picker.locator(`[data-upgrade-id="${ids.pawn}"] strong`)).not.toContainText('Sideways');
   await choose(page, 'c1', ids.bishop);
-  await expect(page.locator('#experimental-upgrade-c1 option:checked')).toContainText('Vertical bishop · accepted');
+  await expect(page.locator('#experimental-upgrade-c1 option:checked')).toContainText('Inquisitor · accepted');
   await square(page, 'e1').click();
-  for (const [id, name] of [[ids.slider, 'Sliding Orthogonal grant (trial)'], [ids.jumper, 'Jumping Orthogonal grant (trial)']]) {
+  for (const [id, name] of [[ids.slider, 'Sliding Orthogonal grant (trial)'], [ids.jumper, 'Warden']]) {
     const choice = picker.locator(`[data-upgrade-id="${id}"]`);
     await expect(choice).toContainText(name); await expect(choice).toContainText('3 pt');
     await expect(choice).toHaveAttribute('data-accent', 'yellow');
@@ -89,7 +89,7 @@ test('the selected old X-ray queen keeps diagonal hops and has no orthogonal hop
   await page.goto('http://127.0.0.1:4173');
   await page.selectOption('#game-mode', library.variant);
   await square(page, 'd1').click();
-  await expect(page.locator(`#setup-picker [data-upgrade-id="${ids.queen}"]`)).toContainText('X-ray queen');
+  await expect(page.locator(`#setup-picker [data-upgrade-id="${ids.queen}"]`)).toContainText('Wraith');
   await expect(page.locator('#setup-picker [data-upgrade-id="queen.xray-rook@1"]')).toHaveCount(0);
   await importPosition(page, { a1: 'K', h7: 'k', d4: type(ids.queen).toUpperCase(), e5: 'P', g7: 'p', h8: 'p', e4: 'P', g4: 'p' });
   await square(page, 'd4').click();

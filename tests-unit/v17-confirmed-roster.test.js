@@ -75,12 +75,13 @@ test('the nineteen-type confirmed roster comes first and preserves all eighteen 
   assert.equal(archived.superseded, true); assert.equal(archived.name, 'Roster and trials (archive)');
 });
 
-test('accepted names and colors stay separate from the two three-point king trials and the existing four-point king grant', () => {
+test('accepted names and colors retain Warden alongside the remaining W2 and four-point trials', () => {
   const options = getDesignOptions(profile.variant), option = id => options.find(item => item.id === id);
-  assert.equal(option(ids.bishop).name, 'Vertical bishop'); assert.equal(option(ids.pawn).name, 'Queen pawn');
+  assert.equal(option(ids.bishop).name, 'Inquisitor'); assert.equal(option(ids.pawn).name, 'Herald');
   assert.equal(option(ids.bishop).status, 'accepted'); assert.equal(option(ids.pawn).status, 'accepted');
-  assert.deepEqual(options.filter(item => item.status === 'experimental').map(item => item.id).sort(), [ids.slider, ids.jumper, ids.king].sort());
-  assert.match(option(ids.slider).name, /Sliding.*trial/); assert.match(option(ids.jumper).name, /Jumping.*trial/);
+  assert.deepEqual(options.filter(item => item.status === 'experimental').map(item => item.id).sort(), [ids.slider, ids.king].sort());
+  assert.match(option(ids.slider).name, /Sliding.*trial/); assert.equal(option(ids.jumper).name, 'Warden');
+  assert.equal(option(ids.jumper).status, 'accepted');
   assert.equal(getDesign(ids.king).level, 4); assert.equal(getDesign(ids.king).movement, 'K');
   assert.equal(getDesign('king.grant-king-level3@1').level, 3, 'The archived price is not rewritten.');
   assert.deepEqual(V17_CONFIRMED_RESERVE_DESIGN_IDS.map(id => option(id).level), [1, 2, 3, 3, 4]);

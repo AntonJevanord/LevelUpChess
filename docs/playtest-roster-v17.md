@@ -18,22 +18,22 @@ All four replace the chosen pawn and promote to ordinary Q/R/B/N. King-step's
 quiet diagonal visit to an empty en-passant target leaves the bypassed pawn;
 Two-step can capture en passant. Two-step is green, King-step blue, Knight yellow
 and Rank orange. The L2 definitions stay unchanged while the
-[mixed-package study](mixed-reference-validation-v17.md) checks partner and
-placement effects.
+[mixed-package review](v17-mixed-panel-review.md) supports testing narrower tall
+Knight-pawn jumps. Prototype revisions remain separate from the playable pawn.
 
 ## Level-three roster
 
-The four red research references remain Vanguard `RfB`, Unicorn `NC`, Cruisader
+The four red research references remain Vanguard `RfB`, Unicorn `NC`, Crusader
 `BsR2nsN` and Amazon `QN`. The other selected choices are purple:
 
 | Piece | Movement | Behavior |
 | --- | :--- | --- |
-| Rook pawn | `mRcfB` | Move any clear distance orthogonally without capturing; capture any clear distance diagonally forward. Standard promotion. |
-| Queen pawn | `mQ2cfQ2` | Move quietly up to two clear squares in any queen direction; capture straight or diagonally forward up to two squares. Sideways/backward moves cannot capture. Standard promotion. |
+| Ranger (Rook pawn) | `mRcfB` | Move any clear distance orthogonally without capturing; capture any clear distance diagonally forward. Standard promotion. |
+| Herald (Queen pawn) | `mQ2cfQ2` | Move quietly up to two clear squares in any queen direction; capture straight or diagonally forward up to two squares. Sideways/backward moves cannot capture. Standard promotion. |
 | Nightrider | `N0` | Repeat knight leaps along a line, stopping at an occupied landing square. |
-| Vertical bishop | `BvW2vnN` | Normal bishop moves, clear vertical moves up to two squares, and tall knight moves blocked on their first vertical square. |
-| Ranged rook | `RC` | Normal rook moves plus camel jumps, including captures. |
-| X-ray queen | `QgB0` | Normal queen moves plus diagonal hops over one piece, landing before or capturing the next blocker if it is an enemy. Orthogonal moves cannot hop. |
+| Inquisitor (Vertical bishop) | `BvW2vnN` | Normal bishop moves, clear vertical moves up to two squares, and tall knight moves blocked on their first vertical square. |
+| Cataphract (Ranged rook) | `RC` | Normal rook moves plus camel jumps, including captures. |
+| Wraith (X-ray queen) | `QgB0` | Normal queen moves plus diagonal hops over one piece, landing before or capturing the next blocker if it is an enemy. Orthogonal moves cannot hop. |
 
 The [latest review](v17-roster-confirmation.md) confirms the bishop and Queen
 pawn. Nightrider and the diagonal-X-ray queen remain exploration choices.
@@ -53,10 +53,12 @@ and guards do not promote.
 | 1 | Pawn grant | `fWmfF`: forward step/capture; quiet forward diagonal step | Blue |
 | 2 | Bishop grant | `F`: diagonal single steps/captures | Green |
 | 3 | Sliding Orthogonal grant | `W2`: clear orthogonal moves/captures up to two squares | Yellow / trial |
-| 3 | Jumping Orthogonal grant | `WD`: orthogonal one-step or two-square jump, including captures | Yellow / trial |
+| 3 | Warden | `WD`: orthogonal one-step or two-square jump, including captures | Yellow / working choice |
 | 4 | King grant | `K`: single steps/captures in all directions | Orange / candidate |
 
-The four-point price is the existing historical King-grant identity, not a new
+Warden scored 55.21% in the mixed-study grant panel. W2 scored 66.67%; retain
+its trial status and the separate opponent/context evidence. Neither result
+changes a frozen reference. The four-point price is the existing historical King-grant identity, not a new
 balance finding. A dedicated four-point study remains pending. Other historical
 grants and costs remain in the King workshop.
 

@@ -60,12 +60,12 @@ These are the official three-point replacement upgrades, available in every new 
 | --- | --- | --- |
 | Vanguard | Rook | `RfB` |
 | Unicorn | Knight | `NC` |
-| Cruisader | Bishop | `BsR2nsN` |
+| Crusader | Bishop | `BsR2nsN` |
 | Amazon | Queen | `QN` |
 
 The [reference guide](docs/official-references.md), [frozen declaration](experiments/designs/official-references-v16.json) and [standalone INI](experiments/designs/official-references-v16.ini) preserve their exact identities. New workshop candidates and reserve prices are provisional; adding them does not change the frozen references or historical evidence.
 
-The [all-reference material fit](experiments/balance/results/reference-material-001.report.md) uses 1,534 complete paired games across all six matchups. Under assumed pawn = 1 / queen = 9, whole-piece estimates are Vanguard **7.85**, Unicorn **5.70**, Cruisader **6.50** and Amazon **12.37**. These are conditional estimates, separate from purchase prices and engine evaluation values.
+The [all-reference material fit](experiments/balance/results/reference-material-001.report.md) uses 1,534 complete paired games across all six matchups. Under assumed pawn = 1 / queen = 9, whole-piece estimates are Vanguard **7.85**, Unicorn **5.70**, Crusader **6.50** and Amazon **12.37**. These are conditional estimates, separate from purchase prices and engine evaluation values. Archived reports retain the earlier “Cruisader” spelling.
 
 Future candidates face the frozen references. The unfinished NC–Amazon game remains unscored.
 
@@ -75,13 +75,17 @@ The five-stage bracket campaign finished **6,752 games**; the next two studies f
 
 The selected Vertical bishop is now `BvW2vnN` (**50.00%**), and Queen pawn is `mQ2cfQ2` (**53.52%**). Retain the Rook pawn, Ranged rook, Nightrider and original diagonal-X-ray queen. The four frozen research references stay unchanged. Choose **Version 17 · Roster and king trials** to try the [current roster](docs/playtest-roster-v17.md); earlier workshops remain available.
 
-The level-two bridge exposed a scaling difference: three Forward Knight pawns scored **67.19%**, three Rank pawns **22.40%**, and three Diagonal grants **55.21%** against two level-three references. The [new 1,824-game study](docs/mixed-reference-validation-v17.md) tests all nine L1+L2 packages against all four frozen L3 references, with matched pawn-file swaps, plus W2/WD grant trials. Twelve fresh four-ply openings and both colors are fixed before play. Partner means give each logical team equal weight.
+The completed mixed-package study confirms a strong Knight-pawn signal: its three L1 partners score **60.94%, 70.31% and 58.59%**. The [review](docs/v17-mixed-panel-review.md) retains partner, placement, opening and color differences. Capture-only and quiet-only tall-jump pawn prototypes preserve wide knight movement and standard promotion; they remain separate from the playable pawn pending balance tests.
 
-W2 slides one or two orthogonal squares; WD jumps on its two-square moves. Both are three-point candidates. The original four-point King grant remains a candidate for a later four-point study. Current definitions and applied search priors are frozen for each run; these priors are separate from material estimates and purchase prices.
+WD is the working three-point **Warden**, scoring **55.21%**. W2 scored **66.67%** and stays a trial; its difference from WD remains uncertain, and nonchecking-drop rules affect their legal placements. The original four-point King grant remains a candidate. Current definitions and applied search priors stay frozen per run; these priors are separate from fitted material estimates and purchase prices.
 
 Run one experiment at a time with four workers total. Game-boundary checkpoints preserve completed results and save interrupted positions on clean stops. The [historical storage-only upgrade](docs/game-checkpoints-v17.md) uses tag `v0.17.10` for unfinished version-0.17.8 campaigns; later research definitions require new run identities.
 
 The [complete level-three panel](docs/level3-panel-v17.md) compares all ten selected pieces at 20k/40k/80k nodes, with ordinary-army material anchors. Start with `npm.cmd run balance:level3:panel -- --out balance-results/level3-panel --openings 8 --jobs 4`, then increase the total to 16, 32 or 64 using `--resume`. Completed games remain in their original stages and append to the campaign's `games.jsonl`; matchup and material reports keep budgets separate. The [Betza convention](docs/betza-convention.md) records the exact ten definitions and tested aliases.
+
+The first eight cases are archived; the current target remains 32. The [Nightrider focus](docs/nightrider-focus-v17.md) compares fresh `N0`, `N0cF` and `N0cW` controls/revisions in 576 games on eight holdout cases. Run `npm.cmd run balance:nightrider -- --out balance-results/nightrider-focus --jobs 4` after pausing or finishing the panel. Its owned runtime preserves the panel's original source identity. The requested `N0gN0` lacks a supported hopper generator in this engine. Wraith stays unchanged.
+
+Current playable names are **Herald**, **Ranger**, **Cataphract**, **Inquisitor**, **Wraith**, **Warden**, **Nightrider** and **Crusader**. Historical reports keep their original labels and rule identities.
 
 Earlier evidence remains in the [level-one acceptance review](docs/v17-acceptance-review.md), [level-two selection](docs/v17-level2-review.md), [level-three confirmation](docs/v17-level3-review.md), [mobility review](experiments/balance/results/v17-mobility-001.report.md) and [complete reference panel](experiments/balance/results/reference-panel-v17-002.panel.md). Reuse compatible outcomes and reserve further tests for repeated concerns that could change a design decision.
 

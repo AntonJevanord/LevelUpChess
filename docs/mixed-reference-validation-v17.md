@@ -1,6 +1,9 @@
 # Mixed purchases and level-three grant trials
 
-This new **1,824-game** study tests every combination of the three selected
+Completed: all **1,824 games** finalized. See the [result review](v17-mixed-panel-review.md)
+before launching another copy. The original protocol follows.
+
+This study tests every combination of the three selected
 level-one purchases and three selected level-two purchases against Vanguard,
 Unicorn, Cruisader and Amazon. All armies spend three upgrade points. The
 completed screens retain their original rules and outcomes; no old games are
