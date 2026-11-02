@@ -2,7 +2,8 @@
 
 // Tiny native protocol/recovery fixtures, never scientific balance evidence.
 // Every game stops after two plies and is deliberately unscored. The original
-// runtime is extracted from the real v0.17.8 Git tree, not simulated hashes.
+// runtimes are extracted from the real v0.17.8 and approved v0.17.10 trees.
+// Later research builds intentionally retain their stricter identity checks.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -11,8 +12,7 @@ const path = require('node:path');
 const { execFileSync } = require('node:child_process');
 const { createHash } = require('node:crypto');
 const { normalizeConfig, makeSchedule } = require('../scripts/balance/plan');
-const { runMatches, getRunIdentity } = require('../scripts/balance/run');
-const { runParallel } = require('../scripts/balance/parallel');
+const currentSerial = require('../scripts/balance/run');
 const { RECEIPT_FILE, loadApproval } = require('../scripts/balance/checkpoint-upgrade');
 const { validateManifest } = require('../scripts/version17-balance');
 
@@ -23,27 +23,37 @@ const json = file => JSON.parse(fs.readFileSync(file, 'utf8'));
 const bytes = file => fs.readFileSync(file);
 const journal = directory => fs.readFileSync(path.join(directory, 'games.jsonl'), 'utf8').trim().split('\n').filter(Boolean).map(JSON.parse);
 let oldRoot;
+let approvedRoot;
 let oldSerial;
 let oldParallel;
+let runMatches, getRunIdentity, runParallel;
+
+function extract(tag) {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'levelup-historical-checkpoint-'));
+  const balanceFiles = execFileSync('git', ['ls-tree', '-r', '--name-only', tag, '--', 'experiments/balance'], { cwd: ROOT, encoding: 'utf8' })
+    .trim().split('\n').filter(file => file.endsWith('.json') && path.posix.dirname(file) === 'experiments/balance');
+  const archive = execFileSync('git', ['archive', tag, 'scripts', 'src', 'variants', 'dist', 'experiments/designs', ...balanceFiles],
+    { cwd: ROOT, maxBuffer: 128 * 1024 * 1024 });
+  execFileSync('tar', ['-xf', '-', '-C', directory], { input: archive });
+  fs.symlinkSync(path.join(ROOT, 'node_modules'), path.join(directory, 'node_modules'), 'junction');
+  return directory;
+}
 
 test.before(() => {
   if (!enginePath) return;
-  oldRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'levelup-original-v178-'));
-  const balanceFiles = execFileSync('git', ['ls-tree', '-r', '--name-only', 'v0.17.8', '--', 'experiments/balance'], { cwd: ROOT, encoding: 'utf8' })
-    .trim().split('\n').filter(file => file.endsWith('.json') && path.posix.dirname(file) === 'experiments/balance');
-  const archive = execFileSync('git', ['archive', 'v0.17.8', 'scripts', 'src', 'variants', 'dist', 'experiments/designs', ...balanceFiles],
-    { cwd: ROOT, maxBuffer: 128 * 1024 * 1024 });
-  execFileSync('tar', ['-xf', '-', '-C', oldRoot], { input: archive });
-  fs.symlinkSync(path.join(ROOT, 'node_modules'), path.join(oldRoot, 'node_modules'), 'junction');
+  oldRoot = extract('v0.17.8');
+  approvedRoot = extract('v0.17.10');
   oldSerial = require(path.join(oldRoot, 'scripts/balance/run'));
   oldParallel = require(path.join(oldRoot, 'scripts/balance/parallel'));
+  ({ runMatches, getRunIdentity } = require(path.join(approvedRoot, 'scripts/balance/run')));
+  ({ runParallel } = require(path.join(approvedRoot, 'scripts/balance/parallel')));
   const before = oldSerial.getRunIdentity(enginePath), after = getRunIdentity(enginePath), approval = loadApproval().approval;
   assert.equal(before.runnerSha256, approval.from.runnerSha256);
   assert.equal(after.runnerSha256, approval.to.runnerSha256);
   assert.equal(before.rulesBundleSha256, after.rulesBundleSha256, 'old and current movement bundles must match exactly');
   assert.equal(before.engineSha256, after.engineSha256);
 });
-test.after(() => { if (oldRoot) fs.rmSync(oldRoot, { recursive: true, force: true }); });
+test.after(() => { for (const directory of [oldRoot, approvedRoot]) if (directory) fs.rmSync(directory, { recursive: true, force: true }); });
 
 function temporary(t) {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'levelup-native-checkpoint-'));
@@ -149,4 +159,15 @@ test('old worker journals ahead of the aggregate merge once and retain original 
   assert.deepEqual(bytes(path.join(directory, 'games.jsonl')), journalAfter);
   assert.equal(createHash('sha256').update(bytes(path.join(directory, 'run.json'))).digest('hex'),
     createHash('sha256').update(manifestBytes).digest('hex'));
+});
+
+test('a later research build cannot silently reuse the historical storage-only approval', native, async t => {
+  const directory = temporary(t), configuration = config(), schedule = makeSchedule(configuration);
+  let stop = null;
+  await oldSerial.runMatches({ config: configuration, schedule, outDir: directory, enginePath,
+    shouldStop: () => stop, onProgress(message) { if (message.startsWith('Finished ')) stop = 'game'; } });
+  const originals = ['run.json', 'games.jsonl', 'checkpoint.json'].map(file => [file, bytes(path.join(directory, file))]);
+  await assert.rejects(currentSerial.runMatches({ config: configuration, schedule, outDir: directory, enginePath, resume: true }), /Cannot apply the game-checkpoint storage upgrade: rulesBundleSha256 changed/);
+  for (const [file, content] of originals) assert.deepEqual(bytes(path.join(directory, file)), content);
+  assert.equal(fs.existsSync(path.join(directory, 'run.lock')), false);
 });

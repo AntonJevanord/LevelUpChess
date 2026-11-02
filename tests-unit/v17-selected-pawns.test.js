@@ -60,7 +60,7 @@ test.after(() => { if (directory) fs.rmSync(directory, { recursive: true, force:
 
 test('the selected workshop preserves all sixteen earlier profile artifacts and identities', () => {
   const profiles = getPlayableProfiles();
-  assert.equal(PLAYABLE_LIBRARIES.length, 17);
+  assert.equal(PLAYABLE_LIBRARIES.length, 18);
   assert.deepEqual(PLAYABLE_LIBRARIES.slice(0, 16).flatMap(item => [item.json, item.ini]), Object.keys(hashes));
   for (const [file, expected] of Object.entries(hashes)) {
     const bytes = fs.readFileSync(path.resolve(__dirname, '..', file), 'utf8').replace(/\r\n/g, '\n');
@@ -72,7 +72,7 @@ test('the selected workshop preserves all sixteen earlier profile artifacts and 
   }
   const ordered = [...PLAYABLE_LIBRARIES].sort((a, b) => (b.generation || 0) - (a.generation || 0)
     || Number(Boolean(a.superseded)) - Number(Boolean(b.superseded)) || (b.edition || 0) - (a.edition || 0));
-  assert.equal(ordered[0].id, library.id);
+  assert.ok(ordered.indexOf(library) < ordered.findIndex(item => item.id === 'v17-pawns-revised'));
   assert.equal(library.edition, 3);
   assert.equal(library.name, 'Pawn workshop');
   assert.equal(PLAYABLE_LIBRARIES.find(item => item.id === 'v17-pawns-revised').name, 'Pawn workshop (bishop trial)');

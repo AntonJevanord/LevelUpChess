@@ -163,6 +163,7 @@ const definitions = [
   // New research brackets append definitions; every archived ID above remains
   // byte-for-byte unchanged, including historical purchase prices.
   ...require('./balance-designs-v17').NEW_DEFINITIONS,
+  ...require('./balance-designs-v17-revisions').NEW_DEFINITIONS,
 ];
 
 const DESIGNS = Object.freeze(Object.fromEntries(definitions.map(design => [design.id, design])));

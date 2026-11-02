@@ -21,7 +21,8 @@ const currentProfiles = [
 ];
 const revisedPawnProfile = require('./playable-v17-pawns-revised-profile.json');
 const selectedPawnProfile = require('./playable-v17-pawns-selected-profile.json');
-const { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_RESERVE_DESIGN_IDS } = require('./playable-library');
+const rosterProfile = require('./playable-v17-roster-trials-profile.json');
+const { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS } = require('./playable-library');
 const { STANDARD_TYPES } = require('./design-catalog');
 const { pieceInfo } = require('./piece-catalog');
 
@@ -34,7 +35,7 @@ function freeze(value) {
 }
 
 const PLAYABLE_PROFILE = freeze(compiled);
-const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile]);
+const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile, rosterProfile]);
 const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
 const EXPERIMENTAL_VARIANTS = freeze(PLAYABLE_PROFILES.map(profile => profile.variant));
 const PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES[index].variant, ...(library.generation ? { generation: library.generation } : {}), ...(library.focusFamily ? { focusFamily: library.focusFamily } : {}), ...(library.edition ? { edition: library.edition } : {}), ...(library.superseded ? { superseded: true } : {}) })));
@@ -94,6 +95,8 @@ const metadata = {
   'pawn.blue@5': ['Two-step pawn', 'Move one or two clear squares forward without capturing. Capture one or two clear squares diagonally forward. These moves cannot jump over a piece.'],
   'pawn.blue@7': ['King-step pawn', 'Move one square in any direction without capturing, or capture one square diagonally in any direction. A clear two-square forward move is available from your home two ranks. Visiting an empty en-passant target diagonally is a quiet move and leaves the bypassed pawn.'],
   'pawn.purple@12': ['Queen pawn', 'Move or capture up to two clear squares straight or diagonally forward. Move up to two clear squares straight or diagonally backward without capturing. No sideways moves. Visiting an empty en-passant target is a quiet move and leaves the bypassed pawn.'],
+  'pawn.purple@13': ['Rook pawn', 'Move any clear distance orthogonally without capturing. Capture any clear distance diagonally forward. This pawn cannot capture en passant.'],
+  'pawn.queen-sideways@1': ['Sideways Queen pawn', 'Move up to two clear squares in any queen direction. Capture up to two clear squares straight or diagonally forward. Sideways and backward moves cannot capture. Visiting an empty en-passant target is quiet and leaves the bypassed pawn.'],
   'knight.blue@2': ['Positional knight', 'Normal knight jumps, plus any clear horizontal move without capturing.'],
   'knight.orange@3': ['Dabada knight', 'Normal knight jumps, plus one-square sideways steps and two-square sideways jumps, including captures.'],
   'knight.purple@4': ['Nightrider', 'Repeat knight jumps in the same direction, stopping at an occupied landing square. Intervening squares between knight landings do not block it.'],
@@ -106,6 +109,8 @@ const metadata = {
   'bishop.purple@14': ['Mating bishop', 'Normal bishop moves. Also capture with one-square orthogonal steps, knight jumps, two-square orthogonal jumps, or two-square diagonal jumps. These extra moves require a capture.'],
   'bishop.blue@3': ['Wazzap bishop', 'Normal bishop moves, plus one-square sideways steps, including captures.'],
   'bishop.orange@3': ['Free Boar bishop', 'Normal bishop moves, plus horizontal rook moves and captures.'],
+  'bishop.purple@18': ['Vertical bishop', 'Normal bishop moves, plus one-square vertical steps and tall knight jumps: one file sideways and two ranks forward or backward. All of these moves can capture.'],
+  'bishop.vertical-blocked@1': ['Blocked Vertical bishop', 'Normal bishop moves, plus clear vertical slides up to two squares and tall knight moves: one file sideways and two ranks forward or backward. Tall knight moves require the first vertical square to be empty. All moves can capture.'],
   'bishop.purple@15': ['Vertical bishop', 'Normal bishop moves, plus vertical one-square steps, tall knight jumps and tall zebra jumps (three ranks and two files), including captures.'],
   'bishop.purple@16': ['Archbishop', 'Normal bishop moves and knight jumps, including captures.'],
   'rook.blue@2': ['Ghost rook', 'Normal rook moves. Also hop along a rank or file over exactly one piece and land on any empty square beyond it before the next blocker, without capturing.'],
@@ -119,6 +124,7 @@ const metadata = {
   'queen.purple@6': ['Sideways queen', 'Normal queen moves, plus wide knight and camel jumps (two or three files sideways and one rank forward or backward), including captures.'],
   'queen.purple@7': ['X-ray queen', 'Normal queen moves. Also hop diagonally over exactly one piece and land anywhere beyond it before the next blocker, including capturing that next blocker.'],
   'queen.purple@8': ['Zebra queen', 'Normal queen moves and zebra jumps (three squares in one direction and two at right angles), including captures.'],
+  'queen.xray-rook@1': ['Rook-ray queen', 'Normal queen moves, plus hops over exactly one piece along a rank or file. Land anywhere beyond it before the next blocker, including capturing that blocker if it is an enemy. Diagonal moves cannot hop.'],
   'king.reserve-pawn@1': ['Pawn grant', 'Add a nonroyal guard that moves or captures one square straight forward.'],
   'king.reserve-pawn@6': ['Pawn grant', 'Add a nonroyal guard that moves or captures one square straight forward, or moves one square diagonally forward without capturing.'],
   'king.reserve-bishop@1': ['Bishop grant', 'Add a nonroyal guard that moves or captures one square diagonally.'],
@@ -129,7 +135,13 @@ const metadata = {
   'king.reserve-okapi@1': ['Okapi grant', 'Add a nonroyal guard with knight and zebra jumps, including captures.'],
   'king.reserve-princess@1': ['Princess grant', 'Add a nonroyal guard with king steps and knight jumps, including captures.'],
   'king.reserve-true-queen@1': ['True queen grant', 'Add a nonroyal guard with normal queen moves and captures.'],
+  'king.grant-king-level3@1': ['King-step grant', 'Add a nonroyal guard that moves or captures one square in any direction.'],
+  'king.grant-orthogonal-three-level3@1': ['Three-step Orthogonal grant', 'Add a nonroyal guard that moves or captures up to three clear squares orthogonally. It cannot jump over pieces.'],
+  'king.grant-knight-level3@1': ['Knight grant', 'Add a nonroyal guard with normal knight jumps, including captures. It has no king steps.'],
 };
+
+const additionalExperimentalIds = new Set(['pawn.bishop-step-current@1', 'pawn.rank-current@1',
+  'bishop.vertical-blocked@1', 'pawn.queen-sideways@1', 'queen.xray-rook@1']);
 
 const definitions = [...new Map(PLAYABLE_PROFILES.flatMap(profile => profile.registry.definitions).map(definition => [definition.id, definition])).values()];
 const DESIGN_OPTIONS = freeze(definitions.map(definition => {
@@ -143,7 +155,7 @@ const DESIGN_OPTIONS = freeze(definitions.map(definition => {
     level: definition.level,
     name,
     description: movement + suffix,
-    status: definition.id === 'rook.purple@1' ? 'retired' : definition.id === 'pawn.purple@2' ? 'parked' : definition.revision > 1 || definition.placement === 'reserve' || ['pawn.bishop-step-current@1', 'pawn.rank-current@1'].includes(definition.id) ? 'experimental' : 'reference',
+    status: definition.id === 'rook.purple@1' ? 'retired' : definition.id === 'pawn.purple@2' ? 'parked' : definition.revision > 1 || definition.placement === 'reserve' || additionalExperimentalIds.has(definition.id) ? 'experimental' : 'reference',
   };
 }));
 const optionsById = Object.fromEntries(DESIGN_OPTIONS.map(option => [option.id, option]));
@@ -171,9 +183,16 @@ const workshopAccents = workshopAccentsFor(V16_CANDIDATES, RESERVE_DESIGN_IDS);
 const currentWorkshopAccents = workshopAccentsFor(V17_CANDIDATES, V17_RESERVE_DESIGN_IDS);
 const revisedPawnAccents = workshopAccentsFor({ ...V17_CANDIDATES, pawns: V17_REVISED_PAWN_CANDIDATES }, V17_RESERVE_DESIGN_IDS);
 const selectedPawnAccents = workshopAccentsFor({ ...V17_CANDIDATES, pawns: V17_SELECTED_PAWN_CANDIDATES }, V17_RESERVE_DESIGN_IDS);
+const rosterAccents = (() => {
+  const accents = { ...workshopAccentsFor(V17_ROSTER_CANDIDATES, []) };
+  for (const id of Object.values(V17_ROSTER_CANDIDATES).flat()) if (optionsById[id].level === 3) accents[id] = 'purple';
+  for (const id of V17_ROSTER_RESERVE_DESIGN_IDS) accents[id] = kingGrantAccents[optionsById[id].level - 1];
+  return Object.freeze(accents);
+})();
 function optionInProfile(option, profile) {
   if (!option) return option;
-  const accents = selectedPawnProfile.variant === profile.variant ? selectedPawnAccents
+  const accents = rosterProfile.variant === profile.variant ? rosterAccents
+    : selectedPawnProfile.variant === profile.variant ? selectedPawnAccents
     : revisedPawnProfile.variant === profile.variant ? revisedPawnAccents
     : currentProfiles.some(candidate => candidate.variant === profile.variant) ? currentWorkshopAccents
     : closeoutProfiles.some(candidate => candidate.variant === profile.variant) ? workshopAccents : null;

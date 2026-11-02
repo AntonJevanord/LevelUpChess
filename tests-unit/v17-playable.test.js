@@ -8,7 +8,7 @@ const { defaultDesignChoices, designSetupFromChoices, loadDesignSetup } = requir
 const { pieceMap, placementFromMap, pocketLetters } = require('../src/profile-fen');
 const { createMatchRules } = require('../dist/balance-rules.cjs');
 
-const libraries = PLAYABLE_LIBRARIES.filter(library => library.generation === 17);
+const libraries = PLAYABLE_LIBRARIES.filter(library => library.generation === 17 && library.id !== 'v17-roster-trials');
 const profiles = getPlayableProfiles();
 const profileFor = library => profiles[PLAYABLE_LIBRARIES.indexOf(library)];
 const pawnLibrary = libraries.find(library => library.id === 'v17-pawns');
@@ -33,7 +33,7 @@ function both(t, pieces, check, pocket = '') {
   }
 }
 
-test('all eight version-17 workshops use the revised one-point grant within the custom-piece limit', () => {
+test('all eight retained family workshops use the revised one-point grant within the custom-piece limit', () => {
   assert.equal(libraries.length, 8);
   assert.equal(V17_RESERVE_DESIGN_IDS.length, 9);
   assert.equal(V17_RESERVE_DESIGN_IDS[0], ids.grant);

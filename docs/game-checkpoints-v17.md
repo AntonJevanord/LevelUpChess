@@ -17,17 +17,25 @@ scheduled games and worker assignments are unchanged.
 
 ## Update the active version-0.17.8 campaign
 
+This historical storage-only upgrade applies to tags **v0.17.9 and v0.17.10**.
+Version 0.17.11 adds research definitions and changes the frozen rules bundle,
+so it deliberately cannot use this approval to resume an unfinished old run.
+The original five-stage campaign has now completed; new experiments use the new
+runtime identity.
+
 In the running terminal, press **g** and wait for the active games to finish
-and the campaign to pause. Then update and resume the same folder:
+and the campaign to pause. For an unfinished historical campaign, select the
+approved release and resume the same folder:
 
 ```powershell
 Set-Location 'D:\Chess\LevelUpChess'
-git pull --ff-only
+git fetch origin tag v0.17.10
+git switch --detach v0.17.10
 npm.cmd run balance:campaign -- --resume balance-results/v17-brackets
 ```
 
-Completed level-1 stages are validated and skipped. The active level-2 stage
-continues with the same four workers. For an individually launched stage, use
+Completed stages are validated and skipped. The unfinished stage continues
+with its original workers. For an individually launched stage, use
 its original `balance:v17 --experiment NAME --resume DIRECTORY` command.
 
 The reviewed upgrade accepts only the exact source transition from `v0.17.8`.

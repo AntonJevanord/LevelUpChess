@@ -36,7 +36,7 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Publish the [combined sixteen-start percentages](experiments/balance/results/v17-followup-001.report.md), with unchanged IDs reusing the original eight cases and revisions kept separate.
 - [x] Include the percentage beside W/D/L in the overall summary; retain the existing score calculation and archive renderers.
 - [x] Review pooled targets alongside replicated opponent differences; verify an actual forced Amazon trade in the Mating-bishop games.
-- [ ] Retain the promising two-step pawn and backward-capture Rook pawn for playtesting; park the weak quiet-diagonal pawn and review Archbishop/Ranged-rook matchups before choosing further changes.
+- [x] Review the initial two-step/backward-capture pawn shortlist and park the weak quiet-diagonal pawn. Later confirmation selects the long-forward-capture Rook pawn and Ranged rook; retain the earlier results as history.
 - [ ] Promote successful research alternatives into the playable workshops only after outcome review and human playtesting.
 
 ## Version 17: focused capture and grant screen
@@ -86,13 +86,23 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Complete and archive the [level-2 pawn/grant stages](docs/v17-level2-review.md): 2,688 finalized games, two unscored truncations and no errors or retries; exclude incomplete color pairs from scores.
 - [x] Select the existing Forward Knight pawn `fmWfceFifmnDfhN`, Rank pawn `ifmnDmfWfceFsR` and Diagonal grant `F` as working two-point references. Pin their IDs and engine tables; reserve orthogonal grants for later design work without rewriting historical prices.
 - [x] Add a selected-pawn workshop with both level-one pawns and the Knight/Rank two-point choices, retaining all sixteen prior profiles and the existing `F` grant. Add a playable-only build that preserves the frozen balance bundle.
-- [ ] Finish level-3 confirmation with the current four-worker campaign: fourteen existing designs plus `BmN`/`BDmC`; preserve the frozen declarations, native proofs and unscored outcomes.
+- [x] Complete and archive [level-3 confirmation](docs/v17-level3-review.md): all 2,048 games finalized, one unscored truncation and no errors/retries. All five campaign stages are finished: 6,752 finalized games.
+- [x] Retain tested Vertical bishop `BvWvN`, long-forward-capture Rook pawn `mRcfB` and Ranged rook `RC`; preserve the four frozen research references. Keep Nightrider as an exploration option without another unchanged run.
 - [x] Declare and preflight the [384-game selected-reference validation](docs/level2-reference-validation-v17.md): 96 direct level-two games and 288 six-point bridge games on sixteen fresh fixed cases, with separate reports for each budget.
 - [ ] Validate the selected level-2 references directly and through the six-point bridge: three L2 purchases versus two identical non-Amazon L3 references. Keep purchase budgets separate; this is outside the current 6,752-game budget.
 
+## Version 17: selected roster and targeted trials
+
+- [x] Archive and reproduce the completed level-three report; keep incomplete color pairs unscored and retain cohort/opponent differences.
+- [x] Add immutable trials `BvW2vnN`, `mQ2cfQ2`, rook-only X-ray `QgR0` and three-point finite `K`/`W3`/`N` grants, without changing historical definitions or prices.
+- [x] Reject full X-ray `QgQ0` for forced `1.Qh5+ g6 2.Qe5#`. Preserve the negative fixture and exhaustively verify no starting mate in two for either color with the rook-only replacement.
+- [x] Declare and verify the [768-game targeted screen](docs/level3-revisions-v17.md), using the same unplayed sixteen-case holdout as the separate L2 validation. Preserve original search priors for movement revisions and W3; record native custom K/N values in a new receipt.
+- [x] Add the twenty-type Roster and trials workshop, preserving all seventeen earlier profile identities, with retained pieces and six labeled trials.
+- [ ] Run the 768-game screen and 384-game L2 validation separately with four workers total. Review repeated matchup/color concerns and human playtests; do not rerun unchanged sibling screens.
+
 ## After reviewing these results
 
-- [ ] Human-playtest the [roster](docs/playtest-roster-v16.md) for readability, fun and counterplay. Changed movement or price gets a new immutable revision.
+- [ ] Human-playtest the [current roster](docs/playtest-roster-v17.md) for readability, fun and counterplay. Changed movement or price gets a new immutable revision.
 - [ ] Declare only the follow-ups that could change a design decision; do not restart completed reference cells whenever another candidate changes.
 - [ ] Add an army-outcome model for joint upgrade contributions, uncertainty, coverage and held-out prediction. Keep its Elo-style units separate from material values.
 - [ ] Use ordinary-army anchors or unequal-budget bridges to identify tier relationships; equal-budget games alone leave a cost-related ambiguity.

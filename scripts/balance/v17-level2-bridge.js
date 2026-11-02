@@ -199,4 +199,4 @@ function renderReport(report) {
 }
 
 module.exports = { ROOT, EXPERIMENT, FILE, OPENINGS_FILE, OPENINGS, HISTORICAL_FILES, CAP,
-  validateOpenings, packages, comparisons, buildConfig, loadExperiment, panelMetadata, createReport, renderReport };
+  validateOpenings, packages, comparisons, buildConfig, loadExperiment, panelMetadata, withPhysicalColors, createReport, renderReport };
