@@ -130,7 +130,11 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Prepare the [576-game Nightrider focus](docs/nightrider-focus-v17.md): fresh N0 control and both capture-step revisions, four frozen references, eight holdout cases outside the ongoing first 32, both colors and 20k/40k/80k budgets. Hold all three at 2326/2211.
 - [x] Add a verified owned runtime snapshot for new research definitions, preserving the active panel's source identity. Retain code/rule/dependency receipts, immutable resume, q/g/p queue stops and matched-control gain reports.
 - [x] Verify all 576 focused opening/color/budget cases with native rules and fixed value tables, prototype attacks and en-passant removal, a deliberately unscored worker/resume fixture, nineteen preserved profile identities and current browser labels.
-- [ ] Run the Nightrider focus after pausing or finishing the complete panel; review per-opponent gains and human counterplay before selecting a revision. Leave Wraith unchanged.
+- [x] Complete and archive all 576 focused games without errors, retries or truncations. Diagonal captures score 53.91/51.56/67.97% and orthogonal captures 73.44/70.31/76.56% at 20k/40k/80k; leave Wraith unchanged and park the stronger orthogonal design.
+- [x] Archive the cumulative 5,288-game panel snapshot: 2,640 earlier records retained exactly and 2,648 new. Use sixteen complete cases at all budgets; exclude the eight next-batch games from matched overall comparisons.
+- [x] Publish the [paired search-budget review](experiments/balance/results/v17-search-review-001.report.md), separating revision-v-control gains from raw cross-budget changes. Retain empirical opening-block and small-sample sensitivity ranges, leave-one-out checks and Cataphract's two-cohort replication.
+- [ ] Finish the existing 32-case panel before deciding a Cataphract change. Its 80k score is 66.32% in both eight-case cohorts and 62.89% against the frozen four; those opponent baskets remain separate.
+- [ ] If a Nightrider selection is the next decision, prepare one fixed confirmation of N0/N0cF at 40k/80k on 16 fresh matched openings against the four references (512 games). Keep discovery and confirmation separate; do not rerun the already-high orthogonal variant or automatically freeze diagonal captures from eight cases.
 
 ## After reviewing these results
 

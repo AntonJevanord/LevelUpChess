@@ -64,3 +64,12 @@ experiments/balance/results/v17-mixed-001.*.gz -text
 experiments/balance/results/v17-level3-panel-001.*.json text eol=lf
 experiments/balance/results/v17-level3-panel-001.*.md text eol=lf
 experiments/balance/results/v17-level3-panel-001.*.gz -text
+experiments/balance/results/v17-level3-panel-002.*.json text eol=lf
+experiments/balance/results/v17-level3-panel-002.*.md text eol=lf
+experiments/balance/results/v17-level3-panel-002.*.gz -text
+experiments/balance/results/v17-nightrider-focus-001.*.json text eol=lf
+experiments/balance/results/v17-nightrider-focus-001.*.md text eol=lf
+experiments/balance/results/v17-nightrider-focus-001.*.gz -text
+# Preserve the exact uploaded report's terminal blank line.
+experiments/balance/results/v17-nightrider-focus-001.original-report.md whitespace=-blank-at-eof
+experiments/balance/results/v17-search-review-001.* text eol=lf

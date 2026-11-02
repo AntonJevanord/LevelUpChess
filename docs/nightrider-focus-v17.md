@@ -1,5 +1,10 @@
 # Nightrider capture-step test
 
+Completed: all 576 games finished. The [paired statistical review](../experiments/balance/results/v17-search-review-001.report.md)
+keeps diagonal captures provisional and parks the consistently strong orthogonal
+variant. The commands below preserve the original reproducible protocol; they
+do not schedule a fresh confirmation or append openings.
+
 The first eight panel openings identify Nightrider as a revision candidate.
 Its full-roster scores are 35.42%, 42.71% and 43.40% at 20k/40k/80k nodes.
 The selected follow-up compares three bodies with the four frozen references:
