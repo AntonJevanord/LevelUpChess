@@ -106,6 +106,26 @@ stage or clean stop. During an active stage, the original stage journals update
 after every game. Offline material replay yields every 32 games, prints progress
 and supports Ctrl+C before the next chunk.
 
+## Check remaining runtime
+
+While the panel is running, open another PowerShell window in the project folder:
+
+```powershell
+npm.cmd run balance:level3:eta -- --run balance-results/level3-panel
+```
+
+This command reads the campaign and original stage journals without starting
+engines, writing reports or taking the campaign lock. The panel can keep running.
+Run it again for a fresh snapshot; add `--json` for structured output.
+
+The estimate covers the remaining games in the requested total, including
+unfinished and future stages. It keeps 20k/40k/80k timings separate, using finalized
+first-attempt game durations and the campaign's recorded worker count. A budget
+without usable timings remains unavailable rather than borrowing another budget's
+speed. Estimates are rough: game lengths, worker imbalance, CPU throttling and disk
+contention can change throughput. Preflight, waiting between sessions, material
+fitting and other overhead are outside the estimate.
+
 ## Reports and evidence
 
 `panel-report.md` contains separate ten-by-ten matrices, W/D/L, physical-color

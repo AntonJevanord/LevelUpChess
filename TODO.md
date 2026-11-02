@@ -118,6 +118,7 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Preserve the active mixed campaign's catalog, runner and balance bundle. Keep grants outside the board-only material panel; distinguish proposed roster colors from current UI colors and frozen reference status.
 - [x] Verify all 7,040 distinct army/color/opening cases, native movement and value tables, cumulative continuation, copied/torn journals, bounded cancellation and Windows checkout checksums without playing scored cloud games.
 - [x] Archive the [first 2,640 collected games](docs/v17-mixed-panel-review.md), reproducing all three budgets exactly. Retain the actual requested32-opening target and note that dispersion tightens at 40k but widens again at 80k.
+- [x] Add a separate read-only live ETA command using original stage journals, first-attempt timings by node budget and the recorded worker count; preserve the running panel's pinned sources and distinguish remaining game time from analysis and preflight overhead.
 - [ ] Finish the ongoing32-opening/10,560-game target before treating search-budget effects as stable. Its original catalog, controller and balance bundle remain fixed; there is no 2,000-game cap.
 - [ ] Review material rank, held-out prediction, ordinary anchors and cohort differences before considering any engine-value changes. Fixed priors and fitted material estimates remain separate.
 
