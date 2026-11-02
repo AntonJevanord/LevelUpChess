@@ -109,6 +109,17 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [ ] Run the 1,632 mixed-package games and 192 W2/WD games in the single declared study with four workers total; inspect partner, placement, opening and color effects before deciding L2 changes.
 - [ ] Test the King grant at its existing four-point price against declared four-point opposition, such as L1+L3 reference packages; do not relabel the old three-point results or infer a price from their percentage.
 
+## Version 17: complete level-three panel
+
+- [x] Record the ten accepted replacement IDs and a [Betza convention](docs/betza-convention.md); verify Crusader aliases against native and browser rules without rewriting old definitions.
+- [x] Declare all 45 unordered matchups plus ten ordinary-army material anchors at 20k/40k/80k nodes, preserving the applied MG/EG priors and four frozen references.
+- [x] Freeze 64 fresh quiet four-ply cases in eight-case batches. Add cumulative 8/16/32/64 targets, immutable stage identities, resume without replay, and a provenance-scoped append-only campaign journal.
+- [x] Add separate node-budget matrices, shared-case overall scores, physical colors and matched-opening search sensitivity; fit baseline/head/combined material estimates with ordinary values and joint whole-piece ranges.
+- [x] Preserve the active mixed campaign's catalog, runner and balance bundle. Keep grants outside the board-only material panel; distinguish proposed roster colors from current UI colors and frozen reference status.
+- [x] Verify all 7,040 distinct army/color/opening cases, native movement and value tables, cumulative continuation, copied/torn journals, bounded cancellation and Windows checkout checksums without playing scored cloud games.
+- [ ] Run the [first 2,640-game target](docs/level3-panel-v17.md) after pausing or finishing the mixed study. Review uncertainty and search effects before extending to 5,280 / 10,560 / 21,120 games; there is no 2,000-game cap.
+- [ ] Review material rank, held-out prediction, ordinary anchors and cohort differences before considering any engine-value changes. Fixed priors and fitted material estimates remain separate.
+
 ## After reviewing these results
 
 - [ ] Human-playtest the [current roster](docs/playtest-roster-v17.md) for readability, fun and counterplay. Changed movement or price gets a new immutable revision.

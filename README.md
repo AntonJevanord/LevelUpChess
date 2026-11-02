@@ -81,6 +81,8 @@ W2 slides one or two orthogonal squares; WD jumps on its two-square moves. Both 
 
 Run one experiment at a time with four workers total. Game-boundary checkpoints preserve completed results and save interrupted positions on clean stops. The [historical storage-only upgrade](docs/game-checkpoints-v17.md) uses tag `v0.17.10` for unfinished version-0.17.8 campaigns; later research definitions require new run identities.
 
+The [complete level-three panel](docs/level3-panel-v17.md) compares all ten selected pieces at 20k/40k/80k nodes, with ordinary-army material anchors. Start with `npm.cmd run balance:level3:panel -- --out balance-results/level3-panel --openings 8 --jobs 4`, then increase the total to 16, 32 or 64 using `--resume`. Completed games remain in their original stages and append to the campaign's `games.jsonl`; matchup and material reports keep budgets separate. The [Betza convention](docs/betza-convention.md) records the exact ten definitions and tested aliases.
+
 Earlier evidence remains in the [level-one acceptance review](docs/v17-acceptance-review.md), [level-two selection](docs/v17-level2-review.md), [level-three confirmation](docs/v17-level3-review.md), [mobility review](experiments/balance/results/v17-mobility-001.report.md) and [complete reference panel](experiments/balance/results/reference-panel-v17-002.panel.md). Reuse compatible outcomes and reserve further tests for repeated concerns that could change a design decision.
 
 ## Development
