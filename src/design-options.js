@@ -20,7 +20,8 @@ const currentProfiles = [
   require('./playable-v17-queens-profile.json'),
 ];
 const revisedPawnProfile = require('./playable-v17-pawns-revised-profile.json');
-const { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_RESERVE_DESIGN_IDS } = require('./playable-library');
+const selectedPawnProfile = require('./playable-v17-pawns-selected-profile.json');
+const { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_RESERVE_DESIGN_IDS } = require('./playable-library');
 const { STANDARD_TYPES } = require('./design-catalog');
 const { pieceInfo } = require('./piece-catalog');
 
@@ -33,7 +34,7 @@ function freeze(value) {
 }
 
 const PLAYABLE_PROFILE = freeze(compiled);
-const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile]);
+const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile]);
 const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
 const EXPERIMENTAL_VARIANTS = freeze(PLAYABLE_PROFILES.map(profile => profile.variant));
 const PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES[index].variant, ...(library.generation ? { generation: library.generation } : {}), ...(library.focusFamily ? { focusFamily: library.focusFamily } : {}), ...(library.edition ? { edition: library.edition } : {}), ...(library.superseded ? { superseded: true } : {}) })));
@@ -86,6 +87,7 @@ const metadata = {
   'pawn.blue@2': ['Bishop pawn', 'Move one square forward, or move or capture one square diagonally forward. A clear initial two-step is available from your home two ranks. Visiting an empty en-passant target diagonally is a quiet move and leaves the bypassed pawn.'],
   'pawn.bishop-step-current@1': ['Bishop pawn', 'Move one square forward, or move or capture one square diagonally forward. A clear initial two-step is available from your home two ranks. Visiting an empty en-passant target diagonally is a quiet move and leaves the bypassed pawn.'],
   'pawn.orange@3': ['Knight pawn', 'Normal pawn moves and captures, plus forward knight jumps: one or two files sideways and two or one ranks forward, including captures.'],
+  'pawn.rank-current@1': ['Rank pawn', 'Move or capture any clear distance sideways. Move one square forward without capturing, or capture one square diagonally forward, including en passant. A clear two-square advance is available from your home two ranks. Sideways moves cannot jump over pieces.'],
   'pawn.purple@11': ['Rook pawn', 'Move any clear distance orthogonally without capturing. Capture one or two clear squares diagonally forward.'],
   'pawn.blue@3': ['Returning pawn', 'Move one clear square backward, or one or two clear squares forward without capturing. Capture one square diagonally forward.'],
   'pawn.orange@4': ['King pawn', 'Move one square in any direction, or capture one square diagonally in any direction. A clear initial two-step forward is available. Visiting an empty en-passant target diagonally is a quiet move and leaves the bypassed pawn.'],
@@ -141,7 +143,7 @@ const DESIGN_OPTIONS = freeze(definitions.map(definition => {
     level: definition.level,
     name,
     description: movement + suffix,
-    status: definition.id === 'rook.purple@1' ? 'retired' : definition.id === 'pawn.purple@2' ? 'parked' : definition.revision > 1 || definition.placement === 'reserve' || definition.id === 'pawn.bishop-step-current@1' ? 'experimental' : 'reference',
+    status: definition.id === 'rook.purple@1' ? 'retired' : definition.id === 'pawn.purple@2' ? 'parked' : definition.revision > 1 || definition.placement === 'reserve' || ['pawn.bishop-step-current@1', 'pawn.rank-current@1'].includes(definition.id) ? 'experimental' : 'reference',
   };
 }));
 const optionsById = Object.fromEntries(DESIGN_OPTIONS.map(option => [option.id, option]));
@@ -168,9 +170,11 @@ function workshopAccentsFor(candidates, reserves) {
 const workshopAccents = workshopAccentsFor(V16_CANDIDATES, RESERVE_DESIGN_IDS);
 const currentWorkshopAccents = workshopAccentsFor(V17_CANDIDATES, V17_RESERVE_DESIGN_IDS);
 const revisedPawnAccents = workshopAccentsFor({ ...V17_CANDIDATES, pawns: V17_REVISED_PAWN_CANDIDATES }, V17_RESERVE_DESIGN_IDS);
+const selectedPawnAccents = workshopAccentsFor({ ...V17_CANDIDATES, pawns: V17_SELECTED_PAWN_CANDIDATES }, V17_RESERVE_DESIGN_IDS);
 function optionInProfile(option, profile) {
   if (!option) return option;
-  const accents = revisedPawnProfile.variant === profile.variant ? revisedPawnAccents
+  const accents = selectedPawnProfile.variant === profile.variant ? selectedPawnAccents
+    : revisedPawnProfile.variant === profile.variant ? revisedPawnAccents
     : currentProfiles.some(candidate => candidate.variant === profile.variant) ? currentWorkshopAccents
     : closeoutProfiles.some(candidate => candidate.variant === profile.variant) ? workshopAccents : null;
   if (!accents) return option;

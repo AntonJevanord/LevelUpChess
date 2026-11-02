@@ -6,9 +6,10 @@ const initial = PLAYABLE_LIBRARIES.find(item => item.id === 'v17-pawns');
 const bishop = 'pawn.bishop-step-current@1';
 const square = (page, name) => page.locator(`#board [data-square="${name}"]`);
 
-test('the current pawn workshop prices Bishop pawn at two points and keeps its initial workshop accessible', async ({ page }) => {
+test('the retained Bishop-pawn trial keeps its two-point price and the initial workshop accessible', async ({ page }) => {
   await page.goto('http://127.0.0.1:4173');
   const entries = await page.locator('#game-mode option').evaluateAll(options => options.map(option => option.textContent));
+  expect(entries).toContain('Version 17 · Pawn workshop (bishop trial)');
   expect(entries.indexOf('Version 17 · Pawn workshop')).toBeLessThan(entries.indexOf('Version 17 · Pawn workshop (initial)'));
   await page.selectOption('#game-mode', library.variant);
   await page.locator('#experimental-budget').fill('3');

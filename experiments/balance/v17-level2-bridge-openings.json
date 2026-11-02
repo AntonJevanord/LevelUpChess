@@ -1,0 +1,18 @@
+[
+  { "id": "l2-bridge-old-benoni", "moves": ["d2d4", "c7c5"] },
+  { "id": "l2-bridge-english-d5", "moves": ["c2c4", "d7d5"] },
+  { "id": "l2-bridge-reti-c6", "moves": ["g1f3", "c7c6"] },
+  { "id": "l2-bridge-van-geet-e5", "moves": ["b1c3", "e7e5"] },
+  { "id": "l2-bridge-larsen-c6", "moves": ["b2b3", "c7c6"] },
+  { "id": "l2-bridge-kings-fianchetto-c6", "moves": ["g2g3", "c7c6"] },
+  { "id": "l2-bridge-larsen-d6", "moves": ["b2b3", "d7d6"] },
+  { "id": "l2-bridge-kings-fianchetto-d6", "moves": ["g2g3", "d7d6"] },
+  { "id": "l2-bridge-english-c6", "moves": ["c2c4", "c7c6"] },
+  { "id": "l2-bridge-van-geet-d5", "moves": ["b1c3", "d7d5"] },
+  { "id": "l2-bridge-van-geet-e6", "moves": ["b1c3", "e7e6"] },
+  { "id": "l2-bridge-van-geet-g6", "moves": ["b1c3", "g7g6"] },
+  { "id": "l2-bridge-larsen-nc6", "moves": ["b2b3", "b8c6"] },
+  { "id": "l2-bridge-kings-fianchetto-nc6", "moves": ["g2g3", "b8c6"] },
+  { "id": "l2-bridge-larsen-g6", "moves": ["b2b3", "g7g6"] },
+  { "id": "l2-bridge-kings-fianchetto-b6", "moves": ["g2g3", "b7b6"] }
+]

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "id": "selected-level2-references-v17-001",
+  "status": "selected-working-references",
+  "selectedDate": "2026-11-02",
+  "level": 2,
+  "roster": [
+    {
+      "key": "forward-knight-pawn",
+      "name": "Forward Knight pawn",
+      "id": "pawn.orange@3",
+      "family": "pawn",
+      "movement": "fmWfceFifmnDfhN",
+      "placement": "replace",
+      "level": 2,
+      "roles": { "pawn": true, "castlingRook": false, "enPassant": true },
+      "engineValue": { "mg": 536, "eg": 592 }
+    },
+    {
+      "key": "rank-pawn",
+      "name": "Rank pawn",
+      "id": "pawn.rank-current@1",
+      "family": "pawn",
+      "movement": "ifmnDmfWfceFsR",
+      "placement": "replace",
+      "level": 2,
+      "roles": { "pawn": true, "castlingRook": false, "enPassant": true },
+      "engineValue": { "mg": 773, "eg": 808 }
+    },
+    {
+      "key": "diagonal-grant",
+      "name": "Diagonal grant",
+      "id": "king.reserve-bishop@1",
+      "family": "king",
+      "movement": "F",
+      "placement": "reserve",
+      "level": 2,
+      "roles": { "pawn": false, "castlingRook": false, "enPassant": false },
+      "engineValue": { "mg": 373, "eg": 416 }
+    }
+  ],
+  "policy": {
+    "selection": "Existing current designs selected after the sixteen-opening level-two screen; no movement or price change.",
+    "referenceChanges": "Declare a new roster revision rather than changing these definitions.",
+    "validation": "Direct level-two comparisons and the six-point bridge remain pending.",
+    "evaluation": "Preserve the applied values from v17-bracket-values.json; these are engine search units, not estimated material or purchase points.",
+    "king": "ordinary-royal",
+    "promotion": "nbrq",
+    "grants": "Finite nonroyal reserve; deployment spends a turn, stays in the owner's home half and cannot give check; captures never refill reserve."
+  },
+  "evidence": "experiments/balance/results/v17-level2-001.audit.json",
+  "calibration": {
+    "file": "experiments/designs/v17-bracket-values.json",
+    "sha256": "205709189dcec631970253dbdf826669262e412c325764f47880acbfbd96d2f9"
+  }
+}

@@ -33,8 +33,8 @@ function both(t, pieces, check, pocket = '') {
   }
 }
 
-test('all seven version-17 workshops use the revised one-point grant within the custom-piece limit', () => {
-  assert.equal(libraries.length, 7);
+test('all eight version-17 workshops use the revised one-point grant within the custom-piece limit', () => {
+  assert.equal(libraries.length, 8);
   assert.equal(V17_RESERVE_DESIGN_IDS.length, 9);
   assert.equal(V17_RESERVE_DESIGN_IDS[0], ids.grant);
   for (const library of libraries) {

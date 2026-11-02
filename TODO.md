@@ -83,9 +83,12 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Verify all scheduled positions and the new reports without playing scored cloud games. Show the first fixed eight cases, second eight and all sixteen with shared-case coverage and per-opponent scores.
 - [x] Add and verify a sequential launcher that freezes the five stages and jobs, skips only validated completions, and pauses the entire queue for immediate/game/pair stops.
 - [x] Complete and archive the [two level-1 acceptance stages](docs/v17-acceptance-review.md): all 2,016 games completed without retries, errors or truncations. Retain per-opponent and eight-case cohort results; no roster changes while level 2 runs.
-- [ ] Finish the level-2 pawn/grant stages and level-3 confirmation through the sequential launcher or individually, with four jobs total. Preserve journals, manifests, native proofs and unscored outcomes; use the existing stop/resume controls.
-- [ ] Review bracket direction and repeated matchup concerns before selecting level-2 benchmarks. Confirm fourteen existing level-3 designs plus `BmN`/`BDmC`; retire the capture-heavy Mating bishop from this campaign.
-- [ ] After selecting level-2 anchors, declare the six-point bridge: three L2 purchases versus two identical non-Amazon L3 references. It is outside the current 6,752-game budget.
+- [x] Complete and archive the [level-2 pawn/grant stages](docs/v17-level2-review.md): 2,688 finalized games, two unscored truncations and no errors or retries; exclude incomplete color pairs from scores.
+- [x] Select the existing Forward Knight pawn `fmWfceFifmnDfhN`, Rank pawn `ifmnDmfWfceFsR` and Diagonal grant `F` as working two-point references. Pin their IDs and engine tables; reserve orthogonal grants for later design work without rewriting historical prices.
+- [x] Add a selected-pawn workshop with both level-one pawns and the Knight/Rank two-point choices, retaining all sixteen prior profiles and the existing `F` grant. Add a playable-only build that preserves the frozen balance bundle.
+- [ ] Finish level-3 confirmation with the current four-worker campaign: fourteen existing designs plus `BmN`/`BDmC`; preserve the frozen declarations, native proofs and unscored outcomes.
+- [x] Declare and preflight the [384-game selected-reference validation](docs/level2-reference-validation-v17.md): 96 direct level-two games and 288 six-point bridge games on sixteen fresh fixed cases, with separate reports for each budget.
+- [ ] Validate the selected level-2 references directly and through the six-point bridge: three L2 purchases versus two identical non-Amazon L3 references. Keep purchase budgets separate; this is outside the current 6,752-game budget.
 
 ## After reviewing these results
 

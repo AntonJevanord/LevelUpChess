@@ -71,7 +71,9 @@ Future candidates face the frozen references. The unfinished NC–Amazon game re
 
 ## Version 17: balance experiments
 
-The [level-1 acceptance review](docs/v17-acceptance-review.md) archives all 2,016 completed games without errors or truncations. Current Wazzap bishop scored 52.60%; expanded Climbing knight scored 59.38%. Pawn rook averages hide matchup differences. Level-2 screening is running; these outcomes do not change the active roster or scheduled games.
+The [selected level-two references](docs/v17-level2-review.md) are Forward Knight pawn, Rank pawn and Diagonal grant (`F`), scoring 53.65%, 51.56% and 54.17% against the level-one packages. All 2,688 pawn/grant games finalized; two move-limit games remain unscored. The [384-game follow-up](docs/level2-reference-validation-v17.md) checks direct matchups and three level-two purchases against two level-three purchases after the current campaign finishes.
+
+The [level-1 acceptance review](docs/v17-acceptance-review.md) archives all 2,016 completed games without errors or truncations. Current Wazzap bishop scored 52.60%; expanded Climbing knight scored 59.38%. Pawn rook averages hide matchup differences. These level-one candidates still need human playtesting before permanent selection.
 
 Version 0.17.9 saves normal checkpoints at game boundaries. Completed games stay durable and clean stops save the active prefix once. The [reviewed storage upgrade](docs/game-checkpoints-v17.md) can resume a version-0.17.8 campaign while preserving its original manifests and completed games.
 

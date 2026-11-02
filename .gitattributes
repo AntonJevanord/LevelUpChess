@@ -37,3 +37,10 @@ scripts/balance/resume-approvals/*.json text eol=lf
 experiments/balance/results/v17-acceptance-001.*.json text eol=lf
 experiments/balance/results/v17-acceptance-001.*.md text eol=lf
 experiments/balance/results/v17-acceptance-001.*.gz -text
+experiments/designs/level2-references-v17.json text eol=lf
+experiments/balance/results/v17-level2-001.*.json text eol=lf
+experiments/balance/results/v17-level2-001.*.md text eol=lf
+experiments/balance/results/v17-level2-001.*.gz -text
+experiments/balance/v17-level2-bridge.json text eol=lf
+experiments/balance/v17-level2-bridge-openings.json text eol=lf
+tests-unit/fixtures/playable-initial16-sha256.json text eol=lf
