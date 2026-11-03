@@ -80,3 +80,5 @@ experiments/balance/results/v17-targeted-followups-001.*.gz -text
 # Keep the uploaded reports' intentional terminal blank lines byte-for-byte.
 experiments/balance/results/v17-targeted-followups-001.nightrider.original-report.md whitespace=-blank-at-eof
 experiments/balance/results/v17-targeted-followups-001.cataphract.original-report.md whitespace=-blank-at-eof
+experiments/balance/results/v17-level3-panel-003.report-only.json text eol=lf
+experiments/balance/results/v17-level3-panel-003.report-only.md text eol=lf

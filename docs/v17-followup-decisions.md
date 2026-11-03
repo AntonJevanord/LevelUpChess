@@ -64,8 +64,10 @@ for a clear gameplay idea or a decision-relevant mixed-bracket result.
 
 ## Finish version 17, then start version 18
 
-1. Finish the existing **32-opening / 10,560-game panel** and review its final
-   matchup and material reports. Preserve its original source and value identities.
+1. Recover the first **32-opening / 10,560-game** panel snapshot and review its
+   matchup and material reports. The campaign has since been extended to 64;
+   recovering the earlier outcome cohort does not require completing the
+   extension. Preserve its original source and value identities.
 2. Decide the final Cataphract roster revision and retain an explicit exploration
    status for the original Nightrider. Do not turn Cataphract into a fifth frozen
    level-three reference without a separate decision.

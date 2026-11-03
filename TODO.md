@@ -119,6 +119,8 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Verify all 7,040 distinct army/color/opening cases, native movement and value tables, cumulative continuation, copied/torn journals, bounded cancellation and Windows checkout checksums without playing scored cloud games.
 - [x] Archive the [first 2,640 collected games](docs/v17-mixed-panel-review.md), reproducing all three budgets exactly. Retain the actual requested32-opening target and note that dispersion tightens at 40k but widens again at 80k.
 - [x] Add a separate read-only live ETA command using original stage journals, first-attempt timings by node budget and the recorded worker count; preserve the running panel's pinned sources and distinguish remaining game time from analysis and preflight overhead.
+- [x] Add a separate outcome snapshot export for completed 8/16/32/64-opening totals while later stages continue; preserve source journals, target and runtime identity, and keep material fitting separate.
+- [x] Review the uploaded 64-target checkpoint as report-only evidence: 12,320 finalized games, 40/40/32 declared cases. Recover Nightrider's common-32 scores without mixing the larger low-budget cohorts; the raw journal exceeds the workspace transfer limit.
 - [ ] Review material rank, held-out prediction, ordinary anchors and cohort differences before considering any engine-value changes. Fixed priors and fitted material estimates remain separate.
 
 ## Version 17: named roster and focused revisions
@@ -142,7 +144,7 @@ provide a screen for gross outliers; they do not establish precise balance.
 
 ## Version 17 closeout
 
-- [ ] Finish the existing 32-opening/10,560-game panel and review final matchup/material reports. Preserve its catalog, controller and balance bundle; these follow-ups require no additional experiment or 2,000-game cap.
+- [ ] Export and review the first-32 outcome snapshot and its material report if already saved. The campaign now requests 64 openings; an earlier snapshot does not require finishing that extension. Preserve the original catalog, controller and balance bundle.
 - [ ] Resolve the final Cataphract roster revision and retain an explicit exploration status for original Nightrider. Keep the original four frozen level-three references unchanged.
 - [ ] Activate the selected quiet-tall Knight pawn in a new playable profile after the panel completes; keep earlier profiles and owned research snapshots reproducible.
 - [ ] Complete roster/documentation cleanup and relevant rule, save, engine and browser checks; tag the version-17 closeout before creating version 18.

@@ -161,6 +161,27 @@ snapshots in `reports/openings-08`, `openings-16`, `openings-32` and `openings-6
 The latest reports remain at the root. Material analysis processes one node
 budget at a time to limit memory.
 
+### Recover an earlier opening total
+
+Extending a target keeps its original stage journals. If the 32-opening target
+finished normally, its saved outcome report is already at
+`reports/openings-32/panel-report.md` inside the campaign folder. That snapshot
+is written after the target's material analysis completes.
+
+If the target was extended before the snapshot was saved, export the first 32
+openings from another PowerShell window while later stages continue:
+
+```powershell
+npm.cmd run balance:level3:snapshot -- --run balance-results/level3-panel --openings 32 --out balance-results/level3-panel-first32
+```
+
+Use a new, separate output folder. This reads the selected completed stages,
+their original manifests, rules and native proofs. It writes `panel-report.md`,
+JSON and a source receipt to the separate folder. It starts no games, takes no
+campaign lock and leaves the ongoing target unchanged. A selected stage must be
+finished; move-limit truncations remain unscored. Use 8, 16, 32 or 64 as the
+opening total. This command exports outcomes only, without fitting material.
+
 Original `run.json`, archived rules, preflight proofs and `games.jsonl` remain
 in each stage directory. The root **`games.jsonl`** is an append-only index:
 each line wraps the original record with stage, config hash and run provenance.

@@ -85,7 +85,9 @@ The [complete level-three panel](docs/level3-panel-v17.md) compares all ten sele
 
 Check remaining game time from a second PowerShell window with `npm.cmd run balance:level3:eta -- --run balance-results/level3-panel`. It reads live stage journals without pausing the panel or starting engines; estimates keep node budgets separate and exclude material fitting and preflight.
 
-Sixteen complete panel cases and all 576 focused games are now archived. The [search-budget review](experiments/balance/results/v17-search-review-001.report.md) compares the diagonal Nightrider's uncertain 80k rise with Cataphract's repeated 66.32% score. It keeps matched opening blocks, node budgets, discovery/confirmation and opponent baskets separate. The complete panel still targets 32 cases; finish that existing run before changing Cataphract. No current movement or search value changes in this review.
+The earlier sixteen-case [search-budget review](experiments/balance/results/v17-search-review-001.report.md) remains archived. The panel now targets 64 openings; its latest report has 40 cases at 20k/40k and 32 at 80k. The [report-only checkpoint review](experiments/balance/results/v17-level3-panel-003.report-only.md) keeps comparable cases and opponent baskets separate. Preserve the active panel's movement, values and source identity.
+
+Earlier opening totals remain recoverable. A normally completed target already has a report in `reports/openings-32` inside the campaign. Otherwise, run `npm.cmd run balance:level3:snapshot -- --run balance-results/level3-panel --openings 32 --out balance-results/level3-panel-first32` to export the original completed stages to a separate folder while later stages continue. It starts no games and leaves the active target unchanged.
 
 The completed [Nightrider focus protocol](docs/nightrider-focus-v17.md) preserves its fresh `N0`, `N0cF` and `N0cW` results in an owned runtime. The requested `N0gN0` lacks a supported hopper generator in this engine. Wraith stays unchanged. `npm.cmd run balance:review-search` verifies the archived statistical review without starting games.
 
