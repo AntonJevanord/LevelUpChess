@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "id": "selected-level2-references-v17-002",
+  "status": "frozen-reference-selection",
+  "selectedDate": "2026-11-03",
+  "level": 2,
+  "supersedes": "selected-level2-references-v17-001",
+  "roster": [
+    {
+      "key": "forward-knight-pawn",
+      "name": "Quiet-tall Knight pawn",
+      "id": "pawn.knight-tall-quiet@1",
+      "family": "pawn",
+      "movement": "ifmnDfmWfceFfsNfmN",
+      "placement": "replace",
+      "level": 2,
+      "roles": {
+        "pawn": true,
+        "castlingRook": false,
+        "enPassant": true
+      },
+      "engineValue": {
+        "mg": 536,
+        "eg": 592
+      },
+      "definitionSource": "src/balance-designs-knight-pawn-followup.js",
+      "valueAnchor": "pawn.orange@3"
+    },
+    {
+      "key": "rank-pawn",
+      "name": "Rank pawn",
+      "id": "pawn.rank-current@1",
+      "family": "pawn",
+      "movement": "ifmnDmfWfceFsR",
+      "placement": "replace",
+      "level": 2,
+      "roles": {
+        "pawn": true,
+        "castlingRook": false,
+        "enPassant": true
+      },
+      "engineValue": {
+        "mg": 773,
+        "eg": 808
+      }
+    },
+    {
+      "key": "diagonal-grant",
+      "name": "Diagonal grant",
+      "id": "king.reserve-bishop@1",
+      "family": "king",
+      "movement": "F",
+      "placement": "reserve",
+      "level": 2,
+      "roles": {
+        "pawn": false,
+        "castlingRook": false,
+        "enPassant": false
+      },
+      "engineValue": {
+        "mg": 373,
+        "eg": 416
+      }
+    }
+  ],
+  "policy": {
+    "selection": "User accepted the quiet-tall Knight pawn after the fixed sixteen-opening mixed-partner follow-up; retain Rank pawn and Diagonal grant unchanged.",
+    "referenceChanges": "Declare a new roster revision rather than changing these definitions, purchase levels or search priors.",
+    "activation": "Prospective selection for future campaigns and version 18 after the active version-17 panel finishes. No automatic live-catalog or UI switch; historical campaigns retain their original roster revision.",
+    "evaluation": "Preserve the original applied MG/EG priors. The quiet-tall Knight pawn shares the original Forward Knight pawn value anchor; these are search settings, not estimated material values or purchase points.",
+    "outcome": "The 49.93% score describes complete L1-plus-L2 army packages against four frozen L3 references on sixteen fixed opening cases; it is not an intrinsic pawn value or a guarantee of future bracket balance.",
+    "king": "ordinary-royal",
+    "promotion": "nbrq",
+    "grants": "Finite nonroyal reserve; deployment spends a turn, stays in the owner's home half and cannot give check; captures never refill reserve."
+  },
+  "selectionEvidence": {
+    "bodyKey": "tall-quiet",
+    "nodes": 20000,
+    "openingCases": 16,
+    "games": 768,
+    "wins": 327,
+    "draws": 113,
+    "losses": 328,
+    "scorePoints": 383.5,
+    "score": 0.4993489583333333,
+    "fixedHalves": [
+      {
+        "games": 384,
+        "score": 0.5026041666666666
+      },
+      {
+        "games": 384,
+        "score": 0.49609375
+      }
+    ],
+    "partners": [
+      {
+        "key": "two-step-pawn",
+        "games": 256,
+        "score": 0.4921875
+      },
+      {
+        "key": "king-step-pawn",
+        "games": 256,
+        "score": 0.5390625
+      },
+      {
+        "key": "pawn-grant",
+        "games": 256,
+        "score": 0.466796875
+      }
+    ]
+  },
+  "evidence": "experiments/balance/results/v17-targeted-followups-001.audit.json",
+  "calibration": {
+    "file": "experiments/designs/v17-bracket-values.json",
+    "sha256": "205709189dcec631970253dbdf826669262e412c325764f47880acbfbd96d2f9"
+  }
+}

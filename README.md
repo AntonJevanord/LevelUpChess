@@ -75,7 +75,7 @@ The five-stage bracket campaign finished **6,752 games**; the next two studies f
 
 The selected Vertical bishop is now `BvW2vnN` (**50.00%**), and Queen pawn is `mQ2cfQ2` (**53.52%**). Retain the Rook pawn, Ranged rook, Nightrider and original diagonal-X-ray queen. The four frozen research references stay unchanged. Choose **Version 17 · Roster and king trials** to try the [current roster](docs/playtest-roster-v17.md); earlier workshops remain available.
 
-The completed mixed-package study confirms a strong Knight-pawn signal: its three L1 partners score **60.94%, 70.31% and 58.59%**. The [review](docs/v17-mixed-panel-review.md) retains partner, placement, opening and color differences. Capture-only and quiet-only tall-jump pawn prototypes preserve wide knight movement and standard promotion; they remain separate from the playable pawn pending balance tests.
+The completed mixed-package study found a strong Knight-pawn signal: its three L1 partners scored **60.94%, 70.31% and 58.59%**. The [follow-up review](docs/v17-followup-decisions.md) selects the quiet-tall revision at **49.93%**, preserving wide knight movement and standard promotion. Its new level-two reference declaration is frozen for future campaigns; playable activation waits for the active panel's closeout.
 
 WD is the working three-point **Warden**, scoring **55.21%**. W2 scored **66.67%** and stays a trial; its difference from WD remains uncertain, and nonchecking-drop rules affect their legal placements. The original four-point King grant remains a candidate. Current definitions and applied search priors stay frozen per run; these priors are separate from fitted material estimates and purchase prices.
 
@@ -89,7 +89,7 @@ Sixteen complete panel cases and all 576 focused games are now archived. The [se
 
 The completed [Nightrider focus protocol](docs/nightrider-focus-v17.md) preserves its fresh `N0`, `N0cF` and `N0cW` results in an owned runtime. The requested `N0gN0` lacks a supported hopper generator in this engine. Wraith stays unchanged. `npm.cmd run balance:review-search` verifies the archived statistical review without starting games.
 
-The [targeted follow-ups](docs/targeted-followups-v17.md) prepare 2,304 Knight-pawn partner games, a 512-game Nightrider confirmation and 512 games for `RsCfC`/`RfhC` Cataphract restrictions. All use sixteen fresh cases and frozen reference opponents. Finish the active panel, then run one study at a time; each owns its runtime and keeps the current roster unchanged.
+All **3,328 targeted follow-up games** are complete and [archived](experiments/balance/results/v17-targeted-followups-001.report.md). Quiet-tall Knight pawn is the selected level-two reference; `RsCfC` is the preferred Cataphract revision at **49.61% / 52.34%**. Park `N0cF` at **65.63% / 62.11%** and schedule no further small-move trials now. The [closeout plan](docs/v17-followup-decisions.md) finishes the existing panel, resolves the roster and then moves to version 18 mixed brackets.
 
 Current playable names are **Herald**, **Ranger**, **Cataphract**, **Inquisitor**, **Wraith**, **Warden**, **Nightrider** and **Crusader**. Historical reports keep their original labels and rule identities.
 

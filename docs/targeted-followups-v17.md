@@ -1,5 +1,9 @@
 # Targeted reference follow-ups
 
+Completed: all **3,328 games** finalized without errors or truncations. See the
+[decisions and closeout plan](v17-followup-decisions.md) before starting another
+copy. The original fixed protocol follows.
+
 Three fixed studies address the repeated Knight-pawn signal, the diagonal
 Nightrider's search sensitivity and restricted Cataphract movement. They prepare
 new evidence; they do not change the playable roster or running panel.

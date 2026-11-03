@@ -119,14 +119,13 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Verify all 7,040 distinct army/color/opening cases, native movement and value tables, cumulative continuation, copied/torn journals, bounded cancellation and Windows checkout checksums without playing scored cloud games.
 - [x] Archive the [first 2,640 collected games](docs/v17-mixed-panel-review.md), reproducing all three budgets exactly. Retain the actual requested32-opening target and note that dispersion tightens at 40k but widens again at 80k.
 - [x] Add a separate read-only live ETA command using original stage journals, first-attempt timings by node budget and the recorded worker count; preserve the running panel's pinned sources and distinguish remaining game time from analysis and preflight overhead.
-- [ ] Finish the ongoing32-opening/10,560-game target before treating search-budget effects as stable. Its original catalog, controller and balance bundle remain fixed; there is no 2,000-game cap.
 - [ ] Review material rank, held-out prediction, ordinary anchors and cohort differences before considering any engine-value changes. Fixed priors and fitted material estimates remain separate.
 
 ## Version 17: named roster and focused revisions
 
 - [x] Apply Herald, Ranger, Cataphract, Inquisitor, Wraith, Warden and corrected Crusader names in current setup/board labels while preserving all nineteen rule-profile identities and archived labels. Retain WD as the working three-point Warden; keep W2 and four-point King trials separate.
 - [x] Validate tall Knight-pawn capture-only `ifmnDfmWfceFfsNfceN` and quiet-only `ifmnDfmWfceFfsNfmN` prototypes. Preserve wide `fsN`, actual en-passant removal, home double advances and standard promotion; use `ce` on new explicit pawn capture components.
-- [ ] Compare both pawn revisions with the current Knight pawn under matched L1 partners and c/e placements before replacing its playable definition. Its mixed partner mean is 63.28% across all three partners.
+- [x] Compare both pawn revisions with the current Knight pawn under matched L1 partners and c/e placements: quiet tall moves score 49.93%, capture-only 55.01%, fresh original control 61.65%.
 - [x] Prepare the [2,304-game Knight-pawn follow-up](docs/targeted-followups-v17.md): fresh current control plus capture-only and quiet-only tall-jump revisions, all three L1 partners, both c/e layouts and sixteen new openings against frozen L3 references at 20k. Keep Rank pawn and F grant unchanged.
 - [x] Demonstrate that `N0gN0` adds no supported hopping moves but inflates automatic valuation. Retain the negative source/engine fixtures and verify supported `N0cF` / `N0cW` alternatives.
 - [x] Prepare the [576-game Nightrider focus](docs/nightrider-focus-v17.md): fresh N0 control and both capture-step revisions, four frozen references, eight holdout cases outside the ongoing first 32, both colors and 20k/40k/80k budgets. Hold all three at 2326/2211.
@@ -135,10 +134,19 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Complete and archive all 576 focused games without errors, retries or truncations. Diagonal captures score 53.91/51.56/67.97% and orthogonal captures 73.44/70.31/76.56% at 20k/40k/80k; leave Wraith unchanged and park the stronger orthogonal design.
 - [x] Archive the cumulative 5,288-game panel snapshot: 2,640 earlier records retained exactly and 2,648 new. Use sixteen complete cases at all budgets; exclude the eight next-batch games from matched overall comparisons.
 - [x] Publish the [paired search-budget review](experiments/balance/results/v17-search-review-001.report.md), separating revision-v-control gains from raw cross-budget changes. Retain empirical opening-block and small-sample sensitivity ranges, leave-one-out checks and Cataphract's two-cohort replication.
-- [ ] Finish the existing 32-case panel before deciding a Cataphract change. Its 80k score is 66.32% in both eight-case cohorts and 62.89% against the frozen four; those opponent baskets remain separate.
 - [x] Prepare one fixed confirmation of N0/N0cF at 40k/80k on sixteen fresh matched openings against the four references (512 games). Keep discovery and confirmation separate; omit the already-high orthogonal variant.
 - [x] Prepare a separate 512-game Cataphract test of `RsCfC` and `RfhC` at 40k/80k on the same sixteen cases and frozen references, holding both at the original RC prior. Keep original RC panel results separate from this study's evidence.
-- [ ] Collect and review the three targeted follow-ups before changing playable movement or prices. Retain whole-opening comparisons, partner/placement results and search-budget separation; no automatic follow-up chain.
+- [x] Archive and reproduce all three targeted follow-ups: 3,328 completed games, 1,664 complete pairs, no errors, truncations or retries. Retain whole-opening comparisons, partner/placement results and separate node budgets.
+- [x] Freeze the [revised level-two reference selection](experiments/designs/level2-references-v17-002.json): quiet-tall Knight pawn `ifmnDfmWfceFfsNfmN`, unchanged Rank pawn and F grant. Preserve the earlier declaration and active panel identities.
+- [x] Park diagonal-capture Nightrider `N0cF` (65.63%/62.11%) and forward-half Cataphract `RfhC` (38.67%/39.84%). Shortlist `RsCfC` (49.61%/52.34%) for the final panel review; do not start further incremental Nightrider trials without a concrete design reason.
+
+## Version 17 closeout
+
+- [ ] Finish the existing 32-opening/10,560-game panel and review final matchup/material reports. Preserve its catalog, controller and balance bundle; these follow-ups require no additional experiment or 2,000-game cap.
+- [ ] Resolve the final Cataphract roster revision and retain an explicit exploration status for original Nightrider. Keep the original four frozen level-three references unchanged.
+- [ ] Activate the selected quiet-tall Knight pawn in a new playable profile after the panel completes; keep earlier profiles and owned research snapshots reproducible.
+- [ ] Complete roster/documentation cleanup and relevant rule, save, engine and browser checks; tag the version-17 closeout before creating version 18.
+- [ ] Begin version 18 with a bounded mixed-bracket study using fixed level-one, revised level-two and original level-three references. Reopen parked designs only for a decision-relevant result or a well-founded gameplay idea.
 
 ## After reviewing these results
 
