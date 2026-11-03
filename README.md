@@ -81,6 +81,8 @@ WD is the working three-point **Warden**, scoring **55.21%**. W2 scored **66.67%
 
 Run one experiment at a time with four workers total. Game-boundary checkpoints preserve completed results and save interrupted positions on clean stops. The [historical storage-only upgrade](docs/game-checkpoints-v17.md) uses tag `v0.17.10` for unfinished version-0.17.8 campaigns; later research definitions require new run identities.
 
+The [version-18 engine-sharing benchmark](docs/engine-sharing-benchmark-v18.md) compares four shared Stockfish processes with eight separate ones at 20k/80k nodes, using four workers and 64 benchmark-only games. Finish or pause the active campaign before timing it. The benchmark keeps the current runner frozen and measures search work alongside games per hour; it does not add piece-balance evidence.
+
 The [complete level-three panel](docs/level3-panel-v17.md) compares all ten selected pieces at 20k/40k/80k nodes, with ordinary-army material anchors. Start with `npm.cmd run balance:level3:panel -- --out balance-results/level3-panel --openings 8 --jobs 4`, then increase the total to 16, 32 or 64 using `--resume`. Completed games remain in their original stages and append to the campaign's `games.jsonl`; matchup and material reports keep budgets separate. The [Betza convention](docs/betza-convention.md) records the exact ten definitions and tested aliases.
 
 Check remaining game time from a second PowerShell window with `npm.cmd run balance:level3:eta -- --run balance-results/level3-panel`. It reads live stage journals without pausing the panel or starting engines; estimates keep node budgets separate and exclude material fitting and preflight.

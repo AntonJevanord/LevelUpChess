@@ -165,7 +165,9 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Add an isolated synthetic-storage benchmark; retain identical result bytes and distinguish write reduction from full-game throughput.
 - [ ] Measure Windows games/hour and disk latency after the checkpoint update before changing any further performance settings.
 - [ ] Add a central queue for future runs: dispatch the next frozen color-swapped pair to each free worker. Preserve durable results, interrupted-pair recovery and q/g/p controls; keep existing static-shard campaigns resumable with their original assignments.
-- [ ] Separately benchmark one shared engine per game when both sides use identical settings: compare RAM, throughput and search behavior at the same node budget. Keep fresh-game resets and preserve the current two-engine protocol for existing runs.
+- [x] Prepare the [version-18 engine-sharing benchmark](docs/engine-sharing-benchmark-v18.md): four versus eight Stockfish processes at four workers, one repeated color-swapped matchup without forced openings, 20k/80k budgets and counterbalanced rounds in an owned snapshot. Preserve the current two-engine protocol for existing runs.
+- [ ] Run the 64-game benchmark on the laptop after the active panel finishes or pauses; compare cell wall time, actual nodes, searched plies and game lengths. Distinguish configured hash capacity from measured RAM and exclude interrupted timing samples from direct ratios.
+- [ ] Profile incremental aggregation, hidden ply IPC, repeated preflight and central pair dispatch separately before combining runner optimizations in version 18.
 
 - [x] Freeze Vanguard `RfB`, Unicorn `NC`, Cruisader `BsR2nsN` and Amazon `QN`; preserve the [reference guide](docs/official-references.md), archived games and reproducible material fits.
 - [x] Leave the 400-ply NC–Amazon game unscored, without continuation or replacement.
