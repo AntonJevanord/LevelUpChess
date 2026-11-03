@@ -121,6 +121,8 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Add a separate read-only live ETA command using original stage journals, first-attempt timings by node budget and the recorded worker count; preserve the running panel's pinned sources and distinguish remaining game time from analysis and preflight overhead.
 - [x] Add a separate outcome snapshot export for completed 8/16/32/64-opening totals while later stages continue; preserve source journals, target and runtime identity, and keep material fitting separate.
 - [x] Review the uploaded 64-target checkpoint as report-only evidence: 12,320 finalized games, 40/40/32 declared cases. Recover Nightrider's common-32 scores without mixing the larger low-budget cohorts; the raw journal exceeds the workspace transfer limit.
+- [x] Add reusable [color and exclusion analysis](docs/panel-insights.md): per-matchup White/Black and color-balanced scores, whole-opening conditional ranges, leave-one-out standings and controlled exclusion changes on matching cases. Export compact paired outcomes for later local or cloud analysis without new games or material refits.
+- [ ] Review the completed panel's color dependence and opponent-set sensitivity after material analysis; retain coverage differences and keep color bias separate from piece imbalance.
 - [ ] Review material rank, held-out prediction, ordinary anchors and cohort differences before considering any engine-value changes. Fixed priors and fitted material estimates remain separate.
 
 ## Version 17: named roster and focused revisions
