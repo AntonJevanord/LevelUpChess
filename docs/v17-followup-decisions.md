@@ -34,10 +34,10 @@ retains Rank pawn and Diagonal grant. The Knight pawn keeps the controlled
 values. Existing level-one and four frozen level-three reference declarations
 remain intact.
 
-This selection is versioned for future campaigns. The earlier level-two
-declaration, active catalog and running panel stay fixed. Activate the selected
-definition in the playable roster and new mixed campaigns during closeout,
-after the panel has finished.
+This selection is versioned for future campaigns. Version 17 closes with its
+earlier playable roster and panel definitions intact. Activate the selected
+definition in new playable profiles and mixed campaigns on version 18, after
+the branch split.
 
 ## Level-three decisions
 
@@ -82,14 +82,13 @@ these distinctions without changing search priors or purchase prices.
    retain an explicit exploration status for the original Nightrider/Wraith.
    Do not turn Cataphract into a fifth frozen level-three reference without a
    separate decision.
-3. Activate the selected Knight pawn and Cataphract in fresh playable profiles,
-   complete roster notes and concise documentation cleanup, then run the relevant
-   rule, save, engine and browser checks. Historical definitions and owned
-   research runtimes remain reproducible.
-4. Tag the version-17 closeout and branch version 18. Start its mixed-bracket
-   validation from the fixed level-one, revised level-two and original level-three
-   reference sets. Declare the next bounded question before collecting more games;
-   these follow-ups do not launch another automatic chain.
+3. Tag the [version-17 closeout](version17-closeout.md) with its nineteen original
+   playable profiles, then create branch `version_18`.
+4. Activate the selected Knight pawn and Cataphract in fresh version-18 profiles;
+   complete rule, save, engine and browser checks while preserving historical
+   definitions and owned research runtimes. Start mixed-bracket validation from
+   the fixed level-one, revised level-two and original level-three references.
+   Declare the next bounded question before collecting more games.
 
 ## Saved evidence
 

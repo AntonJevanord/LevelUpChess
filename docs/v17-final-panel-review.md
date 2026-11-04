@@ -106,11 +106,11 @@ and held-out residuals; the rounded Markdown tables do not settle calibration.
 
 The final 64-case review supersedes the planned interim 32-case review. Earlier
 outcome totals remain recoverable from the saved games or compact pairs. The
-next implementation step is to activate the selected quiet-tall level-two
-Knight pawn and the preferred Cataphract revision in fresh playable profiles,
-preserving historical definitions and the original four reference IDs. Complete
-the relevant rule, engine, save and browser checks before tagging the closeout
-and beginning bounded mixed-army work in version 18.
+version-17 closeout keeps the tested playable roster unchanged. After the branch
+split, activate the selected quiet-tall level-two Knight pawn and preferred
+Cataphract revision in fresh version-18 profiles, preserving historical
+definitions and the original four reference IDs. Complete the relevant rule,
+engine, save and browser checks before bounded mixed-army work.
 
 The prepared engine-sharing benchmark can now run separately on the laptop.
 Its result informs runner performance, not the roster's balance decision.

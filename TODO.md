@@ -148,9 +148,13 @@ provide a screen for gross outliers; they do not establish precise balance.
 
 - [x] Review the final 64-opening panel and material summary, superseding the planned interim first-32 review. Earlier outcome totals remain recoverable; preserve the original catalog, controller, balance bundle and evidence limits.
 - [x] Resolve the final Cataphract selection as `RsCfC` for the next roster activation, supported by its confirmation and the completed original-`RC` panel. Retain original Nightrider/Wraith as exploration choices and preserve the original four frozen level-three references.
-- [ ] Activate the selected quiet-tall Knight pawn and `RsCfC` Cataphract in new playable profiles; keep earlier profiles and owned research snapshots reproducible.
-- [ ] Complete roster/documentation cleanup and relevant rule, save, engine and browser checks; tag the version-17 closeout before creating version 18.
-- [ ] Begin version 18 with a bounded mixed-bracket study using fixed level-one, revised level-two and original level-three references. Reopen parked designs only for a decision-relevant result or a well-founded gameplay idea.
+- [x] Close version 17 at `v0.17.23` with its tested playable roster and all nineteen profiles unchanged. Move both selected replacements to version 18 after the branch split; retain the [closeout record](docs/version17-closeout.md).
+
+## Version 18
+
+- [ ] Create branch `version_18` from the version-17 closeout, then activate the selected quiet-tall Knight pawn and `RsCfC` Cataphract in new playable profiles. Keep historical profiles, definitions and owned research snapshots reproducible.
+- [ ] Verify both-color movement, pawn promotion/en passant, rook castling, engine values, setup costs, saves, PGN, undo and browser engine play; retain the original four frozen level-three references.
+- [ ] Declare a bounded mixed-bracket study using fixed level-one, revised level-two and original level-three references. Reopen parked designs only for a decision-relevant result or a well-founded gameplay idea.
 
 ## After reviewing these results
 
@@ -168,7 +172,7 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [ ] Measure Windows games/hour and disk latency after the checkpoint update before changing any further performance settings.
 - [ ] Add a central queue for future runs: dispatch the next frozen color-swapped pair to each free worker. Preserve durable results, interrupted-pair recovery and q/g/p controls; keep existing static-shard campaigns resumable with their original assignments.
 - [x] Prepare the [version-18 engine-sharing benchmark](docs/engine-sharing-benchmark-v18.md): four versus eight Stockfish processes at four workers, one repeated color-swapped matchup without forced openings, 20k/80k budgets and counterbalanced rounds in an owned snapshot. Preserve the current two-engine protocol for existing runs.
-- [ ] Run the 64-game benchmark on the laptop after the active panel finishes or pauses; compare cell wall time, actual nodes, searched plies and game lengths. Distinguish configured hash capacity from measured RAM and exclude interrupted timing samples from direct ratios.
+- [x] Review the completed 64-game laptop benchmark: shared mode is about 1.7% / 10.6% lower in games/hour at 20k / 80k despite faster searches per ply and fewer processes. Retain separate engines; longer shared-mode games and the small workload prevent a whole-panel speed claim. Configured hash is not measured RSS.
 - [ ] Profile incremental aggregation, hidden ply IPC, repeated preflight and central pair dispatch separately before combining runner optimizations in version 18.
 
 - [x] Freeze Vanguard `RfB`, Unicorn `NC`, Cruisader `BsR2nsN` and Amazon `QN`; preserve the [reference guide](docs/official-references.md), archived games and reproducible material fits.
