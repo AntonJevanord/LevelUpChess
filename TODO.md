@@ -122,8 +122,8 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Add a separate outcome snapshot export for completed 8/16/32/64-opening totals while later stages continue; preserve source journals, target and runtime identity, and keep material fitting separate.
 - [x] Review the uploaded 64-target checkpoint as report-only evidence: 12,320 finalized games, 40/40/32 declared cases. Recover Nightrider's common-32 scores without mixing the larger low-budget cohorts; the raw journal exceeds the workspace transfer limit.
 - [x] Add reusable [color and exclusion analysis](docs/panel-insights.md): per-matchup White/Black and color-balanced scores, whole-opening conditional ranges, leave-one-out standings and controlled exclusion changes on matching cases. Export compact paired outcomes for later local or cloud analysis without new games or material refits.
-- [ ] Review the completed panel's color dependence and opponent-set sensitivity after material analysis; retain coverage differences and keep color bias separate from piece imbalance.
-- [ ] Review material rank, held-out prediction, ordinary anchors and cohort differences before considering any engine-value changes. Fixed priors and fitted material estimates remain separate.
+- [x] Review the [completed 64-opening panel](docs/v17-final-panel-review.md): 21,120 finalized / 21,106 scored games, reproducible compact outcomes and color/exclusion reports. Retain coverage differences and keep White's initiative separate from piece imbalance.
+- [x] Review the uploaded material summary: full-rank fits and stable ordinary estimates, saturated ordinary-army anchors and baseline/head discrepancies. Preserve engine priors; structured diagnostics and position-level replay remain prerequisites for future valuation changes.
 
 ## Version 17: named roster and focused revisions
 
@@ -146,9 +146,9 @@ provide a screen for gross outliers; they do not establish precise balance.
 
 ## Version 17 closeout
 
-- [ ] Export and review the first-32 outcome snapshot and its material report if already saved. The campaign now requests 64 openings; an earlier snapshot does not require finishing that extension. Preserve the original catalog, controller and balance bundle.
-- [ ] Resolve the final Cataphract roster revision and retain an explicit exploration status for original Nightrider. Keep the original four frozen level-three references unchanged.
-- [ ] Activate the selected quiet-tall Knight pawn in a new playable profile after the panel completes; keep earlier profiles and owned research snapshots reproducible.
+- [x] Review the final 64-opening panel and material summary, superseding the planned interim first-32 review. Earlier outcome totals remain recoverable; preserve the original catalog, controller, balance bundle and evidence limits.
+- [x] Resolve the final Cataphract selection as `RsCfC` for the next roster activation, supported by its confirmation and the completed original-`RC` panel. Retain original Nightrider/Wraith as exploration choices and preserve the original four frozen level-three references.
+- [ ] Activate the selected quiet-tall Knight pawn and `RsCfC` Cataphract in new playable profiles; keep earlier profiles and owned research snapshots reproducible.
 - [ ] Complete roster/documentation cleanup and relevant rule, save, engine and browser checks; tag the version-17 closeout before creating version 18.
 - [ ] Begin version 18 with a bounded mixed-bracket study using fixed level-one, revised level-two and original level-three references. Reopen parked designs only for a decision-relevant result or a well-founded gameplay idea.
 

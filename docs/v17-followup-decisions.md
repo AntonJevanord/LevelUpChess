@@ -62,19 +62,30 @@ the revision is strong at both confirmation budgets. Neither result requires
 trying quiet orthogonal steps or pawn-like captures now. Reopen the design only
 for a clear gameplay idea or a decision-relevant mixed-bracket result.
 
+## Final panel review
+
+The [completed 64-opening review](v17-final-panel-review.md) supersedes the
+interim first-32 review. All 21,120 games finalized; 21,106 contribute to scored
+color pairs. Original `RC` remains strong, while original Nightrider and Wraith
+remain weak. Keep the four frozen references unchanged, use the preferred
+`RsCfC` body at the next roster activation, and retain the exploration choices
+without another broad refinement run. The uploaded material summary supports
+these distinctions without changing search priors or purchase prices.
+
 ## Finish version 17, then start version 18
 
-1. Recover the first **32-opening / 10,560-game** panel snapshot and review its
-   matchup and material reports. The campaign has since been extended to 64;
-   recovering the earlier outcome cohort does not require completing the
-   extension. Preserve its original source and value identities.
-2. Decide the final Cataphract roster revision and retain an explicit exploration
-   status for the original Nightrider. Do not turn Cataphract into a fifth frozen
-   level-three reference without a separate decision.
-3. Activate the selected Knight pawn in a new playable profile, complete roster
-   notes and concise documentation cleanup, then run the relevant rule, save,
-   engine and browser checks. Historical definitions and owned research runtimes
-   remain reproducible.
+1. The final **64-opening / 21,120-game** panel review is complete. Preserve the
+   original source and value identities, compact outcome archive and reported
+   material estimates. Earlier opening totals remain available for descriptive
+   comparisons; no additional broad panel is needed for closeout.
+2. Finalize the selected `RsCfC` Cataphract in the next roster declaration and
+   retain an explicit exploration status for the original Nightrider/Wraith.
+   Do not turn Cataphract into a fifth frozen level-three reference without a
+   separate decision.
+3. Activate the selected Knight pawn and Cataphract in fresh playable profiles,
+   complete roster notes and concise documentation cleanup, then run the relevant
+   rule, save, engine and browser checks. Historical definitions and owned
+   research runtimes remain reproducible.
 4. Tag the version-17 closeout and branch version 18. Start its mixed-bracket
    validation from the fixed level-one, revised level-two and original level-three
    reference sets. Declare the next bounded question before collecting more games;

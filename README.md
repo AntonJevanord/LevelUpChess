@@ -87,7 +87,7 @@ The [complete level-three panel](docs/level3-panel-v17.md) compares all ten sele
 
 Check remaining game time from a second PowerShell window with `npm.cmd run balance:level3:eta -- --run balance-results/level3-panel`. It reads live stage journals without pausing the panel or starting engines; estimates keep node budgets separate and exclude material fitting and preflight.
 
-The earlier sixteen-case [search-budget review](experiments/balance/results/v17-search-review-001.report.md) remains archived. The panel now targets 64 openings; its latest report has 40 cases at 20k/40k and 32 at 80k. The [report-only checkpoint review](experiments/balance/results/v17-level3-panel-003.report-only.md) keeps comparable cases and opponent baskets separate. Preserve the active panel's movement, values and source identity.
+The [final 64-opening review](docs/v17-final-panel-review.md) covers **21,120 finalized / 21,106 scored games**. The four frozen references remain healthy; use the tested `RsCfC` Cataphract revision at the next roster activation and keep Nightrider/Wraith as exploration choices. `npm.cmd run balance:review-panel-final` verifies the compact outcome archive and uploaded reports without starting games or refitting material values. Earlier snapshots remain separate historical evidence.
 
 Earlier opening totals remain recoverable. A normally completed target already has a report in `reports/openings-32` inside the campaign. Otherwise, run `npm.cmd run balance:level3:snapshot -- --run balance-results/level3-panel --openings 32 --out balance-results/level3-panel-first32` to export the original completed stages to a separate folder while later stages continue. It starts no games and leaves the active target unchanged.
 
@@ -95,7 +95,7 @@ After material analysis, use the [color and exclusion reports](docs/panel-insigh
 
 The completed [Nightrider focus protocol](docs/nightrider-focus-v17.md) preserves its fresh `N0`, `N0cF` and `N0cW` results in an owned runtime. The requested `N0gN0` lacks a supported hopper generator in this engine. Wraith stays unchanged. `npm.cmd run balance:review-search` verifies the archived statistical review without starting games.
 
-All **3,328 targeted follow-up games** are complete and [archived](experiments/balance/results/v17-targeted-followups-001.report.md). Quiet-tall Knight pawn is the selected level-two reference; `RsCfC` is the preferred Cataphract revision at **49.61% / 52.34%**. Park `N0cF` at **65.63% / 62.11%** and schedule no further small-move trials now. The [closeout plan](docs/v17-followup-decisions.md) finishes the existing panel, resolves the roster and then moves to version 18 mixed brackets.
+All **3,328 targeted follow-up games** are complete and [archived](experiments/balance/results/v17-targeted-followups-001.report.md). Quiet-tall Knight pawn is the selected level-two reference; `RsCfC` scored **49.61% / 52.34%** in its separate confirmation. Park `N0cF` at **65.63% / 62.11%** and schedule no further small-move trials now. The [closeout plan](docs/v17-followup-decisions.md) activates the selected roster in fresh playable profiles, completes verification and then moves to version 18 mixed brackets.
 
 Current playable names are **Herald**, **Ranger**, **Cataphract**, **Inquisitor**, **Wraith**, **Warden**, **Nightrider** and **Crusader**. Historical reports keep their original labels and rule identities.
 

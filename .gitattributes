@@ -82,3 +82,7 @@ experiments/balance/results/v17-targeted-followups-001.nightrider.original-repor
 experiments/balance/results/v17-targeted-followups-001.cataphract.original-report.md whitespace=-blank-at-eof
 experiments/balance/results/v17-level3-panel-003.report-only.json text eol=lf
 experiments/balance/results/v17-level3-panel-003.report-only.md text eol=lf
+# Final compact outcomes and exact uploaded report bytes.
+experiments/balance/results/v17-level3-panel-004.*.gz -text
+experiments/balance/results/v17-level3-panel-004.*.json text eol=lf
+experiments/balance/results/v17-level3-panel-004.*.md text eol=lf whitespace=-blank-at-eof
