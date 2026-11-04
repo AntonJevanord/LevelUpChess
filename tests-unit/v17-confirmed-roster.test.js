@@ -55,8 +55,8 @@ test.before(async () => {
 });
 test.after(() => { if (directory) fs.rmSync(directory, { recursive: true, force: true }); });
 
-test('the nineteen-type confirmed roster comes first and preserves all eighteen earlier profiles', () => {
-  assert.equal(PLAYABLE_LIBRARIES.length, 19);
+test('the nineteen-type confirmed roster leads version 17 and preserves all eighteen earlier profiles', () => {
+  assert.equal(PLAYABLE_LIBRARIES.filter(item => (item.generation || 0) <= 17).length, 19);
   assert.equal(profile.registry.definitions.length, 19);
   assert.deepEqual(library.designIds, [...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(V17_CONFIRMED_CANDIDATES).flat(), ...V17_CONFIRMED_RESERVE_DESIGN_IDS]);
   assert.deepEqual(PLAYABLE_LIBRARIES.slice(0, 18).flatMap(item => [item.json, item.ini]), Object.keys(hashes));
@@ -66,7 +66,7 @@ test('the nineteen-type confirmed roster comes first and preserves all eighteen 
     assert.deepEqual(JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', old.json), 'utf8')), profiles[index]);
     assert.equal(fs.readFileSync(path.resolve(__dirname, '..', old.ini), 'utf8'), profiles[index].config);
   }
-  const sorted = [...PLAYABLE_LIBRARIES].sort((a, b) => (b.generation || 0) - (a.generation || 0)
+  const sorted = PLAYABLE_LIBRARIES.filter(item => (item.generation || 0) <= 17).sort((a, b) => (b.generation || 0) - (a.generation || 0)
     || Number(Boolean(a.superseded)) - Number(Boolean(b.superseded)) || (b.edition || 0) - (a.edition || 0));
   assert.equal(sorted[0].id, library.id); assert.equal(library.edition, 5);
   assert.equal(library.name, 'Roster and king trials');

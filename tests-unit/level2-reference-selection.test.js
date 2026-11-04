@@ -31,16 +31,19 @@ test('the second reference selection freezes the approved pawn while retaining b
   assert.deepEqual(selected.protocol.calibration, previous.protocol.calibration);
 });
 
-test('reading the new selection preserves the previous declaration and leaves research definitions outside the live catalog', () => {
+test('reading the selection preserves the previous declaration and the explicitly activated version-18 definition', () => {
   const bytes = fs.readFileSync(old.FILE), before = old.getLevel2References();
   assert.equal(sha(JSON.parse(bytes)), '0dd869972d1b82027340ff194e86d1ab6c95bc2b4a1a3a7b9cae2e5af7634dc7');
   assert.equal(before.roster[0].id, 'pawn.orange@3');
   assert.equal(before.roster[0].movement, 'fmWfceFifmnDfhN');
-  assert.equal(getDesign('pawn.knight-tall-quiet@1'), undefined);
+  const activated = getDesign('pawn.knight-tall-quiet@1');
+  assert.deepEqual(activated, NEW_DEFINITIONS.find(row => row.id === 'pawn.knight-tall-quiet@1'));
+  assert.equal(getDesign('pawn.knight-tall-capture@1'), undefined);
   getLevel2ReferenceSelection();
   assert.deepEqual(old.getLevel2References(), before);
   assert.deepEqual(fs.readFileSync(old.FILE), bytes);
-  assert.equal(getDesign('pawn.knight-tall-quiet@1'), undefined);
+  assert.strictEqual(getDesign('pawn.knight-tall-quiet@1'), activated);
+  assert.equal(getDesign('pawn.knight-tall-capture@1'), undefined);
 });
 
 test('each read returns detached deeply frozen selection data', () => {

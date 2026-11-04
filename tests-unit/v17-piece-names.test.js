@@ -76,8 +76,10 @@ test('all nineteen stored profiles and portable snapshots retain their exact rul
   const hashes = { ...earlierHashes,
     'src/playable-v17-roster-confirmed-profile.json': '3be2ed4fd607b18ec352e335dd0cc5624ecd15a3948635764cabf6af5e07ff6a',
     'variants/levelup-playable-v17-roster-confirmed.ini': 'ea4a4bd1a5e127c8a53e6b53b547ec60d0756f49da87a574ac6e722feec41572' };
-  assert.equal(definitions.length, 19);
-  assert.equal(Object.keys(hashes).length, definitions.length * 2);
+  const historical = definitions.filter(item => (item.generation || 0) <= 17);
+  assert.equal(historical.length, 19);
+  assert.equal(Object.keys(hashes).length, historical.length * 2);
+  assert.deepEqual(historical.flatMap(item => [item.json, item.ini]), Object.keys(hashes));
   for (const [file, expected] of Object.entries(hashes)) {
     const bytes = fs.readFileSync(path.resolve(__dirname, '..', file), 'utf8').replace(/\r\n/g, '\n');
     assert.equal(createHash('sha256').update(bytes).digest('hex'), expected, file);

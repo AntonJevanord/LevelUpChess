@@ -60,7 +60,7 @@ const V16_CANDIDATES = Object.freeze({
   rooks: Object.freeze(['rook.blue@2', 'rook.orange@2', 'rook.purple@12', 'rook.blue@3', 'rook.orange@3', 'rook.purple@13']),
   queens: Object.freeze(['queen.blue@2', 'queen.orange@2', 'queen.purple@6', 'queen.purple@7', 'queen.purple@8']),
 });
-const CURRENT_PLAYABLE_GENERATION = 17;
+const CURRENT_PLAYABLE_GENERATION = 18;
 const V17_RESERVE_DESIGN_IDS = Object.freeze([
   'king.reserve-pawn@6', ...RESERVE_DESIGN_IDS.slice(1),
 ]);
@@ -105,6 +105,12 @@ const V17_CONFIRMED_RESERVE_DESIGN_IDS = Object.freeze([
   'king.reserve-pawn@6', 'king.reserve-bishop@1',
   'king.reserve-rook@1', 'king.grant-wd-level3@1', 'king.reserve-king@1',
 ]);
+const V18_CANDIDATES = Object.freeze({
+  ...V17_CONFIRMED_CANDIDATES,
+  pawns: Object.freeze(['pawn.blue@5', 'pawn.blue@7', 'pawn.knight-tall-quiet@1', 'pawn.rank-current@1', 'pawn.purple@13', 'pawn.queen-sideways@1']),
+  rooks: Object.freeze(['rook.cataphract-no-tall-back@1']),
+});
+const V18_RESERVE_DESIGN_IDS = V17_CONFIRMED_RESERVE_DESIGN_IDS;
 const closeoutLibrary = (group, candidates = []) => Object.freeze({
   id: `v16-${group}`,
   name: group === 'references' ? 'King workshop' : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
@@ -117,7 +123,7 @@ const closeoutLibrary = (group, candidates = []) => Object.freeze({
 const currentLibrary = (group, candidates = []) => Object.freeze({
   id: `v17-${group}`,
   name: group === 'references' ? 'King workshop' : group === 'pawns' ? 'Pawn workshop (initial)' : `${group[0].toUpperCase() + group.slice(1, -1)} workshop`,
-  generation: CURRENT_PLAYABLE_GENERATION,
+  generation: 17,
   ...(group === 'pawns' ? { superseded: true } : {}),
   ...(group === 'references' ? { focusFamily: 'king' } : {}),
   designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...candidates, ...V17_RESERVE_DESIGN_IDS]),
@@ -126,7 +132,7 @@ const currentLibrary = (group, candidates = []) => Object.freeze({
 });
 const revisedPawnLibrary = Object.freeze({
   id: 'v17-pawns-revised', name: 'Pawn workshop (bishop trial)',
-  generation: CURRENT_PLAYABLE_GENERATION, edition: 2,
+  generation: 17, edition: 2,
   superseded: true,
   designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...V17_REVISED_PAWN_CANDIDATES, ...V17_RESERVE_DESIGN_IDS]),
   json: 'src/playable-v17-pawns-revised-profile.json',
@@ -134,14 +140,14 @@ const revisedPawnLibrary = Object.freeze({
 });
 const selectedPawnLibrary = Object.freeze({
   id: 'v17-pawns-selected', name: 'Pawn workshop',
-  generation: CURRENT_PLAYABLE_GENERATION, edition: 3,
+  generation: 17, edition: 3,
   designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...V17_SELECTED_PAWN_CANDIDATES, ...V17_RESERVE_DESIGN_IDS]),
   json: 'src/playable-v17-pawns-selected-profile.json',
   ini: 'variants/levelup-playable-v17-pawns-selected.ini',
 });
 const rosterLibrary = Object.freeze({
   id: 'v17-roster-trials', name: 'Roster and trials (archive)',
-  generation: CURRENT_PLAYABLE_GENERATION, edition: 4,
+  generation: 17, edition: 4,
   superseded: true,
   designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(V17_ROSTER_CANDIDATES).flat(), ...V17_ROSTER_RESERVE_DESIGN_IDS]),
   json: 'src/playable-v17-roster-trials-profile.json',
@@ -149,7 +155,7 @@ const rosterLibrary = Object.freeze({
 });
 const confirmedLibrary = Object.freeze({
   id: 'v17-roster-confirmed', name: 'Roster and king trials',
-  generation: CURRENT_PLAYABLE_GENERATION, edition: 5,
+  generation: 17, edition: 5,
   designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(V17_CONFIRMED_CANDIDATES).flat(), ...V17_CONFIRMED_RESERVE_DESIGN_IDS]),
   json: 'src/playable-v17-roster-confirmed-profile.json',
   ini: 'variants/levelup-playable-v17-roster-confirmed.ini',
@@ -169,6 +175,19 @@ const PLAYABLE_LIBRARIES = Object.freeze([
   selectedPawnLibrary,
   rosterLibrary,
   confirmedLibrary,
+  Object.freeze({
+    id: 'v18-roster-confirmed', name: 'Roster and king trials',
+    generation: CURRENT_PLAYABLE_GENERATION,
+    designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(V18_CANDIDATES).flat(), ...V18_RESERVE_DESIGN_IDS]),
+    // Match the selected bodies' controlled confirmation priors. Existing
+    // libraries keep their original automatic evaluation and profile identity.
+    evaluation: Object.freeze({ pieceValues: Object.freeze({
+      'pawn.knight-tall-quiet@1': Object.freeze({ mg: 536, eg: 592 }),
+      'rook.cataphract-no-tall-back@1': Object.freeze({ mg: 2240, eg: 2413 }),
+    }) }),
+    json: 'src/playable-v18-roster-confirmed-profile.json',
+    ini: 'variants/levelup-playable-v18-roster-confirmed.ini',
+  }),
 ]);
 
-module.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };
+module.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, V18_CANDIDATES, V18_RESERVE_DESIGN_IDS, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };

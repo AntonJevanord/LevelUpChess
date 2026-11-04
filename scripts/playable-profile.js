@@ -24,7 +24,7 @@ function getPlayableProfiles() {
       });
       // Use the experiment compiler, including its allocation and role rules.
       // Ordinary pieces stay reserved even if a particular army omits them.
-      return compileDesignProfile(createDesignRegistry({ schemaVersion: 2, comparisons }));
+      return compileDesignProfile(createDesignRegistry({ schemaVersion: 2, comparisons }), library.evaluation);
     }));
   }
   return compiled;

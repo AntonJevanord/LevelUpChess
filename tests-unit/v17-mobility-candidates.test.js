@@ -75,8 +75,11 @@ test('mobility alternatives keep prior behavior and historical playable selectio
   for (const [id, movement] of Object.entries(MOVEMENT)) {
     assert.equal(getDesign(id).movement, movement);
     assert.equal(getDesign(id).inheritLegacyProbes, false);
-    assert.ok(PLAYABLE_LIBRARIES.filter(library => library.generation !== 17).every(library => !library.designIds.includes(id)));
+    assert.ok(PLAYABLE_LIBRARIES.filter(library => (library.generation || 0) < 17)
+      .every(library => !library.designIds.includes(id)));
     if (id === 'king.reserve-pawn@5') assert.ok(PLAYABLE_LIBRARIES.every(library => !library.designIds.includes(id)));
+    else assert.ok(PLAYABLE_LIBRARIES.find(library => library.id === 'v18-roster-confirmed').designIds.includes(id),
+      'Version 18 explicitly retains this selected version-17 behavior.');
     assert.ok(profile.capabilityProbes.some(probe => probe.name.startsWith(id + ':')));
   }
   assert.equal(getDesign('king.reserve-pawn@3').movement, 'fW2');

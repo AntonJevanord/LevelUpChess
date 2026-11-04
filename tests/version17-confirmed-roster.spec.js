@@ -29,7 +29,7 @@ async function importPosition(page, pieces) {
 }
 test.beforeAll(() => initVariantRules(library.variant));
 
-test('the confirmed roster comes first with accepted pawn and bishop names and the unchanged four-point King grant', async ({ page }) => {
+test('the version-17 confirmed roster stays ahead of its older workshops with accepted names and the unchanged four-point King grant', async ({ page }) => {
   await page.goto('http://127.0.0.1:4173');
   const entries = await page.locator('#game-mode option').evaluateAll(options => options.map(option => ({ value: option.value, label: option.textContent })));
   expect(entries.findIndex(item => item.value === library.variant)).toBeLessThan(entries.findIndex(item => item.label === 'Version 17 · Pawn workshop'));

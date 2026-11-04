@@ -11,7 +11,7 @@ const { createHash } = require('node:crypto');
 const command = require('../scripts/level3-panel');
 const planTools = require('../scripts/balance/level3-panel-plan');
 const { createPanelReport } = require('../scripts/balance/level3-panel-report');
-const { getRunIdentity } = require('../scripts/balance/run');
+const { assertV17CloseoutIdentity } = require('./helpers/v17-closeout-identity');
 const sha = value => createHash('sha256').update(value).digest('hex');
 const base = planTools.buildCampaignPlan();
 const build = ({ jobs }) => ({ ...base, jobs });
@@ -141,10 +141,10 @@ test('rules-only preflight checks all requested stages without creating output o
   assert.equal(checked.length, 6); assert.equal(fixture.calls.length, 0);
 });
 
-test('controller source inventory is portable and the active mixed runner/bundle remain untouched', () => {
+test('controller source inventory is portable and the version-17 closeout preserves its original runner identity', () => {
   assert.ok(command.controllerSources().length >= 10);
   for (const source of command.controllerSources()) assert.match(source.sha256, /^[a-f0-9]{64}$/);
   const saved = path.resolve(__dirname, '../node_modules/.cache/v17-panel-base-identity.json');
   const native = path.resolve(__dirname, '../node_modules/.cache/levelup-native-values/stockfish');
-  if (fs.existsSync(saved) && fs.existsSync(native)) assert.deepEqual(getRunIdentity(native), JSON.parse(fs.readFileSync(saved)));
+  if (fs.existsSync(saved) && fs.existsSync(native)) assertV17CloseoutIdentity(native, JSON.parse(fs.readFileSync(saved)));
 });

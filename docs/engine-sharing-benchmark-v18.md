@@ -9,6 +9,21 @@ mode up to **eight**. Both have at most **four searches active at once**, becaus
 only the side to move searches within each game. Halving the process count does
 not promise twice the speed.
 
+## Completed laptop comparison
+
+The [uploaded report](../experiments/balance/results/engine-sharing-v18-001.uploaded-report.md)
+contains **64 finalized games**, two alternating rounds and
+eight fresh timing cells. Sharing completed **1.7% fewer games/hour at 20k** and
+**10.6% fewer at 80k**. Search time per ply was about 4% lower, but games averaged
+roughly 21% more plies. Keep separate White/Black engines as the default.
+
+This is a small repeated-position benchmark. It does not establish a whole-panel
+speed difference, playing-strength change or measured memory saving. The report
+does not supply raw timing records or native-process RSS measurements; the
+[source receipt](../experiments/balance/results/engine-sharing-v18-001.source.json)
+records that provenance limit. Further
+runner work should measure aggregation and central pair dispatch separately.
+
 ## Fixed workload
 
 | Setting | Both modes |

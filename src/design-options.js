@@ -23,7 +23,8 @@ const revisedPawnProfile = require('./playable-v17-pawns-revised-profile.json');
 const selectedPawnProfile = require('./playable-v17-pawns-selected-profile.json');
 const rosterProfile = require('./playable-v17-roster-trials-profile.json');
 const confirmedProfile = require('./playable-v17-roster-confirmed-profile.json');
-const { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS } = require('./playable-library');
+const selectedV18Profile = require('./playable-v18-roster-confirmed-profile.json');
+const { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, V18_CANDIDATES, V18_RESERVE_DESIGN_IDS } = require('./playable-library');
 const { STANDARD_TYPES } = require('./design-catalog');
 const { pieceInfo } = require('./piece-catalog');
 
@@ -36,7 +37,7 @@ function freeze(value) {
 }
 
 const PLAYABLE_PROFILE = freeze(compiled);
-const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile, rosterProfile, confirmedProfile]);
+const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile, rosterProfile, confirmedProfile, selectedV18Profile]);
 const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
 const EXPERIMENTAL_VARIANTS = freeze(PLAYABLE_PROFILES.map(profile => profile.variant));
 const PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES[index].variant, ...(library.generation ? { generation: library.generation } : {}), ...(library.focusFamily ? { focusFamily: library.focusFamily } : {}), ...(library.edition ? { edition: library.edition } : {}), ...(library.superseded ? { superseded: true } : {}) })));
@@ -89,6 +90,7 @@ const metadata = {
   'pawn.blue@2': ['Bishop pawn', 'Move one square forward, or move or capture one square diagonally forward. A clear initial two-step is available from your home two ranks. Visiting an empty en-passant target diagonally is a quiet move and leaves the bypassed pawn.'],
   'pawn.bishop-step-current@1': ['Bishop pawn', 'Move one square forward, or move or capture one square diagonally forward. A clear initial two-step is available from your home two ranks. Visiting an empty en-passant target diagonally is a quiet move and leaves the bypassed pawn.'],
   'pawn.orange@3': ['Knight pawn', 'Normal pawn moves and captures, plus forward knight jumps: one or two files sideways and two or one ranks forward, including captures.'],
+  'pawn.knight-tall-quiet@1': ['Knight pawn', 'Normal pawn moves and captures, plus forward knight jumps. Wide jumps (two files sideways and one rank forward) can capture; tall jumps (one file sideways and two ranks forward) land only on empty squares.'],
   'pawn.rank-current@1': ['Rank pawn', 'Move or capture any clear distance sideways. Move one square forward without capturing, or capture one square diagonally forward, including en passant. A clear two-square advance is available from your home two ranks. Sideways moves cannot jump over pieces.'],
   'pawn.purple@11': ['Rook pawn', 'Move any clear distance orthogonally without capturing. Capture one or two clear squares diagonally forward.'],
   'pawn.blue@3': ['Returning pawn', 'Move one clear square backward, or one or two clear squares forward without capturing. Capture one square diagonally forward.'],
@@ -117,6 +119,7 @@ const metadata = {
   'rook.blue@2': ['Ghost rook', 'Normal rook moves. Also hop along a rank or file over exactly one piece and land on any empty square beyond it before the next blocker, without capturing.'],
   'rook.orange@2': ['Blink rook', 'Normal rook moves and captures. Also jump to any empty square within three files and three ranks, without capturing.'],
   'rook.purple@12': ['Ranged rook', 'Normal rook moves and camel jumps (three squares in one direction and one at right angles), including captures.'],
+  'rook.cataphract-no-tall-back@1': ['Cataphract', 'Normal rook moves, plus camel jumps three files sideways and one rank forward or backward, or one file sideways and three ranks forward. All jumps can capture. No tall backward jumps.'],
   'rook.blue@3': ['Pawn rook', 'Normal rook moves, plus one-square diagonal captures in any direction.'],
   'rook.orange@3': ['Knight-capture rook', 'Normal rook moves, plus capture-only knight jumps.'],
   'rook.purple@13': ['Side rook', 'Normal rook moves, plus one-square diagonal steps, wide knight jumps and wide camel jumps, including captures. Wide jumps travel two or three files sideways and one rank forward or backward.'],
@@ -143,7 +146,8 @@ const metadata = {
 };
 
 const additionalExperimentalIds = new Set(['pawn.bishop-step-current@1', 'pawn.rank-current@1',
-  'bishop.vertical-blocked@1', 'pawn.queen-sideways@1', 'queen.xray-rook@1']);
+  'bishop.vertical-blocked@1', 'pawn.queen-sideways@1', 'queen.xray-rook@1',
+  'pawn.knight-tall-quiet@1', 'rook.cataphract-no-tall-back@1']);
 
 const definitions = [...new Map(PLAYABLE_PROFILES.flatMap(profile => profile.registry.definitions).map(definition => [definition.id, definition])).values()];
 const DESIGN_OPTIONS = freeze(definitions.map(definition => {
@@ -197,6 +201,12 @@ const confirmedAccents = (() => {
   for (const id of V17_CONFIRMED_RESERVE_DESIGN_IDS) accents[id] = kingGrantAccents[optionsById[id].level - 1];
   return Object.freeze(accents);
 })();
+const selectedV18Accents = (() => {
+  const accents = { ...workshopAccentsFor(V18_CANDIDATES, []) };
+  for (const id of Object.values(V18_CANDIDATES).flat()) if (optionsById[id].level === 3) accents[id] = 'purple';
+  for (const id of V18_RESERVE_DESIGN_IDS) accents[id] = kingGrantAccents[optionsById[id].level - 1];
+  return Object.freeze(accents);
+})();
 const confirmedNames = {
   'bishop.vertical-blocked@1': 'Vertical bishop',
   'pawn.queen-sideways@1': 'Queen pawn',
@@ -211,16 +221,22 @@ const currentNames = Object.freeze({
   'pawn.queen-sideways@1': 'Herald',
   'pawn.purple@13': 'Ranger',
   'rook.purple@12': 'Cataphract',
+  'rook.cataphract-no-tall-back@1': 'Cataphract',
   'bishop.vertical-blocked@1': 'Inquisitor',
   'queen.purple@7': 'Wraith',
   'king.grant-wd-level3@1': 'Warden',
   'knight.purple@4': 'Nightrider',
   'bishop.purple@13': 'Crusader',
 });
-const namedCurrentVariants = new Set(PLAYABLE_LIBRARIES.filter(library => library.generation === 17 && !library.superseded).map(library => library.variant));
+const namedCurrentVariants = new Set(PLAYABLE_LIBRARIES.filter(library => library.generation >= 17 && !library.superseded).map(library => library.variant));
+const v18ExplorationIds = new Set(['knight.purple@4', 'queen.purple@7']);
 function optionInProfile(option, profile) {
   if (!option) return option;
   const currentName = namedCurrentVariants.has(profile.variant) ? currentNames[option.id] : undefined;
+  if (selectedV18Profile.variant === profile.variant) return { ...option, accent: selectedV18Accents[option.id],
+    name: currentName || officialNames[option.id] || confirmedNames[option.id] || option.name,
+    status: officialNames[option.id] ? 'reference' : confirmedKingTrials.has(option.id) ? 'experimental'
+      : v18ExplorationIds.has(option.id) ? 'exploration' : 'accepted' };
   if (confirmedProfile.variant === profile.variant) return { ...option, accent: confirmedAccents[option.id],
     name: currentName || officialNames[option.id] || confirmedNames[option.id] || option.name,
     status: officialNames[option.id] ? 'reference' : confirmedKingTrials.has(option.id) ? 'experimental' : 'accepted' };

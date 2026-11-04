@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const { readFileSync } = require('node:fs');
 const { createHash } = require('node:crypto');
 const { getPlayableProfile, getPlayableProfiles, getPlayableArtifacts } = require('../scripts/playable-profile');
+const { PLAYABLE_LIBRARIES } = require('../src/playable-library');
 const {
   PLAYABLE_PROFILE, PLAYABLE_PROFILES, EXPERIMENTAL_VARIANT, DESIGN_OPTIONS, getDesignOptions, pieceInfoForProfile,
   getProfileSnapshot, validateProfileSnapshot, encodeProfileSnapshot, decodeProfileSnapshot,
@@ -53,7 +54,7 @@ test('the embedded profile and native INI reproduce the trusted current catalog'
     assert.equal(decodeProfileSnapshot(encodeProfileSnapshot(getProfileSnapshot(profile.variant))).hash, profile.hash);
   }
   assert.equal(PLAYABLE_PROFILES[1].hash, '3f4a34e0852be20501f6e9091332aa92f90a81ad1705f384627e499f5e3fd90a');
-  assert.equal(PLAYABLE_PROFILES.length, 19);
+  assert.equal(PLAYABLE_LIBRARIES.filter(item => (item.generation || 0) <= 17).length, 19);
   assert.equal(compiled.hash, createHash('sha256').update(JSON.stringify({ config: compiled.config, registry: compiled.registry })).digest('hex'));
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'pawn.purple@2'), undefined);
   assert.equal(DESIGN_OPTIONS.find(option => option.id === 'knight.purple@1'), undefined);

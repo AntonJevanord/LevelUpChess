@@ -36,10 +36,13 @@ function recordsFor(input) {
   });
 }
 
-test('only research snapshots resolve the two approved narrower pawn definitions', () => {
+test('the archived research study still resolves both candidates while version 18 activates only its selected pawn', () => {
   assert.deepEqual(plan.BODIES.map(body => body.movement), ['fmWfceFifmnDfhN', 'ifmnDfmWfceFfsNfceN', 'ifmnDfmWfceFfsNfmN']);
   assert.equal(rootCatalog.getDesign('pawn.orange@3').movement, 'fmWfceFifmnDfhN');
-  for (const body of plan.BODIES.slice(1)) assert.equal(rootCatalog.getDesign(body.id), undefined);
+  const definitions = require('../src/balance-designs-knight-pawn-followup').NEW_DEFINITIONS;
+  assert.deepEqual(rootCatalog.getDesign('pawn.knight-tall-quiet@1'),
+    definitions.find(row => row.id === 'pawn.knight-tall-quiet@1'));
+  assert.equal(rootCatalog.getDesign('pawn.knight-tall-capture@1'), undefined);
   assert.throws(() => require('../scripts/balance/knight-pawn-followup-plan').loadExperiment(20000), /isolated research runtime/);
   assert.throws(() => plan.loadExperiment(40000));
 });

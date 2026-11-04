@@ -15,7 +15,7 @@ const { makeSchedule } = require(path.join(overlay.directory, 'scripts/balance/p
 const { createDesignRegistry } = require(path.join(overlay.directory, 'scripts/balance/design-registry'));
 const { compileDesignProfile } = require(path.join(overlay.directory, 'scripts/balance/design-profile'));
 const { getOfficialReferences } = require(path.join(overlay.directory, 'scripts/balance/official-references'));
-const { getRunIdentity } = require('../scripts/balance/run');
+const { assertV17CloseoutIdentity } = require('./helpers/v17-closeout-identity');
 const native = process.env.FAIRY_STOCKFISH_PATH || path.join(ROOT, 'node_modules/.cache/levelup-native-values/stockfish');
 
 function context(nodes = 20000) {
@@ -109,8 +109,8 @@ test('copied records add no paired evidence and conflicting contexts fail before
   assert.throws(() => plan.reportStudy({ runId: 'synthetic' }, [{ nodes: 20000, manifest: input.manifest, records: bad }]), /context changed/);
 });
 
-test('the ordinary live runner and balance bundle still match the pre-panel identity', { skip: !fs.existsSync(native) }, () => {
+test('the archived version-17 runner retains the pre-panel identity while version 18 changes only its live catalog', { skip: !fs.existsSync(native) }, () => {
   const original = path.join(ROOT, 'node_modules/.cache/v17-panel-base-identity.json');
   if (!fs.existsSync(original)) return;
-  assert.deepEqual(getRunIdentity(native), JSON.parse(fs.readFileSync(original)));
+  assertV17CloseoutIdentity(native, JSON.parse(fs.readFileSync(original)));
 });

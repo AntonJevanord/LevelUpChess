@@ -152,13 +152,14 @@ provide a screen for gross outliers; they do not establish precise balance.
 
 ## Version 18
 
-- [ ] Create branch `version_18` from the version-17 closeout, then activate the selected quiet-tall Knight pawn and `RsCfC` Cataphract in new playable profiles. Keep historical profiles, definitions and owned research snapshots reproducible.
-- [ ] Verify both-color movement, pawn promotion/en passant, rook castling, engine values, setup costs, saves, PGN, undo and browser engine play; retain the original four frozen level-three references.
+- [x] Create branch `version_18` from the version-17 closeout before any roster replacement; retain [switching and roster notes](docs/version18.md).
+- [x] Activate the selected quiet-tall Knight pawn and `RsCfC` Cataphract in a new version-18 playable profile, with their tested MG/EG priors. Preserve all nineteen historical profiles and the four frozen references; keep Nightrider/Wraith as exploration choices.
+- [x] Verify both-color movement, pawn promotion/en passant, rook castling, all six native value tables, setup costs, saves, PGN, undo and browser engine play. Retain all nineteen historical profiles and the original four frozen references; complete unit regressions and thirteen browser checks.
 - [ ] Declare a bounded mixed-bracket study using fixed level-one, revised level-two and original level-three references. Reopen parked designs only for a decision-relevant result or a well-founded gameplay idea.
 
 ## After reviewing these results
 
-- [ ] Human-playtest the [current roster](docs/playtest-roster-v17.md) for readability, fun and counterplay. Changed movement or price gets a new immutable revision.
+- [ ] Human-playtest the [version-18 roster](docs/version18.md) for readability, fun and counterplay. Changed movement or price gets a new immutable revision.
 - [ ] Declare only the follow-ups that could change a design decision; do not restart completed reference cells whenever another candidate changes.
 - [ ] Add an army-outcome model for joint upgrade contributions, uncertainty, coverage and held-out prediction. Keep its Elo-style units separate from material values.
 - [ ] Use ordinary-army anchors or unequal-budget bridges to identify tier relationships; equal-budget games alone leave a cost-related ambiguity.

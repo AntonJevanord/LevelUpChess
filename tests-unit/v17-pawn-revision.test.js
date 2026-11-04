@@ -18,7 +18,7 @@ const bishop = 'pawn.bishop-step-current@1';
 const letter = id => profile.registry.allocations.find(item => item.id === id).letter;
 
 test('the revised pawn library preserves all fifteen initial libraries and their canonical bytes', () => {
-  assert.equal(PLAYABLE_LIBRARIES.length, 19);
+  assert.equal(PLAYABLE_LIBRARIES.filter(item => (item.generation || 0) <= 17).length, 19);
   assert.equal(PLAYABLE_LIBRARIES.indexOf(library), 15);
   assert.deepEqual(PLAYABLE_LIBRARIES.slice(0, 15).flatMap(item => [item.json, item.ini]), Object.keys(hashes));
   for (const [file, expected] of Object.entries(hashes)) {

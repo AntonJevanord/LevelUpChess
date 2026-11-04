@@ -86,10 +86,13 @@ test('the sixteen predeclared cases are outside both the first32 panel cases and
   assert.equal(new Set(plan.OPENINGS.map(row => row.id)).size, 16);
 });
 
-test('restricted bodies share originalRC priors while the root catalog and references remain unchanged', () => {
+test('research restrictions retain original RC priors while version 18 activates only the selected immutable body', () => {
   const input = context(), rootCatalog = require('../src/design-catalog');
+  const selected = require('../src/balance-designs-cataphract-followup').NEW_DEFINITIONS
+    .find(row => row.id === 'rook.cataphract-no-tall-back@1');
+  assert.deepEqual(rootCatalog.getDesign(selected.id), selected);
+  assert.equal(rootCatalog.getDesign('rook.cataphract-forward-half@1'), undefined);
   for (const body of plan.BODIES) {
-    assert.equal(rootCatalog.getDesign(body.id), undefined);
     assert.deepEqual(input.declaration.config.evaluation.pieceValues[body.id], { mg: 2240, eg: 2413 });
     assert.ok(input.registry.definitions.find(row => row.id === body.id).roles.castlingRook);
   }

@@ -60,7 +60,7 @@ test.after(() => { if (directory) fs.rmSync(directory, { recursive: true, force:
 
 test('the selected workshop preserves all sixteen earlier profile artifacts and identities', () => {
   const profiles = getPlayableProfiles();
-  assert.equal(PLAYABLE_LIBRARIES.length, 19);
+  assert.equal(PLAYABLE_LIBRARIES.filter(item => (item.generation || 0) <= 17).length, 19);
   assert.deepEqual(PLAYABLE_LIBRARIES.slice(0, 16).flatMap(item => [item.json, item.ini]), Object.keys(hashes));
   for (const [file, expected] of Object.entries(hashes)) {
     const bytes = fs.readFileSync(path.resolve(__dirname, '..', file), 'utf8').replace(/\r\n/g, '\n');

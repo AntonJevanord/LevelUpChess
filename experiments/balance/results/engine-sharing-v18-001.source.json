@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-uploaded-benchmark-report-source",
+  "recordedDate": "2026-11-04",
+  "file": "experiments/balance/results/engine-sharing-v18-001.uploaded-report.md",
+  "originalName": "benchmark-report.md",
+  "sedimentId": "file_0000000041ac820a991ef1d3d7e62dc0",
+  "bytes": 3088,
+  "sha256": "192605cd3ce8533a2159c1b9a648470d2ef6925c6d8c59b6f3813a247929669a",
+  "provenance": "Uploaded Markdown only. Original timing journals, manifests and native process measurements were not supplied; no new games or independent timing benchmark performed here.",
+  "policy": "Benchmark games are excluded from piece-balance and material evidence. Keep separate engines as the default; shared mode did not improve reported games per hour in this small workload."
+}

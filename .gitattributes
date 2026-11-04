@@ -86,3 +86,6 @@ experiments/balance/results/v17-level3-panel-003.report-only.md text eol=lf
 experiments/balance/results/v17-level3-panel-004.*.gz -text
 experiments/balance/results/v17-level3-panel-004.*.json text eol=lf
 experiments/balance/results/v17-level3-panel-004.*.md text eol=lf whitespace=-blank-at-eof
+tests-unit/fixtures/playable-initial19-sha256.json text eol=lf
+src/playable-v18-roster-confirmed-profile.json text eol=lf
+experiments/balance/results/engine-sharing-v18-001.source.json text eol=lf

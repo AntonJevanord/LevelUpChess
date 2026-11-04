@@ -8,9 +8,9 @@ Download `index.html` and open it in Chrome, Edge or Firefox. It contains the bo
 
 Select a piece and a highlighted destination. Arrow keys move focus; Enter or Space selects. The board supports legal moves, checkmate, castling, en passant, promotion, history, undo and board flip.
 
-Under **Rules**, choose **Version 17 · King workshop** or another family workshop. Click a starting piece to choose its upgrade beside the board, then press **Start game**. **Edit armies** reopens setup; **Return to game** keeps the current game. Changes apply only when starting a game. **Clear White**, **Clear Black** and **Clear both** reset draft armies.
+Under **Rules**, choose **Version 18 · Roster and king trials** or an earlier workshop. Click a starting piece to choose its upgrade beside the board, then press **Start game**. **Edit armies** reopens setup; **Return to game** keeps the current game. Changes apply only when starting a game. **Clear White**, **Clear Black** and **Clear both** reset draft armies.
 
-Current libraries allow a 1–9 point budget per side. Each includes the four frozen references and nine king grants; family workshops add pawn, knight, bishop, rook or queen candidates within the engine's 20-custom-piece limit. **Version 17 · Pawn workshop** includes the one-point Two-step and King-step pawns. The revised Pawn workshop prices Bishop pawn at two points and retains the initial workshop separately. Every Version 17 workshop gives the one-point Pawn grant quiet forward-diagonal steps. See the [current playtest guide](docs/playtest-roster-v17.md). Version 16 and earlier libraries retain their original rules and budgets.
+The current roster allows a 1–9 point budget per side and includes the four frozen references, accepted replacement pieces and five guard designs or trials. Version 18 introduces the selected quiet-tall Knight pawn and six-jump Cataphract; all nineteen earlier profiles keep their rules. The [version-18 guide](docs/version18.md) explains the changes and Windows branch-switch commands. Earlier family workshops remain available within the engine's 20-custom-piece limit.
 
 Select the king during setup to buy one nonroyal reserve guard. Starting the game keeps the ordinary royal king and places the guard in reserve. Click a reserve piece, then a highlighted empty square in your own half. A drop spends a turn and cannot give check; captured pieces disappear rather than refill reserves. All ordinary king safety and castling rules still apply.
 
@@ -69,6 +69,17 @@ The [all-reference material fit](experiments/balance/results/reference-material-
 
 Future candidates face the frozen references. The unfinished NC–Amazon game remains unscored.
 
+## Version 18: selected roster and mixed armies
+
+Branch **`version_18`** begins after the **`v0.17.23`** closeout. Its new roster
+replaces Knight pawn with `ifmnDfmWfceFfsNfmN` at cost two and Cataphract with
+`RsCfC` at cost three. The tested search priors remain 536/592 and 2240/2413
+MG/EG respectively. Version-17 profiles retain their old pieces.
+
+The next research step is a bounded mixed-budget study using the fixed
+level-one, revised level-two and original level-three references. No new games
+start automatically. See the [roster and next-step guide](docs/version18.md).
+
 ## Version 17: balance experiments
 
 Version 17 is closed at **`v0.17.23`** on branch **`version_17`**, retaining its
@@ -86,7 +97,7 @@ WD is the working three-point **Warden**, scoring **55.21%**. W2 scored **66.67%
 
 Run one experiment at a time with four workers total. Game-boundary checkpoints preserve completed results and save interrupted positions on clean stops. The [historical storage-only upgrade](docs/game-checkpoints-v17.md) uses tag `v0.17.10` for unfinished version-0.17.8 campaigns; later research definitions require new run identities.
 
-The [version-18 engine-sharing benchmark](docs/engine-sharing-benchmark-v18.md) compares four shared Stockfish processes with eight separate ones at 20k/80k nodes, using four workers and 64 benchmark-only games. Finish or pause the active campaign before timing it. The benchmark keeps the current runner frozen and measures search work alongside games per hour; it does not add piece-balance evidence.
+The completed [version-18 engine-sharing benchmark](docs/engine-sharing-benchmark-v18.md) found about 1.7% / 10.6% fewer games/hour with sharing at 20k / 80k. Shared searches were slightly faster per ply, but games were longer. Retain separate engines as the default; this small benchmark does not establish a whole-panel speed difference or piece-balance result.
 
 The [complete level-three panel](docs/level3-panel-v17.md) compares all ten selected pieces at 20k/40k/80k nodes, with ordinary-army material anchors. Start with `npm.cmd run balance:level3:panel -- --out balance-results/level3-panel --openings 8 --jobs 4`, then increase the total to 16, 32 or 64 using `--resume`. Completed games remain in their original stages and append to the campaign's `games.jsonl`; matchup and material reports keep budgets separate. The [Betza convention](docs/betza-convention.md) records the exact ten definitions and tested aliases.
 
