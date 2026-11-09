@@ -4,6 +4,7 @@ import { ChessClock } from './clock';
 import { UPGRADE_BUDGETS, PIECE_BUDGETS } from './piece-catalog';
 import { isExperimentalVariant, getProfileSnapshot, validateProfileSnapshot } from './design-options';
 import { designSetupFromChoices, loadDesignSetup, designBudgetLimit } from './design-setup';
+import { isOpponentMode } from './engine-play';
 
 export const SAVE_KEY = 'levelupchess.saved-game.v1';
 export const MAX_PGN_SIZE = 256 * 1024;
@@ -70,7 +71,7 @@ export async function parseSave(text) {
   if (!data || ![1, 2].includes(data.version) || typeof data.savedAt !== 'string' || Number.isNaN(Date.parse(data.savedAt))) throw new Error('The saved game format is not supported.');
   if (data.version === 2) validateProfileSnapshot(data.profile);
   const settings = data.settings;
-  if (!settings || !['local', 'engine'].includes(settings.opponent) || !['w', 'b'].includes(settings.humanSide) || !['easy', 'medium', 'hard'].includes(settings.difficulty) || typeof settings.flipped !== 'boolean') throw new Error('The saved game settings are damaged.');
+  if (!settings || !isOpponentMode(settings.opponent) || !['w', 'b'].includes(settings.humanSide) || !['easy', 'medium', 'hard'].includes(settings.difficulty) || typeof settings.flipped !== 'boolean') throw new Error('The saved game settings are damaged.');
   const game = await parsePgn(data.pgn);
   try {
     const experimental = isExperimentalVariant(game.variant);

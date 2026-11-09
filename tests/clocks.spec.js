@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const fs = require('node:fs/promises');
 const { Chess } = require('chess.js');
 
@@ -8,7 +9,7 @@ async function move(page, from, to) {
   await square(page, to).click();
 }
 async function timedGame(page, control = 'blitz') {
-  await page.selectOption('#time-control', control);
+  await inPanel(page, 'setup', () => page.selectOption('#time-control', control));
   await page.getByRole('button', { name: 'New game', exact: true }).click();
 }
 async function clocks(page, white, black) {
@@ -70,7 +71,7 @@ test('flag fall ends play and exports a PGN result and time termination', async 
   await expect(page.locator('#history li')).toHaveCount(0);
 
   const waiting = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Export PGN', exact: true }).click());
   const download = await waiting;
   const pgn = await fs.readFile(await download.path(), 'utf8');
   const game = new Chess();
@@ -107,10 +108,10 @@ test('saving and reloading keeps remaining time and undo history with clocks pau
   await page.clock.fastForward(10_000);
   await move(page, 'e2', 'e4');
   await page.clock.fastForward(7_000);
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.clock.fastForward(20_000);
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await clocks(page, '02:52', '02:53');
   await expect(page.getByRole('button', { name: 'Resume clock', exact: true })).toBeVisible();
   await page.clock.fastForward(60_000);
@@ -127,7 +128,7 @@ test('a different time control applies only after confirming a new game', async 
   await page.getByRole('button', { name: 'Start clock', exact: true }).click();
   await page.clock.fastForward(10_000);
   await move(page, 'e2', 'e4');
-  await page.selectOption('#time-control', 'blitz');
+  await inPanel(page, 'setup', () => page.selectOption('#time-control', 'blitz'));
   await clocks(page, '04:50', '05:00');
   await expect(page.locator('#clock-status')).toContainText(/next game/i);
   await page.getByRole('button', { name: 'New game', exact: true }).click();
@@ -149,7 +150,7 @@ test('flipping retains color clocks and importing PGN starts untimed play', asyn
   await page.getByRole('button', { name: 'Flip board' }).click();
   await expect(page.locator('.square').first()).toHaveAttribute('data-square', 'h1');
   await clocks(page, '02:52', '03:00');
-  await page.getByRole('button', { name: 'Import PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Import PGN', exact: true }).click());
   await page.locator('#pgn-text').fill('1. d4 d5 *');
   await page.getByRole('button', { name: 'Import game', exact: true }).click();
   await page.getByRole('button', { name: 'Replace game', exact: true }).click();
@@ -170,13 +171,13 @@ test('loading or importing asks before replacing a running game with no moves', 
   await timedGame(page, 'five');
   await page.getByRole('button', { name: 'Start clock', exact: true }).click();
   await page.clock.fastForward(10_000);
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.clock.fastForward(10_000);
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(page.getByRole('button', { name: 'Replace game', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Keep current game' }).click();
   await clocks(page, '04:40', '05:00');
-  await page.getByRole('button', { name: 'Import PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Import PGN', exact: true }).click());
   await page.locator('#pgn-text').fill('1. d4 *');
   await page.getByRole('button', { name: 'Import game', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Replace game', exact: true })).toBeVisible();
@@ -197,7 +198,7 @@ test('pausing a clock rejects a pending engine reply and resuming searches again
     await route.fulfill({ json: { move: 'e7e5' } }).catch(() => {});
   });
   await timedGame(page, 'five');
-  await page.selectOption('#opponent', 'engine');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'engine'));
   await expect(page.locator('#engine-status')).toContainText('connected');
   await page.getByRole('button', { name: 'Start clock', exact: true }).click();
   await move(page, 'e2', 'e4');
@@ -223,7 +224,7 @@ test('saved timeouts stay finished after reload and an expired engine search can
     await route.fulfill({ json: { move: 'e7e5' } }).catch(() => {});
   });
   await timedGame(page, 'five');
-  await page.selectOption('#opponent', 'engine');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'engine'));
   await expect(page.locator('#engine-status')).toContainText('connected');
   await page.getByRole('button', { name: 'Start clock', exact: true }).click();
   await move(page, 'e2', 'e4');
@@ -232,9 +233,9 @@ test('saved timeouts stay finished after reload and an expired engine search can
   release();
   await expect(page.locator('#status')).toHaveText('White wins on time');
   await expect(square(page, 'e7')).toHaveAttribute('aria-label', 'e7 Black pawn');
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(page.locator('#status')).toHaveText('White wins on time');
   await expect(page.getByRole('button', { name: 'Resume clock', exact: true })).toBeDisabled();
   await page.getByRole('button', { name: 'Undo move' }).click();
@@ -273,7 +274,7 @@ test('saving across the flag deadline keeps the saved clock and result consisten
   expect(game.getHeaders().Termination).toBe('time forfeit');
 
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(page.locator('#status')).toHaveText('Black wins on time');
   await expect(page.getByRole('button', { name: 'Resume clock', exact: true })).toBeDisabled();
   await move(page, 'e2', 'e4');
@@ -287,7 +288,7 @@ test('old browser saves without clock metadata still load and undo normally', as
     settings: { opponent: 'local', humanSide: 'w', difficulty: 'medium', flipped: false },
   })));
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(page.locator('#time-control')).toHaveValue('none');
   await page.getByRole('button', { name: 'Undo move' }).click();
   await move(page, 'c7', 'c5');
@@ -298,13 +299,13 @@ test('damaged saved clocks are rejected before replacing a current game', async 
   await timedGame(page, 'five');
   await page.getByRole('button', { name: 'Start clock', exact: true }).click();
   await move(page, 'e2', 'e4');
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.evaluate(() => {
     const data = JSON.parse(localStorage.getItem('levelupchess.saved-game.v1'));
     data.clock.remaining.w = -1;
     localStorage.setItem('levelupchess.saved-game.v1', JSON.stringify(data));
   });
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(page.locator('#save-status')).toContainText('saved clock is damaged');
   await expect(square(page, 'e4')).toHaveAttribute('aria-label', 'e4 White pawn');
   await expect(page.locator('#replace-dialog')).not.toBeVisible();

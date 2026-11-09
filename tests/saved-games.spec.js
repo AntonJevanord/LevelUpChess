@@ -1,10 +1,11 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const fs = require('node:fs/promises');
 const { Chess } = require('chess.js');
 const square = (page, name) => page.locator(`[data-square="${name}"]`);
 async function move(page, from, to) { await square(page, from).click(); await square(page, to).click(); }
 async function importPgn(page, text) {
-  await page.getByRole('button', { name: 'Import PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Import PGN', exact: true }).click());
   await page.locator('#pgn-text').fill(text);
   await page.getByRole('button', { name: 'Import game', exact: true }).click();
 }
@@ -14,10 +15,10 @@ test('saved moves and board orientation survive reload, and play can continue', 
   await move(page, 'e2', 'e4');
   await move(page, 'e7', 'e5');
   await page.getByRole('button', { name: 'Flip board' }).click();
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await expect(page.locator('#save-status')).toContainText('Saved 2 half-moves');
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(square(page, 'e4')).toHaveAttribute('aria-label', 'e4 White pawn');
   await expect(square(page, 'e5')).toHaveAttribute('aria-label', 'e5 Black pawn');
   await expect(page.locator('.square').first()).toHaveAttribute('data-square', 'h1');
@@ -28,12 +29,12 @@ test('saved moves and board orientation survive reload, and play can continue', 
 
 test('loading asks before replacing current moves and cancel preserves them', async ({ page }) => {
   await move(page, 'd2', 'd4');
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await move(page, 'd7', 'd5');
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await page.getByRole('button', { name: 'Keep current game' }).click();
   await expect(square(page, 'd5')).toHaveAttribute('aria-label', 'd5 Black pawn');
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await page.getByRole('button', { name: 'Replace game', exact: true }).click();
   await expect(square(page, 'd7')).toHaveAttribute('aria-label', 'd7 Black pawn');
   await expect(page.locator('#status')).toHaveText('Black to move');
@@ -64,7 +65,7 @@ test('PGN download round-trips checkmate and the result', async ({ page }) => {
   await importPgn(page, '1. f3 e5 2. g4 Qh4# 0-1');
   await expect(page.locator('#status')).toHaveText('Black wins by checkmate');
   const waiting = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Export PGN', exact: true }).click());
   const download = await waiting;
   expect(download.suggestedFilename()).toBe('levelup-chess.pgn');
   const pgn = await fs.readFile(await download.path(), 'utf8');
@@ -76,7 +77,7 @@ test('PGN download round-trips checkmate and the result', async ({ page }) => {
 });
 
 test('PGN file import supports black-to-move starting positions and correct move numbering', async ({ page }) => {
-  await page.getByRole('button', { name: 'Import PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Import PGN', exact: true }).click());
   await page.locator('#pgn-file').setInputFiles({ name: 'position.pgn', mimeType: 'text/plain', buffer: Buffer.from('[SetUp "1"]\n[FEN "r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 17"]\n\n17... O-O *') });
   await expect(page.locator('#pgn-text')).toHaveValue(/17\.\.\. O-O/);
   await page.getByRole('button', { name: 'Import game', exact: true }).click();
@@ -91,17 +92,17 @@ test('PGN file import supports black-to-move starting positions and correct move
 test('corrupt or blocked browser storage reports an error without breaking gameplay', async ({ page }) => {
   await page.evaluate(() => localStorage.setItem('levelupchess.saved-game.v1', '{not json'));
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(page.locator('#save-status')).toContainText('damaged');
   await page.evaluate(() => { Storage.prototype.setItem = () => { throw new Error('Storage blocked'); }; });
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await expect(page.locator('#save-status')).toContainText('Use PGN export');
   await move(page, 'e2', 'e4');
   await expect(page.locator('#status')).toHaveText('Black to move');
 });
 
 test('large PGN files are rejected', async ({ page }) => {
-  await page.getByRole('button', { name: 'Import PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Import PGN', exact: true }).click());
   await page.locator('#pgn-file').setInputFiles({ name: 'large.pgn', mimeType: 'text/plain', buffer: Buffer.alloc(256 * 1024 + 1, 32) });
   await expect(page.locator('#import-error')).toContainText('up to 256 KB');
   await expect(page.locator('#pgn-text')).toHaveValue('');
@@ -111,14 +112,14 @@ test('engine settings load paused without a connection or automatic move', async
   let searches = 0;
   await page.route('**/api/engine/status', route => route.fulfill({ json: { name: 'Test engine' } }));
   await page.route('**/api/engine/move', route => { searches++; return route.fulfill({ json: { move: 'e7e5' } }); });
-  await page.selectOption('#opponent', 'engine');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'engine'));
   await expect(page.locator('#engine-status')).toContainText('connected');
-  await page.selectOption('#difficulty', 'easy');
+  await inPanel(page, 'setup', () => page.selectOption('#difficulty', 'easy'));
   await page.getByRole('button', { name: 'Pause engine' }).click();
   await move(page, 'e2', 'e4');
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(page.locator('#opponent')).toHaveValue('engine');
   await expect(page.locator('#difficulty')).toHaveValue('easy');
   await expect(page.locator('#engine-status')).toContainText('Engine paused');
@@ -131,9 +132,9 @@ test('engine settings load paused without a connection or automatic move', async
 test('saved games preserve repetition history, not just the final board', async ({ page }) => {
   await importPgn(page, '1. Nf3 Nf6 2. Ng1 Ng8 3. Nf3 Nf6 4. Ng1 Ng8 1/2-1/2');
   await expect(page.locator('#status')).toHaveText('Draw by repetition');
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(page.locator('#status')).toHaveText('Draw by repetition');
   await page.getByRole('button', { name: 'Undo move' }).click();
   await expect(page.locator('#status')).toHaveText('Black to move');
@@ -149,7 +150,7 @@ test('import cancels the previous engine search before replacing the game', asyn
     await gate;
     await route.fulfill({ json: { move: 'e7e5' } }).catch(() => {});
   });
-  await page.selectOption('#opponent', 'engine');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'engine'));
   await expect(page.locator('#engine-status')).toContainText('connected');
   await move(page, 'e2', 'e4');
   await expect.poll(() => started).toBe(true);
@@ -166,7 +167,7 @@ test('export preserves PGN comments and recorded results until play continues', 
   await importPgn(page, '[Event "Friendly match"]\n\n1. e4 {A useful opening} e5 1-0');
   async function downloadPgn() {
     const waiting = page.waitForEvent('download');
-    await page.getByRole('button', { name: 'Export PGN', exact: true }).click();
+    await inPanel(page, 'files', () => page.getByRole('button', { name: 'Export PGN', exact: true }).click());
     const download = await waiting;
     return fs.readFile(await download.path(), 'utf8');
   }

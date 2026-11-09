@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const { PLAYABLE_LIBRARIES, getPlayableProfile } = require('../src/design-options');
 
 const library = PLAYABLE_LIBRARIES.find(item => item.id === 'v17-pawns-selected');
@@ -23,8 +24,8 @@ test('the preferred workshop offers selected level-two pawns and the diagonal gr
   expect(selectedIndex).toBeGreaterThan(-1);
   expect(selectedIndex).toBeLessThan(entries.findIndex(item => item.label === 'Version 17 · Pawn workshop (bishop trial)'));
   expect(selectedIndex).toBeLessThan(entries.findIndex(item => item.label === 'Version 17 · Pawn workshop (initial)'));
-  await page.selectOption('#game-mode', library.variant);
-  await page.locator('#experimental-budget').fill('6');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', library.variant));
+  await inPanel(page, 'setup', () => page.locator('#experimental-budget').fill('6'));
   await square(page, 'c2').click();
   const picker = page.locator('#setup-picker');
   for (const [id, accent] of [[ids.knight, 'yellow'], [ids.rank, 'orange']]) {
@@ -49,7 +50,7 @@ test('the preferred workshop offers selected level-two pawns and the diagonal gr
 
 test('a Rank pawn advances and slides sideways on the board, and undo restores its previous position', async ({ page }) => {
   await page.goto('http://127.0.0.1:4173');
-  await page.selectOption('#game-mode', library.variant);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', library.variant));
   await choose(page, 'c2', ids.rank);
   await choose(page, 'c7', ids.rank);
   await start(page);

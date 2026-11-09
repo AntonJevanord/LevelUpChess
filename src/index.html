@@ -10,30 +10,51 @@
 <body>
   <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 18 / ARMY WORKSHOP</span></header>
   <main>
-    <section class="intro"><span class="eyebrow">EVERY GREAT GAME STARTS HERE</span><h1>Your next move.</h1><p>Classic chess. Two players. One board.</p></section>
+    <section class="intro"><span class="eyebrow">EVERY GREAT GAME STARTS HERE</span><h1>Your next move.</h1><p>Build an army. Find your strategy.</p></section>
     <div class="game-layout">
       <section class="board-area" aria-label="Chess game">
         <div id="setup-toolbar" class="setup-toolbar" hidden><div><strong>Build your army</strong><p id="setup-instructions">Click a starting piece to choose its upgrade.</p></div><button id="setup-mode" type="button" aria-pressed="false">Edit armies</button></div>
         <div class="player"><span class="avatar">♟</span><div><strong id="top-player">Black pieces</strong><small>Local player</small></div><span class="level">LEVEL 0</span><span id="black-clock" class="clock-display" hidden>00:00</span></div>
         <div id="pocket-top" class="pocket" hidden></div>
-        <div id="board" class="board" role="group" aria-label="Chessboard"></div>
+        <div id="board-stage" class="board-stage">
+          <div id="board" class="board" role="group" aria-label="Chessboard"></div>
+          <svg id="board-annotations" class="board-annotations" aria-hidden="true" focusable="false"></svg>
+          <section id="setup-picker" class="setup-picker" aria-labelledby="setup-piece-title" hidden>
+            <div class="setup-picker-heading"><div><span class="eyebrow">ARMY SETUP</span><h2 id="setup-piece-title">Choose a piece</h2></div><button id="setup-picker-close" type="button" aria-label="Close upgrade choices" title="Close upgrade choices">✕</button></div>
+            <p id="setup-picker-hint">Click a starting piece on the board to see its upgrades.</p>
+            <div id="setup-upgrades"></div>
+          </section>
+        </div>
         <div id="pocket-bottom" class="pocket" hidden></div>
         <div class="player"><span class="avatar white-avatar">♙</span><div><strong id="bottom-player">White pieces</strong><small>Local player</small></div><span class="level">LEVEL 0</span><span id="white-clock" class="clock-display" hidden>00:00</span></div>
       </section>
-      <aside>
-        <section id="setup-picker" class="panel setup-picker" aria-labelledby="setup-piece-title" hidden><span class="eyebrow">ARMY SETUP</span><h2 id="setup-piece-title">Choose a piece</h2><p id="setup-picker-hint">Click a starting piece on the board to see its upgrades.</p><div id="setup-upgrades"></div></section>
-        <section class="panel"><span class="eyebrow">ON THE BOARD</span><h2 id="status" role="status" aria-live="polite"></h2><p id="hint">Select a piece to see its legal moves.</p><div class="actions"><button id="undo" type="button">↶ Undo move</button><button id="flip" type="button">⇅ Flip board</button></div><button id="new-game" class="primary" type="button">New game</button></section>
-        <section class="panel engine-panel" aria-labelledby="engine-title">
-          <div class="panel-heading"><h3 id="engine-title">Play your way</h3><span>FAIRY STOCKFISH</span></div>
+      <aside class="panel side-panel" aria-label="Game controls">
+        <div class="panel-status"><span class="eyebrow">ON THE BOARD</span><h2 id="status" role="status" aria-live="polite"></h2><p id="hint">Select a piece to see its legal moves.</p></div>
+        <div class="panel-tabs" role="tablist" aria-label="Game panels">
+          <button id="panel-tab-game" type="button" role="tab" aria-selected="true" aria-controls="panel-game" data-panel-tab="game">Game</button>
+          <button id="panel-tab-setup" type="button" role="tab" aria-selected="false" aria-controls="panel-setup" tabindex="-1" data-panel-tab="setup">Setup</button>
+          <button id="panel-tab-design" type="button" role="tab" aria-selected="false" aria-controls="panel-design" tabindex="-1" data-panel-tab="design">Design</button>
+          <button id="panel-tab-files" type="button" role="tab" aria-selected="false" aria-controls="panel-files" tabindex="-1" data-panel-tab="files">Files</button>
+        </div>
+        <div class="panel-body">
+          <section id="panel-game" class="tab-panel" role="tabpanel" aria-labelledby="panel-tab-game" data-panel="game">
+            <div class="board-tools" role="group" aria-label="Board tools"><button id="inspect-mode" type="button" aria-pressed="false">Inspect pieces</button><button id="drawing-mode" type="button" aria-pressed="false">Draw</button><button id="clear-annotations" type="button">Clear marks</button></div>
+            <p id="piece-guide-status" class="engine-help" role="status" aria-live="polite">Inspect either side's pieces to explore their movement.</p>
+            <div class="guide-key" aria-label="Piece ability symbols"><span><i class="legend-move" aria-hidden="true"></i>Move</span><span><i class="legend-capture" aria-hidden="true"></i>Capture</span><span><i class="legend-both" aria-hidden="true"></i>Either</span></div>
+            <p class="annotation-help">Right-click for a circle. Right-drag for an arrow. Use Draw on touch screens; Escape clears marks.</p>
+            <section class="history-panel"><div class="panel-heading"><h3>Move history</h3><span>SAN</span></div><p id="empty-history">The opening is yours.</p><ol id="history" aria-label="Move history"></ol></section>
+          </section>
+          <section id="panel-setup" class="tab-panel engine-panel" role="tabpanel" aria-labelledby="panel-tab-setup" data-panel="setup" hidden>
+            <div class="panel-heading"><h3>Next game</h3><span>ARMY &amp; RULES</span></div>
           <label for="game-mode">Rules</label><select id="game-mode"><option value="chess">Standard chess</option><option value="levelup-experimental">Experimental designs</option><option value="levelup-v5">Piece upgrades</option><option value="levelup">Version 04 piece rules</option><option value="levelup-knight">Version 03 knight rules</option></select>
           <div id="experimental-settings" hidden>
+            <label for="experimental-budget">Budget per side (1–6)</label><input id="experimental-budget" type="number" min="1" max="6" step="1" value="6">
+            <p id="experimental-status" role="status" aria-live="polite"></p>
             <p id="experimental-library-help" class="engine-help">Choose a library to try its named designs. Balance and prices are provisional.</p>
             <div id="archive-palette" class="experimental-legend" aria-label="Upgrade levels"><span class="green-text">L1 · 1 point</span><span class="cyan-text">L2 · 2 points</span><span class="red-text">L3 · 3 points</span></div>
             <div id="workshop-palette" class="experimental-legend" aria-label="Replacement upgrade colors" hidden><span aria-label="Level 1: green and blue, 1 point"><i class="color-dot green" aria-hidden="true"></i><i class="color-dot blue" aria-hidden="true"></i>L1 · 1 point</span><span aria-label="Level 2: yellow and orange, 2 points"><i class="color-dot yellow" aria-hidden="true"></i><i class="color-dot orange" aria-hidden="true"></i>L2 · 2 points</span><span aria-label="Level 3: red and purple, 3 points"><i class="color-dot red" aria-hidden="true"></i><i class="color-dot purple" aria-hidden="true"></i>L3 · 3 points</span></div>
             <p id="workshop-palette-help" class="engine-help" hidden>First replacement options use green, yellow and red. Alternatives use blue, orange and purple. The four references are red.</p>
             <p id="king-grant-costs" class="engine-help" hidden>King grants cost 1–9 points. Their colors run blue/green, yellow/orange, red/purple, then teal, gold and silver.</p>
-            <label for="experimental-budget">Budget per side (1–6)</label><input id="experimental-budget" type="number" min="1" max="6" step="1" value="6">
-            <p id="experimental-status" role="status" aria-live="polite"></p>
             <div id="legacy-design-controls"><label for="experimental-family">Choose a piece family</label><select id="experimental-family"><option value="pawn">Pawns</option><option value="knight">Knights</option><option value="bishop">Bishops</option><option value="queen">Queens</option><option value="rook" selected>Rooks</option><option value="king">King grants</option></select>
             <div id="experimental-choices"></div></div>
             <p id="experimental-help" class="engine-help">Choices apply to your next game. Kings remain ordinary and royal.</p>
@@ -58,28 +79,42 @@
             <div class="army-reset-actions" role="group" aria-label="Reset army selections"><button id="clear-white-army" type="button" title="Clear White upgrade selections for the next game">Clear White</button><button id="clear-black-army" type="button" title="Clear Black upgrade selections for the next game">Clear Black</button><button id="clear-both-armies" type="button" title="Clear both armies’ upgrade selections for the next game">Clear both</button></div>
             <p id="army-reset-status" class="engine-help" role="status" aria-live="polite"></p>
           </div>
-          <label for="opponent">Opponent</label><select id="opponent"><option value="local">Local player</option><option value="engine">Fairy Stockfish</option></select>
-          <div id="engine-settings" hidden>
-            <div class="settings-row"><div><label for="human-side">Your side</label><select id="human-side"><option value="w">White</option><option value="b">Black</option></select></div><div><label for="difficulty">Difficulty</label><select id="difficulty"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select></div></div>
-            <p id="engine-status" role="status" aria-live="polite">Connect through npm start to play the engine.</p>
-            <div class="actions"><button id="engine-retry" type="button">Connect engine</button><button id="engine-cancel" type="button" disabled>Pause engine</button></div>
+          <label for="opponent">Opponent</label><select id="opponent"><option value="local">Local player</option><option value="engine">Fairy Stockfish</option><option value="selfplay">Stockfish vs Stockfish</option></select>
+          <div id="engine-configuration" hidden>
+            <div class="settings-row"><div id="human-side-field"><label for="human-side">Your side</label><select id="human-side"><option value="w">White</option><option value="b">Black</option></select></div><div><label for="difficulty">Difficulty</label><select id="difficulty"><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option></select></div></div>
             <p class="engine-help">Engine play needs the local server. Run <code>npm.cmd start</code> and open its printed address.</p>
           </div>
           <label for="time-control">Time control</label>
           <select id="time-control"><option value="none">Untimed</option><option value="blitz">3 min + 2 sec</option><option value="five">5 min + 0 sec</option><option value="rapid">10 min + 5 sec</option><option value="classic">15 min + 10 sec</option></select>
           <p class="engine-help">Applies to your next new game. Increment is added after each move.</p>
-          <p id="clock-status" role="status" aria-live="polite">No time limit.</p>
-          <button id="clock-toggle" type="button" disabled>Start clock</button>
-        </section>
-        <section class="panel history-panel"><div class="panel-heading"><h3>Move history</h3><span>SAN</span></div><p id="empty-history">The opening is yours.</p><ol id="history" aria-label="Move history"></ol></section>
-        <section class="panel save-panel" aria-labelledby="save-title">
+          </section>
+          <section id="panel-design" class="tab-panel engine-panel" role="tabpanel" aria-labelledby="panel-tab-design" data-panel="design" hidden>
+            <div class="panel-heading"><h3>Make it yours</h3><span>APPEARANCE</span></div>
+            <label for="piece-style">Piece design</label><select id="piece-style"><option value="glow">Classic glow</option><option value="flat">Flat classic</option><option value="outline">Outline</option><option value="medallion">Medallion</option></select>
+            <label for="board-theme">Board colors</label><select id="board-theme"><option value="sage">Sage</option><option value="blue">Blue</option><option value="walnut">Walnut</option><option value="slate">Slate</option></select>
+            <label for="annotation-color">Arrow and highlight color</label><input id="annotation-color" type="color" value="#edc34b">
+            <p class="engine-help">Your appearance choices stay in this browser. Upgrade colors and level badges keep their meaning.</p>
+          </section>
+          <section id="panel-files" class="tab-panel" role="tabpanel" aria-labelledby="panel-tab-files" data-panel="files" hidden>
+        <section class="save-panel" aria-labelledby="save-title">
           <h3 id="save-title">Keep your game</h3>
           <p id="save-status" role="status" aria-live="polite">Save in this browser or take a PGN copy with you.</p>
           <div class="actions"><button id="save-game" type="button">Save game</button><button id="load-game" type="button" disabled>Load saved</button></div>
           <div class="actions"><button id="export-pgn" type="button">Export PGN</button><button id="open-import" type="button">Import PGN</button></div>
           <p class="save-help">One save slot per browser. Saving again replaces it. Download PGN for a portable backup.</p>
         </section>
-        <div class="coming-next"><span class="eyebrow">THE NEXT LEVEL</span><p>Build an army within your budget.<br>Explore pawn, knight, bishop, queen and rook upgrades.</p><div class="level-dots"><i></i><i></i><i></i></div></div>
+          </section>
+        </div>
+        <div class="panel-controls">
+          <div id="engine-settings" class="engine-playback" hidden>
+            <div class="panel-heading"><h3 id="engine-title">Engine controls</h3><span>FAIRY STOCKFISH</span></div>
+            <p id="engine-status" role="status" aria-live="polite">Connect through npm start to play the engine.</p>
+            <div class="actions engine-actions"><button id="engine-retry" type="button">Connect engine</button><button id="engine-cancel" type="button" disabled>Pause engine</button><button id="engine-step" type="button" hidden>One move</button></div>
+          </div>
+          <div class="clock-controls"><p id="clock-status" role="status" aria-live="polite">No time limit.</p><button id="clock-toggle" type="button" disabled>Start clock</button></div>
+          <div class="actions game-actions"><button id="undo" type="button">↶ Undo move</button><button id="flip" type="button">⇅ Flip board</button></div>
+          <button id="new-game" class="primary" type="button">New game</button>
+        </div>
       </aside>
     </div>
   </main>

@@ -10,7 +10,7 @@ test('offline opening, illegal moves, undo, flip, and restart', async ({ page })
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await expect(page.locator('.square')).toHaveCount(64);
-  await expect(page.locator('.piece')).toHaveCount(32);
+  await expect(page.locator('#board > .square > .piece')).toHaveCount(32);
   await move(page, 'e2', 'e5');
   await expect(square(page, 'e2')).toHaveAttribute('aria-label', 'e2 White pawn');
   await move(page, 'e2', 'e4');

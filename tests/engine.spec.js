@@ -1,11 +1,12 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const { Chess } = require('chess.js');
 const square = (page, name) => page.locator(`[data-square="${name}"]`);
 async function move(page, from, to) { await square(page, from).click(); await square(page, to).click(); }
 async function mockConnection(page) {
   await page.route('**/api/engine/status', route => route.fulfill({ json: { name: 'Test engine' } }));
 }
-async function selectEngine(page) { await page.selectOption('#opponent', 'engine'); }
+async function selectEngine(page) { await inPanel(page, 'setup', () => page.selectOption('#opponent', 'engine')); }
 test.beforeEach(async ({ page }) => { await page.goto('http://127.0.0.1:4173'); });
 
 test('engine replies legally, locks its pieces, and undo returns to the human turn', async ({ page }) => {
@@ -32,7 +33,7 @@ test('playing black lets engine open and flips the board', async ({ page }) => {
   await page.route('**/api/engine/move', route => route.fulfill({ json: { move: 'e2e4' } }));
   await selectEngine(page);
   await expect(page.locator('#engine-status')).toContainText('connected');
-  await page.selectOption('#human-side', 'b');
+  await inPanel(page, 'setup', () => page.selectOption('#human-side', 'b'));
   await expect(square(page, 'e4')).toHaveAttribute('aria-label', 'e4 White pawn');
   await expect(page.locator('.square').first()).toHaveAttribute('data-square', 'h1');
   await expect(page.locator('#bottom-player')).toHaveText('You · Black');
@@ -93,7 +94,7 @@ test('connection errors are recoverable and local play remains available', async
   await mockConnection(page);
   await page.getByRole('button', { name: 'Connect engine' }).click();
   await expect(page.locator('#engine-status')).toContainText('connected');
-  await page.selectOption('#opponent', 'local');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'local'));
   await move(page, 'e2', 'e4');
   await move(page, 'e7', 'e5');
   await expect(page.locator('#status')).toHaveText('White to move');
@@ -116,7 +117,7 @@ test('standalone HTML explains how to enable the engine', async ({ page }) => {
   await page.setContent(fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf8'));
   await selectEngine(page);
   await expect(page.locator('#engine-status')).toContainText('npm.cmd start');
-  await page.selectOption('#opponent', 'local');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'local'));
   await move(page, 'e2', 'e4');
   await expect(page.locator('#status')).toHaveText('Black to move');
 });
@@ -140,11 +141,11 @@ test('real Fairy Stockfish responds through the bridge and browser', async ({ pa
   expect((await status.json()).name).toContain('Fairy-Stockfish');
   await selectEngine(page);
   await expect(page.locator('#engine-status')).toContainText('connected');
-  await page.selectOption('#difficulty', 'easy');
+  await inPanel(page, 'setup', () => page.selectOption('#difficulty', 'easy'));
   await move(page, 'e2', 'e4');
   await expect(page.locator('#status')).toHaveText('White to move');
   await expect(page.locator('#history li span')).toHaveCount(2);
-  await page.selectOption('#difficulty', 'hard');
+  await inPanel(page, 'setup', () => page.selectOption('#difficulty', 'hard'));
   await move(page, 'g1', 'f3');
   await expect(page.locator('#engine-status')).toContainText('thinking');
   await page.getByRole('button', { name: 'Pause engine' }).click();

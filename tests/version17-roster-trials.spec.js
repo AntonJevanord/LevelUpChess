@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const { PLAYABLE_LIBRARIES, getPlayableProfile } = require('../src/design-options');
 const { VariantGame, initVariantRules } = require('../dist/rules-node.cjs');
 const { placementFromMap } = require('../src/profile-fen');
@@ -9,7 +10,7 @@ const ids = { bishop: 'bishop.vertical-blocked@1', pawn: 'pawn.queen-sideways@1'
   king: 'king.grant-king-level3@1', orthogonal: 'king.grant-orthogonal-three-level3@1', knight: 'king.grant-knight-level3@1' };
 const type = id => profile.registry.allocations.find(item => item.id === id).letter;
 const square = (page, name) => page.locator(`#board [data-square="${name}"]`);
-const marker = (page, name) => square(page, name).locator('.move-marker, .capture-marker');
+const marker = (page, name) => square(page, name).locator('.move-marker[data-playable=true], .capture-marker');
 async function choose(page, name, id) {
   await square(page, name).click();
   await page.locator(`#setup-picker [data-upgrade-id="${id}"]`).click();
@@ -27,8 +28,8 @@ test('the archived roster retains its earlier pieces and three distinct three-po
   expect(entries.findIndex(item => item.label === 'Version 17 · Roster and king trials')).toBeLessThan(entries.findIndex(item => item.value === library.variant));
   expect(entries.find(item => item.value === library.variant).label).toBe('Version 17 · Roster and trials (archive)');
   expect(entries.some(item => item.label === 'Version 17 · Pawn workshop (bishop trial)')).toBe(true);
-  await page.selectOption('#game-mode', library.variant);
-  await page.locator('#experimental-budget').fill('9');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', library.variant));
+  await inPanel(page, 'setup', () => page.locator('#experimental-budget').fill('9'));
   await square(page, 'e1').click();
   const picker = page.locator('#setup-picker');
   for (const [id, name] of [[ids.king, 'King-step grant'], [ids.orthogonal, 'Three-step Orthogonal grant'], [ids.knight, 'Knight grant']]) {
@@ -60,7 +61,7 @@ test('Rook-ray captures cross one hurdle, stop at the next piece and remain port
   const game = new VariantGame(fen, library.variant);
   const pgn = game.pgn(); game.dispose();
   await page.goto('http://127.0.0.1:4173');
-  await page.getByRole('button', { name: 'Import PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Import PGN', exact: true }).click());
   await page.locator('#pgn-text').fill(pgn);
   await page.getByRole('button', { name: 'Import game', exact: true }).click();
   if (await page.locator('#replace-dialog').isVisible()) await page.getByRole('button', { name: 'Replace game', exact: true }).click();
@@ -70,9 +71,9 @@ test('Rook-ray captures cross one hurdle, stop at the next piece and remain port
   for (const name of ['h4', 'f5', 'e6']) await expect(marker(page, name)).toHaveCount(0);
   await square(page, 'g4').click();
   await expect(square(page, 'g4')).toHaveAttribute('data-design-id', ids.queen);
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(page.locator('#game-mode')).toHaveValue(library.variant);
   await expect(square(page, 'g4')).toHaveAttribute('data-design-id', ids.queen);
   await page.getByRole('button', { name: /Undo move/ }).click();
@@ -82,7 +83,7 @@ test('Rook-ray captures cross one hurdle, stop at the next piece and remain port
 
 test('the Rook-ray queen cannot start the rejected diagonal-hop opening through its e-pawn', async ({ page }) => {
   await page.goto('http://127.0.0.1:4173');
-  await page.selectOption('#game-mode', library.variant);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', library.variant));
   await choose(page, 'd1', ids.queen);
   await start(page);
   await square(page, 'd1').click();

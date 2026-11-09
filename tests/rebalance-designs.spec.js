@@ -1,10 +1,11 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const { VariantGame, initVariantRules } = require('../dist/rules-node.cjs');
 const { PLAYABLE_PROFILE, PLAYABLE_PROFILES, DESIGN_OPTIONS } = require('../src/design-options');
 
 const VARIANT = PLAYABLE_PROFILE.variant;
 const square = (page, name) => page.locator(`[data-square="${name}"]`);
-const marker = (page, name) => square(page, name).locator('.move-marker, .capture-marker');
+const marker = (page, name) => square(page, name).locator('.move-marker[data-playable=true], .capture-marker');
 const letter = id => PLAYABLE_PROFILE.registry.allocations.find(item => item.id === id).letter.toUpperCase();
 const names = new Map(DESIGN_OPTIONS.map(option => [option.id, option.name]));
 const revisions = {
@@ -15,7 +16,7 @@ const revisions = {
 };
 
 async function choose(page, family, slot, id) {
-  await page.selectOption('#experimental-family', family);
+  await inPanel(page, 'setup', () => page.selectOption('#experimental-family', family));
   await page.selectOption(`#experimental-upgrade-${slot}`, id);
 }
 async function start(page) {
@@ -42,7 +43,7 @@ function position(pieces, turn = 'w', rights = '-') {
   return `${rows.join('/')} ${turn} ${rights} - 0 1`;
 }
 async function importPgn(page, pgn) {
-  await page.getByRole('button', { name: 'Import PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Import PGN', exact: true }).click());
   await page.locator('#pgn-text').fill(pgn);
   await page.getByRole('button', { name: 'Import game', exact: true }).click();
   await expect(page.locator('#import-dialog')).not.toBeVisible();
@@ -63,22 +64,22 @@ test.beforeEach(async ({ page }) => { await page.goto('http://127.0.0.1:4173'); 
 
 test('the rebalance workshop offers all seven revisions and retires the box rook and level-three short queens', async ({ page }) => {
   await expect(page.locator('.version')).toHaveText('VERSION 18 / ARMY WORKSHOP');
-  await page.selectOption('#game-mode', VARIANT);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', VARIANT));
   const slots = { pawn: 'd2', bishop: 'c1', rook: 'a1', queen: 'd1' };
   for (const [family, ids] of Object.entries(revisions)) {
     for (const id of ids) {
       await choose(page, family, slots[family], id);
       await expect(page.locator(`#experimental-description-${slots[family]}`)).not.toBeEmpty();
       await expect(page.locator(`#experimental-description-${slots[family]}`)).not.toContainText('undefined');
-      await page.getByRole('button', { name: 'Clear both', exact: true }).click();
+      await inPanel(page, 'setup', () => page.getByRole('button', { name: 'Clear both', exact: true }).click());
     }
   }
   for (const profile of PLAYABLE_PROFILES) {
-    await page.selectOption('#game-mode', profile.variant);
+    await inPanel(page, 'setup', () => page.selectOption('#game-mode', profile.variant));
     await expect(page.locator('#experimental-upgrade-a1 option[value="rook.purple@1"]')).toHaveCount(0);
   }
-  await page.selectOption('#game-mode', VARIANT);
-  await page.selectOption('#experimental-family', 'queen');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', VARIANT));
+  await inPanel(page, 'setup', () => page.selectOption('#experimental-family', 'queen'));
   await expect(page.locator('#experimental-upgrade-d1 option[value="queen.purple@2"]')).toHaveCount(0);
   await expect(page.locator('#experimental-upgrade-d1 option[value="queen.purple@1"]')).toHaveCount(1);
 });
@@ -86,7 +87,7 @@ test('the rebalance workshop offers all seven revisions and retires the box rook
 test('Rank pawn shows both new wide forward jumps and performs a jump capture', async ({ page }) => {
   await importPosition(page, { a1: 'K', h8: 'k', d4: letter('pawn.purple@9'), e4: 'P', f5: 'p' });
   await square(page, 'd4').click();
-  await expect(square(page, 'b5').locator('.move-marker')).toHaveCount(1);
+  await expect(square(page, 'b5').locator('.move-marker[data-playable=true]')).toHaveCount(1);
   await expect(square(page, 'f5').locator('.capture-marker')).toHaveCount(1);
   await expect(marker(page, 'b3')).toHaveCount(0);
   await square(page, 'f5').click();
@@ -98,7 +99,7 @@ test('Rank pawn shows both new wide forward jumps and performs a jump capture', 
 test('revised bishops distinguish quiet knight jumps from short horizontal captures', async ({ page }) => {
   await importPosition(page, { a1: 'K', h8: 'k', d4: letter('bishop.purple@3'), d6: 'p', e6: 'p', e5: 'p' });
   await square(page, 'd4').click();
-  await expect(square(page, 'c6').locator('.move-marker')).toHaveCount(1);
+  await expect(square(page, 'c6').locator('.move-marker[data-playable=true]')).toHaveCount(1);
   await expect(marker(page, 'e6')).toHaveCount(0);
   for (const target of ['d6', 'e5']) await expect(square(page, target).locator('.capture-marker')).toHaveCount(1);
   await importPosition(page, { a1: 'K', h7: 'k', d4: letter('bishop.purple@4'), f4: 'p', g4: 'p', f3: 'p' });
@@ -113,7 +114,7 @@ test('Blink captures adjacent diagonals, keeps longer jumps quiet, and castles a
   await importPosition(page, { h1: 'K', h8: 'k', d4: letter('rook.purple@4'), e5: 'p', b2: 'p', d5: 'P' });
   await square(page, 'd4').click();
   await expect(square(page, 'e5').locator('.capture-marker')).toHaveCount(1);
-  await expect(square(page, 'b6').locator('.move-marker')).toHaveCount(1);
+  await expect(square(page, 'b6').locator('.move-marker[data-playable=true]')).toHaveCount(1);
   await expect(marker(page, 'b2')).toHaveCount(0);
   await square(page, 'e5').click();
   await hasDesign(page, 'e5', 'rook.purple@4');
@@ -129,7 +130,7 @@ test('Ranging limits diagonal captures while Courier can capture on a long forwa
   await square(page, 'd4').click();
   await expect(square(page, 'b6').locator('.capture-marker')).toHaveCount(1);
   await expect(marker(page, 'g7')).toHaveCount(0);
-  await expect(square(page, 'd1').locator('.move-marker')).toHaveCount(1);
+  await expect(square(page, 'd1').locator('.move-marker[data-playable=true]')).toHaveCount(1);
   await importPosition(page, { a1: 'K', h8: 'k', d4: letter('pawn.purple@8'), g7: 'p', c3: 'p' });
   await square(page, 'd4').click();
   await expect(square(page, 'g7').locator('.capture-marker')).toHaveCount(1);
@@ -143,7 +144,7 @@ test('the companion can move orthogonally into attack but captures only diagonal
   await square(page, 'd4').click();
   await expect(marker(page, 'e4')).toHaveCount(0);
   await expect(square(page, 'e5').locator('.capture-marker')).toHaveCount(1);
-  await expect(square(page, 'd5').locator('.move-marker')).toHaveCount(1);
+  await expect(square(page, 'd5').locator('.move-marker[data-playable=true]')).toHaveCount(1);
   await square(page, 'd5').click();
   await hasDesign(page, 'd5', 'queen.purple@4');
   await move(page, 'd8', 'd5');
@@ -153,7 +154,7 @@ test('the companion can move orthogonally into attack but captures only diagonal
 
 test('both companion purchases retain their queens and recover deployment, moves, save, PGN and undo', async ({ page }) => {
   test.setTimeout(60000);
-  await page.selectOption('#game-mode', VARIANT);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', VARIANT));
   await choose(page, 'queen', 'd1', 'queen.purple@4');
   await choose(page, 'queen', 'd8', 'queen.purple@4');
   await start(page);
@@ -166,12 +167,12 @@ test('both companion purchases retain their queens and recover deployment, moves
   await move(page, 'd2', 'e3');
   await move(page, 'd7', 'e6');
   const waiting = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Export PGN', exact: true }).click());
   const fs = require('node:fs/promises');
   const pgn = await fs.readFile(await (await waiting).path(), 'utf8');
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await hasDesign(page, 'e3', 'queen.purple@4');
   await hasDesign(page, 'e6', 'queen.purple@4');
   for (const slot of ['d1', 'd8']) await expect(page.locator(`#experimental-upgrade-${slot}`)).toHaveValue('queen.purple@4');

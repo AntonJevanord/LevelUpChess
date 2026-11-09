@@ -1,11 +1,12 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const { PLAYABLE_LIBRARIES } = require('../src/design-options');
 
 const kings = PLAYABLE_LIBRARIES.find(library => library.id === 'v16-references');
 
 test('King workshop opens the nine king grants directly', async ({ page }) => {
   await page.goto('http://127.0.0.1:4173');
-  await page.selectOption('#game-mode', { label: 'Version 16 · King workshop' });
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', { label: 'Version 16 · King workshop' }));
   await expect(page.locator('#game-mode')).toHaveValue(kings.variant);
   await expect(page.locator('#setup-piece-title')).toHaveText('White king · e1');
   await expect(page.locator('#setup-upgrades [data-upgrade-id^="king.reserve-"]')).toHaveCount(9);
@@ -16,7 +17,7 @@ test('King workshop opens the nine king grants directly', async ({ page }) => {
 test('short desktop viewports can scroll past setup controls to reveal the bottom rank', async ({ page }) => {
   await page.setViewportSize({ width: 1366, height: 768 });
   await page.goto('http://127.0.0.1:4173');
-  await page.selectOption('#game-mode', kings.variant);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', kings.variant));
   await page.evaluate(() => window.scrollTo(0, 900));
   const bottomRankFits = () => page.locator('[data-square="a1"]').evaluate(square => {
     const bounds = square.getBoundingClientRect();

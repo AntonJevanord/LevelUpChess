@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const fs = require('node:fs/promises');
 const { VariantGame, initVariantRules } = require('../dist/rules-node.cjs');
 const { PLAYABLE_LIBRARIES, getPlayableProfile } = require('../src/design-options');
@@ -8,7 +9,7 @@ const profile = library && getPlayableProfile(library.variant);
 const square = (page, name) => page.locator(`#board [data-square="${name}"]`);
 const type = id => profile.registry.allocations.find(item => item.id === id).letter;
 const pocket = (page, color, piece) => page.locator(`[data-pocket-color="${color}"][data-pocket-type="${piece}"]`);
-const marker = (page, name) => square(page, name).locator('.move-marker, .capture-marker');
+const marker = (page, name) => square(page, name).locator('.move-marker[data-playable=true], .capture-marker');
 const kingGrant = 'king.reserve-king@1';
 const trueQueenGrant = 'king.reserve-true-queen@1';
 const bishopGrant = 'king.reserve-bishop@1';
@@ -29,7 +30,7 @@ function position(pieces, reserves = '', turn = 'w', rights = '-') {
 }
 
 async function importPgn(page, pgn) {
-  await page.getByRole('button', { name: 'Import PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Import PGN', exact: true }).click());
   await page.locator('#pgn-text').fill(pgn);
   await page.getByRole('button', { name: 'Import game', exact: true }).click();
   await expect(page.locator('#import-dialog')).not.toBeVisible();
@@ -64,8 +65,8 @@ test.beforeAll(async () => {
 test.beforeEach(async ({ page }) => { await page.goto('http://127.0.0.1:4173'); });
 
 test('clicking starting pieces selects upgrades, and the ninth king purchase becomes a finite reserve', async ({ page }) => {
-  await page.selectOption('#game-mode', library.variant);
-  await page.locator('#experimental-budget').fill('9');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', library.variant));
+  await inPanel(page, 'setup', () => page.locator('#experimental-budget').fill('9'));
   await square(page, 'e1').click();
   await expect(page.locator('#setup-piece-title')).toContainText('e1');
   await page.locator(`#setup-picker [data-upgrade-id="${trueQueenGrant}"]`).click();
@@ -85,7 +86,7 @@ test('clicking starting pieces selects upgrades, and the ninth king purchase bec
 });
 
 test('the official replacement roster is selectable directly on the board and reset clears the reserve purchase', async ({ page }) => {
-  await page.selectOption('#game-mode', library.variant);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', library.variant));
   for (const [name, id] of [['a1', 'rook.purple@10'], ['b8', 'knight.purple@3']]) {
     await square(page, name).click();
     await page.locator(`#setup-picker [data-upgrade-id="${id}"]`).click();
@@ -93,7 +94,7 @@ test('the official replacement roster is selectable directly on the board and re
   await square(page, 'e1').click();
   await page.locator(`#setup-picker [data-upgrade-id="${kingGrant}"]`).click();
   await expect(page.locator('#experimental-status')).toContainText('White 7/6');
-  await page.locator('#clear-white-army').click();
+  await inPanel(page, 'setup', () => page.locator('#clear-white-army').click());
   await expect(page.locator('#experimental-status')).toContainText('White 0/6 · Black 3/6');
   await start(page);
   await expect(square(page, 'a1')).toHaveAttribute('aria-label', 'a1 White rook');
@@ -104,10 +105,10 @@ test('the official replacement roster is selectable directly on the board and re
 test('leaving board setup for ordinary chess closes the picker and keeps the current game playable', async ({ page }) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.selectOption('#game-mode', library.variant);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', library.variant));
   await square(page, 'e1').click();
   await page.locator(`#setup-picker [data-upgrade-id="${bishopGrant}"]`).click();
-  await page.selectOption('#game-mode', 'chess');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'chess'));
   await expect(page.locator('#setup-picker')).not.toBeVisible();
   await expect(page.locator('#setup-toolbar')).not.toBeVisible();
   await move(page, 'e2', 'e4');
@@ -120,10 +121,10 @@ test('reserve drops use the chess clock, setup pauses it, and saved undo restore
   await page.clock.install({ time: new Date('2026-10-27T12:00:00Z') });
   await page.clock.pauseAt(new Date('2026-10-27T12:00:01Z'));
   await page.reload();
-  await page.selectOption('#game-mode', library.variant);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', library.variant));
   await square(page, 'e1').click();
   await page.locator(`#setup-picker [data-upgrade-id="${bishopGrant}"]`).click();
-  await page.selectOption('#time-control', 'blitz');
+  await inPanel(page, 'setup', () => page.selectOption('#time-control', 'blitz'));
   await start(page);
   await page.getByRole('button', { name: 'Start clock', exact: true }).click();
   await page.clock.fastForward(10_000);
@@ -139,9 +140,9 @@ test('reserve drops use the chess clock, setup pauses it, and saved undo restore
   await page.clock.fastForward(7_000);
   await move(page, 'e7', 'e5');
   await expect(page.locator('#black-clock')).toHaveText('02:55');
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(square(page, 'e4')).toHaveAttribute('data-design-id', bishopGrant);
   await expect(page.locator('#white-clock')).toHaveText('02:52');
   await expect(page.locator('#black-clock')).toHaveText('02:55');
@@ -196,8 +197,8 @@ test('an engine drop reply is played with the same profile and finite pocket as 
     return route.fulfill({ json: { move: `${grant.toUpperCase()}@e4` } });
   });
   await importPosition(page, { a1: 'K', h8: 'k' }, grant.toUpperCase());
-  await page.selectOption('#opponent', 'engine');
-  await page.selectOption('#human-side', 'b');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'engine'));
+  await inPanel(page, 'setup', () => page.selectOption('#human-side', 'b'));
   await expect(square(page, 'e4')).toHaveAttribute('data-design-id', bishopGrant);
   await expect(pocket(page, 'w', grant)).toHaveCount(0);
   await expect(page.locator('#status')).toHaveText('Black to move');
@@ -217,16 +218,17 @@ test('editing armies cancels an engine search and leaves Resume engine available
     if (searches === 1) await gate;
     await route.fulfill({ json: { move: 'e7e5' } }).catch(() => {});
   });
-  await page.selectOption('#game-mode', library.variant);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', library.variant));
   await start(page);
-  await page.selectOption('#opponent', 'engine');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'engine'));
   await expect(page.locator('#engine-status')).toContainText('connected');
   await move(page, 'e2', 'e4');
   await expect.poll(() => searches).toBe(1);
   await page.locator('#setup-mode').click();
   release();
-  await expect(page.locator('#engine-retry')).toBeEnabled();
+  await expect(page.locator('#engine-retry')).toBeDisabled();
   await page.locator('#setup-mode').click();
+  await expect(page.locator('#engine-retry')).toBeEnabled();
   await expect(square(page, 'e7')).toHaveAttribute('aria-label', 'e7 Black pawn');
   await page.locator('#engine-retry').click();
   await expect(square(page, 'e5')).toHaveAttribute('aria-label', 'e5 Black pawn');
@@ -239,9 +241,9 @@ test('the real native bridge answers a forced reserve interposition', async ({ p
   // The checked king cannot escape: the a-file rook covers a2, the bishop
   // covers b1, and the black king covers b2. Only an a-file reserve drop works.
   await importPosition(page, { a1: 'K', c3: 'k', c2: 'b', a8: 'r' }, grant.toUpperCase());
-  await page.selectOption('#opponent', 'engine');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'engine'));
   await expect(page.locator('#engine-status')).toContainText('connected', { timeout: 20000 });
-  await page.selectOption('#human-side', 'b');
+  await inPanel(page, 'setup', () => page.selectOption('#human-side', 'b'));
   await expect(page.locator('#history li span')).toHaveCount(1, { timeout: 20000 });
   await expect(page.locator('#history li span')).toHaveText(/@a[234]/);
   await expect(pocket(page, 'w', grant)).toHaveCount(0);
@@ -257,12 +259,12 @@ test('a drop survives save and PGN, captured guards never recycle, and undo rest
   await square(page, 'e4').click();
   await expect(square(page, 'e4')).toHaveAttribute('data-design-id', bishopGrant);
   const waiting = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Export PGN', exact: true }).click());
   const pgn = await fs.readFile(await (await waiting).path(), 'utf8');
   expect(pgn).toContain('@e4');
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(square(page, 'e4')).toHaveAttribute('data-design-id', bishopGrant);
   await expect(pocket(page, 'w', grant)).toHaveCount(0);
   await move(page, 'e8', 'e4');

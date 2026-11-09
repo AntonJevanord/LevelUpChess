@@ -27767,7 +27767,7 @@
       var EXPERIMENTAL_VARIANT2 = PLAYABLE_PROFILE2.variant;
       var EXPERIMENTAL_VARIANTS2 = freeze(PLAYABLE_PROFILES2.map((profile) => profile.variant));
       var PLAYABLE_LIBRARIES2 = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES2[index].variant, ...library.generation ? { generation: library.generation } : {}, ...library.focusFamily ? { focusFamily: library.focusFamily } : {}, ...library.edition ? { edition: library.edition } : {}, ...library.superseded ? { superseded: true } : {} })));
-      function getPlayableProfile3(variant = EXPERIMENTAL_VARIANT2) {
+      function getPlayableProfile4(variant = EXPERIMENTAL_VARIANT2) {
         return PLAYABLE_PROFILES2.find((profile) => profile.variant === variant);
       }
       function isExperimentalVariant4(variant) {
@@ -27984,7 +27984,7 @@
         };
       }
       function getDesignOptions2(variant = EXPERIMENTAL_VARIANT2) {
-        const profile = getPlayableProfile3(variant);
+        const profile = getPlayableProfile4(variant);
         if (!profile) return [];
         return profile.registry.definitions.map((definition) => optionInProfile(optionsById[definition.id], profile)).filter((option) => option.status !== "retired");
       }
@@ -28027,28 +28027,28 @@
         return Object.keys(left).length === keys.length && keys.every((key) => Object.hasOwn(left, key) && sameValue(left[key], right[key]));
       }
       function getProfileSnapshot3(variant = EXPERIMENTAL_VARIANT2) {
-        return PROFILE_SNAPSHOTS.find((snapshot) => snapshot.variant === variant);
+        return PROFILE_SNAPSHOTS.find((snapshot2) => snapshot2.variant === variant);
       }
-      function validateProfileSnapshot2(snapshot, variant = snapshot?.variant) {
+      function validateProfileSnapshot2(snapshot2, variant = snapshot2?.variant) {
         const expected = getProfileSnapshot3(variant);
-        if (!expected || !sameValue(snapshot, expected)) throw new Error("This experimental game needs its original design profile. Use the matching build; modified rules or allocations are not supported.");
+        if (!expected || !sameValue(snapshot2, expected)) throw new Error("This experimental game needs its original design profile. Use the matching build; modified rules or allocations are not supported.");
         return expected;
       }
-      function encodeProfileSnapshot2(snapshot = getProfileSnapshot3()) {
-        const bytes = new TextEncoder().encode(JSON.stringify(validateProfileSnapshot2(snapshot)));
+      function encodeProfileSnapshot2(snapshot2 = getProfileSnapshot3()) {
+        const bytes = new TextEncoder().encode(JSON.stringify(validateProfileSnapshot2(snapshot2)));
         return btoa(Array.from(bytes, (value) => String.fromCharCode(value)).join(""));
       }
       function decodeProfileSnapshot2(encoded) {
         try {
           if (typeof encoded !== "string" || !encoded.length || encoded.length > 32768 || !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(encoded)) throw new Error();
           const bytes = Uint8Array.from(atob(encoded), (character) => character.charCodeAt(0));
-          const snapshot = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes));
-          return validateProfileSnapshot2(snapshot);
+          const snapshot2 = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes));
+          return validateProfileSnapshot2(snapshot2);
         } catch {
           throw new Error("The experimental game profile is damaged or does not match this build.");
         }
       }
-      module.exports = { PLAYABLE_PROFILE: PLAYABLE_PROFILE2, PLAYABLE_PROFILES: PLAYABLE_PROFILES2, PLAYABLE_LIBRARIES: PLAYABLE_LIBRARIES2, EXPERIMENTAL_VARIANT: EXPERIMENTAL_VARIANT2, EXPERIMENTAL_VARIANTS: EXPERIMENTAL_VARIANTS2, DESIGN_OPTIONS: DESIGN_OPTIONS2, getPlayableProfile: getPlayableProfile3, getDesignOptions: getDesignOptions2, isExperimentalVariant: isExperimentalVariant4, pieceInfoForProfile: pieceInfoForProfile3, getProfileSnapshot: getProfileSnapshot3, validateProfileSnapshot: validateProfileSnapshot2, encodeProfileSnapshot: encodeProfileSnapshot2, decodeProfileSnapshot: decodeProfileSnapshot2 };
+      module.exports = { PLAYABLE_PROFILE: PLAYABLE_PROFILE2, PLAYABLE_PROFILES: PLAYABLE_PROFILES2, PLAYABLE_LIBRARIES: PLAYABLE_LIBRARIES2, EXPERIMENTAL_VARIANT: EXPERIMENTAL_VARIANT2, EXPERIMENTAL_VARIANTS: EXPERIMENTAL_VARIANTS2, DESIGN_OPTIONS: DESIGN_OPTIONS2, getPlayableProfile: getPlayableProfile4, getDesignOptions: getDesignOptions2, isExperimentalVariant: isExperimentalVariant4, pieceInfoForProfile: pieceInfoForProfile3, getProfileSnapshot: getProfileSnapshot3, validateProfileSnapshot: validateProfileSnapshot2, encodeProfileSnapshot: encodeProfileSnapshot2, decodeProfileSnapshot: decodeProfileSnapshot2 };
     }
   });
 
@@ -28065,7 +28065,7 @@
         }
         return match?.[1] || "";
       }
-      function pieceMap(fen) {
+      function pieceMap2(fen) {
         if (typeof fen !== "string") throw new Error("Invalid balance starting FEN.");
         const pocket = pocketLetters2(fen);
         const placement = fen.split(" ")[0].replace(/\[[A-Za-z]*\]$/, "").split("/");
@@ -28085,7 +28085,7 @@
         if (fen.split(" ")[0].includes("[")) pieces.pocket = pocket;
         return pieces;
       }
-      function placementFromMap(pieces) {
+      function placementFromMap2(pieces) {
         return Array.from({ length: 8 }, (_, row) => {
           let result = "", empty = 0;
           for (const file2 of "abcdefgh") {
@@ -28150,7 +28150,7 @@
         const fen = input.trim().split(/\s+/).join(" ");
         const fields = fen.split(" ");
         if (fields.length !== 6 || !["w", "b"].includes(fields[1]) || !/^\d+$/.test(fields[4]) || !/^[1-9]\d*$/.test(fields[5])) throw new Error("Invalid balance starting FEN.");
-        const pieces = pieceMap(fen);
+        const pieces = pieceMap2(fen);
         const pocket = pocketLetters2(fen);
         if (fields[0].includes("[") && !roles?.reserveTypes) throw new Error("This profile does not support reserve pockets.");
         if ([...pocket].some((type) => !roles?.reserveTypes?.includes(type.toLowerCase()))) throw new Error("The pocket contains an unsupported reserve piece.");
@@ -28170,7 +28170,7 @@
         }
         return new module2.Board(variant, fen);
       }
-      module.exports = { ROYALS, pieceMap, placementFromMap, pocketLetters: pocketLetters2, checkedBoard: checkedBoard2 };
+      module.exports = { ROYALS, pieceMap: pieceMap2, placementFromMap: placementFromMap2, pocketLetters: pocketLetters2, checkedBoard: checkedBoard2 };
     }
   });
 
@@ -28345,7 +28345,7 @@
       var { STANDARD_TYPES } = require_design_catalog();
       var { PIECE_SLOTS: PIECE_SLOTS2 } = require_piece_catalog();
       var { START_FEN } = require_knight_setup();
-      var { pieceMap } = require_profile_fen();
+      var { pieceMap: pieceMap2 } = require_profile_fen();
       var relativeSquare = (square, color) => color === "w" ? square : square[0] + (9 - Number(square[1]));
       var colored = (type, color) => color === "w" ? type.toUpperCase() : type;
       var own = (piece, color) => typeof piece === "string" && piece === colored(piece.toLowerCase(), color);
@@ -28373,7 +28373,7 @@
         }
         pieces.set(relativeSquare(target, color), colored(letter, color));
       }
-      function deployDesignArmies(profile, white = {}, black = {}, initialPieces = pieceMap(START_FEN)) {
+      function deployDesignArmies(profile, white = {}, black = {}, initialPieces = pieceMap2(START_FEN)) {
         if (!(initialPieces instanceof Map)) throw new Error("Deployment needs a starting piece map.");
         const pieces = new Map(initialPieces);
         if (Object.hasOwn(initialPieces, "pocket")) pieces.pocket = initialPieces.pocket;
@@ -28490,7 +28490,7 @@
       "use strict";
       var { PLAYABLE_PROFILE: PLAYABLE_PROFILE2 } = require_design_options();
       var { PIECE_SLOTS: PIECE_SLOTS2 } = require_piece_catalog();
-      var { placementFromMap, pieceMap } = require_profile_fen();
+      var { placementFromMap: placementFromMap2, pieceMap: pieceMap2 } = require_profile_fen();
       var { deployDesignArmies, recoverDesignChoices } = require_design_deployment();
       var DEFAULT_DESIGN_CHOICES = Object.freeze(Object.fromEntries(PIECE_SLOTS2.map((slot) => [slot.square, ""])));
       var relative = (square) => square[0] + (9 - Number(square[1]));
@@ -28522,10 +28522,10 @@
         if (costs.w > budget || costs.b > budget) throw new Error(`Budget exceeded: White ${costs.w}/${budget} \xB7 Black ${costs.b}/${budget}.`);
         const pieces = deployDesignArmies(profile, armies.w, armies.b);
         const rights = [["K", "h1"], ["Q", "a1"], ["k", "h8"], ["q", "a8"]].filter(([, square]) => profile.roles.castlingRooks.includes(pieces.get(square)?.toLowerCase())).map(([right]) => right).join("") || "-";
-        return { fen: placementFromMap(pieces) + ` w ${rights} - 0 1`, choices, budget, costs, white: costs.w, black: costs.b };
+        return { fen: placementFromMap2(pieces) + ` w ${rights} - 0 1`, choices, budget, costs, white: costs.w, black: costs.b };
       }
       function loadDesignSetup3(fen, profile = PLAYABLE_PROFILE2) {
-        return recoverDesignChoices(pieceMap(fen), profile);
+        return recoverDesignChoices(pieceMap2(fen), profile);
       }
       module.exports = { DEFAULT_DESIGN_CHOICES, designSlots: designSlots2, defaultDesignChoices, designBudgetLimit: designBudgetLimit3, designSetupFromChoices: designSetupFromChoices3, loadDesignSetup: loadDesignSetup3 };
     }
@@ -28637,15 +28637,15 @@
             turnStart: balances(this.turnStart)
           };
         }
-        restore(snapshot, moveCount) {
-          validateSnapshot(snapshot, moveCount);
-          this.control = snapshot.control;
-          this.remaining = balances(snapshot.remaining);
-          this.active = snapshot.active;
-          this.started = snapshot.started;
-          this.expired = snapshot.expired;
-          this.history = snapshot.history.map((entry) => ({ remaining: balances(entry.remaining), active: entry.active }));
-          this.turnStart = balances(snapshot.turnStart);
+        restore(snapshot2, moveCount) {
+          validateSnapshot(snapshot2, moveCount);
+          this.control = snapshot2.control;
+          this.remaining = balances(snapshot2.remaining);
+          this.active = snapshot2.active;
+          this.started = snapshot2.started;
+          this.expired = snapshot2.expired;
+          this.history = snapshot2.history.map((entry) => ({ remaining: balances(entry.remaining), active: entry.active }));
+          this.turnStart = balances(snapshot2.turnStart);
           this.running = false;
           this._lastNow = null;
         }
@@ -28693,6 +28693,464 @@
         return `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
       }
       module.exports = { CLOCK_CONTROLS: CLOCK_CONTROLS2, ChessClock: ChessClock3, formatClock: formatClock2 };
+    }
+  });
+
+  // src/engine-play.js
+  var require_engine_play = __commonJS({
+    "src/engine-play.js"(exports, module) {
+      "use strict";
+      var OPPONENT_MODES = Object.freeze(["local", "engine", "selfplay"]);
+      var COLORS = /* @__PURE__ */ new Set(["w", "b"]);
+      function isOpponentMode2(opponent2) {
+        return OPPONENT_MODES.includes(opponent2);
+      }
+      function isEngineMode2(opponent2) {
+        return opponent2 === "engine" || opponent2 === "selfplay";
+      }
+      function engineControlsSide(opponent2, turn, humanSide2 = "w") {
+        if (!COLORS.has(turn)) return false;
+        return opponent2 === "selfplay" || opponent2 === "engine" && COLORS.has(humanSide2) && turn !== humanSide2;
+      }
+      function canHumanMove2(opponent2, turn, humanSide2 = "w") {
+        if (!COLORS.has(turn)) return false;
+        return opponent2 === "local" || opponent2 === "engine" && turn === humanSide2;
+      }
+      function canRequestEngineMove2({
+        opponent: opponent2,
+        turn,
+        humanSide: humanSide2 = "w",
+        connected: connected2,
+        busy,
+        paused,
+        pending: pending2,
+        editingSetup: editingSetup2,
+        finished,
+        canPlay: canPlay2,
+        stepRequested = false
+      } = {}) {
+        if (!engineControlsSide(opponent2, turn, humanSide2) || !connected2 || busy || pending2 || editingSetup2 || finished || !canPlay2) return false;
+        return !paused || opponent2 === "selfplay" && stepRequested === true;
+      }
+      module.exports = {
+        OPPONENT_MODES,
+        isOpponentMode: isOpponentMode2,
+        isEngineMode: isEngineMode2,
+        engineControlsSide,
+        canHumanMove: canHumanMove2,
+        canRequestEngineMove: canRequestEngineMove2
+      };
+    }
+  });
+
+  // src/board-annotations.js
+  var require_board_annotations = __commonJS({
+    "src/board-annotations.js"(exports, module) {
+      "use strict";
+      var SVG_NS = "http://www.w3.org/2000/svg";
+      var SQUARE2 = /^[a-h][1-8]$/;
+      var DEFAULT_COLOR = "#edc34b";
+      function squareCenter(square, flipped2 = false) {
+        if (!SQUARE2.test(square)) throw new Error("An annotation needs a board square.");
+        const file2 = square.charCodeAt(0) - 97, rank2 = Number(square[1]) - 1;
+        return flipped2 ? { x: 7.5 - file2, y: rank2 + 0.5 } : { x: file2 + 0.5, y: 7.5 - rank2 };
+      }
+      function squareAtPoint(x, y, bounds, flipped2 = false) {
+        if (![x, y, bounds?.left, bounds?.top, bounds?.width, bounds?.height].every(Number.isFinite) || bounds.width <= 0 || bounds.height <= 0) return null;
+        const file2 = Math.floor(8 * (x - bounds.left) / bounds.width);
+        const row = Math.floor(8 * (y - bounds.top) / bounds.height);
+        if (file2 < 0 || file2 > 7 || row < 0 || row > 7) return null;
+        return "abcdefgh"[flipped2 ? 7 - file2 : file2] + String(flipped2 ? row + 1 : 8 - row);
+      }
+      function arrowShape(from, to, flipped2 = false) {
+        const start = squareCenter(from, flipped2), tip = squareCenter(to, flipped2);
+        const dx = tip.x - start.x, dy = tip.y - start.y, length = Math.hypot(dx, dy);
+        if (!length) return null;
+        const ux = dx / length, uy = dy / length;
+        const base = { x: tip.x - ux * 0.32, y: tip.y - uy * 0.32 };
+        return {
+          start,
+          end: { x: tip.x - ux * 0.22, y: tip.y - uy * 0.22 },
+          head: [
+            tip,
+            { x: base.x - uy * 0.19, y: base.y + ux * 0.19 },
+            { x: base.x + uy * 0.19, y: base.y - ux * 0.19 }
+          ]
+        };
+      }
+      function createAnnotationModel() {
+        const entries = /* @__PURE__ */ new Map();
+        return {
+          toggle(from, to = from) {
+            if (!SQUARE2.test(from) || !SQUARE2.test(to)) throw new Error("An annotation needs board squares.");
+            const kind = from === to ? "circle" : "arrow", key = `${from}:${to}`;
+            if (entries.has(key)) entries.delete(key);
+            else entries.set(key, { kind, from, to });
+            return this.snapshot();
+          },
+          clear() {
+            const changed = entries.size > 0;
+            entries.clear();
+            return changed;
+          },
+          snapshot() {
+            return [...entries.values()].map((entry) => ({ ...entry }));
+          }
+        };
+      }
+      function createBoardAnnotations2({
+        stage,
+        board: board2,
+        svg,
+        isFlipped = () => false,
+        color = () => DEFAULT_COLOR,
+        onChange = () => {
+        }
+      } = {}) {
+        if (!stage || !board2 || !board2.ownerDocument) throw new Error("Annotations need the board and its stage.");
+        const document2 = board2.ownerDocument, view = document2.defaultView;
+        const ownsSvg = !svg;
+        if (!svg) {
+          svg = document2.createElementNS(SVG_NS, "svg");
+          svg.id = "board-annotations";
+          stage.append(svg);
+        }
+        svg.classList.add("board-annotations");
+        svg.setAttribute("viewBox", "0 0 8 8");
+        svg.setAttribute("preserveAspectRatio", "none");
+        svg.setAttribute("aria-hidden", "true");
+        svg.setAttribute("focusable", "false");
+        Object.assign(svg.style, { position: "absolute", pointerEvents: "none", overflow: "hidden", zIndex: "4" });
+        const model = createAnnotationModel(), listeners = [];
+        let drawing = false, gesture = null, suppressClick = false, disposed = false;
+        const originalTouchAction = board2.style.touchAction;
+        function bounds() {
+          const rect = board2.getBoundingClientRect();
+          const borderX = board2.clientLeft || 0, borderY = board2.clientTop || 0;
+          return {
+            left: rect.left + borderX,
+            top: rect.top + borderY,
+            width: board2.clientWidth || Math.max(0, rect.width - 2 * borderX),
+            height: board2.clientHeight || Math.max(0, rect.height - 2 * borderY)
+          };
+        }
+        const at = (event) => squareAtPoint(event.clientX, event.clientY, bounds(), Boolean(isFlipped()));
+        const consume = (event) => {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        };
+        function element(name, attributes) {
+          const node2 = document2.createElementNS(SVG_NS, name);
+          for (const [key, value] of Object.entries(attributes)) node2.setAttribute(key, String(value));
+          return node2;
+        }
+        function draw(entry, preview = false) {
+          const flipped2 = Boolean(isFlipped()), tint = /^#[0-9a-f]{6}$/i.test(color()) ? color() : DEFAULT_COLOR;
+          const group = element("g", {
+            opacity: preview ? 0.48 : 0.78,
+            "data-annotation": entry.kind,
+            "data-kind": entry.kind,
+            "data-from": entry.from,
+            "data-to": entry.to
+          });
+          if (entry.kind === "circle") group.setAttribute("data-square", entry.from);
+          if (preview) group.setAttribute("data-preview", "true");
+          if (entry.kind === "circle") {
+            const center = squareCenter(entry.from, flipped2);
+            group.append(element("circle", {
+              class: "annotation-circle",
+              cx: center.x,
+              cy: center.y,
+              r: 0.43,
+              fill: "none",
+              stroke: tint,
+              "stroke-width": 0.065
+            }));
+          } else {
+            const shape = arrowShape(entry.from, entry.to, flipped2);
+            group.append(
+              element("line", {
+                class: "annotation-arrow",
+                x1: shape.start.x,
+                y1: shape.start.y,
+                x2: shape.end.x,
+                y2: shape.end.y,
+                stroke: tint,
+                "stroke-width": 0.12,
+                "stroke-linecap": "round"
+              }),
+              element("polygon", { class: "annotation-arrowhead", points: shape.head.map((point) => `${point.x},${point.y}`).join(" "), fill: tint })
+            );
+          }
+          return group;
+        }
+        function render2() {
+          if (disposed) return;
+          const area = bounds(), parent = stage.getBoundingClientRect();
+          Object.assign(svg.style, {
+            left: `${area.left - parent.left + (stage.scrollLeft || 0) - (stage.clientLeft || 0)}px`,
+            top: `${area.top - parent.top + (stage.scrollTop || 0) - (stage.clientTop || 0)}px`,
+            width: `${area.width}px`,
+            height: `${area.height}px`
+          });
+          const drawings = model.snapshot().map((entry) => draw(entry));
+          if (gesture?.to) drawings.push(draw({ kind: gesture.from === gesture.to ? "circle" : "arrow", from: gesture.from, to: gesture.to }, true));
+          svg.replaceChildren(...drawings);
+        }
+        function release(pointerId) {
+          try {
+            board2.releasePointerCapture?.(pointerId);
+          } catch {
+          }
+        }
+        function cancelGesture() {
+          const previous = gesture;
+          gesture = null;
+          if (previous) release(previous.pointerId);
+          render2();
+        }
+        function pointerDown(event) {
+          if (gesture) return;
+          suppressClick = false;
+          if (event.button !== 2 && !(drawing && event.button === 0)) return;
+          const from = at(event);
+          if (!from) return;
+          consume(event);
+          suppressClick = event.button === 0;
+          gesture = { pointerId: event.pointerId, from, to: from };
+          try {
+            board2.setPointerCapture?.(event.pointerId);
+          } catch {
+          }
+          render2();
+        }
+        function pointerMove(event) {
+          if (!gesture || event.pointerId !== gesture.pointerId) return;
+          consume(event);
+          gesture.to = at(event);
+          render2();
+        }
+        function pointerUp(event) {
+          if (!gesture || event.pointerId !== gesture.pointerId) return;
+          consume(event);
+          const previous = gesture, to = at(event);
+          gesture = null;
+          release(previous.pointerId);
+          if (to) {
+            model.toggle(previous.from, to);
+            onChange(model.snapshot());
+          }
+          render2();
+        }
+        function pointerCancel(event) {
+          if (!gesture || event.pointerId !== gesture.pointerId) return;
+          consume(event);
+          cancelGesture();
+        }
+        function click(event) {
+          if (!drawing && !(suppressClick && event.detail !== 0)) return;
+          consume(event);
+          suppressClick = false;
+          if (drawing && event.detail === 0) {
+            const square = event.target?.closest?.("[data-square]")?.dataset.square;
+            if (SQUARE2.test(square)) {
+              model.toggle(square);
+              onChange(model.snapshot());
+              render2();
+            }
+          }
+        }
+        function keyDown(event) {
+          if (event.key !== "Escape") return;
+          clear();
+        }
+        function clear() {
+          cancelGesture();
+          if (model.clear()) {
+            render2();
+            onChange(model.snapshot());
+          }
+        }
+        function listen(target, name, handler, options) {
+          target.addEventListener(name, handler, options);
+          listeners.push(() => target.removeEventListener(name, handler, options));
+        }
+        listen(board2, "pointerdown", pointerDown, { capture: true });
+        listen(board2, "pointermove", pointerMove, { capture: true });
+        listen(board2, "pointerup", pointerUp, { capture: true });
+        listen(board2, "pointercancel", pointerCancel, { capture: true });
+        listen(board2, "lostpointercapture", (event) => {
+          if (gesture && event.pointerId === gesture.pointerId) {
+            gesture = null;
+            render2();
+          }
+        });
+        listen(board2, "click", click, { capture: true });
+        listen(board2, "contextmenu", (event) => event.preventDefault());
+        listen(document2, "keydown", keyDown);
+        if (view) listen(view, "resize", render2);
+        const Observer = view?.ResizeObserver;
+        const observer = Observer ? new Observer(render2) : null;
+        observer?.observe(board2);
+        render2();
+        return {
+          setDrawing(value) {
+            if (disposed) return;
+            drawing = Boolean(value);
+            cancelGesture();
+            board2.style.touchAction = drawing ? "none" : originalTouchAction;
+            board2.classList.toggle("drawing-board", drawing);
+          },
+          clear,
+          render: render2,
+          snapshot: () => model.snapshot(),
+          dispose() {
+            if (disposed) return;
+            cancelGesture();
+            disposed = true;
+            for (const remove of listeners) remove();
+            observer?.disconnect();
+            board2.style.touchAction = originalTouchAction;
+            board2.classList.remove("drawing-board");
+            svg.replaceChildren();
+            if (ownsSvg) svg.remove();
+          }
+        };
+      }
+      module.exports = { DEFAULT_COLOR, squareCenter, squareAtPoint, arrowShape, createAnnotationModel, createBoardAnnotations: createBoardAnnotations2 };
+    }
+  });
+
+  // src/board-appearance.js
+  var require_board_appearance = __commonJS({
+    "src/board-appearance.js"(exports, module) {
+      "use strict";
+      var APPEARANCE_KEY = "levelupchess.appearance.v1";
+      var PIECE_STYLES = Object.freeze(["glow", "flat", "outline", "medallion"]);
+      var BOARD_THEMES = Object.freeze(["sage", "blue", "walnut", "slate"]);
+      var DEFAULT_APPEARANCE = Object.freeze({ pieceStyle: "glow", boardTheme: "sage", annotationColor: "#edc34b" });
+      var FAMILIES = Object.freeze({ p: "pawn", n: "knight", b: "bishop", r: "rook", q: "queen", k: "king" });
+      var SYMBOLS2 = Object.freeze({ pawn: ["\u2659", "\u265F"], knight: ["\u2658", "\u265E"], bishop: ["\u2657", "\u265D"], rook: ["\u2656", "\u265C"], queen: ["\u2655", "\u265B"], king: ["\u2654", "\u265A"] });
+      var SHAPES = Object.freeze({
+        pawn: '<circle cx="22.5" cy="11" r="5.5"/><path d="M19 17h7l-1 5 4 10H16l4-10z"/><path d="M14 32h17l3 6H11z"/>',
+        knight: '<path d="M11 32l5-12-5 3-4-5L20 8l9-3 1 10 7 16v5H11z"/><path class="piece-detail" d="M20 11l-5 5m12-1 3 12"/><circle class="piece-eye" cx="24" cy="12" r="1.3"/><path d="M10 36h28v4H9z"/>',
+        bishop: '<path d="M22.5 5c-4 4-9 8-9 13 0 4 3 7 7 8l-5 8h15l-5-8c4-1 7-4 7-8 0-5-5-9-10-13z"/><path class="piece-detail" d="M26 10l-7 9"/><path d="M13 34h19l3 5H10z"/>',
+        rook: '<path d="M9 6h7v6h4V6h5v6h4V6h7v11l-4 3 1 13H12l1-13-4-3z"/><path class="piece-detail" d="M13 20h19M13 28h19"/><path d="M11 33h23l2 6H9z"/>',
+        queen: '<path d="M10 12l8 8 4.5-12L27 20l8-8-5 21H15z"/><circle cx="9" cy="9" r="3"/><circle cx="22.5" cy="6" r="3"/><circle cx="36" cy="9" r="3"/><path class="piece-detail" d="M15 28h15"/><path d="M13 33h19l3 6H10z"/>',
+        king: '<path d="M20 4h5v5h5v5h-5v7h-5v-7h-5V9h5z"/><path d="M14 20c-3 0-6 3-5 6l5 8h17l5-8c1-3-2-6-5-6-3 0-6 2-8.5 5-2.5-3-5.5-5-8.5-5z"/><path d="M13 34h19l3 6H10z"/>'
+      });
+      function normalizeAppearance(value) {
+        const input = value && typeof value === "object" && !Array.isArray(value) ? value : {};
+        return Object.freeze({
+          pieceStyle: PIECE_STYLES.includes(input.pieceStyle) ? input.pieceStyle : DEFAULT_APPEARANCE.pieceStyle,
+          boardTheme: BOARD_THEMES.includes(input.boardTheme) ? input.boardTheme : DEFAULT_APPEARANCE.boardTheme,
+          annotationColor: typeof input.annotationColor === "string" && /^#[\da-f]{6}$/i.test(input.annotationColor) ? input.annotationColor.toLowerCase() : DEFAULT_APPEARANCE.annotationColor
+        });
+      }
+      function readAppearance(storage) {
+        try {
+          const saved = JSON.parse(storage?.getItem(APPEARANCE_KEY) || "null");
+          return normalizeAppearance(saved?.version === 1 ? saved : null);
+        } catch {
+          return DEFAULT_APPEARANCE;
+        }
+      }
+      function createAppearancePreferences2({ document: doc = globalThis.document, storage, onChange = () => {
+      } } = {}) {
+        if (!doc?.body) throw new Error("Appearance preferences need a document body.");
+        let selectedStorage = storage;
+        if (selectedStorage === void 0) {
+          try {
+            selectedStorage = doc.defaultView?.localStorage;
+          } catch {
+            selectedStorage = null;
+          }
+        }
+        let current = readAppearance(selectedStorage), disposed = false;
+        const controls = { pieceStyle: doc.querySelector("#piece-style"), boardTheme: doc.querySelector("#board-theme"), annotationColor: doc.querySelector("#annotation-color") };
+        const listeners = [];
+        function apply() {
+          doc.body.dataset.pieceStyle = current.pieceStyle;
+          doc.body.dataset.boardTheme = current.boardTheme;
+          doc.body.style.setProperty("--annotation-color", current.annotationColor);
+          for (const [key, element] of Object.entries(controls)) if (element) element.value = current[key];
+          return current;
+        }
+        function set(values) {
+          if (disposed) return current;
+          const next = normalizeAppearance({ ...current, ...values && typeof values === "object" && !Array.isArray(values) ? values : {} });
+          const changed = Object.keys(next).some((key) => next[key] !== current[key]);
+          current = next;
+          apply();
+          if (changed) {
+            try {
+              selectedStorage?.setItem(APPEARANCE_KEY, JSON.stringify({ version: 1, ...current }));
+            } catch {
+            }
+            onChange(current);
+          }
+          return current;
+        }
+        for (const [key, element] of Object.entries(controls)) if (element) {
+          const handler = () => set({ [key]: element.value });
+          element.addEventListener("change", handler);
+          listeners.push(() => element.removeEventListener("change", handler));
+        }
+        apply();
+        return {
+          get settings() {
+            return current;
+          },
+          set,
+          apply,
+          setPieceStyle(value) {
+            return set({ pieceStyle: value });
+          },
+          setBoardTheme(value) {
+            return set({ boardTheme: value });
+          },
+          setAnnotationColor(value) {
+            return set({ annotationColor: value });
+          },
+          reset() {
+            return set(DEFAULT_APPEARANCE);
+          },
+          dispose() {
+            disposed = true;
+            for (const remove of listeners) remove();
+          }
+        };
+      }
+      function pieceSvgMarkup({ family, type, color = "w", style = "flat", level = 0 } = {}) {
+        const selectedFamily = Object.hasOwn(SHAPES, family) ? family : FAMILIES[String(type || "").toLowerCase()] || "pawn";
+        const selectedStyle = PIECE_STYLES.includes(style) && style !== "glow" ? style : "flat";
+        const side2 = color === "b" ? "black" : "white";
+        const coin = selectedStyle === "medallion" ? '<circle class="piece-coin" cx="22.5" cy="22.5" r="20"/><circle class="piece-coin-rim" cx="22.5" cy="22.5" r="17.5"/>' : "";
+        const transform = selectedStyle === "medallion" ? ' transform="translate(5.85 5.85) scale(.74)"' : "";
+        const accent = Number.isInteger(level) && level > 0 ? '<path class="piece-accent" d="M12 41.8h21"/>' : "";
+        return `<svg class="piece-svg ${selectedStyle}-piece ${side2}-svg" viewBox="0 0 45 45" aria-hidden="true" focusable="false">${coin}<g class="piece-shape"${transform}>${SHAPES[selectedFamily]}</g>${accent}</svg>`;
+      }
+      function renderPieceIcon2(element, { family, type, color = "w", symbol, level = 0, style } = {}) {
+        if (!element) return;
+        const preferred = style || element.ownerDocument?.body?.dataset.pieceStyle || "glow";
+        const selected2 = PIECE_STYLES.includes(preferred) ? preferred : "glow";
+        const selectedFamily = Object.hasOwn(SYMBOLS2, family) ? family : FAMILIES[String(type || "").toLowerCase()] || "pawn";
+        element.dataset.pieceStyle = selected2;
+        element.setAttribute("aria-hidden", "true");
+        if (selected2 === "glow") element.textContent = typeof symbol === "string" ? symbol : SYMBOLS2[selectedFamily][color === "b" ? 1 : 0];
+        else element.innerHTML = pieceSvgMarkup({ family: selectedFamily, color, style: selected2, level });
+      }
+      module.exports = {
+        APPEARANCE_KEY,
+        PIECE_STYLES,
+        BOARD_THEMES,
+        DEFAULT_APPEARANCE,
+        normalizeAppearance,
+        readAppearance,
+        createAppearancePreferences: createAppearancePreferences2,
+        pieceSvgMarkup,
+        renderPieceIcon: renderPieceIcon2
+      };
     }
   });
 
@@ -37173,7 +37631,7 @@
   var import_piece_catalog2 = __toESM(require_piece_catalog());
   var import_knight_setup = __toESM(require_knight_setup());
   var import_piece_setup = __toESM(require_piece_setup());
-  var import_design_options3 = __toESM(require_design_options());
+  var import_design_options4 = __toESM(require_design_options());
   var import_design_setup2 = __toESM(require_design_setup());
   var import_clock2 = __toESM(require_clock());
 
@@ -37182,6 +37640,7 @@
   var import_piece_catalog = __toESM(require_piece_catalog());
   var import_design_options2 = __toESM(require_design_options());
   var import_design_setup = __toESM(require_design_setup());
+  var import_engine_play = __toESM(require_engine_play());
   var SAVE_KEY = "levelupchess.saved-game.v1";
   var MAX_PGN_SIZE = 256 * 1024;
   async function parsePgn(text) {
@@ -37256,7 +37715,7 @@
     if (!data || ![1, 2].includes(data.version) || typeof data.savedAt !== "string" || Number.isNaN(Date.parse(data.savedAt))) throw new Error("The saved game format is not supported.");
     if (data.version === 2) (0, import_design_options2.validateProfileSnapshot)(data.profile);
     const settings = data.settings;
-    if (!settings || !["local", "engine"].includes(settings.opponent) || !["w", "b"].includes(settings.humanSide) || !["easy", "medium", "hard"].includes(settings.difficulty) || typeof settings.flipped !== "boolean") throw new Error("The saved game settings are damaged.");
+    if (!settings || !(0, import_engine_play.isOpponentMode)(settings.opponent) || !["w", "b"].includes(settings.humanSide) || !["easy", "medium", "hard"].includes(settings.difficulty) || typeof settings.flipped !== "boolean") throw new Error("The saved game settings are damaged.");
     const game2 = await parsePgn(data.pgn);
     try {
       const experimental = (0, import_design_options2.isExperimentalVariant)(game2.variant);
@@ -37293,7 +37752,153 @@
     }
   }
 
+  // src/workspace-tabs.js
+  function createWorkspaceTabs(root = document) {
+    const buttons = [...root.querySelectorAll("[data-panel-tab]")];
+    const panels = [...root.querySelectorAll("[data-panel]")];
+    let active = buttons.find((button) => button.getAttribute("aria-selected") === "true")?.dataset.panelTab || "game";
+    function show(name, { focus = false } = {}) {
+      const selected2 = buttons.find((button) => button.dataset.panelTab === name);
+      if (!selected2) return;
+      active = name;
+      for (const button of buttons) {
+        button.setAttribute("aria-selected", String(button === selected2));
+        button.tabIndex = button === selected2 ? 0 : -1;
+      }
+      for (const panel of panels) panel.hidden = panel.dataset.panel !== name;
+      if (focus) selected2.focus();
+    }
+    for (const [index, button] of buttons.entries()) {
+      button.addEventListener("click", () => show(button.dataset.panelTab));
+      button.addEventListener("keydown", (event) => {
+        const next = event.key === "ArrowRight" ? (index + 1) % buttons.length : event.key === "ArrowLeft" ? (index + buttons.length - 1) % buttons.length : event.key === "Home" ? 0 : event.key === "End" ? buttons.length - 1 : null;
+        if (next === null) return;
+        event.preventDefault();
+        show(buttons[next].dataset.panelTab, { focus: true });
+      });
+    }
+    show(active);
+    return { show, get active() {
+      return active;
+    } };
+  }
+
   // src/app.js
+  var import_board_annotations = __toESM(require_board_annotations());
+  var import_board_appearance = __toESM(require_board_appearance());
+
+  // src/piece-guide.js
+  var import_design_options3 = __toESM(require_design_options());
+  var import_profile_fen2 = __toESM(require_profile_fen());
+  var { getPlayableProfile: getPlayableProfile2 } = import_design_options3.default;
+  var { pieceMap, placementFromMap } = import_profile_fen2.default;
+  var legacyConfigs = { "levelup-knight": levelup_knight_default, levelup: levelup_default, "levelup-v5": levelup_v5_default };
+  var SQUARES = [..."abcdefgh"].flatMap((file2) => [..."12345678"].map((rank2) => file2 + rank2));
+  var resultCache = /* @__PURE__ */ new Map();
+  var activeEngine;
+  function inspectionConfig(variant = "chess") {
+    const source = variant === "chess" ? "" : getPlayableProfile2(variant)?.config || legacyConfigs[variant];
+    if (source === void 0) throw new Error("This ruleset has no piece guide.");
+    if (/^\s*king\s*=\s*[^\r\n]*:/m.test(source)) throw new Error("This royal movement needs its own inspection profile.");
+    const body = source.replace(/^\s*\[[^\]\r\n]+\]\s*$/m, "").replace(/^\s*king\s*=.*$/gm, "");
+    return `[levelup-piece-guide:chess]
+${body}
+king = -
+commoner = k
+castling = false
+checking = true
+extinctionValue = none
+extinctionPseudoRoyal = false
+mustCapture = false
+pieceDrops = false
+`;
+  }
+  async function inspectionEngine(variant) {
+    const config = inspectionConfig(variant);
+    if (!activeEngine || activeEngine.config !== config) {
+      const entry = { config };
+      entry.promise = ffish_default({ wasmBinary: Uint8Array.from(atob(ffish_default2), (character) => character.charCodeAt(0)) }).then((engine) => {
+        engine.loadVariantConfig(config);
+        if (!engine.variants().split(" ").includes("levelup-piece-guide")) throw new Error("The piece inspection rules could not be loaded.");
+        return engine;
+      }).catch((error) => {
+        if (activeEngine === entry) activeEngine = void 0;
+        throw error;
+      });
+      activeEngine = entry;
+    }
+    return activeEngine.promise;
+  }
+  function snapshot(value) {
+    return {
+      ...value,
+      quiet: [...value.quiet],
+      capture: [...value.capture],
+      legal: [...value.legal],
+      legalQuiet: [...value.legalQuiet],
+      legalCapture: [...value.legalCapture]
+    };
+  }
+  function hasMove(board2, fen, from, to, capture) {
+    board2.setFen(fen);
+    return board2.legalMoves().split(" ").some((move) => move.startsWith(from + to) && board2.isCapture(move) === capture);
+  }
+  async function getPieceGuide(game2, { square } = {}) {
+    if (!/^[a-h][1-8]$/.test(square || "")) throw new Error("Choose a board square to inspect.");
+    const fen = game2.fen(), variant = game2.variant || "chess";
+    const piece = game2.get(square);
+    if (!piece) return null;
+    const key = `${variant}\0${fen}\0${square}`;
+    if (resultCache.has(key)) return snapshot(resultCache.get(key));
+    const moves = game2.turn() === piece.color ? game2.moves({ square, verbose: true }) : [];
+    const legalQuiet = new Set(moves.filter((move) => !move.captured).map((move) => move.to));
+    const legalCapture = new Set(moves.filter((move) => move.captured).map((move) => move.to));
+    const engine = await inspectionEngine(variant);
+    const original = pieceMap(fen);
+    original.pocket = "";
+    const fields = fen.split(/\s+/);
+    const probeFen = (pieces) => `${placementFromMap(pieces)} ${piece.color} - - 0 ${fields[5] || 1}`;
+    const quiet = /* @__PURE__ */ new Set(), capture = /* @__PURE__ */ new Set();
+    const board2 = new engine.Board("levelup-piece-guide", probeFen(original), false);
+    try {
+      const actual = board2.legalMoves().split(" ").filter((move) => move.startsWith(square));
+      const actualQuiet = new Set(actual.filter((move) => !board2.isCapture(move)).map((move) => move.slice(2, 4)));
+      const actualCapture = new Set(actual.filter((move) => board2.isCapture(move)).map((move) => move.slice(2, 4)));
+      for (const target of SQUARES) {
+        if (target === square) continue;
+        const occupant = original.get(target);
+        if (occupant && (occupant === occupant.toUpperCase() ? "w" : "b") === piece.color) continue;
+        const pieces = new Map(original);
+        pieces.delete(target);
+        if (occupant ? hasMove(board2, probeFen(pieces), square, target, false) : actualQuiet.has(target)) quiet.add(target);
+        pieces.set(target, piece.color === "w" ? "p" : "P");
+        if (occupant ? actualCapture.has(target) : hasMove(board2, probeFen(pieces), square, target, true)) capture.add(target);
+      }
+    } finally {
+      board2.delete();
+    }
+    for (const target of legalQuiet) quiet.add(target);
+    for (const target of legalCapture) capture.add(target);
+    const value = {
+      square,
+      color: piece.color,
+      type: piece.type,
+      fen,
+      variant,
+      mode: "abilities",
+      quiet: [...quiet].sort(),
+      capture: [...capture].sort(),
+      legal: [...new Set(moves.map((move) => move.to))].sort(),
+      legalQuiet: [...legalQuiet].sort(),
+      legalCapture: [...legalCapture].sort()
+    };
+    resultCache.set(key, value);
+    if (resultCache.size > 96) resultCache.delete(resultCache.keys().next().value);
+    return snapshot(value);
+  }
+
+  // src/app.js
+  var import_engine_play2 = __toESM(require_engine_play());
   var game = new Chess();
   var board = document.querySelector("#board");
   var promotion = document.querySelector("#promotion");
@@ -37304,6 +37909,16 @@
   var editingSetup = false;
   var setupSquare = null;
   var selectedDrop = null;
+  var inspectedSquare = null;
+  var inspectMode = false;
+  var pieceGuide = null;
+  var guideKey = null;
+  var guideRequest = 0;
+  var guideError = "";
+  var workspaceTabs;
+  var boardAnnotations;
+  var appearancePreferences;
+  var drawingMode = false;
   var ALL_DESIGN_SLOTS = [...import_piece_catalog2.PIECE_SLOTS, { square: "e1", color: "w", family: "king" }, { square: "e8", color: "b", family: "king" }];
   var side = (color) => color === "w" ? "White" : "Black";
   var opponent = document.querySelector("#opponent");
@@ -37322,21 +37937,21 @@
   var armyResetSettings = document.querySelector("#army-reset-settings");
   var armyResetStatus = document.querySelector("#army-reset-status");
   var experimentalOption = gameMode.querySelector("option[value=levelup-experimental]");
-  experimentalOption.replaceWith(...[...import_design_options3.PLAYABLE_LIBRARIES].sort((a, b) => (b.generation || 0) - (a.generation || 0) || Number(Boolean(a.superseded)) - Number(Boolean(b.superseded)) || (b.edition || 0) - (a.edition || 0)).map((library) => {
+  experimentalOption.replaceWith(...[...import_design_options4.PLAYABLE_LIBRARIES].sort((a, b) => (b.generation || 0) - (a.generation || 0) || Number(Boolean(a.superseded)) - Number(Boolean(b.superseded)) || (b.edition || 0) - (a.edition || 0)).map((library) => {
     const option = document.createElement("option");
     option.value = library.variant;
     option.textContent = `${library.generation ? `Version ${library.generation}` : "Archive"} \xB7 ${library.name}`;
     return option;
   }));
-  var designOptions2 = new Map(import_design_options3.DESIGN_OPTIONS.map((option) => [option.id, option]));
-  var currentDesignOption = (id) => (0, import_design_options3.getDesignOptions)(game.variant).find((option) => option.id === id) || designOptions2.get(id);
-  var isExperimental = import_design_options3.isExperimentalVariant;
-  var infoFor = (type) => game.profile ? (0, import_design_options3.pieceInfoForProfile)(game.profile, type) : (0, import_piece_catalog2.pieceInfo)(type);
+  var designOptions3 = new Map(import_design_options4.DESIGN_OPTIONS.map((option) => [option.id, option]));
+  var currentDesignOption = (id) => (0, import_design_options4.getDesignOptions)(game.variant).find((option) => option.id === id) || designOptions3.get(id);
+  var isExperimental = import_design_options4.isExperimentalVariant;
+  var infoFor = (type) => game.profile ? (0, import_design_options4.pieceInfoForProfile)(game.profile, type) : (0, import_piece_catalog2.pieceInfo)(type);
   var designFor = (type) => game.profile?.definitionsByLetter[type];
-  var setupProfile = () => (0, import_design_options3.getPlayableProfile)(gameMode.value);
+  var setupProfile = () => (0, import_design_options4.getPlayableProfile)(gameMode.value);
   var usesBoardSetup = () => Boolean(setupProfile()?.roles.reserveTypes?.length);
   function designCosts(choices) {
-    const spent = (color) => (0, import_design_setup2.designSlots)(setupProfile()).filter((slot) => slot.color === color).reduce((total, slot) => total + (designOptions2.get(choices[slot.square])?.level || 0), 0);
+    const spent = (color) => (0, import_design_setup2.designSlots)(setupProfile()).filter((slot) => slot.color === color).reduce((total, slot) => total + (designOptions3.get(choices[slot.square])?.level || 0), 0);
     return { white: spent("w"), black: spent("b") };
   }
   function displaySan(san) {
@@ -37364,7 +37979,7 @@
       standard.value = "";
       standard.textContent = "0 \xB7 Standard";
       select.append(standard);
-      for (const design of import_design_options3.DESIGN_OPTIONS.filter((option) => option.family === family && option.status !== "retired")) {
+      for (const design of import_design_options4.DESIGN_OPTIONS.filter((option) => option.family === family && option.status !== "retired")) {
         const option = document.createElement("option");
         option.value = design.id;
         const status = design.status === "parked" ? "parked reference" : design.status;
@@ -37381,7 +37996,7 @@
   function refreshExperimentalOptions() {
     if (!isExperimental(gameMode.value) || selectedLibrary === gameMode.value) return;
     selectedLibrary = gameMode.value;
-    const options = (0, import_design_options3.getDesignOptions)(selectedLibrary);
+    const options = (0, import_design_options4.getDesignOptions)(selectedLibrary);
     for (const slot of ALL_DESIGN_SLOTS) {
       const select = document.querySelector(`#experimental-upgrade-${slot.square}`);
       const previous = select.value;
@@ -37401,7 +38016,7 @@
   function updateExperimentalFamily() {
     for (const group of document.querySelectorAll(".experimental-choices")) group.hidden = group.dataset.family !== experimentalFamily.value;
     for (const slot of ALL_DESIGN_SLOTS) {
-      const design = designOptions2.get(document.querySelector(`#experimental-upgrade-${slot.square}`).value);
+      const design = designOptions3.get(document.querySelector(`#experimental-upgrade-${slot.square}`).value);
       const description = document.querySelector(`#experimental-description-${slot.square}`);
       description.textContent = design ? `${design.description}${design.status === "parked" ? " Parked after balance screening; available as a playtest reference." : ""}` : `Ordinary ${slot.family} movement.`;
       description.classList.toggle("parked-design", design?.status === "parked");
@@ -37532,14 +38147,23 @@
     setupSquare = null;
     selected = null;
     selectedDrop = null;
+    clearInspection();
     if (editingSetup) {
+      drawingMode = false;
+      boardAnnotations?.setDrawing(false);
+      document.querySelector("#drawing-mode").setAttribute("aria-pressed", "false");
+      workspaceTabs?.show("setup");
+      boardAnnotations?.clear();
       pauseClocks("Army setup. The current game is paused.");
       cancelEngine();
-      if (opponent.value === "engine") engineMessage("Engine paused during army setup. Resume when ready.");
+      if ((0, import_engine_play2.isEngineMode)(opponent.value)) engineMessage("Engine paused during army setup. Resume when ready.");
     }
     render();
   }
-  document.querySelector("#setup-mode").onclick = () => setSetupEditing(!editingSetup);
+  document.querySelector("#setup-mode").onclick = () => {
+    setSetupEditing(!editingSetup);
+    if (!editingSetup) workspaceTabs?.show("game");
+  };
   var boardArea = document.querySelector(".board-area");
   function updateBoardStickyOffset() {
     boardArea.style.setProperty("--board-sticky-top", `${Math.min(18, window.innerHeight - boardArea.offsetHeight - 18)}px`);
@@ -37549,7 +38173,7 @@
   updateBoardStickyOffset();
   function renderSetupPicker() {
     const panel = document.querySelector("#setup-picker");
-    panel.hidden = !editingSetup;
+    panel.hidden = !editingSetup || !setupSquare;
     const toolbar = document.querySelector("#setup-mode");
     toolbar.setAttribute("aria-pressed", String(editingSetup));
     toolbar.textContent = editingSetup ? "Return to game" : "Edit armies";
@@ -37566,7 +38190,7 @@
     if (!slot) return;
     const select = document.querySelector(`#experimental-upgrade-${slot.square}`);
     const primaryAccent = (option) => ["green", "yellow", "red"].includes(option.accent) ? 0 : 1;
-    const choices = [{ id: "", level: 0, name: slot.family === "king" ? "No reserve grant" : `Standard ${slot.family}`, description: slot.family === "king" ? "Keep your ordinary royal king, without a reserve purchase." : `Ordinary ${slot.family} movement.` }, ...(0, import_design_options3.getDesignOptions)(gameMode.value).filter((option) => option.family === slot.family).sort((a, b) => a.level - b.level || primaryAccent(a) - primaryAccent(b) || a.name.localeCompare(b.name))];
+    const choices = [{ id: "", level: 0, name: slot.family === "king" ? "No reserve grant" : `Standard ${slot.family}`, description: slot.family === "king" ? "Keep your ordinary royal king, without a reserve purchase." : `Ordinary ${slot.family} movement.` }, ...(0, import_design_options4.getDesignOptions)(gameMode.value).filter((option) => option.family === slot.family).sort((a, b) => a.level - b.level || primaryAccent(a) - primaryAccent(b) || a.name.localeCompare(b.name))];
     for (const choice of choices) {
       const button = document.createElement("button");
       button.type = "button";
@@ -37578,7 +38202,11 @@
       title.textContent = `${choice.level ? `${choice.level} pt${choice.level === 1 ? "" : "s"} \xB7 ` : ""}${choice.name}`;
       const description = document.createElement("span");
       description.textContent = slot.family === "king" ? choice.description.split(" It starts in reserve;")[0] : choice.description;
-      button.append(title, description);
+      const icon = document.createElement("span");
+      const base = (0, import_piece_catalog2.pieceInfo)({ pawn: "p", knight: "n", bishop: "b", rook: "r", queen: "q", king: "k" }[slot.family]);
+      icon.className = `piece upgrade-icon ${slot.color === "w" ? "white-piece" : "black-piece"}${choice.level ? ` upgraded ${choice.accent || ""}` : ""}`;
+      (0, import_board_appearance.renderPieceIcon)(icon, { family: slot.family, color: slot.color, symbol: base.symbols[slot.color], level: choice.level });
+      button.append(icon, title, description);
       button.onclick = () => {
         select.value = choice.id;
         updateSetup();
@@ -37626,11 +38254,17 @@
         button.setAttribute("aria-label", `${side(color)} ${info.name}, ${entry.count} in reserve`);
         button.setAttribute("aria-pressed", String(selectedDrop === entry.type && color === game.turn()));
         button.title = info.description;
-        button.textContent = `${info.symbols[color]} ${info.name}${entry.count > 1 ? ` \xD7${entry.count}` : ""}`;
-        button.disabled = color !== game.turn() || buildingGame || isFinished() || !canPlay() || engineBusy || Boolean(pending) || opponent.value === "engine" && game.turn() !== humanSide.value;
+        const icon = document.createElement("span");
+        icon.className = `piece pocket-icon ${color === "w" ? "white-piece" : "black-piece"} upgraded ${info.accent}`;
+        (0, import_board_appearance.renderPieceIcon)(icon, { ...info, color, symbol: info.symbols[color] });
+        const caption = document.createElement("span");
+        caption.textContent = ` ${info.name}${entry.count > 1 ? ` \xD7${entry.count}` : ""}`;
+        button.append(icon, caption);
+        button.disabled = color !== game.turn() || buildingGame || isFinished() || !canPlay() || engineBusy || Boolean(pending) || !(0, import_engine_play2.canHumanMove)(opponent.value, game.turn(), humanSide.value) || inspectMode;
         button.onclick = () => {
           if (button.disabled) return;
           selected = null;
+          clearInspection();
           selectedDrop = selectedDrop === entry.type ? null : entry.type;
           render();
         };
@@ -37644,6 +38278,9 @@
   var engineController = null;
   var generation = 0;
   var engineName = "Fairy Stockfish";
+  var engineStepRequested = false;
+  var engineTimer = null;
+  var nextEngineAt = 0;
   var clock = new import_clock2.ChessClock();
   var timeControl = document.querySelector("#time-control");
   var clockTop = document.querySelector("#black-clock");
@@ -37688,7 +38325,7 @@
       const outcome = timeoutResult();
       game.setHeader("Result", outcome.result);
       game.setHeader("Termination", "time forfeit");
-      if (opponent.value === "engine") engineMessage("Game finished on time.");
+      if ((0, import_engine_play2.isEngineMode)(opponent.value)) engineMessage("Game finished on time.");
       render();
     }
     updateClocks();
@@ -37721,13 +38358,48 @@
     }
     game.setHeader("Result", "*");
     game.removeHeader("Termination");
+    boardAnnotations?.clear();
+    clearInspection();
     return result;
+  }
+  function clearInspection() {
+    inspectedSquare = null;
+    pieceGuide = null;
+    guideKey = null;
+    guideError = "";
+    guideRequest++;
+  }
+  function requestPieceGuide(square) {
+    if (!square || editingSetup || !game.get(square)) return;
+    const fen = game.fen();
+    const key = `${game.variant || "chess"}|${fen}|${square}`;
+    if (guideKey === key) return;
+    guideKey = key;
+    pieceGuide = null;
+    guideError = "";
+    const request = ++guideRequest;
+    void getPieceGuide(game, { square }).then((guide) => {
+      if (request !== guideRequest || game.fen() !== fen || guideKey !== key) return;
+      pieceGuide = guide;
+      render();
+    }).catch((error) => {
+      if (request !== guideRequest || guideKey !== key) return;
+      guideError = `Piece guide unavailable: ${error.message}`;
+      render();
+    });
   }
   function engineMessage(message) {
     document.querySelector("#engine-status").textContent = message;
-    document.querySelector("#engine-retry").disabled = engineBusy;
-    document.querySelector("#engine-retry").textContent = connected ? "Resume engine" : "Connect engine";
-    document.querySelector("#engine-cancel").disabled = !engineBusy && (enginePaused || !connected);
+    updateEngineButtons();
+  }
+  function updateEngineButtons() {
+    const blocked = engineBusy || editingSetup || buildingGame || isFinished() || Boolean(pending);
+    document.querySelector("#engine-retry").disabled = blocked || opponent.value === "selfplay" && connected && !enginePaused;
+    document.querySelector("#engine-retry").textContent = opponent.value === "selfplay" ? connected ? "Start / Resume" : "Connect and start" : connected ? "Resume engine" : "Connect engine";
+    document.querySelector("#engine-cancel").disabled = !engineBusy && (enginePaused || !connected || isFinished());
+    const step = document.querySelector("#engine-step");
+    step.hidden = opponent.value !== "selfplay";
+    step.disabled = blocked || opponent.value === "selfplay" && connected && !enginePaused;
   }
   function cancelEngine() {
     generation++;
@@ -37735,6 +38407,10 @@
     engineController = null;
     engineBusy = false;
     enginePaused = true;
+    engineStepRequested = false;
+    clearTimeout(engineTimer);
+    engineTimer = null;
+    nextEngineAt = 0;
     selectedDrop = null;
   }
   async function engineFetch(route, options = {}) {
@@ -37746,10 +38422,10 @@
     if (!response.ok) throw new Error(data.error || "Engine bridge unavailable.");
     return data;
   }
-  async function connectEngine() {
+  async function connectEngine({ run = opponent.value !== "selfplay", step = false } = {}) {
     cancelEngine();
     connected = false;
-    enginePaused = false;
+    enginePaused = !run;
     engineBusy = true;
     engineController = new AbortController();
     const request = generation;
@@ -37760,7 +38436,8 @@
       engineName = data.name;
       connected = true;
       engineBusy = false;
-      engineMessage(`${engineName} connected.`);
+      engineStepRequested = step;
+      engineMessage(opponent.value === "selfplay" && !run && !step ? "Stockfish self-play ready. Press Start or One move." : `${engineName} connected.`);
       render();
     } catch (error) {
       if (request !== generation) return;
@@ -37771,12 +38448,34 @@
     }
   }
   async function maybeEngineMove() {
-    if (editingSetup || opponent.value !== "engine" || !connected || engineBusy || enginePaused || pending || isFinished() || !canPlay() || game.turn() === humanSide.value) return;
+    if (buildingGame) return;
+    if (!(0, import_engine_play2.canRequestEngineMove)({
+      opponent: opponent.value,
+      turn: game.turn(),
+      humanSide: humanSide.value,
+      connected,
+      busy: engineBusy,
+      paused: enginePaused,
+      pending: Boolean(pending),
+      editingSetup,
+      finished: isFinished(),
+      canPlay: canPlay(),
+      stepRequested: engineStepRequested
+    })) return;
+    if (opponent.value === "selfplay" && !engineStepRequested && !isTimed() && Date.now() < nextEngineAt) {
+      if (!engineTimer) engineTimer = setTimeout(() => {
+        engineTimer = null;
+        void maybeEngineMove();
+      }, nextEngineAt - Date.now());
+      return;
+    }
+    const stepping = engineStepRequested;
+    engineStepRequested = false;
     engineBusy = true;
     engineController = new AbortController();
     const request = generation;
     const fen = game.fen();
-    engineMessage(`${engineName} is thinking\u2026`);
+    engineMessage(`${side(game.turn())} \xB7 ${engineName} is thinking\u2026`);
     try {
       const data = await engineFetch("/api/engine/move", {
         method: "POST",
@@ -37788,7 +38487,12 @@
       const move = data.move[1] === "@" ? { drop: data.move[0].toLowerCase(), to: data.move.slice(2) } : { from: data.move.slice(0, 2), to: data.move.slice(2, 4), promotion: data.move[4] };
       if (!playMove(move)) return;
       engineBusy = false;
-      engineMessage(`${engineName} connected. Your move.`);
+      if (stepping) {
+        enginePaused = true;
+        pauseClocks("One engine move completed. Clocks paused.");
+      }
+      nextEngineAt = opponent.value === "selfplay" ? Date.now() + 250 : 0;
+      engineMessage(isFinished() ? "Game finished." : opponent.value === "selfplay" ? stepping ? "One move completed. Self-play paused." : "Self-play running. Pause to review or undo." : `${engineName} connected. Your move.`);
       render();
     } catch (error) {
       if (request !== generation) return;
@@ -37798,7 +38502,29 @@
       engineMessage(`Engine paused: ${error.message}`);
     }
   }
+  function updateEngineConfiguration() {
+    const active = (0, import_engine_play2.isEngineMode)(opponent.value);
+    document.querySelector("#engine-settings").hidden = !active;
+    document.querySelector("#engine-configuration").hidden = !active;
+    document.querySelector("#human-side-field").hidden = opponent.value === "selfplay";
+    document.querySelector("#engine-step").hidden = opponent.value !== "selfplay";
+  }
+  function beginEngine(step = false) {
+    if (editingSetup || buildingGame || engineBusy || pending || isFinished() || !(0, import_engine_play2.isEngineMode)(opponent.value)) return;
+    if (opponent.value === "selfplay" && isTimed() && !clock.running) {
+      clockNotice = "";
+      clock.start(game.turn());
+    }
+    if (!connected) void connectEngine({ run: !step, step });
+    else {
+      enginePaused = step;
+      engineStepRequested = step;
+      engineMessage(step ? "Playing one engine move\u2026" : isTimed() && !clock.running ? "Engine ready. Start or resume clock to continue." : `${engineName} connected.`);
+      render();
+    }
+  }
   function render(focusSquare) {
+    if (!focusSquare && document.activeElement?.closest("#board")) focusSquare = document.activeElement.closest("[data-square]")?.dataset.square;
     renderSetupPicker();
     renderPockets();
     const files = [..."abcdefgh"];
@@ -37807,11 +38533,16 @@
       files.reverse();
       ranks.reverse();
     }
-    const legal = editingSetup ? [] : selectedDrop ? game.moves({ drop: selectedDrop, verbose: true }) : selected ? game.moves({ square: selected, verbose: true }) : [];
+    const mayMove = !editingSetup && !inspectMode && !engineBusy && (0, import_engine_play2.canHumanMove)(opponent.value, game.turn(), humanSide.value) && !isFinished() && canPlay();
+    const legal = !mayMove ? [] : selectedDrop ? game.moves({ drop: selectedDrop, verbose: true }) : selected ? game.moves({ square: selected, verbose: true }) : [];
+    const guideSquare = editingSetup ? null : inspectedSquare || selected;
+    if (guideSquare) requestPieceGuide(guideSquare);
+    const quietGuide = new Set(pieceGuide?.quiet || []);
+    const captureGuide = new Set(pieceGuide?.capture || []);
     const history = game.history({ verbose: true });
     const last = history.at(-1);
     const displayProfile = editingSetup ? setupProfile() : game.profile;
-    const displayInfo = (type) => displayProfile ? (0, import_design_options3.pieceInfoForProfile)(displayProfile, type) : (0, import_piece_catalog2.pieceInfo)(type);
+    const displayInfo = (type) => displayProfile ? (0, import_design_options4.pieceInfoForProfile)(displayProfile, type) : (0, import_piece_catalog2.pieceInfo)(type);
     board.classList.toggle("experimental-board", Boolean(displayProfile));
     document.querySelector(".history-panel .panel-heading > span").textContent = game.profile ? "PIECE \xB7 LEVEL" : "SAN";
     board.replaceChildren();
@@ -37822,9 +38553,12 @@
       button.type = "button";
       button.className = "square " + ((file2.charCodeAt(0) - 97 + Number(rank2)) % 2 === 0 ? "dark" : "light");
       button.dataset.square = square;
+      button.dataset.legal = String(legal.some((move) => move.to === square));
+      button.dataset.quiet = String(quietGuide.has(square));
+      button.dataset.capture = String(captureGuide.has(square));
       button.setAttribute("aria-label", `${square}${piece ? ` ${side(piece.color)} ${displayInfo(piece.type).name}` : " empty"}`);
-      button.setAttribute("aria-pressed", String((editingSetup ? setupSquare : selected) === square));
-      if ((editingSetup ? setupSquare : selected) === square) button.classList.add("selected");
+      button.setAttribute("aria-pressed", String((editingSetup ? setupSquare : guideSquare) === square));
+      if ((editingSetup ? setupSquare : guideSquare) === square) button.classList.add("selected");
       if (!editingSetup && last && [last.from, last.to].includes(square)) button.classList.add("last-move");
       if (!editingSetup && piece?.type === "k" && piece.color === game.turn() && game.isCheck()) button.classList.add("check");
       if (piece) {
@@ -37837,6 +38571,7 @@
         }
         icon.className = `piece ${piece.color === "w" ? "white-piece" : "black-piece"}${info.level ? ` upgraded ${info.accent}` : ""}`;
         icon.textContent = info.symbols[piece.color];
+        (0, import_board_appearance.renderPieceIcon)(icon, { ...info, color: piece.color, symbol: info.symbols[piece.color] });
         button.append(icon);
         if (info.level) {
           const badge = document.createElement("span");
@@ -37845,9 +38580,18 @@
           button.append(badge);
         }
       }
-      if (legal.some((move) => move.to === square)) {
+      const legalQuiet = legal.some((move) => move.to === square && !move.captured);
+      const legalCapture = legal.some((move) => move.to === square && move.captured);
+      if (!piece && (quietGuide.has(square) || legalQuiet)) {
         const marker = document.createElement("span");
-        marker.className = legal.some((move) => move.to === square && move.captured) ? "capture-marker" : "move-marker";
+        marker.className = "move-marker ability-move-marker";
+        marker.dataset.playable = String(legalQuiet);
+        button.append(marker);
+      }
+      if (captureGuide.has(square) || legalCapture) {
+        const marker = document.createElement("span");
+        marker.className = `ability-capture-marker${legalCapture ? " capture-marker" : ""}${piece || legalCapture ? " occupied-capture" : ""}`;
+        marker.dataset.playable = String(legalCapture);
         button.append(marker);
       }
       for (const [show, value, position] of [[col === 0, rank2, "rank"], [row === 7, file2, "file"]]) {
@@ -37867,6 +38611,7 @@
       });
       board.append(button);
     }));
+    boardAnnotations?.render();
     let status = `${side(game.turn())} to move`;
     if (game.isCheckmate()) status = `${side(game.turn() === "w" ? "b" : "w")} wins by checkmate`;
     else if (game.isStalemate()) status = "Draw by stalemate";
@@ -37877,10 +38622,13 @@
     if (clock.expired) status = timeoutResult().status;
     if (editingSetup) status = "Build your army";
     document.querySelector("#status").textContent = status;
-    const selectedPiece = selected ? game.get(selected) : null;
+    const selectedPiece = guideSquare ? game.get(guideSquare) : null;
     const selectedDesign = selectedPiece ? designFor(selectedPiece.type) : null;
     const description = selectedDesign ? ` ${currentDesignOption(selectedDesign.id)?.description || ""}` : "";
-    document.querySelector("#hint").textContent = editingSetup ? "Click a starting piece to choose an upgrade. Start game when both armies are ready." : isFinished() ? "Start a new game or undo a move to keep playing." : !canPlay() ? "Start or resume the clock to continue playing." : selectedDrop ? `Drop your ${infoFor(selectedDrop).name} on a highlighted empty square in your half. The drop cannot give check.` : selected ? `${side(game.turn())} ${infoFor(selectedPiece.type).name} on ${selected}. Choose a highlighted square.${description}` : game.profile?.roles.reserveTypes?.length ? "Select a piece or a reserve guard to see its legal moves." : "Select a piece to see its legal moves.";
+    document.querySelector("#hint").textContent = editingSetup ? "Click a starting piece to choose an upgrade. Start game when both armies are ready." : selectedPiece ? `${side(selectedPiece.color)} ${infoFor(selectedPiece.type).name} on ${guideSquare}.${description}` : isFinished() ? "Start a new game or undo a move to keep playing." : !canPlay() ? "Start or resume the clock to continue playing." : selectedDrop ? `Drop your ${infoFor(selectedDrop).name} on a highlighted empty square in your half. The drop cannot give check.` : "Select either side\u2019s piece to explore its movement and captures.";
+    document.querySelector("#piece-guide-status").textContent = guideError || (guideSquare && !pieceGuide ? "Loading piece guide\u2026" : guideSquare ? `${inspectedSquare || inspectMode ? "Inspecting only. " : ""}Dots show movement; red rings show capture ability. The guide includes abilities unavailable because of check or pins; only legal moves can be played.` : inspectMode ? "Inspect mode: click any piece without making a move." : "Gray dot: move \xB7 red ring: capture \xB7 both: either.");
+    document.querySelector("#inspect-mode").setAttribute("aria-pressed", String(inspectMode));
+    document.querySelector("#drawing-mode").disabled = editingSetup;
     document.querySelector("#undo").disabled = editingSetup || history.length === 0;
     document.querySelector("#top-player").textContent = flipped ? "White pieces" : "Black pieces";
     document.querySelector("#bottom-player").textContent = flipped ? "Black pieces" : "White pieces";
@@ -37916,14 +38664,23 @@
     document.querySelector("#empty-history").hidden = history.length > 0;
     list.scrollTop = list.scrollHeight;
     if (focusSquare) board.querySelector(`[data-square="${focusSquare}"]`)?.focus({ preventScroll: true });
-    if (opponent.value === "engine") {
+    if ((0, import_engine_play2.isEngineMode)(opponent.value)) {
       const topColor = flipped ? "w" : "b";
       const bottomColor = flipped ? "b" : "w";
-      document.querySelector("#top-player").textContent = topColor === humanSide.value ? `You \xB7 ${side(topColor)}` : `Fairy Stockfish \xB7 ${side(topColor)}`;
-      document.querySelector("#bottom-player").textContent = bottomColor === humanSide.value ? `You \xB7 ${side(bottomColor)}` : `Fairy Stockfish \xB7 ${side(bottomColor)}`;
+      document.querySelector("#top-player").textContent = opponent.value !== "selfplay" && topColor === humanSide.value ? `You \xB7 ${side(topColor)}` : `Fairy Stockfish \xB7 ${side(topColor)}`;
+      document.querySelector("#bottom-player").textContent = opponent.value !== "selfplay" && bottomColor === humanSide.value ? `You \xB7 ${side(bottomColor)}` : `Fairy Stockfish \xB7 ${side(bottomColor)}`;
     }
     document.querySelectorAll(".player .level").forEach((label, index) => {
       const color = index === 0 ? flipped ? "w" : "b" : flipped ? "b" : "w";
+      if (editingSetup) {
+        const draft = setupChoice();
+        const spent = color === "w" ? draft.white : draft.black;
+        label.textContent = `${spent}/${draft.budget} POINTS`;
+        label.title = `${side(color)} draft upgrade budget`;
+        label.setAttribute("aria-label", `${side(color)} draft army: ${spent} of ${draft.budget} points`);
+        return;
+      }
+      label.removeAttribute("aria-label");
       const counts = /* @__PURE__ */ new Map();
       for (const piece of editingSetup ? ALL_DESIGN_SLOTS.map((slot) => setupPieceAt(slot.square)) : game.board().flat()) {
         if (piece?.color !== color) continue;
@@ -37935,19 +38692,20 @@
       label.title = game.profile ? "Upgraded units remaining on the board. Purchase costs are shown in the setup budget." : "";
     });
     updateClocks();
+    updateEngineButtons();
     void maybeEngineMove();
   }
   function selectSquare(square) {
+    if (drawingMode) return;
     if (editingSetup) {
-      if ((0, import_design_setup2.designSlots)(setupProfile()).some((slot) => slot.square === square)) {
-        setupSquare = square;
-        render(square);
-      }
+      setupSquare = (0, import_design_setup2.designSlots)(setupProfile()).some((slot) => slot.square === square) ? square : null;
+      render(square);
       return;
     }
     settleClock();
-    if (buildingGame || isFinished() || !canPlay() || pending || opponent.value === "engine" && game.turn() !== humanSide.value) return;
-    const moves = (selectedDrop ? game.moves({ drop: selectedDrop, verbose: true }) : selected ? game.moves({ square: selected, verbose: true }) : []).filter((move) => move.to === square);
+    if (buildingGame || pending) return;
+    const movable = !inspectMode && !engineBusy && !isFinished() && canPlay() && (0, import_engine_play2.canHumanMove)(opponent.value, game.turn(), humanSide.value);
+    const moves = movable ? (selectedDrop ? game.moves({ drop: selectedDrop, verbose: true }) : selected ? game.moves({ square: selected, verbose: true }) : []).filter((move) => move.to === square) : [];
     if (moves.length) {
       if (moves.some((move) => move.promotion)) {
         pending = { from: selected, to: square };
@@ -37955,7 +38713,10 @@
         options.replaceChildren();
         for (const type of ["q", "r", "b", "n"]) {
           const button = document.createElement("button");
-          button.textContent = (0, import_piece_catalog2.pieceInfo)(type).symbols[game.turn()];
+          const icon = document.createElement("span");
+          icon.className = `piece promotion-icon ${game.turn() === "w" ? "white-piece" : "black-piece"}`;
+          (0, import_board_appearance.renderPieceIcon)(icon, { ...(0, import_piece_catalog2.pieceInfo)(type), color: game.turn(), symbol: (0, import_piece_catalog2.pieceInfo)(type).symbols[game.turn()] });
+          button.append(icon);
           button.setAttribute("aria-label", `Promote to ${(0, import_piece_catalog2.pieceInfo)(type).name}`);
           button.onclick = () => {
             playMove({ ...pending, promotion: type });
@@ -37974,8 +38735,14 @@
       selectedDrop = null;
     } else {
       const piece = game.get(square);
-      selected = square !== selected && piece?.color === game.turn() ? square : null;
+      const alreadySelected = (inspectedSquare || selected) === square;
+      clearInspection();
+      selected = null;
       selectedDrop = null;
+      if (piece && !alreadySelected) {
+        if (movable && piece.color === game.turn()) selected = square;
+        else inspectedSquare = square;
+      }
     }
     render(square);
   }
@@ -37995,7 +38762,9 @@
     game.removeHeader("Termination");
     clockNotice = "Clocks paused after undo. Resume clock when ready.";
     selected = null;
-    if (opponent.value === "engine") engineMessage("Engine paused after undo. Resume when ready.");
+    clearInspection();
+    boardAnnotations?.clear();
+    if ((0, import_engine_play2.isEngineMode)(opponent.value)) engineMessage("Engine paused after undo. Resume when ready.");
     render();
   };
   document.querySelector("#flip").onclick = () => {
@@ -38017,14 +38786,14 @@
         status.textContent = "Loading piece-upgrade rules\u2026";
         await initVariantRules(selectedMode);
         const setup = isExperimental(selectedMode) ? import_design_setup2.designSetupFromChoices : isPieceVariant(selectedMode) ? import_piece_setup.pieceSetupFromLevels : import_knight_setup.setupFromLevels;
-        next = new VariantGame(setup(levels, budget, isExperimental(selectedMode) ? (0, import_design_options3.getPlayableProfile)(selectedMode) : void 0).fen, selectedMode);
+        next = new VariantGame(setup(levels, budget, isExperimental(selectedMode) ? (0, import_design_options4.getPlayableProfile)(selectedMode) : void 0).fen, selectedMode);
       } else next = new Chess();
       if (request !== replacementGeneration) {
         next.dispose?.();
         return;
       }
       cancelEngine();
-      enginePaused = false;
+      enginePaused = opponent.value === "selfplay";
       game.dispose?.();
       game = next;
       editingSetup = false;
@@ -38035,11 +38804,14 @@
       clockNotice = "";
       handledFlag = null;
       selected = null;
+      clearInspection();
+      boardAnnotations?.clear();
       pending = null;
       promotion.close();
       restart.close();
       updateSetup();
-      if (opponent.value === "engine") engineMessage(connected ? `${engineName} connected.` : "Connect the engine to begin.");
+      if ((0, import_engine_play2.isEngineMode)(opponent.value)) engineMessage(opponent.value === "selfplay" ? "Self-play paused. Press Start or One move." : connected ? `${engineName} connected.` : "Connect the engine to begin.");
+      workspaceTabs?.show("game");
       render();
     } catch (error) {
       if (next !== game) next?.dispose?.();
@@ -38072,9 +38844,10 @@
     pauseClocks();
     cancelEngine();
     selected = null;
-    document.querySelector("#engine-settings").hidden = opponent.value !== "engine";
-    if (opponent.value === "engine") {
-      flipped = humanSide.value === "b";
+    clearInspection();
+    updateEngineConfiguration();
+    if ((0, import_engine_play2.isEngineMode)(opponent.value)) {
+      if (opponent.value === "engine") flipped = humanSide.value === "b";
       void connectEngine();
     }
     render();
@@ -38092,18 +38865,12 @@
   difficulty.onchange = () => {
     pauseClocks();
     cancelEngine();
-    enginePaused = false;
+    enginePaused = opponent.value === "selfplay";
     engineMessage(connected ? `${engineName} connected.` : "Connect the engine to begin.");
     render();
   };
-  document.querySelector("#engine-retry").onclick = () => {
-    if (!connected) void connectEngine();
-    else {
-      enginePaused = false;
-      engineMessage(isTimed() && !clock.running ? "Engine ready. Start or resume clock to continue." : `${engineName} connected.`);
-      render();
-    }
-  };
+  document.querySelector("#engine-retry").onclick = () => beginEngine();
+  document.querySelector("#engine-step").onclick = () => beginEngine(true);
   document.querySelector("#engine-cancel").onclick = () => {
     pauseClocks("Engine paused. Resume clock when ready.");
     cancelEngine();
@@ -38132,6 +38899,8 @@
     editingSetup = false;
     setupSquare = null;
     selectedDrop = null;
+    clearInspection();
+    boardAnnotations?.clear();
     gameMode.value = game.variant || "chess";
     activeBudget = candidate.settings?.upgradeBudget || (isPieceVariant(game.variant) || isExperimental(game.variant) ? 6 : 2);
     if (isExperimental(game.variant)) {
@@ -38182,8 +38951,8 @@
       difficulty.value = candidate.settings.difficulty;
       flipped = candidate.settings.flipped;
     }
-    document.querySelector("#engine-settings").hidden = opponent.value !== "engine";
-    if (opponent.value === "engine") engineMessage("Game loaded. Engine paused; connect or resume when ready.");
+    updateEngineConfiguration();
+    if ((0, import_engine_play2.isEngineMode)(opponent.value)) engineMessage("Game loaded. Engine paused; connect or resume when ready.");
     importDialog.close();
     replacement = null;
     saveStatus.textContent = "Game loaded. The browser save slot has not changed.";
@@ -38309,9 +39078,9 @@
     if (clock.running) {
       pauseClocks();
       cancelEngine();
-      if (opponent.value === "engine") engineMessage("Engine paused with the clock.");
+      if ((0, import_engine_play2.isEngineMode)(opponent.value)) engineMessage("Engine paused with the clock.");
     } else {
-      if (opponent.value === "engine" && !connected) {
+      if ((0, import_engine_play2.isEngineMode)(opponent.value) && !connected) {
         clockNotice = "Connect the engine before starting the clock.";
         updateClocks();
         return;
@@ -38327,7 +39096,7 @@
   gameMode.onchange = () => {
     updateSetup();
     setSetupEditing(usesBoardSetup());
-    const library = import_design_options3.PLAYABLE_LIBRARIES.find((library2) => library2.variant === gameMode.value);
+    const library = import_design_options4.PLAYABLE_LIBRARIES.find((library2) => library2.variant === gameMode.value);
     if (editingSetup && library?.focusFamily === "king") {
       setupSquare = "e1";
       render();
@@ -38339,6 +39108,51 @@
   experimentalBudget.oninput = updateSetup;
   experimentalFamily.onchange = updateExperimentalFamily;
   for (const square of upgradeSquares) document.querySelector(`#upgrade-${square}`).onchange = updateSetup;
+  workspaceTabs = createWorkspaceTabs(document);
+  appearancePreferences = (0, import_board_appearance.createAppearancePreferences)({ document, onChange: () => {
+    boardAnnotations?.render();
+    render();
+  } });
+  boardAnnotations = (0, import_board_annotations.createBoardAnnotations)({
+    stage: document.querySelector("#board-stage"),
+    board,
+    svg: document.querySelector("#board-annotations"),
+    isFlipped: () => flipped,
+    color: () => appearancePreferences.settings.annotationColor
+  });
+  document.querySelector("#inspect-mode").onclick = () => {
+    inspectMode = !inspectMode;
+    selected = null;
+    selectedDrop = null;
+    clearInspection();
+    render();
+  };
+  document.querySelector("#drawing-mode").onclick = () => {
+    drawingMode = !drawingMode;
+    boardAnnotations.setDrawing(drawingMode);
+    document.querySelector("#drawing-mode").setAttribute("aria-pressed", String(drawingMode));
+    if (drawingMode) {
+      selected = null;
+      selectedDrop = null;
+      clearInspection();
+      render();
+    }
+  };
+  document.querySelector("#clear-annotations").onclick = () => boardAnnotations.clear();
+  document.querySelector("#setup-picker-close").onclick = () => {
+    const square = setupSquare;
+    setupSquare = null;
+    render(square);
+  };
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || document.querySelector("dialog[open]")) return;
+    setupSquare = null;
+    selected = null;
+    selectedDrop = null;
+    clearInspection();
+    render();
+  });
+  updateEngineConfiguration();
   updateFamily();
   updateSetup();
   refreshSaveAvailability();

@@ -155,6 +155,12 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Create branch `version_18` from the version-17 closeout before any roster replacement; retain [switching and roster notes](docs/version18.md).
 - [x] Activate the selected quiet-tall Knight pawn and `RsCfC` Cataphract in a new version-18 playable profile, with their tested MG/EG priors. Preserve all nineteen historical profiles and the four frozen references; keep Nightrider/Wraith as exploration choices.
 - [x] Verify both-color movement, pawn promotion/en passant, rook castling, all six native value tables, setup costs, saves, PGN, undo and browser engine play. Retain all nineteen historical profiles and the original four frozen references; complete unit regressions and thirteen browser checks.
+- [x] Complete the [tabbed interface](docs/interface-v18.md): one Game/Setup/Design/Files panel, persistent game controls and central-rank upgrade cards without covering either home army.
+- [x] Verify arrows and highlight circles with right-click/right-drag and touch Draw mode, board flips, toggle/removal and clearing after position changes.
+- [x] Verify the piece-ability guide for both sides: quiet dots, capture rings on empty squares, combined abilities, blockers and jumps, while actual play still enforces turns and king safety.
+- [x] Verify Stockfish self-play, serial searches, Start/Pause/One move, clocks, cancellation, undo and paused save restoration.
+- [x] Verify four piece styles, board palettes and annotation colors, locally remembered appearance and offline artwork; preserve upgrade colors and level badges.
+- [x] Complete keyboard, touch, responsive-layout and historical browser regressions before the interface release: 38 interface/save unit checks, 30 clock/native/profile checks and all 236 browser cases pass across the full run and final affected-suite rerun.
 - [ ] Declare a bounded mixed-bracket study using fixed level-one, revised level-two and original level-three references. Reopen parked designs only for a decision-relevant result or a well-founded gameplay idea.
 
 ## After reviewing these results

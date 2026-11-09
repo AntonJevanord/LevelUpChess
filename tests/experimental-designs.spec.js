@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const fs = require('node:fs/promises');
 const { initVariantRules, VariantGame } = require('../dist/rules-node.cjs');
 const { PLAYABLE_PROFILES, DESIGN_OPTIONS } = require('../src/design-options');
@@ -7,22 +8,22 @@ const PLAYABLE_PROFILE = PLAYABLE_PROFILES[1];
 const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
 
 const square = (page, name) => page.locator(`[data-square="${name}"]`);
-const marker = (page, name) => square(page, name).locator('.move-marker, .capture-marker');
+const marker = (page, name) => square(page, name).locator('.move-marker[data-playable=true], .capture-marker');
 const letter = id => PLAYABLE_PROFILE.registry.allocations.find(item => item.id === id).letter;
 const designName = id => DESIGN_OPTIONS.find(item => item.id === id).name;
 async function move(page, from, to) { await square(page, from).click(); await square(page, to).click(); }
 async function choose(page, family, name, id) {
-  await page.selectOption('#experimental-family', family);
+  await inPanel(page, 'setup', () => page.selectOption('#experimental-family', family));
   await page.selectOption(`#experimental-upgrade-${name}`, id);
 }
-async function experimental(page) { await page.selectOption('#game-mode', EXPERIMENTAL_VARIANT); }
+async function experimental(page) { await inPanel(page, 'setup', () => page.selectOption('#game-mode', EXPERIMENTAL_VARIANT)); }
 async function start(page) {
   await page.getByRole('button', { name: 'New game', exact: true }).click();
   if (await page.locator('#restart').isVisible()) await page.getByRole('button', { name: 'Start new game', exact: true }).click();
   await expect(page.locator('#board')).toHaveClass(/experimental-board/);
 }
 async function importPgn(page, pgn) {
-  await page.getByRole('button', { name: 'Import PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Import PGN', exact: true }).click());
   await page.locator('#pgn-text').fill(pgn);
   await page.getByRole('button', { name: 'Import game', exact: true }).click();
   await expect(page.locator('#import-dialog')).not.toBeVisible();
@@ -30,7 +31,7 @@ async function importPgn(page, pgn) {
 }
 async function downloadPgn(page) {
   const waiting = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Export PGN', exact: true }).click());
   return fs.readFile(await (await waiting).path(), 'utf8');
 }
 function fen(pieces, turn = 'w', rights = '-') {
@@ -103,12 +104,12 @@ test('save, load and portable PGN restore design choices, mapped move labels and
   await expect(page.locator('#history li span').nth(1)).toHaveText('a6');
   await expect(page.locator('#history li span').nth(2)).toHaveAttribute('title', /Knight-capture rook/);
   await expect(page.locator('#history li span').nth(2)).toHaveAttribute('aria-label', /Knight-capture rook/);
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await expect(page.locator('#save-status')).toContainText('Saved 3 half-moves');
   const pgn = await downloadPgn(page);
   expect(pgn).toContain('[LevelUpProfile "');
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await hasDesign(page, 'a3', 'rook.purple@2');
   await hasDesign(page, 'a4', 'pawn.purple@5');
   await expect(page.locator('#experimental-upgrade-a1')).toHaveValue('rook.purple@2');
@@ -144,9 +145,9 @@ test('twin pawns and inserted guards share one purchase per slot and survive sav
   await move(page, 'b4', 'b6');
   await move(page, 'g5', 'g3');
   const pgn = await downloadPgn(page);
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await hasDesign(page, 'b6', 'pawn.purple@6');
   await hasDesign(page, 'g3', 'pawn.purple@6');
   for (const [name, id] of [['b1', 'knight.purple@2'], ['b2', 'pawn.purple@6'], ['g8', 'knight.purple@2'], ['g7', 'pawn.purple@6']]) {
@@ -179,7 +180,7 @@ test('revised rook jumps to knight captures across blockers while removed attack
 test('returning pawn obeys its forward range, quiet retreats, and blockers', async ({ page }) => {
   await importPosition(page, fen({ h1: 'K', h8: 'k', d4: letter('pawn.purple@5').toUpperCase(), d5: 'P', f6: 'b' }));
   await square(page, 'd4').click();
-  for (const name of ['b2', 'd2']) await expect(square(page, name).locator('.move-marker')).toHaveCount(1);
+  for (const name of ['b2', 'd2']) await expect(square(page, name).locator('.move-marker[data-playable=true]')).toHaveCount(1);
   for (const name of ['a4', 'b4', 'd1', 'd6']) await expect(marker(page, name)).toHaveCount(0);
   await expect(square(page, 'f6').locator('.capture-marker')).toHaveCount(1);
   await square(page, 'f6').click();
@@ -229,7 +230,7 @@ for (const color of ['w', 'b']) {
     await page.getByRole('button', { name: /Undo move/ }).click();
     await hasDesign(page, 'h' + row, 'rook.purple@2');
     await square(page, 'e' + row).click();
-    await expect(square(page, 'g' + row).locator('.move-marker')).toHaveCount(1);
+    await expect(square(page, 'g' + row).locator('.move-marker[data-playable=true]')).toHaveCount(1);
   });
 }
 
@@ -239,15 +240,15 @@ test('timed experimental saves preserve clocks and pause safely through undo', a
   await page.reload();
   await experimental(page);
   await choose(page, 'rook', 'a1', 'rook.purple@2');
-  await page.selectOption('#time-control', 'blitz');
+  await inPanel(page, 'setup', () => page.selectOption('#time-control', 'blitz'));
   await start(page);
   await page.getByRole('button', { name: 'Start clock', exact: true }).click();
   await page.clock.fastForward(10_000);
   await move(page, 'e2', 'e4');
   await page.clock.fastForward(7_000);
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(page.locator('#white-clock')).toHaveText('02:52');
   await expect(page.locator('#black-clock')).toHaveText('02:53');
   await expect(page.getByRole('button', { name: 'Resume clock', exact: true })).toBeVisible();
@@ -268,7 +269,7 @@ test('experimental engine requests carry the frozen profile identity and apply a
   await experimental(page);
   await choose(page, 'rook', 'a1', 'rook.purple@2');
   await start(page);
-  await page.selectOption('#opponent', 'engine');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'engine'));
   await expect(page.locator('#engine-status')).toContainText('connected');
   await move(page, 'e2', 'e4');
   await expect(square(page, 'f6')).toHaveAttribute('aria-label', 'f6 Black knight');
@@ -286,9 +287,9 @@ test('native engine plays the experimental board through the browser controls', 
   await choose(page, 'rook', 'a1', 'rook.purple@2');
   await choose(page, 'pawn', 'd7', 'pawn.purple@5');
   await start(page);
-  await page.selectOption('#opponent', 'engine');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'engine'));
   await expect(page.locator('#engine-status')).toContainText('connected');
-  await page.selectOption('#difficulty', 'easy');
+  await inPanel(page, 'setup', () => page.selectOption('#difficulty', 'easy'));
   await move(page, 'e2', 'e4');
   await expect(page.locator('#status')).toHaveText('White to move', { timeout: 20000 });
   await expect(page.locator('#history li span')).toHaveCount(2);

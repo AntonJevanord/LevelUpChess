@@ -1,11 +1,12 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const fs = require('node:fs/promises');
 const { PLAYABLE_PROFILES } = require('../src/design-options');
 
 const [workshop, reference] = PLAYABLE_PROFILES;
 const square = (page, name) => page.locator(`[data-square="${name}"]`);
 async function choose(page, family, name, id) {
-  await page.selectOption('#experimental-family', family);
+  await inPanel(page, 'setup', () => page.selectOption('#experimental-family', family));
   await page.selectOption(`#experimental-upgrade-${name}`, id);
 }
 async function move(page, from, to) { await square(page, from).click(); await square(page, to).click(); }
@@ -16,11 +17,11 @@ async function start(page) {
 }
 async function pgnDownload(page) {
   const waiting = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Export PGN', exact: true }).click());
   return fs.readFile(await (await waiting).path(), 'utf8');
 }
 async function importPgn(page, pgn) {
-  await page.getByRole('button', { name: 'Import PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Import PGN', exact: true }).click());
   await page.locator('#pgn-text').fill(pgn);
   await page.getByRole('button', { name: 'Import game', exact: true }).click();
   await expect(page.locator('#import-dialog')).not.toBeVisible();
@@ -30,7 +31,7 @@ async function importPgn(page, pgn) {
 test.beforeEach(async ({ page }) => { await page.goto('http://127.0.0.1:4173'); });
 
 test('Camel knight costs three points, shares a six-point army with Blink, and keeps its camel jump', async ({ page }) => {
-  await page.selectOption('#game-mode', workshop.variant);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', workshop.variant));
   await choose(page, 'knight', 'b1', 'knight.purple@3');
   await expect(page.locator('#experimental-status')).toContainText('White 3/6 · Black 0/6');
   await expect(page.locator('#experimental-upgrade-b1')).toHaveValue('knight.purple@3');
@@ -47,18 +48,18 @@ test('Camel knight costs three points, shares a six-point army with Blink, and k
 test('switching libraries keeps shared choices, clears unavailable choices, and leaves the current board intact', async ({ page }) => {
   await expect(page.locator(`#game-mode option[value="${workshop.variant}"]`)).toHaveText('Archive · Rebalance workshop');
   await expect(page.locator(`#game-mode option[value="${reference.variant}"]`)).toHaveText('Archive · First prototypes (archive)');
-  await page.selectOption('#game-mode', workshop.variant);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', workshop.variant));
   await choose(page, 'pawn', 'a2', 'pawn.purple@5');
   await choose(page, 'queen', 'd1', 'queen.purple@4');
   await start(page);
   await expect(square(page, 'd2')).toHaveAttribute('data-design-id', 'queen.purple@4');
-  await page.selectOption('#game-mode', reference.variant);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', reference.variant));
   await expect(page.locator('#experimental-upgrade-a2')).toHaveValue('pawn.purple@5');
   await expect(page.locator('#experimental-upgrade-d1')).toHaveValue('');
   await expect(page.locator('#experimental-status')).toContainText('White 3/6 · Black 0/6');
   await expect(square(page, 'd2')).toHaveAttribute('data-design-id', 'queen.purple@4');
   await choose(page, 'bishop', 'c1', 'bishop.orange@1');
-  await page.selectOption('#game-mode', workshop.variant);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', workshop.variant));
   await expect(page.locator('#experimental-upgrade-c1')).toHaveValue('');
   await expect(page.locator('#experimental-upgrade-a2')).toHaveValue('pawn.purple@5');
   await expect(page.locator('#experimental-status')).toContainText('White 3/6 · Black 0/6');
@@ -70,8 +71,8 @@ test('switching libraries keeps shared choices, clears unavailable choices, and 
 
 test('short queens are retired and revised companions preserve ordinary queens through save, PGN and undo', async ({ page }) => {
   test.setTimeout(60000);
-  await page.selectOption('#game-mode', workshop.variant);
-  await page.selectOption('#experimental-family', 'queen');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', workshop.variant));
+  await inPanel(page, 'setup', () => page.selectOption('#experimental-family', 'queen'));
   await expect(page.locator('#experimental-upgrade-d1 option[value="queen.purple@2"]')).toHaveCount(0);
   await choose(page, 'queen', 'd1', 'queen.purple@4');
   await choose(page, 'queen', 'd8', 'queen.purple@4');
@@ -91,9 +92,9 @@ test('short queens are retired and revised companions preserve ordinary queens t
   await expect(page.locator('#history li span')).toHaveCount(2);
   const pgn = await pgnDownload(page);
   expect(pgn).toContain(`[Variant "${workshop.variant}"]`);
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(page.locator('#game-mode')).toHaveValue(workshop.variant);
   for (const name of ['e3', 'e6']) await expect(square(page, name)).toHaveAttribute('data-design-id', 'queen.purple@4');
   await expect(page.locator('#experimental-upgrade-d1')).toHaveValue('queen.purple@4');
@@ -109,15 +110,15 @@ test('short queens are retired and revised companions preserve ordinary queens t
 
 test('loading an original-library save restores that library and its distinct choices', async ({ page }) => {
   test.setTimeout(60000);
-  await page.selectOption('#game-mode', reference.variant);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', reference.variant));
   await choose(page, 'pawn', 'b2', 'pawn.purple@6');
   await choose(page, 'knight', 'b1', 'knight.purple@2');
   await start(page);
   const pgn = await pgnDownload(page);
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.selectOption('#game-mode', workshop.variant);
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', workshop.variant));
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(page.locator('#game-mode')).toHaveValue(reference.variant);
   await expect(page.locator('#experimental-upgrade-b2')).toHaveValue('pawn.purple@6');
   for (const name of ['b3', 'b4']) await expect(square(page, name)).toHaveAttribute('data-design-id', 'pawn.purple@6');

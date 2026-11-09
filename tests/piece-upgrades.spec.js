@@ -1,9 +1,10 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const fs = require('node:fs/promises');
 const path = require('node:path');
 
 const square = (page, name) => page.locator(`[data-square="${name}"]`);
-const marker = (page, name) => square(page, name).locator('.move-marker, .capture-marker');
+const marker = (page, name) => square(page, name).locator('.move-marker[data-playable=true], .capture-marker');
 const mixedLevels = { b1: '3', b8: '2', c1: '3', f8: '1', d1: '2', d8: '3' };
 const familyFor = name => ['b1', 'g1', 'b8', 'g8'].includes(name) ? 'knight'
   : ['c1', 'f1', 'c8', 'f8'].includes(name) ? 'bishop' : 'queen';
@@ -18,10 +19,10 @@ async function move(page, from, to) {
   await square(page, to).click();
 }
 async function chooseLevels(page, levels = mixedLevels, budget = '8') {
-  await page.selectOption('#game-mode', 'levelup');
-  await page.locator('#piece-upgrade-budget').fill(budget);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'levelup'));
+  await inPanel(page, 'setup', () => page.locator('#piece-upgrade-budget').fill(budget));
   for (const [name, level] of Object.entries(levels)) {
-    await page.selectOption('#piece-family', familyFor(name));
+    await inPanel(page, 'setup', () => page.selectOption('#piece-family', familyFor(name)));
     await page.selectOption(`#piece-upgrade-${name}`, level);
   }
 }
@@ -31,14 +32,14 @@ async function startMixedGame(page, budget = '8') {
   await upgraded(page, 'b3', 'purple', 3, 'knight');
 }
 async function importPgn(page, text) {
-  await page.getByRole('button', { name: 'Import PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Import PGN', exact: true }).click());
   await page.locator('#pgn-text').fill(text);
   await page.getByRole('button', { name: 'Import game', exact: true }).click();
 }
 const positionPgn = (fen, variant = 'levelup') => `[Variant "${variant}"]\n[SetUp "1"]\n[FEN "${fen}"]\n\n*`;
 async function downloadPgn(page) {
   const waiting = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Export PGN', exact: true }).click());
   return fs.readFile(await (await waiting).path(), 'utf8');
 }
 async function expectMixedChoices(page, budget = '8') {
@@ -53,7 +54,7 @@ test.beforeEach(async ({ page }) => {
 
 test('mixed piece upgrades share per-side budgets and purple bishops replace their starting pieces', async ({ page }) => {
   await expect(page.locator('#game-mode option[value="levelup"]')).toHaveText('Version 04 piece rules');
-  await page.selectOption('#game-mode', 'levelup');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'levelup'));
   await expect(page.locator('#piece-upgrade-budget')).toHaveValue('6');
   await expect(page.locator('#piece-upgrade-budget')).toHaveAttribute('min', '1');
   await expect(page.locator('#piece-upgrade-budget')).toHaveAttribute('max', '39');
@@ -67,7 +68,7 @@ test('mixed piece upgrades share per-side budgets and purple bishops replace the
   await upgraded(page, 'd8', 'purple', 3, 'queen', 'Black');
   await expect(square(page, 'b1')).toHaveAttribute('aria-label', 'b1 White knight');
   await expect(square(page, 'c3')).toHaveAttribute('aria-label', 'c3 empty');
-  await expect(page.locator('.piece')).toHaveCount(33);
+  await expect(page.locator('#board > .square > .piece')).toHaveCount(33);
   for (const [name, color, piece] of [
     ['a1', 'White', 'rook'], ['h1', 'White', 'rook'], ['e1', 'White', 'king'],
     ['a8', 'Black', 'rook'], ['h8', 'Black', 'rook'], ['e8', 'Black', 'king'],
@@ -81,7 +82,7 @@ test('an over-budget mixed army leaves the playable current board unchanged', as
   await expect(square(page, 'b1')).toHaveAttribute('aria-label', 'b1 White knight');
   await expect(square(page, 'c1')).toHaveAttribute('aria-label', 'c1 White bishop');
   await expect(square(page, 'b3')).toHaveAttribute('aria-label', 'b3 empty');
-  await page.locator('#piece-upgrade-budget').fill('8');
+  await inPanel(page, 'setup', () => page.locator('#piece-upgrade-budget').fill('8'));
   await page.getByRole('button', { name: 'New game', exact: true }).click();
   await upgraded(page, 'c1', 'purple', 3, 'bishop');
 });
@@ -90,7 +91,7 @@ test('purple knights take one orthogonal step or jump two squares over friendly 
   await importPgn(page, positionPgn('k7/8/8/3P4/1rPGr3/8/3r4/7K w - - 0 1'));
   await upgraded(page, 'd4', 'purple', 3, 'knight');
   await square(page, 'd4').click();
-  for (const name of ['d3', 'd6', 'f4']) await expect(square(page, name).locator('.move-marker')).toHaveCount(1);
+  for (const name of ['d3', 'd6', 'f4']) await expect(square(page, name).locator('.move-marker[data-playable=true]')).toHaveCount(1);
   for (const name of ['e4', 'b4', 'd2']) await expect(square(page, name).locator('.capture-marker')).toHaveCount(1);
   for (const name of ['c4', 'd5', 'e5', 'f5', 'e6', 'd7']) await expect(marker(page, name)).toHaveCount(0);
   await square(page, 'd3').click();
@@ -113,19 +114,19 @@ test('purple knight steps and jumps obey pins and protect squares from the oppos
   await upgraded(page, 'd2', 'purple', 3, 'knight');
   await square(page, 'd2').click();
   for (const name of ['e2', 'f2']) await expect(marker(page, name)).toHaveCount(0);
-  for (const name of ['d3', 'd4']) await expect(square(page, name).locator('.move-marker')).toHaveCount(1);
+  for (const name of ['d3', 'd4']) await expect(square(page, name).locator('.move-marker[data-playable=true]')).toHaveCount(1);
   await page.reload();
   await importPgn(page, positionPgn('8/8/8/5k2/4G3/8/8/K7 b - - 0 1'));
   await square(page, 'f5').click();
   for (const name of ['f4', 'e5', 'g4']) await expect(marker(page, name)).toHaveCount(0);
-  await expect(square(page, 'g5').locator('.move-marker')).toHaveCount(1);
+  await expect(square(page, 'g5').locator('.move-marker[data-playable=true]')).toHaveCount(1);
 });
 
 test('blue bishops add quiet orthogonal steps while retaining ordinary diagonal captures', async ({ page }) => {
   await importPgn(page, positionPgn('k7/8/5r2/3r4/3H4/8/8/7K w - - 0 1'));
   await upgraded(page, 'd4', 'blue', 1, 'bishop');
   await square(page, 'd4').click();
-  for (const name of ['e4', 'd3', 'c4']) await expect(square(page, name).locator('.move-marker')).toHaveCount(1);
+  for (const name of ['e4', 'd3', 'c4']) await expect(square(page, name).locator('.move-marker[data-playable=true]')).toHaveCount(1);
   await expect(square(page, 'd5').locator('.capture-marker')).toHaveCount(0);
   await expect(square(page, 'f6').locator('.capture-marker')).toHaveCount(1);
   await square(page, 'e4').click();
@@ -137,7 +138,7 @@ test('blue bishops add quiet orthogonal steps while retaining ordinary diagonal 
   await page.reload();
   await importPgn(page, positionPgn('8/p7/8/8/3H1k2/8/8/K7 b - - 0 1'));
   await square(page, 'f4').click();
-  await expect(square(page, 'e4').locator('.move-marker')).toHaveCount(1);
+  await expect(square(page, 'e4').locator('.move-marker[data-playable=true]')).toHaveCount(1);
   await square(page, 'e4').click();
   await expect(square(page, 'e4')).toHaveAttribute('aria-label', 'e4 Black king');
 });
@@ -172,7 +173,7 @@ test('purple bishops combine diagonals and vertical rook rays without passing bl
   await importPgn(page, positionPgn('k7/8/3p4/8/3J1r2/3P4/8/7K w - - 0 1'));
   await upgraded(page, 'd4', 'purple', 3, 'bishop');
   await square(page, 'd4').click();
-  for (const name of ['d5', 'e5', 'b6']) await expect(square(page, name).locator('.move-marker')).toHaveCount(1);
+  for (const name of ['d5', 'e5', 'b6']) await expect(square(page, name).locator('.move-marker[data-playable=true]')).toHaveCount(1);
   await expect(square(page, 'd6').locator('.capture-marker')).toHaveCount(1);
   for (const name of ['d7', 'd3', 'd2', 'c4', 'f4']) await expect(marker(page, name)).toHaveCount(0);
   await square(page, 'd6').click();
@@ -184,7 +185,7 @@ test('orange queens jump quietly like knights and capture only along ordinary qu
   await importPgn(page, positionPgn('k7/3r4/2r5/8/2PTP3/8/8/7K w - - 0 1'));
   await upgraded(page, 'd4', 'orange', 2, 'queen');
   await square(page, 'd4').click();
-  for (const name of ['e6', 'f5']) await expect(square(page, name).locator('.move-marker')).toHaveCount(1);
+  for (const name of ['e6', 'f5']) await expect(square(page, name).locator('.move-marker[data-playable=true]')).toHaveCount(1);
   await expect(marker(page, 'c6')).toHaveCount(0);
   await expect(square(page, 'd7').locator('.capture-marker')).toHaveCount(1);
   await expect(marker(page, 'f4')).toHaveCount(0);
@@ -196,14 +197,14 @@ test('orange queens jump quietly like knights and capture only along ordinary qu
   await page.reload();
   await importPgn(page, positionPgn('8/5k2/8/8/3T4/8/8/K7 b - - 0 1'));
   await square(page, 'f7').click();
-  await expect(square(page, 'e6').locator('.move-marker')).toHaveCount(1);
+  await expect(square(page, 'e6').locator('.move-marker[data-playable=true]')).toHaveCount(1);
 });
 
 test('purple queens add capturing knight jumps that can give check', async ({ page }) => {
   await importPgn(page, positionPgn('k7/8/2r5/8/2PUP3/8/8/7K w - - 0 1'));
   await upgraded(page, 'd4', 'purple', 3, 'queen');
   await square(page, 'd4').click();
-  await expect(square(page, 'e6').locator('.move-marker')).toHaveCount(1);
+  await expect(square(page, 'e6').locator('.move-marker[data-playable=true]')).toHaveCount(1);
   await expect(square(page, 'c6').locator('.capture-marker')).toHaveCount(1);
   await square(page, 'c6').click();
   await upgraded(page, 'c6', 'purple', 3, 'queen');
@@ -229,7 +230,7 @@ test('ordinary royal kings and rooks still castle in both directions under the n
   await importPgn(page, positionPgn('4k3/8/8/8/8/8/7h/R3K2R w KQ - 0 1'));
   await square(page, 'e1').click();
   await expect(marker(page, 'g1')).toHaveCount(0);
-  await expect(square(page, 'c1').locator('.move-marker')).toHaveCount(1);
+  await expect(square(page, 'c1').locator('.move-marker[data-playable=true]')).toHaveCount(1);
 });
 
 test('mixed-army saves retain the maximum budget and PGN restores setup, variant, history and undo', async ({ page }) => {
@@ -237,7 +238,7 @@ test('mixed-army saves retain the maximum budget and PGN restores setup, variant
   for (const [from, to] of [['b3', 'b4'], ['b8', 'c6'], ['b4', 'd4'], ['d8', 'e6']]) await move(page, from, to);
   await upgraded(page, 'd4', 'purple', 3, 'knight');
   await upgraded(page, 'e6', 'purple', 3, 'queen', 'Black');
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await expect(page.locator('#save-status')).toContainText('Saved 4 half-moves');
   const pgn = await downloadPgn(page);
   expect(pgn).toContain('[Variant "levelup"]');
@@ -245,7 +246,7 @@ test('mixed-army saves retain the maximum budget and PGN restores setup, variant
   expect(pgn).toContain('Gd4');
   expect(pgn).toContain('Ue6');
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expectMixedChoices(page, '39');
   await upgraded(page, 'd4', 'purple', 3, 'knight');
   await upgraded(page, 'c6', 'orange', 2, 'knight', 'Black');
@@ -268,30 +269,30 @@ test('legacy knight PGN and saves retain the original two-square-only purple mov
   await expect(page.locator('#game-mode')).toHaveValue('levelup-knight');
   await square(page, 'd4').click();
   await expect(marker(page, 'd5')).toHaveCount(0);
-  await expect(square(page, 'd6').locator('.move-marker')).toHaveCount(1);
+  await expect(square(page, 'd6').locator('.move-marker[data-playable=true]')).toHaveCount(1);
   await square(page, 'd6').click();
   await upgraded(page, 'd6', 'purple', 3, 'knight');
   const pgn = await downloadPgn(page);
   expect(pgn).toContain('[Variant "levelup-knight"]');
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await upgraded(page, 'd6', 'purple', 3, 'knight');
   await expect(page.locator('#game-mode')).toHaveValue('levelup-knight');
   await page.getByRole('button', { name: /Undo move/ }).click();
   await square(page, 'd4').click();
   await expect(marker(page, 'd5')).toHaveCount(0);
-  await expect(square(page, 'd6').locator('.move-marker')).toHaveCount(1);
+  await expect(square(page, 'd6').locator('.move-marker[data-playable=true]')).toHaveCount(1);
 });
 
 test('legacy saves accept the six-point budget and reject larger budgets without replacing the current game', async ({ page }) => {
-  await page.selectOption('#game-mode', 'levelup-knight');
-  await page.selectOption('#upgrade-budget', '6');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'levelup-knight'));
+  await inPanel(page, 'setup', () => page.selectOption('#upgrade-budget', '6'));
   await page.getByRole('button', { name: 'New game', exact: true }).click();
   await upgraded(page, 'b1', 'blue', 1, 'knight');
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await upgraded(page, 'b1', 'blue', 1, 'knight');
   await expect(page.locator('#upgrade-budget')).toHaveValue('6');
   await page.evaluate(() => {
@@ -302,7 +303,7 @@ test('legacy saves accept the six-point budget and reject larger budgets without
   });
   await page.reload();
   await move(page, 'e2', 'e4');
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(page.locator('#save-status')).toContainText('damaged');
   await expect(page.locator('#replace-dialog')).not.toBeVisible();
   await expect(square(page, 'e4')).toHaveAttribute('aria-label', 'e4 White pawn');
@@ -319,7 +320,7 @@ test('engine requests use the shared mixed-piece variant and apply an upgraded q
     searches.push(data);
     return route.fulfill({ json: { move: 'd8e6' } });
   });
-  await page.selectOption('#opponent', 'engine');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'engine'));
   await expect(page.locator('#engine-status')).toContainText('connected');
   await move(page, 'b3', 'b4');
   await upgraded(page, 'e6', 'purple', 3, 'queen', 'Black');
@@ -335,7 +336,7 @@ test('native Fairy Stockfish escapes check with a purple knight jump using the n
   await importPgn(page, positionPgn('5K1k/8/3g2B1/4B3/8/8/8/8 b - - 0 1'));
   await upgraded(page, 'd6', 'purple', 3, 'knight', 'Black');
   await expect(page.locator('#status')).toContainText('Check');
-  await page.selectOption('#opponent', 'engine');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'engine'));
   await upgraded(page, 'f6', 'purple', 3, 'knight', 'Black');
   await expect(square(page, 'd6')).toHaveAttribute('aria-label', 'd6 empty');
   await expect(page.locator('#status')).toHaveText('White to move · Check');

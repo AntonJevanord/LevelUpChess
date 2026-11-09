@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const { PLAYABLE_LIBRARIES } = require('../src/design-options');
 
 const library = PLAYABLE_LIBRARIES.find(item => item.id === 'v17-pawns-revised');
@@ -11,8 +12,8 @@ test('the retained Bishop-pawn trial keeps its two-point price and the initial w
   const entries = await page.locator('#game-mode option').evaluateAll(options => options.map(option => option.textContent));
   expect(entries).toContain('Version 17 · Pawn workshop (bishop trial)');
   expect(entries.indexOf('Version 17 · Pawn workshop')).toBeLessThan(entries.indexOf('Version 17 · Pawn workshop (initial)'));
-  await page.selectOption('#game-mode', library.variant);
-  await page.locator('#experimental-budget').fill('3');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', library.variant));
+  await inPanel(page, 'setup', () => page.locator('#experimental-budget').fill('3'));
   await square(page, 'c2').click();
   const picker = page.locator('#setup-picker');
   await expect(picker.locator(`[data-upgrade-id="${bishop}"]`)).toContainText('2 pt');
@@ -31,7 +32,7 @@ test('the retained Bishop-pawn trial keeps its two-point price and the initial w
   await expect(square(page, 'd2').locator('.piece-level')).toHaveText('L1');
   await expect(square(page, 'e1')).toHaveAttribute('aria-label', 'e1 White king');
 
-  await page.selectOption('#game-mode', initial.variant);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', initial.variant));
   await square(page, 'c2').click();
   await expect(picker.locator('[data-upgrade-id="pawn.blue@2"]')).toContainText('1 pt');
   await expect(picker.locator('[data-upgrade-id="pawn.blue@3"]')).toContainText('1 pt');

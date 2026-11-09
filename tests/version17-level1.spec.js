@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const fs = require('node:fs/promises');
 const { VariantGame, initVariantRules } = require('../dist/rules-node.cjs');
 const { PLAYABLE_LIBRARIES, getPlayableProfile } = require('../src/design-options');
@@ -10,7 +11,7 @@ const profile = library && getPlayableProfile(library.variant);
 const ids = { twoStep: 'pawn.blue@5', kingStep: 'pawn.blue@7', grant: 'king.reserve-pawn@6' };
 const type = id => profile.registry.allocations.find(allocation => allocation.id === id).letter;
 const square = (page, name) => page.locator(`#board [data-square="${name}"]`);
-const marker = (page, name) => square(page, name).locator('.move-marker, .capture-marker');
+const marker = (page, name) => square(page, name).locator('.move-marker[data-playable=true], .capture-marker');
 const pocket = (page, color) => page.locator(`[data-pocket-color="${color}"][data-pocket-type="${type(ids.grant)}"]`);
 async function choose(page, name, id) {
   await square(page, name).click();
@@ -23,7 +24,7 @@ async function start(page) {
   await expect(page.locator('#board')).toHaveClass(/experimental-board/);
 }
 async function importPgn(page, pgn) {
-  await page.getByRole('button', { name: 'Import PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Import PGN', exact: true }).click());
   await page.locator('#pgn-text').fill(pgn);
   await page.getByRole('button', { name: 'Import game', exact: true }).click();
   await expect(page.locator('#import-dialog')).not.toBeVisible();
@@ -45,8 +46,8 @@ test('current pawn setup offers both one-point pawns and the mobile grant, with 
   test.setTimeout(60000);
   const entries = await page.locator('#game-mode option').evaluateAll(options => options.map(option => option.textContent));
   expect(entries.indexOf('Version 17 · Pawn workshop')).toBeLessThan(entries.indexOf('Version 16 · Pawn workshop'));
-  await page.selectOption('#game-mode', library.variant);
-  await page.locator('#experimental-budget').fill('3');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', library.variant));
+  await inPanel(page, 'setup', () => page.locator('#experimental-budget').fill('3'));
   await square(page, 'c2').click();
   await expect(page.locator(`#setup-picker [data-upgrade-id="${ids.twoStep}"]`)).toContainText('1 pt');
   await expect(page.locator(`#setup-picker [data-upgrade-id="${ids.kingStep}"]`)).toContainText('1 pt');
@@ -71,12 +72,12 @@ test('current pawn setup offers both one-point pawns and the mobile grant, with 
   await expect(square(page, 'f5')).toHaveAttribute('data-design-id', ids.grant);
 
   const waiting = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Export PGN', exact: true }).click());
   const pgn = await fs.readFile(await (await waiting).path(), 'utf8');
   expect(pgn).toContain(`[Variant "${library.variant}"]`);
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(page.locator('#game-mode')).toHaveValue(library.variant);
   await expect(square(page, 'f5')).toHaveAttribute('data-design-id', ids.grant);
   for (const [name, id] of [['c2', ids.twoStep], ['d2', ids.kingStep], ['e1', ids.grant]]) {
@@ -112,7 +113,7 @@ test('the current grant has quiet forward diagonals but cannot capture diagonall
 });
 
 test('the version-16 pawn workshop remains an explicit historical choice', async ({ page }) => {
-  await page.selectOption('#game-mode', archived.variant);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', archived.variant));
   await square(page, 'd2').click();
   await expect(page.locator('#setup-picker [data-upgrade-id="pawn.orange@4"]')).toContainText('2 pts');
   await expect(page.locator(`#setup-picker [data-upgrade-id="${ids.twoStep}"]`)).toHaveCount(0);

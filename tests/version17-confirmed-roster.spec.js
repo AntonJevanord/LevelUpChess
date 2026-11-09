@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const { PLAYABLE_LIBRARIES, getPlayableProfile } = require('../src/design-options');
 const { VariantGame, initVariantRules } = require('../dist/rules-node.cjs');
 const { placementFromMap } = require('../src/profile-fen');
@@ -9,7 +10,7 @@ const ids = { bishop: 'bishop.vertical-blocked@1', pawn: 'pawn.queen-sideways@1'
   slider: 'king.reserve-rook@1', jumper: 'king.grant-wd-level3@1', king: 'king.reserve-king@1' };
 const type = id => profile.registry.allocations.find(item => item.id === id).letter;
 const square = (page, name) => page.locator(`#board [data-square="${name}"]`);
-const marker = (page, name) => square(page, name).locator('.move-marker, .capture-marker');
+const marker = (page, name) => square(page, name).locator('.move-marker[data-playable=true], .capture-marker');
 async function choose(page, name, id) {
   await square(page, name).click();
   await page.locator(`#setup-picker [data-upgrade-id="${id}"]`).click();
@@ -21,7 +22,7 @@ async function start(page) {
 async function importPosition(page, pieces) {
   const game = new VariantGame(`${placementFromMap(new Map(Object.entries(pieces)))} w - - 0 1`, library.variant);
   const pgn = game.pgn(); game.dispose();
-  await page.getByRole('button', { name: 'Import PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Import PGN', exact: true }).click());
   await page.locator('#pgn-text').fill(pgn);
   await page.getByRole('button', { name: 'Import game', exact: true }).click();
   await expect(page.locator('#import-dialog')).not.toBeVisible();
@@ -34,8 +35,8 @@ test('the version-17 confirmed roster stays ahead of its older workshops with ac
   const entries = await page.locator('#game-mode option').evaluateAll(options => options.map(option => ({ value: option.value, label: option.textContent })));
   expect(entries.findIndex(item => item.value === library.variant)).toBeLessThan(entries.findIndex(item => item.label === 'Version 17 · Pawn workshop'));
   expect(entries.some(item => item.label === 'Version 17 · Roster and trials (archive)')).toBe(true);
-  await page.selectOption('#game-mode', library.variant);
-  await page.locator('#experimental-budget').fill('9');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', library.variant));
+  await inPanel(page, 'setup', () => page.locator('#experimental-budget').fill('9'));
   const picker = page.locator('#setup-picker');
   await square(page, 'c2').click();
   await expect(picker.locator(`[data-upgrade-id="${ids.pawn}"]`)).toContainText('Herald');
@@ -72,9 +73,9 @@ test('the jumping grant crosses blockers, remains portable and differs from the 
   for (const name of ['b4', 'd6', 'f4', 'd2']) await expect(marker(page, name)).toHaveCount(1);
   await square(page, 'f4').click();
   await expect(square(page, 'f4')).toHaveAttribute('data-design-id', ids.jumper);
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await expect(page.locator('#game-mode')).toHaveValue(library.variant);
   await expect(square(page, 'f4')).toHaveAttribute('data-design-id', ids.jumper);
   await page.getByRole('button', { name: /Undo move/ }).click();
@@ -87,7 +88,7 @@ test('the jumping grant crosses blockers, remains portable and differs from the 
 
 test('the selected old X-ray queen keeps diagonal hops and has no orthogonal hops', async ({ page }) => {
   await page.goto('http://127.0.0.1:4173');
-  await page.selectOption('#game-mode', library.variant);
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', library.variant));
   await square(page, 'd1').click();
   await expect(page.locator(`#setup-picker [data-upgrade-id="${ids.queen}"]`)).toContainText('Wraith');
   await expect(page.locator('#setup-picker [data-upgrade-id="queen.xray-rook@1"]')).toHaveCount(0);

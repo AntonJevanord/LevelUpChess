@@ -1,8 +1,9 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const fs = require('node:fs/promises');
 
 const square = (page, name) => page.locator(`[data-square="${name}"]`);
-const marker = (page, name) => square(page, name).locator('.move-marker, .capture-marker');
+const marker = (page, name) => square(page, name).locator('.move-marker[data-playable=true], .capture-marker');
 const slots = {
   pawn: [...'abcdefgh'].flatMap(file => [file + '2', file + '7']),
   knight: ['b1', 'g1', 'b8', 'g8'],
@@ -21,7 +22,7 @@ async function move(page, from, to) {
   await square(page, to).click();
 }
 async function importPgn(page, text) {
-  await page.getByRole('button', { name: 'Import PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Import PGN', exact: true }).click());
   await page.locator('#pgn-text').fill(text);
   await page.getByRole('button', { name: 'Import game', exact: true }).click();
 }
@@ -30,7 +31,7 @@ async function importPosition(page, fen) {
 }
 async function downloadPgn(page) {
   const waiting = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Export PGN', exact: true }).click());
   return fs.readFile(await (await waiting).path(), 'utf8');
 }
 async function clocks(page, white, black) {
@@ -43,8 +44,8 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('rook setup offers every rook level and all thirty slots fit the maximum 45-point army', async ({ page }) => {
-  await page.selectOption('#game-mode', 'levelup-v5');
-  await page.selectOption('#piece-family', 'rook');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'levelup-v5'));
+  await inPanel(page, 'setup', () => page.selectOption('#piece-family', 'rook'));
   await expect(page.locator('.piece-choices[data-family="rook"] select')).toHaveCount(4);
   await expect(page.locator('#piece-upgrade-choices select')).toHaveCount(30);
   await expect(page.locator('#piece-upgrade-budget')).toHaveAttribute('max', '45');
@@ -53,9 +54,9 @@ test('rook setup offers every rook level and all thirty slots fit the maximum 45
     await expect(select).toBeVisible();
     expect(await select.locator('option').evaluateAll(options => options.map(option => option.value))).toEqual(['0', '1', '2', '3']);
   }
-  await page.locator('#piece-upgrade-budget').fill('45');
+  await inPanel(page, 'setup', () => page.locator('#piece-upgrade-budget').fill('45'));
   for (const [family, names] of Object.entries(slots)) {
-    await page.selectOption('#piece-family', family);
+    await inPanel(page, 'setup', () => page.selectOption('#piece-family', family));
     for (const name of names) await page.selectOption(`#piece-upgrade-${name}`, '3');
   }
   await expect(page.locator('#piece-upgrade-status')).toContainText('White 45/45');
@@ -63,10 +64,10 @@ test('rook setup offers every rook level and all thirty slots fit the maximum 45
   await expect(square(page, 'a1')).toHaveAttribute('aria-label', 'a1 White rook');
   await page.getByRole('button', { name: 'New game', exact: true }).click();
   for (const [name, color] of [['a1', 'White'], ['h1', 'White'], ['a8', 'Black'], ['h8', 'Black']]) await purple(page, name, color);
-  await expect(page.locator('.piece')).toHaveCount(36);
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await expect(page.locator('#board > .square > .piece')).toHaveCount(36);
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await purple(page, 'a1');
   await purple(page, 'h8', 'Black');
   await expect(page.locator('#piece-upgrade-budget')).toHaveValue('45');
@@ -76,20 +77,20 @@ test('rook setup offers every rook level and all thirty slots fit the maximum 45
 });
 
 test('rook costs use the same per-side budget as other upgrades and invalid choices leave the board intact', async ({ page }) => {
-  await page.selectOption('#game-mode', 'levelup-v5');
-  await page.selectOption('#piece-family', 'rook');
-  await page.selectOption('#piece-upgrade-a1', '3');
-  await page.selectOption('#piece-upgrade-h1', '3');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'levelup-v5'));
+  await inPanel(page, 'setup', () => page.selectOption('#piece-family', 'rook'));
+  await inPanel(page, 'setup', () => page.selectOption('#piece-upgrade-a1', '3'));
+  await inPanel(page, 'setup', () => page.selectOption('#piece-upgrade-h1', '3'));
   await expect(page.locator('#piece-upgrade-status')).toContainText('White 7/6');
   await expect(page.locator('#piece-upgrade-status')).toContainText('Black 1/6');
   await page.getByRole('button', { name: 'New game', exact: true }).click();
   for (const name of ['a1', 'h1']) await expect(square(page, name)).toHaveAttribute('aria-label', `${name} White rook`);
-  await page.locator('#piece-upgrade-budget').fill('7');
+  await inPanel(page, 'setup', () => page.locator('#piece-upgrade-budget').fill('7'));
   await page.getByRole('button', { name: 'New game', exact: true }).click();
   await purple(page, 'a1');
   await purple(page, 'h1');
   for (const name of ['a8', 'h8']) await expect(square(page, name)).toHaveAttribute('aria-label', `${name} Black rook`);
-  await expect(page.locator('.piece')).toHaveCount(32);
+  await expect(page.locator('#board > .square > .piece')).toHaveCount(32);
 });
 
 for (const fixture of [
@@ -117,7 +118,7 @@ test('purple rooks retain ordinary quiet rook movement and cannot move quietly o
   await importPosition(page, 'k7/8/8/8/3O4/8/8/7K w - - 0 1');
   await purple(page, 'd4');
   await square(page, 'd4').click();
-  for (const name of ['d6', 'd7', 'd8', 'a4', 'h4', 'd1']) await expect(square(page, name).locator('.move-marker')).toHaveCount(1);
+  for (const name of ['d6', 'd7', 'd8', 'a4', 'h4', 'd1']) await expect(square(page, name).locator('.move-marker[data-playable=true]')).toHaveCount(1);
   for (const name of ['e5', 'f6', 'c6', 'e2']) await expect(marker(page, name)).toHaveCount(0);
   await square(page, 'd7').click();
   await purple(page, 'd7');
@@ -133,8 +134,8 @@ for (const fixture of [
     await importPosition(page, fixture.fen);
     await purple(page, fixture.corner, fixture.color);
     await square(page, fixture.king).click();
-    await expect(square(page, fixture.to).locator('.move-marker')).toHaveCount(1);
-    await expect(square(page, fixture.standardTo).locator('.move-marker')).toHaveCount(1);
+    await expect(square(page, fixture.to).locator('.move-marker[data-playable=true]')).toHaveCount(1);
+    await expect(square(page, fixture.standardTo).locator('.move-marker[data-playable=true]')).toHaveCount(1);
     await square(page, fixture.to).click();
     await expect(square(page, fixture.to)).toHaveAttribute('aria-label', `${fixture.to} ${fixture.color} king`);
     await purple(page, fixture.rookTo, fixture.color);
@@ -160,7 +161,7 @@ test('purple capture jumps attack the castling path even when an intervening paw
     await purple(page, fixture.attacker, fixture.color);
     await square(page, fixture.king).click();
     await expect(marker(page, fixture.forbidden)).toHaveCount(0);
-    await expect(square(page, fixture.allowed).locator('.move-marker')).toHaveCount(1);
+    await expect(square(page, fixture.allowed).locator('.move-marker[data-playable=true]')).toHaveCount(1);
   }
 });
 
@@ -175,7 +176,7 @@ test('a purple rook that returns to its starting corner has lost its castling ri
   await expect(page.locator('#history li span')).toHaveCount(4);
   await square(page, 'e1').click();
   await expect(marker(page, 'g1')).toHaveCount(0);
-  await expect(square(page, 'c1').locator('.move-marker')).toHaveCount(1);
+  await expect(square(page, 'c1').locator('.move-marker[data-playable=true]')).toHaveCount(1);
 });
 
 test('capturing a corner purple rook removes its right even when another purple rook replaces it', async ({ page }) => {
@@ -193,18 +194,18 @@ test('capturing a corner purple rook removes its right even when another purple 
   await purple(page, 'h1');
   await square(page, 'e1').click();
   await expect(marker(page, 'g1')).toHaveCount(0);
-  await expect(square(page, 'c1').locator('.move-marker')).toHaveCount(1);
+  await expect(square(page, 'c1').locator('.move-marker[data-playable=true]')).toHaveCount(1);
 });
 
 test('timed custom castling survives saves and PGN and undo restores the purple rook and previous clocks', async ({ page }) => {
   await page.clock.install({ time: new Date('2026-10-18T12:00:00Z') });
   await page.clock.pauseAt(new Date('2026-10-18T12:00:01Z'));
   await page.reload();
-  await page.selectOption('#game-mode', 'levelup-v5');
-  await page.selectOption('#piece-family', 'rook');
-  await page.selectOption('#piece-upgrade-h1', '3');
-  await page.selectOption('#piece-upgrade-h8', '3');
-  await page.selectOption('#time-control', 'five');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'levelup-v5'));
+  await inPanel(page, 'setup', () => page.selectOption('#piece-family', 'rook'));
+  await inPanel(page, 'setup', () => page.selectOption('#piece-upgrade-h1', '3'));
+  await inPanel(page, 'setup', () => page.selectOption('#piece-upgrade-h8', '3'));
+  await inPanel(page, 'setup', () => page.selectOption('#time-control', 'five'));
   await page.getByRole('button', { name: 'New game', exact: true }).click();
   await purple(page, 'h1');
   await purple(page, 'h8', 'Black');
@@ -216,13 +217,13 @@ test('timed custom castling survives saves and PGN and undo restores the purple 
   await purple(page, 'f1');
   await purple(page, 'f8', 'Black');
   await clocks(page, '04:56', '04:56');
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await expect(page.locator('#save-status')).toContainText('Saved 8 half-moves');
   const pgn = await downloadPgn(page);
   expect(pgn).toContain('[Variant "levelup-v5"]');
   expect(pgn.match(/O-O/g)).toHaveLength(2);
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await purple(page, 'f1');
   await purple(page, 'f8', 'Black');
   await clocks(page, '04:56', '04:56');
@@ -253,9 +254,9 @@ test('the engine bridge receives the purple rook variant and applies ordinary ki
     searches.push(data);
     return route.fulfill({ json: { move: 'e1g1' } });
   });
-  await page.selectOption('#opponent', 'engine');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'engine'));
   await expect(page.locator('#engine-status')).toContainText('connected');
-  await page.selectOption('#human-side', 'b');
+  await inPanel(page, 'setup', () => page.selectOption('#human-side', 'b'));
   await purple(page, 'f1');
   await expect(square(page, 'g1')).toHaveAttribute('aria-label', 'g1 White king');
   await expect(page.locator('#history li span')).toHaveText(['O-O']);

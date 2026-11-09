@@ -1,0 +1,35 @@
+/* Appearance is independent of movement rules and purchase-level colors. */
+body[data-board-theme="sage"]{--board-light:#e4e7ce;--board-dark:#77946c;--board-rim:#304035;--board-light-ink:#4d644a;--board-dark-ink:#e4e7ce;--board-last:#bfd17c}
+body[data-board-theme="blue"]{--board-light:#e0e8ef;--board-dark:#6e8fa9;--board-rim:#344c60;--board-light-ink:#466278;--board-dark-ink:#f1f5f8;--board-last:#adc9bc}
+body[data-board-theme="walnut"]{--board-light:#efddc3;--board-dark:#a47752;--board-rim:#4b3529;--board-light-ink:#745137;--board-dark-ink:#fff1db;--board-last:#c9bd7b}
+body[data-board-theme="slate"]{--board-light:#dce0e3;--board-dark:#7c8792;--board-rim:#35414a;--board-light-ink:#52616e;--board-dark-ink:#f1f4f6;--board-last:#b3bda8}
+body[data-board-theme] .board{border-color:var(--board-rim)}
+body[data-board-theme] .board .square.light{background:var(--board-light);color:var(--board-light-ink)}
+body[data-board-theme] .board .square.dark{background:var(--board-dark);color:var(--board-dark-ink)}
+body[data-board-theme] .board .square.last-move{background:var(--board-last)}
+body[data-board-theme] .board .square.selected{background:#e3c365}
+body[data-board-theme] .board .square.check{background:#c76b61}
+body[data-board-theme] .board.setup-board{border-color:#98ad70}
+body[data-piece-style]:not([data-piece-style="glow"]) .piece{display:grid;place-items:center;width:82%;height:82%;font-size:inherit;text-shadow:none;filter:none}
+.piece-svg{display:block;width:100%;height:100%;overflow:visible;pointer-events:none}
+.piece-svg.white-svg{--piece-fill:#fff9e9;--piece-edge:#253b32;--piece-eye:#253b32}
+.piece-svg.black-svg{--piece-fill:#233930;--piece-edge:#f2ead5;--piece-eye:#f2ead5}
+.piece-svg .piece-shape{fill:var(--piece-fill);stroke:var(--piece-edge);stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round}
+.piece-svg .piece-detail{fill:none;stroke:var(--piece-edge);stroke-width:1.6}
+.piece-svg .piece-eye{fill:var(--piece-eye);stroke:none}
+.piece-svg .piece-accent{fill:none;stroke:var(--upgrade-color,#c5db95);stroke-width:3.8;stroke-linecap:round}
+.piece-svg.outline-piece .piece-shape{fill:none;stroke:var(--piece-fill);stroke-width:2.8;filter:drop-shadow(0 1px 1px var(--piece-edge))}
+.piece-svg.outline-piece .piece-detail{stroke:var(--piece-fill);stroke-width:1.8}
+.piece-svg.outline-piece .piece-eye{fill:var(--piece-fill)}
+.piece-svg .piece-coin{fill:var(--piece-fill);stroke:var(--piece-edge);stroke-width:1.7}
+.piece-svg .piece-coin-rim{fill:none;stroke:var(--piece-edge);stroke-width:.65;opacity:.55}
+.piece-svg.medallion-piece .piece-shape{fill:var(--piece-edge);stroke:var(--piece-edge);stroke-width:1.2}
+.piece-svg.medallion-piece .piece-detail{stroke:var(--piece-fill)}
+.piece-svg.medallion-piece .piece-eye{fill:var(--piece-fill)}
+.piece-svg.medallion-piece .piece-accent{transform:translateY(-2px)}
+@media(prefers-contrast:more){.piece-svg .piece-shape{stroke-width:2}.piece-svg .piece-accent{stroke-width:4.3}}
+/* The same artwork also fits setup cards, reserve buttons and promotions. */
+body[data-piece-style] .upgrade-choice .piece.upgrade-icon{display:block;float:left;width:28px;height:28px;font-size:28px;line-height:1;margin:0 8px 3px 0}
+body[data-piece-style] .pocket-piece{display:inline-flex;align-items:center;gap:4px}
+body[data-piece-style] .pocket-piece .piece.pocket-icon{display:inline-grid;width:25px;height:25px;flex:0 0 25px;font-size:25px;line-height:1}
+body[data-piece-style] #promotion-options .piece.promotion-icon{display:inline-grid;width:42px;height:42px;font-size:36px;line-height:1}

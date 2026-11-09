@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const fs = require('node:fs/promises');
 const path = require('node:path');
 
@@ -9,18 +10,18 @@ async function move(page, from, to) {
   await square(page, to).click();
 }
 async function startUpgradeGame(page) {
-  await page.selectOption('#game-mode', 'levelup-knight');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'levelup-knight'));
   await page.getByRole('button', { name: 'New game', exact: true }).click();
   await blue(page, 'b1');
 }
 async function importPgn(page, text) {
-  await page.getByRole('button', { name: 'Import PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Import PGN', exact: true }).click());
   await page.locator('#pgn-text').fill(text);
   await page.getByRole('button', { name: 'Import game', exact: true }).click();
 }
 async function downloadPgn(page) {
   const waiting = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Export PGN', exact: true }).click());
   return fs.readFile(await (await waiting).path(), 'utf8');
 }
 
@@ -33,7 +34,7 @@ test('classic chess stays the default and staged upgrades require a confirmed ne
   await expect(page.locator('#upgrade-settings')).not.toBeVisible();
   await expect(square(page, 'b1')).toHaveAttribute('aria-label', 'b1 White knight');
   await move(page, 'e2', 'e4');
-  await page.selectOption('#game-mode', 'levelup-knight');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'levelup-knight'));
   await expect(page.locator('#upgrade-settings')).toBeVisible();
   await expect(page.locator('#upgrade-budget')).toHaveValue('2');
   await expect(page.locator('#upgrade-b1')).toHaveValue('1');
@@ -50,31 +51,31 @@ test('classic chess stays the default and staged upgrades require a confirmed ne
   await expect(page.locator('#history li')).toHaveCount(0);
 
   // Selecting standard chess also waits for New game before changing the board.
-  await page.selectOption('#game-mode', 'chess');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'chess'));
   await blue(page, 'b1');
   await page.getByRole('button', { name: 'New game', exact: true }).click();
   await expect(square(page, 'b1')).toHaveAttribute('aria-label', 'b1 White knight');
 });
 
 test('each side has an independent upgrade budget and invalid setup leaves the game intact', async ({ page }) => {
-  await page.selectOption('#game-mode', 'levelup-knight');
-  await page.selectOption('#upgrade-budget', '1');
-  await page.selectOption('#upgrade-g1', '1');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'levelup-knight'));
+  await inPanel(page, 'setup', () => page.selectOption('#upgrade-budget', '1'));
+  await inPanel(page, 'setup', () => page.selectOption('#upgrade-g1', '1'));
   await page.getByRole('button', { name: 'New game', exact: true }).click();
   await expect(page.locator('#upgrade-status')).toContainText(/budget|exceed|point/i);
   await expect(square(page, 'b1')).toHaveAttribute('aria-label', 'b1 White knight');
 
-  await page.selectOption('#upgrade-g1', '0');
-  await page.selectOption('#upgrade-g8', '1');
+  await inPanel(page, 'setup', () => page.selectOption('#upgrade-g1', '0'));
+  await inPanel(page, 'setup', () => page.selectOption('#upgrade-g8', '1'));
   await page.getByRole('button', { name: 'New game', exact: true }).click();
   await expect(page.locator('#upgrade-status')).toContainText(/budget|exceed|point/i);
   await expect(square(page, 'b8')).toHaveAttribute('aria-label', 'b8 Black knight');
 
-  await page.selectOption('#upgrade-g8', '0');
+  await inPanel(page, 'setup', () => page.selectOption('#upgrade-g8', '0'));
   await page.getByRole('button', { name: 'New game', exact: true }).click();
   await blue(page, 'b1');
   await blue(page, 'b8', 'Black');
-  await expect(page.locator('.piece')).toHaveCount(32);
+  await expect(page.locator('#board > .square > .piece')).toHaveCount(32);
 });
 
 test('a blue knight keeps knight moves, adds quiet orthogonal moves, and undoes correctly', async ({ page }) => {
@@ -82,7 +83,7 @@ test('a blue knight keeps knight moves, adds quiet orthogonal moves, and undoes 
   await move(page, 'b1', 'c3');
   await move(page, 'a7', 'a6');
   await square(page, 'c3').click();
-  await expect(square(page, 'd3').locator('.move-marker')).toHaveCount(1);
+  await expect(square(page, 'd3').locator('.move-marker[data-playable=true]')).toHaveCount(1);
   await square(page, 'd3').click();
   await blue(page, 'd3');
   await expect(square(page, 'c3')).toHaveAttribute('aria-label', 'c3 empty');
@@ -133,11 +134,11 @@ test('browser saves restore upgrade choices, moves, and paused engine and clocks
   // This full recovery flow initializes WASM twice and also exercises engine,
   // clock, reload, and undo behavior. Allow the whole workflow extra time.
   test.setTimeout(60000);
-  await page.selectOption('#game-mode', 'levelup-knight');
-  await page.selectOption('#upgrade-budget', '1');
-  await page.selectOption('#upgrade-b1', '0');
-  await page.selectOption('#upgrade-g1', '1');
-  await page.selectOption('#time-control', 'five');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'levelup-knight'));
+  await inPanel(page, 'setup', () => page.selectOption('#upgrade-budget', '1'));
+  await inPanel(page, 'setup', () => page.selectOption('#upgrade-b1', '0'));
+  await inPanel(page, 'setup', () => page.selectOption('#upgrade-g1', '1'));
+  await inPanel(page, 'setup', () => page.selectOption('#time-control', 'five'));
   await page.getByRole('button', { name: 'New game', exact: true }).click();
   await blue(page, 'g1');
   await page.route('**/api/engine/status', route => route.fulfill({ json: { name: 'Test engine' } }));
@@ -146,16 +147,16 @@ test('browser saves restore upgrade choices, moves, and paused engine and clocks
     searches++;
     return route.fulfill({ json: { move: 'a7a6' } });
   });
-  await page.selectOption('#opponent', 'engine');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'engine'));
   await expect(page.locator('#engine-status')).toContainText('connected');
   await page.getByRole('button', { name: 'Start clock', exact: true }).click();
   await move(page, 'g1', 'f3');
   await expect(square(page, 'a6')).toHaveAttribute('aria-label', 'a6 Black pawn');
   await page.getByRole('button', { name: 'Pause clock', exact: true }).click();
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await expect(page.locator('#save-status')).toContainText('Saved 2 half-moves');
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await blue(page, 'f3');
   await expect(square(page, 'b1')).toHaveAttribute('aria-label', 'b1 White knight');
   await expect(page.locator('#game-mode')).toHaveValue('levelup-knight');
@@ -198,7 +199,7 @@ test('engine searches receive the fixed variant name and upgraded FEN, and impor
     searches++;
     return route.fulfill({ json: { move: searches === 1 ? 'a7a6' : 'a6a5' } });
   });
-  await page.selectOption('#opponent', 'engine');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'engine'));
   await expect(page.locator('#engine-status')).toContainText('connected');
   await move(page, 'b1', 'c3');
   await expect(square(page, 'a6')).toHaveAttribute('aria-label', 'a6 Black pawn');
@@ -234,9 +235,9 @@ test('standalone HTML runs upgraded rules with every companion request blocked',
 test('native Fairy Stockfish plays an upgraded game through the browser bridge', async ({ page }) => {
   test.skip(!process.env.FAIRY_STOCKFISH_PATH, 'Set FAIRY_STOCKFISH_PATH to run native engine integration.');
   await startUpgradeGame(page);
-  await page.selectOption('#opponent', 'engine');
+  await inPanel(page, 'setup', () => page.selectOption('#opponent', 'engine'));
   await expect(page.locator('#engine-status')).toContainText('connected');
-  await page.selectOption('#difficulty', 'easy');
+  await inPanel(page, 'setup', () => page.selectOption('#difficulty', 'easy'));
   await move(page, 'b1', 'c3');
   await expect(page.locator('#status')).toHaveText('White to move');
   await expect(page.locator('#history li span')).toHaveCount(2);
@@ -255,7 +256,7 @@ test('cancelling a new game during rule loading preserves the current board', as
     WebAssembly.instantiate = async (...args) => { await gate; return instantiate(...args); };
   });
   await move(page, 'e2', 'e4');
-  await page.selectOption('#game-mode', 'levelup-knight');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'levelup-knight'));
   await page.getByRole('button', { name: 'New game', exact: true }).click();
   await page.getByRole('button', { name: 'Start new game', exact: true }).click();
   await expect(page.locator('#upgrade-status')).toContainText('Loading');

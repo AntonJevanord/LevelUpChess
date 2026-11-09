@@ -1,8 +1,9 @@
 const { test, expect } = require('@playwright/test');
+const { inPanel } = require('./ui-panels');
 const fs = require('node:fs/promises');
 
 const square = (page, name) => page.locator(`[data-square="${name}"]`);
-const marker = (page, name) => square(page, name).locator('.move-marker, .capture-marker');
+const marker = (page, name) => square(page, name).locator('.move-marker[data-playable=true], .capture-marker');
 
 async function upgraded(page, name, accent, level, family, color = 'White') {
   await expect(square(page, name)).toHaveAttribute('aria-label', `${name} ${color} ${accent} ${family}, level ${level}`);
@@ -14,7 +15,7 @@ async function move(page, from, to) {
   await square(page, to).click();
 }
 async function importPgn(page, text) {
-  await page.getByRole('button', { name: 'Import PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Import PGN', exact: true }).click());
   await page.locator('#pgn-text').fill(text);
   await page.getByRole('button', { name: 'Import game', exact: true }).click();
 }
@@ -23,14 +24,14 @@ async function importPosition(page, fen, variant = 'levelup-v5') {
 }
 async function downloadPgn(page) {
   const waiting = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Export PGN', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Export PGN', exact: true }).click());
   return fs.readFile(await (await waiting).path(), 'utf8');
 }
 async function chooseHomeArmy(page) {
-  await page.selectOption('#game-mode', 'levelup-v5');
-  await page.selectOption('#piece-family', 'queen');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'levelup-v5'));
+  await inPanel(page, 'setup', () => page.selectOption('#piece-family', 'queen'));
   for (const name of ['d1', 'd8']) await page.selectOption(`#piece-upgrade-${name}`, '1');
-  await page.selectOption('#piece-family', 'rook');
+  await inPanel(page, 'setup', () => page.selectOption('#piece-family', 'rook'));
   for (const name of ['a1', 'a8']) await page.selectOption(`#piece-upgrade-${name}`, '1');
   for (const name of ['h1', 'h8']) await page.selectOption(`#piece-upgrade-${name}`, '2');
   await page.getByRole('button', { name: 'New game', exact: true }).click();
@@ -42,8 +43,8 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('current setup offers blue queens and every rook level within the shared army budget', async ({ page }) => {
-  await page.selectOption('#game-mode', 'levelup-v5');
-  await page.selectOption('#piece-family', 'queen');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'levelup-v5'));
+  await inPanel(page, 'setup', () => page.selectOption('#piece-family', 'queen'));
   for (const name of ['d1', 'd8']) {
     const select = page.locator(`#piece-upgrade-${name}`);
     await expect(select).toBeVisible();
@@ -62,7 +63,7 @@ test('current setup offers blue queens and every rook level within the shared ar
   }
   await expect(page.locator('#piece-upgrade-choices select')).toHaveCount(30);
   await expect(page.locator('#piece-upgrade-budget')).toHaveAttribute('max', '45');
-  await expect(page.locator('.piece')).toHaveCount(32);
+  await expect(page.locator('#board > .square > .piece')).toHaveCount(32);
 });
 
 for (const fixture of [
@@ -73,7 +74,7 @@ for (const fixture of [
     await importPosition(page, fixture.fen);
     await upgraded(page, fixture.from, 'blue', 1, 'queen', fixture.color);
     await square(page, fixture.from).click();
-    for (const name of fixture.jumps) await expect(square(page, name).locator('.move-marker')).toHaveCount(1);
+    for (const name of fixture.jumps) await expect(square(page, name).locator('.move-marker[data-playable=true]')).toHaveCount(1);
     await square(page, fixture.to).click();
     await upgraded(page, fixture.to, 'blue', 1, 'queen', fixture.color);
     await move(page, ...fixture.next);
@@ -83,7 +84,7 @@ for (const fixture of [
     await page.getByRole('button', { name: /Undo move/ }).click();
     await upgraded(page, fixture.from, 'blue', 1, 'queen', fixture.color);
     await square(page, fixture.from).click();
-    for (const name of fixture.jumps) await expect(square(page, name).locator('.move-marker')).toHaveCount(1);
+    for (const name of fixture.jumps) await expect(square(page, name).locator('.move-marker[data-playable=true]')).toHaveCount(1);
   });
 }
 
@@ -96,7 +97,7 @@ test('blue rook jumps work from the second home rank and reactivate after a retu
     await importPosition(page, fixture.fen);
     await upgraded(page, fixture.from, 'blue', 1, 'rook', fixture.color);
     await square(page, fixture.from).click();
-    await expect(square(page, fixture.homeJump).locator('.move-marker')).toHaveCount(1);
+    await expect(square(page, fixture.homeJump).locator('.move-marker[data-playable=true]')).toHaveCount(1);
     await square(page, fixture.to).click();
     await move(page, ...fixture.other);
     await square(page, fixture.to).click();
@@ -104,7 +105,7 @@ test('blue rook jumps work from the second home rank and reactivate after a retu
     await square(page, fixture.from).click();
     await move(page, fixture.other[1], fixture.other[0]);
     await square(page, fixture.from).click();
-    await expect(square(page, fixture.homeJump).locator('.move-marker')).toHaveCount(1);
+    await expect(square(page, fixture.homeJump).locator('.move-marker[data-playable=true]')).toHaveCount(1);
     await square(page, fixture.homeJump).click();
     await upgraded(page, fixture.homeJump, 'blue', 1, 'rook', fixture.color);
   }
@@ -137,7 +138,7 @@ test('blue queens and blue/orange rooks retain rules, starting choices, history,
   await upgraded(page, 'e5', 'blue', 1, 'queen', 'Black');
   await upgraded(page, 'a3', 'blue', 1, 'rook');
   await upgraded(page, 'a6', 'blue', 1, 'rook', 'Black');
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await expect(page.locator('#save-status')).toContainText('Saved 4 half-moves');
   const pgn = await downloadPgn(page);
   expect(pgn).toContain('[Variant "levelup-v5"]');
@@ -145,7 +146,7 @@ test('blue queens and blue/orange rooks retain rules, starting choices, history,
   expect(pgn).toContain('La3');
   for (const recovery of ['save', 'pgn']) {
     await page.reload();
-    if (recovery === 'save') await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+    if (recovery === 'save') await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
     else await importPgn(page, pgn);
     await expect(page.locator('#game-mode')).toHaveValue('levelup-v5');
     await expect(page.locator('#piece-upgrade-budget')).toHaveValue('6');
@@ -162,19 +163,19 @@ test('blue queens and blue/orange rooks retain rules, starting choices, history,
 });
 
 test('version 04 disables new upgrades and imported old games keep their original profile', async ({ page }) => {
-  await page.selectOption('#game-mode', 'levelup-v5');
-  await page.selectOption('#piece-family', 'queen');
-  await page.selectOption('#piece-upgrade-d1', '1');
-  await page.selectOption('#piece-family', 'rook');
-  await page.selectOption('#piece-upgrade-a1', '1');
-  await page.selectOption('#game-mode', 'levelup');
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'levelup-v5'));
+  await inPanel(page, 'setup', () => page.selectOption('#piece-family', 'queen'));
+  await inPanel(page, 'setup', () => page.selectOption('#piece-upgrade-d1', '1'));
+  await inPanel(page, 'setup', () => page.selectOption('#piece-family', 'rook'));
+  await inPanel(page, 'setup', () => page.selectOption('#piece-upgrade-a1', '1'));
+  await inPanel(page, 'setup', () => page.selectOption('#game-mode', 'levelup'));
   await expect(page.locator('#piece-upgrade-budget')).toHaveAttribute('max', '39');
   await expect(page.locator('#piece-family option[value="rook"]')).toBeDisabled();
   for (const name of ['a1', 'h1', 'a8', 'h8']) {
     await expect(page.locator(`#piece-upgrade-${name}`)).toBeDisabled();
     await expect(page.locator(`#piece-upgrade-${name}`)).toHaveValue('0');
   }
-  await page.selectOption('#piece-family', 'queen');
+  await inPanel(page, 'setup', () => page.selectOption('#piece-family', 'queen'));
   await expect(page.locator('#piece-upgrade-d1 option[value="1"]')).toBeDisabled();
   await expect(page.locator('#piece-upgrade-d1')).toHaveValue('0');
   await importPosition(page, 'k7/8/8/8/3T4/8/8/7K w - - 0 1', 'levelup');
@@ -183,9 +184,9 @@ test('version 04 disables new upgrades and imported old games keep their origina
   await upgraded(page, 'e6', 'orange', 2, 'queen');
   const pgn = await downloadPgn(page);
   expect(pgn).toContain('[Variant "levelup"]');
-  await page.getByRole('button', { name: 'Save game', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Save game', exact: true }).click());
   await page.reload();
-  await page.getByRole('button', { name: 'Load saved', exact: true }).click();
+  await inPanel(page, 'files', () => page.getByRole('button', { name: 'Load saved', exact: true }).click());
   await upgraded(page, 'e6', 'orange', 2, 'queen');
   await expect(page.locator('#game-mode')).toHaveValue('levelup');
   await page.getByRole('button', { name: /Undo move/ }).click();

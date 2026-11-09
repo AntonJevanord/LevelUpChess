@@ -6,9 +6,11 @@ Chess with upgradeable pieces. Build an army within a shared budget, then play l
 
 Download `index.html` and open it in Chrome, Edge or Firefox. It contains the board, styles and rules; two local players need no server or internet connection. Open the downloaded file directly if a chat preview restricts interaction.
 
-Select a piece and a highlighted destination. Arrow keys move focus; Enter or Space selects. The board supports legal moves, checkmate, castling, en passant, promotion, history, undo and board flip.
+Select a piece and a legal destination. Gray dots show quiet movement, red rings show capture ability, and both appear when a piece can do either. The guide includes empty-square captures and abilities unavailable because of check or pins; only legal moves can be played. Click enemy pieces to inspect them, or enable **Inspect pieces** to prevent accidental moves. Arrow keys move focus; Enter or Space selects.
 
-Under **Rules**, choose **Version 18 · Roster and king trials** or an earlier workshop. Click a starting piece to choose its upgrade beside the board, then press **Start game**. **Edit armies** reopens setup; **Return to game** keeps the current game. Changes apply only when starting a game. **Clear White**, **Clear Black** and **Clear both** reset draft armies.
+The side panel has **Game, Setup, Design and Files** tabs. Status and essential game controls stay visible across tabs. In Setup, choose **Version 18 · Roster and king trials** under Rules, then click a starting piece to choose an upgrade in the board's central ranks. Press **Start game** to apply the draft. **Edit armies** reopens setup; **Return to game** keeps the current game. **Clear White**, **Clear Black** and **Clear both** reset draft armies.
+
+Right-click for a circle or right-drag for an arrow; repeat to remove a mark, or press Escape to clear marks. **Draw** enables tap/drag annotation on touch screens. Design offers four piece styles, four board palettes and an annotation color, with preferences remembered locally. See the [interface guide](docs/interface-v18.md).
 
 The current roster allows a 1–9 point budget per side and includes the four frozen references, accepted replacement pieces and five guard designs or trials. Version 18 introduces the selected quiet-tall Knight pawn and six-jump Cataphract; all nineteen earlier profiles keep their rules. The [version-18 guide](docs/version18.md) explains the changes and Windows branch-switch commands. Earlier family workshops remain available within the engine's 20-custom-piece limit.
 
@@ -23,7 +25,7 @@ npm.cmd ci
 npm.cmd start
 ```
 
-Open the printed address, keep the terminal running, and choose **Fairy Stockfish** under **Opponent**. The server listens only on your computer. Direct-file play supports local players; engine play uses this local server.
+Open the printed address, keep the terminal running, and choose **Fairy Stockfish** under **Opponent** in Setup. Choose **Stockfish vs Stockfish** to watch from the current position; it connects paused, with **Start / Resume**, **Pause engine** and **One move** controls. The server listens only on your computer. Direct-file play supports local players and the other interface features; engine play uses this local server.
 
 Windows uses the bundled LevelUp engine automatically. Easy / Medium / Hard are skill and search-time presets, not measured Elo ratings. Stop the server before updating the branch and restart it afterward.
 
@@ -44,9 +46,9 @@ Linux/macOS require a compatible native build. See [engine setup and source prov
 
 ## Clocks, saves and PGN
 
-Choose untimed or a clock preset before **New game**. **Start clock** begins timed play; pause also cancels engine searches. Undo restores the beginning of the undone turn and leaves clocks paused.
+Choose untimed or a clock preset in Setup before **New game**. **Start clock** begins timed play; pause also cancels engine searches. Undo restores the beginning of the undone turn and leaves clocks paused. In self-play, Undo takes back one half-move and pauses the engine.
 
-**Save game** stores one browser slot, including rules, setup and clocks. **Load saved** restores it paused. **Export PGN** and **Import PGN** transfer games and exact rules; PGN excludes clocks. Imports start untimed and preserve the board if validation fails.
+Files contains **Save game**, **Load saved**, **Export PGN** and **Import PGN**. Browser saves include rules, setup, play mode and clocks; loading restores the game paused. PGN transfers games and exact rules, without clocks. Imports start untimed and preserve the board if validation fails. Temporary drawing marks are not included.
 
 Browser saves belong to the current browser and site address. Use PGN when moving between direct-file and server play. New releases may require fresh saves. Checkmate, stalemate, repetition and the fifty-move rule end games automatically; experimental low-material limits are documented in the [rules guide](variants/README.md).
 

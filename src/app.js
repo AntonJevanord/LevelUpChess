@@ -7,6 +7,11 @@ import { PLAYABLE_LIBRARIES, DESIGN_OPTIONS, getDesignOptions, getPlayableProfil
 import { designSetupFromChoices, loadDesignSetup, designSlots, designBudgetLimit } from './design-setup';
 import { ChessClock, CLOCK_CONTROLS, formatClock } from './clock';
 import { SAVE_KEY, MAX_PGN_SIZE, parsePgn, exportPgn, makeSave, parseSave } from './saved-games';
+import { createWorkspaceTabs } from './workspace-tabs';
+import { createBoardAnnotations } from './board-annotations';
+import { createAppearancePreferences, renderPieceIcon } from './board-appearance';
+import { getPieceGuide } from './piece-guide';
+import { isEngineMode, canHumanMove, canRequestEngineMove } from './engine-play';
 
 let game = new Chess();
 const board = document.querySelector('#board');
@@ -18,6 +23,16 @@ let pending = null;
 let editingSetup = false;
 let setupSquare = null;
 let selectedDrop = null;
+let inspectedSquare = null;
+let inspectMode = false;
+let pieceGuide = null;
+let guideKey = null;
+let guideRequest = 0;
+let guideError = '';
+let workspaceTabs;
+let boardAnnotations;
+let appearancePreferences;
+let drawingMode = false;
 const ALL_DESIGN_SLOTS = [...PIECE_SLOTS, { square: 'e1', color: 'w', family: 'king' }, { square: 'e8', color: 'b', family: 'king' }];
 const side = color => color === 'w' ? 'White' : 'Black';
 const opponent = document.querySelector('#opponent');
@@ -251,14 +266,23 @@ function setSetupEditing(value) {
   setupSquare = null;
   selected = null;
   selectedDrop = null;
+  clearInspection();
   if (editingSetup) {
+    drawingMode = false;
+    boardAnnotations?.setDrawing(false);
+    document.querySelector('#drawing-mode').setAttribute('aria-pressed', 'false');
+    workspaceTabs?.show('setup');
+    boardAnnotations?.clear();
     pauseClocks('Army setup. The current game is paused.');
     cancelEngine();
-    if (opponent.value === 'engine') engineMessage('Engine paused during army setup. Resume when ready.');
+    if (isEngineMode(opponent.value)) engineMessage('Engine paused during army setup. Resume when ready.');
   }
   render();
 }
-document.querySelector('#setup-mode').onclick = () => setSetupEditing(!editingSetup);
+document.querySelector('#setup-mode').onclick = () => {
+  setSetupEditing(!editingSetup);
+  if (!editingSetup) workspaceTabs?.show('game');
+};
 
 // A tall setup panel must scroll far enough to expose the board's bottom rank.
 // Measure the entire column so toolbars, clocks and wrapping reserves count too.
@@ -272,7 +296,7 @@ updateBoardStickyOffset();
 
 function renderSetupPicker() {
   const panel = document.querySelector('#setup-picker');
-  panel.hidden = !editingSetup;
+  panel.hidden = !editingSetup || !setupSquare;
   const toolbar = document.querySelector('#setup-mode');
   toolbar.setAttribute('aria-pressed', String(editingSetup));
   toolbar.textContent = editingSetup ? 'Return to game' : 'Edit armies';
@@ -303,7 +327,11 @@ function renderSetupPicker() {
     title.textContent = `${choice.level ? `${choice.level} pt${choice.level === 1 ? '' : 's'} · ` : ''}${choice.name}`;
     const description = document.createElement('span');
     description.textContent = slot.family === 'king' ? choice.description.split(' It starts in reserve;')[0] : choice.description;
-    button.append(title, description);
+    const icon = document.createElement('span');
+    const base = pieceInfo(({ pawn: 'p', knight: 'n', bishop: 'b', rook: 'r', queen: 'q', king: 'k' })[slot.family]);
+    icon.className = `piece upgrade-icon ${slot.color === 'w' ? 'white-piece' : 'black-piece'}${choice.level ? ` upgraded ${choice.accent || ''}` : ''}`;
+    renderPieceIcon(icon, { family: slot.family, color: slot.color, symbol: base.symbols[slot.color], level: choice.level });
+    button.append(icon, title, description);
     button.onclick = () => {
       select.value = choice.id;
       updateSetup();
@@ -353,11 +381,17 @@ function renderPockets() {
       button.setAttribute('aria-label', `${side(color)} ${info.name}, ${entry.count} in reserve`);
       button.setAttribute('aria-pressed', String(selectedDrop === entry.type && color === game.turn()));
       button.title = info.description;
-      button.textContent = `${info.symbols[color]} ${info.name}${entry.count > 1 ? ` ×${entry.count}` : ''}`;
-      button.disabled = color !== game.turn() || buildingGame || isFinished() || !canPlay() || engineBusy || Boolean(pending) || (opponent.value === 'engine' && game.turn() !== humanSide.value);
+      const icon = document.createElement('span');
+      icon.className = `piece pocket-icon ${color === 'w' ? 'white-piece' : 'black-piece'} upgraded ${info.accent}`;
+      renderPieceIcon(icon, { ...info, color, symbol: info.symbols[color] });
+      const caption = document.createElement('span');
+      caption.textContent = ` ${info.name}${entry.count > 1 ? ` ×${entry.count}` : ''}`;
+      button.append(icon, caption);
+      button.disabled = color !== game.turn() || buildingGame || isFinished() || !canPlay() || engineBusy || Boolean(pending) || !canHumanMove(opponent.value, game.turn(), humanSide.value) || inspectMode;
       button.onclick = () => {
         if (button.disabled) return;
         selected = null;
+        clearInspection();
         selectedDrop = selectedDrop === entry.type ? null : entry.type;
         render();
       };
@@ -372,6 +406,9 @@ let enginePaused = false;
 let engineController = null;
 let generation = 0;
 let engineName = 'Fairy Stockfish';
+let engineStepRequested = false;
+let engineTimer = null;
+let nextEngineAt = 0;
 const clock = new ChessClock();
 const timeControl = document.querySelector('#time-control');
 const clockTop = document.querySelector('#black-clock');
@@ -418,7 +455,7 @@ function settleClock() {
     const outcome = timeoutResult();
     game.setHeader('Result', outcome.result);
     game.setHeader('Termination', 'time forfeit');
-    if (opponent.value === 'engine') engineMessage('Game finished on time.');
+    if (isEngineMode(opponent.value)) engineMessage('Game finished on time.');
     render();
   }
   updateClocks();
@@ -451,14 +488,52 @@ function playMove(move) {
   }
   game.setHeader('Result', '*');
   game.removeHeader('Termination');
+  boardAnnotations?.clear();
+  clearInspection();
   return result;
+}
+
+function clearInspection() {
+  inspectedSquare = null;
+  pieceGuide = null;
+  guideKey = null;
+  guideError = '';
+  guideRequest++;
+}
+
+function requestPieceGuide(square) {
+  if (!square || editingSetup || !game.get(square)) return;
+  const fen = game.fen();
+  const key = `${game.variant || 'chess'}|${fen}|${square}`;
+  if (guideKey === key) return;
+  guideKey = key;
+  pieceGuide = null;
+  guideError = '';
+  const request = ++guideRequest;
+  void getPieceGuide(game, { square }).then(guide => {
+    if (request !== guideRequest || game.fen() !== fen || guideKey !== key) return;
+    pieceGuide = guide;
+    render();
+  }).catch(error => {
+    if (request !== guideRequest || guideKey !== key) return;
+    guideError = `Piece guide unavailable: ${error.message}`;
+    render();
+  });
 }
 
 function engineMessage(message) {
   document.querySelector('#engine-status').textContent = message;
-  document.querySelector('#engine-retry').disabled = engineBusy;
-  document.querySelector('#engine-retry').textContent = connected ? 'Resume engine' : 'Connect engine';
-  document.querySelector('#engine-cancel').disabled = !engineBusy && (enginePaused || !connected);
+  updateEngineButtons();
+}
+
+function updateEngineButtons() {
+  const blocked = engineBusy || editingSetup || buildingGame || isFinished() || Boolean(pending);
+  document.querySelector('#engine-retry').disabled = blocked || opponent.value === 'selfplay' && connected && !enginePaused;
+  document.querySelector('#engine-retry').textContent = opponent.value === 'selfplay' ? (connected ? 'Start / Resume' : 'Connect and start') : connected ? 'Resume engine' : 'Connect engine';
+  document.querySelector('#engine-cancel').disabled = !engineBusy && (enginePaused || !connected || isFinished());
+  const step = document.querySelector('#engine-step');
+  step.hidden = opponent.value !== 'selfplay';
+  step.disabled = blocked || opponent.value === 'selfplay' && connected && !enginePaused;
 }
 
 function cancelEngine() {
@@ -467,6 +542,10 @@ function cancelEngine() {
   engineController = null;
   engineBusy = false;
   enginePaused = true;
+  engineStepRequested = false;
+  clearTimeout(engineTimer);
+  engineTimer = null;
+  nextEngineAt = 0;
   selectedDrop = null;
 }
 
@@ -478,10 +557,10 @@ async function engineFetch(route, options = {}) {
   return data;
 }
 
-async function connectEngine() {
+async function connectEngine({ run = opponent.value !== 'selfplay', step = false } = {}) {
   cancelEngine();
   connected = false;
-  enginePaused = false;
+  enginePaused = !run;
   engineBusy = true;
   engineController = new AbortController();
   const request = generation;
@@ -492,7 +571,8 @@ async function connectEngine() {
     engineName = data.name;
     connected = true;
     engineBusy = false;
-    engineMessage(`${engineName} connected.`);
+    engineStepRequested = step;
+    engineMessage(opponent.value === 'selfplay' && !run && !step ? 'Stockfish self-play ready. Press Start or One move.' : `${engineName} connected.`);
     render();
   } catch (error) {
     if (request !== generation) return;
@@ -504,12 +584,21 @@ async function connectEngine() {
 }
 
 async function maybeEngineMove() {
-  if (editingSetup || opponent.value !== 'engine' || !connected || engineBusy || enginePaused || pending || isFinished() || !canPlay() || game.turn() === humanSide.value) return;
+  if (buildingGame) return;
+  if (!canRequestEngineMove({ opponent: opponent.value, turn: game.turn(), humanSide: humanSide.value,
+    connected, busy: engineBusy, paused: enginePaused, pending: Boolean(pending), editingSetup,
+    finished: isFinished(), canPlay: canPlay(), stepRequested: engineStepRequested })) return;
+  if (opponent.value === 'selfplay' && !engineStepRequested && !isTimed() && Date.now() < nextEngineAt) {
+    if (!engineTimer) engineTimer = setTimeout(() => { engineTimer = null; void maybeEngineMove(); }, nextEngineAt - Date.now());
+    return;
+  }
+  const stepping = engineStepRequested;
+  engineStepRequested = false;
   engineBusy = true;
   engineController = new AbortController();
   const request = generation;
   const fen = game.fen();
-  engineMessage(`${engineName} is thinking…`);
+  engineMessage(`${side(game.turn())} · ${engineName} is thinking…`);
   try {
     const data = await engineFetch('/api/engine/move', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -520,7 +609,14 @@ async function maybeEngineMove() {
     const move = data.move[1] === '@' ? { drop: data.move[0].toLowerCase(), to: data.move.slice(2) } : { from: data.move.slice(0, 2), to: data.move.slice(2, 4), promotion: data.move[4] };
     if (!playMove(move)) return;
     engineBusy = false;
-    engineMessage(`${engineName} connected. Your move.`);
+    if (stepping) {
+      enginePaused = true;
+      pauseClocks('One engine move completed. Clocks paused.');
+    }
+    nextEngineAt = opponent.value === 'selfplay' ? Date.now() + 250 : 0;
+    engineMessage(isFinished() ? 'Game finished.' : opponent.value === 'selfplay'
+      ? stepping ? 'One move completed. Self-play paused.' : 'Self-play running. Pause to review or undo.'
+      : `${engineName} connected. Your move.`);
     render();
   } catch (error) {
     if (request !== generation) return;
@@ -531,14 +627,43 @@ async function maybeEngineMove() {
   }
 }
 
+function updateEngineConfiguration() {
+  const active = isEngineMode(opponent.value);
+  document.querySelector('#engine-settings').hidden = !active;
+  document.querySelector('#engine-configuration').hidden = !active;
+  document.querySelector('#human-side-field').hidden = opponent.value === 'selfplay';
+  document.querySelector('#engine-step').hidden = opponent.value !== 'selfplay';
+}
+
+function beginEngine(step = false) {
+  if (editingSetup || buildingGame || engineBusy || pending || isFinished() || !isEngineMode(opponent.value)) return;
+  if (opponent.value === 'selfplay' && isTimed() && !clock.running) {
+    clockNotice = '';
+    clock.start(game.turn());
+  }
+  if (!connected) void connectEngine({ run: !step, step });
+  else {
+    enginePaused = step;
+    engineStepRequested = step;
+    engineMessage(step ? 'Playing one engine move…' : isTimed() && !clock.running ? 'Engine ready. Start or resume clock to continue.' : `${engineName} connected.`);
+    render();
+  }
+}
+
 
 function render(focusSquare) {
+  if (!focusSquare && document.activeElement?.closest('#board')) focusSquare = document.activeElement.closest('[data-square]')?.dataset.square;
   renderSetupPicker();
   renderPockets();
   const files = [...'abcdefgh'];
   const ranks = [...'87654321'];
   if (flipped) { files.reverse(); ranks.reverse(); }
-  const legal = editingSetup ? [] : selectedDrop ? game.moves({ drop: selectedDrop, verbose: true }) : selected ? game.moves({ square: selected, verbose: true }) : [];
+  const mayMove = !editingSetup && !inspectMode && !engineBusy && canHumanMove(opponent.value, game.turn(), humanSide.value) && !isFinished() && canPlay();
+  const legal = !mayMove ? [] : selectedDrop ? game.moves({ drop: selectedDrop, verbose: true }) : selected ? game.moves({ square: selected, verbose: true }) : [];
+  const guideSquare = editingSetup ? null : inspectedSquare || selected;
+  if (guideSquare) requestPieceGuide(guideSquare);
+  const quietGuide = new Set(pieceGuide?.quiet || []);
+  const captureGuide = new Set(pieceGuide?.capture || []);
   const history = game.history({ verbose: true });
   const last = history.at(-1);
   const displayProfile = editingSetup ? setupProfile() : game.profile;
@@ -553,9 +678,12 @@ function render(focusSquare) {
     button.type = 'button';
     button.className = 'square ' + ((file.charCodeAt(0) - 97 + Number(rank)) % 2 === 0 ? 'dark' : 'light');
     button.dataset.square = square;
+    button.dataset.legal = String(legal.some(move => move.to === square));
+    button.dataset.quiet = String(quietGuide.has(square));
+    button.dataset.capture = String(captureGuide.has(square));
     button.setAttribute('aria-label', `${square}${piece ? ` ${side(piece.color)} ${displayInfo(piece.type).name}` : ' empty'}`);
-    button.setAttribute('aria-pressed', String((editingSetup ? setupSquare : selected) === square));
-    if ((editingSetup ? setupSquare : selected) === square) button.classList.add('selected');
+    button.setAttribute('aria-pressed', String((editingSetup ? setupSquare : guideSquare) === square));
+    if ((editingSetup ? setupSquare : guideSquare) === square) button.classList.add('selected');
     if (!editingSetup && last && [last.from, last.to].includes(square)) button.classList.add('last-move');
     if (!editingSetup && piece?.type === 'k' && piece.color === game.turn() && game.isCheck()) button.classList.add('check');
     if (piece) {
@@ -568,6 +696,7 @@ function render(focusSquare) {
       }
       icon.className = `piece ${piece.color === 'w' ? 'white-piece' : 'black-piece'}${info.level ? ` upgraded ${info.accent}` : ''}`;
       icon.textContent = info.symbols[piece.color];
+      renderPieceIcon(icon, { ...info, color: piece.color, symbol: info.symbols[piece.color] });
       button.append(icon);
       if (info.level) {
         const badge = document.createElement('span');
@@ -576,9 +705,18 @@ function render(focusSquare) {
         button.append(badge);
       }
     }
-    if (legal.some(move => move.to === square)) {
+    const legalQuiet = legal.some(move => move.to === square && !move.captured);
+    const legalCapture = legal.some(move => move.to === square && move.captured);
+    if (!piece && (quietGuide.has(square) || legalQuiet)) {
       const marker = document.createElement('span');
-      marker.className = legal.some(move => move.to === square && move.captured) ? 'capture-marker' : 'move-marker';
+      marker.className = 'move-marker ability-move-marker';
+      marker.dataset.playable = String(legalQuiet);
+      button.append(marker);
+    }
+    if (captureGuide.has(square) || legalCapture) {
+      const marker = document.createElement('span');
+      marker.className = `ability-capture-marker${legalCapture ? ' capture-marker' : ''}${piece || legalCapture ? ' occupied-capture' : ''}`;
+      marker.dataset.playable = String(legalCapture);
       button.append(marker);
     }
     for (const [show, value, position] of [[col === 0, rank, 'rank'], [row === 7, file, 'file']]) {
@@ -598,6 +736,7 @@ function render(focusSquare) {
     });
     board.append(button);
   }));
+  boardAnnotations?.render();
   let status = `${side(game.turn())} to move`;
   if (game.isCheckmate()) status = `${side(game.turn() === 'w' ? 'b' : 'w')} wins by checkmate`;
   else if (game.isStalemate()) status = 'Draw by stalemate';
@@ -608,10 +747,19 @@ function render(focusSquare) {
   if (clock.expired) status = timeoutResult().status;
   if (editingSetup) status = 'Build your army';
   document.querySelector('#status').textContent = status;
-  const selectedPiece = selected ? game.get(selected) : null;
+  const selectedPiece = guideSquare ? game.get(guideSquare) : null;
   const selectedDesign = selectedPiece ? designFor(selectedPiece.type) : null;
   const description = selectedDesign ? ` ${currentDesignOption(selectedDesign.id)?.description || ''}` : '';
-  document.querySelector('#hint').textContent = editingSetup ? 'Click a starting piece to choose an upgrade. Start game when both armies are ready.' : isFinished() ? 'Start a new game or undo a move to keep playing.' : !canPlay() ? 'Start or resume the clock to continue playing.' : selectedDrop ? `Drop your ${infoFor(selectedDrop).name} on a highlighted empty square in your half. The drop cannot give check.` : selected ? `${side(game.turn())} ${infoFor(selectedPiece.type).name} on ${selected}. Choose a highlighted square.${description}` : game.profile?.roles.reserveTypes?.length ? 'Select a piece or a reserve guard to see its legal moves.' : 'Select a piece to see its legal moves.';
+  document.querySelector('#hint').textContent = editingSetup ? 'Click a starting piece to choose an upgrade. Start game when both armies are ready.'
+    : selectedPiece ? `${side(selectedPiece.color)} ${infoFor(selectedPiece.type).name} on ${guideSquare}.${description}`
+      : isFinished() ? 'Start a new game or undo a move to keep playing.' : !canPlay() ? 'Start or resume the clock to continue playing.'
+        : selectedDrop ? `Drop your ${infoFor(selectedDrop).name} on a highlighted empty square in your half. The drop cannot give check.`
+          : 'Select either side’s piece to explore its movement and captures.';
+  document.querySelector('#piece-guide-status').textContent = guideError || (guideSquare && !pieceGuide ? 'Loading piece guide…'
+    : guideSquare ? `${inspectedSquare || inspectMode ? 'Inspecting only. ' : ''}Dots show movement; red rings show capture ability. The guide includes abilities unavailable because of check or pins; only legal moves can be played.`
+      : inspectMode ? 'Inspect mode: click any piece without making a move.' : 'Gray dot: move · red ring: capture · both: either.');
+  document.querySelector('#inspect-mode').setAttribute('aria-pressed', String(inspectMode));
+  document.querySelector('#drawing-mode').disabled = editingSetup;
   document.querySelector('#undo').disabled = editingSetup || history.length === 0;
   document.querySelector('#top-player').textContent = flipped ? 'White pieces' : 'Black pieces';
   document.querySelector('#bottom-player').textContent = flipped ? 'Black pieces' : 'White pieces';
@@ -647,14 +795,23 @@ function render(focusSquare) {
   document.querySelector('#empty-history').hidden = history.length > 0;
   list.scrollTop = list.scrollHeight;
   if (focusSquare) board.querySelector(`[data-square="${focusSquare}"]`)?.focus({ preventScroll: true });
-  if (opponent.value === 'engine') {
+  if (isEngineMode(opponent.value)) {
     const topColor = flipped ? 'w' : 'b';
     const bottomColor = flipped ? 'b' : 'w';
-    document.querySelector('#top-player').textContent = topColor === humanSide.value ? `You · ${side(topColor)}` : `Fairy Stockfish · ${side(topColor)}`;
-    document.querySelector('#bottom-player').textContent = bottomColor === humanSide.value ? `You · ${side(bottomColor)}` : `Fairy Stockfish · ${side(bottomColor)}`;
+    document.querySelector('#top-player').textContent = opponent.value !== 'selfplay' && topColor === humanSide.value ? `You · ${side(topColor)}` : `Fairy Stockfish · ${side(topColor)}`;
+    document.querySelector('#bottom-player').textContent = opponent.value !== 'selfplay' && bottomColor === humanSide.value ? `You · ${side(bottomColor)}` : `Fairy Stockfish · ${side(bottomColor)}`;
   }
   document.querySelectorAll('.player .level').forEach((label, index) => {
     const color = index === 0 ? (flipped ? 'w' : 'b') : (flipped ? 'b' : 'w');
+    if (editingSetup) {
+      const draft = setupChoice();
+      const spent = color === 'w' ? draft.white : draft.black;
+      label.textContent = `${spent}/${draft.budget} POINTS`;
+      label.title = `${side(color)} draft upgrade budget`;
+      label.setAttribute('aria-label', `${side(color)} draft army: ${spent} of ${draft.budget} points`);
+      return;
+    }
+    label.removeAttribute('aria-label');
     const counts = new Map();
     for (const piece of editingSetup ? ALL_DESIGN_SLOTS.map(slot => setupPieceAt(slot.square)) : game.board().flat()) {
       if (piece?.color !== color) continue;
@@ -666,20 +823,23 @@ function render(focusSquare) {
     label.title = game.profile ? 'Upgraded units remaining on the board. Purchase costs are shown in the setup budget.' : '';
   });
   updateClocks();
+  updateEngineButtons();
   void maybeEngineMove();
 }
 
 function selectSquare(square) {
+  if (drawingMode) return;
   if (editingSetup) {
-    if (designSlots(setupProfile()).some(slot => slot.square === square)) {
-      setupSquare = square;
-      render(square);
-    }
+    setupSquare = designSlots(setupProfile()).some(slot => slot.square === square) ? square : null;
+    render(square);
     return;
   }
   settleClock();
-  if (buildingGame || isFinished() || !canPlay() || pending || (opponent.value === 'engine' && game.turn() !== humanSide.value)) return;
-  const moves = (selectedDrop ? game.moves({ drop: selectedDrop, verbose: true }) : selected ? game.moves({ square: selected, verbose: true }) : []).filter(move => move.to === square);
+  if (buildingGame || pending) return;
+  const movable = !inspectMode && !engineBusy && !isFinished() && canPlay()
+    && canHumanMove(opponent.value, game.turn(), humanSide.value);
+  const moves = movable ? (selectedDrop ? game.moves({ drop: selectedDrop, verbose: true })
+    : selected ? game.moves({ square: selected, verbose: true }) : []).filter(move => move.to === square) : [];
   if (moves.length) {
     if (moves.some(move => move.promotion)) {
       pending = { from: selected, to: square };
@@ -687,7 +847,10 @@ function selectSquare(square) {
       options.replaceChildren();
       for (const type of ['q', 'r', 'b', 'n']) {
         const button = document.createElement('button');
-        button.textContent = pieceInfo(type).symbols[game.turn()];
+        const icon = document.createElement('span');
+        icon.className = `piece promotion-icon ${game.turn() === 'w' ? 'white-piece' : 'black-piece'}`;
+        renderPieceIcon(icon, { ...pieceInfo(type), color: game.turn(), symbol: pieceInfo(type).symbols[game.turn()] });
+        button.append(icon);
         button.setAttribute('aria-label', `Promote to ${pieceInfo(type).name}`);
         button.onclick = () => { playMove({ ...pending, promotion: type }); pending = null; selected = null; promotion.close(); render(square); };
         options.append(button);
@@ -700,8 +863,14 @@ function selectSquare(square) {
     selectedDrop = null;
   } else {
     const piece = game.get(square);
-    selected = square !== selected && piece?.color === game.turn() ? square : null;
+    const alreadySelected = (inspectedSquare || selected) === square;
+    clearInspection();
+    selected = null;
     selectedDrop = null;
+    if (piece && !alreadySelected) {
+      if (movable && piece.color === game.turn()) selected = square;
+      else inspectedSquare = square;
+    }
   }
   render(square);
 }
@@ -717,7 +886,9 @@ document.querySelector('#undo').onclick = () => {
   game.removeHeader('Termination');
   clockNotice = 'Clocks paused after undo. Resume clock when ready.';
   selected = null;
-  if (opponent.value === 'engine') engineMessage('Engine paused after undo. Resume when ready.');
+  clearInspection();
+  boardAnnotations?.clear();
+  if (isEngineMode(opponent.value)) engineMessage('Engine paused after undo. Resume when ready.');
   render();
 };
 document.querySelector('#flip').onclick = () => { flipped = !flipped; render(); };
@@ -740,7 +911,7 @@ async function newGame() {
     } else next = new Chess();
     if (request !== replacementGeneration) { next.dispose?.(); return; }
     cancelEngine();
-    enginePaused = false;
+    enginePaused = opponent.value === 'selfplay';
     game.dispose?.();
     game = next;
     editingSetup = false;
@@ -751,11 +922,14 @@ async function newGame() {
     clockNotice = '';
     handledFlag = null;
     selected = null;
+    clearInspection();
+    boardAnnotations?.clear();
     pending = null;
     promotion.close();
     restart.close();
     updateSetup();
-    if (opponent.value === 'engine') engineMessage(connected ? `${engineName} connected.` : 'Connect the engine to begin.');
+    if (isEngineMode(opponent.value)) engineMessage(opponent.value === 'selfplay' ? 'Self-play paused. Press Start or One move.' : connected ? `${engineName} connected.` : 'Connect the engine to begin.');
+    workspaceTabs?.show('game');
     render();
   } catch (error) {
     if (next !== game) next?.dispose?.();
@@ -780,8 +954,12 @@ opponent.onchange = () => {
   pauseClocks();
   cancelEngine();
   selected = null;
-  document.querySelector('#engine-settings').hidden = opponent.value !== 'engine';
-  if (opponent.value === 'engine') { flipped = humanSide.value === 'b'; void connectEngine(); }
+  clearInspection();
+  updateEngineConfiguration();
+  if (isEngineMode(opponent.value)) {
+    if (opponent.value === 'engine') flipped = humanSide.value === 'b';
+    void connectEngine();
+  }
   render();
 };
 humanSide.onchange = () => {
@@ -797,14 +975,12 @@ humanSide.onchange = () => {
 difficulty.onchange = () => {
   pauseClocks();
   cancelEngine();
-  enginePaused = false;
+  enginePaused = opponent.value === 'selfplay';
   engineMessage(connected ? `${engineName} connected.` : 'Connect the engine to begin.');
   render();
 };
-document.querySelector('#engine-retry').onclick = () => {
-  if (!connected) void connectEngine();
-  else { enginePaused = false; engineMessage(isTimed() && !clock.running ? 'Engine ready. Start or resume clock to continue.' : `${engineName} connected.`); render(); }
-};
+document.querySelector('#engine-retry').onclick = () => beginEngine();
+document.querySelector('#engine-step').onclick = () => beginEngine(true);
 document.querySelector('#engine-cancel').onclick = () => {
   pauseClocks('Engine paused. Resume clock when ready.');
   cancelEngine();
@@ -833,6 +1009,8 @@ function applyGame(candidate) {
   editingSetup = false;
   setupSquare = null;
   selectedDrop = null;
+  clearInspection();
+  boardAnnotations?.clear();
   gameMode.value = game.variant || 'chess';
   activeBudget = candidate.settings?.upgradeBudget || (isPieceVariant(game.variant) || isExperimental(game.variant) ? 6 : 2);
   if (isExperimental(game.variant)) {
@@ -885,8 +1063,8 @@ function applyGame(candidate) {
     difficulty.value = candidate.settings.difficulty;
     flipped = candidate.settings.flipped;
   }
-  document.querySelector('#engine-settings').hidden = opponent.value !== 'engine';
-  if (opponent.value === 'engine') engineMessage('Game loaded. Engine paused; connect or resume when ready.');
+  updateEngineConfiguration();
+  if (isEngineMode(opponent.value)) engineMessage('Game loaded. Engine paused; connect or resume when ready.');
   importDialog.close();
   replacement = null;
   saveStatus.textContent = 'Game loaded. The browser save slot has not changed.';
@@ -980,9 +1158,9 @@ clockToggle.onclick = () => {
   if (clock.running) {
     pauseClocks();
     cancelEngine();
-    if (opponent.value === 'engine') engineMessage('Engine paused with the clock.');
+    if (isEngineMode(opponent.value)) engineMessage('Engine paused with the clock.');
   } else {
-    if (opponent.value === 'engine' && !connected) {
+    if (isEngineMode(opponent.value) && !connected) {
       clockNotice = 'Connect the engine before starting the clock.';
       updateClocks();
       return;
@@ -1010,6 +1188,45 @@ pieceFamily.onchange = updateFamily;
 experimentalBudget.oninput = updateSetup;
 experimentalFamily.onchange = updateExperimentalFamily;
 for (const square of upgradeSquares) document.querySelector(`#upgrade-${square}`).onchange = updateSetup;
+workspaceTabs = createWorkspaceTabs(document);
+appearancePreferences = createAppearancePreferences({ document, onChange: () => {
+  boardAnnotations?.render();
+  render();
+} });
+boardAnnotations = createBoardAnnotations({
+  stage: document.querySelector('#board-stage'), board,
+  svg: document.querySelector('#board-annotations'),
+  isFlipped: () => flipped,
+  color: () => appearancePreferences.settings.annotationColor,
+});
+document.querySelector('#inspect-mode').onclick = () => {
+  inspectMode = !inspectMode;
+  selected = null;
+  selectedDrop = null;
+  clearInspection();
+  render();
+};
+document.querySelector('#drawing-mode').onclick = () => {
+  drawingMode = !drawingMode;
+  boardAnnotations.setDrawing(drawingMode);
+  document.querySelector('#drawing-mode').setAttribute('aria-pressed', String(drawingMode));
+  if (drawingMode) { selected = null; selectedDrop = null; clearInspection(); render(); }
+};
+document.querySelector('#clear-annotations').onclick = () => boardAnnotations.clear();
+document.querySelector('#setup-picker-close').onclick = () => {
+  const square = setupSquare;
+  setupSquare = null;
+  render(square);
+};
+document.addEventListener('keydown', event => {
+  if (event.key !== 'Escape' || document.querySelector('dialog[open]')) return;
+  setupSquare = null;
+  selected = null;
+  selectedDrop = null;
+  clearInspection();
+  render();
+});
+updateEngineConfiguration();
 updateFamily();
 updateSetup();
 refreshSaveAvailability();
