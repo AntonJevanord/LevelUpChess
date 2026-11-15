@@ -161,6 +161,11 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Verify Stockfish self-play, serial searches, Start/Pause/One move, clocks, cancellation, undo and paused save restoration.
 - [x] Verify four piece styles, board palettes and annotation colors, locally remembered appearance and offline artwork; preserve upgrade colors and level badges.
 - [x] Complete keyboard, touch, responsive-layout and historical browser regressions before the interface release: 38 interface/save unit checks, 30 clock/native/profile checks and all 236 browser cases pass across the full run and final affected-suite rerun.
+- [x] Review the [level-one/two roster and archived acceptance evidence](docs/v18-balance-roster.md); retain the six lower-tier references and distinguish weak candidates from untested designs.
+- [x] Prepare separate 40k same-tier screens for eight L1 and eight L2 designs, plus controlled 40k/80k Nightrider `N0mF` / `N0mW` / `N0mK` and bounded Wraith hopper trials. Freeze search priors, purchase budgets, paired colors and all 64 starting cases before the first game.
+- [x] Add opt-in owned study snapshots, cumulative 8/16/32/64-opening continuation, offline reports, physical-color/overall scores, matched control gains and retained first-target reports. Preserve all existing playable profiles, source definitions and the balance bundle.
+- [x] Verify new movement, capture limits, blockers, royal safety, hopper direction diagnostics and opening-mate regressions; validate initial native positions and the entire future casebook without scored cloud games.
+- [ ] Review the new L1/L2 and mobility screen outcomes before changing movement, price or valuation. Start with eight cases; extend only the studies whose result could change a selection.
 - [ ] Declare a bounded mixed-bracket study using fixed level-one, revised level-two and original level-three references. Reopen parked designs only for a decision-relevant result or a well-founded gameplay idea.
 
 ## After reviewing these results

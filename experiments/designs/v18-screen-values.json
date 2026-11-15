@@ -1,0 +1,748 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-v18-screen-values",
+  "declaredDate": "2026-11-16",
+  "policy": "Freeze the new L2 workshop bodies at their measured automatic raw MG/EG, except Blink rook shares the Knight-capture rook prior to avoid documented quiet-mobility inflation. Existing bracket/reference values are retained separately. Search priors are not material estimates or purchase costs.",
+  "provenance": {
+    "engineSha256": "8ccde8596fb88aa7fbbf1020cc5afa52ef9d1887764275ea8e627ba0227e4f1e",
+    "diagnostic": "levelupvalues version 1; no searches or match games",
+    "profile": {
+      "schemaVersion": 1,
+      "variant": "levelup-design-edfdc3174880adf184c2",
+      "config": "# Dynamic experiment profile. Meanings belong to the archived registry.\n[levelup-design-edfdc3174880adf184c2:chess]\ncustomPiece1 = a:NsWsD\ncustomPiece2 = c:BvN\ncustomPiece3 = d:NA\ncustomPiece4 = e:QmHmCmZmG\ncustomPiece5 = f:BsR\ncustomPiece6 = g:RmFmDmAmHmGmNmCmZ\ncustomPiece7 = h:RcN\npieceToCharTable = -\ncastlingRookPiece = rgh\ndoubleStepRegionWhite = *1 *2\ndoubleStepRegionBlack = *7 *8\npawnTypes = p\nenPassantTypes = p\npromotionPieceTypes = nbrq\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n",
+      "registry": {
+        "schemaVersion": 1,
+        "definitions": [
+          {
+            "id": "bishop.orange@2",
+            "family": "bishop",
+            "level": 2,
+            "revision": 2,
+            "movement": "BvN",
+            "legacyType": "c",
+            "legacySlot": 2,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "inheritLegacyProbes": false
+          },
+          {
+            "id": "bishop.orange@3",
+            "family": "bishop",
+            "level": 2,
+            "revision": 3,
+            "movement": "BsR",
+            "legacyType": "f",
+            "legacySlot": 5,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "inheritLegacyProbes": false
+          },
+          {
+            "id": "knight.orange@3",
+            "family": "knight",
+            "level": 2,
+            "revision": 3,
+            "movement": "NsWsD",
+            "legacyType": "c",
+            "legacySlot": 2,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "inheritLegacyProbes": false
+          },
+          {
+            "id": "knight.orange@4",
+            "family": "knight",
+            "level": 2,
+            "revision": 4,
+            "movement": "NA",
+            "legacyType": "f",
+            "legacySlot": 5,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "inheritLegacyProbes": false
+          },
+          {
+            "id": "queen.orange@2",
+            "family": "queen",
+            "level": 2,
+            "revision": 2,
+            "movement": "QmHmCmZmG",
+            "legacyType": "f",
+            "legacySlot": 5,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "inheritLegacyProbes": false
+          },
+          {
+            "id": "rook.orange@2",
+            "family": "rook",
+            "level": 2,
+            "revision": 2,
+            "movement": "RmFmDmAmHmGmNmCmZ",
+            "legacyType": "c",
+            "legacySlot": 2,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": true,
+              "enPassant": false
+            },
+            "inheritLegacyProbes": false
+          },
+          {
+            "id": "rook.orange@3",
+            "family": "rook",
+            "level": 2,
+            "revision": 3,
+            "movement": "RcN",
+            "legacyType": "f",
+            "legacySlot": 5,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": true,
+              "enPassant": false
+            },
+            "inheritLegacyProbes": false
+          }
+        ],
+        "allocations": [
+          {
+            "id": "bishop.orange@2",
+            "letter": "c",
+            "slot": 2
+          },
+          {
+            "id": "bishop.orange@3",
+            "letter": "f",
+            "slot": 5
+          },
+          {
+            "id": "knight.orange@3",
+            "letter": "a",
+            "slot": 1
+          },
+          {
+            "id": "knight.orange@4",
+            "letter": "d",
+            "slot": 3
+          },
+          {
+            "id": "queen.orange@2",
+            "letter": "e",
+            "slot": 4
+          },
+          {
+            "id": "rook.orange@2",
+            "letter": "g",
+            "slot": 6
+          },
+          {
+            "id": "rook.orange@3",
+            "letter": "h",
+            "slot": 7
+          }
+        ],
+        "hash": "2faddaa58576d6fd7bd011be8cd8ebebd30d732f46819efd2872cf888193f835"
+      },
+      "registryHash": "2faddaa58576d6fd7bd011be8cd8ebebd30d732f46819efd2872cf888193f835",
+      "hash": "02995d3219ec7e1e5d31a2f253558bddd2501dd66e3e1ad97aa80c9bb02618cc",
+      "roles": {
+        "pawnTypes": [
+          "p"
+        ],
+        "enPassantTypes": [
+          "p"
+        ],
+        "castlingRooks": [
+          "r",
+          "g",
+          "h"
+        ],
+        "royalTypes": [
+          "k"
+        ],
+        "initialPawnLeaps": {
+          "p": 2
+        },
+        "initialLandingLeaps": {}
+      },
+      "definitionsByLetter": {
+        "c": {
+          "id": "bishop.orange@2",
+          "family": "bishop",
+          "level": 2,
+          "revision": 2,
+          "movement": "BvN",
+          "legacyType": "c",
+          "legacySlot": 2,
+          "placement": "replace",
+          "roles": {
+            "pawn": false,
+            "castlingRook": false,
+            "enPassant": false
+          },
+          "inheritLegacyProbes": false
+        },
+        "f": {
+          "id": "bishop.orange@3",
+          "family": "bishop",
+          "level": 2,
+          "revision": 3,
+          "movement": "BsR",
+          "legacyType": "f",
+          "legacySlot": 5,
+          "placement": "replace",
+          "roles": {
+            "pawn": false,
+            "castlingRook": false,
+            "enPassant": false
+          },
+          "inheritLegacyProbes": false
+        },
+        "a": {
+          "id": "knight.orange@3",
+          "family": "knight",
+          "level": 2,
+          "revision": 3,
+          "movement": "NsWsD",
+          "legacyType": "c",
+          "legacySlot": 2,
+          "placement": "replace",
+          "roles": {
+            "pawn": false,
+            "castlingRook": false,
+            "enPassant": false
+          },
+          "inheritLegacyProbes": false
+        },
+        "d": {
+          "id": "knight.orange@4",
+          "family": "knight",
+          "level": 2,
+          "revision": 4,
+          "movement": "NA",
+          "legacyType": "f",
+          "legacySlot": 5,
+          "placement": "replace",
+          "roles": {
+            "pawn": false,
+            "castlingRook": false,
+            "enPassant": false
+          },
+          "inheritLegacyProbes": false
+        },
+        "e": {
+          "id": "queen.orange@2",
+          "family": "queen",
+          "level": 2,
+          "revision": 2,
+          "movement": "QmHmCmZmG",
+          "legacyType": "f",
+          "legacySlot": 5,
+          "placement": "replace",
+          "roles": {
+            "pawn": false,
+            "castlingRook": false,
+            "enPassant": false
+          },
+          "inheritLegacyProbes": false
+        },
+        "g": {
+          "id": "rook.orange@2",
+          "family": "rook",
+          "level": 2,
+          "revision": 2,
+          "movement": "RmFmDmAmHmGmNmCmZ",
+          "legacyType": "c",
+          "legacySlot": 2,
+          "placement": "replace",
+          "roles": {
+            "pawn": false,
+            "castlingRook": true,
+            "enPassant": false
+          },
+          "inheritLegacyProbes": false
+        },
+        "h": {
+          "id": "rook.orange@3",
+          "family": "rook",
+          "level": 2,
+          "revision": 3,
+          "movement": "RcN",
+          "legacyType": "f",
+          "legacySlot": 5,
+          "placement": "replace",
+          "roles": {
+            "pawn": false,
+            "castlingRook": true,
+            "enPassant": false
+          },
+          "inheritLegacyProbes": false
+        }
+      },
+      "capabilityProbes": [
+        {
+          "name": "bishop.orange@2: White open movement and range",
+          "fen": "8/7k/8/8/3C4/8/8/K7 w - - 0 1"
+        },
+        {
+          "name": "bishop.orange@2: Black open movement and range",
+          "fen": "k7/8/8/3c4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          "name": "bishop.orange@2: White blocked movement and capture jumps",
+          "fen": "8/7k/1p1p1p2/3P4/1pPCPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          "name": "bishop.orange@2: Black blocked movement and capture jumps",
+          "fen": "k7/3P4/3p4/1PpcpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          "name": "bishop.orange@3: White open movement and range",
+          "fen": "8/7k/8/8/3F4/8/8/K7 w - - 0 1"
+        },
+        {
+          "name": "bishop.orange@3: Black open movement and range",
+          "fen": "k7/8/8/3f4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          "name": "bishop.orange@3: White blocked movement and capture jumps",
+          "fen": "8/7k/1p1p1p2/3P4/1pPFPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          "name": "bishop.orange@3: Black blocked movement and capture jumps",
+          "fen": "k7/3P4/3p4/1PpfpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          "name": "knight.orange@3: White open movement and range",
+          "fen": "8/7k/8/8/3A4/8/8/K7 w - - 0 1"
+        },
+        {
+          "name": "knight.orange@3: Black open movement and range",
+          "fen": "k7/8/8/3a4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          "name": "knight.orange@3: White blocked movement and capture jumps",
+          "fen": "8/7k/1p1p1p2/3P4/1pPAPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          "name": "knight.orange@3: Black blocked movement and capture jumps",
+          "fen": "k7/3P4/3p4/1PpapP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          "name": "knight.orange@4: White open movement and range",
+          "fen": "8/7k/8/8/3D4/8/8/K7 w - - 0 1"
+        },
+        {
+          "name": "knight.orange@4: Black open movement and range",
+          "fen": "k7/8/8/3d4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          "name": "knight.orange@4: White blocked movement and capture jumps",
+          "fen": "8/7k/1p1p1p2/3P4/1pPDPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          "name": "knight.orange@4: Black blocked movement and capture jumps",
+          "fen": "k7/3P4/3p4/1PpdpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          "name": "queen.orange@2: White open movement and range",
+          "fen": "8/7k/8/8/3E4/8/8/K7 w - - 0 1"
+        },
+        {
+          "name": "queen.orange@2: Black open movement and range",
+          "fen": "k7/8/8/3e4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          "name": "queen.orange@2: White blocked movement and capture jumps",
+          "fen": "8/7k/1p1p1p2/3P4/1pPEPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          "name": "queen.orange@2: Black blocked movement and capture jumps",
+          "fen": "k7/3P4/3p4/1PpepP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          "name": "rook.orange@2: White open movement and range",
+          "fen": "8/7k/8/8/3G4/8/8/K7 w - - 0 1"
+        },
+        {
+          "name": "rook.orange@2: Black open movement and range",
+          "fen": "k7/8/8/3g4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          "name": "rook.orange@2: White blocked movement and capture jumps",
+          "fen": "8/7k/1p1p1p2/3P4/1pPGPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          "name": "rook.orange@2: Black blocked movement and capture jumps",
+          "fen": "k7/3P4/3p4/1PpgpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          "name": "rook.orange@2: White both castling sides",
+          "fen": "4k3/8/8/8/8/8/8/G3K2G w KQ - 0 1"
+        },
+        {
+          "name": "rook.orange@2: Black both castling sides",
+          "fen": "g3k2g/8/8/8/8/8/8/4K3 b kq - 0 1"
+        },
+        {
+          "name": "rook.orange@3: White open movement and range",
+          "fen": "8/7k/8/8/3H4/8/8/K7 w - - 0 1"
+        },
+        {
+          "name": "rook.orange@3: Black open movement and range",
+          "fen": "k7/8/8/3h4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          "name": "rook.orange@3: White blocked movement and capture jumps",
+          "fen": "8/7k/1p1p1p2/3P4/1pPHPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          "name": "rook.orange@3: Black blocked movement and capture jumps",
+          "fen": "k7/3P4/3p4/1PphpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          "name": "rook.orange@3: White both castling sides",
+          "fen": "4k3/8/8/8/8/8/8/H3K2H w KQ - 0 1"
+        },
+        {
+          "name": "rook.orange@3: Black both castling sides",
+          "fen": "h3k2h/8/8/8/8/8/8/4K3 b kq - 0 1"
+        },
+        {
+          "name": "ordinary White king castling",
+          "fen": "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1"
+        },
+        {
+          "name": "ordinary Black king castling",
+          "fen": "r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1"
+        }
+      ]
+    },
+    "registry": {
+      "schemaVersion": 1,
+      "definitions": [
+        {
+          "id": "bishop.orange@2",
+          "family": "bishop",
+          "level": 2,
+          "revision": 2,
+          "movement": "BvN",
+          "legacyType": "c",
+          "legacySlot": 2,
+          "placement": "replace",
+          "roles": {
+            "pawn": false,
+            "castlingRook": false,
+            "enPassant": false
+          },
+          "inheritLegacyProbes": false
+        },
+        {
+          "id": "bishop.orange@3",
+          "family": "bishop",
+          "level": 2,
+          "revision": 3,
+          "movement": "BsR",
+          "legacyType": "f",
+          "legacySlot": 5,
+          "placement": "replace",
+          "roles": {
+            "pawn": false,
+            "castlingRook": false,
+            "enPassant": false
+          },
+          "inheritLegacyProbes": false
+        },
+        {
+          "id": "knight.orange@3",
+          "family": "knight",
+          "level": 2,
+          "revision": 3,
+          "movement": "NsWsD",
+          "legacyType": "c",
+          "legacySlot": 2,
+          "placement": "replace",
+          "roles": {
+            "pawn": false,
+            "castlingRook": false,
+            "enPassant": false
+          },
+          "inheritLegacyProbes": false
+        },
+        {
+          "id": "knight.orange@4",
+          "family": "knight",
+          "level": 2,
+          "revision": 4,
+          "movement": "NA",
+          "legacyType": "f",
+          "legacySlot": 5,
+          "placement": "replace",
+          "roles": {
+            "pawn": false,
+            "castlingRook": false,
+            "enPassant": false
+          },
+          "inheritLegacyProbes": false
+        },
+        {
+          "id": "queen.orange@2",
+          "family": "queen",
+          "level": 2,
+          "revision": 2,
+          "movement": "QmHmCmZmG",
+          "legacyType": "f",
+          "legacySlot": 5,
+          "placement": "replace",
+          "roles": {
+            "pawn": false,
+            "castlingRook": false,
+            "enPassant": false
+          },
+          "inheritLegacyProbes": false
+        },
+        {
+          "id": "rook.orange@2",
+          "family": "rook",
+          "level": 2,
+          "revision": 2,
+          "movement": "RmFmDmAmHmGmNmCmZ",
+          "legacyType": "c",
+          "legacySlot": 2,
+          "placement": "replace",
+          "roles": {
+            "pawn": false,
+            "castlingRook": true,
+            "enPassant": false
+          },
+          "inheritLegacyProbes": false
+        },
+        {
+          "id": "rook.orange@3",
+          "family": "rook",
+          "level": 2,
+          "revision": 3,
+          "movement": "RcN",
+          "legacyType": "f",
+          "legacySlot": 5,
+          "placement": "replace",
+          "roles": {
+            "pawn": false,
+            "castlingRook": true,
+            "enPassant": false
+          },
+          "inheritLegacyProbes": false
+        }
+      ],
+      "allocations": [
+        {
+          "id": "bishop.orange@2",
+          "letter": "c",
+          "slot": 2
+        },
+        {
+          "id": "bishop.orange@3",
+          "letter": "f",
+          "slot": 5
+        },
+        {
+          "id": "knight.orange@3",
+          "letter": "a",
+          "slot": 1
+        },
+        {
+          "id": "knight.orange@4",
+          "letter": "d",
+          "slot": 3
+        },
+        {
+          "id": "queen.orange@2",
+          "letter": "e",
+          "slot": 4
+        },
+        {
+          "id": "rook.orange@2",
+          "letter": "g",
+          "slot": 6
+        },
+        {
+          "id": "rook.orange@3",
+          "letter": "h",
+          "slot": 7
+        }
+      ],
+      "hash": "2faddaa58576d6fd7bd011be8cd8ebebd30d732f46819efd2872cf888193f835"
+    }
+  },
+  "values": [
+    {
+      "id": "bishop.orange@2",
+      "movement": "BvN",
+      "automatic": {
+        "mg": 1506,
+        "eg": 1506
+      },
+      "automaticTables": {
+        "rawMg": 1506,
+        "rawEg": 1506,
+        "captureMg": 1506,
+        "captureEg": 1506,
+        "evalMg": 1506,
+        "evalEg": 1506
+      },
+      "applied": {
+        "mg": 1506,
+        "eg": 1506
+      },
+      "anchor": "bishop.orange@2"
+    },
+    {
+      "id": "bishop.orange@3",
+      "movement": "BsR",
+      "automatic": {
+        "mg": 1782,
+        "eg": 1756
+      },
+      "automaticTables": {
+        "rawMg": 1782,
+        "rawEg": 1756,
+        "captureMg": 1782,
+        "captureEg": 1756,
+        "evalMg": 1782,
+        "evalEg": 1756
+      },
+      "applied": {
+        "mg": 1782,
+        "eg": 1756
+      },
+      "anchor": "bishop.orange@3"
+    },
+    {
+      "id": "knight.orange@3",
+      "movement": "NsWsD",
+      "automatic": {
+        "mg": 1203,
+        "eg": 1352
+      },
+      "automaticTables": {
+        "rawMg": 1203,
+        "rawEg": 1352,
+        "captureMg": 1203,
+        "captureEg": 1352,
+        "evalMg": 1203,
+        "evalEg": 1352
+      },
+      "applied": {
+        "mg": 1203,
+        "eg": 1352
+      },
+      "anchor": "knight.orange@3"
+    },
+    {
+      "id": "knight.orange@4",
+      "movement": "NA",
+      "automatic": {
+        "mg": 1203,
+        "eg": 1352
+      },
+      "automaticTables": {
+        "rawMg": 1203,
+        "rawEg": 1352,
+        "captureMg": 1203,
+        "captureEg": 1352,
+        "evalMg": 1203,
+        "evalEg": 1352
+      },
+      "applied": {
+        "mg": 1203,
+        "eg": 1352
+      },
+      "anchor": "knight.orange@4"
+    },
+    {
+      "id": "queen.orange@2",
+      "movement": "QmHmCmZmG",
+      "automatic": {
+        "mg": 3738,
+        "eg": 4155
+      },
+      "automaticTables": {
+        "rawMg": 3738,
+        "rawEg": 4155,
+        "captureMg": 3738,
+        "captureEg": 4155,
+        "evalMg": 3738,
+        "evalEg": 4155
+      },
+      "applied": {
+        "mg": 3738,
+        "eg": 4155
+      },
+      "anchor": "queen.orange@2"
+    },
+    {
+      "id": "rook.orange@2",
+      "movement": "RmFmDmAmHmGmNmCmZ",
+      "automatic": {
+        "mg": 3146,
+        "eg": 3944
+      },
+      "automaticTables": {
+        "rawMg": 3146,
+        "rawEg": 3944,
+        "captureMg": 3146,
+        "captureEg": 3944,
+        "evalMg": 3146,
+        "evalEg": 3944
+      },
+      "applied": {
+        "mg": 1904,
+        "eg": 1959
+      },
+      "anchor": "rook.orange@3"
+    },
+    {
+      "id": "rook.orange@3",
+      "movement": "RcN",
+      "automatic": {
+        "mg": 1904,
+        "eg": 1959
+      },
+      "automaticTables": {
+        "rawMg": 1904,
+        "rawEg": 1959,
+        "captureMg": 1904,
+        "captureEg": 1959,
+        "evalMg": 1904,
+        "evalEg": 1959
+      },
+      "applied": {
+        "mg": 1904,
+        "eg": 1959
+      },
+      "anchor": "rook.orange@3"
+    }
+  ]
+}

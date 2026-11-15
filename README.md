@@ -82,6 +82,17 @@ The next research step is a bounded mixed-budget study using the fixed
 level-one, revised level-two and original level-three references. No new games
 start automatically. See the [roster and next-step guide](docs/version18.md).
 
+The [lower-tier roster and mobility screens](docs/v18-balance-roster.md) review
+existing level-one evidence, test eight level-one and eight level-two candidates
+against same-tier references at 40k nodes, and compare quiet-step Nightriders
+and two bounded Wraith hopper designs with fresh controls at 40k/80k. Use
+`npm.cmd run balance:v18 -- --study level1 --out balance-results/v18-level1 --openings 8 --jobs 4`
+for the first 384 games. Choose `level2` or `mobility` with a separate output
+folder for their 384 or 896 games. Run one study at a time. Extend with
+`--study NAME --resume DIRECTORY --openings 16` (then 32 or 64); completed games
+remain in their original stage journals and reports retain earlier checkpoints.
+No trial changes the playable roster or historical definitions.
+
 ## Version 17: balance experiments
 
 Version 17 is closed at **`v0.17.23`** on branch **`version_17`**, retaining its
