@@ -20,12 +20,15 @@ const { conditionalRange } = require('./level3-panel-report');
 const nightrider = require('../../src/balance-designs-v18-nightrider');
 const wraith = require('../../src/balance-designs-v18-wraith');
 const level1 = require('../../src/balance-designs-v18-level1');
+const l1Followup = require('../../src/balance-designs-v18-l1-followup');
+const l2Followup = require('../../src/balance-designs-v18-l2-followup');
 
 const ROOT = path.resolve(__dirname, '../..');
 const FORMAT = 'levelup-v18-reference-screens';
-const STUDIES = Object.freeze(['level1', 'level2', 'mobility']);
+const STUDIES = Object.freeze(['level1', 'level2', 'mobility', 'level1-followup', 'level2-followup']);
 const OPENING_TARGETS = Object.freeze([8, 16, 32, 64]);
-const NODES = Object.freeze({ level1: Object.freeze([40000]), level2: Object.freeze([40000]), mobility: Object.freeze([40000, 80000]) });
+const NODES = Object.freeze({ level1: Object.freeze([40000]), level2: Object.freeze([40000]), mobility: Object.freeze([40000, 80000]),
+  'level1-followup': Object.freeze([40000]), 'level2-followup': Object.freeze([40000]) });
 const VALUES_FILE = 'experiments/designs/v18-screen-values.json';
 const VALUES_SHA256 = '1b243939936ea57d74f4f026ef055502fd2430faea284879e8fa3ca08762cbe0';
 const HOMES = { pawn: ['c2', 'e2'], knight: ['b1', 'g1'], bishop: ['c1', 'f1'], rook: ['a1', 'h1'], queen: ['d1'] };
@@ -45,11 +48,25 @@ const L2 = [
   ['knight-capture', 'Knight-capture rook', 'rook.orange@3'],
   ['box', 'Box queen', 'queen.orange@2'],
 ];
+const L1_CONTROLS = [
+  { key: 'positional-control', label: 'Positional knight control', id: 'knight.positional-expanded@1', movement: 'NmR', anchorId: 'knight.blue@2' },
+  { key: 'hopping-control', label: 'Hopping bishop control', id: 'bishop.hopping-capture@1', movement: 'BgB', anchorId: 'bishop.blue@2' },
+  { key: 'baby-amazon-control', label: 'Baby Amazon control', id: 'queen.advancing-expanded@1', movement: 'QmN', anchorId: 'queen.blue@2' },
+];
+const L2_CONTROLS = [
+  { key: 'dabada-control', label: 'Dabada knight control', id: 'knight.orange@3', movement: 'NsWsD', anchorId: 'knight.orange@3' },
+  { key: 'long-range-control', label: 'Long-range knight control', id: 'knight.orange@4', movement: 'NA', anchorId: 'knight.orange@4' },
+  { key: 'bishop-pawn-control', label: 'Bishop pawn: new-prior control', id: 'pawn.bishop-step-current@1', movement: 'fmWfeFifmnD', anchorId: 'pawn.knight-tall-quiet@1' },
+];
+const FOLLOWUP_OPENINGS = Object.freeze([...OPENINGS.slice(16), ...OPENINGS.slice(0, 16)]);
+const isFollowup = study => study === 'level1-followup' || study === 'level2-followup';
+const tier = study => study.startsWith('level1') ? 1 : study.startsWith('level2') ? 2 : 3;
+const openingCases = study => isFollowup(study) ? FOLLOWUP_OPENINGS : OPENINGS;
 const sha = value => createHash('sha256').update(value).digest('hex');
 const average = values => values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
 function freeze(value) { if (value && typeof value === 'object' && !Object.isFrozen(value)) { Object.values(value).forEach(freeze); Object.freeze(value); } return value; }
-freeze(L1); freeze(L2); freeze(HOMES);
-function requireStudy(study) { if (!STUDIES.includes(study)) throw new Error('Choose study level1, level2 or mobility.'); }
+freeze(L1); freeze(L2); freeze(HOMES); freeze(L1_CONTROLS); freeze(L2_CONTROLS);
+function requireStudy(study) { if (!STUDIES.includes(study)) throw new Error(`Choose study ${STUDIES.join(', ')}.`); }
 function army(id, count = 1) {
   const design = getDesign(id);
   if (!design) throw new Error(`The screen requires its isolated research runtime: ${id}.`);
@@ -60,32 +77,35 @@ function army(id, count = 1) {
 function candidates(study) {
   requireStudy(study);
   const bodies = study === 'level1' ? L1.map(([key, label, id]) => ({ key, label, id }))
-    : study === 'level2' ? L2.map(([key, label, id]) => ({ key, label, id })) : [
+    : study === 'level2' ? L2.map(([key, label, id]) => ({ key, label, id }))
+      : study === 'level1-followup' ? [...L1_CONTROLS, ...l1Followup.TRIALS]
+        : study === 'level2-followup' ? [...L2_CONTROLS, ...l2Followup.TRIALS] : [
       { key: 'nightrider-control', label: 'Nightrider control', id: 'knight.purple@4', movement: 'N0' },
       ...nightrider.TRIALS,
       { key: 'wraith-control', label: 'Wraith control', id: 'queen.purple@7', movement: 'QgB0' },
       ...wraith.TRIALS,
     ];
   return freeze(bodies.map(body => {
-    const design = getDesign(body.id), level = study === 'level1' ? 1 : study === 'level2' ? 2 : 3;
+    const design = getDesign(body.id), level = tier(study);
     if (!design || design.level !== level || body.movement && design.movement !== body.movement) throw new Error(`The screen requires its isolated research runtime or an unchanged body: ${body.id}.`);
-    const count = study === 'level1' && design.family !== 'queen' ? 2 : 1;
+    const count = tier(study) === 1 && design.family !== 'queen' ? 2 : 1;
     return { ...body, label: count === 2 ? `2 × ${body.label}` : body.label,
       family: design.family, movement: design.movement, count, upgradePoints: level * count, army: army(body.id, count) };
   }));
 }
 function references(study) {
   requireStudy(study);
-  if (study === 'level1') { getReferencePanelRoster(); return LEVEL1_ROSTER.map(row => ({ ...row, label: row.name })); }
-  if (study === 'level2') return getLevel2ReferenceSelection().roster.map(row => ({ ...row, label: row.name }));
+  if (tier(study) === 1) { getReferencePanelRoster(); return LEVEL1_ROSTER.map(row => ({ ...row, label: row.name })); }
+  if (tier(study) === 2) return getLevel2ReferenceSelection().roster.map(row => ({ ...row, label: row.name }));
   return getOfficialReferences().roster.map(row => ({ ...row, label: row.key === 'cruisader' ? 'Crusader' : row.name }));
 }
 function matches(study) {
   return candidates(study).flatMap(row => references(study).map(reference => ({ id: `${row.key}-v-${reference.key}`,
     aKey: row.key, aLabel: row.label, bKey: reference.key, bLabel: reference.label, upgradePoints: row.upgradePoints,
-    armyA: row.army, armyB: study === 'level1' ? buildPurchaseArmy(Array(row.count).fill(reference.id)) : army(reference.id) })));
+    armyA: row.army, armyB: tier(study) === 1 ? buildPurchaseArmy(Array(row.count).fill(reference.id)) : army(reference.id) })));
 }
 function getValueAudit(study) {
+  if (isFollowup(study)) return getFollowupValueAudit(study);
   const ids = [...new Set([...candidates(study), ...references(study)].map(row => row.id))].sort();
   const baseline = readSnapshot(), newerBytes = fs.readFileSync(path.join(ROOT, VALUES_FILE));
   if (sha(newerBytes) !== VALUES_SHA256) throw new Error('The declared v18 search priors changed.');
@@ -109,13 +129,40 @@ function getValueAudit(study) {
   return freeze({ sources: [getBracketValueReceipt(), { file: VALUES_FILE, sha256: VALUES_SHA256 }], values,
     policy: 'Retain frozen references and earlier applied family anchors for revised L1 bodies. Both Ghost rook trials share 1716/1636. New L2 bodies use declared native raw values, except Blink shares RcN 1904/1959. All quiet Nightriders share N0 2326/2211; all new Wraiths share QgB0 3772/3470. Every pair is applied to all six engine tables for both colors. These are controlled search priors, not measured material values.' });
 }
+function getFollowupValueAudit(study) {
+  const bodies = candidates(study), refs = references(study);
+  const ids = [...new Set([...bodies, ...refs].map(row => row.id))].sort();
+  const baseline = readSnapshot(), newerBytes = fs.readFileSync(path.join(ROOT, VALUES_FILE));
+  if (sha(newerBytes) !== VALUES_SHA256) throw new Error('The declared v18 search priors changed.');
+  const old = new Map(baseline.values.map(value => [value.id, value]));
+  const fresh = new Map(JSON.parse(newerBytes).values.map(value => [value.id, value]));
+  const selected = getLevel2ReferenceSelection();
+  const values = ids.map(id => {
+    const body = bodies.find(row => row.id === id), anchorId = body?.anchorId || id;
+    const reference = selected.roster.find(row => row.id === id);
+    const referenceAnchor = selected.roster.find(row => row.id === anchorId);
+    const anchor = fresh.get(anchorId) || old.get(anchorId);
+    const applied = reference?.engineValue || referenceAnchor?.engineValue || anchor?.applied;
+    if (!applied || !getDesign(id)) throw new Error(`No frozen follow-up search prior for ${id}.`);
+    const measured = fresh.get(id) || old.get(id);
+    const source = reference || referenceAnchor ? 'experiments/designs/level2-references-v17-002.json'
+      : fresh.has(anchorId) ? VALUES_FILE : getBracketValueReceipt().file;
+    return { id, movement: getDesign(id).movement, anchorId, automatic: measured?.automatic || null,
+      applied: { ...applied }, source };
+  });
+  return freeze({ sources: [getBracketValueReceipt(), { file: VALUES_FILE, sha256: VALUES_SHA256 },
+    { file: 'experiments/designs/level2-references-v17-002.json', declarationSha256: selected.declarationSha256 }], values,
+    policy: study === 'level1-followup'
+      ? 'Fresh controls and revisions share their earlier family anchor: Positional knight 972/1093, Hopping bishop 1480/1302 and Baby Amazon/Blink queen 2771/2833 MG/EG. Existing L1 reference priors remain fixed. These are search settings, not estimated material values. Earlier scored games are not pooled.'
+      : 'All knight controls and revisions use the established 1203/1352 MG/EG pair. The Bishop-pawn control and both new board-pawn revisions instead share the selected Quiet-tall Knight-pawn prior 536/592. This deliberately replaces the old Bishop-pawn 214/245 prior only in this new follow-up; its old screen percentage is not pooled with the fresh new-prior control. The three L2 references, including the F reserve grant, retain their frozen priors. Every pair is applied to all six engine tables for both colors. No material values are fitted.' });
+}
 function getBatchDeclaration(study, batchIndex, nodes) {
   requireStudy(study);
   if (!NODES[study].includes(nodes) || !Number.isInteger(batchIndex) || batchIndex < 0 || batchIndex > 7) throw new Error('Select a declared screen batch and node budget.');
   const rows = candidates(study), refs = references(study), cells = matches(study), audit = getValueAudit(study);
   const config = normalizeConfig({ schemaVersion: 3, name: `Version 18 ${study} reference screen: batch ${batchIndex + 1}, ${nodes} nodes`,
     seed: 20261116 + batchIndex, repetitions: 1, engine: { nodes, threads: 1, hashMb: 32, maxPlies: 400 },
-    openings: OPENINGS.slice(batchIndex * 8, (batchIndex + 1) * 8),
+    openings: openingCases(study).slice(batchIndex * 8, (batchIndex + 1) * 8),
     comparisons: cells.map(cell => ({ id: cell.id, label: `${cell.aLabel} versus ${cell.bLabel}`,
       armyA: cell.armyA, armyB: cell.armyB, strengthA: { skill: 20 }, strengthB: { skill: 20 } })),
     evaluation: { pieceValues: Object.fromEntries(audit.values.map(row => [row.id, row.applied])) } });
@@ -126,11 +173,16 @@ function getBatchDeclaration(study, batchIndex, nodes) {
     rowBudgets: Object.fromEntries(rows.map(row => [row.key, row.upgradePoints])),
     ...(study === 'mobility' ? {} : { referenceValueProfile: 'official-standalone' }),
     evaluationAudit: audit,
-    question: study === 'level1' ? 'Screen the revised L1 designs, both Ghost rook alternatives, and three retained comparison designs against fixed L1 references. Queen singles and native minor/rook pairs retain separate equal purchase budgets.'
+    question: study === 'level1-followup' ? 'Compare five stronger L1 revisions with three fresh matched body controls against the fixed L1 reference basket. Native minor pairs and queen singles retain separate equal purchase budgets.'
+      : study === 'level2-followup' ? 'Compare four knight revisions and two stronger Bishop board pawns with fresh Dabada, Long-range and new-prior Bishop-pawn controls against the three frozen L2 references. Keep the F reserve grant unchanged.'
+      : study === 'level1' ? 'Screen the revised L1 designs, both Ghost rook alternatives, and three retained comparison designs against fixed L1 references. Queen singles and native minor/rook pairs retain separate equal purchase budgets.'
       : study === 'level2' ? 'Screen the current L2 workshop candidates against the revised Quiet-tall Knight pawn, Rank pawn and Bishop grant as equal-cost singles.'
         : 'Compare quiet adjacent Nightrider steps and bounded Wraith hopper captures with fresh original controls against the four frozen L3 references. Trials do not face one another.',
     openings: { file: OPENINGS_FILE, sha256: OPENINGS_SHA256,
-      policy: 'Reuse the frozen 64-case book as matched eight-case batches. This is a new stronger-search/body screen, not 64 newly invented independent openings. Prior scored journals are not pooled.' },
+      ...(isFollowup(study) ? { openingIds: openingCases(study).map(opening => opening.id) } : {}),
+      policy: isFollowup(study)
+        ? 'Rotate the frozen casebook to cases 17–64, then 1–16. The first sixteen enabled cases are held out for these bodies; later extension reuses established cases. Do not describe all sixty-four as fresh. New controls and revisions share actual opening IDs; no earlier scored journals are pooled.'
+        : 'Reuse the frozen 64-case book as matched eight-case batches. This is a new stronger-search/body screen, not 64 newly invented independent openings. Prior scored journals are not pooled.' },
   } });
 }
 function expectedGames(study, openings) {
@@ -153,7 +205,8 @@ function buildCampaignPlan({ study, jobs = 4 } = {}) {
   }
   return freeze({ schemaVersion: 1, format: FORMAT, study, jobs, games: expectedGames(study, 64),
     nodes: NODES[study], openingTargets: OPENING_TARGETS, batchSize: 8,
-    book: { file: OPENINGS_FILE, sha256: OPENINGS_SHA256 }, roster: candidates(study), references: references(study),
+    book: { file: OPENINGS_FILE, sha256: OPENINGS_SHA256,
+      ...(isFollowup(study) ? { openingIds: openingCases(study).map(opening => opening.id), firstHoldoutCases: 16 } : {}) }, roster: candidates(study), references: references(study),
     evaluationAudit: getValueAudit(study), stages });
 }
 function selectedStages(openings, plan) { expectedGames(plan.study, openings); return plan.stages.filter(stage => stage.batchIndex < openings / 8); }
@@ -163,7 +216,8 @@ function selectedStages(openings, plan) { expectedGames(plan.study, openings); r
 async function checkExperiment(declaration, options = {}) {
   const proof = await require('../version17-balance').checkExperiment(declaration, options);
   const registry = createDesignRegistry(declaration.config), profile = compileDesignProfile(registry, declaration.config.evaluation);
-  const probes = [...level1.revisionProbes(profile), ...nightrider.revisionProbes(profile), ...wraith.revisionProbes(profile)];
+  const probes = [...level1.revisionProbes(profile), ...nightrider.revisionProbes(profile), ...wraith.revisionProbes(profile),
+    ...l1Followup.revisionProbes(profile), ...l2Followup.revisionProbes(profile)];
   if (!probes.length) return proof;
   const { createMatchRules } = require('../../dist/balance-rules.cjs');
   const rules = await createMatchRules({ profile });
@@ -185,7 +239,7 @@ async function checkExperiment(declaration, options = {}) {
       } finally { board.dispose(); }
     }
     proof.screenMovementChecks = probes.length;
-    options.onProgress?.(`Validation: ${probes.length} explicit L1/Nightrider/Wraith probe positions passed${engine ? ' native/WASM agreement' : ' browser rules'}.`);
+    options.onProgress?.(`Validation: ${probes.length} explicit screen movement probe positions passed${engine ? ' native/WASM agreement' : ' browser rules'}.`);
     return proof;
   } finally { await engine?.close(); if (directory) fs.rmSync(directory, { recursive: true, force: true }); }
 }
@@ -221,7 +275,7 @@ function reportStudy(manifest, stages) {
   }
   const reports = NODES[manifest.study].map(nodes => {
     const declaration = getBatchDeclaration(manifest.study, 0, nodes);
-    const config = { ...declaration.config, openings: OPENINGS.slice(0, targetOpenings) };
+    const config = { ...declaration.config, openings: openingCases(manifest.study).slice(0, targetOpenings) };
     const available = stages.filter(stage => stage.nodes === nodes).sort((a, b) => a.batchIndex - b.batchIndex);
     // Stage namespaces preserve native game IDs without permitting a copied
     // journal in a second batch to masquerade as another independent game.
@@ -232,7 +286,7 @@ function reportStudy(manifest, stages) {
     const report = createV17Report({ ...input, records });
     const rows = summarizeRows(report, records, input, `${manifest.study}:${nodes}`);
     const cohorts = Array.from({ length: targetOpenings / 8 }, (_, batchIndex) => {
-      const ids = new Set(OPENINGS.slice(batchIndex * 8, batchIndex * 8 + 8).map(opening => opening.id));
+      const ids = new Set(openingCases(manifest.study).slice(batchIndex * 8, batchIndex * 8 + 8).map(opening => opening.id));
       const subset = { ...input, config: { ...config, openings: config.openings.filter(opening => ids.has(opening.id)) } };
       const subsetRecords = records.filter(record => ids.has(record.openingId));
       const cohortReport = createV17Report({ ...subset, records: subsetRecords });
@@ -240,7 +294,7 @@ function reportStudy(manifest, stages) {
     });
     const controls = manifest.study === 'mobility' ? [['knight', 'nightrider-control'], ['queen', 'wraith-control']] : [];
     const gains = candidates(manifest.study).filter(row => !controls.some(([, key]) => row.key === key)).flatMap(body => {
-      const control = controls.find(([family]) => family === body.family)?.[1];
+      const control = body.controlKey || controls.find(([family]) => family === body.family)?.[1];
       if (!control) return [];
       const byRow = key => {
         const valid = new Map(), pairs = new Map();
@@ -252,13 +306,16 @@ function reportStudy(manifest, stages) {
       const a = byRow(body.key), b = byRow(control), refs = references(manifest.study);
       const common = config.openings.filter(opening => refs.every(ref => a.has(`${ref.key}:${opening.id}`) && b.has(`${ref.key}:${opening.id}`)));
       const differences = common.map(opening => average(refs.map(ref => a.get(`${ref.key}:${opening.id}`) - b.get(`${ref.key}:${opening.id}`))));
-      return [{ key: body.key, label: body.label, control, sharedOpenings: common.length,
+      return [{ key: body.key, label: body.label, control,
+        ...(isFollowup(manifest.study) ? { controlLabel: candidates(manifest.study).find(row => row.key === control)?.label } : {}), sharedOpenings: common.length,
         difference: average(differences), conditionalRange: conditionalRange(differences, `v18gain:${nodes}:${body.key}`) }];
     });
     return { nodes, report, rows, cohorts, gains };
   });
   return { schemaVersion: 1, format: 'levelup-v18-screen-report', runId: manifest.runId, study: manifest.study, targetOpenings,
-    scheduledGames: expectedGames(manifest.study, targetOpenings), reports, evaluationAudit: getValueAudit(manifest.study),
+    scheduledGames: expectedGames(manifest.study, targetOpenings), reports,
+    ...(isFollowup(manifest.study) ? { openingIds: openingCases(manifest.study).slice(0, targetOpenings).map(opening => opening.id),
+      openingPolicy: getBatchDeclaration(manifest.study, 0, NODES[manifest.study][0]).metadata.openings.policy } : {}), evaluationAudit: getValueAudit(manifest.study),
     sources: stages.map(stage => ({ batchIndex: stage.batchIndex, nodes: stage.nodes,
       directory: stage.directory || `batch-${String(stage.batchIndex + 1).padStart(2, '0')}-n${stage.nodes}`,
       runId: stage.manifest.runId, profileHash: stage.manifest.designProfile.hash,
@@ -271,23 +328,30 @@ function renderReport(input) {
   const lines = [`# Version 18 ${input.study} reference screen`, '',
     `${input.targetOpenings} fixed opening cases; ${input.scheduledGames} scheduled games. Draws count half a point. Budgets and node counts remain separate.`, '',
     'The 40%–60% target and per-opponent concerns guide review; eight cases cannot establish precise balance. Conditional 95% ranges resample whole opening blocks, retain both colors, and exclude engine/protocol bias. Repeated complete batches and human counterplay matter more than a single outlying score. No Elo or material values are fitted.', ''];
+  if (input.openingPolicy) lines.push(input.openingPolicy, '');
+  const cohortLabel = cohort => isFollowup(input.study) ? `${cohort.openingIds[0]} … ${cohort.openingIds.at(-1)}`
+    : `Cases ${cohort.batchIndex * 8 + 1}–${cohort.batchIndex * 8 + 8}`;
   for (const stage of input.reports) {
     lines.push(`## ${stage.nodes} nodes`, '',
       '| Design | Purchase points per side | Overall score | White | Black | Conditional 95% range | Shared cases | Review flag |',
       '| --- | ---: | ---: | ---: | ---: | --- | ---: | --- |',
       ...stage.rows.map(row => `| ${row.label} | ${row.upgradePoints} | ${pct(row.score)} | ${pct(row.physicalColors[0].score)} | ${pct(row.physicalColors[1].score)} | ${range(row.conditionalRange)} | ${row.openingCoverage.shared}/${row.openingCoverage.total} | ${row.flags.join('; ')} |`), '',
       renderV17Report(stage.report), '',
-      '| Design | ' + stage.cohorts.map(cohort => `Cases ${cohort.batchIndex * 8 + 1}–${cohort.batchIndex * 8 + 8}`).join(' | ') + ' |',
+      '| Design | ' + stage.cohorts.map(cohortLabel).join(' | ') + ' |',
       '| --- | ' + stage.cohorts.map(() => '---:').join(' | ') + ' |',
       ...stage.rows.map(row => `| ${row.label} | ${stage.cohorts.map(cohort => { const value = cohort.rows.find(item => item.key === row.key); return `${pct(value.score)} (${value.openingCoverage.shared}/8)`; }).join(' | ')} |`), '');
-    if (stage.gains.length) lines.push('| Trial | Matched cases with fresh control | Gain over control (pp) | Conditional 95% range (pp) |',
-      '| --- | ---: | ---: | --- |', ...stage.gains.map(row => `| ${row.label} | ${row.sharedOpenings} | ${pp(row.difference)} | ${range(row.conditionalRange, '')} |`), '');
+    if (stage.gains.length) {
+      const followup = isFollowup(input.study);
+      lines.push(`| Trial | ${followup ? 'Fresh control | ' : ''}Matched cases with fresh control | Gain over control (pp) | Conditional 95% range (pp) |`,
+        `| --- | ${followup ? '--- | ' : ''}---: | ---: | --- |`,
+        ...stage.gains.map(row => `| ${row.label} | ${followup ? `${row.controlLabel} | ` : ''}${row.sharedOpenings} | ${pp(row.difference)} | ${range(row.conditionalRange, '')} |`), '');
+    }
   }
   lines.push('## Frozen search priors', '', input.evaluationAudit.policy, '',
     '| Design | Movement | Value anchor | Applied MG / EG |', '| --- | --- | --- | ---: |',
     ...input.evaluationAudit.values.map(value => `| ${value.id} | \`${value.movement}\` | ${value.anchorId} | ${value.applied.mg} / ${value.applied.eg} |`), '');
   return lines.join('\n');
 }
-module.exports = { ROOT, FORMAT, STUDIES, OPENING_TARGETS, NODES, OPENINGS, VALUES_FILE, VALUES_SHA256, L1, L2,
+module.exports = { ROOT, FORMAT, STUDIES, OPENING_TARGETS, NODES, OPENINGS, FOLLOWUP_OPENINGS, openingCases, L1_CONTROLS, L2_CONTROLS, VALUES_FILE, VALUES_SHA256, L1, L2,
   candidates, references, matches, getValueAudit, getBatchDeclaration, expectedGames, buildCampaignPlan, selectedStages,
   checkExperiment, reportStudy, renderReport };

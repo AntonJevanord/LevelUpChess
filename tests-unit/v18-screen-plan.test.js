@@ -53,7 +53,8 @@ test('new definitions remain isolated and every historical playable profile and 
 });
 
 test('all targets freeze distinct paired stages and extending does not repeat the first eight cases', () => {
-  const totals = { level1: [432, 3456], level2: [384, 3072], mobility: [1024, 8192] };
+  const totals = { level1: [432, 3456], level2: [384, 3072], mobility: [1024, 8192],
+    'level1-followup': [384, 3072], 'level2-followup': [432, 3456] };
   for (const study of plan.STUDIES) {
     const campaign = plan.buildCampaignPlan({ study, jobs: 4 });
     assert.equal(plan.expectedGames(study, 8), totals[study][0]);
@@ -79,19 +80,21 @@ test('all targets freeze distinct paired stages and extending does not repeat th
 });
 
 test('same-tier opponents and purchase budgets preserve queen singles and native minor pairs', () => {
-  for (const study of ['level1', 'level2']) {
+  for (const study of ['level1', 'level2', 'level1-followup', 'level2-followup']) {
     const rows = plan.candidates(study), comparisons = plan.matches(study);
-    assert.equal(rows.length, study === 'level1' ? 9 : 8);
-    assert.equal(comparisons.length, study === 'level1' ? 27 : 24);
+    const expected = { level1: 9, level2: 8, 'level1-followup': 8, 'level2-followup': 9 }[study];
+    assert.equal(rows.length, expected);
+    assert.equal(comparisons.length, expected * 3);
     assert.equal(plan.references(study).length, 3);
     for (const row of rows) {
-      const count = study === 'level1' && row.family !== 'queen' ? 2 : 1;
+      const l1 = study.startsWith('level1');
+      const count = l1 && row.family !== 'queen' ? 2 : 1;
       assert.equal(Object.keys(row.army.upgrades).length, count);
-      assert.equal(row.upgradePoints, count * (study === 'level1' ? 1 : 2));
+      assert.equal(row.upgradePoints, count * (l1 ? 1 : 2));
       for (const cell of comparisons.filter(cell => cell.aKey === row.key)) {
         const upgrades = Object.keys(cell.armyB.upgrades).length;
         const reserve = (cell.armyB.reserve || []).reduce((sum, entry) => sum + entry.count, 0);
-        assert.equal(upgrades + reserve, study === 'level1' ? count : 1);
+        assert.equal(upgrades + reserve, l1 ? count : 1);
       }
     }
   }
@@ -170,4 +173,85 @@ test('journal duplicates add no weight and foreign stages, nodes, openings and c
   assert.throws(() => plan.reportStudy(manifest, [source(input, invalid)]), /context changed/);
   const otherOpening = structuredClone(records); otherOpening[0].openingId = 'unknown';
   assert.throws(() => plan.reportStudy(manifest, [source(input, otherOpening)]), /unknown opening/);
+});
+
+
+test('the three existing screen protocols keep every config byte and campaign identity unchanged', () => {
+  const pins = {
+    level1: { campaign: 'a66bcbb5889ce62c865be30f0a2e75b7756138b161655739b1aa2296a8902f10', configs: '268ca3c70e404ccf97bacc9050e03df7691935a9b7399db8f8f783911afe5e63' },
+    level2: { campaign: '65473c5ea3fd6a13a00260f73d1d997f312c8fd004f30ce16a550659a2b7361d', configs: 'fbab6b25a44ca3ac47aa0c61e393367445b393e724771d9620c485e12472955d' },
+    mobility: { campaign: '3b97e43a69b38478e17635c2262ecc03b76f2ef29a100af2c5bb067d7c5ca7a9', configs: '696a2bce58e20becde1e0938382787101eaa3ec6405f2803e1f6a29a34d278f0' },
+  };
+  for (const [study, pin] of Object.entries(pins)) {
+    const campaign = plan.buildCampaignPlan({ study, jobs: 4 });
+    assert.equal(sha(JSON.stringify(campaign)), pin.campaign, study);
+    const configs = campaign.stages.map(stage => plan.getBatchDeclaration(study, stage.batchIndex, stage.nodes).config);
+    assert.equal(sha(JSON.stringify(configs)), pin.configs, study);
+  }
+});
+
+test('follow-ups freeze heldout-first opening IDs and preserve fresh controls instead of pooling old scores', () => {
+  const expectedIds = [...plan.OPENINGS.slice(16), ...plan.OPENINGS.slice(0, 16)].map(opening => opening.id);
+  for (const study of ['level1-followup', 'level2-followup']) {
+    const campaign = plan.buildCampaignPlan({ study, jobs: 3 });
+    assert.deepEqual(campaign.book.openingIds, expectedIds);
+    assert.equal(campaign.book.firstHoldoutCases, 16);
+    const first = context(study), second = context(study, 1), final = context(study, 7);
+    assert.deepEqual(first.declaration.config.openings.map(opening => opening.id), expectedIds.slice(0, 8));
+    assert.deepEqual(second.declaration.config.openings.map(opening => opening.id), expectedIds.slice(8, 16));
+    assert.deepEqual(final.declaration.config.openings.map(opening => opening.id), expectedIds.slice(56));
+    assert.ok(plan.candidates(study).filter(row => row.key.endsWith('-control')).length === 3);
+    assert.ok(first.declaration.metadata.openings.policy.includes('first sixteen'));
+  }
+  assert.ok(!plan.candidates('level2-followup').some(row => row.family === 'king'));
+  assert.equal(plan.references('level2-followup').find(row => row.family === 'king').movement, 'F');
+});
+
+test('follow-up priors hold sibling bodies fixed and explicitly revalue all three Bishop board pawns', () => {
+  const l1 = plan.getValueAudit('level1-followup');
+  const expectedL1 = new Map([
+    ['positional-control', { mg: 972, eg: 1093 }], ['hopping-control', { mg: 1480, eg: 1302 }],
+    ['baby-amazon-control', { mg: 2771, eg: 2833 }],
+  ]);
+  for (const body of plan.candidates('level1-followup')) {
+    const controlKey = body.controlKey || body.key;
+    assert.deepEqual(l1.values.find(row => row.id === body.id).applied, expectedL1.get(controlKey), body.key);
+  }
+  const l2 = plan.getValueAudit('level2-followup');
+  for (const body of plan.candidates('level2-followup')) {
+    const row = l2.values.find(row => row.id === body.id);
+    assert.deepEqual(row.applied, body.family === 'pawn' ? { mg: 536, eg: 592 } : { mg: 1203, eg: 1352 });
+    if (body.family === 'pawn') {
+      assert.equal(row.anchorId, 'pawn.knight-tall-quiet@1');
+      assert.equal(row.source, 'experiments/designs/level2-references-v17-002.json');
+      if (body.key !== 'bishop-pawn-control') assert.equal(row.automatic, null);
+    }
+  }
+  assert.deepEqual(plan.getValueAudit('level2').values.find(row => row.id === 'pawn.bishop-step-current@1').applied, { mg: 214, eg: 245 });
+  assert.ok(l2.policy.includes('214/245')); assert.ok(l2.policy.includes('not pooled'));
+});
+
+test('same-budget follow-up gains retain their declared fresh control and complete matched blocks', () => {
+  for (const study of ['level1-followup', 'level2-followup']) {
+    const input = context(study), records = recordsFor(input);
+    const report = plan.reportStudy({ study, targetOpenings: 8, runId: 'followup-synthetic' }, [source(input, records)]);
+    const stage = report.reports[0], bodies = plan.candidates(study);
+    assert.equal(stage.report.progress.pairedGames, study === 'level1-followup' ? 384 : 432);
+    assert.equal(stage.gains.length, study === 'level1-followup' ? 5 : 6);
+    assert.ok(stage.gains.every(gain => gain.sharedOpenings === 8 && gain.difference === 0.25));
+    for (const gain of stage.gains) {
+      assert.equal(gain.control, bodies.find(body => body.key === gain.key).controlKey);
+      assert.equal(gain.controlLabel, bodies.find(body => body.key === gain.control).label);
+    }
+    assert.deepEqual(report.openingIds, plan.OPENINGS.slice(16, 24).map(opening => opening.id));
+    const markdown = plan.renderReport(report);
+    for (const term of ['Fresh control', 'l3-panel-17', 'l3-panel-24', '25.00']) assert.ok(markdown.includes(term), term);
+    const damaged = structuredClone(records), controlKey = stage.gains[0].control;
+    const row = damaged.find(row => row.comparisonId.startsWith(controlKey + '-v-'));
+    row.status = 'truncated'; row.result = '*';
+    const revised = plan.reportStudy({ study, targetOpenings: 8 }, [source(input, damaged)]).reports[0];
+    assert.ok(revised.gains.filter(gain => gain.control === controlKey).every(gain => gain.sharedOpenings === 7));
+    assert.ok(revised.gains.filter(gain => gain.control !== controlKey).every(gain => gain.sharedOpenings === 8));
+    assert.ok(revised.rows.find(row => row.key === controlKey).flags.includes('partial screen'));
+  }
 });

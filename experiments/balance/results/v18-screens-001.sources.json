@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-v18-screen-source-pins",
+  "studies": {
+    "level1": {
+      "journals": [
+        {
+          "study": "level1",
+          "nodes": 40000,
+          "batchIndex": 0,
+          "originalName": "games.jsonl",
+          "archiveFile": "v18-screens-001.level1.b1.n40000.games.jsonl.gz",
+          "archivedSha256": "341087458e53fb2cf8c0405eddbdc94d40477bb260da02a5530b741757cef270",
+          "sha256": "db6d90e1f3a0899c5df6476c5f4e90fb3b215e30fe9c161b5f7e99e89070a924",
+          "bytes": 1819468
+        },
+        {
+          "study": "level1",
+          "nodes": 40000,
+          "batchIndex": 1,
+          "originalName": "games.jsonl",
+          "archiveFile": "v18-screens-001.level1.b2.n40000.games.jsonl.gz",
+          "archivedSha256": "20fc1c59d981938ccc1631149d265d173c3597d8571900ed43382d7d50e68c89",
+          "sha256": "05987009a75c07e3fdcf822a8fdbfb48c04baf075be74de9e2fe09a31b683c30",
+          "bytes": 1825506
+        }
+      ],
+      "uploadedReport": {
+        "originalName": "screen-report.md",
+        "archiveFile": "v18-screens-001.level1.uploaded-report.md.gz",
+        "archivedSha256": "85b871782bdbe20709aea3e74ef47f172f6e2f1f1e8082d425748910317d3740",
+        "sha256": "9046d47acb6a983f0e5c124d89fe3273dea048ec7b9259e30eaf49eb94645617",
+        "bytes": 9206
+      }
+    },
+    "level2": {
+      "journals": [
+        {
+          "study": "level2",
+          "nodes": 40000,
+          "batchIndex": 0,
+          "originalName": "games.jsonl",
+          "archiveFile": "v18-screens-001.level2.b1.n40000.games.jsonl.gz",
+          "archivedSha256": "64c635d59449388f9ede2a7eca646ddf20f4c5b935d023ed79402e0e5fdee4fa",
+          "sha256": "dbaa3caec5755c9115f2f21119673dfea0984441010184514b4b7f9022dbe794",
+          "bytes": 1567437
+        },
+        {
+          "study": "level2",
+          "nodes": 40000,
+          "batchIndex": 1,
+          "originalName": "games.jsonl",
+          "archiveFile": "v18-screens-001.level2.b2.n40000.games.jsonl.gz",
+          "archivedSha256": "f33f6c9fbe62fd45cb4e9f46e4161b11270d823d120aff9572911f0716e4b9a5",
+          "sha256": "211ec6712c7e10a2eb37a09853f3919d177e7f6434f4656a1b2cf56334e2c84b",
+          "bytes": 1566131
+        }
+      ],
+      "uploadedReport": {
+        "originalName": "screen-report.md",
+        "archiveFile": "v18-screens-001.level2.uploaded-report.md.gz",
+        "archivedSha256": "45b6f784b226c58470db7e5989ecdff2b5433444696bea2cc4f48c1eed3b0059",
+        "sha256": "26adf1301b5b2acb23673bddb0534f20028a138aabf3e44ad0704f0f3d49120a",
+        "bytes": 8141
+      }
+    },
+    "mobility": {
+      "journals": [
+        {
+          "study": "mobility",
+          "nodes": 40000,
+          "batchIndex": 0,
+          "originalName": "games.jsonl",
+          "archiveFile": "v18-screens-001.mobility.b1.n40000.games.jsonl.gz",
+          "archivedSha256": "f7f4876c5dbb91374ef3ed38774b9bb480e381c1a57504cca7673e67e45a0fc6",
+          "sha256": "2562e40e2aace33e195c357eecc75978d2807d5aa9728982014964b57a76f8a0",
+          "bytes": 2084861
+        },
+        {
+          "study": "mobility",
+          "nodes": 80000,
+          "batchIndex": 0,
+          "originalName": "games.jsonl",
+          "archiveFile": "v18-screens-001.mobility.b1.n80000.games.jsonl.gz",
+          "archivedSha256": "617c37a998eafc3d2d4355a21131d728f2d227d503b47e9806f0968107575061",
+          "sha256": "bbfaa609e8e5d52095aa7c43b43cd66847e47610fd8364cb2b8f2daa2ece8e74",
+          "bytes": 2101656
+        },
+        {
+          "study": "mobility",
+          "nodes": 40000,
+          "batchIndex": 1,
+          "originalName": "games.jsonl",
+          "archiveFile": "v18-screens-001.mobility.b2.n40000.games.jsonl.gz",
+          "archivedSha256": "e72dafb3d37b7292b5fd05743c34bc1854b0c23fd9e5426671daca00ce3c5e8a",
+          "sha256": "6117326b7dce515c18f7e837326c1a0c3f1344de1992d409502201340aa34f2c",
+          "bytes": 2058525
+        },
+        {
+          "study": "mobility",
+          "nodes": 80000,
+          "batchIndex": 1,
+          "originalName": "games.jsonl",
+          "archiveFile": "v18-screens-001.mobility.b2.n80000.games.jsonl.gz",
+          "archivedSha256": "d7ee1e10a9a1df5989fac76f9ebd46c46c70539dfc1f6ea886164e899299fbbc",
+          "sha256": "6d1245e6e8fcbdb7625cccdb566262dc29c99dd26bf161e71cf923e6beb5d04f",
+          "bytes": 2076943
+        }
+      ],
+      "uploadedReport": {
+        "originalName": "screen-report.md",
+        "archiveFile": "v18-screens-001.mobility.uploaded-report.md.gz",
+        "archivedSha256": "c852faaf86d8914acf0f594dcb4de518d763244cce4f4cf4652f3e5ebade87d9",
+        "sha256": "a9cea5e598821003d10cb94d7a130b8df438d9aaf54619cca3889525c4c510d4",
+        "bytes": 18658
+      }
+    }
+  },
+  "declarations": {
+    "archiveFile": "v18-screens-001.declarations.json.gz",
+    "archivedSha256": "534228e36199b46a9640fe18e94889687a08c0144d624ebc212f9b48929b1361",
+    "sha256": "9fcc2ba25a48cf554bb72e9779d7ee66f47205247266b42444c6126779827d8e",
+    "bytes": 2573178
+  }
+}

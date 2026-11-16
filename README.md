@@ -93,6 +93,17 @@ folder for their 384 or 1,024 games. Run one study at a time. Extend with
 remain in their original stage journals and reports retain earlier checkpoints.
 No trial changes the playable roster or historical definitions.
 
+The first sixteen cases are [archived and reviewed](experiments/balance/results/v18-screens-001.report.md).
+Run `npm.cmd run balance:review-v18` to verify the uploaded outcomes offline.
+The [targeted lower-tier follow-ups](docs/v18-followup-screens.md) test `NmQ` /
+`NmK`, longer-hopping bishops and a Blink queen at level one, and `NWD` / `NWH`
+/ `NFA` / `NAD` plus two stronger Bishop board pawns at level two. Each trial
+faces fixed same-tier references with fresh matched controls; candidate scores
+do not pull one another down. Use new study folders with `--study level1-followup`
+or `--study level2-followup`; original folders remain resumable through their
+owned snapshots. The weak Bishop pawn is a replacement pawn; the `F` Bishop
+grant remains a fixed reference.
+
 ## Version 17: balance experiments
 
 Version 17 is closed at **`v0.17.23`** on branch **`version_17`**, retaining its

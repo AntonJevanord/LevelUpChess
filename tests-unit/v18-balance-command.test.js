@@ -61,6 +61,8 @@ test('screen selectors and cumulative totals reject incompatible or ignored flag
   assert.deepEqual(command.parseArgs(['--study', 'level1', '--out', 'x']), { study: 'level1', out: 'x', jobs: 4, openings: 8 });
   assert.deepEqual(command.parseArgs(['--study', 'level2', '--resume', 'x', '--openings', '32']), { study: 'level2', resume: 'x', openings: 32 });
   assert.deepEqual(command.parseArgs(['--study', 'mobility', '--check', '--rules-only']), { study: 'mobility', check: true, 'rules-only': true, openings: 8 });
+  assert.deepEqual(command.parseArgs(['--study', 'level1-followup', '--out', 'x']), { study: 'level1-followup', out: 'x', jobs: 4, openings: 8 });
+  assert.deepEqual(command.parseArgs(['--study', 'level2-followup', '--resume', 'x']), { study: 'level2-followup', resume: 'x' });
   assert.deepEqual(command.parseArgs(['--study', 'level1', '--help']), { help: true });
   assert.deepEqual(command.parseArgs(['--help']), { help: true });
   for (const args of [[], ['--out', 'x'], ['--study', '__proto__', '--out', 'x'], ['--study', 'level1', '--out'],
@@ -69,6 +71,20 @@ test('screen selectors and cumulative totals reject incompatible or ignored flag
     ['--study', 'level1', '--report', 'x', '--openings', '8'], ['--study', 'level1', '--report', 'x', '--engine', 'native'],
     ['--study', 'level1', '--check', '--log', 'plies'], ['--study', 'level1', '--check', '--rules-only', '--engine', 'native'],
     ['--study', 'level1', '--out', 'x', '--log', 'silent'], ['--study', 'level1', '--check', '--check']]) assert.throws(() => command.parseArgs(args));
+});
+
+test('follow-up selectors own separate resumable studies and cannot reuse an original screen folder', async t => {
+  for (const study of ['level1-followup', 'level2-followup']) {
+    const f = setup(t, study);
+    await command.runStudy(f.args('--out', f.out), f.dependencies);
+    assert.equal(f.calls.length, 1);
+    await command.runStudy(f.args('--resume', f.out, '--openings', '16'), f.dependencies);
+    assert.equal(f.calls.length, 2);
+    const played = f.calls.length;
+    await command.runStudy(f.args('--report', f.out), f.dependencies);
+    assert.equal(f.calls.length, played);
+    await assert.rejects(command.runStudy(['--study', study.split('-')[0], '--resume', f.out], f.dependencies), /different study/);
+  }
 });
 
 test('8→16→32→64 adds only new stages while retaining the original manifest and per-target reports', async t => {
