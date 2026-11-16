@@ -105,17 +105,22 @@ owned snapshots. The weak Bishop pawn is a replacement pawn; the `F` Bishop
 grant remains a fixed reference.
 
 The [completed follow-up review](docs/v18-followup-review.md) shortlists `NmQ`,
-`BgB0` and the clear-range Bishop pawn for playtesting. `NFA` is the closest new
-L2 knight, while `NWH` overshoots at two points. Blink queen remains exploratory.
+`BgB0` and the clear-range Bishop pawn for playtesting. `NFA` was the closest new
+L2 knight in that follow-up, while `NWH` overshoots at two points. Blink queen remains exploratory.
 The archived games and reports preserve every result; this review changes no
 playable profile, reference, price or engine setting and starts no new study.
 Verify the follow-up uploads with `npm.cmd run balance:review-v18-followups`.
 
-The next [focused L2 knight screen](docs/v18-knight-screen.md) compares `NH`,
-`NDH` and a two-point `N0` with fresh `NA` / `NFA` controls against the fixed
-L2 references. Sixteen cases schedule 480 games at 40k nodes. Start a new folder
-with `--study level2-knights`; the old three-point Nightrider and prior studies
-remain unchanged.
+The completed [focused L2 knight review](docs/v18-knight-review.md) selects
+unchanged `N0` for level two: **54.69% overall**, with 51.56%–57.81% against
+the three references. `NH` is weak and `NDH` is strong at this tier. All 480
+games finished cleanly. Verify the archived uploads offline with
+`npm.cmd run balance:review-v18-knights`; the old three-point Nightrider and
+playable profiles retain their tested definitions.
+
+The [current lower-tier shortlist](docs/v18-lower-tier-shortlist.md) gathers
+the promising pawn, knight, bishop, rook and grant choices alongside the fixed
+references. Both queen slots remain unresolved.
 
 ## Version 17: balance experiments
 

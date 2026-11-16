@@ -96,3 +96,6 @@ experiments/balance/results/v18-screens-001.*.gz -text
 experiments/balance/results/v18-followups-001.*.json text eol=lf
 experiments/balance/results/v18-followups-001.*.md text eol=lf
 experiments/balance/results/v18-followups-001.*.gz -text
+experiments/balance/results/v18-knights-001.*.json text eol=lf
+experiments/balance/results/v18-knights-001.*.md text eol=lf
+experiments/balance/results/v18-knights-001.*.gz -text
