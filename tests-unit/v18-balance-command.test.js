@@ -64,6 +64,9 @@ test('screen selectors and cumulative totals reject incompatible or ignored flag
   assert.deepEqual(command.parseArgs(['--study', 'level1-followup', '--out', 'x']), { study: 'level1-followup', out: 'x', jobs: 4, openings: 8 });
   assert.deepEqual(command.parseArgs(['--study', 'level2-followup', '--resume', 'x']), { study: 'level2-followup', resume: 'x' });
   assert.deepEqual(command.parseArgs(['--study', 'level2-knights', '--out', 'x', '--openings', '16']), { study: 'level2-knights', out: 'x', jobs: 4, openings: 16 });
+  for (const study of ['level1-queens', 'level2-completion']) {
+    assert.deepEqual(command.parseArgs(['--study', study, '--out', 'x', '--openings', '16']), { study, out: 'x', jobs: 4, openings: 16 });
+  }
   assert.deepEqual(command.parseArgs(['--study', 'level1', '--help']), { help: true });
   assert.deepEqual(command.parseArgs(['--help']), { help: true });
   for (const args of [[], ['--out', 'x'], ['--study', '__proto__', '--out', 'x'], ['--study', 'level1', '--out'],
@@ -75,7 +78,7 @@ test('screen selectors and cumulative totals reject incompatible or ignored flag
 });
 
 test('follow-up selectors own separate resumable studies and cannot reuse an original screen folder', async t => {
-  for (const study of ['level1-followup', 'level2-followup', 'level2-knights']) {
+  for (const study of ['level1-followup', 'level2-followup', 'level2-knights', 'level1-queens', 'level2-completion']) {
     const f = setup(t, study);
     await command.runStudy(f.args('--out', f.out), f.dependencies);
     assert.equal(f.calls.length, 1);

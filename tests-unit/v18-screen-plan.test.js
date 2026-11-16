@@ -43,6 +43,9 @@ test('new definitions remain isolated and every historical playable profile and 
   assert.equal(rootCatalog.getDesign('knight.nightrider-quiet-diagonal@1'), undefined);
   assert.equal(rootCatalog.getDesign('queen.wraith-side-through@1'), undefined);
   for (const id of ['knight.level2-nh@1', 'knight.level2-ndh@1', 'knight.nightrider-level2@1']) assert.equal(rootCatalog.getDesign(id), undefined);
+  for (const id of ['queen.level1-camel-capture@1', 'queen.level1-forward-knight@1',
+    'queen.level1-forward-half-knight@1', 'queen.level2-side-knight@1', 'queen.level2-tall-knight@1',
+    'knight.level2-nd@1', 'knight.level2-nd-quiet-king@1']) assert.equal(rootCatalog.getDesign(id), undefined);
   assert.throws(() => require('../scripts/balance/v18-screen-plan').candidates('mobility'), /isolated research runtime/);
   assert.equal(rootCatalog.getDesign('knight.purple@4').movement, 'N0');
   assert.equal(rootCatalog.getDesign('queen.purple@7').movement, 'QgB0');
@@ -55,7 +58,8 @@ test('new definitions remain isolated and every historical playable profile and 
 
 test('all targets freeze distinct paired stages and extending does not repeat the first eight cases', () => {
   const totals = { level1: [432, 3456], level2: [384, 3072], mobility: [1024, 8192],
-    'level1-followup': [384, 3072], 'level2-followup': [432, 3456], 'level2-knights': [240, 1920] };
+    'level1-followup': [384, 3072], 'level2-followup': [432, 3456], 'level2-knights': [240, 1920],
+    'level1-queens': [192, 1536], 'level2-completion': [336, 2688] };
   for (const study of plan.STUDIES) {
     const campaign = plan.buildCampaignPlan({ study, jobs: 4 });
     assert.equal(plan.expectedGames(study, 8), totals[study][0]);
@@ -81,9 +85,10 @@ test('all targets freeze distinct paired stages and extending does not repeat th
 });
 
 test('same-tier opponents and purchase budgets preserve queen singles and native minor pairs', () => {
-  for (const study of ['level1', 'level2', 'level1-followup', 'level2-followup', 'level2-knights']) {
+  for (const study of ['level1', 'level2', 'level1-followup', 'level2-followup', 'level2-knights', 'level1-queens', 'level2-completion']) {
     const rows = plan.candidates(study), comparisons = plan.matches(study);
-    const expected = { level1: 9, level2: 8, 'level1-followup': 8, 'level2-followup': 9, 'level2-knights': 5 }[study];
+    const expected = { level1: 9, level2: 8, 'level1-followup': 8, 'level2-followup': 9, 'level2-knights': 5,
+      'level1-queens': 4, 'level2-completion': 7 }[study];
     assert.equal(rows.length, expected);
     assert.equal(comparisons.length, expected * 3);
     assert.equal(plan.references(study).length, 3);
@@ -177,13 +182,14 @@ test('journal duplicates add no weight and foreign stages, nodes, openings and c
 });
 
 
-test('the five existing screen protocols keep every config byte and campaign identity unchanged', () => {
+test('the six existing screen protocols keep every config byte and campaign identity unchanged', () => {
   const pins = {
     level1: { campaign: 'a66bcbb5889ce62c865be30f0a2e75b7756138b161655739b1aa2296a8902f10', configs: '268ca3c70e404ccf97bacc9050e03df7691935a9b7399db8f8f783911afe5e63' },
     level2: { campaign: '65473c5ea3fd6a13a00260f73d1d997f312c8fd004f30ce16a550659a2b7361d', configs: 'fbab6b25a44ca3ac47aa0c61e393367445b393e724771d9620c485e12472955d' },
     mobility: { campaign: '3b97e43a69b38478e17635c2262ecc03b76f2ef29a100af2c5bb067d7c5ca7a9', configs: '696a2bce58e20becde1e0938382787101eaa3ec6405f2803e1f6a29a34d278f0' },
     'level1-followup': { campaign: '3a3be8a24e3049fc890a6122e9e68d9a99c24c9df6c7b3d4abba55a92e1a926b', configs: 'ddf1afc0aef47bada45ccc4c0350e51398642fb0656ba7743d78da6707e1b12b' },
     'level2-followup': { campaign: '3abd7053e6dd0810011d7da8934d86a37d2e1dae7c70c85a5d314d87a9e866ac', configs: 'a7a82685ce8198aaf3a6e8d5790db54a5286ff16f0a9786d2e4eb8688df5fa9e' },
+    'level2-knights': { campaign: '8263ca89aae04e5154e481d1bc43c1c6edfdc597a66a0d0c924e5f2cbaaeee11', configs: '899924a350a7baaf895eac9b8b857eeae581b17b4ff3897d54854d95d21fdca3' },
   };
   for (const [study, pin] of Object.entries(pins)) {
     const campaign = plan.buildCampaignPlan({ study, jobs: 4 });
@@ -318,4 +324,100 @@ test('knight-only reports use fresh NFA gains, actual case IDs and complete pair
   assert.ok(revised.gains.every(gain => gain.sharedOpenings === 7));
   assert.ok(revised.rows.find(row => row.key === 'nfa-control').flags.includes('partial screen'));
   assert.equal(revised.rows.find(row => row.key === 'long-range-control').openingCoverage.shared, 8);
+});
+
+test('queen and completion studies preserve exact requested bodies and separate equal purchase budgets', () => {
+  const l1 = plan.candidates('level1-queens'), l2 = plan.candidates('level2-completion');
+  assert.deepEqual(l1.map(row => [row.key, row.movement]), [
+    ['baby-amazon-control', 'QmN'], ['queen-camel-capture', 'QcC'], ['queen-forward-knight', 'QfN'],
+    ['queen-forward-half-knight', 'QfhN'],
+  ]);
+  assert.ok(l1.every(row => row.family === 'queen' && row.count === 1 && row.upgradePoints === 1));
+  assert.deepEqual(l2.map(row => [row.key, row.movement]), [
+    ['box-control', 'QmHmCmZmG'], ['queen-side-knight', 'QsN'], ['queen-tall-knight', 'QvN'],
+    ['nightrider-control', 'N0'], ['knight-nd', 'ND'], ['knight-nd-quiet-king', 'NDmK'], ['free-boar', 'BsR'],
+  ]);
+  assert.ok(l2.every(row => row.count === 1 && row.upgradePoints === 2));
+  assert.deepEqual(l2.map(row => row.family), ['queen', 'queen', 'queen', 'knight', 'knight', 'knight', 'bishop']);
+  assert.equal(l2.find(row => row.key === 'nightrider-control').id, 'knight.nightrider-level2@1');
+  assert.equal(l2.find(row => row.key === 'free-boar').controlKey, undefined);
+  assert.equal(l2.find(row => row.key === 'free-boar').id, 'bishop.orange@3');
+  assert.deepEqual(plan.references('level1-queens'), plan.references('level1'));
+  assert.deepEqual(plan.references('level2-completion'), plan.references('level2-followup'));
+  assert.equal(plan.expectedGames('level1-queens', 16), 384);
+  assert.equal(plan.expectedGames('level2-completion', 16), 672);
+  assert.ok(l1.some(row => row.movement === 'QfhN'));
+  assert.ok(!l2.some(row => ['NDmW', 'NDmF'].includes(row.movement)));
+});
+
+test('completion search policies keep queen siblings, knight siblings and Free Boar on explicit separate priors', () => {
+  const cases = {
+    'level1-queens': { queen: { mg: 2771, eg: 2833 } },
+    'level2-completion': { queen: { mg: 3738, eg: 4155 }, knight: { mg: 1203, eg: 1352 }, bishop: { mg: 1782, eg: 1756 } },
+  };
+  for (const [study, expected] of Object.entries(cases)) {
+    const audit = plan.getValueAudit(study), declaration = plan.getBatchDeclaration(study, 0, 40000);
+    for (const body of plan.candidates(study)) {
+      const row = audit.values.find(row => row.id === body.id);
+      assert.deepEqual(row.applied, expected[body.family], body.id);
+      assert.equal(row.anchorId, body.anchorId);
+      assert.deepEqual(declaration.config.evaluation.pieceValues[body.id], row.applied);
+    }
+    for (const reference of plan.references(study)) {
+      const row = audit.values.find(row => row.id === reference.id);
+      if (study === 'level2-completion') assert.deepEqual(row.applied, reference.engineValue);
+      assert.equal(row.anchorId, reference.id);
+    }
+    assert.deepEqual(declaration.config.engine, { nodes: 40000, threads: 1, hashMb: 32, maxPlies: 400 });
+    assert.ok(audit.policy.includes('all six engine tables for both colors'));
+    assert.ok(audit.policy.includes('not estimated material values'));
+  }
+  const low = plan.getValueAudit('level1-queens').policy;
+  for (const term of ['2771/2833', 'two tall forward', 'QfhN sanity check', 'all four forward', 'one-point']) assert.ok(low.includes(term), term);
+  const high = plan.getValueAudit('level2-completion').policy;
+  for (const term of ['3738/4155', '1203/1352', '1782/1756', 'four wide', 'four tall', 'two-point', 'not pooled', 'without adjacent captures', 'NDmW and NDmF are deferred']) assert.ok(high.includes(term), term);
+});
+
+test('completion studies start with cases 49–64 and freeze a unique cumulative sixty-four-case order', () => {
+  const expectedIds = [...plan.OPENINGS.slice(48), ...plan.OPENINGS.slice(0, 48)].map(row => row.id);
+  for (const study of ['level1-queens', 'level2-completion']) {
+    const campaign = plan.buildCampaignPlan({ study });
+    assert.deepEqual(campaign.book.openingIds, expectedIds);
+    assert.equal(campaign.book.firstHoldoutCases, 16);
+    assert.equal(new Set(campaign.book.openingIds).size, 64);
+    const declarations = plan.selectedStages(16, campaign).map(stage => plan.getBatchDeclaration(study, stage.batchIndex, stage.nodes));
+    assert.deepEqual(declarations.flatMap(row => row.config.openings.map(opening => opening.id)), plan.OPENINGS.slice(48).map(row => row.id));
+    assert.deepEqual(plan.getBatchDeclaration(study, 7, 40000).config.openings.map(row => row.id), expectedIds.slice(56));
+    const policy = declarations[0].metadata.openings.policy;
+    for (const term of ['49–64', '1–48', 'not globally fresh', 'Free Boar is unchanged', 'No earlier scored journals are pooled']) assert.ok(policy.includes(term), term);
+  }
+  assert.ok(plan.getBatchDeclaration('level2-completion', 0, 40000).metadata.question.includes('does not establish matchups against other experimental upgrades'));
+});
+
+test('completion reports retain fresh family controls, unmatched Free Boar and actual case labels', () => {
+  for (const study of ['level1-queens', 'level2-completion']) {
+    const first = context(study), second = context(study, 1), records = recordsFor(first);
+    const report = plan.reportStudy({ study, targetOpenings: 16, runId: 'completion-synthetic' }, [source(first, records), source(second)]);
+    const stage = report.reports[0];
+    assert.equal(stage.report.progress.pairedGames, study === 'level1-queens' ? 384 : 672);
+    assert.equal(stage.gains.length, study === 'level1-queens' ? 3 : 4);
+    assert.ok(stage.gains.every(row => row.sharedOpenings === 16 && row.difference === 0.25));
+    assert.deepEqual(report.openingIds, plan.OPENINGS.slice(48).map(row => row.id));
+    for (const gain of stage.gains) {
+      const body = plan.candidates(study).find(row => row.key === gain.key);
+      assert.equal(gain.control, body.controlKey);
+      assert.equal(gain.controlLabel, plan.candidates(study).find(row => row.key === gain.control).label);
+    }
+    const markdown = plan.renderReport(report);
+    for (const term of ['Fresh control', 'l3-panel-49', 'l3-panel-64', '25.00']) assert.ok(markdown.includes(term), term);
+    if (study === 'level2-completion') {
+      assert.ok(!stage.gains.some(row => row.key === 'free-boar'));
+      const damaged = structuredClone(records), record = damaged.find(row => row.comparisonId.startsWith('box-control-v-'));
+      record.status = 'truncated'; record.result = '*';
+      const revised = plan.reportStudy({ study, targetOpenings: 16 }, [source(first, damaged), source(second)]).reports[0];
+      assert.ok(revised.gains.filter(row => row.control === 'box-control').every(row => row.sharedOpenings === 15));
+      assert.ok(revised.gains.filter(row => row.control === 'nightrider-control').every(row => row.sharedOpenings === 16));
+      assert.equal(revised.rows.find(row => row.key === 'free-boar').openingCoverage.shared, 16);
+    }
+  }
 });

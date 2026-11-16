@@ -44,8 +44,8 @@ Keep the fixed Quiet-tall Knight pawn `ifmnDfmWfceFfsNfmN`, Rank pawn
 
 The jumping Bishop pawn `fmWifmnDfceFfceAbFbA` is an alternative at 42.71%.
 Its small deficit to the clear-range version does not prove lower intrinsic
-strength. Free Boar `BsR` remains an interesting counter choice at 59.38%, but
-its 82.81% Rank-pawn matchup needs attention. Box queen `QmHmCmZmG` is weak at
+strength. Keep Free Boar `BsR` as the second bishop candidate at 59.38%, while
+checking whether its 82.81% Rank-pawn matchup persists on new cases. Box queen `QmHmCmZmG` is weak at
 26.04%, leaving this tier's queen slot unresolved too.
 
 The latest knight screen makes N0 the better selection than NFA: the fresh NFA
@@ -54,6 +54,11 @@ NFA results as a separate context. Historical level-three N0 also used different
 search values and opponents; it is not pooled into the two-point result.
 
 ## Next roster step
+
+The [roster-completion studies](v18-roster-completion.md) test L1 queens QcC,
+QfN and QfhN, L2 queens QsN and QvN, and L2 knights ND and NDmK, with fresh
+family controls and an unchanged Free Boar row. NDmW/NDmF remain conditional
+future ideas. Grants need only one option per tier.
 
 Use these bodies for human playtesting and the planned mixed-budget study.
 Prioritize readable threats and counterplay, especially the King-step-pawn

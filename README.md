@@ -122,6 +122,13 @@ The [current lower-tier shortlist](docs/v18-lower-tier-shortlist.md) gathers
 the promising pawn, knight, bishop, rook and grant choices alongside the fixed
 references. Both queen slots remain unresolved.
 
+The [next roster trials](docs/v18-roster-completion.md) add L1 queens `QcC`,
+`QfN` and sanity comparison `QfhN`; L2 queens `QsN` / `QvN`; and L2 knights
+`ND` / `NDmK`. Free Boar remains a candidate and receives new reference cases.
+Sixteen cases schedule 384 L1 and 672 L2 games. Use `--study level1-queens`
+or `--study level2-completion` in separate new output folders. One grant per
+tier is enough; no second grant is scheduled.
+
 ## Version 17: balance experiments
 
 Version 17 is closed at **`v0.17.23`** on branch **`version_17`**, retaining its
