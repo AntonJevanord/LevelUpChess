@@ -136,7 +136,7 @@ function markdownTables(text) {
   }
   return tables;
 }
-function verifyUploadedReport(study, report, uploaded) {
+function verifyUploadedReport(study, report, uploaded, { cohortHeaderPrefix = 'Cases', gainsHaveControlLabels = false } = {}) {
   assert.ok(uploaded.includes(`16 fixed opening cases; ${report.scheduledGames} scheduled games.`), 'Uploaded headline count differs.');
   const budgets = uploaded.split(/^## (40000|80000) nodes\r?$/m), sections = new Map();
   for (let index = 1; index < budgets.length; index += 2) sections.set(Number(budgets[index]), markdownTables(budgets[index + 1]));
@@ -152,10 +152,11 @@ function verifyUploadedReport(study, report, uploaded) {
     assert.deepEqual(matrix.rows, stage.report.matrix.rows.map(row => { const summary = byKey.get(row.key); return [row.label, ...row.cells.map(cell => dashPercent(cell.score)), `${percent(summary.score)} (${summary.openingCoverage.shared}/${summary.openingCoverage.total})`]; }), 'Uploaded matchup matrix differs.');
     assert.deepEqual(table('Overall row').rows, stage.rows.map(row => [row.label, String(row.games), `${row.wins} / ${row.draws} / ${row.losses}`, percent(row.score), String(row.opponents.length), `${row.openingCoverage.shared}/${row.openingCoverage.total}`]), 'Uploaded W/D/L totals differ.');
     assert.deepEqual(table('A versus B').rows, stage.report.comparisons.map(row => [`${row.aLabel} / ${row.bLabel}`, String(row.pairedGames), `${row.wins} / ${row.draws} / ${row.losses}`, percent(row.score), `${row.completePairs}/${row.expectedPairs}`, String(row.openings), String(row.statusCounts.truncated), String(row.statusCounts.error)]), 'Uploaded comparison counts differ.');
-    const cohortTables = tables.filter(item => item.header[0] === 'Design' && item.header[1].startsWith('Cases'));
+    const cohortTables = tables.filter(item => item.header[0] === 'Design' && item.header[1].startsWith(cohortHeaderPrefix));
     assert.equal(cohortTables.length, 1, 'Missing fixed-cohort table.');
     assert.deepEqual(cohortTables[0].rows, stage.rows.map(row => [row.label, ...stage.cohorts.map(cohort => { const value = cohort.rows.find(item => item.key === row.key); return `${percent(value.score)} (${value.openingCoverage.shared}/8)`; })]), 'Uploaded fixed-cohort scores differ.');
-    if (study === 'mobility') assert.deepEqual(table('Trial').rows, stage.gains.map(row => [row.label, String(row.sharedOpenings), pp(row.difference), range(row.conditionalRange, '')]), 'Uploaded matched-control gains differ.');
+    if (study === 'mobility' || gainsHaveControlLabels) assert.deepEqual(table('Trial').rows, stage.gains.map(row => [row.label,
+      ...(gainsHaveControlLabels ? [row.controlLabel] : []), String(row.sharedOpenings), pp(row.difference), range(row.conditionalRange, '')]), 'Uploaded matched-control gains differ.');
     assert.ok(uploaded.includes(`Finalized games: ${stage.report.progress.finalizedGames}/${stage.report.scheduledGames}; scored complete pairs: ${stage.report.progress.completePairs}.`), 'Uploaded progress count differs.');
   }
   const priors = markdownTables(uploaded).filter(table => table.header[0] === 'Design' && table.header[1] === 'Movement');
@@ -164,8 +165,9 @@ function verifyUploadedReport(study, report, uploaded) {
   return true;
 }
 
-function analyzeStudy(study, inputs, descriptors, uploadedReport) {
-  assert.ok(STUDIES.includes(study), 'Choose level1, level2 or mobility.');
+function analyzeStudy(study, inputs, descriptors, uploadedReport, { allowedStudies = STUDIES, computeGains = pairedGains,
+  verifyReport = verifyUploadedReport, cohortOpeningIds = false } = {}) {
+  assert.ok(allowedStudies.includes(study), 'Choose a declared archived study.');
   const expected = descriptors.stages.filter(row => row.study === study);
   assert.equal(inputs.length, expected.length, 'Every expected node/batch journal is required.');
   const seen = new Set(), stages = inputs.map(input => {
@@ -193,13 +195,15 @@ function analyzeStudy(study, inputs, descriptors, uploadedReport) {
     const rows = summaries(report, records, declaration, `${study}:${nodes}`);
     const cohorts = selected.map(stage => {
       const cohort = stage.descriptor.declaration;
-      return { batchIndex: stage.batchIndex, rows: summaries(stage.report, stage.records, cohort, `${study}:${nodes}:${stage.batchIndex}`) };
+      return { batchIndex: stage.batchIndex,
+        ...(cohortOpeningIds ? { openingIds: cohort.config.openings.map(opening => opening.id) } : {}),
+        rows: summaries(stage.report, stage.records, cohort, `${study}:${nodes}:${stage.batchIndex}`) };
     });
-    return { nodes, report, rows, cohorts, gains: pairedGains(study, nodes, declaration, records) };
+    return { nodes, report, rows, cohorts, gains: computeGains(study, nodes, declaration, records) };
   });
   const report = { study, targetOpenings: 16, scheduledGames: stages.reduce((sum, stage) => sum + stage.report.scheduledGames, 0), reports,
     evaluationAudit: stages[0].descriptor.declaration.metadata.evaluationAudit };
-  if (uploadedReport !== undefined) verifyUploadedReport(study, report, uploadedReport);
+  if (uploadedReport !== undefined) verifyReport(study, report, uploadedReport);
   const latest = stages.flatMap(stage => latestRecords(stage.records)), attempts = stages.flatMap(stage => stage.records);
   const counts = { attempts: attempts.length, scheduledGames: report.scheduledGames, finalizedGames: latest.length,
     completedGames: latest.filter(row => row.status === 'completed').length, truncatedGames: latest.filter(row => row.status === 'truncated').length,

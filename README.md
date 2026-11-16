@@ -104,6 +104,13 @@ or `--study level2-followup`; original folders remain resumable through their
 owned snapshots. The weak Bishop pawn is a replacement pawn; the `F` Bishop
 grant remains a fixed reference.
 
+The [completed follow-up review](docs/v18-followup-review.md) shortlists `NmQ`,
+`BgB0` and the clear-range Bishop pawn for playtesting. `NFA` is the closest new
+L2 knight, while `NWH` overshoots at two points. Blink queen remains exploratory.
+The archived games and reports preserve every result; this review changes no
+playable profile, reference, price or engine setting and starts no new study.
+Verify the follow-up uploads with `npm.cmd run balance:review-v18-followups`.
+
 ## Version 17: balance experiments
 
 Version 17 is closed at **`v0.17.23`** on branch **`version_17`**, retaining its

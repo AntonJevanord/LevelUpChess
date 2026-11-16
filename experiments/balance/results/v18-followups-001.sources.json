@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-v18-followup-source-pins",
+  "studies": {
+    "level1-followup": {
+      "journals": [
+        {
+          "study": "level1-followup",
+          "nodes": 40000,
+          "batchIndex": 0,
+          "originalName": "games.jsonl",
+          "archiveFile": "v18-followups-001.level1-followup.b1.n40000.games.jsonl.gz",
+          "archivedSha256": "3855bff6b8250d4d30d1ea8dba171b2c6f9a45264ed4ae19c868ceb7c62a72a9",
+          "sha256": "b693fc45fe1143c1cfd0f099c62b8dc0275dceecba65a45214d07a4e0ab0ab9e",
+          "bytes": 1618007
+        },
+        {
+          "study": "level1-followup",
+          "nodes": 40000,
+          "batchIndex": 1,
+          "originalName": "games.jsonl",
+          "archiveFile": "v18-followups-001.level1-followup.b2.n40000.games.jsonl.gz",
+          "archivedSha256": "26b0aa2e5ace8d710f75aab27273ca102e2bc6aa7f82241faaeb87e513aa8762",
+          "sha256": "a8142c294a025c1994ad961c7854e8f9fba89cc06a8f2f615a2036f92a249cc1",
+          "bytes": 1646770
+        }
+      ],
+      "uploadedReport": {
+        "originalName": "screen-report.md",
+        "archiveFile": "v18-followups-001.level1-followup.uploaded-report.md.gz",
+        "archivedSha256": "74c6538205b83bf5f0f2cb8bcf55efb7e627656f52e2339ad76fda99efb98bd9",
+        "sha256": "c13639b0e6edfe9d3f1750d906134b2c667a47af11823015cd079ee3648f94bb",
+        "bytes": 9925
+      }
+    },
+    "level2-followup": {
+      "journals": [
+        {
+          "study": "level2-followup",
+          "nodes": 40000,
+          "batchIndex": 0,
+          "originalName": "games.jsonl",
+          "archiveFile": "v18-followups-001.level2-followup.b1.n40000.games.jsonl.gz",
+          "archivedSha256": "de78858aa6a66977cc09de9cfca5b69e8a282ae9ff5aafc74eb3f7df85cee95f",
+          "sha256": "0d0cae0157781f56c52949fa27fcd2cb82db6f9999fb85ec7b2813ab9f7d6ce8",
+          "bytes": 1820857
+        },
+        {
+          "study": "level2-followup",
+          "nodes": 40000,
+          "batchIndex": 1,
+          "originalName": "games.jsonl",
+          "archiveFile": "v18-followups-001.level2-followup.b2.n40000.games.jsonl.gz",
+          "archivedSha256": "b350c0a5610f10a341c00d40461d0ffec8b41be9a899e2c3e335bd12c7785a7d",
+          "sha256": "21a01e33e393b45c980ad8e41b898b282d354d1eb300e9839ee411201759b2fe",
+          "bytes": 1840052
+        }
+      ],
+      "uploadedReport": {
+        "originalName": "screen-report.md",
+        "archiveFile": "v18-followups-001.level2-followup.uploaded-report.md.gz",
+        "archivedSha256": "928bbcfc2b4100e1698b906ba9b91caaaa79872121edf7fe9f2fe2921a910ac7",
+        "sha256": "4bd486c1db306c85c67acbd5c7e87264cf16f7005dd011be08a1d8bbc33bb7f5",
+        "bytes": 11079
+      }
+    }
+  },
+  "declarations": {
+    "archiveFile": "v18-followups-001.declarations.json.gz",
+    "archivedSha256": "9bb19b82568b7a7f70fa1f593cbcba63a4fe7fcc113a454fd03ccc1e6d2eb819",
+    "sha256": "f70793a3b74dde6a984d7d33a37ab482ea526e93ee7869a9f38f6f2f528e76f5",
+    "bytes": 1233651
+  }
+}

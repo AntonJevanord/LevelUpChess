@@ -93,3 +93,6 @@ experiments/balance/results/engine-sharing-v18-001.source.json text eol=lf
 experiments/balance/results/v18-screens-001.*.json text eol=lf
 experiments/balance/results/v18-screens-001.*.md text eol=lf
 experiments/balance/results/v18-screens-001.*.gz -text
+experiments/balance/results/v18-followups-001.*.json text eol=lf
+experiments/balance/results/v18-followups-001.*.md text eol=lf
+experiments/balance/results/v18-followups-001.*.gz -text
