@@ -24,6 +24,7 @@ const cases = [
   { key: 'forward-component', variant: 'v18-wraith-forward-component', movement: 'gfR' },
   { key: 'rejected', variant: 'v18-wraith-rejected-omni', movement: 'QgQ0' },
 ];
+const trialCases = cases.slice(0, TRIALS.length);
 const config = cases.map(row => `[${row.variant}:chess]\ncustomPiece1 = a:${row.movement}\npieceToCharTable = -\n`).join('\n');
 const reflect = square => square[0] + (9 - Number(square[1]));
 const swap = piece => piece === piece.toUpperCase() ? piece.toLowerCase() : piece.toUpperCase();
@@ -53,6 +54,11 @@ function offset(dx, dy, distance) {
   const file = 3 + dx * distance, rank = 4 + dy * distance;
   return file >= 0 && file < 8 && rank >= 1 && rank <= 8 ? 'abcdefgh'[file] + rank : null;
 }
+function hopperCapture(row, dx, dy, after) {
+  if (dx === 0) return false;
+  if (dy === 0) return row.key !== 'wraith-short-through' || after === 1;
+  return row.key === 'wraith-full-diagonal' || after === 1;
+}
 
 test.before(async () => {
   directory = fs.mkdtempSync(path.join(os.tmpdir(), 'levelup-v18-wraith-'));
@@ -67,16 +73,16 @@ test.after(() => { if (directory) fs.rmSync(directory, { recursive: true, force:
 
 test('new immutable Wraith identities preserve the playable diagonal-X-ray queen', () => {
   assert.equal(getDesign('queen.purple@7').movement, 'QgB0');
-  assert.deepEqual(NEW_DEFINITIONS.map(row => row.movement), ['QgmQ0gcBgcsR0', 'QgmQ0gcsQ']);
+  assert.deepEqual(NEW_DEFINITIONS.map(row => row.movement), ['QgmQ0gcBgcsR0', 'QgmQ0gcsQ', 'QgsQ0gmvR0']);
   for (const row of NEW_DEFINITIONS) {
     assert.ok(Object.isFrozen(row)); assert.ok(Object.isFrozen(row.roles));
     assert.equal(row.level, 3); assert.equal(row.roles.pawn, false);
     assert.equal(wraithProbes(row, 'A', pieces => fen(pieces)).length, 5);
   }
   assert.deepEqual(wraithProbes({ id: 'queen.purple@7' }, 'A', pieces => fen(pieces)), []);
-  const allocated = revisionProbes({ definitionsByLetter: { h: NEW_DEFINITIONS[0], z: NEW_DEFINITIONS[1], q: getDesign('queen.purple@7') } });
-  assert.equal(allocated.length, 20);
-  for (const [index, letter] of ['h', 'z'].entries()) for (const black of [false, true]) {
+  const allocated = revisionProbes({ definitionsByLetter: { h: NEW_DEFINITIONS[0], z: NEW_DEFINITIONS[1], l: NEW_DEFINITIONS[2], q: getDesign('queen.purple@7') } });
+  assert.equal(allocated.length, 30);
+  for (const [index, letter] of ['h', 'z', 'l'].entries()) for (const black of [false, true]) {
     const group = allocated.filter(row => row.name.startsWith(NEW_DEFINITIONS[index].id + ': ' + (black ? 'Black' : 'White')));
     assert.equal(group.length, 5);
     for (const row of group) {
@@ -92,18 +98,18 @@ test('all ordinary queen moves and captures remain unchanged without a hurdle', 
   for (const black of [false, true]) {
     const pieces = { ...kings, d4: 'A' };
     const baseline = allMoves(ordinary, pieces, black, 'ordinary clear queen');
-    for (const row of cases.slice(0, 2)) assert.deepEqual(allMoves(row, pieces, black, 'clear queen'), baseline);
+    for (const row of trialCases) assert.deepEqual(allMoves(row, pieces, black, 'clear queen'), baseline);
     for (const [dx, dy] of directions) {
       const target = offset(dx, dy, 2), occupied = { ...pieces, [target]: 'p' };
       // The enemy piece is also a possible hurdle: new quiet destinations
       // beyond it are expected, but the ordinary first capture must survive.
-      for (const row of cases.slice(0, 2)) assert.equal(canLand(row, occupied, target, black, 'ordinary first capture'), true);
+      for (const row of trialCases) assert.equal(canLand(row, occupied, target, black, 'ordinary first capture'), true);
     }
   }
 });
 
-test('both Wraiths hop quietly across one friendly or enemy hurdle along every queen ray', () => {
-  for (const row of cases.slice(0, 2)) for (const black of [false, true]) for (const [dx, dy] of directions) {
+test('all Wraiths hop quietly across one friendly or enemy hurdle along every queen ray', () => {
+  for (const row of trialCases) for (const black of [false, true]) for (const [dx, dy] of directions) {
     for (const hurdleDistance of [1, 2]) for (const after of [1, 2, 3]) {
       const hurdle = offset(dx, dy, hurdleDistance), target = offset(dx, dy, hurdleDistance + after);
       if (!target) continue;
@@ -116,12 +122,12 @@ test('both Wraiths hop quietly across one friendly or enemy hurdle along every q
   }
 });
 
-test('hopper captures distinguish short diagonals, long or short sideways rays, and excluded vertical rays', () => {
-  for (const row of cases.slice(0, 2)) for (const black of [false, true]) for (const [dx, dy] of directions) {
+test('hopper captures distinguish short or long diagonals and sideways rays, while vertical captures stay excluded', () => {
+  for (const row of trialCases) for (const black of [false, true]) for (const [dx, dy] of directions) {
     for (const hurdleDistance of [1, 2]) for (const after of [1, 2, 3]) {
       const hurdle = offset(dx, dy, hurdleDistance), target = offset(dx, dy, hurdleDistance + after);
       if (!target) continue;
-      const expected = dy === 0 ? row.key === 'wraith-side-through' || after === 1 : dx !== 0 && after === 1;
+      const expected = hopperCapture(row, dx, dy, after);
       for (const occupant of ['N', 'p']) {
         const pieces = { ...kings, d4: 'A', [hurdle]: occupant, [target]: 'p' };
         assert.equal(canLand(row, pieces, target, black, 'hopper capture limits'), expected,
@@ -132,7 +138,7 @@ test('hopper captures distinguish short diagonals, long or short sideways rays, 
 });
 
 test('a second blocker stops both quiet and capture hops and friendly pieces cannot be captured', () => {
-  for (const row of cases.slice(0, 2)) for (const black of [false, true]) for (const [dx, dy] of directions) {
+  for (const row of trialCases) for (const black of [false, true]) for (const [dx, dy] of directions) {
     const first = offset(dx, dy, 1), second = offset(dx, dy, 2), target = offset(dx, dy, 3);
     if (!target) continue;
     for (const occupant of ['N', 'p']) for (const targetPiece of [null, 'p']) {
@@ -144,15 +150,16 @@ test('a second blocker stops both quiet and capture hops and friendly pieces can
 });
 
 test('capture geometry alone gives check; quiet hopper movement never becomes a checking attack', () => {
-  const targets = [ ['d6', 'd5', false, false], ['d2', 'd3', false, false],
-    ['f4', 'e4', true, true], ['g4', 'e4', true, false],
-    ['f6', 'e5', true, true], ['g7', 'e5', false, false] ];
-  for (const row of [...cases.slice(0, 2), cases.find(item => item.key === 'quiet')]) for (const black of [false, true]) {
-    for (const [target, hurdle, longCheck, shortCheck] of targets) {
+  for (const row of [...trialCases, cases.find(item => item.key === 'quiet')]) for (const black of [false, true]) {
+    for (const [dx, dy] of directions) for (const after of [1, 2, 3]) {
+      const hurdle = offset(dx, dy, 1), target = offset(dx, dy, 1 + after);
+      if (!target) continue;
+      const ownKing = ['a8', 'h8', 'a1', 'h1'].find(square => square !== target && square !== hurdle
+        && Math.max(Math.abs(square.charCodeAt(0) - target.charCodeAt(0)), Math.abs(Number(square[1]) - Number(target[1]))) > 1);
       // Knights do not attack the tested king squares; a pawn hurdle would
       // itself attack the immediately following diagonal square.
-      const board = boardFor(row, fen({ a8: 'K', [target]: 'k', d4: 'A', [hurdle]: 'N', h1: 'r' }, black, 'b'), 'checking modality');
-      try { assert.equal(board.isCheck(), row.key === 'quiet' ? false : row.key === 'wraith-side-through' ? longCheck : shortCheck,
+      const board = boardFor(row, fen({ [ownKing]: 'K', [target]: 'k', d4: 'A', [hurdle]: 'N' }, black, 'b'), 'checking modality');
+      try { assert.equal(board.isCheck(), row.key === 'quiet' ? false : hopperCapture(row, dx, dy, after),
         `${row.movement}: king ${target}, hurdle ${hurdle}, ${black}`); }
       finally { board.delete(); }
     }
@@ -194,11 +201,11 @@ function mateInTwo(board) {
   return null;
 }
 
-test('neither Wraith restores the rejected opening mate-in-two, with the old omni queen as a positive control', () => {
+test('no Wraith trial restores the rejected opening mate-in-two, with the old omni queen as a positive control', () => {
   const start = { a1: 'R', b1: 'N', c1: 'B', d1: 'A', e1: 'K', f1: 'B', g1: 'N', h1: 'R',
     a8: 'r', b8: 'n', c8: 'b', d8: 'q', e8: 'k', f8: 'b', g8: 'n', h8: 'r' };
   for (const file of 'abcdefgh') { start[file + '2'] = 'P'; start[file + '7'] = 'p'; }
-  for (const row of [...cases.slice(0, 2), cases.find(item => item.key === 'rejected')]) for (const black of [false, true]) {
+  for (const row of [...trialCases, cases.find(item => item.key === 'rejected')]) for (const black of [false, true]) {
     const board = boardFor(row, fen(start, black, 'w', 'KQkq'), 'opening-mate gate');
     try {
       assert.equal(mateInTwo(board) !== null, row.key === 'rejected', row.movement);
@@ -211,7 +218,7 @@ test('neither Wraith restores the rejected opening mate-in-two, with the old omn
       fixtures.get(row.variant).set(board.fen(), 'forced g6 reply');
       assert.ok(board.push(s('h5') + s('e5')));
       fixtures.get(row.variant).set(board.fen(), 'Qe5 opening-mate gate');
-      assert.equal(board.isCheck(), row.key === 'rejected', 'Neither candidate attacks vertically through e7.');
+      assert.equal(board.isCheck(), row.key === 'rejected', 'No candidate attacks vertically through e7.');
       assert.equal(board.numberLegalMoves() === 0, row.key === 'rejected');
     }
     finally { board.delete(); }

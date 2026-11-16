@@ -53,7 +53,7 @@ test('new definitions remain isolated and every historical playable profile and 
 });
 
 test('all targets freeze distinct paired stages and extending does not repeat the first eight cases', () => {
-  const totals = { level1: [384, 3072], level2: [384, 3072], mobility: [896, 7168] };
+  const totals = { level1: [432, 3456], level2: [384, 3072], mobility: [1024, 8192] };
   for (const study of plan.STUDIES) {
     const campaign = plan.buildCampaignPlan({ study, jobs: 4 });
     assert.equal(plan.expectedGames(study, 8), totals[study][0]);
@@ -81,7 +81,8 @@ test('all targets freeze distinct paired stages and extending does not repeat th
 test('same-tier opponents and purchase budgets preserve queen singles and native minor pairs', () => {
   for (const study of ['level1', 'level2']) {
     const rows = plan.candidates(study), comparisons = plan.matches(study);
-    assert.equal(rows.length, 8); assert.equal(comparisons.length, 24);
+    assert.equal(rows.length, study === 'level1' ? 9 : 8);
+    assert.equal(comparisons.length, study === 'level1' ? 27 : 24);
     assert.equal(plan.references(study).length, 3);
     for (const row of rows) {
       const count = study === 'level1' && row.family !== 'queen' ? 2 : 1;
@@ -97,11 +98,19 @@ test('same-tier opponents and purchase budgets preserve queen singles and native
   assert.equal(plan.references('level2')[0].id, 'pawn.knight-tall-quiet@1');
   assert.ok(!plan.references('level2').some(row => row.id === 'pawn.orange@3'));
   const mobile = plan.matches('mobility');
-  assert.equal(mobile.length, 28);
+  assert.equal(mobile.length, 32);
   assert.ok(mobile.every(cell => ['vanguard', 'unicorn', 'cruisader', 'amazon'].includes(cell.bKey)));
 });
 
 test('priors preserve frozen references and explicitly control quiet movement inflation', () => {
+  const l1 = plan.getBatchDeclaration('level1', 0, 40000).config.evaluation.pieceValues;
+  const revised = plan.candidates('level1');
+  assert.deepEqual(revised.map(row => row.movement).sort(), ['NmR', 'NW', 'NvWvD', 'BgB', 'BsW', 'RmBgmR0', 'RmBgmQ0', 'RceF', 'QmN'].sort());
+  for (const [movement, value] of [
+    ['NmR', { mg: 972, eg: 1093 }], ['NW', { mg: 984, eg: 1105 }],
+    ['BgB', { mg: 1480, eg: 1302 }], ['RmBgmR0', { mg: 1716, eg: 1636 }],
+    ['RmBgmQ0', { mg: 1716, eg: 1636 }], ['QmN', { mg: 2771, eg: 2833 }],
+  ]) assert.deepEqual(l1[revised.find(row => row.movement === movement).id], value);
   const lower = plan.getBatchDeclaration('level2', 0, 40000).config.evaluation.pieceValues;
   assert.deepEqual(lower['pawn.knight-tall-quiet@1'], { mg: 536, eg: 592 });
   assert.deepEqual(lower['rook.orange@2'], { mg: 1904, eg: 1959 });
@@ -118,16 +127,16 @@ test('priors preserve frozen references and explicitly control quiet movement in
 test('cumulative reports include percentages, physical colors, budgets, shared cases and fixed batches', () => {
   const a = context('level1'), b = context('level1', 1);
   const report = plan.reportStudy({ study: 'level1', targetOpenings: 16, runId: 'synthetic' }, [source(a), source(b)]);
-  assert.equal(report.scheduledGames, 768);
+  assert.equal(report.scheduledGames, 864);
   const stage = report.reports[0];
-  assert.equal(stage.report.progress.pairedGames, 768);
+  assert.equal(stage.report.progress.pairedGames, 864);
   assert.ok(stage.rows.every(row => row.score === 0.5 && row.openingCoverage.shared === 16));
   assert.deepEqual(report.sources.map(row => row.runId), [a.manifest.runId, b.manifest.runId]);
   assert.equal(report.sources[0].profileHash, a.profile.hash);
   assert.deepEqual(stage.rows[0].physicalColors.map(color => color.score), [1, 0]);
   assert.equal(stage.cohorts.length, 2); assert.equal(stage.cohorts[0].rows[0].openingCoverage.shared, 8);
-  assert.equal(stage.rows.find(row => row.key === 'advancing').upgradePoints, 1);
-  assert.equal(stage.rows.find(row => row.key === 'positional').upgradePoints, 2);
+  assert.equal(stage.rows.find(row => plan.candidates('level1').find(body => body.key === row.key).family === 'queen').upgradePoints, 1);
+  assert.equal(stage.rows.find(row => plan.candidates('level1').find(body => body.key === row.key).movement === 'NmR').upgradePoints, 2);
   assert.equal(stage.rows[0].conditionalRange.available, true);
   const markdown = plan.renderReport(report);
   for (const term of ['50.00%', 'White', 'Black', 'Cases 1–8', 'Cases 9–16', 'Frozen search priors']) assert.ok(markdown.includes(term), term);
@@ -138,7 +147,7 @@ test('new quiet/body gains use common complete opening blocks with fresh family 
   const records = recordsFor(input);
   const report = plan.reportStudy({ study: 'mobility', targetOpenings: 8, runId: 'synthetic' }, [source(input, records)]);
   const stage = report.reports[0];
-  assert.equal(stage.gains.length, 5);
+  assert.equal(stage.gains.length, 6);
   assert.ok(stage.gains.every(gain => gain.sharedOpenings === 8 && gain.difference === 0.25));
   assert.equal(report.reports[1].rows[0].score, null);
   assert.ok(report.reports[1].rows[0].flags.includes('partial screen'));

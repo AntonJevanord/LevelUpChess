@@ -14,11 +14,16 @@ const TRIALS = [
     movement: 'QgmQ0gcsQ', placement: 'replace',
     baseId: 'queen.purple@7', valueBaseId: 'queen.purple@7',
     valuePolicy: 'preserve-applied-baseline' },
+  { key: 'wraith-full-diagonal', label: 'Wraith: long diagonal and sideways captures',
+    id: 'queen.wraith-full-diagonal@1', family: 'queen', level: 3,
+    movement: 'QgsQ0gmvR0', placement: 'replace',
+    baseId: 'queen.purple@7', valueBaseId: 'queen.purple@7',
+    valuePolicy: 'preserve-applied-baseline' },
 ];
 
 const NEW_DEFINITIONS = TRIALS.map(({ id, family, level, movement, placement }, index) => ({
   id, family, level, revision: 1, movement, placement,
-  legacyType: index ? 'c' : 'a', legacySlot: index + 1,
+  legacyType: ['a', 'c', 'd'][index], legacySlot: index + 1,
   roles: { pawn: false, castlingRook: false, enPassant: false },
   inheritLegacyProbes: false,
 }));
@@ -32,9 +37,13 @@ function wraithProbes(definition, type, position) {
     { name: 'quiet hops cross one hurdle in every queen direction',
       fen: position({ ...kings, d4: type, e4: 'P', c4: 'P', d5: 'P', d3: 'P',
         e5: 'P', c5: 'P', e3: 'P', c3: 'P' }) },
-    { name: 'diagonal hopper captures land immediately beyond the first hurdle',
-      fen: position({ ...kings, d4: type, e5: 'P', f6: 'p', g7: 'p', c5: 'P', b6: 'p',
-        e3: 'P', f2: 'p', c3: 'P', b2: 'p' }) },
+    definition.id === 'queen.wraith-full-diagonal@1'
+      ? { name: 'diagonal hopper captures can travel beyond the first landing square',
+        fen: position({ ...kings, d4: type, e5: 'P', g7: 'p', h8: 'p', c5: 'P', a7: 'p',
+          e3: 'P', g1: 'p', c3: 'P', a1: 'p' }) }
+      : { name: 'diagonal hopper captures land immediately beyond the first hurdle',
+        fen: position({ ...kings, d4: type, e5: 'P', f6: 'p', g7: 'p', c5: 'P', b6: 'p',
+          e3: 'P', f2: 'p', c3: 'P', b2: 'p' }) },
     { name: 'sideways hopper capture range and vertical capture exclusion',
       fen: position({ ...kings, d4: type, e4: 'P', g4: 'p', h4: 'p', c4: 'P', a4: 'p',
         d5: 'P', d7: 'p', d3: 'P', d1: 'p' }) },

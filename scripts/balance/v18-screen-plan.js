@@ -19,6 +19,7 @@ const { createV17Report, renderV17Report } = require('./v17-report');
 const { conditionalRange } = require('./level3-panel-report');
 const nightrider = require('../../src/balance-designs-v18-nightrider');
 const wraith = require('../../src/balance-designs-v18-wraith');
+const level1 = require('../../src/balance-designs-v18-level1');
 
 const ROOT = path.resolve(__dirname, '../..');
 const FORMAT = 'levelup-v18-reference-screens';
@@ -29,14 +30,10 @@ const VALUES_FILE = 'experiments/designs/v18-screen-values.json';
 const VALUES_SHA256 = '1b243939936ea57d74f4f026ef055502fd2430faea284879e8fa3ca08762cbe0';
 const HOMES = { pawn: ['c2', 'e2'], knight: ['b1', 'g1'], bishop: ['c1', 'f1'], rook: ['a1', 'h1'], queen: ['d1'] };
 const L1 = [
-  ['positional', 'Positional knight', 'knight.blue@2'],
-  ['climbing', 'Climbing knight', 'knight.blue@3'],
+  ...level1.TRIALS.map(({ key, label, id }) => [key, label, id]),
   ['climbing-expanded', 'Climbing knight: expanded', 'knight.climbing-expanded@1'],
-  ['hopping', 'Hopping bishop', 'bishop.blue@2'],
   ['wazzap', 'Wazzap bishop', 'bishop.blue@3'],
-  ['ghost', 'Ghost rook', 'rook.blue@2'],
   ['pawn-rook', 'Pawn rook', 'rook.blue@3'],
-  ['advancing', 'Advancing queen', 'queen.blue@2'],
 ];
 const L2 = [
   ['bishop-pawn', 'Bishop pawn', 'pawn.bishop-step-current@1'],
@@ -73,7 +70,7 @@ function candidates(study) {
     const design = getDesign(body.id), level = study === 'level1' ? 1 : study === 'level2' ? 2 : 3;
     if (!design || design.level !== level || body.movement && design.movement !== body.movement) throw new Error(`The screen requires its isolated research runtime or an unchanged body: ${body.id}.`);
     const count = study === 'level1' && design.family !== 'queen' ? 2 : 1;
-    return { ...body, label: count === 2 ? `Two ${body.label.toLowerCase()}s` : body.label,
+    return { ...body, label: count === 2 ? `2 × ${body.label}` : body.label,
       family: design.family, movement: design.movement, count, upgradePoints: level * count, army: army(body.id, count) };
   }));
 }
@@ -98,17 +95,19 @@ function getValueAudit(study) {
   const quietIds = new Set(nightrider.TRIALS.map(row => row.id)), wraithIds = new Set(wraith.TRIALS.map(row => row.id));
   const values = ids.map(id => {
     const anchorId = quietIds.has(id) ? 'knight.purple@4' : wraithIds.has(id) ? 'queen.purple@7'
-      : id === 'pawn.knight-tall-quiet@1' ? 'pawn.orange@3' : id;
+      : id === 'pawn.knight-tall-quiet@1' ? 'pawn.orange@3'
+        : level1.TRIALS.find(row => row.id === id)?.anchorId || id;
     const source = fresh.get(id) || old.get(anchorId);
     if (!source || id === anchorId && source.movement !== getDesign(id)?.movement) throw new Error(`No frozen search prior for ${id}.`);
+    const measured = fresh.get(id) || old.get(id);
     const reference = selected.roster.find(row => row.id === id);
     return { id, movement: getDesign(id).movement, anchorId: source.anchor || anchorId,
-      automatic: id === anchorId ? source.automatic : null,
+      automatic: measured?.automatic || null,
       applied: { ...(reference?.engineValue || source.applied) },
       source: fresh.has(id) ? VALUES_FILE : getBracketValueReceipt().file };
   });
   return freeze({ sources: [getBracketValueReceipt(), { file: VALUES_FILE, sha256: VALUES_SHA256 }], values,
-    policy: 'Retain earlier applied values and frozen reference priors. New L2 bodies use declared native raw values, except Blink shares RcN 1904/1959. All quiet Nightriders share N0 2326/2211; both new Wraiths share QgB0 3772/3470. Every pair is applied to all six engine tables for both colors. These are controlled search priors, not measured material values.' });
+    policy: 'Retain frozen references and earlier applied family anchors for revised L1 bodies. Both Ghost rook trials share 1716/1636. New L2 bodies use declared native raw values, except Blink shares RcN 1904/1959. All quiet Nightriders share N0 2326/2211; all new Wraiths share QgB0 3772/3470. Every pair is applied to all six engine tables for both colors. These are controlled search priors, not measured material values.' });
 }
 function getBatchDeclaration(study, batchIndex, nodes) {
   requireStudy(study);
@@ -127,7 +126,7 @@ function getBatchDeclaration(study, batchIndex, nodes) {
     rowBudgets: Object.fromEntries(rows.map(row => [row.key, row.upgradePoints])),
     ...(study === 'mobility' ? {} : { referenceValueProfile: 'official-standalone' }),
     evaluationAudit: audit,
-    question: study === 'level1' ? 'Screen the seven workshop designs and expanded Climbing knight against fixed L1 references at stronger search. Queen singles and native minor/rook pairs retain separate equal purchase budgets.'
+    question: study === 'level1' ? 'Screen the revised L1 designs, both Ghost rook alternatives, and three retained comparison designs against fixed L1 references. Queen singles and native minor/rook pairs retain separate equal purchase budgets.'
       : study === 'level2' ? 'Screen the current L2 workshop candidates against the revised Quiet-tall Knight pawn, Rank pawn and Bishop grant as equal-cost singles.'
         : 'Compare quiet adjacent Nightrider steps and bounded Wraith hopper captures with fresh original controls against the four frozen L3 references. Trials do not face one another.',
     openings: { file: OPENINGS_FILE, sha256: OPENINGS_SHA256,
@@ -164,7 +163,7 @@ function selectedStages(openings, plan) { expectedGames(plan.study, openings); r
 async function checkExperiment(declaration, options = {}) {
   const proof = await require('../version17-balance').checkExperiment(declaration, options);
   const registry = createDesignRegistry(declaration.config), profile = compileDesignProfile(registry, declaration.config.evaluation);
-  const probes = [...nightrider.revisionProbes(profile), ...wraith.revisionProbes(profile)];
+  const probes = [...level1.revisionProbes(profile), ...nightrider.revisionProbes(profile), ...wraith.revisionProbes(profile)];
   if (!probes.length) return proof;
   const { createMatchRules } = require('../../dist/balance-rules.cjs');
   const rules = await createMatchRules({ profile });
@@ -186,7 +185,7 @@ async function checkExperiment(declaration, options = {}) {
       } finally { board.dispose(); }
     }
     proof.screenMovementChecks = probes.length;
-    options.onProgress?.(`Validation: ${probes.length} explicit Nightrider/Wraith probe positions passed${engine ? ' native/WASM agreement' : ' browser rules'}.`);
+    options.onProgress?.(`Validation: ${probes.length} explicit L1/Nightrider/Wraith probe positions passed${engine ? ' native/WASM agreement' : ' browser rules'}.`);
     return proof;
   } finally { await engine?.close(); if (directory) fs.rmSync(directory, { recursive: true, force: true }); }
 }

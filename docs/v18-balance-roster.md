@@ -37,21 +37,24 @@ and [selected Knight-pawn confirmation](v17-followup-decisions.md).
 
 ## Level-one candidates
 
-The seven current family-workshop bodies are included, along with the promising
-expanded Climbing knight. This adds no new movement design or price. Historical
-research alternatives remain archived instead of automatically adding every
-reduced and expanded sibling to the campaign.
+The revised, unstarted screen has nine designs. Positional knight gains quiet
+rook movement in every direction; Wazzap knight gains orthogonal steps; Hopping
+bishop gains hopping captures. Two Ghost rooks gain quiet diagonal movement,
+with either orthogonal or queen-line quiet hops. Baby Amazon uses the previously
+tested full quiet-knight addition. Wazzap bishop, Pawn rook and the promising
+expanded Climbing knight remain in the shortlist.
 
-| Candidate | Movement | Design ID | Previous 20k score |
-| --- | --- | --- | ---: |
-| Positional knight | `NsmR` | `knight.blue@2` | 24.48% |
-| Climbing knight | `NvW` | `knight.blue@3` | 38.54% |
-| Expanded Climbing knight | `NvWvD` | `knight.climbing-expanded@1` | 59.38% |
-| Hopping bishop | `BgmB` | `bishop.blue@2` | 27.08% |
-| Wazzap bishop | `BsW` | `bishop.blue@3` | 52.60% |
-| Ghost rook | `RgmR0` | `rook.blue@2` | 25.00% |
-| Pawn rook | `RceF` | `rook.blue@3` | 48.96% |
-| Advancing queen | `QmfhN` | `queen.blue@2` | 29.69% |
+| Candidate | Movement | Design ID | Previous score for this body at 20k | Fixed MG/EG |
+| --- | --- | --- | ---: | ---: |
+| Positional knight | `NmR` | `knight.positional-expanded@1` | 39.06% | 972/1093 |
+| Wazzap knight | `NW` | `knight.wazzap@1` | New body | 984/1105 |
+| Expanded Climbing knight | `NvWvD` | `knight.climbing-expanded@1` | 59.38% | 984/1105 |
+| Hopping bishop | `BgB` | `bishop.hopping-capture@1` | New body | 1480/1302 |
+| Wazzap bishop | `BsW` | `bishop.blue@3` | 52.60% | 1277/1252 |
+| Diagonal Ghost rook | `RmBgmR0` | `rook.ghost-diagonal@1` | New body | 1716/1636 |
+| Omnidirectional Ghost rook | `RmBgmQ0` | `rook.ghost-diagonal-omni@1` | New body | 1716/1636 |
+| Pawn rook | `RceF` | `rook.blue@3` | 48.96% | 1584/1636 |
+| Baby Amazon | `QmN` | `queen.advancing-expanded@1` | 35.94% | 2771/2833 |
 
 Each historical score used sixteen opening cases, both colors and three equally
 weighted benchmarks, for 96 games per row. Knights, bishops and rooks purchased
@@ -59,13 +62,16 @@ two identical upgrades against two identical reference purchases. A queen
 purchased one upgrade against one reference purchase. Those budgets remain
 separate in the new screen.
 
-Wazzap was the most consistent earlier candidate, with opponent scores between
-48.44% and 54.69%. Pawn rook's average conceals a counter: 62.50% against
+Wazzap bishop was the most consistent earlier candidate, with opponent scores
+between 48.44% and 54.69%. Pawn rook's average conceals a counter: 62.50% against
 Two-step pawns, 26.56% against King-step pawns and 57.81% against grants. All
-tested Hopping-bishop and Advancing-queen siblings were weak; the new run should
-show whether stronger search changes that conclusion before another redesign.
-The [acceptance review](v17-acceptance-review.md) preserves the full earlier
-three-version screen.
+tested quiet Hopping-bishop and Advancing-queen siblings were weak. The earlier
+`NsmR`, `NvW`, `BgmB`, `RgmR0` and `QmfhN` bodies scored 24.48%, 38.54%, 27.08%,
+25.00% and 29.69% respectively. Those results do not belong to their changed
+successors. New bodies inherit the old family's declared value anchor so added
+movement does not also change the automatic search valuation. Those anchors
+are not estimates of the new pieces' strength. The [acceptance review](v17-acceptance-review.md) preserves
+the full earlier three-version screen.
 
 ## Level-two candidates
 
@@ -108,25 +114,32 @@ original `N0` Nightrider and `QgB0` Wraith serve as fresh controls.
 | `N0mW` | One-square orthogonal moves without capturing |
 | `N0mK` | Both quiet step types |
 
-Both supported Wraith alternatives retain normal queen moves and captures,
-and add quiet queen-line hops across one occupied hurdle:
+All three supported Wraith alternatives retain normal queen moves and captures,
+and add unlimited quiet queen-line hops across one occupied hurdle:
 
 | Trial | Exact movement | Additional hopper captures |
 | --- | --- | --- |
 | Long sideways | `QgmQ0gcBgcsR0` | Immediately beyond a diagonal hurdle; any clear distance beyond a sideways hurdle |
 | Short through | `QgmQ0gcsQ` | Immediately beyond a diagonal or sideways hurdle |
+| Full diagonal | `QgsQ0gmvR0` | Any clear distance beyond a diagonal or sideways hurdle |
 
-Neither gains vertical hopper captures. A second occupied square stops a quiet
+None gains vertical hopper captures. A second occupied square stops a quiet
 hop; a friendly landing blocker cannot be captured or crossed. Native/browser
 fixtures cover both colors, blockers, landing distance, capture restrictions
 and check attacks. Exhaustive rules traversal finds no forced starting mate in
-two for either trial. Both still allow `1.Qh5+ g6`, but `2.Qe5` is no longer
+two for any trial. All still allow `1.Qh5+ g6`, but `2.Qe5` is no longer
 check. The full `QgQ0` remains excluded.
 
 The reported direction bug is reproducible: compound `QgbR` / `QgfR` grants
 vertical hops and attacks in both directions, even though isolated `gbR` /
 `gfR` movement respects its restriction. These symmetric diagonal/sideways
 trials avoid that restriction rather than depending on the broken behavior.
+
+The new full-diagonal body has immutable ID `queen.wraith-full-diagonal@1`.
+Its proof includes unlimited quiet hopping in all eight directions and
+unlimited hopping captures on four diagonal and two horizontal rays, with
+vertical hopping captures absent. Native and browser engines agree across the
+912 tested positions covering all three Wraith revisions.
 
 ## Run and extend
 
@@ -140,10 +153,11 @@ thread, 32 MiB hash and the declared fixed MG/EG values; search priors are not
 purchase costs or outcome-fitted material estimates. Paired colors, the same
 opening cases and per-opponent percentages remain visible.
 
-The first eight cases schedule **384 level-one games, 384 level-two games and
-896 mobility games**: 1,664 total. Sixteen cases double those counts; sixty-four
-schedule 13,312 games in total. These are three independent studies, not an
-automatic queue. There is no 2,000-game limit.
+The first eight cases schedule **432 level-one games, 384 level-two games and
+1,024 mobility games**: 1,840 total. Mobility contains eight bodies: the two
+controls, three quiet-step Nightriders and three Wraith revisions. Sixteen cases
+double those counts; sixty-four schedule 14,720 games in total. These are three
+independent studies, not an automatic queue. There is no 2,000-game limit.
 
 The casebook is reused from the fixed 64-case panel. Its prefixes can develop
 a purchased L1 knight or a pawn reference using ordinary moves. They are legal,
@@ -151,14 +165,17 @@ matched starting conditions; they are not new independent openings or a promise
 that purchased pieces remain on their home squares. Future eight-case batches
 are frozen before the first game, and every position is checked before play.
 
-Earlier L1 and reference MG/EG values remain fixed. The seven newly calibrated
+L1 bodies retain the historical family MG/EG anchors listed above, including
+new movement revisions; reference values remain fixed. The seven newly calibrated
 L2 minor/major bodies use their native automatic values, except Blink rook uses
 Knight-capture rook's **1904/1959** rather than its inflated automatic
 **3146/3944**. All Nightrider bodies share **2326/2211**; all Wraith bodies share
 **3772/3470**. These predeclared search priors apply to all six tables and both
 colors. The [new value receipt](../experiments/designs/v18-screen-values.json)
-preserves automatic readings as well as the override. Results remain conditional
-on those priors; a repeated anomaly merits valuation review before redesign.
+preserves automatic readings as well as the override; the new L1 revisions
+inherit their historical bracket anchors without rewriting that receipt.
+Results remain conditional on those priors; a repeated anomaly merits valuation
+review before redesign.
 
 Begin with eight opening cases. Each study can extend its total to sixteen,
 thirty-two or sixty-four using its existing folder; completed games remain
@@ -185,6 +202,8 @@ The same forms apply to the other two folders. Do not put a changed design,
 price or value policy into an existing run. Grants stay finite and nonroyal;
 deployment spends a turn, cannot give check and stays in the owner's half.
 Ordinary royal kings, castling and standard Q/R/B/N promotions remain.
+If an output folder was already created with an earlier declaration, choose a
+new folder for the revised screen; resume preserves the original declaration.
 
 The current report is `screen-report.md` (and JSON) in the selected output
 folder. Journals remain under each `batch-XX-nNNNNN` stage; keep the complete
