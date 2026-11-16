@@ -22,13 +22,14 @@ const wraith = require('../../src/balance-designs-v18-wraith');
 const level1 = require('../../src/balance-designs-v18-level1');
 const l1Followup = require('../../src/balance-designs-v18-l1-followup');
 const l2Followup = require('../../src/balance-designs-v18-l2-followup');
+const l2Knights = require('../../src/balance-designs-v18-knight-screen');
 
 const ROOT = path.resolve(__dirname, '../..');
 const FORMAT = 'levelup-v18-reference-screens';
-const STUDIES = Object.freeze(['level1', 'level2', 'mobility', 'level1-followup', 'level2-followup']);
+const STUDIES = Object.freeze(['level1', 'level2', 'mobility', 'level1-followup', 'level2-followup', 'level2-knights']);
 const OPENING_TARGETS = Object.freeze([8, 16, 32, 64]);
 const NODES = Object.freeze({ level1: Object.freeze([40000]), level2: Object.freeze([40000]), mobility: Object.freeze([40000, 80000]),
-  'level1-followup': Object.freeze([40000]), 'level2-followup': Object.freeze([40000]) });
+  'level1-followup': Object.freeze([40000]), 'level2-followup': Object.freeze([40000]), 'level2-knights': Object.freeze([40000]) });
 const VALUES_FILE = 'experiments/designs/v18-screen-values.json';
 const VALUES_SHA256 = '1b243939936ea57d74f4f026ef055502fd2430faea284879e8fa3ca08762cbe0';
 const HOMES = { pawn: ['c2', 'e2'], knight: ['b1', 'g1'], bishop: ['c1', 'f1'], rook: ['a1', 'h1'], queen: ['d1'] };
@@ -58,14 +59,19 @@ const L2_CONTROLS = [
   { key: 'long-range-control', label: 'Long-range knight control', id: 'knight.orange@4', movement: 'NA', anchorId: 'knight.orange@4' },
   { key: 'bishop-pawn-control', label: 'Bishop pawn: new-prior control', id: 'pawn.bishop-step-current@1', movement: 'fmWfeFifmnD', anchorId: 'pawn.knight-tall-quiet@1' },
 ];
+const L2_KNIGHT_CONTROLS = [
+  { key: 'long-range-control', label: 'Long-range knight control', id: 'knight.orange@4', movement: 'NA', anchorId: 'knight.orange@3' },
+  { key: 'nfa-control', label: 'NFA knight control', id: 'knight.level2-nfa@1', movement: 'NFA', anchorId: 'knight.orange@3' },
+];
 const FOLLOWUP_OPENINGS = Object.freeze([...OPENINGS.slice(16), ...OPENINGS.slice(0, 16)]);
-const isFollowup = study => study === 'level1-followup' || study === 'level2-followup';
+const KNIGHT_OPENINGS = Object.freeze([...OPENINGS.slice(32), ...OPENINGS.slice(0, 32)]);
+const isFollowup = study => study === 'level1-followup' || study === 'level2-followup' || study === 'level2-knights';
 const tier = study => study.startsWith('level1') ? 1 : study.startsWith('level2') ? 2 : 3;
-const openingCases = study => isFollowup(study) ? FOLLOWUP_OPENINGS : OPENINGS;
+const openingCases = study => study === 'level2-knights' ? KNIGHT_OPENINGS : isFollowup(study) ? FOLLOWUP_OPENINGS : OPENINGS;
 const sha = value => createHash('sha256').update(value).digest('hex');
 const average = values => values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
 function freeze(value) { if (value && typeof value === 'object' && !Object.isFrozen(value)) { Object.values(value).forEach(freeze); Object.freeze(value); } return value; }
-freeze(L1); freeze(L2); freeze(HOMES); freeze(L1_CONTROLS); freeze(L2_CONTROLS);
+freeze(L1); freeze(L2); freeze(HOMES); freeze(L1_CONTROLS); freeze(L2_CONTROLS); freeze(L2_KNIGHT_CONTROLS);
 function requireStudy(study) { if (!STUDIES.includes(study)) throw new Error(`Choose study ${STUDIES.join(', ')}.`); }
 function army(id, count = 1) {
   const design = getDesign(id);
@@ -79,7 +85,8 @@ function candidates(study) {
   const bodies = study === 'level1' ? L1.map(([key, label, id]) => ({ key, label, id }))
     : study === 'level2' ? L2.map(([key, label, id]) => ({ key, label, id }))
       : study === 'level1-followup' ? [...L1_CONTROLS, ...l1Followup.TRIALS]
-        : study === 'level2-followup' ? [...L2_CONTROLS, ...l2Followup.TRIALS] : [
+        : study === 'level2-followup' ? [...L2_CONTROLS, ...l2Followup.TRIALS]
+          : study === 'level2-knights' ? [...L2_KNIGHT_CONTROLS, ...l2Knights.TRIALS] : [
       { key: 'nightrider-control', label: 'Nightrider control', id: 'knight.purple@4', movement: 'N0' },
       ...nightrider.TRIALS,
       { key: 'wraith-control', label: 'Wraith control', id: 'queen.purple@7', movement: 'QgB0' },
@@ -152,7 +159,9 @@ function getFollowupValueAudit(study) {
   });
   return freeze({ sources: [getBracketValueReceipt(), { file: VALUES_FILE, sha256: VALUES_SHA256 },
     { file: 'experiments/designs/level2-references-v17-002.json', declarationSha256: selected.declarationSha256 }], values,
-    policy: study === 'level1-followup'
+    policy: study === 'level2-knights'
+      ? 'Fresh NA and NFA controls and NH, NDH and N0 level-two trials all share the established knight 1203/1352 MG/EG search prior. The new N0 treatment is a two-point replacement, while historical level-three N0 used 2326/2211. This changes both the purchase context and search prior, so it is not a pure price-effect comparison and old N0 scores are not pooled. The three frozen L2 references retain their own priors. Every pair is applied to all six engine tables for both colors. These are controlled search settings, not estimated material values.'
+      : study === 'level1-followup'
       ? 'Fresh controls and revisions share their earlier family anchor: Positional knight 972/1093, Hopping bishop 1480/1302 and Baby Amazon/Blink queen 2771/2833 MG/EG. Existing L1 reference priors remain fixed. These are search settings, not estimated material values. Earlier scored games are not pooled.'
       : 'All knight controls and revisions use the established 1203/1352 MG/EG pair. The Bishop-pawn control and both new board-pawn revisions instead share the selected Quiet-tall Knight-pawn prior 536/592. This deliberately replaces the old Bishop-pawn 214/245 prior only in this new follow-up; its old screen percentage is not pooled with the fresh new-prior control. The three L2 references, including the F reserve grant, retain their frozen priors. Every pair is applied to all six engine tables for both colors. No material values are fitted.' });
 }
@@ -173,14 +182,17 @@ function getBatchDeclaration(study, batchIndex, nodes) {
     rowBudgets: Object.fromEntries(rows.map(row => [row.key, row.upgradePoints])),
     ...(study === 'mobility' ? {} : { referenceValueProfile: 'official-standalone' }),
     evaluationAudit: audit,
-    question: study === 'level1-followup' ? 'Compare five stronger L1 revisions with three fresh matched body controls against the fixed L1 reference basket. Native minor pairs and queen singles retain separate equal purchase budgets.'
+    question: study === 'level2-knights' ? 'Compare NH, NDH and a distinct level-two N0 replacement with fresh NA and NFA controls against the three frozen L2 references as equal-cost two-point singles. Use fresh controls, not historical level-three N0 scores.'
+      : study === 'level1-followup' ? 'Compare five stronger L1 revisions with three fresh matched body controls against the fixed L1 reference basket. Native minor pairs and queen singles retain separate equal purchase budgets.'
       : study === 'level2-followup' ? 'Compare four knight revisions and two stronger Bishop board pawns with fresh Dabada, Long-range and new-prior Bishop-pawn controls against the three frozen L2 references. Keep the F reserve grant unchanged.'
       : study === 'level1' ? 'Screen the revised L1 designs, both Ghost rook alternatives, and three retained comparison designs against fixed L1 references. Queen singles and native minor/rook pairs retain separate equal purchase budgets.'
       : study === 'level2' ? 'Screen the current L2 workshop candidates against the revised Quiet-tall Knight pawn, Rank pawn and Bishop grant as equal-cost singles.'
         : 'Compare quiet adjacent Nightrider steps and bounded Wraith hopper captures with fresh original controls against the four frozen L3 references. Trials do not face one another.',
     openings: { file: OPENINGS_FILE, sha256: OPENINGS_SHA256,
       ...(isFollowup(study) ? { openingIds: openingCases(study).map(opening => opening.id) } : {}),
-      policy: isFollowup(study)
+      policy: study === 'level2-knights'
+        ? 'Rotate the frozen casebook to cases 33–64, then 1–32. The first sixteen enabled cases (33–48) are held out for these new L2 treatments, not globally fresh openings. New controls and revisions share actual opening IDs; later extensions reuse established cases. No earlier scored journals are pooled.'
+        : isFollowup(study)
         ? 'Rotate the frozen casebook to cases 17–64, then 1–16. The first sixteen enabled cases are held out for these bodies; later extension reuses established cases. Do not describe all sixty-four as fresh. New controls and revisions share actual opening IDs; no earlier scored journals are pooled.'
         : 'Reuse the frozen 64-case book as matched eight-case batches. This is a new stronger-search/body screen, not 64 newly invented independent openings. Prior scored journals are not pooled.' },
   } });
@@ -217,7 +229,7 @@ async function checkExperiment(declaration, options = {}) {
   const proof = await require('../version17-balance').checkExperiment(declaration, options);
   const registry = createDesignRegistry(declaration.config), profile = compileDesignProfile(registry, declaration.config.evaluation);
   const probes = [...level1.revisionProbes(profile), ...nightrider.revisionProbes(profile), ...wraith.revisionProbes(profile),
-    ...l1Followup.revisionProbes(profile), ...l2Followup.revisionProbes(profile)];
+    ...l1Followup.revisionProbes(profile), ...l2Followup.revisionProbes(profile), ...l2Knights.revisionProbes(profile)];
   if (!probes.length) return proof;
   const { createMatchRules } = require('../../dist/balance-rules.cjs');
   const rules = await createMatchRules({ profile });
@@ -352,6 +364,6 @@ function renderReport(input) {
     ...input.evaluationAudit.values.map(value => `| ${value.id} | \`${value.movement}\` | ${value.anchorId} | ${value.applied.mg} / ${value.applied.eg} |`), '');
   return lines.join('\n');
 }
-module.exports = { ROOT, FORMAT, STUDIES, OPENING_TARGETS, NODES, OPENINGS, FOLLOWUP_OPENINGS, openingCases, L1_CONTROLS, L2_CONTROLS, VALUES_FILE, VALUES_SHA256, L1, L2,
+module.exports = { ROOT, FORMAT, STUDIES, OPENING_TARGETS, NODES, OPENINGS, FOLLOWUP_OPENINGS, KNIGHT_OPENINGS, openingCases, L1_CONTROLS, L2_CONTROLS, L2_KNIGHT_CONTROLS, VALUES_FILE, VALUES_SHA256, L1, L2,
   candidates, references, matches, getValueAudit, getBatchDeclaration, expectedGames, buildCampaignPlan, selectedStages,
   checkExperiment, reportStudy, renderReport };

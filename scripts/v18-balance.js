@@ -14,7 +14,7 @@ const { renameWithRetrySync, unlinkWithRetrySync } = require('./balance/files');
 const ROOT = path.resolve(__dirname, '..');
 const OWNER = 'screen-runtime.json', MANIFEST = 'screen.json', STATE = 'screen-state.json', LOCK = '.v18-screen.lock';
 const OVERLAY = Object.freeze({ name: 'reference-screens-v18', entryFile: 'scripts/v18-balance.js', definitionFile: 'src/balance-designs-v18-screen.js' });
-const STUDIES = Object.freeze(['level1', 'level2', 'mobility', 'level1-followup', 'level2-followup']);
+const STUDIES = Object.freeze(['level1', 'level2', 'mobility', 'level1-followup', 'level2-followup', 'level2-knights']);
 const TARGETS = Object.freeze([8, 16, 32, 64]);
 const TEMP = /^\.v18-screen-[a-f0-9-]{36}\.tmp$/;
 const sha = value => createHash('sha256').update(value).digest('hex');
@@ -26,6 +26,7 @@ const HELP = `Version 18 reference screens, each in its own immutable runtime
   npm.cmd run balance:v18 -- --study mobility --out DIRECTORY [--openings 8] [--jobs 4]
   npm.cmd run balance:v18 -- --study level1-followup --out DIRECTORY [--openings 8] [--jobs 4]
   npm.cmd run balance:v18 -- --study level2-followup --out DIRECTORY [--openings 8] [--jobs 4]
+  npm.cmd run balance:v18 -- --study level2-knights --out DIRECTORY --openings 16 [--jobs 4]
   npm.cmd run balance:v18 -- --study NAME --resume DIRECTORY [--openings 16]
   npm.cmd run balance:v18 -- --study NAME --report DIRECTORY
   npm.cmd run balance:v18 -- --study NAME --check [--openings 8] [--rules-only]
@@ -36,7 +37,7 @@ and skipped; new batches append separate authoritative game journals. Reports
 update at stage boundaries and retain completed eight-case checkpoints under
 reports/openings-N. Offline reporting starts no engines or games.
 
-Level1/level2 and their follow-ups use 40k nodes; mobility keeps 40k/80k separate. Each cell retains
+Level1/level2, their follow-ups and level2-knights use 40k nodes; mobility keeps 40k/80k separate. Each cell retains
 both physical colors. Fixed engine priors are not material-value estimates.
 Run one study at a time. q/Ctrl+C stops now; g finishes active games; p finishes
 active color pairs. Any stop, failure or unfinished stage pauses the queue.
@@ -58,7 +59,7 @@ function parseArgs(args) {
     if (!value || value.startsWith('--')) throw new Error(`${flag} requires a value.`);
     options[key] = value;
   }
-  if (!STUDIES.includes(options.study)) throw new Error('Select --study level1, level2, mobility, level1-followup or level2-followup.');
+  if (!STUDIES.includes(options.study)) throw new Error('Select --study level1, level2, mobility, level1-followup, level2-followup or level2-knights.');
   const modes = ['check', 'out', 'resume', 'report'].filter(key => options[key]);
   if (modes.length !== 1) throw new Error('Choose exactly one of --check, --out, --resume or --report.');
   const mode = modes[0];

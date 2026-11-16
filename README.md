@@ -111,6 +111,12 @@ The archived games and reports preserve every result; this review changes no
 playable profile, reference, price or engine setting and starts no new study.
 Verify the follow-up uploads with `npm.cmd run balance:review-v18-followups`.
 
+The next [focused L2 knight screen](docs/v18-knight-screen.md) compares `NH`,
+`NDH` and a two-point `N0` with fresh `NA` / `NFA` controls against the fixed
+L2 references. Sixteen cases schedule 480 games at 40k nodes. Start a new folder
+with `--study level2-knights`; the old three-point Nightrider and prior studies
+remain unchanged.
+
 ## Version 17: balance experiments
 
 Version 17 is closed at **`v0.17.23`** on branch **`version_17`**, retaining its

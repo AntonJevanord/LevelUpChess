@@ -172,6 +172,8 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Archive and review the [two completed lower-tier follow-ups](docs/v18-followup-review.md): 1,632 completed games and 816 scored pairs, without errors, retries or truncations. Compare revisions with fresh controls; keep the old Bishop-pawn 22.92% result separate from its new-prior control.
 - [x] Shortlist `NmQ`, `BgB0` and the clear-range Bishop pawn for playtesting; keep the jumping pawn as an alternative and `NFA` as the nearest upper-edge L2 knight. Park `NmK`, quiet-range hopping bishop and L2 `NWH`; leave Blink queen exploratory without another automatic buff.
 - [ ] Human-playtest the shortlisted movement and counters before promoting a trial, changing a reference, repricing a body or scheduling another refinement. The small clear-versus-jumping pawn score gap is not proof of intrinsic superiority.
+- [x] Prepare the user-requested [focused L2 knight screen](docs/v18-knight-screen.md): `NH`, `NDH` and a separate two-point `N0`, with fresh `NA` / `NFA` controls, frozen L2 references, common 1203/1352 priors and held-out first cases. Preserve all earlier declarations and the original L3 Nightrider.
+- [ ] Review the 480-game sixteen-case knight screen before selecting a body or changing its price, movement or search prior; do not pool original L3 Nightrider outcomes into the new L2 context.
 - [ ] Declare a bounded mixed-bracket study using fixed level-one, revised level-two and original level-three references. Reopen parked designs only for a decision-relevant result or a well-founded gameplay idea.
 
 ## After reviewing these results
