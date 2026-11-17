@@ -137,6 +137,14 @@ errors or retries. Verify the archived uploads with
 `npm.cmd run balance:review-v18-completion`. Second distinct queen choices
 remain open; no new experiment or playable replacement starts automatically.
 
+The next [targeted alternatives](docs/v18-prepanel-alternatives.md) test the
+queen price swap, `NDmW` / `NDmF`, three shorter-sideways bishops, and seven
+L3 knight compounds, including `NDH`. Sixteen cases total 2,080 games across
+`prepanel-level1`, `prepanel-level2` and `prepanel-level3`; use separate new
+folders. The [version-19 plan](docs/version19-plan.md) reserves same-tier
+panels for 16-opening review, then cumulative 32/64 cases and finally explicit
+cross-level comparisons. Wraith remains the original weaker `QgB0` design.
+
 ## Version 17: balance experiments
 
 Version 17 is closed at **`v0.17.23`** on branch **`version_17`**, retaining its

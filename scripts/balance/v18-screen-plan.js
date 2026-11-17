@@ -25,14 +25,19 @@ const l2Followup = require('../../src/balance-designs-v18-l2-followup');
 const l2Knights = require('../../src/balance-designs-v18-knight-screen');
 const queens = require('../../src/balance-designs-v18-queen-screen');
 const dabbaba = require('../../src/balance-designs-v18-knight-dabbaba');
+const prepanelQueens = require('../../src/balance-designs-v18-prepanel-queens');
+const prepanelLevel2 = require('../../src/balance-designs-v18-prepanel-level2');
+const prepanelLevel3 = require('../../src/balance-designs-v18-prepanel-level3');
 
 const ROOT = path.resolve(__dirname, '../..');
 const FORMAT = 'levelup-v18-reference-screens';
-const STUDIES = Object.freeze(['level1', 'level2', 'mobility', 'level1-followup', 'level2-followup', 'level2-knights', 'level1-queens', 'level2-completion']);
+const STUDIES = Object.freeze(['level1', 'level2', 'mobility', 'level1-followup', 'level2-followup', 'level2-knights', 'level1-queens', 'level2-completion',
+  'prepanel-level1', 'prepanel-level2', 'prepanel-level3']);
 const OPENING_TARGETS = Object.freeze([8, 16, 32, 64]);
 const NODES = Object.freeze({ level1: Object.freeze([40000]), level2: Object.freeze([40000]), mobility: Object.freeze([40000, 80000]),
   'level1-followup': Object.freeze([40000]), 'level2-followup': Object.freeze([40000]), 'level2-knights': Object.freeze([40000]),
-  'level1-queens': Object.freeze([40000]), 'level2-completion': Object.freeze([40000]) });
+  'level1-queens': Object.freeze([40000]), 'level2-completion': Object.freeze([40000]),
+  'prepanel-level1': Object.freeze([40000]), 'prepanel-level2': Object.freeze([40000]), 'prepanel-level3': Object.freeze([40000]) });
 const VALUES_FILE = 'experiments/designs/v18-screen-values.json';
 const VALUES_SHA256 = '1b243939936ea57d74f4f026ef055502fd2430faea284879e8fa3ca08762cbe0';
 const HOMES = { pawn: ['c2', 'e2'], knight: ['b1', 'g1'], bishop: ['c1', 'f1'], rook: ['a1', 'h1'], queen: ['d1'] };
@@ -71,18 +76,33 @@ const L2_COMPLETION_CONTROLS = [
   { key: 'nightrider-control', label: 'Level-two Nightrider control', id: 'knight.nightrider-level2@1', movement: 'N0', anchorId: 'knight.orange@3' },
 ];
 const FREE_BOAR_COMPARISON = { key: 'free-boar', label: 'Free Boar bishop', id: 'bishop.orange@3', movement: 'BsR', anchorId: 'bishop.orange@3' };
+const PREPANEL_CONTROLS = {
+  'prepanel-level1': [
+    { key: 'forward-queen-control', label: 'Forward-tall queen control', id: 'queen.level1-forward-knight@1', movement: 'QfN', anchorId: 'queen.blue@2' },
+  ],
+  'prepanel-level2': [
+    { key: 'side-queen-control', label: 'Wide-knight queen control', id: 'queen.level2-side-knight@1', movement: 'QsN', anchorId: 'queen.orange@2' },
+    { key: 'ndmk-control', label: 'NDmK knight control', id: 'knight.level2-nd-quiet-king@1', movement: 'NDmK', anchorId: 'knight.orange@3' },
+    { key: 'free-boar-control', label: 'Free Boar bishop control', id: 'bishop.orange@3', movement: 'BsR', anchorId: 'bishop.orange@3' },
+  ],
+  'prepanel-level3': [
+    { key: 'unicorn-control', label: 'Unicorn knight control', id: 'knight.purple@3', movement: 'NC', anchorId: 'knight.purple@3' },
+  ],
+};
 const FOLLOWUP_OPENINGS = Object.freeze([...OPENINGS.slice(16), ...OPENINGS.slice(0, 16)]);
 const KNIGHT_OPENINGS = Object.freeze([...OPENINGS.slice(32), ...OPENINGS.slice(0, 32)]);
 const COMPLETION_OPENINGS = Object.freeze([...OPENINGS.slice(48), ...OPENINGS.slice(0, 48)]);
 const isCompletion = study => study === 'level1-queens' || study === 'level2-completion';
-const isFollowup = study => study === 'level1-followup' || study === 'level2-followup' || study === 'level2-knights' || isCompletion(study);
-const tier = study => study.startsWith('level1') ? 1 : study.startsWith('level2') ? 2 : 3;
-const openingCases = study => isCompletion(study) ? COMPLETION_OPENINGS : study === 'level2-knights' ? KNIGHT_OPENINGS : isFollowup(study) ? FOLLOWUP_OPENINGS : OPENINGS;
+const isPrepanel = study => study.startsWith('prepanel-level');
+const isFollowup = study => study === 'level1-followup' || study === 'level2-followup' || study === 'level2-knights' || isCompletion(study) || isPrepanel(study);
+const tier = study => study === 'prepanel-level1' || study.startsWith('level1') ? 1 : study === 'prepanel-level2' || study.startsWith('level2') ? 2 : 3;
+const openingCases = study => isPrepanel(study) ? OPENINGS : isCompletion(study) ? COMPLETION_OPENINGS : study === 'level2-knights' ? KNIGHT_OPENINGS : isFollowup(study) ? FOLLOWUP_OPENINGS : OPENINGS;
 const sha = value => createHash('sha256').update(value).digest('hex');
 const average = values => values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
 function freeze(value) { if (value && typeof value === 'object' && !Object.isFrozen(value)) { Object.values(value).forEach(freeze); Object.freeze(value); } return value; }
 freeze(L1); freeze(L2); freeze(HOMES); freeze(L1_CONTROLS); freeze(L2_CONTROLS); freeze(L2_KNIGHT_CONTROLS);
 freeze(L2_COMPLETION_CONTROLS); freeze(FREE_BOAR_COMPARISON);
+freeze(PREPANEL_CONTROLS);
 function requireStudy(study) { if (!STUDIES.includes(study)) throw new Error(`Choose study ${STUDIES.join(', ')}.`); }
 function army(id, count = 1) {
   const design = getDesign(id);
@@ -93,7 +113,12 @@ function army(id, count = 1) {
 }
 function candidates(study) {
   requireStudy(study);
-  const bodies = study === 'level1' ? L1.map(([key, label, id]) => ({ key, label, id }))
+  const bodies = study === 'prepanel-level1' ? [...PREPANEL_CONTROLS[study], ...prepanelQueens.LEVEL1_TRIALS]
+    : study === 'prepanel-level2' ? [PREPANEL_CONTROLS[study][0], ...prepanelQueens.LEVEL2_TRIALS,
+      PREPANEL_CONTROLS[study][1], ...prepanelLevel2.TRIALS.filter(row => row.family === 'knight'),
+      PREPANEL_CONTROLS[study][2], ...prepanelLevel2.TRIALS.filter(row => row.family === 'bishop')]
+      : study === 'prepanel-level3' ? [...PREPANEL_CONTROLS[study], ...prepanelLevel3.TRIALS]
+        : study === 'level1' ? L1.map(([key, label, id]) => ({ key, label, id }))
     : study === 'level2' ? L2.map(([key, label, id]) => ({ key, label, id }))
       : study === 'level1-followup' ? [...L1_CONTROLS, ...l1Followup.TRIALS]
         : study === 'level2-followup' ? [...L2_CONTROLS, ...l2Followup.TRIALS]
@@ -158,22 +183,31 @@ function getFollowupValueAudit(study) {
   const old = new Map(baseline.values.map(value => [value.id, value]));
   const fresh = new Map(JSON.parse(newerBytes).values.map(value => [value.id, value]));
   const selected = getLevel2ReferenceSelection();
+  const official = study === 'prepanel-level3' ? getOfficialReferences() : null;
   const values = ids.map(id => {
     const body = bodies.find(row => row.id === id), anchorId = body?.anchorId || id;
-    const reference = selected.roster.find(row => row.id === id);
-    const referenceAnchor = selected.roster.find(row => row.id === anchorId);
+    const reference = selected.roster.find(row => row.id === id) || official?.roster.find(row => row.id === id);
+    const referenceAnchor = selected.roster.find(row => row.id === anchorId) || official?.roster.find(row => row.id === anchorId);
     const anchor = fresh.get(anchorId) || old.get(anchorId);
     const applied = reference?.engineValue || referenceAnchor?.engineValue || anchor?.applied;
     if (!applied || !getDesign(id)) throw new Error(`No frozen follow-up search prior for ${id}.`);
     const measured = fresh.get(id) || old.get(id);
-    const source = reference || referenceAnchor ? 'experiments/designs/level2-references-v17-002.json'
+    const source = official && (reference || referenceAnchor) ? 'experiments/designs/official-references-v16.json'
+      : reference || referenceAnchor ? 'experiments/designs/level2-references-v17-002.json'
       : fresh.has(anchorId) ? VALUES_FILE : getBracketValueReceipt().file;
     return { id, movement: getDesign(id).movement, anchorId, automatic: measured?.automatic || null,
       applied: { ...applied }, source };
   });
   return freeze({ sources: [getBracketValueReceipt(), { file: VALUES_FILE, sha256: VALUES_SHA256 },
-    { file: 'experiments/designs/level2-references-v17-002.json', declarationSha256: selected.declarationSha256 }], values,
-    policy: study === 'level1-queens'
+    { file: 'experiments/designs/level2-references-v17-002.json', declarationSha256: selected.declarationSha256 },
+    ...(official ? [{ file: 'experiments/designs/official-references-v16.json', declarationSha256: official.declarationSha256 }] : [])], values,
+    policy: study === 'prepanel-level1'
+      ? 'The new one-point QvN treatment and fresh QfN control share the established 2771/2833 MG/EG L1 queen search prior. QvN keeps its earlier two-point movement but changes both purchase context and search prior; this is not a pure price-effect comparison. Each army buys one one-point upgrade against one fixed L1 reference. All references retain their frozen priors. Values apply to all six engine tables for both colors; these are controlled search settings, not estimated material values. No earlier scored journals are pooled.'
+      : study === 'prepanel-level2'
+      ? 'The new two-point QcC treatment and fresh QsN control share 3738/4155 MG/EG. NDmW / NDmF and fresh NDmK share 1203/1352. BsW2 / BsWsnN / BsW3 and fresh Free Boar share 1782/1756. QcC retains its earlier one-point movement but changes purchase context and search prior, not a pure price-effect comparison. Each army buys one two-point upgrade; the three L2 references retain their frozen priors. Values apply to all six engine tables for both colors; these are controlled search settings, not estimated material values. No earlier scored journals are pooled.'
+      : study === 'prepanel-level3'
+      ? 'The new three-point NWH / NH / NZ / NAZ / NAD / NADmK / NDH treatments and fresh frozen Unicorn NC control share 1663/1877 MG/EG. Every frozen L3 reference retains its own declared prior. NWH previously used the same family prior in historical 20k-node L3 tests; this is a fresh 40k context. Earlier NH, NAD and NDH two-point results used 1203/1352, so the new purchase/search context is not a pure price-effect comparison. Values apply to all six engine tables for both colors; these are controlled search settings, not estimated material values. No earlier scored journals are pooled.'
+      : study === 'level1-queens'
       ? 'Fresh Baby Amazon QmN control and QcC / QfN / QfhN level-one queen trials share the established 2771/2833 MG/EG family search prior. Each is a single one-point purchase against one fixed L1 reference purchase. QfN adds only the two tall forward knight jumps; the separate QfhN sanity check adds all four forward knight jumps. The three references retain their frozen priors. Every pair is applied to all six engine tables for both colors. These are controlled search settings, not estimated material values; no earlier scored journals are pooled.'
       : study === 'level2-completion'
       ? 'Fresh Box queen control and QsN / QvN trials share the established 3738/4155 MG/EG queen search prior. ND, NDmK and the fresh level-two N0 control share 1203/1352. NDmK adds adjacent quiet king steps without adjacent captures; NDmW and NDmF are deferred. The unchanged Free Boar comparison retains 1782/1756; all three frozen L2 references retain their own priors. Each body is a single two-point purchase. QsN adds four wide knight jumps; QvN adds four tall knight jumps. Every pair is applied to all six engine tables for both colors. These are controlled search settings, not estimated material values. Earlier queen, Free Boar and historical level-three N0 scores are not pooled; N0 remains in its distinct two-point context.'
@@ -200,7 +234,10 @@ function getBatchDeclaration(study, batchIndex, nodes) {
     rowBudgets: Object.fromEntries(rows.map(row => [row.key, row.upgradePoints])),
     ...(study === 'mobility' ? {} : { referenceValueProfile: 'official-standalone' }),
     evaluationAudit: audit,
-    question: study === 'level1-queens' ? 'Compare QcC and QfN as one-point queen purchases against the three frozen L1 references, with a fresh matched QmN control and a separate QfhN four-forward-jump sanity check. Keep exact QfN two-tall-forward movement distinct.'
+    question: study === 'prepanel-level1' ? 'Compare unchanged QvN movement at one point with a fresh QfN control against the three frozen L1 references before the version-19 panels.'
+      : study === 'prepanel-level2' ? 'Compare QcC at two points, NDmW / NDmF and the three bounded or blocked-side bishop alternatives with fresh QsN, NDmK and Free Boar controls against the three frozen L2 references. Keep other experimental matchups for the later panels.'
+      : study === 'prepanel-level3' ? 'Compare NWH, NH, NZ, NAZ, NAD, NADmK and NDH as three-point knight upgrades with fresh Unicorn NC control against all four frozen L3 references; keep earlier Nightrider and lower-tier results separate.'
+      : study === 'level1-queens' ? 'Compare QcC and QfN as one-point queen purchases against the three frozen L1 references, with a fresh matched QmN control and a separate QfhN four-forward-jump sanity check. Keep exact QfN two-tall-forward movement distinct.'
       : study === 'level2-completion' ? 'Compare QsN / QvN with a fresh Box queen control and ND / NDmK with a fresh two-point N0 control against the three frozen L2 references. NDmK adds quiet adjacent steps; defer NDmW and NDmF. Retain unchanged Free Boar on the same new cases to review its Rank-pawn counter; this screen does not establish matchups against other experimental upgrades.'
       : study === 'level2-knights' ? 'Compare NH, NDH and a distinct level-two N0 replacement with fresh NA and NFA controls against the three frozen L2 references as equal-cost two-point singles. Use fresh controls, not historical level-three N0 scores.'
       : study === 'level1-followup' ? 'Compare five stronger L1 revisions with three fresh matched body controls against the fixed L1 reference basket. Native minor pairs and queen singles retain separate equal purchase budgets.'
@@ -210,7 +247,9 @@ function getBatchDeclaration(study, batchIndex, nodes) {
         : 'Compare quiet adjacent Nightrider steps and bounded Wraith hopper captures with fresh original controls against the four frozen L3 references. Trials do not face one another.',
     openings: { file: OPENINGS_FILE, sha256: OPENINGS_SHA256,
       ...(isFollowup(study) ? { openingIds: openingCases(study).map(opening => opening.id) } : {}),
-      policy: isCompletion(study)
+      policy: isPrepanel(study)
+        ? 'Reuse the frozen casebook in canonical cases 1–64 order. These are reused cases, not globally fresh or held-out openings. New treatments and fresh controls share actual opening IDs. Later extensions add the next frozen batches; no earlier scored journals are pooled.'
+        : isCompletion(study)
         ? 'Rotate the frozen casebook to cases 49–64, then 1–48. The first sixteen enabled cases are held out for the new queens, ND / NDmK and fresh controls, not globally fresh openings. Free Boar is unchanged and receives fresh cases rather than a movement revision. All rows share actual opening IDs; later extensions reuse established cases. No earlier scored journals are pooled.'
         : study === 'level2-knights'
         ? 'Rotate the frozen casebook to cases 33–64, then 1–32. The first sixteen enabled cases (33–48) are held out for these new L2 treatments, not globally fresh openings. New controls and revisions share actual opening IDs; later extensions reuse established cases. No earlier scored journals are pooled.'
@@ -240,7 +279,7 @@ function buildCampaignPlan({ study, jobs = 4 } = {}) {
   return freeze({ schemaVersion: 1, format: FORMAT, study, jobs, games: expectedGames(study, 64),
     nodes: NODES[study], openingTargets: OPENING_TARGETS, batchSize: 8,
     book: { file: OPENINGS_FILE, sha256: OPENINGS_SHA256,
-      ...(isFollowup(study) ? { openingIds: openingCases(study).map(opening => opening.id), firstHoldoutCases: 16 } : {}) }, roster: candidates(study), references: references(study),
+      ...(isFollowup(study) ? { openingIds: openingCases(study).map(opening => opening.id), firstHoldoutCases: isPrepanel(study) ? 0 : 16 } : {}) }, roster: candidates(study), references: references(study),
     evaluationAudit: getValueAudit(study), stages });
 }
 function selectedStages(openings, plan) { expectedGames(plan.study, openings); return plan.stages.filter(stage => stage.batchIndex < openings / 8); }
@@ -252,7 +291,8 @@ async function checkExperiment(declaration, options = {}) {
   const registry = createDesignRegistry(declaration.config), profile = compileDesignProfile(registry, declaration.config.evaluation);
   const probes = [...level1.revisionProbes(profile), ...nightrider.revisionProbes(profile), ...wraith.revisionProbes(profile),
     ...l1Followup.revisionProbes(profile), ...l2Followup.revisionProbes(profile), ...l2Knights.revisionProbes(profile),
-    ...queens.revisionProbes(profile), ...dabbaba.revisionProbes(profile)];
+    ...queens.revisionProbes(profile), ...dabbaba.revisionProbes(profile),
+    ...prepanelQueens.revisionProbes(profile), ...prepanelLevel2.revisionProbes(profile), ...prepanelLevel3.revisionProbes(profile)];
   if (!probes.length) return proof;
   const { createMatchRules } = require('../../dist/balance-rules.cjs');
   const rules = await createMatchRules({ profile });
@@ -387,6 +427,6 @@ function renderReport(input) {
     ...input.evaluationAudit.values.map(value => `| ${value.id} | \`${value.movement}\` | ${value.anchorId} | ${value.applied.mg} / ${value.applied.eg} |`), '');
   return lines.join('\n');
 }
-module.exports = { ROOT, FORMAT, STUDIES, OPENING_TARGETS, NODES, OPENINGS, FOLLOWUP_OPENINGS, KNIGHT_OPENINGS, COMPLETION_OPENINGS, openingCases, L1_CONTROLS, L2_CONTROLS, L2_KNIGHT_CONTROLS, L2_COMPLETION_CONTROLS, FREE_BOAR_COMPARISON, VALUES_FILE, VALUES_SHA256, L1, L2,
+module.exports = { ROOT, FORMAT, STUDIES, OPENING_TARGETS, NODES, OPENINGS, FOLLOWUP_OPENINGS, KNIGHT_OPENINGS, COMPLETION_OPENINGS, openingCases, L1_CONTROLS, L2_CONTROLS, L2_KNIGHT_CONTROLS, L2_COMPLETION_CONTROLS, FREE_BOAR_COMPARISON, PREPANEL_CONTROLS, VALUES_FILE, VALUES_SHA256, L1, L2,
   candidates, references, matches, getValueAudit, getBatchDeclaration, expectedGames, buildCampaignPlan, selectedStages,
   checkExperiment, reportStudy, renderReport };

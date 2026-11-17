@@ -14,7 +14,7 @@ const { renameWithRetrySync, unlinkWithRetrySync } = require('./balance/files');
 const ROOT = path.resolve(__dirname, '..');
 const OWNER = 'screen-runtime.json', MANIFEST = 'screen.json', STATE = 'screen-state.json', LOCK = '.v18-screen.lock';
 const OVERLAY = Object.freeze({ name: 'reference-screens-v18', entryFile: 'scripts/v18-balance.js', definitionFile: 'src/balance-designs-v18-screen.js' });
-const STUDIES = Object.freeze(['level1', 'level2', 'mobility', 'level1-followup', 'level2-followup', 'level2-knights', 'level1-queens', 'level2-completion']);
+const STUDIES = Object.freeze(['level1', 'level2', 'mobility', 'level1-followup', 'level2-followup', 'level2-knights', 'level1-queens', 'level2-completion', 'prepanel-level1', 'prepanel-level2', 'prepanel-level3']);
 const TARGETS = Object.freeze([8, 16, 32, 64]);
 const TEMP = /^\.v18-screen-[a-f0-9-]{36}\.tmp$/;
 const sha = value => createHash('sha256').update(value).digest('hex');
@@ -29,6 +29,9 @@ const HELP = `Version 18 reference screens, each in its own immutable runtime
   npm.cmd run balance:v18 -- --study level2-knights --out DIRECTORY --openings 16 [--jobs 4]
   npm.cmd run balance:v18 -- --study level1-queens --out DIRECTORY --openings 16 [--jobs 4]
   npm.cmd run balance:v18 -- --study level2-completion --out DIRECTORY --openings 16 [--jobs 4]
+  npm.cmd run balance:v18 -- --study prepanel-level1 --out DIRECTORY --openings 16 [--jobs 4]
+  npm.cmd run balance:v18 -- --study prepanel-level2 --out DIRECTORY --openings 16 [--jobs 4]
+  npm.cmd run balance:v18 -- --study prepanel-level3 --out DIRECTORY --openings 16 [--jobs 4]
   npm.cmd run balance:v18 -- --study NAME --resume DIRECTORY [--openings 16]
   npm.cmd run balance:v18 -- --study NAME --report DIRECTORY
   npm.cmd run balance:v18 -- --study NAME --check [--openings 8] [--rules-only]

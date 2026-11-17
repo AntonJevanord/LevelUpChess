@@ -181,8 +181,19 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Compare Free Boar's new Rank-pawn cases with its earlier screen: 71.88% versus 82.81%, with favorable new scores against the other references too. Retain its movement as requested; keep the old and new study contexts separate.
 - [ ] Assess Free Boar alongside other upgrades in human games and mixed armies; its new 65.56% average suggests broader strength than a single Rank-pawn counter.
 - [ ] Resolve second distinct queen choices per tier. `QcC` is high at L1 and untested at L2; `QvN` is weak. `QfhN` contains all `QfN` moves and is a stronger alternative rather than evidence that two independent balanced queen choices are complete.
+- [x] Prepare the user-requested [pre-panel alternatives](docs/v18-prepanel-alternatives.md): L1 `QvN`, L2 `QcC`, `NDmW` / `NDmF`, `BsW2` / `BsWsnN` / `BsW3`, and L3 `NWH` / `NH` / `NZ` / `NAZ` / `NAD` / `NADmK` / `NDH`. Use fresh family comparisons, frozen priors and explicit new price contexts; retain all older study identities.
+- [ ] Review the 192-game L1, 864-game L2 and 1,024-game L3 alternatives before freezing the version-19 roster. Keep QgB0 Wraith's weaker role explicit; use already-tested alternatives as fallbacks rather than adding speculative designs automatically.
 - [ ] Integrate the selected L2 Nightrider, `NDmK`, L1 `QfN` and L2 `QsN` in a new playable roster revision, preserving historical profiles and frozen references; verify setup cost, description, colors and saved-profile identity together with the other shortlisted roster choices.
 - [ ] Declare a bounded mixed-bracket study using fixed level-one, revised level-two and original level-three references. Reopen parked designs only for a decision-relevant result or a well-founded gameplay idea.
+
+## Version 19: planned panel sequence
+
+- [x] Record the [panel sequence and budget rules](docs/version19-plan.md): separate tier panels, one purchase per army throughout L1/L2/L3, one grant option per tier, then explicit cross-level bridges and mixed armies.
+- [ ] Close version 18 after the alternatives review and create `version_19` with an explicit accepted roster; preserve historical profiles, declarations and exact journals.
+- [ ] Prepare three frozen same-tier round robins with canonical semantic IDs, search priors, starting homes and paired-color openings. Include the revised Cataphract; do not silently reuse original-RC results for its replacement.
+- [ ] Run each tier through sixteen openings and review direct matchups, colors, coverage, uncertainty and human counterplay before extending.
+- [ ] Extend unchanged declarations to 32 total openings, then optionally 64; retain every earlier checkpoint. Changed pieces, priors or placements receive new contexts, and reused cells require verified compatibility.
+- [ ] After the tier panels, declare a combined cross-level experiment with unequal-budget anchors and equal-budget mixed armies. Respect board capacity and the twenty-custom-type limit through per-group mappings; keep army Elo-like estimates separate from fitted material values.
 
 ## After reviewing these results
 

@@ -64,7 +64,7 @@ test('screen selectors and cumulative totals reject incompatible or ignored flag
   assert.deepEqual(command.parseArgs(['--study', 'level1-followup', '--out', 'x']), { study: 'level1-followup', out: 'x', jobs: 4, openings: 8 });
   assert.deepEqual(command.parseArgs(['--study', 'level2-followup', '--resume', 'x']), { study: 'level2-followup', resume: 'x' });
   assert.deepEqual(command.parseArgs(['--study', 'level2-knights', '--out', 'x', '--openings', '16']), { study: 'level2-knights', out: 'x', jobs: 4, openings: 16 });
-  for (const study of ['level1-queens', 'level2-completion']) {
+  for (const study of ['level1-queens', 'level2-completion', 'prepanel-level1', 'prepanel-level2', 'prepanel-level3']) {
     assert.deepEqual(command.parseArgs(['--study', study, '--out', 'x', '--openings', '16']), { study, out: 'x', jobs: 4, openings: 16 });
   }
   assert.deepEqual(command.parseArgs(['--study', 'level1', '--help']), { help: true });
@@ -78,7 +78,7 @@ test('screen selectors and cumulative totals reject incompatible or ignored flag
 });
 
 test('follow-up selectors own separate resumable studies and cannot reuse an original screen folder', async t => {
-  for (const study of ['level1-followup', 'level2-followup', 'level2-knights', 'level1-queens', 'level2-completion']) {
+  for (const study of ['level1-followup', 'level2-followup', 'level2-knights', 'level1-queens', 'level2-completion', 'prepanel-level1', 'prepanel-level2', 'prepanel-level3']) {
     const f = setup(t, study);
     await command.runStudy(f.args('--out', f.out), f.dependencies);
     assert.equal(f.calls.length, 1);
@@ -87,7 +87,8 @@ test('follow-up selectors own separate resumable studies and cannot reuse an ori
     const played = f.calls.length;
     await command.runStudy(f.args('--report', f.out), f.dependencies);
     assert.equal(f.calls.length, played);
-    await assert.rejects(command.runStudy(['--study', study.split('-')[0], '--resume', f.out], f.dependencies), /different study/);
+    const original = { 'prepanel-level1': 'level1', 'prepanel-level2': 'level2', 'prepanel-level3': 'mobility' }[study] || study.split('-')[0];
+    await assert.rejects(command.runStudy(['--study', original, '--resume', f.out], f.dependencies), /different study/);
   }
 });
 
