@@ -105,3 +105,6 @@ experiments/balance/results/v18-completion-001.*.gz -text
 experiments/balance/results/v18-queen32-001.*.json text eol=lf
 experiments/balance/results/v18-queen32-001.*.md text eol=lf
 experiments/balance/results/v18-queen32-001.*.gz -text
+experiments/balance/results/v18-prepanel32-001.*.json text eol=lf
+experiments/balance/results/v18-prepanel32-001.*.md text eol=lf
+experiments/balance/results/v18-prepanel32-001.*.gz -text

@@ -150,7 +150,15 @@ The [32-opening L1 queen review](docs/v18-queen32-review.md) supports keeping
 QfN at **50.78%**, alongside QvN at **53.76%**. The matched 31-case difference
 is only 3.49 percentage points, with a conditional range spanning zero. All
 384 games are archived, including one unscored truncation; verify them with
-`npm.cmd run balance:review-v18-queen32`. L2/L3 alternatives remain pending.
+`npm.cmd run balance:review-v18-queen32`.
+
+The [32-opening L2/L3 review](docs/v18-prepanel32-review.md) favors NAD at L3
+(51.76%, with all four matchups 50.00%–55.47%) and retains QcC and Free Boar
+as viable L2 candidates (both 55.21%). Free Boar's four opening batches span
+48.96%–59.38%; keep them all rather than selecting a favorable batch.
+All 3,776 games are archived; verify them with
+`npm.cmd run balance:review-v18-prepanel32`. Historical and playable profiles
+remain separate from these roster choices.
 
 The [opening diagnostic](docs/opening-diagnostics.md) can inspect completed
 runs or the pinned queen archive without playing new games. It reports prefix
