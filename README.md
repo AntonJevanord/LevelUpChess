@@ -152,6 +152,14 @@ is only 3.49 percentage points, with a conditional range spanning zero. All
 384 games are archived, including one unscored truncation; verify them with
 `npm.cmd run balance:review-v18-queen32`. L2/L3 alternatives remain pending.
 
+The [opening diagnostic](docs/opening-diagnostics.md) can inspect completed
+runs or the pinned queen archive without playing new games. It reports prefix
+captures and upgraded-piece survival, checks, royal-shield pins and legal
+capture/recapture candidates; `--evaluate` adds optional pre/post native searches.
+Use `npm.cmd run balance:opening-audit -- --archive v18-queen32-001 --out balance-results/queen-opening-audit`
+for the archived example. It flags concerns without selecting a separate book
+for each matchup or modifying recorded results.
+
 ## Version 17: balance experiments
 
 Version 17 is closed at **`v0.17.23`** on branch **`version_17`**, retaining its

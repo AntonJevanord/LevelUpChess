@@ -18,6 +18,12 @@ L1 paired-minor/rook screens and single-queen screens are different budgets;
 their percentages do not form one uniform panel ranking. Fix starting homes,
 grant counts, engine settings and the opening book before the first game.
 
+Run the [opening diagnostic](opening-diagnostics.md) on candidate prefixes and
+recorded games to inspect forced captures, surviving upgrades, pins, exposure
+and optional pre/post engine evaluations. Freeze one shared diverse book;
+avoid matchup-specific near-zero evaluation selection, which conditions away
+some of the strength being measured. More games do not remove that bias.
+
 Start at 40k nodes, one engine thread and four workers. Keep each physical-color
 pair and opening ID together. Add stronger-search checks only for a specific
 unresolved effect; node-budget arms remain separate datasets.
