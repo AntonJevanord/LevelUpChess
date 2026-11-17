@@ -1,9 +1,20 @@
 # Version 19: panels, then cross-level armies
 
-Version 19 will begin after reviewing the [targeted alternatives](v18-prepanel-alternatives.md).
-Version 18 retains the experiment definitions, raw journals and current
-playable profiles. Decide the roster before creating version-19 declarations;
-unresolved alternatives do not all become permanent roster slots.
+Pre-panel screening is complete. The final choices from the
+[targeted alternatives](v18-prepanel32-review.md) are:
+
+| Tier | Selected movement | Role |
+| --- | --- | --- |
+| L3 | `NAD` | Second knight alongside the fixed Unicorn `NC` |
+| L2 | `NDmW` | Second knight alongside Nightrider `N0`; replaces the earlier NDmK shortlist choice |
+| L2 | `QcC` | Second queen alongside `QsN` |
+| L2 | `BsR` | Retained Free Boar bishop alongside `BvN` |
+
+The remaining shortlisted bodies carry forward. No further pre-panel campaign
+is required; QfcCscC and BsW3 remain optional alternatives. Version 18 retains
+the experiment definitions, raw journals and current playable profiles. Next,
+integrate the accepted roster in a new profile, preserve historical identities,
+and freeze the concrete version-19 declarations and shared opening book.
 
 ## Same-tier panels
 

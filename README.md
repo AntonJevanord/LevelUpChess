@@ -160,6 +160,10 @@ All 3,776 games are archived; verify them with
 `npm.cmd run balance:review-v18-prepanel32`. Historical and playable profiles
 remain separate from these roster choices.
 
+Pre-panel screening is complete: retain **L3 NAD** and **L2 NDmW, QcC and
+Free Boar BsR**. Next is roster integration and the
+[version-19 tier panels](docs/version19-plan.md), starting at sixteen openings.
+
 The [opening diagnostic](docs/opening-diagnostics.md) can inspect completed
 runs or the pinned queen archive without playing new games. It reports prefix
 captures and upgraded-piece survival, checks, royal-shield pins and legal

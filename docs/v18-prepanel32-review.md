@@ -1,8 +1,9 @@
 # Version 18: thirty-two-opening roster review
 
-The latest L2/L3 screens support NAD as the preferred L3 knight candidate and
-keep QcC and Free Boar viable at L2. These are design choices for playtesting
-and the version-19 panel; no playable profile or frozen reference changes here.
+The final selections are **NAD at L3**, and **NDmW, QcC and Free Boar BsR at
+L2**. This concludes pre-panel screening. The next stage is roster integration
+and version-19 panel preparation; historical profiles and frozen references
+retain their existing identities.
 
 Both studies use 40,000 nodes and the same thirty-two fixed opening cases,
 against their fixed same-tier references. Draws count half a point. The
@@ -77,8 +78,8 @@ that the narrow opening book is representative. Reproduce it with:
 npm.cmd run balance:opening-audit -- --archive v18-prepanel32-001 --out balance-results/prepanel32-opening-audit
 ```
 
-Use these results to choose the version-19 panel roster and a shared, more
-diverse book. NAD is the preferred new L3 knight candidate; Free Boar, QcC,
-NDmK/NDmW and BsW3 offer bounded choices without another automatic refinement
-chain. The [lower-tier shortlist](v18-lower-tier-shortlist.md) preserves the
-remaining roster candidates.
+Carry the accepted choices into the [version-19 plan](version19-plan.md) and
+freeze a shared, more diverse book. NDmK, BsW3 and QfcCscC remain alternatives;
+they do not require another pre-panel campaign. The
+[lower-tier shortlist](v18-lower-tier-shortlist.md) preserves the remaining
+roster candidates and historical comparisons.

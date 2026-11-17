@@ -49,16 +49,16 @@ Keep the fixed Quiet-tall Knight pawn `ifmnDfmWfceFfsNfmN`, Rank pawn
 | Candidate | Movement | Screen score | Assessment |
 | --- | --- | ---: | --- |
 | Nightrider | `N0` | 54.69%; fresh 51.11% | Selected knight; new overall uses 15/16 shared cases |
-| Quiet-step Dabbaba knight | `NDmK` | 48.96% | Viable second knight; thirty-two cases |
-| Quiet-orthogonal Dabbaba knight | `NDmW` | 53.13% | Viable alternative; thirty-two cases; uncertain lead over NDmK |
+| Quiet-step Dabbaba knight | `NDmK` | 48.96% | Retained alternative; NDmW selected for the panel |
+| Quiet-orthogonal Dabbaba knight | `NDmW` | 53.13% | Selected second knight; thirty-two cases; uncertain lead over NDmK |
 | Bishop pawn: clear diagonal range | `fmWifmnDfceF2bF2` | 45.31% | Preferred revision; all matchups are 40.63%–48.44% |
 | Tall-knight bishop | `BvN` | 51.56% | Strong candidate with relatively even matchups |
 | Blink rook | `RmFmDmAmHmGmNmCmZ` | 51.04% | Good average; 39.06% against Rank pawn |
 | Knight-capture rook | `RcN` | 55.21% | Promising; slightly high against Bishop grant at 60.94% |
-| Free Boar bishop | `BsR` | 55.21% | Retained; thirty-two cases; matchups 52.34%–60.16% |
+| Free Boar bishop | `BsR` | 55.21% | Selected for the panel; thirty-two cases; matchups 52.34%–60.16% |
 | Three-square rank bishop | `BsW3` | 48.44% | Promising alternative; thirty-two cases; matchups 45.31%–52.34% |
 | Wide-knight queen | `QsN` | 39.32% | Fresh control on thirty-two cases; earlier study scored 47.40% |
-| Camel-capture queen | `QcC` | 55.21% | Viable second queen; thirty-two cases; 50.00% against two references |
+| Camel-capture queen | `QcC` | 55.21% | Selected second queen; thirty-two cases; 50.00% against two references |
 
 The jumping Bishop pawn `fmWifmnDfceFfceAbFbA` is an alternative at 42.71%.
 Its small deficit to the clear-range version does not prove lower intrinsic
@@ -87,8 +87,10 @@ search values and opponents; it is not pooled into the two-point result.
 The [completed roster review](v18-completion-review.md) selected QfN, QsN and
 NDmK for playtesting. The [requested alternatives](v18-prepanel-alternatives.md)
 are now reviewed in the [thirty-two-case results](v18-prepanel32-review.md).
-NAD is the preferred L3 knight candidate at 51.76%, with all reference matchups
-50.00%–55.47%; no playable profile or frozen reference changes automatically.
+The final pre-panel choices are L3 NAD and L2 NDmW, QcC and BsR. NAD scores
+51.76%, with all reference matchups 50.00%–55.47%. Screening is complete;
+integration into a new playable profile and the version-19 declarations follows.
+Historical profiles and frozen references retain their existing identities.
 QfN and QvN remain the L1 queen panel candidates. Grants need only one option
 per tier. Opening diagnostic flags do not retrospectively adjust outcome scores.
 
