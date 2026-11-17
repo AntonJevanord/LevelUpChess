@@ -1,5 +1,10 @@
 # Version 18
 
+Version 18 is closed at **`v0.18.14`** on **`version_18`**. Its interface,
+twenty playable libraries, completed screening data and retrospective opening
+diagnostic remain available. [Version 19](version19-plan.md) carries the
+accepted roster into new profiles and separate tier panels.
+
 Branch **`version_18`** starts from the version-17 closeout, **`v0.17.23`**.
 Version 17 retains its tested playable roster and all nineteen original
 profiles. The two selected replacements enter the new **Version 18 · Roster
@@ -55,22 +60,21 @@ under **Rules**. Local two-player games also work by opening `index.html`
 directly. Use version-17 libraries or branch `version_17` to revisit the old
 roster.
 
-## Next balance question
+## Screening closeout
 
-Start with a fixed mixed-army question: do equal purchase budgets remain
-roughly competitive when the selected level-one, level-two and level-three
-references appear in different combinations? Freeze the roster, placements,
-search priors and schedule before collecting games. Keep both colors and
-matched openings together, and report opponent and partner effects separately.
+The [accepted shortlist](v18-lower-tier-shortlist.md) and
+[final alternatives review](v18-prepanel32-review.md) conclude pre-panel
+screening. The final choices are L3 **NAD** and L2 **NDmW, QcC and BsR**.
+L1 retains QfN/QvN; the original references and Wraith's deliberately weaker
+exploration role remain. Trial outcomes retain their exact rules, search
+priors, placements and opening contexts.
 
-Use eight varied openings to find gross outliers, then a declared 32-opening
-confirmation when the decision needs it. Reserve 64 openings or higher search
-budgets for borderline or tactically sensitive questions. More openings reduce
-sampling uncertainty; more search checks engine limitations. Neither makes
-conditional scores intrinsic piece Elo or material prices.
+The [opening diagnostic](opening-diagnostics.md) replays recorded prefixes
+and inspects pins and capture candidates, with optional native evaluation.
+Flags do not adjust recorded win rates or select a separate book per matchup.
 
-This roster release starts no new balance games. Runner work—incremental
-aggregation, less hidden progress traffic and central pair dispatch—should be
-measured separately from piece changes. The completed
+Version 19 begins with separate same-tier panels at sixteen shared openings,
+then unchanged 32/64-opening extensions where useful, before cross-level and
+mixed armies. The completed
 [engine-sharing benchmark](engine-sharing-benchmark-v18.md) supports retaining
 separate White/Black engines as the current default.

@@ -71,7 +71,11 @@ The [all-reference material fit](experiments/balance/results/reference-material-
 
 Future candidates face the frozen references. The unfinished NC–Amazon game remains unscored.
 
-## Version 18: selected roster and mixed armies
+## Version 18: closed screening and interface release
+
+Version 18 is closed at **`v0.18.14`** on **`version_18`**. Its historical
+profiles and exact evidence remain available; the accepted choices move into
+the [version-19 tier panels](docs/version19-plan.md).
 
 Branch **`version_18`** begins after the **`v0.17.23`** closeout. Its new roster
 replaces Knight pawn with `ifmnDfmWfceFfsNfmN` at cost two and Cataphract with

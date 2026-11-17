@@ -193,7 +193,8 @@ provide a screen for gross outliers; they do not establish precise balance.
 ## Version 19: planned panel sequence
 
 - [x] Record the [panel sequence and budget rules](docs/version19-plan.md): separate tier panels, one purchase per army throughout L1/L2/L3, one grant option per tier, then explicit cross-level bridges and mixed armies.
-- [ ] Close version 18 after the alternatives review and create `version_19` with an explicit accepted roster; preserve historical profiles, declarations and exact journals.
+- [x] Close version 18 at `v0.18.14` after the alternatives review; retain its twenty playable libraries, interface, declarations and exact journals.
+- [ ] Create `version_19` with the accepted roster, preserving every historical profile and experimental identity.
 - [ ] Prepare three frozen same-tier round robins with canonical semantic IDs, search priors, starting homes and paired-color openings. Include the revised Cataphract; do not silently reuse original-RC results for its replacement.
 - [ ] Broaden and freeze a shared opening book using neutral, declared criteria. Review diagnostic flags across actual armies; do not select per-matchup near-zero evaluations or infer that more samples cure selection bias.
 - [ ] Run each tier through sixteen openings and review direct matchups, colors, coverage, uncertainty and human counterplay before extending.
