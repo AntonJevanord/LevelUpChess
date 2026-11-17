@@ -11,6 +11,7 @@ const { rulesBuildOptions } = require('../scripts/rules-build');
 const { UciEngine } = require('../scripts/balance/uci');
 const { placementFromMap } = require('../src/profile-fen');
 const { getDesign } = require('../src/design-catalog');
+const promoted = new Map(require('../src/designs-v19-selected').NEW_DEFINITIONS.map(definition => [definition.id, definition]));
 const { LEVEL1_TRIALS, LEVEL2_TRIALS, NEW_DEFINITIONS, revisionProbes } = require('../src/balance-designs-v18-queen-screen');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -65,7 +66,7 @@ test('five immutable tiered research identities leave historical queens outside 
   ]);
   assert.ok(Object.isFrozen(LEVEL1_TRIALS)); assert.ok(Object.isFrozen(LEVEL2_TRIALS));
   for (const definition of NEW_DEFINITIONS) {
-    assert.equal(getDesign(definition.id), undefined); assert.ok(Object.isFrozen(definition));
+    assert.deepEqual(getDesign(definition.id), promoted.get(definition.id)); assert.ok(Object.isFrozen(definition));
     assert.ok(Object.isFrozen(definition.roles)); assert.equal(definition.placement, 'replace');
     assert.deepEqual(definition.roles, { pawn: false, castlingRook: false, enPassant: false });
   }

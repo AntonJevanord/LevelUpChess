@@ -69,7 +69,7 @@ test('candidate IDs, slots, duplicates and type capacity are checked before crea
   ]) {
     const roster = simple(); edit(roster); assert.throws(() => buildCampaign(roster));
   }
-  const oversized = { referenceId: 'queen.purple@1', candidates: Object.values(DESIGNS).filter(design => design.family !== 'king').map(design => ({ id: design.id })) };
+  const oversized = { referenceId: 'queen.purple@1', candidates: Object.values(DESIGNS).filter(design => design.family !== 'king').map((design, index) => ({ id: design.id, key: `candidate-${index}` })) };
   assert.throws(() => buildCampaign(oversized, { allowUnequalCosts: true }), /custom letters/);
 });
 

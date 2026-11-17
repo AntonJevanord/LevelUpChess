@@ -11,6 +11,7 @@ const { rulesBuildOptions } = require('../scripts/rules-build');
 const { UciEngine } = require('../scripts/balance/uci');
 const { placementFromMap } = require('../src/profile-fen');
 const { getDesign } = require('../src/design-catalog');
+const promoted = new Map(require('../src/designs-v19-selected').NEW_DEFINITIONS.map(definition => [definition.id, definition]));
 const current = require('../src/balance-designs-v18-prepanel-queens');
 const earlier = require('../src/balance-designs-v18-queen-screen');
 
@@ -66,7 +67,7 @@ test('queen swaps receive new immutable tier identities while earlier definition
   ]);
   for (const rows of [current.TRIALS, current.LEVEL1_TRIALS, current.LEVEL2_TRIALS, current.NEW_DEFINITIONS]) assert.ok(Object.isFrozen(rows));
   for (const definition of current.NEW_DEFINITIONS) {
-    assert.equal(getDesign(definition.id), undefined); assert.ok(Object.isFrozen(definition));
+    assert.deepEqual(getDesign(definition.id), promoted.get(definition.id)); assert.ok(Object.isFrozen(definition));
     assert.ok(Object.isFrozen(definition.roles)); assert.equal(definition.placement, 'replace');
     assert.deepEqual(definition.roles, { pawn: false, castlingRook: false, enPassant: false });
   }

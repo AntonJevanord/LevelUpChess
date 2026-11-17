@@ -8,6 +8,7 @@ const path = require('node:path');
 const { createHash } = require('node:crypto');
 const { ensureResearchOverlay } = require('../scripts/balance/research-overlay');
 const rootCatalog = require('../src/design-catalog');
+const promoted = new Map(require('../src/designs-v19-selected').NEW_DEFINITIONS.map(definition => [definition.id, definition]));
 const overlay = ensureResearchOverlay({ name: 'v18-screen-plan-test', entryFile: 'scripts/v18-balance.js', definitionFile: 'src/balance-designs-v18-screen.js' });
 const plan = require(path.join(overlay.directory, 'scripts/balance/v18-screen-plan'));
 const { makeSchedule } = require(path.join(overlay.directory, 'scripts/balance/plan'));
@@ -39,16 +40,16 @@ function source(input, records = recordsFor(input)) {
   return { batchIndex: input.batchIndex, nodes: input.nodes, manifest: input.manifest, records };
 }
 
-test('new definitions remain isolated and every historical playable profile and bundle survives preparation', () => {
+test('unselected trials remain isolated, selected promotions keep exact definitions and historical artifacts survive', () => {
   assert.equal(rootCatalog.getDesign('knight.nightrider-quiet-diagonal@1'), undefined);
   assert.equal(rootCatalog.getDesign('queen.wraith-side-through@1'), undefined);
-  for (const id of ['knight.level2-nh@1', 'knight.level2-ndh@1', 'knight.nightrider-level2@1']) assert.equal(rootCatalog.getDesign(id), undefined);
+  for (const id of ['knight.level2-nh@1', 'knight.level2-ndh@1', 'knight.nightrider-level2@1']) assert.deepEqual(rootCatalog.getDesign(id), promoted.get(id));
   for (const id of ['queen.level1-camel-capture@1', 'queen.level1-forward-knight@1',
     'queen.level1-forward-half-knight@1', 'queen.level2-side-knight@1', 'queen.level2-tall-knight@1',
-    'knight.level2-nd@1', 'knight.level2-nd-quiet-king@1']) assert.equal(rootCatalog.getDesign(id), undefined);
+    'knight.level2-nd@1', 'knight.level2-nd-quiet-king@1']) assert.deepEqual(rootCatalog.getDesign(id), promoted.get(id));
   for (const source of ['queens', 'level2', 'level3']) {
     for (const definition of require(`../src/balance-designs-v18-prepanel-${source}`).NEW_DEFINITIONS) {
-      assert.equal(rootCatalog.getDesign(definition.id), undefined);
+      assert.deepEqual(rootCatalog.getDesign(definition.id), promoted.get(definition.id));
     }
   }
   assert.throws(() => require('../scripts/balance/v18-screen-plan').candidates('mobility'), /isolated research runtime/);

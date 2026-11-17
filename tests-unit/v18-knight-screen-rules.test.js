@@ -11,6 +11,7 @@ const { rulesBuildOptions } = require('../scripts/rules-build');
 const { UciEngine } = require('../scripts/balance/uci');
 const { placementFromMap } = require('../src/profile-fen');
 const { getDesign } = require('../src/design-catalog');
+const promoted = new Map(require('../src/designs-v19-selected').NEW_DEFINITIONS.map(definition => [definition.id, definition]));
 const { NEW_DEFINITIONS, TRIALS, revisionProbes } = require('../src/balance-designs-v18-knight-screen');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -61,7 +62,7 @@ test('three immutable level-two identities leave the original level-three Nightr
   assert.deepEqual(TRIALS.map(row => row.movement), ['NH', 'NDH', 'N0']);
   assert.ok(Object.isFrozen(TRIALS)); assert.ok(Object.isFrozen(NEW_DEFINITIONS));
   for (const definition of NEW_DEFINITIONS) {
-    assert.equal(getDesign(definition.id), undefined);
+    assert.deepEqual(getDesign(definition.id), promoted.get(definition.id));
     assert.equal(definition.level, 2); assert.equal(definition.placement, 'replace');
     assert.deepEqual(definition.roles, { pawn: false, castlingRook: false, enPassant: false });
     assert.ok(Object.isFrozen(definition)); assert.ok(Object.isFrozen(definition.roles));

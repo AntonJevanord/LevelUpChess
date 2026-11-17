@@ -24,7 +24,11 @@ function getPlayableProfiles() {
       });
       // Use the experiment compiler, including its allocation and role rules.
       // Ordinary pieces stay reserved even if a particular army omits them.
-      return compileDesignProfile(createDesignRegistry({ schemaVersion: 2, comparisons }), library.evaluation);
+      const profile = compileDesignProfile(createDesignRegistry({ schemaVersion: 2, comparisons }), library.evaluation);
+      // New editions can require broader capability checks without changing
+      // a historical profile's probe inventory or recorded rule identity.
+      return library.generation === 19 ? Object.freeze({ ...profile,
+        capabilityProbes: require('../src/v19-capability-probes').revisionProbes(profile) }) : profile;
     }));
   }
   return compiled;

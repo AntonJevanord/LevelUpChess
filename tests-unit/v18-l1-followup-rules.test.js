@@ -11,6 +11,7 @@ const { rulesBuildOptions } = require('../scripts/rules-build');
 const { UciEngine } = require('../scripts/balance/uci');
 const { placementFromMap } = require('../src/profile-fen');
 const { getDesign } = require('../src/design-catalog');
+const promoted = new Map(require('../src/designs-v19-selected').NEW_DEFINITIONS.map(definition => [definition.id, definition]));
 const { TRIALS, NEW_DEFINITIONS, revisionProbes } = require('../src/balance-designs-v18-l1-followup');
 const ROOT = path.resolve(__dirname, '..');
 const native = process.env.FAIRY_STOCKFISH_PATH || path.join(ROOT, 'node_modules/.cache/levelup-native-values/stockfish');
@@ -57,7 +58,7 @@ test('five new identities and their control links remain outside the playable ca
   assert.deepEqual(TRIALS.map(row => row.movement), ['NmQ', 'NmK', 'BgBgmB0', 'BgB0', 'QmDmAmHmGmNmCmZ']);
   assert.equal(NEW_DEFINITIONS.length, 5);
   for (const definition of NEW_DEFINITIONS) {
-    assert.equal(getDesign(definition.id), undefined);
+    assert.deepEqual(getDesign(definition.id), promoted.get(definition.id));
     assert.ok(Object.isFrozen(definition)); assert.ok(Object.isFrozen(definition.roles));
     assert.equal(definition.level, 1); assert.equal(definition.placement, 'replace');
     assert.deepEqual(definition.roles, { pawn: false, castlingRook: false, enPassant: false });

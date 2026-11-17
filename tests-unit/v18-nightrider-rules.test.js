@@ -11,6 +11,7 @@ const { rulesBuildOptions } = require('../scripts/rules-build');
 const { UciEngine } = require('../scripts/balance/uci');
 const { placementFromMap } = require('../src/profile-fen');
 const { getDesign } = require('../src/design-catalog');
+const promoted = new Map(require('../src/designs-v19-selected').NEW_DEFINITIONS.map(definition => [definition.id, definition]));
 const { NEW_DEFINITIONS, TRIALS, revisionProbes } = require('../src/balance-designs-v18-nightrider');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -60,7 +61,7 @@ test('research definitions are immutable, nonroyal replacements and leave N0 unc
   assert.equal(getDesign('knight.purple@4').movement, 'N0');
   assert.deepEqual(NEW_DEFINITIONS.map(row => row.movement), ['N0mF', 'N0mW', 'N0mK']);
   for (const definition of NEW_DEFINITIONS) {
-    assert.equal(getDesign(definition.id), undefined);
+    assert.deepEqual(getDesign(definition.id), promoted.get(definition.id));
     assert.equal(definition.level, 3);
     assert.equal(definition.placement, 'replace');
     assert.deepEqual(definition.roles, { pawn: false, castlingRook: false, enPassant: false });

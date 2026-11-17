@@ -63,7 +63,7 @@ test.beforeAll(() => initVariantRules(VARIANT));
 test.beforeEach(async ({ page }) => { await page.goto('http://127.0.0.1:4173'); });
 
 test('the rebalance workshop offers all seven revisions and retires the box rook and level-three short queens', async ({ page }) => {
-  await expect(page.locator('.version')).toHaveText('VERSION 18 / ARMY WORKSHOP');
+  await expect(page.locator('.version')).toHaveText('VERSION 19 / ARMY WORKSHOP');
   await inPanel(page, 'setup', () => page.selectOption('#game-mode', VARIANT));
   const slots = { pawn: 'd2', bishop: 'c1', rook: 'a1', queen: 'd1' };
   for (const [family, ids] of Object.entries(revisions)) {

@@ -1,6 +1,8 @@
 # Version 19: panels, then cross-level armies
 
-Pre-panel screening is complete. The final choices from the
+Version 19 is underway; the [release guide](version19.md) records the playable
+tier libraries and concrete panel commands. Pre-panel screening is complete.
+The final choices from the
 [targeted alternatives](v18-prepanel32-review.md) are:
 
 | Tier | Selected movement | Role |
@@ -12,9 +14,10 @@ Pre-panel screening is complete. The final choices from the
 
 The remaining shortlisted bodies carry forward. No further pre-panel campaign
 is required; QfcCscC and BsW3 remain optional alternatives. Version 18 retains
-the experiment definitions, raw journals and current playable profiles. Next,
-integrate the accepted roster in a new profile, preserve historical identities,
-and freeze the concrete version-19 declarations and shared opening book.
+the experiment definitions, raw journals and current playable profiles.
+The accepted roster is integrated into three tier profiles with preserved
+historical identities. The first version-19 declarations and shared opening
+book are frozen for the initial sixteen-opening review.
 
 ## Same-tier panels
 

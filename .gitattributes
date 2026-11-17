@@ -108,3 +108,6 @@ experiments/balance/results/v18-queen32-001.*.gz -text
 experiments/balance/results/v18-prepanel32-001.*.json text eol=lf
 experiments/balance/results/v18-prepanel32-001.*.md text eol=lf
 experiments/balance/results/v18-prepanel32-001.*.gz -text
+experiments/designs/v19-roster.json text eol=lf
+experiments/designs/v19-panel-values.json text eol=lf
+experiments/balance/v19-panel-openings.json text eol=lf

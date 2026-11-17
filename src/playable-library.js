@@ -60,7 +60,7 @@ const V16_CANDIDATES = Object.freeze({
   rooks: Object.freeze(['rook.blue@2', 'rook.orange@2', 'rook.purple@12', 'rook.blue@3', 'rook.orange@3', 'rook.purple@13']),
   queens: Object.freeze(['queen.blue@2', 'queen.orange@2', 'queen.purple@6', 'queen.purple@7', 'queen.purple@8']),
 });
-const CURRENT_PLAYABLE_GENERATION = 18;
+const CURRENT_PLAYABLE_GENERATION = 19;
 const V17_RESERVE_DESIGN_IDS = Object.freeze([
   'king.reserve-pawn@6', ...RESERVE_DESIGN_IDS.slice(1),
 ]);
@@ -160,6 +160,20 @@ const confirmedLibrary = Object.freeze({
   json: 'src/playable-v17-roster-confirmed-profile.json',
   ini: 'variants/levelup-playable-v17-roster-confirmed.ini',
 });
+// The accepted roster spans more than twenty custom types. Tier libraries
+// keep every selected body playable without changing any historical mapping.
+const V19_TIERS = require('./designs-v19-selected').TIERS;
+const V19_LIBRARIES = Object.freeze(V19_TIERS.map(tier => Object.freeze({
+  id: `v19-level${tier.level}`,
+  name: `Level ${tier.level} roster`,
+  generation: CURRENT_PLAYABLE_GENERATION,
+  edition: tier.level,
+  designIds: Object.freeze(tier.bodies.map(body => body.id)),
+  evaluation: Object.freeze({ pieceValues: Object.freeze(Object.fromEntries(tier.bodies.map(body =>
+    [body.id, Object.freeze({ ...body.prior })]))) }),
+  json: `src/playable-v19-level${tier.level}-profile.json`,
+  ini: `variants/levelup-playable-v19-level${tier.level}.ini`,
+})));
 const PLAYABLE_LIBRARIES = Object.freeze([
   Object.freeze({ id: 'workshop', name: 'Rebalance workshop', designIds: PLAYABLE_DESIGN_IDS,
     json: 'src/playable-profile.json', ini: 'variants/levelup-playable.ini' }),
@@ -177,7 +191,7 @@ const PLAYABLE_LIBRARIES = Object.freeze([
   confirmedLibrary,
   Object.freeze({
     id: 'v18-roster-confirmed', name: 'Roster and king trials',
-    generation: CURRENT_PLAYABLE_GENERATION,
+    generation: 18,
     designIds: Object.freeze([...OFFICIAL_REFERENCE_DESIGN_IDS, ...Object.values(V18_CANDIDATES).flat(), ...V18_RESERVE_DESIGN_IDS]),
     // Match the selected bodies' controlled confirmation priors. Existing
     // libraries keep their original automatic evaluation and profile identity.
@@ -188,6 +202,7 @@ const PLAYABLE_LIBRARIES = Object.freeze([
     json: 'src/playable-v18-roster-confirmed-profile.json',
     ini: 'variants/levelup-playable-v18-roster-confirmed.ini',
   }),
+  ...V19_LIBRARIES,
 ]);
 
-module.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, V18_CANDIDATES, V18_RESERVE_DESIGN_IDS, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };
+module.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, V18_CANDIDATES, V18_RESERVE_DESIGN_IDS, V19_LIBRARIES, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };

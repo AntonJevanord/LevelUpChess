@@ -11,6 +11,7 @@ const { rulesBuildOptions } = require('../scripts/rules-build');
 const { UciEngine } = require('../scripts/balance/uci');
 const { placementFromMap, pieceMap } = require('../src/profile-fen');
 const { getDesign } = require('../src/design-catalog');
+const promoted = new Map(require('../src/designs-v19-selected').NEW_DEFINITIONS.map(definition => [definition.id, definition]));
 const { TRIALS, NEW_DEFINITIONS, revisionProbes } = require('../src/balance-designs-v18-l2-followup');
 const ROOT = path.resolve(__dirname, '..');
 const native = process.env.FAIRY_STOCKFISH_PATH || path.join(ROOT, 'node_modules/.cache/levelup-native-values/stockfish');
@@ -70,7 +71,7 @@ test('six immutable two-point replacements do not register or reprice live desig
   assert.deepEqual(TRIALS.map(row => row.movement), ['NWD', 'NWH', 'NFA', 'NAD', 'fmWifmnDfceF2bF2', 'fmWifmnDfceFfceAbFbA']);
   assert.equal(NEW_DEFINITIONS.length, 6);
   for (const row of NEW_DEFINITIONS) {
-    assert.equal(getDesign(row.id), undefined); assert.equal(row.level, 2); assert.equal(row.placement, 'replace');
+    assert.deepEqual(getDesign(row.id), promoted.get(row.id)); assert.equal(row.level, 2); assert.equal(row.placement, 'replace');
     assert.equal(row.roles.pawn, row.family === 'pawn'); assert.equal(row.roles.enPassant, row.family === 'pawn');
     assert.equal(row.roles.castlingRook, false); assert.ok(Object.isFrozen(row));
   }

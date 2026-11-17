@@ -11,6 +11,7 @@ const { rulesBuildOptions } = require('../scripts/rules-build');
 const { UciEngine } = require('../scripts/balance/uci');
 const { placementFromMap } = require('../src/profile-fen');
 const { getDesign } = require('../src/design-catalog');
+const promoted = new Map(require('../src/designs-v19-selected').NEW_DEFINITIONS.map(definition => [definition.id, definition]));
 const { TRIALS, NEW_DEFINITIONS, revisionProbes } = require('../src/balance-designs-v18-prepanel-level2');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -67,7 +68,7 @@ test('five new level-two bodies stay immutable and outside the playable catalog'
   assert.deepEqual(TRIALS.map(trial => trial.movement), ['NDmW', 'NDmF', 'BsW2', 'BsWsnN', 'BsW3']);
   assert.ok(Object.isFrozen(TRIALS)); assert.ok(Object.isFrozen(NEW_DEFINITIONS));
   for (const [index, trial] of TRIALS.entries()) {
-    assert.equal(getDesign(trial.id), undefined); assert.ok(Object.isFrozen(trial));
+    assert.deepEqual(getDesign(trial.id), promoted.get(trial.id)); assert.ok(Object.isFrozen(trial));
     assert.equal(trial.anchorId, trial.family === 'knight' ? 'knight.orange@3' : 'bishop.orange@3');
     assert.equal(trial.controlKey, trial.family === 'knight' ? 'ndmk-control' : 'free-boar-control');
     const definition = NEW_DEFINITIONS[index];

@@ -8,11 +8,11 @@ Download `index.html` and open it in Chrome, Edge or Firefox. It contains the bo
 
 Select a piece and a legal destination. Gray dots show quiet movement, red rings show capture ability, and both appear when a piece can do either. The guide includes empty-square captures and abilities unavailable because of check or pins; only legal moves can be played. Click enemy pieces to inspect them, or enable **Inspect pieces** to prevent accidental moves. Arrow keys move focus; Enter or Space selects.
 
-The side panel has **Game, Setup, Design and Files** tabs. Status and essential game controls stay visible across tabs. In Setup, choose **Version 18 · Roster and king trials** under Rules, then click a starting piece to choose an upgrade in the board's central ranks. Press **Start game** to apply the draft. **Edit armies** reopens setup; **Return to game** keeps the current game. **Clear White**, **Clear Black** and **Clear both** reset draft armies.
+The side panel has **Game, Setup, Design and Files** tabs. Status and essential game controls stay visible across tabs. In Setup, choose a **Version 19 · Level 1, 2 or 3 roster** under Rules, then click a starting piece to choose an upgrade in the board's central ranks. Press **Start game** to apply the draft. **Edit armies** reopens setup; **Return to game** keeps the current game. **Clear White**, **Clear Black** and **Clear both** reset draft armies.
 
 Right-click for a circle or right-drag for an arrow; repeat to remove a mark, or press Escape to clear marks. **Draw** enables tap/drag annotation on touch screens. Design offers four piece styles, four board palettes and an annotation color, with preferences remembered locally. See the [interface guide](docs/interface-v18.md).
 
-The current roster allows a 1–9 point budget per side and includes the four frozen references, accepted replacement pieces and five guard designs or trials. Version 18 introduces the selected quiet-tall Knight pawn and six-jump Cataphract; all nineteen earlier profiles keep their rules. The [version-18 guide](docs/version18.md) explains the changes and Windows branch-switch commands. Earlier family workshops remain available within the engine's 20-custom-piece limit.
+The current roster allows a 1–9 point budget per side. Three tier libraries contain 11, 12 and 11 selected designs, with one reserve grant per tier; each fits the engine's 20-custom-piece limit. All twenty earlier libraries retain their rules. The [version-19 guide](docs/version19.md) gives the accepted roster, Windows branch-switch instructions and panel commands. Historical family workshops remain selectable for earlier mixed-tier setups.
 
 Select the king during setup to buy one nonroyal reserve guard. Starting the game keeps the ordinary royal king and places the guard in reserve. Click a reserve piece, then a highlighted empty square in your own half. A drop spends a turn and cannot give check; captured pieces disappear rather than refill reserves. All ordinary king safety and castling rules still apply.
 
@@ -52,11 +52,34 @@ Files contains **Save game**, **Load saved**, **Export PGN** and **Import PGN**.
 
 Browser saves belong to the current browser and site address. Use PGN when moving between direct-file and server play. New releases may require fresh saves. Checkmate, stalemate, repetition and the fifty-move rule end games automatically; experimental low-material limits are documented in the [rules guide](variants/README.md).
 
+## Version 19: accepted roster and tier panels
+
+Branch **`version_19`** starts from the **`v0.18.14`** closeout. The final
+choices are L3 **NAD** and L2 **NDmW, QcC and BsR**; L1 keeps QfN/QvN.
+The [roster](experiments/designs/v19-roster.json),
+[search values](experiments/designs/v19-panel-values.json) and
+[shared 64-case book](experiments/balance/v19-panel-openings.json) are declared
+before collection. Historical profiles and outcomes retain their identities.
+
+The complete same-tier round robins use one purchase per army, paired colors,
+40k nodes, one engine thread and four workers. At sixteen openings the L1/L2/L3
+panels contain **1,760 / 2,112 / 1,760 games**. Start one panel at a time:
+
+```powershell
+npm.cmd run balance:v19 -- --tier 1 --out balance-results/v19-level1 --openings 16 --jobs 4
+```
+
+Use tiers 2 and 3 with their own folders. Resume with `--resume DIRECTORY`;
+add `--openings 32` or `64` for total coverage. Reports retain completed
+eight-case checkpoints and separate fixed-reference scores from whole-roster
+averages. See the [guide](docs/version19.md) for validation and offline reports.
+No scored balance campaign starts during installation or build.
+
 ## Version 16: frozen references and playtest roster
 
 The playable closeout with UI fixes is tagged `v0.16.7`. Mixed-army experiments belong to version 17.
 
-These are the official three-point replacement upgrades, available in every new playtest library:
+These are the official three-point replacement upgrades, available in the level-three roster and historical reference workshops:
 
 | Reference | Family | Movement |
 | --- | --- | --- |
@@ -82,9 +105,8 @@ replaces Knight pawn with `ifmnDfmWfceFfsNfmN` at cost two and Cataphract with
 `RsCfC` at cost three. The tested search priors remain 536/592 and 2240/2413
 MG/EG respectively. Version-17 profiles retain their old pieces.
 
-The next research step is a bounded mixed-budget study using the fixed
-level-one, revised level-two and original level-three references. No new games
-start automatically. See the [roster and next-step guide](docs/version18.md).
+Its screening work feeds the version-19 tier panels before cross-level and
+mixed-budget studies. See the [closeout guide](docs/version18.md).
 
 The [lower-tier roster and mobility screens](docs/v18-balance-roster.md) review
 existing level-one evidence, test nine level-one and eight level-two candidates

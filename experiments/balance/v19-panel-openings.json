@@ -1,0 +1,1130 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-v19-shared-opening-book",
+  "source": "Project-curated standard-chess prefixes; no downloaded game data or outcome/evaluation selection.",
+  "policy": "One shared eight-family book for all tiers, armies and colors. Each eight-case batch has one case from each structural family. All 64 ordinary positions are distinct after ignoring move clocks. Prefixes contain eight standard plies, preserve material and stop outside check; they are not chosen for near-zero upgraded-army evaluations. The complete book must pass ordinary-chess replay and actual-army legality before collection. Static tactical flags remain diagnostic and never silently remove cells. Related prefixes are not independent population samples.",
+  "families": [
+    {
+      "id": "open-king",
+      "label": "Open king-pawn centres"
+    },
+    {
+      "id": "sicilian",
+      "label": "Asymmetric c-pawn structures"
+    },
+    {
+      "id": "french-caro",
+      "label": "Closed and semi-closed e-pawn structures"
+    },
+    {
+      "id": "queen-centre",
+      "label": "Queen-pawn centres"
+    },
+    {
+      "id": "indian",
+      "label": "Indian and fianchetto centres"
+    },
+    {
+      "id": "english",
+      "label": "English c-pawn structures"
+    },
+    {
+      "id": "reti",
+      "label": "Reti and flexible knight starts"
+    },
+    {
+      "id": "flank",
+      "label": "Flank and alternate first moves"
+    }
+  ],
+  "openings": [
+    {
+      "id": "v19-book-01",
+      "family": "open-king",
+      "label": "Open king-pawn centres 1",
+      "san": "e4 e5 Nf3 Nc6 Bc4 Bc5 d3 Nf6",
+      "moves": [
+        "e2e4",
+        "e7e5",
+        "g1f3",
+        "b8c6",
+        "f1c4",
+        "f8c5",
+        "d2d3",
+        "g8f6"
+      ],
+      "ordinaryFen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-02",
+      "family": "sicilian",
+      "label": "Asymmetric c-pawn structures 1",
+      "san": "e4 c5 Nf3 d6 g3 Nf6 Bg2 g6",
+      "moves": [
+        "e2e4",
+        "c7c5",
+        "g1f3",
+        "d7d6",
+        "g2g3",
+        "g8f6",
+        "f1g2",
+        "g7g6"
+      ],
+      "ordinaryFen": "rnbqkb1r/pp2pp1p/3p1np1/2p5/4P3/5NP1/PPPP1PBP/RNBQK2R w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-03",
+      "family": "french-caro",
+      "label": "Closed and semi-closed e-pawn structures 1",
+      "san": "e4 e6 d4 d5 Nd2 Nf6 Bd3 c5",
+      "moves": [
+        "e2e4",
+        "e7e6",
+        "d2d4",
+        "d7d5",
+        "b1d2",
+        "g8f6",
+        "f1d3",
+        "c7c5"
+      ],
+      "ordinaryFen": "rnbqkb1r/pp3ppp/4pn2/2pp4/3PP3/3B4/PPPN1PPP/R1BQK1NR w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-04",
+      "family": "queen-centre",
+      "label": "Queen-pawn centres 1",
+      "san": "d4 d5 c4 e6 Nc3 Nf6 Nf3 Be7",
+      "moves": [
+        "d2d4",
+        "d7d5",
+        "c2c4",
+        "e7e6",
+        "b1c3",
+        "g8f6",
+        "g1f3",
+        "f8e7"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1bppp/4pn2/3p4/2PP4/2N2N2/PP2PPPP/R1BQKB1R w KQkq - 4 5"
+    },
+    {
+      "id": "v19-book-05",
+      "family": "indian",
+      "label": "Indian and fianchetto centres 1",
+      "san": "d4 Nf6 c4 g6 Nc3 Bg7 e4 d6",
+      "moves": [
+        "d2d4",
+        "g8f6",
+        "c2c4",
+        "g7g6",
+        "b1c3",
+        "f8g7",
+        "e2e4",
+        "d7d6"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1ppbp/3p1np1/8/2PPP3/2N5/PP3PPP/R1BQKBNR w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-06",
+      "family": "english",
+      "label": "English c-pawn structures 1",
+      "san": "c4 e5 Nc3 Nf6 g3 Bb4 Bg2 d6",
+      "moves": [
+        "c2c4",
+        "e7e5",
+        "b1c3",
+        "g8f6",
+        "g2g3",
+        "f8b4",
+        "f1g2",
+        "d7d6"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp2ppp/3p1n2/4p3/1bP5/2N3P1/PP1PPPBP/R1BQK1NR w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-07",
+      "family": "reti",
+      "label": "Reti and flexible knight starts 1",
+      "san": "Nf3 d5 g3 Nf6 Bg2 e6 d3 Be7",
+      "moves": [
+        "g1f3",
+        "d7d5",
+        "g2g3",
+        "g8f6",
+        "f1g2",
+        "e7e6",
+        "d2d3",
+        "f8e7"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1bppp/4pn2/3p4/8/3P1NP1/PPP1PPBP/RNBQK2R w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-08",
+      "family": "flank",
+      "label": "Flank and alternate first moves 1",
+      "san": "b3 e5 Bb2 Nc6 e3 Nf6 Nf3 d6",
+      "moves": [
+        "b2b3",
+        "e7e5",
+        "c1b2",
+        "b8c6",
+        "e2e3",
+        "g8f6",
+        "g1f3",
+        "d7d6"
+      ],
+      "ordinaryFen": "r1bqkb1r/ppp2ppp/2np1n2/4p3/8/1P2PN2/PBPP1PPP/RN1QKB1R w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-09",
+      "family": "open-king",
+      "label": "Open king-pawn centres 2",
+      "san": "e4 e5 Nc3 Nc6 g3 g6 Bg2 Bg7",
+      "moves": [
+        "e2e4",
+        "e7e5",
+        "b1c3",
+        "b8c6",
+        "g2g3",
+        "g7g6",
+        "f1g2",
+        "f8g7"
+      ],
+      "ordinaryFen": "r1bqk1nr/pppp1pbp/2n3p1/4p3/4P3/2N3P1/PPPP1PBP/R1BQK1NR w KQkq - 2 5"
+    },
+    {
+      "id": "v19-book-10",
+      "family": "sicilian",
+      "label": "Asymmetric c-pawn structures 2",
+      "san": "e4 c5 Nc3 Nc6 g3 g6 Bg2 Bg7",
+      "moves": [
+        "e2e4",
+        "c7c5",
+        "b1c3",
+        "b8c6",
+        "g2g3",
+        "g7g6",
+        "f1g2",
+        "f8g7"
+      ],
+      "ordinaryFen": "r1bqk1nr/pp1pppbp/2n3p1/2p5/4P3/2N3P1/PPPP1PBP/R1BQK1NR w KQkq - 2 5"
+    },
+    {
+      "id": "v19-book-11",
+      "family": "french-caro",
+      "label": "Closed and semi-closed e-pawn structures 2",
+      "san": "e4 c6 d4 d5 e5 Bf5 Nf3 e6",
+      "moves": [
+        "e2e4",
+        "c7c6",
+        "d2d4",
+        "d7d5",
+        "e4e5",
+        "c8f5",
+        "g1f3",
+        "e7e6"
+      ],
+      "ordinaryFen": "rn1qkbnr/pp3ppp/2p1p3/3pPb2/3P4/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-12",
+      "family": "queen-centre",
+      "label": "Queen-pawn centres 2",
+      "san": "d4 d5 Nf3 Nf6 e3 e6 Bd3 c5",
+      "moves": [
+        "d2d4",
+        "d7d5",
+        "g1f3",
+        "g8f6",
+        "e2e3",
+        "e7e6",
+        "f1d3",
+        "c7c5"
+      ],
+      "ordinaryFen": "rnbqkb1r/pp3ppp/4pn2/2pp4/3P4/3BPN2/PPP2PPP/RNBQK2R w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-13",
+      "family": "indian",
+      "label": "Indian and fianchetto centres 2",
+      "san": "d4 Nf6 Nf3 g6 g3 Bg7 Bg2 d6",
+      "moves": [
+        "d2d4",
+        "g8f6",
+        "g1f3",
+        "g7g6",
+        "g2g3",
+        "f8g7",
+        "f1g2",
+        "d7d6"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1ppbp/3p1np1/8/3P4/5NP1/PPP1PPBP/RNBQK2R w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-14",
+      "family": "english",
+      "label": "English c-pawn structures 2",
+      "san": "c4 c5 Nc3 Nc6 g3 g6 Bg2 Bg7",
+      "moves": [
+        "c2c4",
+        "c7c5",
+        "b1c3",
+        "b8c6",
+        "g2g3",
+        "g7g6",
+        "f1g2",
+        "f8g7"
+      ],
+      "ordinaryFen": "r1bqk1nr/pp1pppbp/2n3p1/2p5/2P5/2N3P1/PP1PPPBP/R1BQK1NR w KQkq - 2 5"
+    },
+    {
+      "id": "v19-book-15",
+      "family": "reti",
+      "label": "Reti and flexible knight starts 2",
+      "san": "Nf3 Nf6 c4 g6 Nc3 Bg7 g3 d6",
+      "moves": [
+        "g1f3",
+        "g8f6",
+        "c2c4",
+        "g7g6",
+        "b1c3",
+        "f8g7",
+        "g2g3",
+        "d7d6"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1ppbp/3p1np1/8/2P5/2N2NP1/PP1PPP1P/R1BQKB1R w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-16",
+      "family": "flank",
+      "label": "Flank and alternate first moves 2",
+      "san": "b4 d5 Bb2 Nf6 e3 e6 Nf3 Bd6",
+      "moves": [
+        "b2b4",
+        "d7d5",
+        "c1b2",
+        "g8f6",
+        "e2e3",
+        "e7e6",
+        "g1f3",
+        "f8d6"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp2ppp/3bpn2/3p4/1P6/4PN2/PBPP1PPP/RN1QKB1R w KQkq - 2 5"
+    },
+    {
+      "id": "v19-book-17",
+      "family": "open-king",
+      "label": "Open king-pawn centres 3",
+      "san": "e4 e5 Nf3 Nf6 d3 d6 g3 g6",
+      "moves": [
+        "e2e4",
+        "e7e5",
+        "g1f3",
+        "g8f6",
+        "d2d3",
+        "d7d6",
+        "g2g3",
+        "g7g6"
+      ],
+      "ordinaryFen": "rnbqkb1r/ppp2p1p/3p1np1/4p3/4P3/3P1NP1/PPP2P1P/RNBQKB1R w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-18",
+      "family": "sicilian",
+      "label": "Asymmetric c-pawn structures 3",
+      "san": "e4 c5 Nf3 e6 d3 Nc6 g3 g6",
+      "moves": [
+        "e2e4",
+        "c7c5",
+        "g1f3",
+        "e7e6",
+        "d2d3",
+        "b8c6",
+        "g2g3",
+        "g7g6"
+      ],
+      "ordinaryFen": "r1bqkbnr/pp1p1p1p/2n1p1p1/2p5/4P3/3P1NP1/PPP2P1P/RNBQKB1R w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-19",
+      "family": "french-caro",
+      "label": "Closed and semi-closed e-pawn structures 3",
+      "san": "e4 e6 d4 d5 e5 c5 c3 Nc6",
+      "moves": [
+        "e2e4",
+        "e7e6",
+        "d2d4",
+        "d7d5",
+        "e4e5",
+        "c7c5",
+        "c2c3",
+        "b8c6"
+      ],
+      "ordinaryFen": "r1bqkbnr/pp3ppp/2n1p3/2ppP3/3P4/2P5/PP3PPP/RNBQKBNR w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-20",
+      "family": "queen-centre",
+      "label": "Queen-pawn centres 3",
+      "san": "d4 d5 c4 c6 Nf3 Nf6 Nc3 e6",
+      "moves": [
+        "d2d4",
+        "d7d5",
+        "c2c4",
+        "c7c6",
+        "g1f3",
+        "g8f6",
+        "b1c3",
+        "e7e6"
+      ],
+      "ordinaryFen": "rnbqkb1r/pp3ppp/2p1pn2/3p4/2PP4/2N2N2/PP2PPPP/R1BQKB1R w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-21",
+      "family": "indian",
+      "label": "Indian and fianchetto centres 3",
+      "san": "d4 Nf6 c4 e6 Nf3 b6 g3 Bb7",
+      "moves": [
+        "d2d4",
+        "g8f6",
+        "c2c4",
+        "e7e6",
+        "g1f3",
+        "b7b6",
+        "g2g3",
+        "c8b7"
+      ],
+      "ordinaryFen": "rn1qkb1r/pbpp1ppp/1p2pn2/8/2PP4/5NP1/PP2PP1P/RNBQKB1R w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-22",
+      "family": "english",
+      "label": "English c-pawn structures 3",
+      "san": "c4 e5 Nc3 Nf6 g3 Bb4 Bg2 Nc6",
+      "moves": [
+        "c2c4",
+        "e7e5",
+        "b1c3",
+        "g8f6",
+        "g2g3",
+        "f8b4",
+        "f1g2",
+        "b8c6"
+      ],
+      "ordinaryFen": "r1bqk2r/pppp1ppp/2n2n2/4p3/1bP5/2N3P1/PP1PPPBP/R1BQK1NR w KQkq - 3 5"
+    },
+    {
+      "id": "v19-book-23",
+      "family": "reti",
+      "label": "Reti and flexible knight starts 3",
+      "san": "Nf3 c5 g3 Nc6 Bg2 g6 c4 Bg7",
+      "moves": [
+        "g1f3",
+        "c7c5",
+        "g2g3",
+        "b8c6",
+        "f1g2",
+        "g7g6",
+        "c2c4",
+        "f8g7"
+      ],
+      "ordinaryFen": "r1bqk1nr/pp1pppbp/2n3p1/2p5/2P5/5NP1/PP1PPPBP/RNBQK2R w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-24",
+      "family": "flank",
+      "label": "Flank and alternate first moves 3",
+      "san": "f4 d5 Nf3 g6 g3 Bg7 Bg2 Nf6",
+      "moves": [
+        "f2f4",
+        "d7d5",
+        "g1f3",
+        "g7g6",
+        "g2g3",
+        "f8g7",
+        "f1g2",
+        "g8f6"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1ppbp/5np1/3p4/5P2/5NP1/PPPPP1BP/RNBQK2R w KQkq - 3 5"
+    },
+    {
+      "id": "v19-book-25",
+      "family": "open-king",
+      "label": "Open king-pawn centres 4",
+      "san": "e4 e5 Bc4 Nc6 d3 Bc5 Nc3 Nf6",
+      "moves": [
+        "e2e4",
+        "e7e5",
+        "f1c4",
+        "b8c6",
+        "d2d3",
+        "f8c5",
+        "b1c3",
+        "g8f6"
+      ],
+      "ordinaryFen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/2NP4/PPP2PPP/R1BQK1NR w KQkq - 3 5"
+    },
+    {
+      "id": "v19-book-26",
+      "family": "sicilian",
+      "label": "Asymmetric c-pawn structures 4",
+      "san": "e4 c5 c3 Nf6 d3 d6 Nf3 g6",
+      "moves": [
+        "e2e4",
+        "c7c5",
+        "c2c3",
+        "g8f6",
+        "d2d3",
+        "d7d6",
+        "g1f3",
+        "g7g6"
+      ],
+      "ordinaryFen": "rnbqkb1r/pp2pp1p/3p1np1/2p5/4P3/2PP1N2/PP3PPP/RNBQKB1R w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-27",
+      "family": "french-caro",
+      "label": "Closed and semi-closed e-pawn structures 4",
+      "san": "e4 c6 d3 d5 Nd2 Nf6 g3 g6",
+      "moves": [
+        "e2e4",
+        "c7c6",
+        "d2d3",
+        "d7d5",
+        "b1d2",
+        "g8f6",
+        "g2g3",
+        "g7g6"
+      ],
+      "ordinaryFen": "rnbqkb1r/pp2pp1p/2p2np1/3p4/4P3/3P2P1/PPPN1P1P/R1BQKBNR w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-28",
+      "family": "queen-centre",
+      "label": "Queen-pawn centres 4",
+      "san": "d4 d5 Nc3 Nf6 Bf4 e6 e3 Be7",
+      "moves": [
+        "d2d4",
+        "d7d5",
+        "b1c3",
+        "g8f6",
+        "c1f4",
+        "e7e6",
+        "e2e3",
+        "f8e7"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1bppp/4pn2/3p4/3P1B2/2N1P3/PPP2PPP/R2QKBNR w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-29",
+      "family": "indian",
+      "label": "Indian and fianchetto centres 4",
+      "san": "d4 Nf6 c4 e6 Nc3 Bb4 e3 d5",
+      "moves": [
+        "d2d4",
+        "g8f6",
+        "c2c4",
+        "e7e6",
+        "b1c3",
+        "f8b4",
+        "e2e3",
+        "d7d5"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp2ppp/4pn2/3p4/1bPP4/2N1P3/PP3PPP/R1BQKBNR w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-30",
+      "family": "english",
+      "label": "English c-pawn structures 4",
+      "san": "c4 Nf6 g3 g6 Bg2 Bg7 Nc3 d6",
+      "moves": [
+        "c2c4",
+        "g8f6",
+        "g2g3",
+        "g7g6",
+        "f1g2",
+        "f8g7",
+        "b1c3",
+        "d7d6"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1ppbp/3p1np1/8/2P5/2N3P1/PP1PPPBP/R1BQK1NR w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-31",
+      "family": "reti",
+      "label": "Reti and flexible knight starts 4",
+      "san": "Nf3 d5 b3 Nf6 Bb2 e6 e3 Be7",
+      "moves": [
+        "g1f3",
+        "d7d5",
+        "b2b3",
+        "g8f6",
+        "c1b2",
+        "e7e6",
+        "e2e3",
+        "f8e7"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1bppp/4pn2/3p4/8/1P2PN2/PBPP1PPP/RN1QKB1R w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-32",
+      "family": "flank",
+      "label": "Flank and alternate first moves 4",
+      "san": "a3 d5 b4 e5 Bb2 Bd6 e3 Nf6",
+      "moves": [
+        "a2a3",
+        "d7d5",
+        "b2b4",
+        "e7e5",
+        "c1b2",
+        "f8d6",
+        "e2e3",
+        "g8f6"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp2ppp/3b1n2/3pp3/1P6/P3P3/1BPP1PPP/RN1QKBNR w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-33",
+      "family": "open-king",
+      "label": "Open king-pawn centres 5",
+      "san": "e4 e5 Nf3 d6 d4 Nf6 Nc3 Nbd7",
+      "moves": [
+        "e2e4",
+        "e7e5",
+        "g1f3",
+        "d7d6",
+        "d2d4",
+        "g8f6",
+        "b1c3",
+        "b8d7"
+      ],
+      "ordinaryFen": "r1bqkb1r/pppn1ppp/3p1n2/4p3/3PP3/2N2N2/PPP2PPP/R1BQKB1R w KQkq - 3 5"
+    },
+    {
+      "id": "v19-book-34",
+      "family": "sicilian",
+      "label": "Asymmetric c-pawn structures 5",
+      "san": "e4 c5 Nf3 Nc6 Bb5 g6 d3 Bg7",
+      "moves": [
+        "e2e4",
+        "c7c5",
+        "g1f3",
+        "b8c6",
+        "f1b5",
+        "g7g6",
+        "d2d3",
+        "f8g7"
+      ],
+      "ordinaryFen": "r1bqk1nr/pp1pppbp/2n3p1/1Bp5/4P3/3P1N2/PPP2PPP/RNBQK2R w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-35",
+      "family": "french-caro",
+      "label": "Closed and semi-closed e-pawn structures 5",
+      "san": "e4 e6 d3 d5 Nd2 Nf6 Ngf3 c5",
+      "moves": [
+        "e2e4",
+        "e7e6",
+        "d2d3",
+        "d7d5",
+        "b1d2",
+        "g8f6",
+        "g1f3",
+        "c7c5"
+      ],
+      "ordinaryFen": "rnbqkb1r/pp3ppp/4pn2/2pp4/4P3/3P1N2/PPPN1PPP/R1BQKB1R w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-36",
+      "family": "queen-centre",
+      "label": "Queen-pawn centres 5",
+      "san": "d4 d5 Bf4 Nf6 e3 c5 c3 Nc6",
+      "moves": [
+        "d2d4",
+        "d7d5",
+        "c1f4",
+        "g8f6",
+        "e2e3",
+        "c7c5",
+        "c2c3",
+        "b8c6"
+      ],
+      "ordinaryFen": "r1bqkb1r/pp2pppp/2n2n2/2pp4/3P1B2/2P1P3/PP3PPP/RN1QKBNR w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-37",
+      "family": "indian",
+      "label": "Indian and fianchetto centres 5",
+      "san": "d4 Nf6 Nf3 e6 e3 b6 Bd3 Bb7",
+      "moves": [
+        "d2d4",
+        "g8f6",
+        "g1f3",
+        "e7e6",
+        "e2e3",
+        "b7b6",
+        "f1d3",
+        "c8b7"
+      ],
+      "ordinaryFen": "rn1qkb1r/pbpp1ppp/1p2pn2/8/3P4/3BPN2/PPP2PPP/RNBQK2R w KQkq - 2 5"
+    },
+    {
+      "id": "v19-book-38",
+      "family": "english",
+      "label": "English c-pawn structures 5",
+      "san": "c4 e5 g3 Nc6 Bg2 g6 Nc3 Bg7",
+      "moves": [
+        "c2c4",
+        "e7e5",
+        "g2g3",
+        "b8c6",
+        "f1g2",
+        "g7g6",
+        "b1c3",
+        "f8g7"
+      ],
+      "ordinaryFen": "r1bqk1nr/pppp1pbp/2n3p1/4p3/2P5/2N3P1/PP1PPPBP/R1BQK1NR w KQkq - 2 5"
+    },
+    {
+      "id": "v19-book-39",
+      "family": "reti",
+      "label": "Reti and flexible knight starts 5",
+      "san": "Nf3 Nf6 g3 b6 Bg2 Bb7 d3 e6",
+      "moves": [
+        "g1f3",
+        "g8f6",
+        "g2g3",
+        "b7b6",
+        "f1g2",
+        "c8b7",
+        "d2d3",
+        "e7e6"
+      ],
+      "ordinaryFen": "rn1qkb1r/pbpp1ppp/1p2pn2/8/8/3P1NP1/PPP1PPBP/RNBQK2R w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-40",
+      "family": "flank",
+      "label": "Flank and alternate first moves 5",
+      "san": "g3 e5 Bg2 Nc6 d3 d5 Nf3 Nf6",
+      "moves": [
+        "g2g3",
+        "e7e5",
+        "f1g2",
+        "b8c6",
+        "d2d3",
+        "d7d5",
+        "g1f3",
+        "g8f6"
+      ],
+      "ordinaryFen": "r1bqkb1r/ppp2ppp/2n2n2/3pp3/8/3P1NP1/PPP1PPBP/RNBQK2R w KQkq - 2 5"
+    },
+    {
+      "id": "v19-book-41",
+      "family": "open-king",
+      "label": "Open king-pawn centres 6",
+      "san": "e4 e5 f4 Bc5 Nf3 d6 Bc4 Nf6",
+      "moves": [
+        "e2e4",
+        "e7e5",
+        "f2f4",
+        "f8c5",
+        "g1f3",
+        "d7d6",
+        "f1c4",
+        "g8f6"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp2ppp/3p1n2/2b1p3/2B1PP2/5N2/PPPP2PP/RNBQK2R w KQkq - 2 5"
+    },
+    {
+      "id": "v19-book-42",
+      "family": "sicilian",
+      "label": "Asymmetric c-pawn structures 6",
+      "san": "e4 c5 f4 Nc6 Nf3 g6 g3 Bg7",
+      "moves": [
+        "e2e4",
+        "c7c5",
+        "f2f4",
+        "b8c6",
+        "g1f3",
+        "g7g6",
+        "g2g3",
+        "f8g7"
+      ],
+      "ordinaryFen": "r1bqk1nr/pp1pppbp/2n3p1/2p5/4PP2/5NP1/PPPP3P/RNBQKB1R w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-43",
+      "family": "french-caro",
+      "label": "Closed and semi-closed e-pawn structures 6",
+      "san": "e4 c6 Nc3 d5 Nf3 Nf6 d3 g6",
+      "moves": [
+        "e2e4",
+        "c7c6",
+        "b1c3",
+        "d7d5",
+        "g1f3",
+        "g8f6",
+        "d2d3",
+        "g7g6"
+      ],
+      "ordinaryFen": "rnbqkb1r/pp2pp1p/2p2np1/3p4/4P3/2NP1N2/PPP2PPP/R1BQKB1R w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-44",
+      "family": "queen-centre",
+      "label": "Queen-pawn centres 6",
+      "san": "d4 d5 Nf3 e6 g3 Nf6 Bg2 Be7",
+      "moves": [
+        "d2d4",
+        "d7d5",
+        "g1f3",
+        "e7e6",
+        "g2g3",
+        "g8f6",
+        "f1g2",
+        "f8e7"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1bppp/4pn2/3p4/3P4/5NP1/PPP1PPBP/RNBQK2R w KQkq - 3 5"
+    },
+    {
+      "id": "v19-book-45",
+      "family": "indian",
+      "label": "Indian and fianchetto centres 6",
+      "san": "d4 Nf6 c4 d6 Nc3 e5 Nf3 Nbd7",
+      "moves": [
+        "d2d4",
+        "g8f6",
+        "c2c4",
+        "d7d6",
+        "b1c3",
+        "e7e5",
+        "g1f3",
+        "b8d7"
+      ],
+      "ordinaryFen": "r1bqkb1r/pppn1ppp/3p1n2/4p3/2PP4/2N2N2/PP2PPPP/R1BQKB1R w KQkq - 2 5"
+    },
+    {
+      "id": "v19-book-46",
+      "family": "english",
+      "label": "English c-pawn structures 6",
+      "san": "c4 c6 Nf3 d5 e3 Nf6 Nc3 e6",
+      "moves": [
+        "c2c4",
+        "c7c6",
+        "g1f3",
+        "d7d5",
+        "e2e3",
+        "g8f6",
+        "b1c3",
+        "e7e6"
+      ],
+      "ordinaryFen": "rnbqkb1r/pp3ppp/2p1pn2/3p4/2P5/2N1PN2/PP1P1PPP/R1BQKB1R w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-47",
+      "family": "reti",
+      "label": "Reti and flexible knight starts 6",
+      "san": "Nf3 d5 e3 Nf6 c4 e6 Nc3 Be7",
+      "moves": [
+        "g1f3",
+        "d7d5",
+        "e2e3",
+        "g8f6",
+        "c2c4",
+        "e7e6",
+        "b1c3",
+        "f8e7"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1bppp/4pn2/3p4/2P5/2N1PN2/PP1P1PPP/R1BQKB1R w KQkq - 2 5"
+    },
+    {
+      "id": "v19-book-48",
+      "family": "flank",
+      "label": "Flank and alternate first moves 6",
+      "san": "f4 Nf6 Nf3 g6 e3 Bg7 b3 d6",
+      "moves": [
+        "f2f4",
+        "g8f6",
+        "g1f3",
+        "g7g6",
+        "e2e3",
+        "f8g7",
+        "b2b3",
+        "d7d6"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1ppbp/3p1np1/8/5P2/1P2PN2/P1PP2PP/RNBQKB1R w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-49",
+      "family": "open-king",
+      "label": "Open king-pawn centres 7",
+      "san": "e4 e5 Nc3 Nf6 f4 d6 Nf3 Nbd7",
+      "moves": [
+        "e2e4",
+        "e7e5",
+        "b1c3",
+        "g8f6",
+        "f2f4",
+        "d7d6",
+        "g1f3",
+        "b8d7"
+      ],
+      "ordinaryFen": "r1bqkb1r/pppn1ppp/3p1n2/4p3/4PP2/2N2N2/PPPP2PP/R1BQKB1R w KQkq - 2 5"
+    },
+    {
+      "id": "v19-book-50",
+      "family": "sicilian",
+      "label": "Asymmetric c-pawn structures 7",
+      "san": "e4 c5 b3 d6 Bb2 Nf6 Nc3 g6",
+      "moves": [
+        "e2e4",
+        "c7c5",
+        "b2b3",
+        "d7d6",
+        "c1b2",
+        "g8f6",
+        "b1c3",
+        "g7g6"
+      ],
+      "ordinaryFen": "rnbqkb1r/pp2pp1p/3p1np1/2p5/4P3/1PN5/PBPP1PPP/R2QKBNR w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-51",
+      "family": "french-caro",
+      "label": "Closed and semi-closed e-pawn structures 7",
+      "san": "e4 e6 Nc3 d5 Nf3 Nf6 e5 Nfd7",
+      "moves": [
+        "e2e4",
+        "e7e6",
+        "b1c3",
+        "d7d5",
+        "g1f3",
+        "g8f6",
+        "e4e5",
+        "f6d7"
+      ],
+      "ordinaryFen": "rnbqkb1r/pppn1ppp/4p3/3pP3/8/2N2N2/PPPP1PPP/R1BQKB1R w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-52",
+      "family": "queen-centre",
+      "label": "Queen-pawn centres 7",
+      "san": "d4 d5 e3 Nf6 Bd3 c5 Nf3 Nc6",
+      "moves": [
+        "d2d4",
+        "d7d5",
+        "e2e3",
+        "g8f6",
+        "f1d3",
+        "c7c5",
+        "g1f3",
+        "b8c6"
+      ],
+      "ordinaryFen": "r1bqkb1r/pp2pppp/2n2n2/2pp4/3P4/3BPN2/PPP2PPP/RNBQK2R w KQkq - 2 5"
+    },
+    {
+      "id": "v19-book-53",
+      "family": "indian",
+      "label": "Indian and fianchetto centres 7",
+      "san": "d4 Nf6 Nc3 d5 Bf4 g6 e3 Bg7",
+      "moves": [
+        "d2d4",
+        "g8f6",
+        "b1c3",
+        "d7d5",
+        "c1f4",
+        "g7g6",
+        "e2e3",
+        "f8g7"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1ppbp/5np1/3p4/3P1B2/2N1P3/PPP2PPP/R2QKBNR w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-54",
+      "family": "english",
+      "label": "English c-pawn structures 7",
+      "san": "c4 b6 Nc3 Bb7 Nf3 Nf6 g3 e6",
+      "moves": [
+        "c2c4",
+        "b7b6",
+        "b1c3",
+        "c8b7",
+        "g1f3",
+        "g8f6",
+        "g2g3",
+        "e7e6"
+      ],
+      "ordinaryFen": "rn1qkb1r/pbpp1ppp/1p2pn2/8/2P5/2N2NP1/PP1PPP1P/R1BQKB1R w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-55",
+      "family": "reti",
+      "label": "Reti and flexible knight starts 7",
+      "san": "Nf3 c6 g3 d5 Bg2 Nf6 d3 Bf5",
+      "moves": [
+        "g1f3",
+        "c7c6",
+        "g2g3",
+        "d7d5",
+        "f1g2",
+        "g8f6",
+        "d2d3",
+        "c8f5"
+      ],
+      "ordinaryFen": "rn1qkb1r/pp2pppp/2p2n2/3p1b2/8/3P1NP1/PPP1PPBP/RNBQK2R w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-56",
+      "family": "flank",
+      "label": "Flank and alternate first moves 7",
+      "san": "Nc3 d5 e4 e6 Nf3 Nf6 d3 Be7",
+      "moves": [
+        "b1c3",
+        "d7d5",
+        "e2e4",
+        "e7e6",
+        "g1f3",
+        "g8f6",
+        "d2d3",
+        "f8e7"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1bppp/4pn2/3p4/4P3/2NP1N2/PPP2PPP/R1BQKB1R w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-57",
+      "family": "open-king",
+      "label": "Open king-pawn centres 8",
+      "san": "e4 e5 d4 d6 Nf3 Nd7 Bc4 Ngf6",
+      "moves": [
+        "e2e4",
+        "e7e5",
+        "d2d4",
+        "d7d6",
+        "g1f3",
+        "b8d7",
+        "f1c4",
+        "g8f6"
+      ],
+      "ordinaryFen": "r1bqkb1r/pppn1ppp/3p1n2/4p3/2BPP3/5N2/PPP2PPP/RNBQK2R w KQkq - 4 5"
+    },
+    {
+      "id": "v19-book-58",
+      "family": "sicilian",
+      "label": "Asymmetric c-pawn structures 8",
+      "san": "e4 c5 d3 Nc6 Nd2 g6 g3 Bg7",
+      "moves": [
+        "e2e4",
+        "c7c5",
+        "d2d3",
+        "b8c6",
+        "b1d2",
+        "g7g6",
+        "g2g3",
+        "f8g7"
+      ],
+      "ordinaryFen": "r1bqk1nr/pp1pppbp/2n3p1/2p5/4P3/3P2P1/PPPN1P1P/R1BQKBNR w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-59",
+      "family": "french-caro",
+      "label": "Closed and semi-closed e-pawn structures 8",
+      "san": "e4 c6 d4 d5 Nd2 g6 Ngf3 Bg7",
+      "moves": [
+        "e2e4",
+        "c7c6",
+        "d2d4",
+        "d7d5",
+        "b1d2",
+        "g7g6",
+        "g1f3",
+        "f8g7"
+      ],
+      "ordinaryFen": "rnbqk1nr/pp2ppbp/2p3p1/3p4/3PP3/5N2/PPPN1PPP/R1BQKB1R w KQkq - 2 5"
+    },
+    {
+      "id": "v19-book-60",
+      "family": "queen-centre",
+      "label": "Queen-pawn centres 8",
+      "san": "d4 d5 c4 e6 g3 Nf6 Bg2 Be7",
+      "moves": [
+        "d2d4",
+        "d7d5",
+        "c2c4",
+        "e7e6",
+        "g2g3",
+        "g8f6",
+        "f1g2",
+        "f8e7"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1bppp/4pn2/3p4/2PP4/6P1/PP2PPBP/RNBQK1NR w KQkq - 3 5"
+    },
+    {
+      "id": "v19-book-61",
+      "family": "indian",
+      "label": "Indian and fianchetto centres 8",
+      "san": "d4 Nf6 c4 g6 g3 Bg7 Bg2 d6",
+      "moves": [
+        "d2d4",
+        "g8f6",
+        "c2c4",
+        "g7g6",
+        "g2g3",
+        "f8g7",
+        "f1g2",
+        "d7d6"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1ppbp/3p1np1/8/2PP4/6P1/PP2PPBP/RNBQK1NR w KQkq - 0 5"
+    },
+    {
+      "id": "v19-book-62",
+      "family": "english",
+      "label": "English c-pawn structures 8",
+      "san": "c4 Nf6 Nc3 e6 e4 d6 d4 Be7",
+      "moves": [
+        "c2c4",
+        "g8f6",
+        "b1c3",
+        "e7e6",
+        "e2e4",
+        "d7d6",
+        "d2d4",
+        "f8e7"
+      ],
+      "ordinaryFen": "rnbqk2r/ppp1bppp/3ppn2/8/2PPP3/2N5/PP3PPP/R1BQKBNR w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-63",
+      "family": "reti",
+      "label": "Reti and flexible knight starts 8",
+      "san": "Nf3 e6 g3 d5 Bg2 c5 d3 Nf6",
+      "moves": [
+        "g1f3",
+        "e7e6",
+        "g2g3",
+        "d7d5",
+        "f1g2",
+        "c7c5",
+        "d2d3",
+        "g8f6"
+      ],
+      "ordinaryFen": "rnbqkb1r/pp3ppp/4pn2/2pp4/8/3P1NP1/PPP1PPBP/RNBQK2R w KQkq - 1 5"
+    },
+    {
+      "id": "v19-book-64",
+      "family": "flank",
+      "label": "Flank and alternate first moves 8",
+      "san": "b4 e5 Bb2 d6 e3 Nf6 Nf3 g6",
+      "moves": [
+        "b2b4",
+        "e7e5",
+        "c1b2",
+        "d7d6",
+        "e2e3",
+        "g8f6",
+        "g1f3",
+        "g7g6"
+      ],
+      "ordinaryFen": "rnbqkb1r/ppp2p1p/3p1np1/4p3/1P6/4PN2/PBPP1PPP/RN1QKB1R w KQkq - 0 5"
+    }
+  ]
+}

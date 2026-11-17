@@ -11,6 +11,7 @@ const { rulesBuildOptions } = require('../scripts/rules-build');
 const { UciEngine } = require('../scripts/balance/uci');
 const { placementFromMap } = require('../src/profile-fen');
 const { getDesign } = require('../src/design-catalog');
+const promoted = new Map(require('../src/designs-v19-selected').NEW_DEFINITIONS.map(definition => [definition.id, definition]));
 const { TRIALS, NEW_DEFINITIONS, revisionProbes } = require('../src/balance-designs-v18-level1');
 const ROOT = path.resolve(__dirname, '..');
 const native = process.env.FAIRY_STOCKFISH_PATH || path.join(ROOT, 'node_modules/.cache/levelup-native-values/stockfish');
@@ -54,7 +55,7 @@ test('six trial identities reuse exact historical bodies and isolate four new de
   assert.deepEqual(TRIALS.map(row => row.movement), ['NmR', 'NW', 'BgB', 'RmBgmR0', 'RmBgmQ0', 'QmN']);
   assert.equal(NEW_DEFINITIONS.length, 4);
   for (const row of NEW_DEFINITIONS) {
-    assert.equal(getDesign(row.id), undefined); assert.equal(row.level, 1); assert.equal(row.placement, 'replace');
+    assert.deepEqual(getDesign(row.id), promoted.get(row.id)); assert.equal(row.level, 1); assert.equal(row.placement, 'replace');
     assert.equal(row.roles.castlingRook, row.family === 'rook'); assert.ok(Object.isFrozen(row));
   }
   assert.equal(getDesign('knight.positional-expanded@1').movement, 'NmR');

@@ -56,7 +56,8 @@ test.before(async () => {
 test.after(() => { if (directory) fs.rmSync(directory, { recursive: true, force: true }); });
 
 test('version 18 selects fresh definitions while all nineteen historical profiles retain their rules', () => {
-  assert.equal(PLAYABLE_LIBRARIES.length, 20);
+  assert.equal(PLAYABLE_LIBRARIES.indexOf(library), 19);
+  assert.equal(PLAYABLE_LIBRARIES.slice(0, 20).filter(row => row.generation >= 19).length, 0);
   assert.equal(library.generation, 18); assert.equal(profile.registry.definitions.length, 19);
   assert.notEqual(profile.variant, previous.variant); assert.notEqual(profile.hash, previous.hash);
   assert.deepEqual(PLAYABLE_LIBRARIES.slice(0, 19).flatMap(row => [row.json, row.ini]), Object.keys(historicalHashes));

@@ -11,6 +11,7 @@ const { rulesBuildOptions } = require('../scripts/rules-build');
 const { UciEngine } = require('../scripts/balance/uci');
 const { placementFromMap } = require('../src/profile-fen');
 const { getDesign } = require('../src/design-catalog');
+const promoted = new Map(require('../src/designs-v19-selected').NEW_DEFINITIONS.map(definition => [definition.id, definition]));
 const { getOfficialReferences } = require('../scripts/balance/official-references');
 const { TRIALS, NEW_DEFINITIONS, revisionProbes } = require('../src/balance-designs-v18-prepanel-level3');
 
@@ -67,7 +68,7 @@ test('seven immutable three-point trials preserve old two-point bodies and froze
   assert.equal(anchor.movement, 'NC'); assert.equal(anchor.level, 3);
   assert.deepEqual(anchor.engineValue, { mg: 1663, eg: 1877 });
   for (const [index, trial] of TRIALS.entries()) {
-    assert.equal(getDesign(trial.id), undefined);
+    assert.deepEqual(getDesign(trial.id), promoted.get(trial.id));
     assert.equal(trial.anchorId, anchor.id); assert.equal(trial.controlKey, 'unicorn-control');
     assert.ok(Object.isFrozen(trial));
     const definition = NEW_DEFINITIONS[index];

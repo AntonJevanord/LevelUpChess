@@ -30,11 +30,12 @@ async function importPosition(page, pieces) {
 }
 test.beforeAll(() => initVariantRules(library.variant));
 
-test('version 18 is the first workshop and offers the selected revisions while version 17 remains available', async ({ page }) => {
+test('version 18 remains selectable with its tested revisions after version 19 is added', async ({ page }) => {
   await page.goto('http://127.0.0.1:4173');
-  await expect(page.locator('.version')).toHaveText('VERSION 18 / ARMY WORKSHOP');
+  await expect(page.locator('.version')).toHaveText('VERSION 19 / ARMY WORKSHOP');
   const entries = await page.locator('#game-mode option').evaluateAll(options => options.map(option => ({ value: option.value, label: option.textContent })));
-  expect(entries.find(row => row.label.startsWith('Version ')).value).toBe(library.variant);
+  expect(entries.find(row => row.label.startsWith('Version ')).label).toMatch(/^Version 19/);
+  expect(entries.find(row => row.value === library.variant).label).toContain('Version 18');
   expect(entries.find(row => row.value === previous.variant).label).toContain('Version 17');
   await inPanel(page, 'setup', () => page.selectOption('#game-mode', library.variant));
   await square(page, 'd2').click();

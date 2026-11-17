@@ -167,6 +167,9 @@ const definitions = [
   ...require('./balance-designs-v17-mixed').NEW_DEFINITIONS,
   // Version 18 activates only the selected tested pawn and Cataphract bodies.
   ...require('./designs-v18-selected').NEW_DEFINITIONS,
+  // Version 19 promotes the accepted pre-panel identities without changing
+  // any earlier behavior, price, role or allocation hint.
+  ...require('./designs-v19-selected').NEW_DEFINITIONS,
 ];
 
 const DESIGNS = Object.freeze(Object.fromEntries(definitions.map(design => [design.id, design])));
