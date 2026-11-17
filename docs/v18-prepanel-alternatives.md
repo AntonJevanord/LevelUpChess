@@ -1,5 +1,9 @@
 # Version 18: alternatives before the next panels
 
+The L1 study has now reached [thirty-two reviewed cases](v18-queen32-review.md),
+supporting QfN and QvN as L1 panel candidates. L2/L3 outcomes remain pending.
+The protocol and sixteen-case counts below preserve the original declaration.
+
 These three optional studies finish the targeted design questions before the
 version-19 panels. They test new purchase contexts for the queen swap, two
 intermediate knights, three shorter-sideways bishops and seven L3 knights.

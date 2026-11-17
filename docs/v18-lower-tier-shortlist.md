@@ -2,7 +2,8 @@
 
 The current screens support a useful roster at both levels, with queens still
 the main gap. The scores below count draws as half a point against the fixed
-same-tier references at 40k nodes and sixteen opening cases. They are separate
+same-tier references at 40k nodes and sixteen opening cases, except the latest
+L1 queen screen which has thirty-two. They are separate
 studies with different cases, not a ranking from one round robin.
 
 ## Level one
@@ -18,7 +19,8 @@ Keep the three fixed references: Two-step pawn `fmW2fceF2`, King-step pawn
 | Hopping bishop | `BgB0` | 48.44% | Promising revision; 39.06% against King-step pawns |
 | Ghost rook: quiet diagonal hops | `RmBgmQ0` | 50.00% | Preferred Ghost-rook candidate |
 | Pawn rook | `RceF` | 49.44% | Promising; overall uses 15/16 complete shared cases |
-| Forward-tall queen | `QfN` | 44.79% | Preferred L1 queen; all matchups 42.19%–48.44% |
+| Forward-tall queen | `QfN` | 50.78% | Keep at L1; 32 cases, all matchups 45.31%–55.47% |
+| Tall-knight queen | `QvN` | 53.76% | Viable L1 alternative; 31/32 shared cases |
 
 The simpler Ghost rook `RmBgmR0` remains an alternative at 45.31%. The expanded
 Climbing knight `NvWvD` is high at 61.98%. Earlier quiet queen trials were weak:
@@ -26,8 +28,14 @@ Baby Amazon `QmN` scored 34.38% in the initial screen and 31.25% as a fresh
 control; Blink queen reached 39.06%, with only 23.44% against King-step pawns.
 The newer capture trials give QfN the preferred slot. QfhN is a stronger
 alternative at 59.38%, not an independent specialization: it contains every
-QfN move plus two more. QcC scored high at 64.58%; keep it for a possible later
-two-point test rather than assuming that price has already been established.
+QfN move plus two more. QcC scored high at 64.58%; its new two-point trial is
+pending rather than evidence that the higher price is already established.
+
+The [thirty-two-case comparison](v18-queen32-review.md) supports retaining QfN
+and QvN for the L1 panel. Their matched gap is 3.49 percentage points, with a
+−4.58 to +13.44 conditional range. QvN's backward jumps add options, but the
+screen does not establish a large strength gap or exact equivalence. QfN's
+earlier 44.79% score remains in its separate cases-49–64 study.
 
 Knights, bishops and rooks were tested as two identical one-point upgrades
 against two reference purchases. Queen tests used one purchase per side. Mixed
@@ -55,7 +63,7 @@ strength. Free Boar's new 65.56% score uses fifteen shared cases, and remains
 separate from its earlier 59.38%. Its Rank-pawn score fell from 82.81% to
 71.88%, while the other matchups became favorable too. Keep it for mixed-army
 review without automatically changing its movement. Box queen remains weak
-at 34.38% in the fresh control, as does QvN at 38.54%. A second distinct L2
+at 34.38% in the fresh control, as did QvN at its old two-point price (38.54%). A second distinct L2
 queen remains unresolved.
 
 The latest knight screen makes N0 the better selection than NFA: the fresh NFA
@@ -65,10 +73,11 @@ search values and opponents; it is not pooled into the two-point result.
 
 ## Next roster step
 
-The [completed roster review](v18-completion-review.md) selects QfN, QsN and
-NDmK for playtesting, with QfhN as an upper-end alternative. NDmW/NDmF remain
-conditional future ideas, not the next automatic experiment. Grants need only
-one option per tier.
+The [completed roster review](v18-completion-review.md) selected QfN, QsN and
+NDmK for playtesting. The [current alternatives](v18-prepanel-alternatives.md)
+also test NDmW/NDmF and the remaining bishop/L3-knight questions at the user's
+request; their results are still pending. QfN and QvN now form the L1 queen
+panel candidates. Grants need only one option per tier.
 
 Use these bodies for human playtesting and the planned mixed-budget study.
 Prioritize readable threats and counterplay, especially the King-step-pawn

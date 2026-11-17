@@ -120,7 +120,8 @@ playable profiles retain their tested definitions.
 
 The [current lower-tier shortlist](docs/v18-lower-tier-shortlist.md) gathers
 the promising pawn, knight, bishop, rook and grant choices alongside the fixed
-references. Second distinct queen choices remain unresolved.
+references. L1 now has QfN and QvN panel candidates; the remaining L2 queen
+decision awaits its new-context results.
 
 The [roster trials](docs/v18-roster-completion.md) added L1 queens `QcC`,
 `QfN` and sanity comparison `QfhN`; L2 queens `QsN` / `QvN`; and L2 knights
@@ -134,16 +135,22 @@ The [completed roster-trial review](docs/v18-completion-review.md) favors
 second L2 knight. Free Boar remains, with a broader strength concern at 65.56%.
 The 1,056 finalized games include two unscored move-limit truncations, without
 errors or retries. Verify the archived uploads with
-`npm.cmd run balance:review-v18-completion`. Second distinct queen choices
-remain open; no new experiment or playable replacement starts automatically.
+`npm.cmd run balance:review-v18-completion`. That review left second queen
+choices open; it started no new experiment or playable replacement.
 
-The next [targeted alternatives](docs/v18-prepanel-alternatives.md) test the
+The [targeted alternatives](docs/v18-prepanel-alternatives.md) test the
 queen price swap, `NDmW` / `NDmF`, three shorter-sideways bishops, and seven
 L3 knight compounds, including `NDH`. Sixteen cases total 2,080 games across
 `prepanel-level1`, `prepanel-level2` and `prepanel-level3`; use separate new
 folders. The [version-19 plan](docs/version19-plan.md) reserves same-tier
 panels for 16-opening review, then cumulative 32/64 cases and finally explicit
 cross-level comparisons. Wraith remains the original weaker `QgB0` design.
+
+The [32-opening L1 queen review](docs/v18-queen32-review.md) supports keeping
+QfN at **50.78%**, alongside QvN at **53.76%**. The matched 31-case difference
+is only 3.49 percentage points, with a conditional range spanning zero. All
+384 games are archived, including one unscored truncation; verify them with
+`npm.cmd run balance:review-v18-queen32`. L2/L3 alternatives remain pending.
 
 ## Version 17: balance experiments
 

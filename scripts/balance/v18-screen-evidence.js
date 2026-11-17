@@ -137,7 +137,7 @@ function markdownTables(text) {
   return tables;
 }
 function verifyUploadedReport(study, report, uploaded, { cohortHeaderPrefix = 'Cases', gainsHaveControlLabels = false } = {}) {
-  assert.ok(uploaded.includes(`16 fixed opening cases; ${report.scheduledGames} scheduled games.`), 'Uploaded headline count differs.');
+  assert.ok(uploaded.includes(`${report.targetOpenings} fixed opening cases; ${report.scheduledGames} scheduled games.`), 'Uploaded headline count differs.');
   const budgets = uploaded.split(/^## (40000|80000) nodes\r?$/m), sections = new Map();
   for (let index = 1; index < budgets.length; index += 2) sections.set(Number(budgets[index]), markdownTables(budgets[index + 1]));
   for (const stage of report.reports) {
@@ -166,8 +166,9 @@ function verifyUploadedReport(study, report, uploaded, { cohortHeaderPrefix = 'C
 }
 
 function analyzeStudy(study, inputs, descriptors, uploadedReport, { allowedStudies = STUDIES, computeGains = pairedGains,
-  verifyReport = verifyUploadedReport, cohortOpeningIds = false } = {}) {
+  verifyReport = verifyUploadedReport, cohortOpeningIds = false, targetOpenings = 16 } = {}) {
   assert.ok(allowedStudies.includes(study), 'Choose a declared archived study.');
+  assert.ok([8, 16, 32, 64].includes(targetOpenings), 'Choose a declared opening target.');
   const expected = descriptors.stages.filter(row => row.study === study);
   assert.equal(inputs.length, expected.length, 'Every expected node/batch journal is required.');
   const seen = new Set(), stages = inputs.map(input => {
@@ -189,6 +190,8 @@ function analyzeStudy(study, inputs, descriptors, uploadedReport, { allowedStudi
   const reports = [...new Set(stages.map(stage => stage.nodes))].sort((a, b) => a - b).map(nodes => {
     const selected = stages.filter(stage => stage.nodes === nodes), first = selected[0].descriptor.declaration;
     const config = { ...first.config, openings: selected.flatMap(stage => stage.descriptor.declaration.config.openings) };
+    assert.equal(config.openings.length, targetOpenings, 'Archived opening count differs from its declared target.');
+    assert.equal(new Set(config.openings.map(opening => opening.id)).size, targetOpenings, 'Archived opening IDs repeat.');
     const declaration = { ...first, config };
     const records = selected.flatMap(stage => stage.records.map(row => ({ ...row, id: `${stage.batchIndex}:${row.id}`, pairId: `${stage.batchIndex}:${row.pairId}` })));
     const report = createV17Report({ ...declaration, records });
@@ -201,7 +204,7 @@ function analyzeStudy(study, inputs, descriptors, uploadedReport, { allowedStudi
     });
     return { nodes, report, rows, cohorts, gains: computeGains(study, nodes, declaration, records) };
   });
-  const report = { study, targetOpenings: 16, scheduledGames: stages.reduce((sum, stage) => sum + stage.report.scheduledGames, 0), reports,
+  const report = { study, targetOpenings, scheduledGames: stages.reduce((sum, stage) => sum + stage.report.scheduledGames, 0), reports,
     evaluationAudit: stages[0].descriptor.declaration.metadata.evaluationAudit };
   if (uploadedReport !== undefined) verifyReport(study, report, uploadedReport);
   const latest = stages.flatMap(stage => latestRecords(stage.records)), attempts = stages.flatMap(stage => stage.records);

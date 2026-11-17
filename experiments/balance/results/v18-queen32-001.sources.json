@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-v18-queen32-source-pins",
+  "targetOpenings": 32,
+  "studies": {
+    "prepanel-level1": {
+      "journals": [
+        {
+          "study": "prepanel-level1",
+          "nodes": 40000,
+          "batchIndex": 0,
+          "originalName": "games.jsonl",
+          "archiveFile": "v18-queen32-001.prepanel-level1.b1.n40000.games.jsonl.gz",
+          "archivedSha256": "4c9c42546c034912d08670c0fdff23ca685089b13b74c1c84d8207bc8be2e4c6",
+          "sha256": "74d8e36c2c7e02b2c3cd19cae1b08592bbb5cce65696c1e1469dc911136d0a63",
+          "bytes": 378808
+        },
+        {
+          "study": "prepanel-level1",
+          "nodes": 40000,
+          "batchIndex": 1,
+          "originalName": "games.jsonl",
+          "archiveFile": "v18-queen32-001.prepanel-level1.b2.n40000.games.jsonl.gz",
+          "archivedSha256": "4bc9d10c4b9595a624e33f9a70fabec956f6ea3c0f8bcf4153d40b224db22ddd",
+          "sha256": "432f67c5bc60864f1d095e4cd3ad8e129b15417506f51dae2a5c0e200010c3ca",
+          "bytes": 386446
+        },
+        {
+          "study": "prepanel-level1",
+          "nodes": 40000,
+          "batchIndex": 2,
+          "originalName": "games.jsonl",
+          "archiveFile": "v18-queen32-001.prepanel-level1.b3.n40000.games.jsonl.gz",
+          "archivedSha256": "ea441d68fb085c817e3a2450422d7e5b7cf281b1ca37613e587d7efa2d099ee1",
+          "sha256": "9d1924c244f7fc338ee5e5604e94beb3a5ebfc88eb93f1d0bc4c4692535eb6ea",
+          "bytes": 374128
+        },
+        {
+          "study": "prepanel-level1",
+          "nodes": 40000,
+          "batchIndex": 3,
+          "originalName": "games.jsonl",
+          "archiveFile": "v18-queen32-001.prepanel-level1.b4.n40000.games.jsonl.gz",
+          "archivedSha256": "9f35e4dffde496c8dd2b99277d49d4604dac18a7f8b7ead0d3dfffc3f8a524ca",
+          "sha256": "4c49afbd012601aef89b38c9b6ab012cd5b62ac737eeaa401f9c62b4e41c7760",
+          "bytes": 391776
+        }
+      ],
+      "uploadedReport": {
+        "originalName": "screen-report.md",
+        "archiveFile": "v18-queen32-001.prepanel-level1.uploaded-report.md.gz",
+        "archivedSha256": "15f9cac68f0ad820f2db77921f5f4364dc4adc149524d8ff74d2aaa0fd2c3313",
+        "sha256": "a70aedb32e1cc6672b797dee0ff93bdfd29cae06117bb3617a7081662b7f1a38",
+        "bytes": 5520
+      }
+    }
+  },
+  "declarations": {
+    "archiveFile": "v18-queen32-001.declarations.json.gz",
+    "archivedSha256": "122a86c339fbd92f097d506b6f282b45ab3df653774bedbeb554d9b3a7df6b38",
+    "sha256": "0b7f86327c3079e71612b4ad36825786a31fbea54ad845786f77e859545f1728",
+    "bytes": 332264
+  }
+}
