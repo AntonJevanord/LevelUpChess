@@ -1,5 +1,8 @@
 # Version 18: queen and second-knight trials
 
+The first sixteen cases are now [completed and reviewed](v18-completion-review.md).
+This document preserves the prospective protocol; no new run starts automatically.
+
 Retain Free Boar `BsR` as the second L2 bishop candidate. Its 59.38% screen
 score included 82.81% against Rank pawn, but only 46.88% and 48.44% against
 the other references. New cases can check whether that counter repeats;

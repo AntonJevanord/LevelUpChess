@@ -120,14 +120,22 @@ playable profiles retain their tested definitions.
 
 The [current lower-tier shortlist](docs/v18-lower-tier-shortlist.md) gathers
 the promising pawn, knight, bishop, rook and grant choices alongside the fixed
-references. Both queen slots remain unresolved.
+references. Second distinct queen choices remain unresolved.
 
-The [next roster trials](docs/v18-roster-completion.md) add L1 queens `QcC`,
+The [roster trials](docs/v18-roster-completion.md) added L1 queens `QcC`,
 `QfN` and sanity comparison `QfhN`; L2 queens `QsN` / `QvN`; and L2 knights
-`ND` / `NDmK`. Free Boar remains a candidate and receives new reference cases.
-Sixteen cases schedule 384 L1 and 672 L2 games. Use `--study level1-queens`
+`ND` / `NDmK`. Free Boar remained a candidate and received new reference cases.
+Sixteen cases scheduled 384 L1 and 672 L2 games. Use `--study level1-queens`
 or `--study level2-completion` in separate new output folders. One grant per
 tier is enough; no second grant is scheduled.
+
+The [completed roster-trial review](docs/v18-completion-review.md) favors
+`QfN` (44.79%) at L1, `QsN` (47.40%) at L2 and `NDmK` (56.77%) as the
+second L2 knight. Free Boar remains, with a broader strength concern at 65.56%.
+The 1,056 finalized games include two unscored move-limit truncations, without
+errors or retries. Verify the archived uploads with
+`npm.cmd run balance:review-v18-completion`. Second distinct queen choices
+remain open; no new experiment or playable replacement starts automatically.
 
 ## Version 17: balance experiments
 
