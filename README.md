@@ -12,7 +12,7 @@ The side panel has **Game, Setup, Design and Files** tabs. Status and essential 
 
 Right-click for a circle or right-drag for an arrow; repeat to remove a mark, or press Escape to clear marks. **Draw** enables tap/drag annotation on touch screens. Design offers four piece styles, four board palettes and an annotation color, with preferences remembered locally. See the [interface guide](docs/interface-v18.md).
 
-The current roster allows a 1–9 point budget per side. The current tier libraries each contain 11 selected designs, with one reserve grant per tier; choose the **revised** L2/L3 entries. All twenty-three earlier libraries retain their rules. The [version-19 guide](docs/version19.md) gives the accepted roster, Windows branch-switch instructions and panel commands. Historical family workshops remain selectable for earlier mixed-tier setups.
+The current roster allows a 1–9 point budget per side. Choose **Level 1 roster · current**, **Level 2 roster · current**, or **Level 3 roster · revised**: they contain 11, 12 and 11 designs, with one reserve grant per tier. All twenty-five earlier libraries retain their rules. The [version-19 guide](docs/version19.md) gives the playable roster, Windows branch-switch instructions and panel commands. Historical family workshops remain selectable for earlier mixed-tier setups.
 
 Select the king during setup to buy one nonroyal reserve guard. Starting the game keeps the ordinary royal king and places the guard in reserve. Click a reserve piece, then a highlighted empty square in your own half. A drop spends a turn and cannot give check; captured pieces disappear rather than refill reserves. All ordinary king safety and castling rules still apply.
 
@@ -87,6 +87,13 @@ L2/L3 games and flag Wraith's immediate post-prefix mates. A separate
 [L2 pawn follow-up](docs/v19-pawn-range-followup.md) compares `fQ2` with
 `mvQ2fceB2`; the same guide explains recovery of the queen trial's incomplete
 runtime setup.
+
+The [completed queen/pawn trials](docs/v19-selected-trials-review.md) add
+1,152 archived games. Playable revision 003 selects **Wide-forward queen
+`QfsN`** as the blue second L1 queen and **Forward-range pawn `fQ2`** as a
+two-point L2 choice, retaining the fixed pawn references. These are design
+choices at recorded scores of 42.19% and 56.51%; published panel declarations
+and earlier game profiles retain their identities.
 
 New runs [record the first post-opening engine score](docs/opening-evaluations.md)
 with each game and summarize it automatically in the panel/trial reports.

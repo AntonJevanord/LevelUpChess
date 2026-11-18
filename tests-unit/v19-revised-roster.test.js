@@ -56,7 +56,8 @@ test('new profile mappings, help text and colors are coherent without changing s
   const factory = getPlayableProfiles();
   for (const level of [2, 3]) {
     const row = library(level), value = profile(level), options = getDesignOptions(value.variant);
-    assert.ok(row && !row.superseded);
+    assert.ok(row);
+    assert.equal(Boolean(row.superseded), level === 2, 'only the later L2 selection supersedes this revised edition');
     assert.deepEqual(value, factory[PLAYABLE_LIBRARIES.indexOf(row)]);
     assert.equal(value.registry.definitions.length, 11);
     assert.deepEqual(options.map(option => option.id).sort(), revised.getTierRoster(level).map(body => body.id).sort());

@@ -28,9 +28,11 @@ function getPlayableProfiles() {
       // New editions can require broader capability checks without changing
       // a historical profile's probe inventory or recorded rule identity.
       return library.generation === 19 ? Object.freeze({ ...profile,
-        capabilityProbes: (library.rosterRevision === 'v19-002'
-          ? require('../src/v19-revised-capability-probes')
-          : require('../src/v19-capability-probes')).revisionProbes(profile) }) : profile;
+        capabilityProbes: (library.rosterRevision === 'v19-003'
+          ? require('../src/v19-current-capability-probes')
+          : library.rosterRevision === 'v19-002'
+            ? require('../src/v19-revised-capability-probes')
+            : require('../src/v19-capability-probes')).revisionProbes(profile) }) : profile;
     }));
   }
   return compiled;

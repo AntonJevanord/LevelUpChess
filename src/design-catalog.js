@@ -172,6 +172,8 @@ const definitions = [
   ...require('./designs-v19-selected').NEW_DEFINITIONS,
   // A later roster selects the tested Wraith without relabeling earlier games.
   ...require('./designs-v19-revised').NEW_DEFINITIONS,
+  // Explicit playable selections preserve the trials' immutable identities.
+  ...require('./designs-v19-current').NEW_DEFINITIONS,
 ];
 
 const DESIGNS = Object.freeze(Object.fromEntries(definitions.map(design => [design.id, design])));

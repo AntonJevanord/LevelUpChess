@@ -33,8 +33,13 @@ const revisedV19Profiles = [
   require('./playable-v19-level2-revised-profile.json'),
   require('./playable-v19-level3-revised-profile.json'),
 ];
+const currentV19Profiles = [
+  require('./playable-v19-level1-current-profile.json'),
+  require('./playable-v19-level2-current-profile.json'),
+];
 const { TIERS: V19_TIERS } = require('./designs-v19-selected');
 const { TIERS: V19_REVISED_TIERS } = require('./designs-v19-revised');
+const { TIERS: V19_CURRENT_TIERS } = require('./designs-v19-current');
 const { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, V18_CANDIDATES, V18_RESERVE_DESIGN_IDS } = require('./playable-library');
 const { STANDARD_TYPES } = require('./design-catalog');
 const { pieceInfo } = require('./piece-catalog');
@@ -48,7 +53,7 @@ function freeze(value) {
 }
 
 const PLAYABLE_PROFILE = freeze(compiled);
-const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile, rosterProfile, confirmedProfile, selectedV18Profile, ...selectedV19Profiles, ...revisedV19Profiles]);
+const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile, rosterProfile, confirmedProfile, selectedV18Profile, ...selectedV19Profiles, ...revisedV19Profiles, ...currentV19Profiles]);
 const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
 const EXPERIMENTAL_VARIANTS = freeze(PLAYABLE_PROFILES.map(profile => profile.variant));
 const PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES[index].variant, ...(library.generation ? { generation: library.generation } : {}), ...(library.focusFamily ? { focusFamily: library.focusFamily } : {}), ...(library.edition ? { edition: library.edition } : {}), ...(library.superseded ? { superseded: true } : {}) })));
@@ -160,6 +165,8 @@ const metadata = {
   'rook.ghost-diagonal-omni@1': ['Ghost rook', 'Normal rook moves and captures. Also move along clear diagonal lines without capturing, or hop in any queen direction over exactly one piece to an empty square before the next blocker. Hopping cannot capture.'],
   'queen.level1-forward-knight@1': ['Forward-tall queen', 'Normal queen moves, plus knight jumps two ranks forward and one file sideways, including captures.'],
   'queen.level1-tall-knight@1': ['Tall-knight queen', 'Normal queen moves, plus knight jumps two ranks forward or backward and one file sideways, including captures.'],
+  'queen.level1-wide-forward-knight@1': ['Wide-forward queen', 'Normal queen moves, plus knight jumps two files sideways and one rank forward, including captures. These extra jumps cross intervening pieces.'],
+  'pawn.level2-forward-queen-only@1': ['Forward-range pawn', 'Move or capture up to two clear squares straight forward or diagonally forward. No sideways or backward moves. Range-two moves remain available away from the home rank and cannot jump over pieces. Visiting an empty en-passant target diagonally is a quiet move and leaves the bypassed pawn.'],
   'pawn.bishop-diagonal-range@1': ['Bishop pawn', 'Move one square forward without capturing. Capture up to two clear squares diagonally forward, or move or capture up to two clear squares diagonally backward. A clear two-square advance is available from your home two ranks.'],
   'knight.nightrider-level2@1': ['Nightrider', 'Repeat knight jumps in the same direction, stopping at an occupied landing square. Intervening squares between knight landings do not block it.'],
   'knight.level2-nd-quiet-orthogonal@1': ['Dabbaba knight', 'Normal knight jumps and two-square orthogonal jumps, including captures. Also step one square orthogonally without capturing. All jumps cross intervening pieces.'],
@@ -258,6 +265,7 @@ const v18ExplorationIds = new Set(['knight.purple@4', 'queen.purple@7']);
 const v19Presentation = new Map([
   ...selectedV19Profiles.map((profile, index) => [profile, V19_TIERS[index]]),
   ...revisedV19Profiles.map((profile, index) => [profile, V19_REVISED_TIERS[index + 1]]),
+  ...currentV19Profiles.map((profile, index) => [profile, V19_CURRENT_TIERS[index]]),
 ].map(([profile, tier]) => {
   const groups = new Set(), entries = {};
   for (const body of tier.bodies) {

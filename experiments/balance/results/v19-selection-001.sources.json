@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-v19-selection-source-pins",
+  "targetOpenings": 32,
+  "studies": {
+    "queens": {
+      "internalStudy": "level1",
+      "planModule": "v19-trial-plan",
+      "journals": [
+        {
+          "uploadFileId": "file_0000000062d0820ab72fc37f4d8a84de",
+          "batchIndex": 0,
+          "nodes": 40000,
+          "originalFilename": "games.jsonl",
+          "archiveFile": "v19-selection-001.queens.b1.n40000.games.jsonl.gz",
+          "bytes": 926020,
+          "sha256": "8254be0e7f83fec155ad766be4f96463083f8519613dbcfeabb14b670b1e5d45",
+          "archivedSha256": "c34f5328b420fa6fab6f39e4c254e1020ff8a6004adbe4381405140ed9403c2e"
+        },
+        {
+          "uploadFileId": "file_00000000cef0820abe6d502abb89298a",
+          "batchIndex": 1,
+          "nodes": 40000,
+          "originalFilename": "games.jsonl",
+          "archiveFile": "v19-selection-001.queens.b2.n40000.games.jsonl.gz",
+          "bytes": 936827,
+          "sha256": "671f0b4c5813c2ec2dd7d2c3502e2b00083d715ce800be47c8d630a71b1c8567",
+          "archivedSha256": "dcdd8aee9dd6e37a0a2605bd05b362604b1929ae7163a817db1aa2f868834711"
+        },
+        {
+          "uploadFileId": "file_000000009a64820aaed95bb1d5a37e32",
+          "batchIndex": 2,
+          "nodes": 40000,
+          "originalFilename": "games.jsonl",
+          "archiveFile": "v19-selection-001.queens.b3.n40000.games.jsonl.gz",
+          "bytes": 938542,
+          "sha256": "570aca3b4053c17ea0b680e078143ee64ebf578ab8a4560e232ec1bdb13afdd7",
+          "archivedSha256": "1c48881ccd630c42507ad32c25e403ed3bdcf9a947e4b8fd5ff8a5c4500da273"
+        },
+        {
+          "uploadFileId": "file_00000000e64c820a9ada20adbf6d86ca",
+          "batchIndex": 3,
+          "nodes": 40000,
+          "originalFilename": "games.jsonl",
+          "archiveFile": "v19-selection-001.queens.b4.n40000.games.jsonl.gz",
+          "bytes": 934378,
+          "sha256": "750eb30c838f025ded9814a36557fef65f747f76b57d2d03612b5a35947155aa",
+          "archivedSha256": "ea4f5b547b25e01271b8e55a01f2d680c1400e4edcfd6f484a2e2633d5974ca1"
+        }
+      ],
+      "uploadedReport": {
+        "uploadFileId": "file_00000000da3481f48a7c869386e01f9d",
+        "originalFilename": "panel-report.md",
+        "archiveFile": "v19-selection-001.queens.uploaded-report.md.gz",
+        "bytes": 8154,
+        "sha256": "1a8a8085da7db23c86725a34ea07d18a504b6f9f5cb037b2655302cb84907fed",
+        "archivedSha256": "cb04c8cbad65205f66cea2834b204d243f983d11347675ae71a6e51c71273016"
+      }
+    },
+    "pawns2": {
+      "internalStudy": "level2",
+      "planModule": "v19-pawn-followup-plan",
+      "journals": [
+        {
+          "uploadFileId": "file_000000008070820ab900e686cf77d8f8",
+          "batchIndex": 0,
+          "nodes": 40000,
+          "originalFilename": "games.jsonl",
+          "archiveFile": "v19-selection-001.pawns2.b1.n40000.games.jsonl.gz",
+          "bytes": 452749,
+          "sha256": "6b34a9c5e975e1f1f39d1066ee3265fc25651325f7fd4446a37a0c7e70140957",
+          "archivedSha256": "63725122a8ba5775e1ae86780247306ed4888f2ebc7d4926b90854f0672f8932"
+        },
+        {
+          "uploadFileId": "file_000000005660820aa13fcd26be65a339",
+          "batchIndex": 1,
+          "nodes": 40000,
+          "originalFilename": "games.jsonl",
+          "archiveFile": "v19-selection-001.pawns2.b2.n40000.games.jsonl.gz",
+          "bytes": 473701,
+          "sha256": "59f8338f329c0df2f24e5ab05f8ee77380f9297500bb29f7a85bc4ea3c30b419",
+          "archivedSha256": "a1738f8f7a9dfea8f65f6b99e6bf68ab092f7a6a2300e9a6ce9482e0ff607bc0"
+        },
+        {
+          "uploadFileId": "file_000000003f14820a9698e58a44fa1b7f",
+          "batchIndex": 2,
+          "nodes": 40000,
+          "originalFilename": "games.jsonl",
+          "archiveFile": "v19-selection-001.pawns2.b3.n40000.games.jsonl.gz",
+          "bytes": 462918,
+          "sha256": "7e4e09e50ef5eeccc77f62a30a5c7dda98080ee6b4cd14ebbb1e8fba61ea46de",
+          "archivedSha256": "ce3bdc188b4fd2ada2744f44bf6552bb72e9ab25bca24df40557d5f675407a23"
+        },
+        {
+          "uploadFileId": "file_00000000a12c8210babedee565e944ac",
+          "batchIndex": 3,
+          "nodes": 40000,
+          "originalFilename": "games.jsonl",
+          "archiveFile": "v19-selection-001.pawns2.b4.n40000.games.jsonl.gz",
+          "bytes": 460527,
+          "sha256": "59efa87507cc4342e6b5f4f596cb4db947dea976c626fbd9547d009e79c37b44",
+          "archivedSha256": "70ab569b787b2ed5b228b0a72f8071b9daccc0421146b5d6b352eff404b9d7f3"
+        }
+      ],
+      "uploadedReport": {
+        "uploadFileId": "file_00000000a4e482109b1aa9606164d5b6",
+        "originalFilename": "panel-report.md",
+        "archiveFile": "v19-selection-001.pawns2.uploaded-report.md.gz",
+        "bytes": 7425,
+        "sha256": "68bb70e75282335fe27e13a9dd5da330824b8ec32fda17d763fbd12593049211",
+        "archivedSha256": "13822f402911ea0b659334a22bc4a785b0105493d0a5c47506065782691a21b7"
+      }
+    }
+  },
+  "declarations": {
+    "derived": true,
+    "archiveFile": "v19-selection-001.declarations.json.gz",
+    "bytes": 926343,
+    "sha256": "a1ab3c07386be42fe0692c6e77d9fa08a3f9e602eb3c004186fa40dea3465758",
+    "archivedSha256": "4903f9566f4f1e169f8507ff7e51ca448270cf0d7bf07498610844ee8fd78979"
+  }
+}

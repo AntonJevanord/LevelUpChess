@@ -3,17 +3,21 @@
 Branch **`version_19`** starts from the version-18 closeout, **`v0.18.14`**.
 Pre-panel screening is complete. The accepted roster now enters playable tier
 libraries and separate same-tier round robins before cross-level experiments.
-All twenty-three previously published libraries and their exact rules remain available.
+All twenty-five previously published libraries and their exact rules remain available.
 
 ## Accepted roster
 
 The final choices are **NAD at L3**, and **NDmW, QcC and Free Boar BsR at L2**.
-L1 retains QfN/QvN pending the [new queen and pawn trials](v19-pawn-queen-trials.md).
-Revision 002 removes the third L2 Bishop pawn, retaining the frozen Knight/Rank
-pawn references. Herald remains at L3 while alternatives are tested.
+Playable revision 003 keeps the green **Forward-tall queen `QfN`** and selects
+the blue **Wide-forward queen `QfsN`** as the second L1 queen. It also adds the
+two-point orange **Forward-range pawn `fQ2`** at L2 while retaining the frozen
+Knight/Rank pawn references. The [completed trial review](v19-selected-trials-review.md)
+records scores of 42.19% and 56.51%; the selection favors their clear movement
+identities rather than claiming exact balance. The L2 Bishop pawn remains in
+earlier libraries. Herald and the revised Wraith remain at L3.
 The playable Wraith is now **`QgmQ0gcBgcsR0`**, the best tested below-50%
 revision (38.67% at 40k nodes; 37.89% at 80k). The
-[revised roster declaration](../experiments/designs/v19-roster-002.json) records every
+[current playable declaration](../experiments/designs/v19-roster-003.json) records every
 accepted identity; the [screening review](v18-prepanel32-review.md) preserves
 the comparisons behind the final choices.
 
@@ -26,7 +30,7 @@ The fixed reference baskets remain:
 | L3 | Vanguard `RfB`, Unicorn `NC`, Crusader `BsR2nsN`, Amazon `QN` |
 
 MG/EG search priors are frozen separately in the
-[value declaration](../experiments/designs/v19-panel-values-002.json). They are
+[playable value declaration](../experiments/designs/v19-panel-values-003.json). They are
 engine settings, not purchase prices or fitted material values. Existing
 research identities retain their tested movement and historical contexts.
 
@@ -42,9 +46,13 @@ npm.cmd ci
 npm.cmd start
 ```
 
-Under **Rules**, choose **Version 19 · Level 1 roster**, **Version 19 · Level 2
-roster · revised** or **Version 19 · Level 3 roster · revised**. Each contains
-11 upgrade designs. Separate libraries keep each profile below the engine's
+Under **Rules**, choose **Version 19 · Level 1 roster · current**, **Version 19 · Level 2
+roster · current** or **Version 19 · Level 3 roster · revised**. They contain
+11, 12 and 11 upgrade designs. The L1 queen choices are green QfN and blue QfsN;
+the new orange L2 pawn moves and captures up to two clear squares forward,
+straight or diagonally, with no sideways/backward moves. Standard promotion
+remains Q/R/B/N; its quiet diagonal en-passant landing leaves the bypassed pawn.
+Separate libraries keep each profile below the engine's
 20-custom-type limit; each offers its tier's upgrades alongside ordinary pieces.
 Local two-player games also work by opening `index.html` directly.
 
@@ -60,6 +68,11 @@ adjacent diagonal en-passant capture removes it. The piece descriptions retain
 these distinctions; notation was not silently changed during promotion.
 
 ## Run the tier panels
+
+Published panel runs still use the [revision-002 declaration](../experiments/designs/v19-roster-002.json)
+and its [value policy](../experiments/designs/v19-panel-values-002.json). The new
+playable selections do not silently revise those experiments or their opponent
+baskets. Any future panel revision will receive its own declared context.
 
 Each panel compares **one purchase per army**, including pawns, queens and
 grants, in every same-tier pairing. Both physical colors play each shared

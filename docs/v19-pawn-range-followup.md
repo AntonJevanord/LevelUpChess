@@ -5,6 +5,11 @@ above the reference basket: `B2vR2` scored **60.94%**, and `fQ2mbQ2`
 **67.20%** over 32 shared openings. This follow-up restricts their captures
 or retreat while preserving the same opponents and engine priors.
 
+The study has now completed 32 openings: fQ2 scores **56.51%**, versus
+**58.07%** for mvQ2fceB2. The user selected the simpler forward-only fQ2 for
+the playable roster. See the [completed review](v19-selected-trials-review.md)
+for exact outcomes, colors and limitations; the prior trials stay archived.
+
 | Candidate | Quiet movement | Captures |
 | --- | --- | --- |
 | `fQ2` | Up to two squares straight forward or diagonally forward | Same paths |
@@ -67,9 +72,13 @@ conditional opening-block ranges and the
 Reports refresh at batch boundaries and clean stops. Errors, truncations and
 incomplete color pairs remain unscored; diagnostic flags never correct results.
 
-## Recover the queen trial
+## Earlier queen-trial interruption
 
-The uploaded queen receipt has `directory: null`, four workers and a
+The queen study has since finished; its results are in the
+[selected-trial review](v19-selected-trials-review.md). The recovery below
+documents the earlier setup interruption and remains applicable to that state.
+
+The earlier uploaded queen receipt has `directory: null`, four workers and a
 32-opening target. Together with the empty runtime folder, this indicates that
 snapshot setup did not finish. There is no game journal or result to recover.
 The receipt alone cannot identify the original operating-system error.

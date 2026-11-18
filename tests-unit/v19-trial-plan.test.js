@@ -26,8 +26,12 @@ function context(study = 'level1', batchIndex = 0, tools = plan) {
     schedule, designRegistry: registry, designProfile: profile } };
 }
 
-test('new trials remain isolated, fixed references stay unchanged and all games use one purchase', () => {
-  for (const definition of definitions) assert.equal(rootCatalog.getDesign(definition.id), undefined);
+test('unselected trials remain isolated, fixed references stay unchanged and all games use one purchase', () => {
+  const selectedIds = new Set(require('../src/designs-v19-current').NEW_DEFINITIONS.map(row => row.id));
+  for (const definition of definitions) {
+    if (selectedIds.has(definition.id)) assert.deepEqual(rootCatalog.getDesign(definition.id), definition);
+    else assert.equal(rootCatalog.getDesign(definition.id), undefined);
+  }
   const totals = { level1: 192, level2: 96, level3: 320 };
   assert.equal(Object.values(totals).reduce((a, b) => a + b), 608);
   for (const study of plan.STUDIES) {

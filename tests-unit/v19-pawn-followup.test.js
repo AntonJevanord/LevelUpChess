@@ -86,7 +86,10 @@ test('two requested designs face only the unchanged three references with pinned
   const pairs = new Map();
   for (const game of schedule) { const group = pairs.get(game.pairId) || []; group.push(game.aColor); pairs.set(game.pairId, group); }
   for (const colors of pairs.values()) assert.deepEqual(colors.sort(), ['b', 'w']);
-  assert.equal(require('../src/design-catalog').getDesign(rows[0].id), undefined, 'research-only designs never enter the playable catalog');
+  assert.deepEqual(require('../src/design-catalog').getDesign(rows[0].id),
+    require('../src/balance-designs-v19-pawn-followup').NEW_DEFINITIONS.find(row => row.id === rows[0].id),
+    'the explicitly selected pawn retains its exact tested definition');
+  assert.equal(require('../src/design-catalog').getDesign(rows[1].id), undefined, 'the unselected alternative stays research-only');
 });
 
 test('follow-up reports retain automatic opening diagnostics and their own actual movement notes', () => {

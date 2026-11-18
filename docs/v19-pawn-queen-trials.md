@@ -9,6 +9,11 @@ uploaded games and the automatic opening flags. Both L2 candidates scored
 high; the [restricted-pawn follow-up](v19-pawn-range-followup.md) tests two
 new versions and explains how to resume the queen trial's incomplete setup.
 
+Both the queen study and restricted-pawn follow-up have now finished 32
+openings. The [selected-trial review](v19-selected-trials-review.md) preserves
+all 1,152 new games. The playable roster chooses QfsN as its second L1 queen
+and adds fQ2 at L2; the original experimental declarations remain unchanged.
+
 Each army buys one upgrade. Search uses **40k nodes, Skill 20, one thread,
 32 MiB hash and four workers**, with both colors on eight shared opening cases.
 Run one study at a time. Eight cases identify gross outliers; they do not
