@@ -82,6 +82,12 @@ designs plus fresh controls, for **608 games** at eight openings. Use
 `npm.cmd run balance:v19:trials -- --help` for the three separate studies.
 Movement dots and capture rings are larger and thicker.
 
+The [first trial results](docs/v19-focused-trials-review.md) retain all 1,664
+L2/L3 games and flag Wraith's immediate post-prefix mates. A separate
+[L2 pawn follow-up](docs/v19-pawn-range-followup.md) compares `fQ2` with
+`mvQ2fceB2`; the same guide explains recovery of the queen trial's incomplete
+runtime setup.
+
 New runs [record the first post-opening engine score](docs/opening-evaluations.md)
 with each game and summarize it automatically in the panel/trial reports.
 This reuses the normal search and keeps exact cp, bounds, mates and missing

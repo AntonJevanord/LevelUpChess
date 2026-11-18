@@ -4,6 +4,11 @@ These small studies test alternative identities against fixed same-tier
 references. They do not replace playable pieces automatically. The frozen L2
 Knight pawn and L3 Herald remain in the panels while these ideas are tested.
 
+The [32-opening L2/L3 review](v19-focused-trials-review.md) preserves all
+uploaded games and the automatic opening flags. Both L2 candidates scored
+high; the [restricted-pawn follow-up](v19-pawn-range-followup.md) tests two
+new versions and explains how to resume the queen trial's incomplete setup.
+
 Each army buys one upgrade. Search uses **40k nodes, Skill 20, one thread,
 32 MiB hash and four workers**, with both colors on eight shared opening cases.
 Run one study at a time. Eight cases identify gross outliers; they do not

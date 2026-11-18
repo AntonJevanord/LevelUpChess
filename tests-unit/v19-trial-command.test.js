@@ -59,3 +59,53 @@ test('rules-only checking owns the trial extension and creates no study output',
   assert.equal(f.calls[0].options.enginePath, undefined);
   assert.ok(f.calls[0].args.includes('--rules-only'));
 });
+
+test('an interrupted queen snapshot resumes its original target without replacing game evidence', async t => {
+  const f = fixture(t), failure = Object.assign(new Error('fixture sharing violation'), { code: 'EPERM' });
+  await assert.rejects(command.main(['--study', 'queens', '--out', f.out, '--openings', '32'], { ...f.dependencies,
+    ensure(options) { fs.mkdirSync(options.cacheDirectory, { recursive: true }); throw failure; } }), error => {
+    assert.match(error.message, /before any games started.*sharing violation.*--resume/s);
+    assert.equal(error.cause, failure); return true;
+  });
+  const pending = JSON.parse(fs.readFileSync(path.join(f.out, panels.OWNER)));
+  assert.equal(pending.directory, null);
+  assert.equal(pending.initialOpenings, 32);
+  assert.deepEqual(fs.readdirSync(path.join(f.out, 'runtime')), []);
+  assert.equal(fs.existsSync(path.join(f.out, panels.LOCK)), false);
+  await command.main(['--study', 'queens', '--resume', f.out], f.dependencies);
+  assert.equal(f.calls.length, 1);
+  assert.equal(f.calls[0].options.initialJobs, 4);
+  assert.equal(f.calls[0].options.initialOpenings, 32);
+  assert.notEqual(JSON.parse(fs.readFileSync(path.join(f.out, panels.OWNER))).directory, null);
+});
+
+test('incomplete snapshot recovery refuses unknown root or runtime data without modifying it', async t => {
+  for (const where of ['root', 'runtime']) {
+    const f = fixture(t);
+    fs.mkdirSync(path.join(f.out, 'runtime'), { recursive: true });
+    const owner = { schemaVersion: 1, format: 'levelup-v19-panel-runtime-owner', study: 'level1', directory: null, jobs: 4, initialOpenings: 32 };
+    const ownerFile = path.join(f.out, panels.OWNER), foreign = path.join(f.out, where === 'root' ? '' : 'runtime', 'games.jsonl');
+    fs.writeFileSync(ownerFile, JSON.stringify(owner)); fs.writeFileSync(foreign, 'preserve all evidence\n');
+    const bytes = fs.readFileSync(ownerFile);
+    await assert.rejects(command.main(['--study', 'queens', '--resume', f.out], { ...f.dependencies,
+      ensure() { assert.fail('foreign data must be rejected before snapshot creation'); } }), /foreign data|unverified runtime/);
+    assert.deepEqual(fs.readFileSync(ownerFile), bytes);
+    assert.equal(fs.readFileSync(foreign, 'utf8'), 'preserve all evidence\n');
+    assert.equal(fs.existsSync(path.join(f.out, panels.LOCK)), false);
+    assert.equal(f.calls.length, 0);
+  }
+});
+
+test('a real queen snapshot resolves its research catalog and can recover a pending ownership receipt', async t => {
+  const f = fixture(t), dependencies = { log() {}, enginePath: process.execPath, execute: async () => {
+    const owner = JSON.parse(fs.readFileSync(path.join(f.out, panels.OWNER)));
+    const plan = require(path.join(f.out, owner.directory, 'scripts/balance/v19-trial-plan'));
+    assert.equal(plan.getBatchDeclaration('level1', 0).metadata.comparisons.length, 12);
+  } };
+  await command.main(['--study', 'queens', '--out', f.out, '--openings', '32'], dependencies);
+  const original = JSON.parse(fs.readFileSync(path.join(f.out, panels.OWNER)));
+  fs.writeFileSync(path.join(f.out, panels.OWNER), JSON.stringify({ ...original, directory: null, manifestSha256: undefined }));
+  await command.main(['--study', 'queens', '--resume', f.out], dependencies);
+  assert.deepEqual(JSON.parse(fs.readFileSync(path.join(f.out, panels.OWNER))), original);
+  assert.equal(fs.existsSync(path.join(f.out, panels.MANIFEST)), false, 'this test never starts a study or game');
+});

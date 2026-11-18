@@ -94,6 +94,28 @@ function ordinaryDirectory(root) {
   const stat = fs.lstatSync(root);
   if (!stat.isDirectory() || stat.isSymbolicLink()) throw new Error('Use an ordinary panel directory, not a symbolic link.');
 }
+function requireIncompleteSetup(root) {
+  for (const file of fs.readdirSync(root)) {
+    const absolute = path.join(root, file), stat = fs.lstatSync(absolute);
+    if (![OWNER, LOCK, 'runtime'].includes(file) && !TEMP.test(file)
+      || stat.isSymbolicLink() || (file !== 'runtime' && !stat.isFile())) throw new Error('Incomplete panel setup contains foreign data.');
+  }
+  const runtime = path.join(root, 'runtime');
+  if (!fs.existsSync(runtime)) return;
+  ordinaryDirectory(runtime);
+  // Empty caches and complete, verified source snapshots contain no game
+  // evidence. Refuse unknown or partially copied contents; never delete them.
+  for (const name of fs.readdirSync(runtime)) {
+    try { openResearchOverlay({ directory: path.join(runtime, name) }); }
+    catch (error) { throw new Error(`Incomplete panel setup contains unverified runtime data: ${name}. Preserve this folder and use a fresh output directory.`, { cause: error }); }
+  }
+}
+function prepareRuntime(root, sourceRoot, ensure) {
+  try { return ensure({ ...OVERLAY, root: sourceRoot, cacheDirectory: path.join(root, 'runtime') }); }
+  catch (error) {
+    throw new Error(`Runtime snapshot setup failed before any games started: ${error.message} Retry the same study with --resume "${root}"; the original worker count and opening target are retained.`, { cause: error });
+  }
+}
 function requireInactive(root) {
   if (!fs.existsSync(path.join(root, 'run.lock'))) return;
   const owner = json(path.join(root, 'run.lock'));
@@ -302,7 +324,7 @@ async function main(args = process.argv.slice(2), { sourceRoot = ROOT, ensure = 
         initialJobs = options.jobs; initialOpenings = options.openings;
         const owner = { schemaVersion: 1, format: 'levelup-v19-panel-runtime-owner', study: options.study, directory: null, jobs: initialJobs, initialOpenings };
         atomicWrite(path.join(root, OWNER), JSON.stringify(owner) + '\n');
-        overlay = ensure({ ...OVERLAY, root: sourceRoot, cacheDirectory: path.join(root, 'runtime') });
+        overlay = prepareRuntime(root, sourceRoot, ensure);
         atomicWrite(path.join(root, OWNER), JSON.stringify({ ...owner,
           directory: path.relative(root, overlay.directory).split(path.sep).join('/'), manifestSha256: overlay.manifestSha256 }) + '\n');
       } else {
@@ -311,8 +333,8 @@ async function main(args = process.argv.slice(2), { sourceRoot = ROOT, ensure = 
           || !Number.isInteger(owner.jobs) || owner.jobs < 1 || owner.jobs > 16 || !TARGETS.includes(owner.initialOpenings)) throw new Error('Invalid panel runtime ownership.');
         initialJobs = owner.jobs; initialOpenings = owner.initialOpenings;
         if (owner.directory === null && options.resume && !fs.existsSync(path.join(root, MANIFEST))) {
-          if (fs.readdirSync(root).some(file => ![OWNER, LOCK, 'runtime'].includes(file) && !TEMP.test(file))) throw new Error('Incomplete panel setup contains foreign data.');
-          overlay = ensure({ ...OVERLAY, root: sourceRoot, cacheDirectory: path.join(root, 'runtime') });
+          requireIncompleteSetup(root);
+          overlay = prepareRuntime(root, sourceRoot, ensure);
           atomicWrite(path.join(root, OWNER), JSON.stringify({ ...owner,
             directory: path.relative(root, overlay.directory).split(path.sep).join('/'), manifestSha256: overlay.manifestSha256 }) + '\n');
         } else {
@@ -326,4 +348,5 @@ async function main(args = process.argv.slice(2), { sourceRoot = ROOT, ensure = 
 }
 if (require.main === module) main().catch(error => { console.error(`Version 19 panel: ${error.message}`); process.exitCode = 1; });
 module.exports = { ROOT, OWNER, MANIFEST, STATE, LOCK, OVERLAY, STUDIES, TARGETS, HELP, parseArgs, atomicWrite,
-  main, runStudy, stageState, inspectAll, validateManifest, validateRoot, validateStageIdentities, reportSources, writeOwnedReport, writeReport };
+  main, runStudy, stageState, inspectAll, validateManifest, validateRoot, validateStageIdentities, reportSources, writeOwnedReport, writeReport,
+  requireIncompleteSetup, prepareRuntime };

@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-v19-focused-trial-source-pins",
+  "targetOpenings": 32,
+  "studies": {
+    "level2": {
+      "journals": [
+        {
+          "uploadFileId": "file_000000007f5c820a9750d3f8979ce762",
+          "batchIndex": 0,
+          "nodes": 40000,
+          "originalFilename": "games.jsonl",
+          "archiveFile": "v19-focused-trials-001.level2.b1.n40000.games.jsonl.gz",
+          "bytes": 446338,
+          "sha256": "380a3d543e2f83bca5a39632f809497cc0d315721a67be6d974efcb688480c0d",
+          "archivedSha256": "b04b7fb9ab4aed082818e8e7babe3fa73ff65dd0168183c9ba1fc6bcc656ab65"
+        },
+        {
+          "uploadFileId": "file_00000000fbc8820a83483a588a5fb009",
+          "batchIndex": 1,
+          "nodes": 40000,
+          "originalFilename": "games.jsonl",
+          "archiveFile": "v19-focused-trials-001.level2.b2.n40000.games.jsonl.gz",
+          "bytes": 457822,
+          "sha256": "8cf106a3356a1f62a5efac7698bebde64ef1be3c0d73477504d3e9b1267131bb",
+          "archivedSha256": "d46c96978ae7d183025c79fa3783e0cefb09a9ea706e155ebf29534667c5ec11"
+        },
+        {
+          "uploadFileId": "file_00000000c4ac820a907415ddaff5d9aa",
+          "batchIndex": 2,
+          "nodes": 40000,
+          "originalFilename": "games.jsonl",
+          "archiveFile": "v19-focused-trials-001.level2.b3.n40000.games.jsonl.gz",
+          "bytes": 439891,
+          "sha256": "ad2aa37235985bbcae21a7ae466184519dce2929f8fe90cb753b5dfd7c5794e8",
+          "archivedSha256": "3967599f6e7cf95405fb43861c24b0e5794cc46547d7a54bdb72dc7578417e2f"
+        },
+        {
+          "uploadFileId": "file_00000000b7f0820a81fec4f2733b3a15",
+          "batchIndex": 3,
+          "nodes": 40000,
+          "originalFilename": "games.jsonl",
+          "archiveFile": "v19-focused-trials-001.level2.b4.n40000.games.jsonl.gz",
+          "bytes": 458212,
+          "sha256": "e6b7eeb7991bcec483dd6ac0adb0eaa250fa67ab43c394e1af21d2cdd145b998",
+          "archivedSha256": "b285d7d49d5e545e0b4a257f989abe483245d2a5a08326afdfc239914eeeed75"
+        }
+      ],
+      "uploadedReport": {
+        "uploadFileId": "file_00000000a4788210a17ce56dc437dc22",
+        "originalFilename": "panel-report.md",
+        "archiveFile": "v19-focused-trials-001.level2.uploaded-report.md.gz",
+        "bytes": 7285,
+        "sha256": "2c7aa2f8f205f19e995ef86a1fd1188fcf17d1065385cba683400a324a8ebecc",
+        "archivedSha256": "d844d10c9036d13813930c0f2bdae565412c5888afc08fedb5d64c14fd2f835f"
+      }
+    },
+    "level3": {
+      "journals": [
+        {
+          "uploadFileId": "file_000000002370820aa3bdbb9fac08f8bb",
+          "batchIndex": 0,
+          "nodes": 40000,
+          "originalFilename": "games.jsonl",
+          "archiveFile": "v19-focused-trials-001.level3.b1.n40000.games.jsonl.gz",
+          "bytes": 1497926,
+          "sha256": "e69a39626c6bb2dd8cee2f08b92cf5174471e27f1282683eb33825bce990f667",
+          "archivedSha256": "bbd80407ec60165083acff44144a194639c2aaaa83f112a45598adb452c7dd55"
+        },
+        {
+          "uploadFileId": "file_000000006d48821090bf74bb69642a1e",
+          "batchIndex": 1,
+          "nodes": 40000,
+          "originalFilename": "games.jsonl",
+          "archiveFile": "v19-focused-trials-001.level3.b2.n40000.games.jsonl.gz",
+          "bytes": 1498307,
+          "sha256": "ba73218e6fe45c6effb01d8f8293892239c0dee60dd2997d7bacd2563690fdb0",
+          "archivedSha256": "8ce270294de0f21ed72be1661e958e5e2f0ae71f607dac2470dbffebca3b2f04"
+        },
+        {
+          "uploadFileId": "file_0000000077b48210aecc361936f5d768",
+          "batchIndex": 2,
+          "nodes": 40000,
+          "originalFilename": "games.jsonl",
+          "archiveFile": "v19-focused-trials-001.level3.b3.n40000.games.jsonl.gz",
+          "bytes": 1480671,
+          "sha256": "cf2f7558e12f47b8ccf0b6e54296fdaf0ebec799a5dc843a03ea3cb2398e0e2d",
+          "archivedSha256": "5fa4a450cda04a6044553bafe4df8c30398b61bd637353d18f64cb666ee3220a"
+        },
+        {
+          "uploadFileId": "file_000000007e34820a81855b09a06fa67e",
+          "batchIndex": 3,
+          "nodes": 40000,
+          "originalFilename": "games.jsonl",
+          "archiveFile": "v19-focused-trials-001.level3.b4.n40000.games.jsonl.gz",
+          "bytes": 1495452,
+          "sha256": "e3fc62cbf284f21e5a5ed37d40938d6be0dab0f32085f3d92ee677305ba9f817",
+          "archivedSha256": "d758b2362f6e663eb8b9f61d1b065ca8b87b7a69ed9ea7ae5669cb84b289af90"
+        }
+      ],
+      "uploadedReport": {
+        "uploadFileId": "file_00000000daa4820aae566f0693e3784b",
+        "originalFilename": "panel-report.md",
+        "archiveFile": "v19-focused-trials-001.level3.uploaded-report.md.gz",
+        "bytes": 9803,
+        "sha256": "e676265686e0dc2c7902ee3206dc188c04d4f106250a86f9c73fd8da32043efa",
+        "archivedSha256": "c1ae6cb821010f242cf4842e23775e9bd09f9cbbe2546af7707dd448fe3f0b8a"
+      }
+    }
+  },
+  "queenRuntime": {
+    "uploadFileId": "file_0000000071508210bcce0b25eb36b80c",
+    "originalFilename": "panel-runtime.json",
+    "archiveFile": "v19-focused-trials-001.queens.uploaded-runtime.json.gz",
+    "bytes": 127,
+    "sha256": "629e68591086d7223f62bee01b034717e5c36b6fb0927094d910d1bb46501f7f",
+    "archivedSha256": "64300700577a43d00048b78d03f5101cd0ee1f1bc9c42a46a77ee41a54f25d9d"
+  },
+  "declarations": {
+    "derived": true,
+    "archiveFile": "v19-focused-trials-001.declarations.json.gz",
+    "bytes": 1236516,
+    "sha256": "382ff72ada3272683225ad7ad8c1984b754b44e83331eaa34c0fc8fb1e9e9c44",
+    "archivedSha256": "f79f8badabebc2e81b4295220d686dd0929741b640e1301283acfd871bf56ca3"
+  }
+}

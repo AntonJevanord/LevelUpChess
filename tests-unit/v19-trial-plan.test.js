@@ -2,18 +2,20 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const path = require('node:path');
+const { createHash } = require('node:crypto');
 const { ensureResearchOverlay } = require('../scripts/balance/research-overlay');
 const { OVERLAY } = require('../scripts/v19-trials');
 const rootCatalog = require('../src/design-catalog');
 const definitions = require('../src/balance-designs-v19-trials').NEW_DEFINITIONS;
+const { TRIALS } = require('../src/balance-designs-v19-trials');
 const overlay = ensureResearchOverlay(OVERLAY);
 const plan = require(path.join(overlay.directory, 'scripts/balance/v19-trial-plan'));
 const { makeSchedule } = require(path.join(overlay.directory, 'scripts/balance/plan'));
 const { createDesignRegistry } = require(path.join(overlay.directory, 'scripts/balance/design-registry'));
 const { compileDesignProfile } = require(path.join(overlay.directory, 'scripts/balance/design-profile'));
 
-function context(study = 'level1', batchIndex = 0) {
-  const declaration = plan.getBatchDeclaration(study, batchIndex), schedule = makeSchedule(declaration.config);
+function context(study = 'level1', batchIndex = 0, tools = plan) {
+  const declaration = tools.getBatchDeclaration(study, batchIndex), schedule = makeSchedule(declaration.config);
   const registry = createDesignRegistry(declaration.config), profile = compileDesignProfile(registry, declaration.config.evaluation);
   const records = schedule.map(game => ({ ...game, attempt: 1, status: 'completed',
     result: game.aColor === 'w' ? '1-0' : '0-1', reason: 'checkmate', profileHash: profile.hash,
@@ -91,4 +93,73 @@ test('cumulative trial reporting keeps batch identities and rejects changed prof
   assert.throws(() => plan.reportStudy({ study: 'level1', targetOpenings: 8 }, [changed]), /profile or schedule changed/);
   const corrupt = structuredClone(first); corrupt.records[0].registryHash = '0'.repeat(64);
   assert.throws(() => plan.reportStudy({ study: 'level1', targetOpenings: 8 }, [corrupt]), /registry|rules|profile/i);
+});
+
+test('the plan factory preserves all original declarations, schedules and compiled profiles byte for byte', () => {
+  // Captured before extracting the factory, including all eight published batches.
+  const expected = {
+    level1: 'ff5e4f2f8b978c3b873181f8d1c6d89018f922fde57e25cea1dbf852eb27c05b',
+    level2: '6f9f810e889987da1ce6c5aa9e95504af934c74a991a6527e70534ceb7e1d53e',
+    level3: 'feadf400aadad53be5f22d1e220b34370d03fa578e47d9492ee7a9b01bf2d31e',
+  };
+  for (const study of plan.STUDIES) {
+    const batches = Array.from({ length: 8 }, (_, index) => {
+      const declaration = plan.getBatchDeclaration(study, index), schedule = makeSchedule(declaration.config);
+      const registry = createDesignRegistry(declaration.config), profile = compileDesignProfile(registry, declaration.config.evaluation);
+      return { declaration, schedule, registry, profile };
+    });
+    assert.equal(createHash('sha256').update(JSON.stringify(batches)).digest('hex'), expected[study], study);
+  }
+});
+
+test('a separate follow-up reuses reference/reporting logic while owning its trial identities and notes', () => {
+  const rows = TRIALS.filter(row => row.level === 2).map(row => ({ ...row }));
+  const custom = plan.createTrialPlan({ trials: rows, revisionProbes: () => [], controlsForTier: () => [],
+    format: 'levelup-v19-test-pawn-followup', experimentPrefix: 'v19-test-pawn-followup',
+    question: 'Compare the declared pawn revisions.', valuePolicy: 'Fixed pawn-family search priors.',
+    movementNotes: 'Only the follow-up pawn movement conventions apply.' });
+  rows[0].label = 'Caller mutation must not rewrite the plan';
+  const campaign = custom.buildCampaignPlan({ study: 'level2', jobs: 2 });
+  assert.equal(campaign.format, 'levelup-v19-test-pawn-followup');
+  assert.equal(campaign.roster.length, 2);
+  assert.equal(custom.expectedGames('level2', 8), 96);
+  assert.equal(campaign.roster[0].label, TRIALS.find(row => row.level === 2).label);
+  assert.deepEqual(custom.references('level2'), plan.references('level2'));
+  for (const row of campaign.roster) assert.deepEqual(row.prior, { mg: 536, eg: 592 });
+  const declaration = custom.getBatchDeclaration('level2', 0);
+  assert.equal(declaration.experiment, 'v19-test-pawn-followup-level2-b1');
+  assert.equal(declaration.metadata.kind, 'v19-test-pawn-followup');
+  assert.equal(declaration.metadata.question, 'Compare the declared pawn revisions.');
+  assert.deepEqual(declaration.config, plan.getBatchDeclaration('level2', 0).config,
+    'a different ownership context can deliberately reuse unchanged configured matchups');
+  const report = custom.reportStudy({ study: 'level2', targetOpenings: 8 }, [context('level2', 0, custom)]);
+  assert.equal(report.format, 'levelup-v19-test-pawn-followup-report');
+  assert.equal(report.rows.length, 2);
+  assert.equal(report.progress.completePairs, 48);
+  assert.equal(report.openingEvaluations.counts.missing, 96);
+  const markdown = custom.renderReport(report);
+  assert.match(markdown, /Only the follow-up pawn movement conventions apply/);
+  assert.doesNotMatch(markdown, /QsfN|eight, six or four/);
+  assert.match(markdown, /Fixed pawn-family search priors/);
+});
+
+test('factory validation rejects ambiguous candidates without resolving future definitions outside their snapshot', () => {
+  const candidate = { ...TRIALS.find(row => row.level === 2) };
+  for (const trials of [[], [candidate, candidate], [candidate, { ...candidate, id: candidate.id + '-other' }],
+    [candidate, { ...candidate, key: candidate.key + '-other' }], [{ ...candidate, level: 4 }],
+    [{ ...candidate, anchorId: 'unknown.anchor@1' }], [{ ...candidate, anchorId: 'queen.level1-forward-knight@1' }]]) {
+    assert.throws(() => plan.createTrialPlan({ trials }));
+  }
+  assert.throws(() => plan.createTrialPlan({ trials: [candidate], format: '../other' }));
+  assert.throws(() => plan.createTrialPlan({ trials: [candidate], revisionProbes: null }));
+  assert.throws(() => plan.createTrialPlan({ trials: [candidate], movementNotes: '' }));
+  const future = plan.createTrialPlan({ trials: [{ ...candidate, id: 'pawn.future-research-only@1' }] });
+  assert.equal(rootCatalog.getDesign('pawn.future-research-only@1'), undefined);
+  assert.throws(() => future.candidates('level2'), /isolated owned research runtime/);
+  const wrongTierControl = plan.createTrialPlan({ trials: [candidate],
+    controlsForTier: () => [['wrong', 'Wrong tier', 'queen.level1-forward-knight@1']] });
+  assert.throws(() => wrongTierControl.candidates('level2'), /same tier/);
+  const repeatedControl = plan.createTrialPlan({ trials: [candidate],
+    controlsForTier: () => [[candidate.key, 'Repeated candidate', candidate.anchorId]] });
+  assert.throws(() => repeatedControl.candidates('level2'), /repeat a candidate/);
 });
