@@ -42,6 +42,24 @@ test.before(async () => {
 const stage = selected => ({ key: 'batch-01', nodes: 40000, profile, identity, records: selected,
   comparisons: [{ id: 'board', kind: 'head', designA: A, designB: B }, { id: 'grant', kind: 'head', designA: G, designB: A }] });
 
+test('compact stored profiles reconstruct their separate registry without changing archived bytes', () => {
+  const manifest = { config, designRegistry: profile.registry,
+    designProfile: { variant: profile.variant, config: profile.config, hash: profile.hash, registryHash: profile.registryHash } };
+  assert.equal(manifest.designProfile.registry, undefined, 'this is the real saved-manifest shape');
+  const before = JSON.stringify(manifest), calls = [];
+  const restored = command.restorePanelProfile(manifest, (registry, evaluation) => {
+    calls.push({ registry, evaluation }); return compileDesignProfile(registry, evaluation);
+  });
+  assert.deepEqual(restored, profile);
+  assert.deepEqual(calls, [{ registry: manifest.designRegistry, evaluation: config.evaluation }]);
+  assert.equal(JSON.stringify(manifest), before);
+  for (const field of ['variant', 'config', 'hash', 'registryHash']) {
+    const changed = structuredClone(manifest); changed.designProfile[field] += '-changed';
+    assert.throws(() => command.restorePanelProfile(changed, compileDesignProfile), /differs from its archived/);
+  }
+  assert.throws(() => command.restorePanelProfile({ designProfile: manifest.designProfile }, compileDesignProfile), /archived design registry/);
+});
+
 test('legacy export still refuses reserve profiles unless board-only mode is explicitly requested', async () => {
   assert.throws(() => decodeMaterial(records[0].startFen, profile), /pocket-aware/);
   await assert.rejects(exportDataset({ sources: [{ id: 'fixture', records, identity }], profile }), /pocket-aware/);

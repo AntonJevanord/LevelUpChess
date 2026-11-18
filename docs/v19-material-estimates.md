@@ -63,7 +63,10 @@ nodes only**; this analysis does not request additional search budgets.
 
 The command validates the campaign declaration, archived rules, profile,
 preflight evidence and all recorded attempts. It selects complete scored color
-pairs, replays every retained game through its original rules, checks every SAN
+pairs after reconstructing each full profile from its separately stored
+registry with the owned runtime's compiler. The reconstructed configuration
+and hashes must match the compact descriptor in each populated batch.
+It then replays every retained game through its original rules, checks every SAN
 and final outcome, then extracts the stable material windows. Original source
 files are hashed and checked again before output. Active-run locks are refused
 and never removed. No source journal, report, runtime or engine value is changed.

@@ -51,6 +51,20 @@ function recordHash(files, file) { ordinary(file); files.push({ file, sha256: sh
 function noActiveLock(root) {
   if (['.v19-panel.lock', 'run.lock'].some(file => fs.existsSync(path.join(root, file)))) throw new Error('Stop the source panel and its workers before material analysis; existing locks are never removed.');
 }
+function restorePanelProfile(manifest, compile) {
+  if (!manifest?.designRegistry || !manifest?.designProfile || typeof compile !== 'function') {
+    throw new Error('Material replay requires the archived design registry and profile descriptor.');
+  }
+  // Stored manifests intentionally keep the registry separate from the compact
+  // profile descriptor. Rebuild with that run's compiler, retaining its exact
+  // semantic IDs, letter mapping, movement and evaluation policy.
+  const profile = compile(manifest.designRegistry, manifest.config?.evaluation);
+  const descriptor = { variant: profile.variant, config: profile.config, hash: profile.hash, registryHash: profile.registryHash };
+  if (!isDeepStrictEqual(profile.registry, manifest.designRegistry) || !isDeepStrictEqual(descriptor, manifest.designProfile)) {
+    throw new Error('The reconstructed material profile differs from its archived registry or descriptor.');
+  }
+  return profile;
+}
 function loadPanel(directory) {
   const root = path.resolve(directory); ordinary(root, true); noActiveLock(root);
   const owner = json(path.join(root, 'panel-runtime.json'));
@@ -79,6 +93,7 @@ function loadPanel(directory) {
   const files = [{ file: path.join(root, '.v19-panel.lock'), absent: true }, { file: path.join(root, 'run.lock'), absent: true }];
   for (const name of ['panel-runtime.json', 'screen.json', 'panel-state.json']) recordHash(files, path.join(root, name));
   const read = require(path.join(overlay.directory, 'scripts/version17-balance')).readReportInput;
+  const compile = require(path.join(overlay.directory, 'scripts/balance/design-profile')).compileDesignProfile;
   const stages = [], sourceStages = [];
   let profile;
   for (const descriptor of plan.selectedStages(state.targetOpenings, manifest)) {
@@ -91,12 +106,13 @@ function loadPanel(directory) {
     for (const name of ['run.json', 'games.jsonl', 'v17-preflight.json']) if (fs.existsSync(path.join(stageRoot, name))) ordinary(path.join(stageRoot, name));
     const input = read(stageRoot, declaration);
     for (const key of ['engineSha256', 'runnerSha256', 'runnerSources', 'rulesBundleSha256']) if (!isDeepStrictEqual(input.manifest[key], manifest.identity[key])) throw new Error('A batch changed the original panel runtime identity.');
-    if (profile && !isDeepStrictEqual(profile, input.manifest.designProfile)) throw new Error('Cannot fit different actual panel profiles together.');
-    profile ||= input.manifest.designProfile;
+    const batchProfile = restorePanelProfile(input.manifest, compile);
+    if (profile && !isDeepStrictEqual(profile, batchProfile)) throw new Error('Cannot fit different actual panel profiles together.');
+    profile ||= batchProfile;
     for (const name of ['run.json', 'v17-preflight.json', input.manifest.rulesProfiles[0].file]) recordHash(files, path.join(stageRoot, name));
     if (fs.existsSync(path.join(stageRoot, 'games.jsonl'))) recordHash(files, path.join(stageRoot, 'games.jsonl'));
     else files.push({ file: path.join(stageRoot, 'games.jsonl'), absent: true });
-    stages.push({ key: descriptor.id, nodes: descriptor.nodes, records: input.records, profile: input.manifest.designProfile,
+    stages.push({ key: descriptor.id, nodes: descriptor.nodes, records: input.records, profile: batchProfile,
       comparisons: declaration.metadata.comparisons, identity: { ...manifest.identity, sourceRunId: manifest.runId,
         profileHash: input.manifest.designProfile.hash, registryHash: input.manifest.designProfile.registryHash } });
     sourceStages.push({ ...descriptor, manifest: input.manifest, records: input.records, source: input.source });
@@ -158,4 +174,4 @@ async function main(args = process.argv.slice(2), { log = console.log, load = lo
   return { ...result, manifest, out };
 }
 if (require.main === module) main().catch(error => { console.error(`Version 19 material analysis: ${error.message}`); process.exitCode = 1; });
-module.exports = { HELP, ANALYSIS_SOURCES, parseArgs, loadPanel, validateOutput, verifySource, main };
+module.exports = { HELP, ANALYSIS_SOURCES, parseArgs, restorePanelProfile, loadPanel, validateOutput, verifySource, main };
