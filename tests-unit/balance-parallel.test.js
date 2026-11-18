@@ -158,6 +158,13 @@ test('two native workers retain independent checkpoints and one exact aggregate 
   assert.equal(aggregate.length, 8);
   assert.equal(new Set(aggregate.map(record => record.id)).size, 8);
   assert.ok(aggregate.every(record => record.status === 'truncated' && record.result === '*'));
+  const openingDiagnostics = require('../scripts/balance/opening-evaluation-report').buildOpeningEvaluationReport(aggregate,
+    { engineSha256: manifest.engineSha256 });
+  assert.equal(openingDiagnostics.counts.exactCp + openingDiagnostics.counts.boundedCp + openingDiagnostics.counts.mate, 8,
+    'worker first-search scores survive parent journal aggregation, including bounds at short search budgets');
+  assert.equal(openingDiagnostics.counts.completeColorPairs, 4, 'offline diagnostics retain both physical colors');
+  assert.equal(openingDiagnostics.counts.invalid, 0);
+  assert.equal(openingDiagnostics.counts.missing, 0);
   assert.equal(result.summary.statusCounts.truncated, 8);
   assert.equal(result.summary.statusCounts.error, 0);
   assert.ok(result.summary.comparisons.every(comparison => comparison.primaryEstimate.score === null));
@@ -173,7 +180,10 @@ test('two native workers retain independent checkpoints and one exact aggregate 
     assert.notEqual(worker.configHash, manifest.configHash, 'the worker schedule has its own identity');
     assert.ok(messages.some(message => message.startsWith(`[worker ${index + 1}] Starting game`)), 'both worker processes report a game');
     assert.equal(journal(workerDir).length, worker.schedule.length);
-    for (const record of journal(workerDir)) assert.ok(worker.schedule.some(game => game.id === record.id));
+    for (const record of journal(workerDir)) {
+      assert.ok(worker.schedule.some(game => game.id === record.id));
+      assert.deepEqual(record.openingEvaluation, aggregate.find(row => row.id === record.id).openingEvaluation);
+    }
   }
   assertUnlocked(directory, manifest);
   const originalJournal = text(directory, 'games.jsonl'), originalManifest = text(directory, 'run.json');

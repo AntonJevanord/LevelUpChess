@@ -153,6 +153,8 @@ test('evaluations normalize Black scores and bounds without subtracting mates or
   assert.deepEqual(normalizeEvaluation({ score: { type: 'cp', value: 10, bound: 'upperbound' } }, white).score,
     { type: 'cp', value: 10, bound: 'upperbound' });
   assert.equal(normalizeEvaluation({ info: null }, white).available, false);
+  assert.deepEqual(normalizeEvaluation({ info: { nodes: 123 }, scoreInfo: { score: { type: 'cp', value: 45 } } }, black).score,
+    { type: 'cp', value: -45 });
   assert.throws(() => normalizeEvaluation({ score: { type: 'win-percent', value: 50 } }, white));
 });
 

@@ -3,15 +3,17 @@
 Branch **`version_19`** starts from the version-18 closeout, **`v0.18.14`**.
 Pre-panel screening is complete. The accepted roster now enters playable tier
 libraries and separate same-tier round robins before cross-level experiments.
-All twenty earlier playable libraries and their exact rules remain available.
+All twenty-three previously published libraries and their exact rules remain available.
 
 ## Accepted roster
 
 The final choices are **NAD at L3**, and **NDmW, QcC and Free Boar BsR at L2**.
-L1 retains both QfN and QvN queens. L2 also retains the clear-range Bishop
-board pawn, giving that tier three pawn choices. Wraith `QgB0` remains an
-intentionally weaker exploration choice. The
-[roster declaration](../experiments/designs/v19-roster.json) records every
+L1 retains QfN/QvN pending the [new queen and pawn trials](v19-pawn-queen-trials.md).
+Revision 002 removes the third L2 Bishop pawn, retaining the frozen Knight/Rank
+pawn references. Herald remains at L3 while alternatives are tested.
+The playable Wraith is now **`QgmQ0gcBgcsR0`**, the best tested below-50%
+revision (38.67% at 40k nodes; 37.89% at 80k). The
+[revised roster declaration](../experiments/designs/v19-roster-002.json) records every
 accepted identity; the [screening review](v18-prepanel32-review.md) preserves
 the comparisons behind the final choices.
 
@@ -24,7 +26,7 @@ The fixed reference baskets remain:
 | L3 | Vanguard `RfB`, Unicorn `NC`, Crusader `BsR2nsN`, Amazon `QN` |
 
 MG/EG search priors are frozen separately in the
-[value declaration](../experiments/designs/v19-panel-values.json). They are
+[value declaration](../experiments/designs/v19-panel-values-002.json). They are
 engine settings, not purchase prices or fitted material values. Existing
 research identities retain their tested movement and historical contexts.
 
@@ -41,8 +43,8 @@ npm.cmd start
 ```
 
 Under **Rules**, choose **Version 19 · Level 1 roster**, **Version 19 · Level 2
-roster** or **Version 19 · Level 3 roster**. They contain 11, 12 and 11 upgrade
-designs respectively. Separate libraries keep each profile below the engine's
+roster · revised** or **Version 19 · Level 3 roster · revised**. Each contains
+11 upgrade designs. Separate libraries keep each profile below the engine's
 20-custom-type limit; each offers its tier's upgrades alongside ordinary pieces.
 Local two-player games also work by opening `index.html` directly.
 
@@ -74,17 +76,27 @@ Repeat for tiers 2 and 3. Add `--rules-only` to omit native-engine checks.
 Windows uses the bundled compatible engine unless `FAIRY_STOCKFISH_PATH` or
 `--engine PATH` selects another. Preflight does not play scored games.
 
+The same preflight runs automatically before each eight-case batch: every
+army/color prefix must be legal and nonterminal, native/browser move sets must
+agree, and manual MG/EG tables must match. It does not certify that a pinned
+or exposed piece is tactically safe. Those concerns remain separate diagnostic
+flags rather than automatic exclusions or matchup-specific opening selection.
+
 Start at sixteen openings, with a separate output folder per tier:
 
 ```powershell
 npm.cmd run balance:v19 -- --tier 1 --out balance-results/v19-level1 --openings 16 --jobs 4
-npm.cmd run balance:v19 -- --tier 2 --out balance-results/v19-level2 --openings 16 --jobs 4
-npm.cmd run balance:v19 -- --tier 3 --out balance-results/v19-level3 --openings 16 --jobs 4
+npm.cmd run balance:v19 -- --tier 2 --out balance-results/v19-level2-revised --openings 16 --jobs 4
+npm.cmd run balance:v19 -- --tier 3 --out balance-results/v19-level3-revised --openings 16 --jobs 4
 ```
 
-The initial schedules contain **1,760 / 2,112 / 1,760 games** respectively.
+The revised schedules each contain **1,760 games** at sixteen openings.
 These commands start games only when you run them. This release has not
 started a scored cloud campaign.
+
+Existing v0.19.0 panels retain their original roster and counts through their
+owned runtime. Resume those folders with the same command; use new folders for
+revised L2/L3 panels. Do not pool the different Wraith profiles or opponent baskets.
 
 Resume an interrupted panel without changing its target, or extend the same
 unchanged declaration to a **total** of 32 or 64 openings:
@@ -101,6 +113,11 @@ The current report is `panel-report.md` with a JSON companion. Keep the whole
 run folder, including its owned runtime and journals. `q` or Ctrl+C stops now;
 `g` finishes active games; `p` finishes active color pairs. Starts and results
 are logged by default; `--log plies` adds moves.
+
+New runs also [record the first post-opening evaluation](opening-evaluations.md)
+with each game and summarize its coverage in the report. This reuses the normal
+search, preserving scores through retries without extra evaluation searches.
+Already-started owned runtimes retain their original behavior.
 
 ## Read the results
 
@@ -123,7 +140,7 @@ are reused only after explicit compatibility checks. The
 [panel plan](version19-plan.md) reserves cross-level bridges and mixed armies
 for the next stage.
 
-## Release checks
+## Initial release checks
 
 The roster, continuation/reporting logic and save/PGN behavior pass the new
 unit checks. Browser checks cover all three native-engine connections, setup,
@@ -132,3 +149,8 @@ earlier profile pairs and the frozen balance bundle retain their bytes.
 The 64-case army prefixes pass browser-rule validation; native parity also
 covers the first eight cases, the four replacement prefixes and all 452
 accepted-roster movement fixtures. No scored panel games were collected here.
+
+Revision 002 adds native/browser Wraith checks, revised setup/save/PGN tests
+and desktop/mobile marker checks. The original v0.19.0 declarations and three
+profile pairs stay unchanged. Experimental queen and pawn results are collected
+separately before any further roster promotion.

@@ -12,7 +12,7 @@ The side panel has **Game, Setup, Design and Files** tabs. Status and essential 
 
 Right-click for a circle or right-drag for an arrow; repeat to remove a mark, or press Escape to clear marks. **Draw** enables tap/drag annotation on touch screens. Design offers four piece styles, four board palettes and an annotation color, with preferences remembered locally. See the [interface guide](docs/interface-v18.md).
 
-The current roster allows a 1–9 point budget per side. Three tier libraries contain 11, 12 and 11 selected designs, with one reserve grant per tier; each fits the engine's 20-custom-piece limit. All twenty earlier libraries retain their rules. The [version-19 guide](docs/version19.md) gives the accepted roster, Windows branch-switch instructions and panel commands. Historical family workshops remain selectable for earlier mixed-tier setups.
+The current roster allows a 1–9 point budget per side. The current tier libraries each contain 11 selected designs, with one reserve grant per tier; choose the **revised** L2/L3 entries. All twenty-three earlier libraries retain their rules. The [version-19 guide](docs/version19.md) gives the accepted roster, Windows branch-switch instructions and panel commands. Historical family workshops remain selectable for earlier mixed-tier setups.
 
 Select the king during setup to buy one nonroyal reserve guard. Starting the game keeps the ordinary royal king and places the guard in reserve. Click a reserve piece, then a highlighted empty square in your own half. A drop spends a turn and cannot give check; captured pieces disappear rather than refill reserves. All ordinary king safety and castling rules still apply.
 
@@ -56,14 +56,14 @@ Browser saves belong to the current browser and site address. Use PGN when movin
 
 Branch **`version_19`** starts from the **`v0.18.14`** closeout. The final
 choices are L3 **NAD** and L2 **NDmW, QcC and BsR**; L1 keeps QfN/QvN.
-The [roster](experiments/designs/v19-roster.json),
-[search values](experiments/designs/v19-panel-values.json) and
+The [revised roster](experiments/designs/v19-roster-002.json),
+[search values](experiments/designs/v19-panel-values-002.json) and
 [shared 64-case book](experiments/balance/v19-panel-openings.json) are declared
 before collection. Historical profiles and outcomes retain their identities.
 
 The complete same-tier round robins use one purchase per army, paired colors,
 40k nodes, one engine thread and four workers. At sixteen openings the L1/L2/L3
-panels contain **1,760 / 2,112 / 1,760 games**. Start one panel at a time:
+revised panels each contain **1,760 games**. Start one panel at a time:
 
 ```powershell
 npm.cmd run balance:v19 -- --tier 1 --out balance-results/v19-level1 --openings 16 --jobs 4
@@ -74,6 +74,18 @@ add `--openings 32` or `64` for total coverage. Reports retain completed
 eight-case checkpoints and separate fixed-reference scores from whole-roster
 averages. See the [guide](docs/version19.md) for validation and offline reports.
 No scored balance campaign starts during installation or build.
+
+Revision 002 removes the third L2 Bishop pawn and selects the tested
+`QgmQ0gcBgcsR0` Wraith. The fixed Knight-pawn reference and Herald remain.
+The [focused pawn/queen trials](docs/v19-pawn-queen-trials.md) add eight new
+designs plus fresh controls, for **608 games** at eight openings. Use
+`npm.cmd run balance:v19:trials -- --help` for the three separate studies.
+Movement dots and capture rings are larger and thicker.
+
+New runs [record the first post-opening engine score](docs/opening-evaluations.md)
+with each game and summarize it automatically in the panel/trial reports.
+This reuses the normal search and keeps exact cp, bounds, mates and missing
+historical observations separate.
 
 ## Version 16: frozen references and playtest roster
 

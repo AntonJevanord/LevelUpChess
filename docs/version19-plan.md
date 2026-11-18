@@ -19,6 +19,13 @@ The accepted roster is integrated into three tier profiles with preserved
 historical identities. The first version-19 declarations and shared opening
 book are frozen for the initial sixteen-opening review.
 
+Revision 002 removes the third L2 Bishop pawn and replaces Wraith with the
+tested `QgmQ0gcBgcsR0` body. New panels use eleven designs per tier; owned
+v0.19.0 runs retain their original declarations. The
+[focused pawn/queen trials](v19-pawn-queen-trials.md) test possible queen/pawn
+replacements separately. The frozen L2 Knight pawn and L3 Herald remain in
+the panels until those results support an explicit new revision.
+
 ## Same-tier panels
 
 Prepare separate L1, L2 and L3 round robins using accepted movement revisions,

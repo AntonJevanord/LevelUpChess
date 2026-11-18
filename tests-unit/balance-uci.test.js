@@ -131,6 +131,23 @@ test('perft waits for both readyok and the asynchronous move list', async t => {
   assert.equal(fake.commands.at(-1), 'isready');
 });
 
+test('search retains the latest main-line score when a final statistics-only line follows it', async t => {
+  fakeEngine(t, { onCommand(command, { emit }) {
+    if (!command.startsWith('go nodes ')) return;
+    emit(['info depth 9 score cp 23 lowerbound nodes 18000 pv e2e4 e7e5',
+      'info depth 9 multipv 2 score cp 999 nodes 19000 pv d2d4',
+      'info nodes 20000 time 50 nps 400000', 'bestmove e2e4']);
+    return false;
+  } });
+  const engine = client(); t.after(() => engine.close()); await engine.start();
+  const result = await engine.search({ fen: FEN, nodes: 20000 });
+  assert.equal(result.info.nodes, 20000);
+  assert.equal(result.info.score, undefined);
+  assert.deepEqual(result.scoreInfo.score, { type: 'cp', value: 23, bound: 'lowerbound' });
+  assert.equal(result.scoreInfo.depth, 9);
+  assert.deepEqual(result.scoreInfo.pv, ['e2e4', 'e7e5']);
+});
+
 test('finite reserve UCI drops survive search history, principal variations and perft parsing', async t => {
   const fake = fakeEngine(t, {
     move: 'A@e4',

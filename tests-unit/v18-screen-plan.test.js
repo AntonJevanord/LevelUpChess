@@ -42,7 +42,7 @@ function source(input, records = recordsFor(input)) {
 
 test('unselected trials remain isolated, selected promotions keep exact definitions and historical artifacts survive', () => {
   assert.equal(rootCatalog.getDesign('knight.nightrider-quiet-diagonal@1'), undefined);
-  assert.equal(rootCatalog.getDesign('queen.wraith-side-through@1'), undefined);
+  assert.deepEqual(rootCatalog.getDesign('queen.wraith-side-through@1'), require('../src/designs-v19-revised').NEW_DEFINITIONS[0]);
   for (const id of ['knight.level2-nh@1', 'knight.level2-ndh@1', 'knight.nightrider-level2@1']) assert.deepEqual(rootCatalog.getDesign(id), promoted.get(id));
   for (const id of ['queen.level1-camel-capture@1', 'queen.level1-forward-knight@1',
     'queen.level1-forward-half-knight@1', 'queen.level2-side-knight@1', 'queen.level2-tall-knight@1',

@@ -170,6 +170,8 @@ const definitions = [
   // Version 19 promotes the accepted pre-panel identities without changing
   // any earlier behavior, price, role or allocation hint.
   ...require('./designs-v19-selected').NEW_DEFINITIONS,
+  // A later roster selects the tested Wraith without relabeling earlier games.
+  ...require('./designs-v19-revised').NEW_DEFINITIONS,
 ];
 
 const DESIGNS = Object.freeze(Object.fromEntries(definitions.map(design => [design.id, design])));

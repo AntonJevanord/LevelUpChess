@@ -10,6 +10,7 @@ const { checkCapabilities } = require('./capabilities');
 const { createDesignRegistry, restoreDesignRegistry } = require('./design-registry');
 const { compileDesignProfile } = require('./design-profile');
 const { requireManualValues } = require('./evaluation');
+const { makeOpeningEvaluation, unavailableOpeningEvaluation, validateOpeningEvaluation } = require('./opening-evaluation');
 const { identity: frozenIdentity, chooseRuntimeIdentity, verifyCheckpointParent, writeUpgradeReceipt } = require('./checkpoint-upgrade');
 
 const FINAL = new Set(['completed', 'truncated']);
@@ -20,7 +21,7 @@ const fingerprint = value => sha256(JSON.stringify(value));
 function getRunIdentity(enginePath, rulesFile = path.resolve(__dirname, '../../dist/balance-rules.cjs')) {
   const rulesBundleSha256 = sha256(fs.readFileSync(rulesFile));
   const engineSha256 = sha256(fs.readFileSync(enginePath));
-  const runnerSources = ['run.js', 'plan.js', 'stats.js', 'storage.js', 'uci.js', 'capabilities.js', '../engine-capabilities.js', 'files.js', 'resume-compatibility.js', 'design-registry.js', 'design-profile.js', 'evaluation.js', '../../src/design-catalog.js', 'checkpoint-upgrade.js']
+  const runnerSources = ['run.js', 'plan.js', 'stats.js', 'storage.js', 'uci.js', 'capabilities.js', '../engine-capabilities.js', 'files.js', 'resume-compatibility.js', 'design-registry.js', 'design-profile.js', 'evaluation.js', 'opening-evaluation.js', '../../src/design-catalog.js', 'checkpoint-upgrade.js']
     .map(file => ({ file, sha256: sha256(fs.readFileSync(path.resolve(__dirname, file), 'utf8').replace(/\r\n/g, '\n')) }));
   return { rulesBundleSha256, engineSha256, runnerSources, runnerSha256: fingerprint(runnerSources) };
 }
@@ -69,7 +70,10 @@ function recoverHistory(game, startFen, checkpoint, records) {
       const shorter = candidate.moves.length < saved.moves.length ? candidate : saved;
       const longer = shorter === candidate ? saved : candidate;
       if (shorter.moves.some((move, index) => move !== longer.moves[index])) throw new Error('Checkpoint and journal contain conflicting histories for the same attempt.');
-      saved = longer;
+      if (shorter.openingEvaluation?.available && longer.openingEvaluation?.available
+        && !isDeepStrictEqual(shorter.openingEvaluation, longer.openingEvaluation)) throw new Error('Checkpoint and journal contain conflicting opening evaluations for the same attempt.');
+      saved = !longer.openingEvaluation && shorter.openingEvaluation
+        ? { ...longer, openingEvaluation: shorter.openingEvaluation } : longer;
     }
   }
   return saved;
@@ -348,9 +352,11 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
       const moves = saved ? [...saved.moves] : [...game.openingMoves];
       if (moves.length < game.openingMoves.length || game.openingMoves.some((move, i) => moves[i] !== move)) throw new Error('Checkpoint does not preserve the forced opening prefix.');
       const board = rules.createBoard(startFen);
-      let sans;
+      let sans, openingFen;
       try {
-        sans = replay(board, moves);
+        sans = replay(board, game.openingMoves);
+        openingFen = board.fen();
+        sans.push(...replay(board, moves.slice(game.openingMoves.length)));
         if (saved?.finalFen && saved.finalFen !== board.fen()) throw new Error('Journal final position does not match its move history.');
       }
       catch (error) { board.dispose(); throw new Error(`Cannot replay checkpoint for ${game.id}: ${error.message}`, { cause: error }); }
@@ -358,9 +364,24 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
       const engines = [];
       const names = {};
       const lastInfo = {};
+      const openingColor = openingFen.split(' ')[1];
+      const openingContext = {
+        fen: openingFen, openingPlies: game.openingMoves.length, attempt, color: openingColor, engineSha256,
+        strength: openingColor === 'w' ? sides.white.strength : sides.black.strength,
+        limits: config.engine.movetimeMs === undefined ? { nodes: config.engine.nodes } : { movetimeMs: config.engine.movetimeMs },
+      };
+      let openingEvaluation;
+      try {
+        openingEvaluation = saved?.openingEvaluation
+          ? validateOpeningEvaluation(saved.openingEvaluation, openingContext)
+          : moves.length > game.openingMoves.length
+            ? unavailableOpeningEvaluation(openingContext, 'missing-resumed-opening-evaluation') : null;
+      } catch (error) { board.dispose(); throw error; }
+      const openingDiagnostic = () => openingEvaluation || unavailableOpeningEvaluation(openingContext, 'no-post-opening-search');
       let finalized = false;
       const designRefs = dynamic ? { profileHash: designProfile.hash, registryHash: registry.hash, registryReference: 'run.json#designRegistry' } : {};
-      const persistCurrent = () => store.saveCheckpoint({ schemaVersion: 1, nextIndex, current: { id: game.id, startFen, moves, sans, attempt, ...designRefs } });
+      const persistCurrent = () => store.saveCheckpoint({ schemaVersion: 1, nextIndex, current: { id: game.id, startFen, moves, sans, attempt,
+        openingEvaluation: openingDiagnostic(), ...designRefs } });
       const record = (status, outcome) => ({
         schemaVersion: 1, id: game.id, pairId: game.pairId, comparisonId: game.comparisonId,
         comparisonLabel: game.comparison.label, openingId: game.openingId, repetition: game.repetition,
@@ -370,7 +391,7 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
         startFen, finalFen: board.fen(), moves: [...moves], sans: [...sans], openingMoves: [...game.openingMoves],
         openingPlies: game.openingMoves.length, totalPlies: moves.length, playedPlies: moves.length - game.openingMoves.length,
         whiteStrength: sides.white.strength, blackStrength: sides.black.strength,
-        engineNames: names, lastInfo, engine: config.engine,
+        engineNames: names, lastInfo, engine: config.engine, openingEvaluation: openingDiagnostic(),
         royalMode: profile.royalMode, evaluationCaveat: profile.evaluationCaveat,
         ...(config.evaluation ? { evaluation: config.evaluation } : {}),
         ...designRefs,
@@ -399,6 +420,9 @@ async function runMatches({ config, schedule, outDir, resume = false, enginePath
           const search = await engine.search({ fen: startFen, moves, nodes: config.engine.nodes, movetimeMs: config.engine.movetimeMs, signal });
           checkAbort(signal);
           if (!search.move || !board.moves().includes(search.move)) throw new Error(`Engine returned an illegal or missing move for ${game.id}.`);
+          if (moves.length === game.openingMoves.length && !openingEvaluation?.available) {
+            openingEvaluation = makeOpeningEvaluation({ ...openingContext, engineName: names[color] }, search);
+          }
           const san = board.san(search.move);
           if (!board.push(search.move)) throw new Error(`Rules refused engine move ${search.move}.`);
           moves.push(search.move);

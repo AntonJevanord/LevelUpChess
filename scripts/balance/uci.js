@@ -255,14 +255,17 @@ class UciEngine {
     const budget = movetimeMs === undefined ? `nodes ${integer(nodes, 'node budget')}` : `movetime ${integer(movetimeMs, 'move time')}`;
     return this._run(signal, async () => {
       this._requireReady();
-      let info = null;
+      let info = null, scoreInfo = null;
       return this._exchange([`position fen ${fen}${moves.length ? ` moves ${moves.join(' ')}` : ''}`, `go ${budget}`], (line, done) => {
         const parsed = parseInfo(line);
-        if (parsed) info = parsed;
+        if (parsed) {
+          info = parsed;
+          if (parsed.score) scoreInfo = parsed;
+        }
         if (!line.startsWith('bestmove ')) return;
         const move = line.split(/\s+/)[1];
-        if (move === '(none)' || move === '0000') done({ move: null, info });
-        else if (MOVE.test(move || '')) done({ move, info });
+        if (move === '(none)' || move === '0000') done({ move: null, info, scoreInfo });
+        else if (MOVE.test(move || '')) done({ move, info, scoreInfo });
         else throw new Error('Engine returned an invalid UCI move.');
       }, movetimeMs === undefined ? this.timeoutMs : Math.max(this.timeoutMs, movetimeMs + 5000));
     });

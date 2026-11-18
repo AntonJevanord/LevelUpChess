@@ -28,9 +28,9 @@ function context(batchIndex = 0) {
 }
 
 test('one-purchase round robins preserve both colors, tier budgets, shared book and bounded extension', () => {
-  assert.throws(() => plan.verifyFrozenInputs(file => file === 'experiments/designs/v19-roster.json'
+  assert.throws(() => plan.verifyFrozenInputs(file => file === 'experiments/designs/v19-roster-002.json'
     ? Buffer.from('changed') : fs.readFileSync(path.join(plan.ROOT, file))), /frozen version-19 declaration changed/);
-  for (const [study, count] of [['level1', 11], ['level2', 12], ['level3', 11]]) {
+  for (const [study, count] of [['level1', 11], ['level2', 11], ['level3', 11]]) {
     const campaign = plan.buildCampaignPlan({ study, jobs: 4 });
     assert.equal(campaign.stages.length, 8);
     assert.equal(plan.expectedGames(study, 16), count * (count - 1) * 16);

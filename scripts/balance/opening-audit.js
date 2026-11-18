@@ -148,7 +148,7 @@ async function replayPrefix({ rules, profile, startFen, openingMoves, signal }) 
 }
 
 function normalizeEvaluation(result, fen) {
-  const info = result?.info || result, input = info?.score;
+  const info = result?.scoreInfo || result?.info || result, input = info?.score;
   if (!input) return { available: false, perspective: 'white', reason: 'No score returned.' };
   assert.ok(['cp', 'mate'].includes(input.type) && Number.isSafeInteger(input.value), 'Unsupported diagnostic engine score.');
   assert.ok(!input.bound || ['lowerbound', 'upperbound'].includes(input.bound), 'Unsupported diagnostic score bound.');

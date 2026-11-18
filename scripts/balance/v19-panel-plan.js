@@ -10,7 +10,7 @@ const { isDeepStrictEqual } = require('node:util');
 const { Chess } = require('chess.js');
 const { normalizeConfig, makeSchedule } = require('./plan');
 const { getDesign } = require('../../src/design-catalog');
-const { getTierRoster, getTier, getRosterReceipt, getValueReceipt, TIERS, VALUE_POLICY } = require('../../src/designs-v19-selected');
+const { getTierRoster, getTier, getRosterReceipt, getValueReceipt, TIERS, VALUE_POLICY } = require('../../src/designs-v19-revised');
 const { createDesignRegistry } = require('./design-registry');
 const { compileDesignProfile } = require('./design-profile');
 const { createV17Report } = require('./v17-report');
@@ -141,7 +141,7 @@ function selectedStages(openings, plan) { expectedGames(plan.study, openings); r
 async function checkExperiment(declaration, options = {}) {
   const proof = await require('../version17-balance').checkExperiment(declaration, options);
   const profile = compileDesignProfile(createDesignRegistry(declaration.config), declaration.config.evaluation);
-  const probes = require('../../src/v19-capability-probes').revisionProbes(profile);
+  const probes = require('../../src/v19-revised-capability-probes').revisionProbes(profile);
   const { createMatchRules } = require('../../dist/balance-rules.cjs');
   const rules = await createMatchRules({ profile });
   let engine, directory;
@@ -221,9 +221,11 @@ function reportStudy(manifest, stages) {
     const ids = openingIds.slice(batchIndex * 8, batchIndex * 8 + 8);
     return { batchIndex, openingIds: ids, rows: rowsFor(study, records.filter(row => ids.includes(row.openingId)), declaration, ids, `v19:${study}:batch${batchIndex}`) };
   });
+  const openingEvaluations = require('./opening-evaluation-report').buildOpeningEvaluationReport(records,
+    { engineSha256: manifest.identity?.engineSha256 });
   return { schemaVersion: 1, format: 'levelup-v19-tier-panel-report', runId: manifest.runId || null, study, tier: LEVEL(study), targetOpenings,
     scheduledGames: expectedGames(study, targetOpenings), nodes: NODES, progress: checked.progress, comparisons: checked.comparisons,
-    rows, cohorts, openingPolicy: BOOK.policy, evaluationAudit: getValueAudit(study),
+    rows, cohorts, openingPolicy: BOOK.policy, evaluationAudit: getValueAudit(study), openingEvaluations,
     sources: stages.map(stage => ({ batchIndex: stage.batchIndex, nodes: stage.nodes, directory: stage.directory || null,
       runId: stage.manifest.runId, profileHash: stage.manifest.designProfile.hash, registryHash: stage.manifest.designProfile.registryHash })) };
 }
@@ -247,6 +249,7 @@ function renderReport(report) {
     '| Design | ' + report.cohorts.map(cohort => `Cases ${cohort.batchIndex * 8 + 1}–${cohort.batchIndex * 8 + 8}`).join(' | ') + ' |',
     '| --- | ' + report.cohorts.map(() => '---:').join(' | ') + ' |',
     ...report.rows.map(row => `| ${row.label} | ${report.cohorts.map(cohort => { const part = cohort.rows.find(item => item.key === row.key).allOpponents; return `${pct(part.score)} (${part.openingCoverage.shared}/8)`; }).join(' | ')} |`), '',
+    require('./opening-evaluation-report').renderOpeningEvaluationReport(report.openingEvaluations),
     '## Frozen search priors', '', report.evaluationAudit.policy, '', '| Design | Movement | Applied MG / EG |', '| --- | --- | ---: |',
     ...report.evaluationAudit.values.map(row => `| ${row.id} | \`${row.movement}\` | ${row.applied.mg} / ${row.applied.eg} |`), '',
     'Conditional ranges resample whole shared opening cases, retaining both colors. Related prefixes, fixed priors and engine limitations remain outside those ranges. Scores measure army outcomes under this protocol, not intrinsic piece Elo or fitted material prices. No old study outcomes are silently pooled.', ''];

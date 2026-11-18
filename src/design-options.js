@@ -29,7 +29,12 @@ const selectedV19Profiles = [
   require('./playable-v19-level2-profile.json'),
   require('./playable-v19-level3-profile.json'),
 ];
+const revisedV19Profiles = [
+  require('./playable-v19-level2-revised-profile.json'),
+  require('./playable-v19-level3-revised-profile.json'),
+];
 const { TIERS: V19_TIERS } = require('./designs-v19-selected');
+const { TIERS: V19_REVISED_TIERS } = require('./designs-v19-revised');
 const { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, V18_CANDIDATES, V18_RESERVE_DESIGN_IDS } = require('./playable-library');
 const { STANDARD_TYPES } = require('./design-catalog');
 const { pieceInfo } = require('./piece-catalog');
@@ -43,7 +48,7 @@ function freeze(value) {
 }
 
 const PLAYABLE_PROFILE = freeze(compiled);
-const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile, rosterProfile, confirmedProfile, selectedV18Profile, ...selectedV19Profiles]);
+const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile, rosterProfile, confirmedProfile, selectedV18Profile, ...selectedV19Profiles, ...revisedV19Profiles]);
 const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
 const EXPERIMENTAL_VARIANTS = freeze(PLAYABLE_PROFILES.map(profile => profile.variant));
 const PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES[index].variant, ...(library.generation ? { generation: library.generation } : {}), ...(library.focusFamily ? { focusFamily: library.focusFamily } : {}), ...(library.edition ? { edition: library.edition } : {}), ...(library.superseded ? { superseded: true } : {}) })));
@@ -161,6 +166,7 @@ const metadata = {
   'queen.level2-side-knight@1': ['Wide-knight queen', 'Normal queen moves, plus knight jumps two files sideways and one rank forward or backward, including captures.'],
   'queen.level2-camel-capture@1': ['Camel-capture queen', 'Normal queen moves. Also capture with camel jumps: three squares in one direction and one at right angles. These extra jumps require a capture.'],
   'knight.level3-nad@1': ['NAD knight', 'Normal knight jumps, plus two-square diagonal and orthogonal jumps, including captures. All jumps cross intervening pieces.'],
+  'queen.wraith-side-through@1': ['Wraith', 'Normal queen moves. Hop over one piece to any empty square along a queen line before the next blocker. Hopping captures can land any clear distance beyond a sideways hurdle, or immediately beyond a diagonal hurdle. Vertical hops cannot capture.'],
 };
 
 const additionalExperimentalIds = new Set(['pawn.bishop-step-current@1', 'pawn.rank-current@1',
@@ -242,14 +248,18 @@ const currentNames = Object.freeze({
   'rook.cataphract-no-tall-back@1': 'Cataphract',
   'bishop.vertical-blocked@1': 'Inquisitor',
   'queen.purple@7': 'Wraith',
+  'queen.wraith-side-through@1': 'Wraith',
   'king.grant-wd-level3@1': 'Warden',
   'knight.purple@4': 'Nightrider',
   'bishop.purple@13': 'Crusader',
 });
-const namedCurrentVariants = new Set(PLAYABLE_LIBRARIES.filter(library => library.generation >= 17 && !library.superseded).map(library => library.variant));
+const namedCurrentVariants = new Set(PLAYABLE_LIBRARIES.filter(library => library.generation >= 17 && (!library.superseded || library.generation === 19)).map(library => library.variant));
 const v18ExplorationIds = new Set(['knight.purple@4', 'queen.purple@7']);
-const v19Presentation = new Map(selectedV19Profiles.map((profile, index) => {
-  const tier = V19_TIERS[index], groups = new Set(), entries = {};
+const v19Presentation = new Map([
+  ...selectedV19Profiles.map((profile, index) => [profile, V19_TIERS[index]]),
+  ...revisedV19Profiles.map((profile, index) => [profile, V19_REVISED_TIERS[index + 1]]),
+].map(([profile, tier]) => {
+  const groups = new Set(), entries = {};
   for (const body of tier.bodies) {
     const group = `${body.family}:${tier.level}`;
     const familyHasReference = tier.bodies.some(other => other.family === body.family && other.reference);
@@ -260,7 +270,7 @@ const v19Presentation = new Map(selectedV19Profiles.map((profile, index) => {
     entries[body.id] = { accent,
       ...(body.id === 'pawn.purple@13' ? { description: 'Move any clear distance orthogonally without capturing. Capture any clear distance diagonally forward, including an adjacent en-passant capture. Standard queen, rook, bishop or knight promotion.' } : {}),
       status: body.reference ? 'reference'
-      : body.id === 'queen.purple@7' ? 'exploration' : 'accepted' };
+      : ['queen.purple@7', 'queen.wraith-side-through@1'].includes(body.id) ? 'exploration' : 'accepted' };
   }
   return [profile.variant, entries];
 }));

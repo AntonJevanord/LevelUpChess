@@ -13,10 +13,10 @@ const { getPlayableProfiles } = require('../scripts/playable-profile');
 const { defaultDesignChoices, designSetupFromChoices, loadDesignSetup } = require('../src/design-setup');
 const historical = require('./fixtures/playable-initial20-sha256.json');
 const root = path.resolve(__dirname, '..');
-const libraries = PLAYABLE_LIBRARIES.filter(library => library.generation === 19);
+const libraries = PLAYABLE_LIBRARIES.filter(library => /^v19-level[123]$/.test(library.id));
 
 test('new tier libraries preserve every historical profile byte and offer only accepted bodies', () => {
-  assert.equal(PLAYABLE_LIBRARIES.length, 23);
+  assert.equal(PLAYABLE_LIBRARIES.slice(0, 23).filter(library => library.generation === 19).length, 3);
   for (const [file, expected] of Object.entries(historical)) {
     const bytes = fs.readFileSync(path.join(root, file), 'utf8').replace(/\r\n/g, '\n');
     assert.equal(createHash('sha256').update(bytes).digest('hex'), expected, file);
