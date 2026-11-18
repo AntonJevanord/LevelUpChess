@@ -34,6 +34,11 @@ finite reserve grants. Every matchup keeps both colors on the same opening.
 Fixed-reference scores are reported separately from the whole-roster average.
 Search: 40,000 nodes, Skill 20, one thread, 32 MiB hash; four workers default.
 
+Fresh panels use roster revision 004, including the selected QfsN queen,
+fQ2 pawn and six-jump L3 pawn. At sixteen openings L1/L2/L3 schedule
+1,760 / 2,112 / 2,112 games. Use fresh output folders for this context;
+existing folders resume their original owned roster and search protocol.
+
 Opening targets are TOTALS of 8, 16, 32 or 64, not additional cases. Default
 16; --resume without --openings keeps the previous target. New eight-case
 batches append authoritative journals; finished batches are checked and skipped.
@@ -123,7 +128,7 @@ function requireInactive(root) {
   try { process.kill(owner.pid, 0); } catch (error) { if (error.code === 'ESRCH') return; throw error; }
   throw new Error(`Panel stage is active in process ${owner.pid}.`);
 }
-function stageState(root, stage, jobs, study, planTools = require('./balance/v19-panel-plan')) {
+function stageState(root, stage, jobs, study, planTools = require('./balance/v19-panel-current-plan')) {
   if (!fs.existsSync(root)) return { mode: 'new' };
   ordinaryDirectory(root); requireInactive(root);
   const tools = require('./version17-balance'), declaration = planTools.getBatchDeclaration(study, stage.batchIndex, stage.nodes);
@@ -219,7 +224,7 @@ function writeReport(root, manifest, targetOpenings, stages, planTools) {
 // Executes inside the verified source snapshot. Tests inject a tiny frozen plan
 // and synthetic stages; normal operation always resolves the snapshot catalog.
 async function runStudy(args, { enginePath, overlaySha256, initialJobs, initialOpenings, log = console.log, signals = process,
-  planTools = require('./balance/v19-panel-plan'), check, run, persist,
+  planTools = require('./balance/v19-panel-current-plan'), check, run, persist,
   identity = require('./balance/run').getRunIdentity, inspect = inspectAll, report = writeReport, verifyOverlay = openResearchOverlay } = {}) {
   const options = parseArgs(args), tools = require('./version17-balance');
   check ||= planTools.checkExperiment || tools.checkExperiment; run ||= require('./parallel-balance').main; persist ||= tools.writePreflight;

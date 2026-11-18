@@ -180,7 +180,7 @@ const V19_REVISED_LIBRARIES = Object.freeze(require('./designs-v19-revised').TIE
     id: `v19-level${tier.level}-revised`, name: `Level ${tier.level} roster · revised`,
     generation: CURRENT_PLAYABLE_GENERATION, edition: tier.level + 2,
     rosterRevision: 'v19-002',
-    ...(tier.level === 2 ? { superseded: true } : {}),
+    superseded: true,
     designIds: Object.freeze(tier.bodies.map(body => body.id)),
     evaluation: Object.freeze({ pieceValues: Object.freeze(Object.fromEntries(tier.bodies.map(body =>
       [body.id, Object.freeze({ ...body.prior })]))) }),
@@ -192,6 +192,17 @@ const V19_CURRENT_LIBRARIES = Object.freeze(require('./designs-v19-current').TIE
     id: `v19-level${tier.level}-current`, name: `Level ${tier.level} roster · current`,
     generation: CURRENT_PLAYABLE_GENERATION, edition: tier.level + 5,
     rosterRevision: 'v19-003',
+    designIds: Object.freeze(tier.bodies.map(body => body.id)),
+    evaluation: Object.freeze({ pieceValues: Object.freeze(Object.fromEntries(tier.bodies.map(body =>
+      [body.id, Object.freeze({ ...body.prior })]))) }),
+    json: `src/playable-v19-level${tier.level}-current-profile.json`,
+    ini: `variants/levelup-playable-v19-level${tier.level}-current.ini`,
+  })));
+const V19_PANEL_READY_LIBRARIES = Object.freeze(require('./designs-v19-panel-ready').TIERS
+  .filter(tier => tier.level === 3).map(tier => Object.freeze({
+    id: `v19-level${tier.level}-current`, name: `Level ${tier.level} roster · current`,
+    generation: CURRENT_PLAYABLE_GENERATION, edition: 8,
+    rosterRevision: 'v19-004',
     designIds: Object.freeze(tier.bodies.map(body => body.id)),
     evaluation: Object.freeze({ pieceValues: Object.freeze(Object.fromEntries(tier.bodies.map(body =>
       [body.id, Object.freeze({ ...body.prior })]))) }),
@@ -229,6 +240,7 @@ const PLAYABLE_LIBRARIES = Object.freeze([
   ...V19_LIBRARIES,
   ...V19_REVISED_LIBRARIES,
   ...V19_CURRENT_LIBRARIES,
+  ...V19_PANEL_READY_LIBRARIES,
 ]);
 
-module.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, V18_CANDIDATES, V18_RESERVE_DESIGN_IDS, V19_LIBRARIES, V19_REVISED_LIBRARIES, V19_CURRENT_LIBRARIES, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };
+module.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, V18_CANDIDATES, V18_RESERVE_DESIGN_IDS, V19_LIBRARIES, V19_REVISED_LIBRARIES, V19_CURRENT_LIBRARIES, V19_PANEL_READY_LIBRARIES, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };

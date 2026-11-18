@@ -34635,6 +34635,1197 @@ var require_playable_v19_level2_current_profile = __commonJS({
   }
 });
 
+// src/playable-v19-level3-current-profile.json
+var require_playable_v19_level3_current_profile = __commonJS({
+  "src/playable-v19-level3-current-profile.json"(exports2, module2) {
+    module2.exports = {
+      schemaVersion: 1,
+      variant: "levelup-design-b1aeffdad8c6b21e594a",
+      config: "# Dynamic experiment profile. Meanings belong to the archived registry.\n[levelup-design-b1aeffdad8c6b21e594a:chess]\ncustomPiece1 = a:BvW2vnN\ncustomPiece2 = c:WD\ncustomPiece3 = g:NC\ncustomPiece4 = d:mRcfB\ncustomPiece5 = f:NAD\ncustomPiece6 = e:ifmnDfmWfceFsNfN\ncustomPiece7 = h:mQ2cfQ2\ncustomPiece8 = u:QN\ncustomPiece9 = i:QgmQ0gcBgcsR0\ncustomPiece10 = j:RsCfC\ncustomPiece18 = x:RfB\ncustomPiece22 = m:BsR2nsN\npieceValueMg = m:1858 a:1742 c:563 f:1663 g:1663 e:762 d:762 h:418 u:3738 i:3772 j:2240 x:1904\npieceValueEg = m:1903 a:1769 c:635 f:1877 g:1877 e:808 d:808 h:436 u:3875 i:3470 j:2413 x:1932\npieceToCharTable = -\ncastlingRookPiece = rjx\ndoubleStepRegionWhite = *1 *2\ndoubleStepRegionBlack = *7 *8\npawnTypes = pdeh\nenPassantTypes = pdeh\npromotionPieceTypes = nbrq\n# Finite nonroyal king grants: deployment spends a turn; captures disappear.\ntwoBoards = false\npieceDrops = true\ncapturesToHand = false\nmustDrop = false\ndropChecks = false\ndropRegionWhite = *1 *2 *3 *4\ndropRegionBlack = *5 *6 *7 *8\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n",
+      registry: {
+        schemaVersion: 1,
+        definitions: [
+          {
+            id: "bishop.purple@13",
+            family: "bishop",
+            level: 3,
+            revision: 13,
+            movement: "BsR2nsN",
+            legacyType: "m",
+            legacySlot: 22,
+            placement: "replace",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            }
+          },
+          {
+            id: "bishop.vertical-blocked@1",
+            family: "bishop",
+            level: 3,
+            revision: 1,
+            movement: "BvW2vnN",
+            legacyType: "a",
+            legacySlot: 1,
+            placement: "replace",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "king.grant-wd-level3@1",
+            family: "king",
+            level: 3,
+            revision: 1,
+            movement: "WD",
+            legacyType: "a",
+            legacySlot: 1,
+            placement: "reserve",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "knight.level3-nad@1",
+            family: "knight",
+            level: 3,
+            revision: 1,
+            movement: "NAD",
+            legacyType: "f",
+            legacySlot: 5,
+            placement: "replace",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "knight.purple@3",
+            family: "knight",
+            level: 3,
+            revision: 3,
+            movement: "NC",
+            legacyType: "g",
+            legacySlot: 3,
+            placement: "replace",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            }
+          },
+          {
+            id: "pawn.level3-six-knight@1",
+            family: "pawn",
+            level: 3,
+            revision: 1,
+            movement: "ifmnDfmWfceFsNfN",
+            legacyType: "g",
+            legacySlot: 6,
+            placement: "replace",
+            roles: {
+              pawn: true,
+              castlingRook: false,
+              enPassant: true
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "pawn.purple@13",
+            family: "pawn",
+            level: 3,
+            revision: 13,
+            movement: "mRcfB",
+            legacyType: "d",
+            legacySlot: 3,
+            placement: "replace",
+            roles: {
+              pawn: true,
+              castlingRook: false,
+              enPassant: true
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "pawn.queen-sideways@1",
+            family: "pawn",
+            level: 3,
+            revision: 1,
+            movement: "mQ2cfQ2",
+            legacyType: "a",
+            legacySlot: 1,
+            placement: "replace",
+            roles: {
+              pawn: true,
+              castlingRook: false,
+              enPassant: true
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "queen.purple@1",
+            family: "queen",
+            level: 3,
+            revision: 1,
+            movement: "QN",
+            legacyType: "u",
+            legacySlot: 8,
+            placement: "replace",
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            }
+          },
+          {
+            id: "queen.wraith-side-through@1",
+            family: "queen",
+            level: 3,
+            revision: 1,
+            movement: "QgmQ0gcBgcsR0",
+            placement: "replace",
+            legacyType: "a",
+            legacySlot: 1,
+            roles: {
+              pawn: false,
+              castlingRook: false,
+              enPassant: false
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "rook.cataphract-no-tall-back@1",
+            family: "rook",
+            level: 3,
+            revision: 1,
+            movement: "RsCfC",
+            legacyType: "a",
+            legacySlot: 1,
+            placement: "replace",
+            roles: {
+              pawn: false,
+              castlingRook: true,
+              enPassant: false
+            },
+            inheritLegacyProbes: false
+          },
+          {
+            id: "rook.purple@10",
+            family: "rook",
+            level: 3,
+            revision: 10,
+            movement: "RfB",
+            legacyType: "x",
+            legacySlot: 18,
+            placement: "replace",
+            roles: {
+              pawn: false,
+              castlingRook: true,
+              enPassant: false
+            }
+          }
+        ],
+        allocations: [
+          {
+            id: "bishop.purple@13",
+            letter: "m",
+            slot: 22
+          },
+          {
+            id: "bishop.vertical-blocked@1",
+            letter: "a",
+            slot: 1
+          },
+          {
+            id: "king.grant-wd-level3@1",
+            letter: "c",
+            slot: 2
+          },
+          {
+            id: "knight.level3-nad@1",
+            letter: "f",
+            slot: 5
+          },
+          {
+            id: "knight.purple@3",
+            letter: "g",
+            slot: 3
+          },
+          {
+            id: "pawn.level3-six-knight@1",
+            letter: "e",
+            slot: 6
+          },
+          {
+            id: "pawn.purple@13",
+            letter: "d",
+            slot: 4
+          },
+          {
+            id: "pawn.queen-sideways@1",
+            letter: "h",
+            slot: 7
+          },
+          {
+            id: "queen.purple@1",
+            letter: "u",
+            slot: 8
+          },
+          {
+            id: "queen.wraith-side-through@1",
+            letter: "i",
+            slot: 9
+          },
+          {
+            id: "rook.cataphract-no-tall-back@1",
+            letter: "j",
+            slot: 10
+          },
+          {
+            id: "rook.purple@10",
+            letter: "x",
+            slot: 18
+          }
+        ],
+        hash: "b3180c3bbf890fcf2229b0eba13712a53c2397b40bdc5d9d938ab18912c5b7a3"
+      },
+      registryHash: "b3180c3bbf890fcf2229b0eba13712a53c2397b40bdc5d9d938ab18912c5b7a3",
+      hash: "6a36279ece0e287a02b0f54dfadbf61c82a3ef3a163457db4b076a50d3cda4be",
+      roles: {
+        pawnTypes: [
+          "p",
+          "d",
+          "e",
+          "h"
+        ],
+        enPassantTypes: [
+          "p",
+          "d",
+          "e",
+          "h"
+        ],
+        castlingRooks: [
+          "r",
+          "j",
+          "x"
+        ],
+        royalTypes: [
+          "k"
+        ],
+        initialPawnLeaps: {
+          p: 2,
+          e: 2
+        },
+        initialLandingLeaps: {},
+        reserveTypes: [
+          "c"
+        ]
+      },
+      definitionsByLetter: {
+        m: {
+          id: "bishop.purple@13",
+          family: "bishop",
+          level: 3,
+          revision: 13,
+          movement: "BsR2nsN",
+          legacyType: "m",
+          legacySlot: 22,
+          placement: "replace",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          }
+        },
+        a: {
+          id: "bishop.vertical-blocked@1",
+          family: "bishop",
+          level: 3,
+          revision: 1,
+          movement: "BvW2vnN",
+          legacyType: "a",
+          legacySlot: 1,
+          placement: "replace",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          },
+          inheritLegacyProbes: false
+        },
+        c: {
+          id: "king.grant-wd-level3@1",
+          family: "king",
+          level: 3,
+          revision: 1,
+          movement: "WD",
+          legacyType: "a",
+          legacySlot: 1,
+          placement: "reserve",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          },
+          inheritLegacyProbes: false
+        },
+        f: {
+          id: "knight.level3-nad@1",
+          family: "knight",
+          level: 3,
+          revision: 1,
+          movement: "NAD",
+          legacyType: "f",
+          legacySlot: 5,
+          placement: "replace",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          },
+          inheritLegacyProbes: false
+        },
+        g: {
+          id: "knight.purple@3",
+          family: "knight",
+          level: 3,
+          revision: 3,
+          movement: "NC",
+          legacyType: "g",
+          legacySlot: 3,
+          placement: "replace",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          }
+        },
+        e: {
+          id: "pawn.level3-six-knight@1",
+          family: "pawn",
+          level: 3,
+          revision: 1,
+          movement: "ifmnDfmWfceFsNfN",
+          legacyType: "g",
+          legacySlot: 6,
+          placement: "replace",
+          roles: {
+            pawn: true,
+            castlingRook: false,
+            enPassant: true
+          },
+          inheritLegacyProbes: false
+        },
+        d: {
+          id: "pawn.purple@13",
+          family: "pawn",
+          level: 3,
+          revision: 13,
+          movement: "mRcfB",
+          legacyType: "d",
+          legacySlot: 3,
+          placement: "replace",
+          roles: {
+            pawn: true,
+            castlingRook: false,
+            enPassant: true
+          },
+          inheritLegacyProbes: false
+        },
+        h: {
+          id: "pawn.queen-sideways@1",
+          family: "pawn",
+          level: 3,
+          revision: 1,
+          movement: "mQ2cfQ2",
+          legacyType: "a",
+          legacySlot: 1,
+          placement: "replace",
+          roles: {
+            pawn: true,
+            castlingRook: false,
+            enPassant: true
+          },
+          inheritLegacyProbes: false
+        },
+        u: {
+          id: "queen.purple@1",
+          family: "queen",
+          level: 3,
+          revision: 1,
+          movement: "QN",
+          legacyType: "u",
+          legacySlot: 8,
+          placement: "replace",
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          }
+        },
+        i: {
+          id: "queen.wraith-side-through@1",
+          family: "queen",
+          level: 3,
+          revision: 1,
+          movement: "QgmQ0gcBgcsR0",
+          placement: "replace",
+          legacyType: "a",
+          legacySlot: 1,
+          roles: {
+            pawn: false,
+            castlingRook: false,
+            enPassant: false
+          },
+          inheritLegacyProbes: false
+        },
+        j: {
+          id: "rook.cataphract-no-tall-back@1",
+          family: "rook",
+          level: 3,
+          revision: 1,
+          movement: "RsCfC",
+          legacyType: "a",
+          legacySlot: 1,
+          placement: "replace",
+          roles: {
+            pawn: false,
+            castlingRook: true,
+            enPassant: false
+          },
+          inheritLegacyProbes: false
+        },
+        x: {
+          id: "rook.purple@10",
+          family: "rook",
+          level: 3,
+          revision: 10,
+          movement: "RfB",
+          legacyType: "x",
+          legacySlot: 18,
+          placement: "replace",
+          roles: {
+            pawn: false,
+            castlingRook: true,
+            enPassant: false
+          }
+        }
+      },
+      capabilityProbes: [
+        {
+          name: "bishop.purple@13: White open movement and range",
+          fen: "8/7k/8/8/3M4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: Black open movement and range",
+          fen: "k7/8/8/3m4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPMPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpmpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: White first sideways leg blocks both wide knight directions",
+          fen: "8/7k/8/5p2/2PMP3/1p6/8/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: Black first sideways leg blocks both wide knight directions",
+          fen: "k7/8/1P6/2pmp3/5P2/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: White second sideways square is not the lame knight leg",
+          fen: "8/7k/8/5p2/1P1M1P2/1p6/8/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: Black second sideways square is not the lame knight leg",
+          fen: "k7/8/1P6/1p1m1p2/5P2/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: White enemy first leg can be captured sideways but blocks knight continuation",
+          fen: "8/7k/8/5p2/3Mp3/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: Black enemy first leg can be captured sideways but blocks knight continuation",
+          fen: "k7/8/8/3mP3/5P2/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: White horizontal slides retain a two-square clear limit",
+          fen: "8/7k/8/8/p2M1p2/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.purple@13: Black horizontal slides retain a two-square clear limit",
+          fen: "k7/8/8/P2m1P2/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: White open movement and range",
+          fen: "8/7k/8/8/3A4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: Black open movement and range",
+          fen: "k7/8/8/3a4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPAPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpapP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: White tall knight is blocked on its first vertical leg",
+          fen: "8/7k/2p1p3/3P4/3A4/3P4/2p1p3/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: Black tall knight is blocked on its first vertical leg",
+          fen: "k7/2P1P3/3p4/3a4/3p4/2P1P3/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: White tall knight ignores the second vertical square",
+          fen: "8/7k/2pPp3/8/3A4/8/2pPp3/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: Black tall knight ignores the second vertical square",
+          fen: "k7/2PpP3/8/3a4/8/2PpP3/7K/8 b - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: White vertical two-step is a clear-path slide and has no sideways counterpart",
+          fen: "8/7k/3p4/8/1p1A1p2/8/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "bishop.vertical-blocked@1: Black vertical two-step is a clear-path slide and has no sideways counterpart",
+          fen: "k7/3P4/8/1P1a1P2/8/3P4/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White open movement and range",
+          fen: "8/7k/8/8/3C4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black open movement and range",
+          fen: "k7/8/8/3c4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPCPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpcpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White orthogonal steps and two-square jumps with no longer or diagonal moves",
+          fen: "8/7k/3p4/8/1p1C1p2/8/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black orthogonal steps and two-square jumps with no longer or diagonal moves",
+          fen: "k7/3P4/8/1P1c1P2/8/3P4/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White two-square orthogonal jumps cross friendly intermediate blockers",
+          fen: "8/7k/3p4/3P4/1pPCPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black two-square orthogonal jumps cross friendly intermediate blockers",
+          fen: "k7/3P4/3p4/1PpcpP2/3p4/3P4/7K/8 b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White finite nonroyal grant remains capturable",
+          fen: "3r4/7k/8/8/3C4/8/8/K7 b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black finite nonroyal grant remains capturable",
+          fen: "k7/8/8/3c4/8/8/7K/3R4 w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White non-pawn grant keeps ordinary nonpromotion at the last rank",
+          fen: "8/1C6/7k/8/8/8/8/7K w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black non-pawn grant keeps ordinary nonpromotion at the last rank",
+          fen: "7k/8/8/8/8/7K/1c6/8 b - - 0 1"
+        },
+        {
+          name: "knight.level3-nad@1: White open movement and range",
+          fen: "8/7k/8/8/3F4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "knight.level3-nad@1: Black open movement and range",
+          fen: "k7/8/8/3f4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "knight.level3-nad@1: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPFPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "knight.level3-nad@1: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpfpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "knight.purple@3: White open movement and range",
+          fen: "8/7k/8/8/3G4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "knight.purple@3: Black open movement and range",
+          fen: "k7/8/8/3g4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "knight.purple@3: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPGPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "knight.purple@3: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpgpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "knight.purple@3: White camel captures across blockers",
+          fen: "8/4p2k/8/3P2p1/3GP3/p7/8/K1p5 w - - 0 1"
+        },
+        {
+          name: "knight.purple@3: Black camel captures across blockers",
+          fen: "k1P5/8/P7/3gp3/3p2P1/8/4P2K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: White open movement and range",
+          fen: "8/7k/8/8/3E4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: Black open movement and range",
+          fen: "k7/8/8/3e4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPEPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpepP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: White initial movement across home-rank blockers",
+          fen: "8/7k/8/8/8/2pPp3/3E4/7K w - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: Black initial movement across home-rank blockers",
+          fen: "7k/3e4/2PpP3/8/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: White mandatory standard promotion",
+          fen: "8/1E6/7k/8/8/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: Black mandatory standard promotion",
+          fen: "k7/8/8/8/8/7K/1e6/8 b - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: White open movement and range",
+          fen: "8/7k/8/8/3D4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: Black open movement and range",
+          fen: "k7/8/8/3d4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPDPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpdpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: White mandatory standard promotion",
+          fen: "8/1D6/7k/8/8/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: Black mandatory standard promotion",
+          fen: "k7/8/8/8/8/7K/1d6/8 b - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: White standard forward en passant capture",
+          fen: "7k/8/8/2Dp4/8/8/8/7K w - d6 0 1"
+        },
+        {
+          name: "pawn.purple@13: Black standard forward en passant capture",
+          fen: "7k/8/8/8/2dP4/8/8/7K b - d3 0 1"
+        },
+        {
+          name: "pawn.purple@13: White unlimited forward captures but quiet-only backward movement",
+          fen: "7k/p5p1/8/8/3D4/8/1p3p2/7K w - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: Black unlimited forward captures but quiet-only backward movement",
+          fen: "7k/1P3P2/8/3d4/8/8/P5P1/7K b - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: White forward diagonal captures require a clear path",
+          fen: "7k/8/1p3p2/2P1P3/3D4/8/8/7K w - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: Black forward diagonal captures require a clear path",
+          fen: "7k/8/8/3d4/2p1p3/1P3P2/8/7K b - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: White open movement and range",
+          fen: "8/7k/8/8/3H4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: Black open movement and range",
+          fen: "k7/8/8/3h4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPHPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PphpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: White mandatory standard promotion",
+          fen: "8/1H6/7k/8/8/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: Black mandatory standard promotion",
+          fen: "k7/8/8/8/8/7K/1h6/8 b - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: White two-square quiet queen range with forward-only captures",
+          fen: "8/7k/1p1p1p2/8/1p1H1p2/8/1p1p1p2/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: Black two-square quiet queen range with forward-only captures",
+          fen: "k7/1P1P1P2/8/1P1h1P2/8/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: White quiet sideways and backward slides require a clear intervening square",
+          fen: "8/7k/8/8/3HPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: Black quiet sideways and backward slides require a clear intervening square",
+          fen: "k7/3P4/3p4/3hpP2/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: White quiet EP-target visit keeps the bypassed pawn",
+          fen: "7k/8/8/2Hp4/8/8/8/7K w - d6 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: Black quiet EP-target visit keeps the bypassed pawn",
+          fen: "7k/8/8/8/2hP4/8/8/7K b - d3 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: White quiet and capturing forward promotions remain standard",
+          fen: "2r5/1H6/7k/8/8/8/8/7K w - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: Black quiet and capturing forward promotions remain standard",
+          fen: "7k/8/8/8/8/7K/1h6/2R5 b - - 0 1"
+        },
+        {
+          name: "queen.purple@1: White open movement and range",
+          fen: "8/7k/8/8/3U4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "queen.purple@1: Black open movement and range",
+          fen: "k7/8/8/3u4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "queen.purple@1: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPUPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "queen.purple@1: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpupP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "queen.wraith-side-through@1: White open movement and range",
+          fen: "8/7k/8/8/3I4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "queen.wraith-side-through@1: Black open movement and range",
+          fen: "k7/8/8/3i4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "queen.wraith-side-through@1: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPIPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "queen.wraith-side-through@1: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpipP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "rook.cataphract-no-tall-back@1: White open movement and range",
+          fen: "8/7k/8/8/3J4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "rook.cataphract-no-tall-back@1: Black open movement and range",
+          fen: "k7/8/8/3j4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "rook.cataphract-no-tall-back@1: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPJPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "rook.cataphract-no-tall-back@1: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpjpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "rook.cataphract-no-tall-back@1: White both castling sides",
+          fen: "4k3/8/8/8/8/8/8/J3K2J w KQ - 0 1"
+        },
+        {
+          name: "rook.cataphract-no-tall-back@1: Black both castling sides",
+          fen: "j3k2j/8/8/8/8/8/8/4K3 b kq - 0 1"
+        },
+        {
+          name: "rook.purple@10: White open movement and range",
+          fen: "8/7k/8/8/3X4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "rook.purple@10: Black open movement and range",
+          fen: "k7/8/8/3x4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "rook.purple@10: White blocked movement and capture jumps",
+          fen: "8/7k/1p1p1p2/3P4/1pPXPp2/3P4/3p4/K7 w - - 0 1"
+        },
+        {
+          name: "rook.purple@10: Black blocked movement and capture jumps",
+          fen: "k7/3P4/3p4/1PpxpP2/3p4/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "rook.purple@10: White forward and backward diagonal ranges",
+          fen: "8/p5pk/8/8/3X4/8/1p3p2/K7 w - - 0 1"
+        },
+        {
+          name: "rook.purple@10: Black forward and backward diagonal ranges",
+          fen: "k7/1P3P2/8/3x4/8/8/P5PK/8 b - - 0 1"
+        },
+        {
+          name: "rook.purple@10: White diagonal slides cannot cross blockers",
+          fen: "8/7k/5p2/4P3/3X4/2p5/1p6/K7 w - - 0 1"
+        },
+        {
+          name: "rook.purple@10: Black diagonal slides cannot cross blockers",
+          fen: "k7/1P6/2P5/3x4/4p3/5P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "rook.purple@10: White both castling sides",
+          fen: "4k3/8/8/8/8/8/8/X3K2X w KQ - 0 1"
+        },
+        {
+          name: "rook.purple@10: Black both castling sides",
+          fen: "x3k2x/8/8/8/8/8/8/4K3 b kq - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: finite w reserve deployment",
+          fen: "7k/8/8/8/8/8/8/K7[C] w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: finite b reserve deployment",
+          fen: "7k/8/8/8/8/8/8/K7[c] b - - 0 1"
+        },
+        {
+          name: "ordinary White king castling",
+          fen: "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1"
+        },
+        {
+          name: "ordinary Black king castling",
+          fen: "r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 1"
+        },
+        {
+          name: "knight.level3-nad@1: White clear stepped and jumping geometry",
+          fen: "7k/8/8/8/3F4/8/8/K7 w - - 0 1"
+        },
+        {
+          name: "knight.level3-nad@1: Black clear stepped and jumping geometry",
+          fen: "k7/8/8/3f4/8/8/8/7K b - - 0 1"
+        },
+        {
+          name: "knight.level3-nad@1: White enemy landings test the declared capture subsets",
+          fen: "7k/1b1b1b2/bbbbbbb1/1b1b1b2/bbbFbbb1/1b1b1b2/bbbbbbb1/Kb1b1b2 w - - 0 1"
+        },
+        {
+          name: "knight.level3-nad@1: Black enemy landings test the declared capture subsets",
+          fen: "kB1B1B2/BBBBBBB1/1B1B1B2/BBBfBBB1/1B1B1B2/BBBBBBB1/1B1B1B2/7K b - - 0 1"
+        },
+        {
+          name: "knight.level3-nad@1: White friendly landing squares remain blocked",
+          fen: "7k/1B1B1B2/BBBBBNB1/1B1B1B2/BBBFBBB1/1B1B1B2/BNBBBBB1/KB1B1B2 w - - 0 1"
+        },
+        {
+          name: "knight.level3-nad@1: Black friendly landing squares remain blocked",
+          fen: "kb1b1b2/bnbbbbb1/1b1b1b2/bbbfbbb1/1b1b1b2/bbbbbnb1/1b1b1b2/7K b - - 0 1"
+        },
+        {
+          name: "knight.level3-nad@1: White long jumps cross occupied intervening squares",
+          fen: "7k/8/8/3PPP2/2PFP3/3P4/8/K7 w - - 0 1"
+        },
+        {
+          name: "knight.level3-nad@1: Black long jumps cross occupied intervening squares",
+          fen: "k7/8/3p4/2pfp3/3ppp2/8/8/7K b - - 0 1"
+        },
+        {
+          name: "knight.level3-nad@1: White a pinned nonroyal knight must preserve king safety",
+          fen: "3r3k/8/8/8/3F4/8/8/3K4 w - - 0 1"
+        },
+        {
+          name: "knight.level3-nad@1: Black a pinned nonroyal knight must preserve king safety",
+          fen: "3k4/8/8/3f4/8/8/8/3R3K b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White finite home-half drop and occupied square",
+          fen: "7k/8/8/8/2P5/8/8/K7[CC] w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black finite home-half drop and occupied square",
+          fen: "k7/8/8/2p5/8/8/8/7K[cc] b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White checking drops are prohibited",
+          fen: "8/8/3k4/8/8/8/8/K7[C] w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black checking drops are prohibited",
+          fen: "k7/8/8/8/8/3K4/8/8[c] b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White a grant may interpose a rook check",
+          fen: "4r2k/8/8/8/8/8/8/4K3[C] w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black a grant may interpose a rook check",
+          fen: "4k3/8/8/8/8/8/8/4R2K[c] b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White a knight check cannot be blocked by a drop",
+          fen: "7k/8/8/8/8/5n2/8/4K3[C] w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black a knight check cannot be blocked by a drop",
+          fen: "4k3/8/5N2/8/8/8/8/7K[c] b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White captured grant disappears instead of entering a pocket",
+          fen: "3r4/7k/8/8/3C4/8/8/K7[] b - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black captured grant disappears instead of entering a pocket",
+          fen: "k7/8/8/3c4/8/8/7K/3R4[] w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: White a non-pawn grant does not promote",
+          fen: "8/1C6/7k/8/8/8/8/7K[] w - - 0 1"
+        },
+        {
+          name: "king.grant-wd-level3@1: Black a non-pawn grant does not promote",
+          fen: "7k/8/8/8/8/7K/1c6/8[] b - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: White recorded diagonal en-passant convention",
+          fen: "7k/8/8/2Ep4/8/8/8/7K w - d6 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: Black recorded diagonal en-passant convention",
+          fen: "7k/8/8/8/2eP4/8/8/7K b - d3 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: White ordinary promotion choices",
+          fen: "2r5/1E6/7k/8/8/8/8/7K w - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: Black ordinary promotion choices",
+          fen: "7k/8/8/8/8/7K/1e6/2R5 b - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: White pawn capture paths retain their intervening blockers",
+          fen: "7k/8/1p3p2/2P1P3/3E4/8/8/7K w - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: Black pawn capture paths retain their intervening blockers",
+          fen: "7k/8/8/3e4/2p1p3/1P3P2/8/7K b - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: White ordinary forward and capture promotion choices",
+          fen: "2r5/1D6/7k/8/8/8/8/7K w - - 0 1"
+        },
+        {
+          name: "pawn.purple@13: Black ordinary forward and capture promotion choices",
+          fen: "7k/8/8/8/8/7K/1d6/2R5 b - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: White pawn capture paths retain their intervening blockers",
+          fen: "7k/8/1p3p2/2P1P3/3H4/8/8/7K w - - 0 1"
+        },
+        {
+          name: "pawn.queen-sideways@1: Black pawn capture paths retain their intervening blockers",
+          fen: "7k/8/8/3h4/2p1p3/1P3P2/8/7K b - - 0 1"
+        },
+        {
+          name: "rook.cataphract-no-tall-back@1: White castling through check remains forbidden",
+          fen: "3k1r2/8/8/8/8/8/8/J3K2J w KQ - 0 1"
+        },
+        {
+          name: "rook.cataphract-no-tall-back@1: Black castling through check remains forbidden",
+          fen: "j3k2j/8/8/8/8/8/8/3K1R2 b kq - 0 1"
+        },
+        {
+          name: "rook.purple@10: White castling through check remains forbidden",
+          fen: "3k1r2/8/8/8/8/8/8/X3K2X w KQ - 0 1"
+        },
+        {
+          name: "rook.purple@10: Black castling through check remains forbidden",
+          fen: "x3k2x/8/8/8/8/8/8/3K1R2 b kq - 0 1"
+        },
+        {
+          name: "queen.wraith-side-through@1: White ordinary queen moves remain available without a hurdle",
+          fen: "8/7k/8/8/3I4/8/K7/8 w - - 0 1"
+        },
+        {
+          name: "queen.wraith-side-through@1: Black ordinary queen moves remain available without a hurdle",
+          fen: "8/k7/8/3i4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "queen.wraith-side-through@1: White quiet hops cross one hurdle in every queen direction",
+          fen: "8/7k/8/2PPP3/2PIP3/2PPP3/K7/8 w - - 0 1"
+        },
+        {
+          name: "queen.wraith-side-through@1: Black quiet hops cross one hurdle in every queen direction",
+          fen: "8/k7/2ppp3/2pip3/2ppp3/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "queen.wraith-side-through@1: White diagonal hopper captures land immediately beyond the first hurdle",
+          fen: "8/6pk/1p3p2/2P1P3/3I4/2P1P3/Kp3p2/8 w - - 0 1"
+        },
+        {
+          name: "queen.wraith-side-through@1: Black diagonal hopper captures land immediately beyond the first hurdle",
+          fen: "8/kP3P2/2p1p3/3i4/2p1p3/1P3P2/6PK/8 b - - 0 1"
+        },
+        {
+          name: "queen.wraith-side-through@1: White sideways hopper capture range and vertical capture exclusion",
+          fen: "8/3p3k/8/3P4/p1PIP1pp/3P4/K7/3p4 w - - 0 1"
+        },
+        {
+          name: "queen.wraith-side-through@1: Black sideways hopper capture range and vertical capture exclusion",
+          fen: "3P4/k7/3p4/P1pip1PP/3p4/8/3P3K/8 b - - 0 1"
+        },
+        {
+          name: "queen.wraith-side-through@1: White second friendly blocker stops quiet and capturing hopper rays",
+          fen: "8/6pk/5P2/4P3/3IPPp1/8/K7/8 w - - 0 1"
+        },
+        {
+          name: "queen.wraith-side-through@1: Black second friendly blocker stops quiet and capturing hopper rays",
+          fen: "8/k7/8/3ippP1/4p3/5p2/6PK/8 b - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: White quiet destinations",
+          fen: "8/7k/8/8/3E4/8/8/7K w - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: Black quiet destinations",
+          fen: "7k/8/8/3e4/8/8/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: White enemy landings and backward capture restrictions",
+          fen: "8/7k/1ppppp2/1p3p2/1p1E1p2/1p3p2/1ppppp2/7K w - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: Black enemy landings and backward capture restrictions",
+          fen: "7k/1PPPPP2/1P3P2/1P1e1P2/1P3P2/1PPPPP2/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: White jumps and sliders distinguish intervening blockers",
+          fen: "8/7k/1p1p1p2/2PPP3/1pPEPp2/2PPP3/1p1p1p2/7K w - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: Black jumps and sliders distinguish intervening blockers",
+          fen: "7k/1P1P1P2/2ppp3/1PpepP2/2ppp3/1P1P1P2/7K/8 b - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: White royal safety constrains otherwise available jumps",
+          fen: "3r4/7k/8/8/3E4/8/8/3K4 w - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: Black royal safety constrains otherwise available jumps",
+          fen: "3k4/8/8/3e4/8/8/7K/3R4 b - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: White home two-step and forward capture geometry",
+          fen: "7k/8/8/8/8/2p1p3/3E4/K7 w - - 0 1"
+        },
+        {
+          name: "pawn.level3-six-knight@1: Black home two-step and forward capture geometry",
+          fen: "k7/3e4/2P1P3/8/8/8/8/7K b - - 0 1"
+        }
+      ],
+      evaluation: {
+        pieceValues: {
+          "bishop.purple@13": {
+            mg: 1858,
+            eg: 1903
+          },
+          "bishop.vertical-blocked@1": {
+            mg: 1742,
+            eg: 1769
+          },
+          "king.grant-wd-level3@1": {
+            mg: 563,
+            eg: 635
+          },
+          "knight.level3-nad@1": {
+            mg: 1663,
+            eg: 1877
+          },
+          "knight.purple@3": {
+            mg: 1663,
+            eg: 1877
+          },
+          "pawn.level3-six-knight@1": {
+            mg: 762,
+            eg: 808
+          },
+          "pawn.purple@13": {
+            mg: 762,
+            eg: 808
+          },
+          "pawn.queen-sideways@1": {
+            mg: 418,
+            eg: 436
+          },
+          "queen.purple@1": {
+            mg: 3738,
+            eg: 3875
+          },
+          "queen.wraith-side-through@1": {
+            mg: 3772,
+            eg: 3470
+          },
+          "rook.cataphract-no-tall-back@1": {
+            mg: 2240,
+            eg: 2413
+          },
+          "rook.purple@10": {
+            mg: 1904,
+            eg: 1932
+          }
+        }
+      }
+    };
+  }
+});
+
 // experiments/designs/v19-roster.json
 var require_v19_roster = __commonJS({
   "experiments/designs/v19-roster.json"(exports2, module2) {
@@ -40192,6 +41383,1364 @@ var require_designs_v19_current = __commonJS({
   }
 });
 
+// experiments/designs/v19-roster-004.json
+var require_v19_roster_004 = __commonJS({
+  "experiments/designs/v19-roster-004.json"(exports2, module2) {
+    module2.exports = {
+      schemaVersion: 1,
+      format: "levelup-v19-roster",
+      id: "panel-ready-roster-v19-004",
+      status: "accepted-panel-ready-selection",
+      selectedDate: "2026-11-18",
+      policy: {
+        selection: "Retain the revision003 playable choices and add the tested six-jump pawn at L3, alongside Herald and Ranger. It retains its measured immutable identity and controlled prior. Earlier playable and panel declarations remain unchanged.",
+        identities: "Reuse tested immutable semantic IDs and exact movement strings. Historical profiles and their purchase, movement and value meanings remain unchanged.",
+        references: "Retain the three L1 and three L2 purchase references, and original Vanguard, Unicorn, Crusader and Amazon L3 references.",
+        evaluation: "Search priors are preserved from each body's declared confirmation or matched family anchor. They are not purchase costs or estimated material values.",
+        pawns: "Retain the two fixed L2 pawn references. Add fQ2: up to two clear squares straight or diagonally forward, including captures, with mandatory standard Q/R/B/N promotion. Its overlapping diagonal movement visits an empty en-passant target quietly and leaves the bypassed pawn; the initial/home-rank restriction does not apply to this range-two slider. The L3 Six-jump pawn keeps ordinary pawn movement and captures, adds four wide knight jumps forward/backward and two tall forward knight jumps, and retains mandatory Q/R/B/N promotion and adjacent diagonal en passant.",
+        grants: "One finite nonroyal grant design per tier. Purchases leave an ordinary royal king on the board; deployment spends a turn within the owner's home half, cannot give check, and captures never refill the pocket.",
+        wraith: "Promote the tested long-sideways Wraith QgmQ0gcBgcsR0: 38.67% at 40k nodes and 37.89% at 80k, the strongest tested alternative below fifty percent at both budgets. Keep its recorded 3772/3470 prior and immutable research ID; original QgB0 profiles remain unchanged.",
+        panels: "This panel-ready roster is a new declaration. Existing panels, saved games and owned runtimes retain their original roster and values; fresh panel runs require an explicit matching context.",
+        queens: "L1 keeps Forward-tall queen QfN first and selects Wide-forward queen QfsN second. QfsN adds full two-files-sideways/one-rank-forward knight jumps in the supported modifier order. Historical QvN remains available in its original libraries."
+      },
+      tiers: [
+        {
+          level: 1,
+          name: "Level 1",
+          referenceIds: [
+            "pawn.blue@5",
+            "pawn.blue@7",
+            "king.reserve-pawn@6"
+          ],
+          bodies: [
+            {
+              key: "two-step-pawn",
+              id: "pawn.blue@5",
+              label: "Two-step pawn",
+              family: "pawn",
+              level: 1,
+              movement: "fmW2fceF2",
+              placement: "replace",
+              roles: {
+                pawn: true,
+                castlingRook: false,
+                enPassant: true
+              },
+              reference: true,
+              prior: {
+                mg: 189,
+                eg: 206
+              },
+              priorSource: "experiments/designs/v17-bracket-values.json",
+              anchorId: "pawn.blue@5",
+              definitionSource: "src/design-catalog.js"
+            },
+            {
+              key: "king-step-pawn",
+              id: "pawn.blue@7",
+              label: "King-step pawn",
+              family: "pawn",
+              level: 1,
+              movement: "mWFifmnD",
+              placement: "replace",
+              roles: {
+                pawn: true,
+                castlingRook: false,
+                enPassant: true
+              },
+              reference: true,
+              prior: {
+                mg: 503,
+                eg: 592
+              },
+              priorSource: "experiments/designs/v17-bracket-values.json",
+              anchorId: "pawn.blue@7",
+              definitionSource: "src/design-catalog.js"
+            },
+            {
+              key: "positional-knight",
+              id: "knight.positional-quiet-queen@1",
+              label: "Positional knight",
+              family: "knight",
+              level: 1,
+              movement: "NmQ",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 972,
+                eg: 1093
+              },
+              priorSource: "experiments/designs/v17-bracket-values.json",
+              anchorId: "knight.blue@2",
+              definitionSource: "src/balance-designs-v18-l1-followup.js"
+            },
+            {
+              key: "wazzap-knight",
+              id: "knight.wazzap@1",
+              label: "Wazzap knight",
+              family: "knight",
+              level: 1,
+              movement: "NW",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 984,
+                eg: 1105
+              },
+              priorSource: "experiments/designs/v17-bracket-values.json",
+              anchorId: "knight.blue@3",
+              definitionSource: "src/balance-designs-v18-level1.js"
+            },
+            {
+              key: "hopping-bishop",
+              id: "bishop.hopper-full-range@1",
+              label: "Hopping bishop",
+              family: "bishop",
+              level: 1,
+              movement: "BgB0",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 1480,
+                eg: 1302
+              },
+              priorSource: "experiments/designs/v17-bracket-values.json",
+              anchorId: "bishop.blue@2",
+              definitionSource: "src/balance-designs-v18-l1-followup.js"
+            },
+            {
+              key: "wazzap-bishop",
+              id: "bishop.blue@3",
+              label: "Wazzap bishop",
+              family: "bishop",
+              level: 1,
+              movement: "BsW",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 1277,
+                eg: 1252
+              },
+              priorSource: "experiments/designs/v17-bracket-values.json",
+              anchorId: "bishop.blue@3",
+              definitionSource: "src/design-catalog.js"
+            },
+            {
+              key: "ghost-rook",
+              id: "rook.ghost-diagonal-omni@1",
+              label: "Ghost rook",
+              family: "rook",
+              level: 1,
+              movement: "RmBgmQ0",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: true,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 1716,
+                eg: 1636
+              },
+              priorSource: "experiments/designs/v17-bracket-values.json",
+              anchorId: "rook.blue@2",
+              definitionSource: "src/balance-designs-v18-level1.js"
+            },
+            {
+              key: "pawn-rook",
+              id: "rook.blue@3",
+              label: "Pawn rook",
+              family: "rook",
+              level: 1,
+              movement: "RceF",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: true,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 1584,
+                eg: 1636
+              },
+              priorSource: "experiments/designs/v17-bracket-values.json",
+              anchorId: "rook.blue@3",
+              definitionSource: "src/design-catalog.js"
+            },
+            {
+              key: "forward-queen",
+              id: "queen.level1-forward-knight@1",
+              label: "Forward-tall queen",
+              family: "queen",
+              level: 1,
+              movement: "QfN",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 2771,
+                eg: 2833
+              },
+              priorSource: "experiments/designs/v17-bracket-values.json",
+              anchorId: "queen.blue@2",
+              definitionSource: "src/balance-designs-v18-queen-screen.js"
+            },
+            {
+              key: "wide-forward-queen",
+              id: "queen.level1-wide-forward-knight@1",
+              label: "Wide-forward queen",
+              family: "queen",
+              level: 1,
+              movement: "QfsN",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 2771,
+                eg: 2833
+              },
+              priorSource: "experiments/designs/v17-bracket-values.json",
+              anchorId: "queen.blue@2",
+              definitionSource: "src/balance-designs-v19-trials.js"
+            },
+            {
+              key: "pawn-grant",
+              id: "king.reserve-pawn@6",
+              label: "Pawn grant",
+              family: "king",
+              level: 1,
+              movement: "fWmfF",
+              placement: "reserve",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: true,
+              prior: {
+                mg: 152,
+                eg: 183
+              },
+              priorSource: "experiments/designs/v17-bracket-values.json",
+              anchorId: "king.reserve-pawn@6",
+              definitionSource: "src/design-catalog.js"
+            }
+          ]
+        },
+        {
+          level: 2,
+          name: "Level 2",
+          referenceIds: [
+            "pawn.knight-tall-quiet@1",
+            "pawn.rank-current@1",
+            "king.reserve-bishop@1"
+          ],
+          bodies: [
+            {
+              key: "knight-pawn",
+              id: "pawn.knight-tall-quiet@1",
+              label: "Quiet-tall Knight pawn",
+              family: "pawn",
+              level: 2,
+              movement: "ifmnDfmWfceFfsNfmN",
+              placement: "replace",
+              roles: {
+                pawn: true,
+                castlingRook: false,
+                enPassant: true
+              },
+              reference: true,
+              prior: {
+                mg: 536,
+                eg: 592
+              },
+              priorSource: "experiments/designs/level2-references-v17-002.json",
+              anchorId: "pawn.knight-tall-quiet@1",
+              definitionSource: "src/balance-designs-knight-pawn-followup.js"
+            },
+            {
+              key: "rank-pawn",
+              id: "pawn.rank-current@1",
+              label: "Rank pawn",
+              family: "pawn",
+              level: 2,
+              movement: "ifmnDmfWfceFsR",
+              placement: "replace",
+              roles: {
+                pawn: true,
+                castlingRook: false,
+                enPassant: true
+              },
+              reference: true,
+              prior: {
+                mg: 773,
+                eg: 808
+              },
+              priorSource: "experiments/designs/level2-references-v17-002.json",
+              anchorId: "pawn.rank-current@1",
+              definitionSource: "src/design-catalog.js"
+            },
+            {
+              key: "forward-range-pawn",
+              id: "pawn.level2-forward-queen-only@1",
+              label: "Forward-range pawn",
+              family: "pawn",
+              level: 2,
+              movement: "fQ2",
+              placement: "replace",
+              roles: {
+                pawn: true,
+                castlingRook: false,
+                enPassant: true
+              },
+              reference: false,
+              prior: {
+                mg: 536,
+                eg: 592
+              },
+              priorSource: "experiments/designs/level2-references-v17-002.json",
+              anchorId: "pawn.knight-tall-quiet@1",
+              definitionSource: "src/balance-designs-v19-pawn-followup.js"
+            },
+            {
+              key: "nightrider",
+              id: "knight.nightrider-level2@1",
+              label: "Nightrider",
+              family: "knight",
+              level: 2,
+              movement: "N0",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 1203,
+                eg: 1352
+              },
+              priorSource: "experiments/designs/v18-screen-values.json",
+              anchorId: "knight.orange@3",
+              definitionSource: "src/balance-designs-v18-knight-screen.js"
+            },
+            {
+              key: "dabbaba-knight",
+              id: "knight.level2-nd-quiet-orthogonal@1",
+              label: "Dabbaba knight",
+              family: "knight",
+              level: 2,
+              movement: "NDmW",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 1203,
+                eg: 1352
+              },
+              priorSource: "experiments/designs/v18-screen-values.json",
+              anchorId: "knight.orange@3",
+              definitionSource: "src/balance-designs-v18-prepanel-level2.js"
+            },
+            {
+              key: "tall-knight-bishop",
+              id: "bishop.orange@2",
+              label: "Tall-knight bishop",
+              family: "bishop",
+              level: 2,
+              movement: "BvN",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 1506,
+                eg: 1506
+              },
+              priorSource: "experiments/designs/v18-screen-values.json",
+              anchorId: "bishop.orange@2",
+              definitionSource: "src/design-catalog.js"
+            },
+            {
+              key: "free-boar",
+              id: "bishop.orange@3",
+              label: "Free Boar",
+              family: "bishop",
+              level: 2,
+              movement: "BsR",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 1782,
+                eg: 1756
+              },
+              priorSource: "experiments/designs/v18-screen-values.json",
+              anchorId: "bishop.orange@3",
+              definitionSource: "src/design-catalog.js"
+            },
+            {
+              key: "blink-rook",
+              id: "rook.orange@2",
+              label: "Blink rook",
+              family: "rook",
+              level: 2,
+              movement: "RmFmDmAmHmGmNmCmZ",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: true,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 1904,
+                eg: 1959
+              },
+              priorSource: "experiments/designs/v18-screen-values.json",
+              anchorId: "rook.orange@3",
+              definitionSource: "src/design-catalog.js"
+            },
+            {
+              key: "knight-capture-rook",
+              id: "rook.orange@3",
+              label: "Knight-capture rook",
+              family: "rook",
+              level: 2,
+              movement: "RcN",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: true,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 1904,
+                eg: 1959
+              },
+              priorSource: "experiments/designs/v18-screen-values.json",
+              anchorId: "rook.orange@3",
+              definitionSource: "src/design-catalog.js"
+            },
+            {
+              key: "wide-knight-queen",
+              id: "queen.level2-side-knight@1",
+              label: "Wide-knight queen",
+              family: "queen",
+              level: 2,
+              movement: "QsN",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 3738,
+                eg: 4155
+              },
+              priorSource: "experiments/designs/v18-screen-values.json",
+              anchorId: "queen.orange@2",
+              definitionSource: "src/balance-designs-v18-queen-screen.js"
+            },
+            {
+              key: "camel-capture-queen",
+              id: "queen.level2-camel-capture@1",
+              label: "Camel-capture queen",
+              family: "queen",
+              level: 2,
+              movement: "QcC",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 3738,
+                eg: 4155
+              },
+              priorSource: "experiments/designs/v18-screen-values.json",
+              anchorId: "queen.orange@2",
+              definitionSource: "src/balance-designs-v18-prepanel-queens.js"
+            },
+            {
+              key: "bishop-grant",
+              id: "king.reserve-bishop@1",
+              label: "Bishop grant",
+              family: "king",
+              level: 2,
+              movement: "F",
+              placement: "reserve",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: true,
+              prior: {
+                mg: 373,
+                eg: 416
+              },
+              priorSource: "experiments/designs/level2-references-v17-002.json",
+              anchorId: "king.reserve-bishop@1",
+              definitionSource: "src/design-catalog.js"
+            }
+          ]
+        },
+        {
+          level: 3,
+          name: "Level 3",
+          referenceIds: [
+            "knight.purple@3",
+            "bishop.purple@13",
+            "rook.purple@10",
+            "queen.purple@1"
+          ],
+          bodies: [
+            {
+              key: "herald",
+              id: "pawn.queen-sideways@1",
+              label: "Herald",
+              family: "pawn",
+              level: 3,
+              movement: "mQ2cfQ2",
+              placement: "replace",
+              roles: {
+                pawn: true,
+                castlingRook: false,
+                enPassant: true
+              },
+              reference: false,
+              prior: {
+                mg: 418,
+                eg: 436
+              },
+              priorSource: "experiments/designs/v17-level3-revision-values.json",
+              anchorId: "pawn.queen-sideways@1",
+              definitionSource: "src/balance-designs-v17-revisions.js"
+            },
+            {
+              key: "ranger",
+              id: "pawn.purple@13",
+              label: "Ranger",
+              family: "pawn",
+              level: 3,
+              movement: "mRcfB",
+              placement: "replace",
+              roles: {
+                pawn: true,
+                castlingRook: false,
+                enPassant: true
+              },
+              reference: false,
+              prior: {
+                mg: 762,
+                eg: 808
+              },
+              priorSource: "experiments/designs/v17-bracket-values.json",
+              anchorId: "pawn.purple@13",
+              definitionSource: "src/design-catalog.js"
+            },
+            {
+              key: "six-jump-pawn",
+              id: "pawn.level3-six-knight@1",
+              label: "Six-jump pawn",
+              family: "pawn",
+              level: 3,
+              movement: "ifmnDfmWfceFsNfN",
+              placement: "replace",
+              roles: {
+                pawn: true,
+                castlingRook: false,
+                enPassant: true
+              },
+              reference: false,
+              prior: {
+                mg: 762,
+                eg: 808
+              },
+              priorSource: "experiments/designs/v17-bracket-values.json",
+              anchorId: "pawn.purple@13",
+              definitionSource: "src/balance-designs-v19-trials.js"
+            },
+            {
+              key: "unicorn",
+              id: "knight.purple@3",
+              label: "Unicorn",
+              family: "knight",
+              level: 3,
+              movement: "NC",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: true,
+              prior: {
+                mg: 1663,
+                eg: 1877
+              },
+              priorSource: "experiments/designs/official-references-v16.json",
+              anchorId: "knight.purple@3",
+              definitionSource: "src/design-catalog.js"
+            },
+            {
+              key: "nad-knight",
+              id: "knight.level3-nad@1",
+              label: "NAD knight",
+              family: "knight",
+              level: 3,
+              movement: "NAD",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 1663,
+                eg: 1877
+              },
+              priorSource: "experiments/designs/official-references-v16.json",
+              anchorId: "knight.purple@3",
+              definitionSource: "src/balance-designs-v18-prepanel-level3.js"
+            },
+            {
+              key: "inquisitor",
+              id: "bishop.vertical-blocked@1",
+              label: "Inquisitor",
+              family: "bishop",
+              level: 3,
+              movement: "BvW2vnN",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 1742,
+                eg: 1769
+              },
+              priorSource: "experiments/designs/v17-level3-revision-values.json",
+              anchorId: "bishop.vertical-blocked@1",
+              definitionSource: "src/balance-designs-v17-revisions.js"
+            },
+            {
+              key: "crusader",
+              id: "bishop.purple@13",
+              label: "Crusader",
+              family: "bishop",
+              level: 3,
+              movement: "BsR2nsN",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: true,
+              prior: {
+                mg: 1858,
+                eg: 1903
+              },
+              priorSource: "experiments/designs/official-references-v16.json",
+              anchorId: "bishop.purple@13",
+              definitionSource: "src/design-catalog.js"
+            },
+            {
+              key: "vanguard",
+              id: "rook.purple@10",
+              label: "Vanguard",
+              family: "rook",
+              level: 3,
+              movement: "RfB",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: true,
+                enPassant: false
+              },
+              reference: true,
+              prior: {
+                mg: 1904,
+                eg: 1932
+              },
+              priorSource: "experiments/designs/official-references-v16.json",
+              anchorId: "rook.purple@10",
+              definitionSource: "src/design-catalog.js"
+            },
+            {
+              key: "cataphract",
+              id: "rook.cataphract-no-tall-back@1",
+              label: "Cataphract",
+              family: "rook",
+              level: 3,
+              movement: "RsCfC",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: true,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 2240,
+                eg: 2413
+              },
+              priorSource: "experiments/designs/v17-bracket-values.json",
+              anchorId: "rook.purple@12",
+              definitionSource: "src/balance-designs-cataphract-followup.js"
+            },
+            {
+              key: "amazon",
+              id: "queen.purple@1",
+              label: "Amazon",
+              family: "queen",
+              level: 3,
+              movement: "QN",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: true,
+              prior: {
+                mg: 3738,
+                eg: 3875
+              },
+              priorSource: "experiments/designs/official-references-v16.json",
+              anchorId: "queen.purple@1",
+              definitionSource: "src/design-catalog.js"
+            },
+            {
+              key: "wraith",
+              id: "queen.wraith-side-through@1",
+              label: "Wraith",
+              family: "queen",
+              level: 3,
+              movement: "QgmQ0gcBgcsR0",
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 3772,
+                eg: 3470
+              },
+              priorSource: "experiments/designs/v17-bracket-values.json",
+              anchorId: "queen.purple@7",
+              definitionSource: "src/balance-designs-v18-wraith.js"
+            },
+            {
+              key: "warden",
+              id: "king.grant-wd-level3@1",
+              label: "Warden",
+              family: "king",
+              level: 3,
+              movement: "WD",
+              placement: "reserve",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              reference: false,
+              prior: {
+                mg: 563,
+                eg: 635
+              },
+              priorSource: "experiments/designs/v17-mixed-values.json",
+              anchorId: "king.grant-wd-level3@1",
+              definitionSource: "src/balance-designs-v17-mixed.js"
+            }
+          ]
+        }
+      ],
+      supersedes: "playable-roster-v19-003"
+    };
+  }
+});
+
+// experiments/designs/v19-panel-values-004.json
+var require_v19_panel_values_004 = __commonJS({
+  "experiments/designs/v19-panel-values-004.json"(exports2, module2) {
+    module2.exports = {
+      schemaVersion: 1,
+      format: "levelup-v19-panel-values",
+      id: "panel-ready-search-priors-v19-004",
+      declaredDate: "2026-11-18",
+      policy: "Preserve each accepted body's tested applied MG/EG prior or exact matched family anchor, applying it to all six engine tables for both colors. These are engine search settings, not material estimates or upgrade purchase points.",
+      sources: [
+        {
+          key: "bracket",
+          file: "experiments/designs/v17-bracket-values.json",
+          sha256: "205709189dcec631970253dbdf826669262e412c325764f47880acbfbd96d2f9"
+        },
+        {
+          key: "v18",
+          file: "experiments/designs/v18-screen-values.json",
+          sha256: "1b243939936ea57d74f4f026ef055502fd2430faea284879e8fa3ca08762cbe0"
+        },
+        {
+          key: "l2",
+          file: "experiments/designs/level2-references-v17-002.json",
+          sha256: "db42d4362f9d4ae1357636aaf49bc001ec7f3043f7d6291194a332a478ee61f2"
+        },
+        {
+          key: "official",
+          file: "experiments/designs/official-references-v16.json",
+          sha256: "0448230163f090c49c7bfbd0bc96685affc3ba8c85018ddd139b42f0756de5ef"
+        },
+        {
+          key: "revision",
+          file: "experiments/designs/v17-level3-revision-values.json",
+          sha256: "9507dbc13aec08c22562433852ffdb3bc5dea572835dab2ee342cf5729f0358f"
+        },
+        {
+          key: "mixed",
+          file: "experiments/designs/v17-mixed-values.json",
+          sha256: "495f4e8796b8ea4181aee3d959432a4820e87ac7641eb339e4fb25908222048e"
+        },
+        {
+          key: "previous-roster",
+          file: "experiments/designs/v19-roster.json",
+          sha256: "935292aa17ee8c83be98e47b9c2ffb4765f5623f217ed2b797db1155dd37eef8"
+        },
+        {
+          key: "previous-values",
+          file: "experiments/designs/v19-panel-values.json",
+          sha256: "2cf2661f504c410dc28d5bfdb03517581706666d2a8d3e8a380eef46d32bdd11"
+        },
+        {
+          key: "previous-playable-roster",
+          file: "experiments/designs/v19-roster-002.json",
+          sha256: "080ac76fdaff15c32ef425bff375d8bf8bf7adf47f16553de49f024d2522e612"
+        },
+        {
+          key: "previous-playable-values",
+          file: "experiments/designs/v19-panel-values-002.json",
+          sha256: "0daafa2b00b5afa8f72091daaca8789aab3585f2da9a96262744602a9d59fbc7"
+        },
+        {
+          key: "playable-roster-003",
+          file: "experiments/designs/v19-roster-003.json",
+          sha256: "dcee066cd342a9d902750fa1620e21f2b702142f624b8dff1d6197b2717c9df5"
+        },
+        {
+          key: "playable-values-003",
+          file: "experiments/designs/v19-panel-values-003.json",
+          sha256: "8e7ea7dd5d664c938f9276591b431f850edd1d30972d781b7fbb2782a699c7d6"
+        }
+      ],
+      values: [
+        {
+          id: "pawn.blue@5",
+          movement: "fmW2fceF2",
+          level: 1,
+          applied: {
+            mg: 189,
+            eg: 206
+          },
+          anchorId: "pawn.blue@5",
+          source: "experiments/designs/v17-bracket-values.json"
+        },
+        {
+          id: "pawn.blue@7",
+          movement: "mWFifmnD",
+          level: 1,
+          applied: {
+            mg: 503,
+            eg: 592
+          },
+          anchorId: "pawn.blue@7",
+          source: "experiments/designs/v17-bracket-values.json"
+        },
+        {
+          id: "knight.positional-quiet-queen@1",
+          movement: "NmQ",
+          level: 1,
+          applied: {
+            mg: 972,
+            eg: 1093
+          },
+          anchorId: "knight.blue@2",
+          source: "experiments/designs/v17-bracket-values.json"
+        },
+        {
+          id: "knight.wazzap@1",
+          movement: "NW",
+          level: 1,
+          applied: {
+            mg: 984,
+            eg: 1105
+          },
+          anchorId: "knight.blue@3",
+          source: "experiments/designs/v17-bracket-values.json"
+        },
+        {
+          id: "bishop.hopper-full-range@1",
+          movement: "BgB0",
+          level: 1,
+          applied: {
+            mg: 1480,
+            eg: 1302
+          },
+          anchorId: "bishop.blue@2",
+          source: "experiments/designs/v17-bracket-values.json"
+        },
+        {
+          id: "bishop.blue@3",
+          movement: "BsW",
+          level: 1,
+          applied: {
+            mg: 1277,
+            eg: 1252
+          },
+          anchorId: "bishop.blue@3",
+          source: "experiments/designs/v17-bracket-values.json"
+        },
+        {
+          id: "rook.ghost-diagonal-omni@1",
+          movement: "RmBgmQ0",
+          level: 1,
+          applied: {
+            mg: 1716,
+            eg: 1636
+          },
+          anchorId: "rook.blue@2",
+          source: "experiments/designs/v17-bracket-values.json"
+        },
+        {
+          id: "rook.blue@3",
+          movement: "RceF",
+          level: 1,
+          applied: {
+            mg: 1584,
+            eg: 1636
+          },
+          anchorId: "rook.blue@3",
+          source: "experiments/designs/v17-bracket-values.json"
+        },
+        {
+          id: "queen.level1-forward-knight@1",
+          movement: "QfN",
+          level: 1,
+          applied: {
+            mg: 2771,
+            eg: 2833
+          },
+          anchorId: "queen.blue@2",
+          source: "experiments/designs/v17-bracket-values.json"
+        },
+        {
+          id: "queen.level1-wide-forward-knight@1",
+          movement: "QfsN",
+          level: 1,
+          applied: {
+            mg: 2771,
+            eg: 2833
+          },
+          anchorId: "queen.blue@2",
+          source: "experiments/designs/v17-bracket-values.json"
+        },
+        {
+          id: "king.reserve-pawn@6",
+          movement: "fWmfF",
+          level: 1,
+          applied: {
+            mg: 152,
+            eg: 183
+          },
+          anchorId: "king.reserve-pawn@6",
+          source: "experiments/designs/v17-bracket-values.json"
+        },
+        {
+          id: "pawn.knight-tall-quiet@1",
+          movement: "ifmnDfmWfceFfsNfmN",
+          level: 2,
+          applied: {
+            mg: 536,
+            eg: 592
+          },
+          anchorId: "pawn.knight-tall-quiet@1",
+          source: "experiments/designs/level2-references-v17-002.json"
+        },
+        {
+          id: "pawn.rank-current@1",
+          movement: "ifmnDmfWfceFsR",
+          level: 2,
+          applied: {
+            mg: 773,
+            eg: 808
+          },
+          anchorId: "pawn.rank-current@1",
+          source: "experiments/designs/level2-references-v17-002.json"
+        },
+        {
+          id: "pawn.level2-forward-queen-only@1",
+          movement: "fQ2",
+          level: 2,
+          applied: {
+            mg: 536,
+            eg: 592
+          },
+          anchorId: "pawn.knight-tall-quiet@1",
+          source: "experiments/designs/level2-references-v17-002.json"
+        },
+        {
+          id: "knight.nightrider-level2@1",
+          movement: "N0",
+          level: 2,
+          applied: {
+            mg: 1203,
+            eg: 1352
+          },
+          anchorId: "knight.orange@3",
+          source: "experiments/designs/v18-screen-values.json"
+        },
+        {
+          id: "knight.level2-nd-quiet-orthogonal@1",
+          movement: "NDmW",
+          level: 2,
+          applied: {
+            mg: 1203,
+            eg: 1352
+          },
+          anchorId: "knight.orange@3",
+          source: "experiments/designs/v18-screen-values.json"
+        },
+        {
+          id: "bishop.orange@2",
+          movement: "BvN",
+          level: 2,
+          applied: {
+            mg: 1506,
+            eg: 1506
+          },
+          anchorId: "bishop.orange@2",
+          source: "experiments/designs/v18-screen-values.json"
+        },
+        {
+          id: "bishop.orange@3",
+          movement: "BsR",
+          level: 2,
+          applied: {
+            mg: 1782,
+            eg: 1756
+          },
+          anchorId: "bishop.orange@3",
+          source: "experiments/designs/v18-screen-values.json"
+        },
+        {
+          id: "rook.orange@2",
+          movement: "RmFmDmAmHmGmNmCmZ",
+          level: 2,
+          applied: {
+            mg: 1904,
+            eg: 1959
+          },
+          anchorId: "rook.orange@3",
+          source: "experiments/designs/v18-screen-values.json"
+        },
+        {
+          id: "rook.orange@3",
+          movement: "RcN",
+          level: 2,
+          applied: {
+            mg: 1904,
+            eg: 1959
+          },
+          anchorId: "rook.orange@3",
+          source: "experiments/designs/v18-screen-values.json"
+        },
+        {
+          id: "queen.level2-side-knight@1",
+          movement: "QsN",
+          level: 2,
+          applied: {
+            mg: 3738,
+            eg: 4155
+          },
+          anchorId: "queen.orange@2",
+          source: "experiments/designs/v18-screen-values.json"
+        },
+        {
+          id: "queen.level2-camel-capture@1",
+          movement: "QcC",
+          level: 2,
+          applied: {
+            mg: 3738,
+            eg: 4155
+          },
+          anchorId: "queen.orange@2",
+          source: "experiments/designs/v18-screen-values.json"
+        },
+        {
+          id: "king.reserve-bishop@1",
+          movement: "F",
+          level: 2,
+          applied: {
+            mg: 373,
+            eg: 416
+          },
+          anchorId: "king.reserve-bishop@1",
+          source: "experiments/designs/level2-references-v17-002.json"
+        },
+        {
+          id: "pawn.queen-sideways@1",
+          movement: "mQ2cfQ2",
+          level: 3,
+          applied: {
+            mg: 418,
+            eg: 436
+          },
+          anchorId: "pawn.queen-sideways@1",
+          source: "experiments/designs/v17-level3-revision-values.json"
+        },
+        {
+          id: "pawn.purple@13",
+          movement: "mRcfB",
+          level: 3,
+          applied: {
+            mg: 762,
+            eg: 808
+          },
+          anchorId: "pawn.purple@13",
+          source: "experiments/designs/v17-bracket-values.json"
+        },
+        {
+          id: "pawn.level3-six-knight@1",
+          movement: "ifmnDfmWfceFsNfN",
+          level: 3,
+          applied: {
+            mg: 762,
+            eg: 808
+          },
+          anchorId: "pawn.purple@13",
+          source: "experiments/designs/v17-bracket-values.json"
+        },
+        {
+          id: "knight.purple@3",
+          movement: "NC",
+          level: 3,
+          applied: {
+            mg: 1663,
+            eg: 1877
+          },
+          anchorId: "knight.purple@3",
+          source: "experiments/designs/official-references-v16.json"
+        },
+        {
+          id: "knight.level3-nad@1",
+          movement: "NAD",
+          level: 3,
+          applied: {
+            mg: 1663,
+            eg: 1877
+          },
+          anchorId: "knight.purple@3",
+          source: "experiments/designs/official-references-v16.json"
+        },
+        {
+          id: "bishop.vertical-blocked@1",
+          movement: "BvW2vnN",
+          level: 3,
+          applied: {
+            mg: 1742,
+            eg: 1769
+          },
+          anchorId: "bishop.vertical-blocked@1",
+          source: "experiments/designs/v17-level3-revision-values.json"
+        },
+        {
+          id: "bishop.purple@13",
+          movement: "BsR2nsN",
+          level: 3,
+          applied: {
+            mg: 1858,
+            eg: 1903
+          },
+          anchorId: "bishop.purple@13",
+          source: "experiments/designs/official-references-v16.json"
+        },
+        {
+          id: "rook.purple@10",
+          movement: "RfB",
+          level: 3,
+          applied: {
+            mg: 1904,
+            eg: 1932
+          },
+          anchorId: "rook.purple@10",
+          source: "experiments/designs/official-references-v16.json"
+        },
+        {
+          id: "rook.cataphract-no-tall-back@1",
+          movement: "RsCfC",
+          level: 3,
+          applied: {
+            mg: 2240,
+            eg: 2413
+          },
+          anchorId: "rook.purple@12",
+          source: "experiments/designs/v17-bracket-values.json"
+        },
+        {
+          id: "queen.purple@1",
+          movement: "QN",
+          level: 3,
+          applied: {
+            mg: 3738,
+            eg: 3875
+          },
+          anchorId: "queen.purple@1",
+          source: "experiments/designs/official-references-v16.json"
+        },
+        {
+          id: "queen.wraith-side-through@1",
+          movement: "QgmQ0gcBgcsR0",
+          level: 3,
+          applied: {
+            mg: 3772,
+            eg: 3470
+          },
+          anchorId: "queen.purple@7",
+          source: "experiments/designs/v17-bracket-values.json"
+        },
+        {
+          id: "king.grant-wd-level3@1",
+          movement: "WD",
+          level: 3,
+          applied: {
+            mg: 563,
+            eg: 635
+          },
+          anchorId: "king.grant-wd-level3@1",
+          source: "experiments/designs/v17-mixed-values.json"
+        }
+      ],
+      notes: [
+        "The new L3 NAD body retains Unicorn's 1663/1877 matched prior; its older L2 treatment is a different immutable ID and context.",
+        "Both selected L2 knights retain 1203/1352. L1 queens retain 2771/2833 and selected L2 queens 3738/4155.",
+        "Blink rook retains the Knight-capture rook 1904/1959 prior from v18-screen-values rather than its inflated automatic quiet-mobility value.",
+        "Revised Cataphract retains its original RC family 2240/2413 confirmation prior. WD Warden retains the shared W2 563/635 prior, not its automatic 773/866.",
+        "Herald and Inquisitor retain their version-17 applied revision priors. No outcome-fitted or universal point-to-centipawn conversion is introduced.",
+        "The revised Wraith keeps the tested original-Wraith 3772/3470 manual prior. Its richer quiet and capture geometry does not trigger a new automatic mobility estimate. The removed L2 Bishop pawn remains preserved in the original roster and research files.",
+        "The selected QfsN queen retains the 2771/2833 matched L1 queen prior used in its trial. The added fQ2 pawn retains the 536/592 matched Knight-pawn prior used in its follow-up. Purchase costs remain one and two points respectively. No existing panel or historical profile changes.",
+        "The Six-jump pawn retains the exact 762/808 matched Ranger-family prior used for its 51.37% reference trial. Its purchase costs three points; no outcome-derived estimate or new automatic mobility value is substituted. Earlier panel and playable contexts remain intact."
+      ],
+      supersedes: "playable-search-priors-v19-003"
+    };
+  }
+});
+
+// src/designs-v19-panel-ready.js
+var require_designs_v19_panel_ready = __commonJS({
+  "src/designs-v19-panel-ready.js"(exports2, module2) {
+    "use strict";
+    var ROSTER_FILE = "experiments/designs/v19-roster-004.json";
+    var VALUES_FILE = "experiments/designs/v19-panel-values-004.json";
+    var ROSTER_SHA256 = "7102046d54114d80417e6b757fbc06b5b0f116d61bfa247d5d3ed8a7cc57fc0b";
+    var VALUES_SHA256 = "0850507b28f7d21e93d623a17d27f86375358789f26805c98814d14f509010cb";
+    function freeze(value) {
+      if (value && typeof value === "object" && !Object.isFrozen(value)) {
+        Object.values(value).forEach(freeze);
+        Object.freeze(value);
+      }
+      return value;
+    }
+    var sixJumpPawn = require_balance_designs_v19_trials().NEW_DEFINITIONS.find((definition) => definition.id === "pawn.level3-six-knight@1");
+    if (!sixJumpPawn) throw new Error("Missing tested six-jump pawn definition.");
+    var NEW_DEFINITIONS = freeze([sixJumpPawn]);
+    var ROSTER = freeze(require_v19_roster_004());
+    var VALUE_POLICY = freeze(require_v19_panel_values_004());
+    var TIERS = ROSTER.tiers;
+    var ALL_BODIES = freeze(TIERS.flatMap((tier) => tier.bodies));
+    function getTier(level) {
+      const tier = TIERS.find((row) => row.level === Number(level));
+      if (!tier) throw new Error("Select version-19 tier 1, 2 or 3.");
+      return tier;
+    }
+    function getTierRoster(level) {
+      return getTier(level).bodies;
+    }
+    function getRosterReceipt() {
+      return { file: ROSTER_FILE, sha256: ROSTER_SHA256, id: ROSTER.id };
+    }
+    function getValueReceipt() {
+      return { file: VALUES_FILE, sha256: VALUES_SHA256, id: VALUE_POLICY.id, policy: VALUE_POLICY.policy };
+    }
+    module2.exports = {
+      NEW_DEFINITIONS,
+      ROSTER,
+      VALUE_POLICY,
+      TIERS,
+      ALL_BODIES,
+      ROSTER_FILE,
+      VALUES_FILE,
+      ROSTER_SHA256,
+      VALUES_SHA256,
+      getTier,
+      getTierRoster,
+      getRosterReceipt,
+      getValueReceipt
+    };
+  }
+});
+
 // src/playable-library.js
 var require_playable_library = __commonJS({
   "src/playable-library.js"(exports2, module2) {
@@ -40428,7 +42977,7 @@ var require_playable_library = __commonJS({
       generation: CURRENT_PLAYABLE_GENERATION,
       edition: tier.level + 2,
       rosterRevision: "v19-002",
-      ...tier.level === 2 ? { superseded: true } : {},
+      superseded: true,
       designIds: Object.freeze(tier.bodies.map((body) => body.id)),
       evaluation: Object.freeze({ pieceValues: Object.freeze(Object.fromEntries(tier.bodies.map((body) => [body.id, Object.freeze({ ...body.prior })]))) }),
       json: `src/playable-v19-level${tier.level}-revised-profile.json`,
@@ -40440,6 +42989,17 @@ var require_playable_library = __commonJS({
       generation: CURRENT_PLAYABLE_GENERATION,
       edition: tier.level + 5,
       rosterRevision: "v19-003",
+      designIds: Object.freeze(tier.bodies.map((body) => body.id)),
+      evaluation: Object.freeze({ pieceValues: Object.freeze(Object.fromEntries(tier.bodies.map((body) => [body.id, Object.freeze({ ...body.prior })]))) }),
+      json: `src/playable-v19-level${tier.level}-current-profile.json`,
+      ini: `variants/levelup-playable-v19-level${tier.level}-current.ini`
+    })));
+    var V19_PANEL_READY_LIBRARIES = Object.freeze(require_designs_v19_panel_ready().TIERS.filter((tier) => tier.level === 3).map((tier) => Object.freeze({
+      id: `v19-level${tier.level}-current`,
+      name: `Level ${tier.level} roster \xB7 current`,
+      generation: CURRENT_PLAYABLE_GENERATION,
+      edition: 8,
+      rosterRevision: "v19-004",
       designIds: Object.freeze(tier.bodies.map((body) => body.id)),
       evaluation: Object.freeze({ pieceValues: Object.freeze(Object.fromEntries(tier.bodies.map((body) => [body.id, Object.freeze({ ...body.prior })]))) }),
       json: `src/playable-v19-level${tier.level}-current-profile.json`,
@@ -40491,9 +43051,10 @@ var require_playable_library = __commonJS({
       }),
       ...V19_LIBRARIES,
       ...V19_REVISED_LIBRARIES,
-      ...V19_CURRENT_LIBRARIES
+      ...V19_CURRENT_LIBRARIES,
+      ...V19_PANEL_READY_LIBRARIES
     ]);
-    module2.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, V18_CANDIDATES, V18_RESERVE_DESIGN_IDS, V19_LIBRARIES, V19_REVISED_LIBRARIES, V19_CURRENT_LIBRARIES, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };
+    module2.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, V18_CANDIDATES, V18_RESERVE_DESIGN_IDS, V19_LIBRARIES, V19_REVISED_LIBRARIES, V19_CURRENT_LIBRARIES, V19_PANEL_READY_LIBRARIES, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };
   }
 });
 
@@ -41056,7 +43617,9 @@ var require_design_catalog = __commonJS({
       // A later roster selects the tested Wraith without relabeling earlier games.
       ...require_designs_v19_revised().NEW_DEFINITIONS,
       // Explicit playable selections preserve the trials' immutable identities.
-      ...require_designs_v19_current().NEW_DEFINITIONS
+      ...require_designs_v19_current().NEW_DEFINITIONS,
+      // The complete panel-ready roster adds only the tested six-jump pawn.
+      ...require_designs_v19_panel_ready().NEW_DEFINITIONS
     ];
     var DESIGNS = Object.freeze(Object.fromEntries(definitions.map((design) => [design.id, design])));
     var LEGACY_DESIGN_IDS = Object.freeze(Object.fromEntries(definitions.filter((design) => design.revision === 1 && design.family !== "king" && design.inheritLegacyProbes !== false).map((design) => [design.legacyType, design.id])));
@@ -41167,9 +43730,11 @@ var require_design_options = __commonJS({
       require_playable_v19_level1_current_profile(),
       require_playable_v19_level2_current_profile()
     ];
+    var panelReadyV19Profile = require_playable_v19_level3_current_profile();
     var { TIERS: V19_TIERS } = require_designs_v19_selected();
     var { TIERS: V19_REVISED_TIERS } = require_designs_v19_revised();
     var { TIERS: V19_CURRENT_TIERS } = require_designs_v19_current();
+    var { TIERS: V19_PANEL_READY_TIERS } = require_designs_v19_panel_ready();
     var { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, V18_CANDIDATES, V18_RESERVE_DESIGN_IDS } = require_playable_library();
     var { STANDARD_TYPES } = require_design_catalog();
     var { pieceInfo } = require_piece_catalog();
@@ -41181,7 +43746,7 @@ var require_design_options = __commonJS({
       return value;
     }
     var PLAYABLE_PROFILE2 = freeze(compiled);
-    var PLAYABLE_PROFILES2 = freeze([PLAYABLE_PROFILE2, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile, rosterProfile, confirmedProfile, selectedV18Profile, ...selectedV19Profiles, ...revisedV19Profiles, ...currentV19Profiles]);
+    var PLAYABLE_PROFILES2 = freeze([PLAYABLE_PROFILE2, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile, rosterProfile, confirmedProfile, selectedV18Profile, ...selectedV19Profiles, ...revisedV19Profiles, ...currentV19Profiles, panelReadyV19Profile]);
     var EXPERIMENTAL_VARIANT2 = PLAYABLE_PROFILE2.variant;
     var EXPERIMENTAL_VARIANTS2 = freeze(PLAYABLE_PROFILES2.map((profile) => profile.variant));
     var PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES2[index].variant, ...library.generation ? { generation: library.generation } : {}, ...library.focusFamily ? { focusFamily: library.focusFamily } : {}, ...library.edition ? { edition: library.edition } : {}, ...library.superseded ? { superseded: true } : {} })));
@@ -41299,6 +43864,7 @@ var require_design_options = __commonJS({
       "queen.level1-tall-knight@1": ["Tall-knight queen", "Normal queen moves, plus knight jumps two ranks forward or backward and one file sideways, including captures."],
       "queen.level1-wide-forward-knight@1": ["Wide-forward queen", "Normal queen moves, plus knight jumps two files sideways and one rank forward, including captures. These extra jumps cross intervening pieces."],
       "pawn.level2-forward-queen-only@1": ["Forward-range pawn", "Move or capture up to two clear squares straight forward or diagonally forward. No sideways or backward moves. Range-two moves remain available away from the home rank and cannot jump over pieces. Visiting an empty en-passant target diagonally is a quiet move and leaves the bypassed pawn."],
+      "pawn.level3-six-knight@1": ["Six-jump pawn", "Normal pawn movement and diagonal captures, including an initial clear two-step and en passant. Also make six knight jumps: four wide jumps two files sideways and one rank forward or backward, plus two tall jumps two ranks forward and one file sideways. These jumps can capture and cross intervening pieces."],
       "pawn.bishop-diagonal-range@1": ["Bishop pawn", "Move one square forward without capturing. Capture up to two clear squares diagonally forward, or move or capture up to two clear squares diagonally backward. A clear two-square advance is available from your home two ranks."],
       "knight.nightrider-level2@1": ["Nightrider", "Repeat knight jumps in the same direction, stopping at an occupied landing square. Intervening squares between knight landings do not block it."],
       "knight.level2-nd-quiet-orthogonal@1": ["Dabbaba knight", "Normal knight jumps and two-square orthogonal jumps, including captures. Also step one square orthogonally without capturing. All jumps cross intervening pieces."],
@@ -41396,7 +43962,8 @@ var require_design_options = __commonJS({
     var v19Presentation = new Map([
       ...selectedV19Profiles.map((profile, index) => [profile, V19_TIERS[index]]),
       ...revisedV19Profiles.map((profile, index) => [profile, V19_REVISED_TIERS[index + 1]]),
-      ...currentV19Profiles.map((profile, index) => [profile, V19_CURRENT_TIERS[index]])
+      ...currentV19Profiles.map((profile, index) => [profile, V19_CURRENT_TIERS[index]]),
+      [panelReadyV19Profile, V19_PANEL_READY_TIERS[2]]
     ].map(([profile, tier]) => {
       const groups = /* @__PURE__ */ new Set(), entries = {};
       for (const body of tier.bodies) {

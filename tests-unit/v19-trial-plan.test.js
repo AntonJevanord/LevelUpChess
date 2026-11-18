@@ -27,7 +27,10 @@ function context(study = 'level1', batchIndex = 0, tools = plan) {
 }
 
 test('unselected trials remain isolated, fixed references stay unchanged and all games use one purchase', () => {
-  const selectedIds = new Set(require('../src/designs-v19-current').NEW_DEFINITIONS.map(row => row.id));
+  const selectedIds = new Set([
+    ...require('../src/designs-v19-current').NEW_DEFINITIONS,
+    ...require('../src/designs-v19-panel-ready').NEW_DEFINITIONS,
+  ].map(row => row.id));
   for (const definition of definitions) {
     if (selectedIds.has(definition.id)) assert.deepEqual(rootCatalog.getDesign(definition.id), definition);
     else assert.equal(rootCatalog.getDesign(definition.id), undefined);

@@ -13,25 +13,34 @@ const SCORES = { '1-0': 1, '1/2-1/2': 0.5, '0-1': 0 };
 const fail = message => { throw new Error(message); };
 const hash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 
-function encodingFor(profile) {
+function encodingFor(profile, boardOnly = false) {
+  if (typeof boardOnly !== 'boolean') fail('boardOnly must be a boolean.');
   if (!profile || !isDeepStrictEqual(profile, compileDesignProfile(profile.registry, profile.evaluation))) {
     fail('Material export requires an intact compiled dynamic profile and frozen registry.');
   }
-  if (profile.roles.reserveTypes?.length) fail('Reserve grants require pocket-aware material analysis; use outcome reports for this experiment.');
-  const ids = profile.registry.definitions.map(definition => definition.id).sort();
+  if (profile.roles.reserveTypes?.length && !boardOnly) fail('Reserve grants require pocket-aware material analysis; use outcome reports for this experiment.');
+  const excluded = boardOnly ? profile.registry.definitions.filter(definition => definition.placement === 'reserve').map(definition => definition.id) : [];
+  const ids = profile.registry.definitions.filter(definition => !excluded.includes(definition.id)).map(definition => definition.id).sort();
   const names = [...FAMILIES, 'tempo', ...ids.map(id => `bonus:${id}`)];
   const letters = new Map(Object.entries(ORDINARY).map(([letter, family]) => [letter, { family }]));
   for (const { id, letter } of profile.registry.allocations) {
     const definition = profile.definitionsByLetter[letter];
+    if (excluded.includes(id)) continue;
+    if (boardOnly && definition.placement !== 'replace') fail('Board-only material analysis supports replacement designs only.');
     if (!FAMILIES.includes(definition.family)) fail('Royal piece upgrades are not supported by material-count regression.');
     letters.set(letter, { family: definition.family, id });
   }
-  return { names, letters, ids };
+  return { names, letters, ids, boardOnly, excluded };
 }
 
 function readMaterial(fen, encoding) {
   if (typeof fen !== 'string') fail('Material positions require FEN strings.');
-  const fields = fen.trim().split(/\s+/), ranks = fields[0].split('/');
+  const fields = fen.trim().split(/\s+/);
+  if (encoding.boardOnly && /[\[\]]/.test(fields[0])) {
+    if (!fields[0].endsWith('[]') || /[\[\]]/.test(fields[0].slice(0, -2))) fail('Board-only material positions cannot contain reserve pockets.');
+    fields[0] = fields[0].slice(0, -2);
+  }
+  const ranks = fields[0].split('/');
   if (fields.length !== 6 || !['w', 'b'].includes(fields[1]) || ranks.length !== 8) fail('Unsupported material FEN.');
   const counts = {}, values = Object.fromEntries(encoding.names.map(name => [name, 0]));
   let totalPieces = 0;
@@ -60,7 +69,7 @@ function readMaterial(fen, encoding) {
     signature: Object.keys(counts).sort().map(letter => `${letter}:${counts[letter]}`).join(',') };
 }
 
-function decodeMaterial(fen, profile) { return readMaterial(fen, encodingFor(profile)); }
+function decodeMaterial(fen, profile, { boardOnly = false } = {}) { return readMaterial(fen, encodingFor(profile, boardOnly)); }
 
 function samplingPolicy(input) {
   if (!input || typeof input !== 'object' || Array.isArray(input)) fail('Sampling options must be an object.');
@@ -80,8 +89,8 @@ function recordPolicy(record) {
 
 /** A conservative first prototype: completed, paired, equal-strength dynamic
  * design games under one frozen policy. Missing process manifests stay unknown. */
-async function exportDataset({ sources, profile, sampling = {}, openingGroups = {}, rulesFactory } = {}) {
-  const encoding = encodingFor(profile), policy = samplingPolicy(sampling);
+async function exportDataset({ sources, profile, sampling = {}, openingGroups = {}, rulesFactory, boardOnly = false } = {}) {
+  const encoding = encodingFor(profile, boardOnly), policy = samplingPolicy(sampling);
   if (!Array.isArray(sources) || !sources.length) fail('Material export requires at least one journal source.');
   if (!openingGroups || typeof openingGroups !== 'object' || Array.isArray(openingGroups)) fail('Opening groups must map opening IDs to families.');
   const pairs = new Map(), ids = new Set(), sourceIds = new Set();
@@ -114,6 +123,7 @@ async function exportDataset({ sources, profile, sampling = {}, openingGroups = 
         || record.totalPlies !== record.moves.length || !Array.isArray(record.openingMoves)
         || record.openingPlies !== record.openingMoves.length || record.playedPlies !== record.totalPlies - record.openingPlies
         || !isDeepStrictEqual(record.moves.slice(0, record.openingPlies), record.openingMoves)) fail(`Inconsistent move counts or opening prefix: ${record.id}.`);
+      if (boardOnly && record.moves.some(move => typeof move !== 'string' || move.includes('@'))) fail('Board-only material games cannot contain reserve drops.');
       const groupId = openingGroups[record.openingId] ?? source.metadata?.openingGroups?.[record.openingId] ?? record.openingId;
       if (typeof groupId !== 'string' || !groupId) fail('Every opening must have a nonempty group ID.');
       const pairId = `${source.id}:${record.pairId}`, gameId = `${source.id}:${record.id}`;
@@ -171,6 +181,8 @@ async function exportDataset({ sources, profile, sampling = {}, openingGroups = 
   const sampledCompletePairs = [...sampledPairSizes.values()].filter(count => count === 2).length;
   const sampledPartialPairs = sampledPairSizes.size - sampledCompletePairs;
   return { schemaVersion: 1, format: 'levelup-material-dataset',
+    ...(boardOnly ? { reservePolicy: { mode: 'board-only', excludedDesignIds: encoding.excluded,
+      emptyPocketsOnly: true, dropsAllowed: false, profileUnchanged: true } } : {}),
     featureNames: encoding.names, sampling: policy, identity: structuredClone(commonIdentity),
     recordedPolicy: commonPolicy, profile: { hash: profile.hash, registryHash: profile.registryHash,
       registry: profile.registry, variant: profile.variant, evaluation: profile.evaluation ?? null },
@@ -193,6 +205,7 @@ async function exportDataset({ sources, profile, sampling = {}, openingGroups = 
       'Material-stable windows filter recent/nearby captures and promotions but do not establish tactical quietness.',
       'Ordinary family counts plus upgrade bonuses are model features, not intrinsic exchange prices or engine MG/EG parameters.',
       'Each sampled game has total weight one; games with no accepted positions are retained in coverage but contribute no fitting weight.',
+      ...(boardOnly ? ['Entire grant-involved matchups are excluded by the caller. Every replayed position must have an empty pocket and no reserve piece on board; original profile, letters and game identities remain unchanged.'] : []),
       ...(sampledPartialPairs ? [`${sampledPartialPairs} color pairs contribute samples from only one game; sampled evidence is not fully color-paired.`] : []) ] };
 }
 

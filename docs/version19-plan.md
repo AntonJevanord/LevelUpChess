@@ -26,6 +26,12 @@ v0.19.0 runs retain their original declarations. The
 replacements separately. The frozen L2 Knight pawn and L3 Herald remain in
 the panels until those results support an explicit new revision.
 
+The selected queen/pawn trials now support explicit **revision 004**:
+QfsN replaces the second L1 queen, fQ2 is an additional L2 pawn, and the
+six-jump pawn joins Herald/Ranger at L3. New panels use 11, 12 and 12 bodies;
+old owned runs retain their original declaration. The playable current-tier
+libraries and fresh panel plans now contain the same selected bodies.
+
 ## Same-tier panels
 
 Prepare separate L1, L2 and L3 round robins using accepted movement revisions,
@@ -45,9 +51,9 @@ and optional pre/post engine evaluations. Freeze one shared diverse book;
 avoid matchup-specific near-zero evaluation selection, which conditions away
 some of the strength being measured. More games do not remove that bias.
 
-Start at 40k nodes, one engine thread and four workers. Keep each physical-color
-pair and opening ID together. Add stronger-search checks only for a specific
-unresolved effect; node-budget arms remain separate datasets.
+Use **40k nodes only**, one engine thread and four workers. Keep each
+physical-color pair and opening ID together. The current panels do not include
+other node-budget arms.
 
 1. Run the first **16 openings**, retaining first-eight and first-sixteen reports.
 2. Review averages, direct matchups, White/Black scores, shared coverage,
@@ -60,15 +66,22 @@ Report the fixed-reference basket separately from the whole-roster average.
 Removing or revising a candidate changes the latter opponent basket; it should
 not rewrite an unchanged direct matchup or its retained reference comparison.
 
+The [offline material command](v19-material-estimates.md) can reuse a finished
+panel's actual journals, without more engine games. It fits conditional
+board-piece values with assumed pawn=1 / queen=9 and reports support problems.
+Whole grant-involved cells are excluded; their strength stays in the outcome
+panel. Cross-level and mixed-army tests still matter for transfer between tiers
+and interactions between upgrades.
+
 No automatic extension beyond the requested review point is needed. If a piece,
 prior or placement changes, preserve the old data and declare the new revision.
 Reuse unchanged games only when both army definitions, engine/search policy,
 opening, color pairing and archived rule meanings match. A changed letter map
 or registry needs explicit compatibility proof rather than trusting raw letters.
 
-With two ordinary upgrades per family and one grant, a tier has eleven bodies.
-A full panel then schedules **1,760 games at sixteen openings**, 3,520 at 32
-and 7,040 at 64. Accepted extra bodies increase that count: for N bodies and
+The selected L1 tier has eleven bodies; L2 and L3 each have twelve. The three
+panels schedule **1,760 / 2,112 / 2,112 games at sixteen openings**, twice that
+at 32 and four times at 64. For N bodies and
 O openings, paired-color round-robin games are **N × (N − 1) × O**. Declare
 the final roster and total before starting rather than imposing a 2,000-game cap.
 

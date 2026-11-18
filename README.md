@@ -12,7 +12,7 @@ The side panel has **Game, Setup, Design and Files** tabs. Status and essential 
 
 Right-click for a circle or right-drag for an arrow; repeat to remove a mark, or press Escape to clear marks. **Draw** enables tap/drag annotation on touch screens. Design offers four piece styles, four board palettes and an annotation color, with preferences remembered locally. See the [interface guide](docs/interface-v18.md).
 
-The current roster allows a 1–9 point budget per side. Choose **Level 1 roster · current**, **Level 2 roster · current**, or **Level 3 roster · revised**: they contain 11, 12 and 11 designs, with one reserve grant per tier. All twenty-five earlier libraries retain their rules. The [version-19 guide](docs/version19.md) gives the playable roster, Windows branch-switch instructions and panel commands. Historical family workshops remain selectable for earlier mixed-tier setups.
+The current roster allows a 1–9 point budget per side. Choose **Level 1/2/3 roster · current**: they contain 11, 12 and 12 designs, with one reserve grant per tier. All twenty-seven earlier libraries retain their rules. The [version-19 guide](docs/version19.md) gives the playable roster, Windows branch-switch instructions and panel commands. Historical family workshops remain selectable for earlier mixed-tier setups.
 
 Select the king during setup to buy one nonroyal reserve guard. Starting the game keeps the ordinary royal king and places the guard in reserve. Click a reserve piece, then a highlighted empty square in your own half. A drop spends a turn and cannot give check; captured pieces disappear rather than refill reserves. All ordinary king safety and castling rules still apply.
 
@@ -55,21 +55,25 @@ Browser saves belong to the current browser and site address. Use PGN when movin
 ## Version 19: accepted roster and tier panels
 
 Branch **`version_19`** starts from the **`v0.18.14`** closeout. The final
-choices are L3 **NAD** and L2 **NDmW, QcC and BsR**; L1 keeps QfN/QvN.
-The [revised roster](experiments/designs/v19-roster-002.json),
-[search values](experiments/designs/v19-panel-values-002.json) and
+choices include L3 **NAD**, L2 **NDmW, QcC, BsR and fQ2**, and L1 **QfN/QfsN**.
+The [current roster](experiments/designs/v19-roster-004.json),
+[search values](experiments/designs/v19-panel-values-004.json) and
 [shared 64-case book](experiments/balance/v19-panel-openings.json) are declared
 before collection. Historical profiles and outcomes retain their identities.
 
 The complete same-tier round robins use one purchase per army, paired colors,
-40k nodes, one engine thread and four workers. At sixteen openings the L1/L2/L3
-revised panels each contain **1,760 games**. Start one panel at a time:
+**40k nodes only**, one engine thread and four workers. At sixteen openings the
+L1/L2/L3 panels contain **1,760 / 2,112 / 2,112 games**. Start one panel at a time:
 
 ```powershell
-npm.cmd run balance:v19 -- --tier 1 --out balance-results/v19-level1 --openings 16 --jobs 4
+npm.cmd run balance:v19 -- --tier 1 --out balance-results/v19-level1-roster004 --openings 16 --jobs 4
+npm.cmd run balance:v19 -- --tier 2 --out balance-results/v19-level2-roster004 --openings 16 --jobs 4
+npm.cmd run balance:v19 -- --tier 3 --out balance-results/v19-level3-roster004 --openings 16 --jobs 4
 ```
 
-Use tiers 2 and 3 with their own folders. Resume with `--resume DIRECTORY`;
+These fresh panels use revision 004, including the purple **Six-jump pawn**
+`ifmnDfmWfceFsNfN` at L3 beside Herald and Ranger. Earlier panel folders retain
+their exact owned roster. Resume with `--resume DIRECTORY`;
 add `--openings 32` or `64` for total coverage. Reports retain completed
 eight-case checkpoints and separate fixed-reference scores from whole-roster
 averages. See the [guide](docs/version19.md) for validation and offline reports.
@@ -99,6 +103,12 @@ New runs [record the first post-opening engine score](docs/opening-evaluations.m
 with each game and summarize it automatically in the panel/trial reports.
 This reuses the normal search and keeps exact cp, bounds, mates and missing
 historical observations separate.
+
+After a panel target finishes, [fit material estimates offline](docs/v19-material-estimates.md)
+with `npm.cmd run balance:v19:material -- --run PANEL_DIRECTORY --out NEW_DIRECTORY`.
+This replays the saved games without engine searches. The fit assumes pawn=1
+and ordinary queen=9, retains support/uncertainty checks, and excludes whole
+grant-involved matchups. Grant strength remains in the outcome panel.
 
 ## Version 16: frozen references and playtest roster
 

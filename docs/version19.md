@@ -3,7 +3,7 @@
 Branch **`version_19`** starts from the version-18 closeout, **`v0.18.14`**.
 Pre-panel screening is complete. The accepted roster now enters playable tier
 libraries and separate same-tier round robins before cross-level experiments.
-All twenty-five previously published libraries and their exact rules remain available.
+All twenty-seven previously published libraries and their exact rules remain available.
 
 ## Accepted roster
 
@@ -15,9 +15,13 @@ Knight/Rank pawn references. The [completed trial review](v19-selected-trials-re
 records scores of 42.19% and 56.51%; the selection favors their clear movement
 identities rather than claiming exact balance. The L2 Bishop pawn remains in
 earlier libraries. Herald and the revised Wraith remain at L3.
+Revision 004 adds the purple three-point **Six-jump pawn**
+`ifmnDfmWfceFsNfN` beside Herald and Ranger. It keeps ordinary pawn moves and
+captures, adds four wide knight jumps in both directions and two tall forward
+jumps, and retains standard promotion and adjacent diagonal en passant.
 The playable Wraith is now **`QgmQ0gcBgcsR0`**, the best tested below-50%
 revision (38.67% at 40k nodes; 37.89% at 80k). The
-[current playable declaration](../experiments/designs/v19-roster-003.json) records every
+[current roster declaration](../experiments/designs/v19-roster-004.json) records every
 accepted identity; the [screening review](v18-prepanel32-review.md) preserves
 the comparisons behind the final choices.
 
@@ -30,7 +34,7 @@ The fixed reference baskets remain:
 | L3 | Vanguard `RfB`, Unicorn `NC`, Crusader `BsR2nsN`, Amazon `QN` |
 
 MG/EG search priors are frozen separately in the
-[playable value declaration](../experiments/designs/v19-panel-values-003.json). They are
+[value declaration](../experiments/designs/v19-panel-values-004.json). They are
 engine settings, not purchase prices or fitted material values. Existing
 research identities retain their tested movement and historical contexts.
 
@@ -47,8 +51,8 @@ npm.cmd start
 ```
 
 Under **Rules**, choose **Version 19 · Level 1 roster · current**, **Version 19 · Level 2
-roster · current** or **Version 19 · Level 3 roster · revised**. They contain
-11, 12 and 11 upgrade designs. The L1 queen choices are green QfN and blue QfsN;
+roster · current** or **Version 19 · Level 3 roster · current**. They contain
+11, 12 and 12 upgrade designs. The L1 queen choices are green QfN and blue QfsN;
 the new orange L2 pawn moves and captures up to two clear squares forward,
 straight or diagonally, with no sideways/backward moves. Standard promotion
 remains Q/R/B/N; its quiet diagonal en-passant landing leaves the bypassed pawn.
@@ -69,15 +73,16 @@ these distinctions; notation was not silently changed during promotion.
 
 ## Run the tier panels
 
-Published panel runs still use the [revision-002 declaration](../experiments/designs/v19-roster-002.json)
-and its [value policy](../experiments/designs/v19-panel-values-002.json). The new
-playable selections do not silently revise those experiments or their opponent
-baskets. Any future panel revision will receive its own declared context.
+Fresh panel runs now use [roster revision 004](../experiments/designs/v19-roster-004.json)
+and its [value policy](../experiments/designs/v19-panel-values-004.json), including
+QfsN, fQ2 and the six-jump L3 pawn. Earlier folders keep their original roster,
+value policy and controller through their owned runtime. Use fresh folders for
+the selected roster; do not reinterpret or pool earlier opponent baskets.
 
 Each panel compares **one purchase per army**, including pawns, queens and
 grants, in every same-tier pairing. Both physical colors play each shared
-opening. Search uses **40,000 nodes, one engine thread and 32 MiB hash**;
-four workers are the default. Run one panel at a time.
+opening. Search uses **40,000 nodes only, one engine thread and 32 MiB hash**;
+four workers are the default. There are no 20k/80k arms. Run one panel at a time.
 
 Preflight can check all sixty-four cases before collecting games:
 
@@ -98,26 +103,26 @@ flags rather than automatic exclusions or matchup-specific opening selection.
 Start at sixteen openings, with a separate output folder per tier:
 
 ```powershell
-npm.cmd run balance:v19 -- --tier 1 --out balance-results/v19-level1 --openings 16 --jobs 4
-npm.cmd run balance:v19 -- --tier 2 --out balance-results/v19-level2-revised --openings 16 --jobs 4
-npm.cmd run balance:v19 -- --tier 3 --out balance-results/v19-level3-revised --openings 16 --jobs 4
+npm.cmd run balance:v19 -- --tier 1 --out balance-results/v19-level1-roster004 --openings 16 --jobs 4
+npm.cmd run balance:v19 -- --tier 2 --out balance-results/v19-level2-roster004 --openings 16 --jobs 4
+npm.cmd run balance:v19 -- --tier 3 --out balance-results/v19-level3-roster004 --openings 16 --jobs 4
 ```
 
-The revised schedules each contain **1,760 games** at sixteen openings.
+The schedules contain **1,760 / 2,112 / 2,112 games** at sixteen openings.
 These commands start games only when you run them. This release has not
 started a scored cloud campaign.
 
-Existing v0.19.0 panels retain their original roster and counts through their
-owned runtime. Resume those folders with the same command; use new folders for
-revised L2/L3 panels. Do not pool the different Wraith profiles or opponent baskets.
+Existing panels retain their original roster and counts through their owned
+runtime. Resume those folders with the same command. Do not pool different
+Wraith profiles or opponent baskets.
 
 Resume an interrupted panel without changing its target, or extend the same
 unchanged declaration to a **total** of 32 or 64 openings:
 
 ```powershell
-npm.cmd run balance:v19 -- --tier 1 --resume balance-results/v19-level1
-npm.cmd run balance:v19 -- --tier 1 --resume balance-results/v19-level1 --openings 32
-npm.cmd run balance:v19 -- --tier 1 --report balance-results/v19-level1
+npm.cmd run balance:v19 -- --tier 1 --resume balance-results/v19-level1-roster004
+npm.cmd run balance:v19 -- --tier 1 --resume balance-results/v19-level1-roster004 --openings 32
+npm.cmd run balance:v19 -- --tier 1 --report balance-results/v19-level1-roster004
 ```
 
 Complete eight-case batches retain reports under `reports/openings-8`,
@@ -131,6 +136,28 @@ New runs also [record the first post-opening evaluation](opening-evaluations.md)
 with each game and summarize its coverage in the report. This reuses the normal
 search, preserving scores through retries without extra evaluation searches.
 Already-started owned runtimes retain their original behavior.
+
+## Material estimates after a panel
+
+The full journals already contain the moves, results and exact profiles needed
+for offline replay. No extra engine games are needed to attempt a material fit.
+After a target finishes or the panel stops cleanly, use a new output folder:
+
+```powershell
+npm.cmd run balance:v19:material -- --run balance-results/v19-level3-roster004 --out balance-results/v19-level3-material-16 --bootstrap 100
+```
+
+Repeat for L1/L2 with their own source and output folders. The report estimates
+ordinary pieces, upgraded whole pieces and their bonuses over ordinary family
+values, under assumed pawn=1 and ordinary queen=9. It is an outcome-based,
+conditional estimate, not a replacement for the recorded engine search priors.
+Rank, coverage or stability problems leave estimates explicitly unavailable.
+
+Entire grant-involved matchups are excluded from this board-material fit;
+pockets, dropped pieces and royal kings are not silently priced as board
+replacements. Grants stay in the outcome reports until a pocket-aware model is
+implemented. Source journals and owned runtimes are not modified. See the
+[material-estimate guide](v19-material-estimates.md) for scope and interpretation.
 
 ## Read the results
 

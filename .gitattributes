@@ -116,3 +116,6 @@ experiments/designs/v19-panel-values-002.json text eol=lf
 experiments/designs/v19-roster-003.json text eol=lf
 experiments/designs/v19-panel-values-003.json text eol=lf
 tests-unit/fixtures/playable-v19-before-selection-sha256.json text eol=lf
+experiments/designs/v19-roster-004.json text eol=lf
+experiments/designs/v19-panel-values-004.json text eol=lf
+tests-unit/fixtures/playable-v19-before-six-pawn-sha256.json text eol=lf
