@@ -110,6 +110,15 @@ This replays the saved games without engine searches. The fit assumes pawn=1
 and ordinary queen=9, retains support/uncertainty checks, and excludes whole
 grant-involved matchups. Grant strength remains in the outcome panel.
 
+The separate [queen/rook follow-up](docs/v19-queen-rook-followup.md) screens
+`QsNfD` / `QsNfDfH`, restricted-capture rook `RcsNcfN`, and L3 queens
+`QsCfC` / `QsZfZ` / `QZAG` / `QZH` / `QC` / `QZ` against fixed references
+with fresh controls.
+Use `npm.cmd run balance:v19:queen-rook -- --help` after the current panel
+finishes. These research studies preserve the running roster; selected
+replacements would enter a separate panel with verified reuse of unchanged
+matchups.
+
 ## Version 16: frozen references and playtest roster
 
 The playable closeout with UI fixes is tagged `v0.16.7`. Mixed-army experiments belong to version 17.

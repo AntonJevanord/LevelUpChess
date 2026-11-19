@@ -38,7 +38,6 @@ for (const receipt of [selected.getRosterReceipt(), selected.getValueReceipt()])
   const bytes = fs.readFileSync(path.join(ROOT, receipt.file), 'utf8').replace(/\r\n/g, '\n');
   if (sha(bytes) !== receipt.sha256) throw new Error(`Frozen trial anchor changed: ${receipt.file}.`);
 }
-function anchor(id) { const body = selected.ALL_BODIES.find(body => body.id === id); if (!body) throw new Error(`Missing tested value anchor: ${id}.`); return body; }
 function army(id) {
   const design = getDesign(id);
   if (!design) throw new Error(`Trial ${id} requires its isolated owned research runtime.`);
@@ -58,12 +57,26 @@ function defaultControlsForTier(tier) {
 function createTrialPlan({ trials = DEFAULT_TRIALS, revisionProbes = defaultRevisionProbes,
   format: FORMAT = DEFAULT_FORMAT, experimentPrefix = 'v19-trials', question = DEFAULT_QUESTION,
   valuePolicy = DEFAULT_VALUE_POLICY, movementNotes = DEFAULT_MOVEMENT_NOTES,
-  controlsForTier = defaultControlsForTier } = {}) {
+  controlsForTier = defaultControlsForTier, anchorRoster = selected,
+  configurationLabel = 'pawn/queen', reportLabel = 'trials' } = {}) {
   if (!Array.isArray(trials) || !trials.length || typeof revisionProbes !== 'function' || typeof controlsForTier !== 'function') {
     throw new Error('A trial plan requires candidate rows and probe/control functions.');
   }
-  for (const [name, value] of Object.entries({ format: FORMAT, experimentPrefix, question, valuePolicy, movementNotes })) {
+  for (const [name, value] of Object.entries({ format: FORMAT, experimentPrefix, question, valuePolicy, movementNotes, configurationLabel, reportLabel })) {
     if (typeof value !== 'string' || !value.trim()) throw new Error(`Trial ${name} must be a nonempty string.`);
+  }
+  if (!anchorRoster || !Array.isArray(anchorRoster.ALL_BODIES)
+    || ['getTierRoster', 'getRosterReceipt', 'getValueReceipt'].some(name => typeof anchorRoster[name] !== 'function')) {
+    throw new Error('Trial anchors require a declared roster and value receipts.');
+  }
+  for (const receipt of [anchorRoster.getRosterReceipt(), anchorRoster.getValueReceipt()]) {
+    const bytes = fs.readFileSync(path.join(ROOT, receipt.file), 'utf8').replace(/\r\n/g, '\n');
+    if (sha(bytes) !== receipt.sha256) throw new Error(`Frozen trial anchor changed: ${receipt.file}.`);
+  }
+  function anchor(id) {
+    const body = anchorRoster.ALL_BODIES.find(body => body.id === id);
+    if (!body) throw new Error(`Missing tested value anchor: ${id}.`);
+    return body;
   }
   if (!/^[a-z0-9][a-z0-9-]*$/.test(FORMAT) || !/^[a-z0-9][a-z0-9-]*$/.test(experimentPrefix)) throw new Error('Trial format and experiment prefix must be simple identities.');
   const keys = new Set(), ids = new Set();
@@ -94,7 +107,7 @@ function createTrialPlan({ trials = DEFAULT_TRIALS, revisionProbes = defaultRevi
     return freeze(rows.map(row => ({ ...row, army: army(row.id), count: 1, upgradePoints: tier })));
   }
   function references(study) {
-    return freeze(selected.getTierRoster(level(study)).filter(row => row.reference)
+    return freeze(anchorRoster.getTierRoster(level(study)).filter(row => row.reference)
       .map(row => ({ ...row, army: army(row.id), count: 1, upgradePoints: row.level })));
   }
   function matches(study) {
@@ -105,7 +118,7 @@ function createTrialPlan({ trials = DEFAULT_TRIALS, revisionProbes = defaultRevi
   }
   function getValueAudit(study) {
     const bodies = [...candidates(study), ...references(study)];
-    return freeze({ sources: [selected.getRosterReceipt(), selected.getValueReceipt()],
+    return freeze({ sources: [anchorRoster.getRosterReceipt(), anchorRoster.getValueReceipt()],
       policy: valuePolicy,
       values: bodies.map(row => ({ id: row.id, movement: row.movement, applied: row.prior, anchorId: row.anchorId || row.id,
         source: row.priorSource, ...(row.requestedMovement ? { requestedMovement: row.requestedMovement } : {}) })) });
@@ -114,7 +127,7 @@ function createTrialPlan({ trials = DEFAULT_TRIALS, revisionProbes = defaultRevi
     const tier = level(study);
     if (nodes !== NODES || !Number.isInteger(batchIndex) || batchIndex < 0 || batchIndex > 7) throw new Error('Choose one of the eight declared 40k-node trial batches.');
     const rows = candidates(study), columns = references(study), cells = matches(study), audit = getValueAudit(study);
-    const config = normalizeConfig({ schemaVersion: 3, name: `Version 19 focused level ${tier} pawn/queen trials: batch ${batchIndex + 1}`,
+    const config = normalizeConfig({ schemaVersion: 3, name: `Version 19 focused level ${tier} ${configurationLabel} trials: batch ${batchIndex + 1}`,
       seed: 20261118 + batchIndex, repetitions: 1, engine: { nodes, threads: 1, hashMb: 32, maxPlies: 400 },
       openings: OPENINGS.slice(batchIndex * 8, batchIndex * 8 + 8),
       comparisons: cells.map(cell => ({ id: cell.id, label: `${cell.aLabel} versus ${cell.bLabel}`,
@@ -207,7 +220,7 @@ function createTrialPlan({ trials = DEFAULT_TRIALS, revisionProbes = defaultRevi
   function renderReport(report) {
     const pct = value => value === null ? 'pending' : `${(100 * value).toFixed(2)}%`;
     const range = value => value.available ? `${pct(value.lower)}–${pct(value.upper)}` : 'pending';
-    return [`# Version 19 focused level ${report.tier} trials`, '',
+    return [`# Version 19 focused level ${report.tier} ${reportLabel}`, '',
       `${report.targetOpenings} shared openings; ${report.scheduledGames} scheduled games; ${report.progress.finalizedGames} finalized; ${report.progress.completePairs} scored color pairs. Draws count half a point.`, '',
       'Each trial faces only the fixed reference basket, with one purchase per army and both colors. Eight openings are an outlier screen, not a precise balance estimate. Incomplete pairs, truncations and errors remain unscored. No earlier outcomes are pooled.', '',
       ...(report.openingWarnings || []).flatMap(warning => [
