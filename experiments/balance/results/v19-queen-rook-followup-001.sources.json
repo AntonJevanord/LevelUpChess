@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-v19-queen-rook-followup-report-sources",
+  "reviewed": "2026-11-24",
+  "scope": "Two uploaded completed 64-opening reports only. Raw journals, source runtimes and preflight proofs for this checkpoint were not uploaded; report figures are preserved, not replay-verified or pooled with other studies.",
+  "sources": [
+    {
+      "study": "level3",
+      "uploadedFileId": "file_00000000592c820a8485c8ebba36dbfb",
+      "uploadedName": "panel-report.md",
+      "file": "experiments/balance/results/v19-queen-rook-followup-001.level3.report.md.gz",
+      "bytes": 13161,
+      "sha256": "991580feb59b7770467df9151b0ead9305018813ff89afc5276dfda6466506ea",
+      "archiveSha256": "39a321e0b461f1c6dd54678faabed7cb7eb31a14cb12efacee6fff279afe1e1d"
+    },
+    {
+      "study": "level2",
+      "uploadedFileId": "file_000000001d98820ab9ab8b86b19ca0a9",
+      "uploadedName": "panel-report.md",
+      "file": "experiments/balance/results/v19-queen-rook-followup-001.level2.report.md.gz",
+      "bytes": 11603,
+      "sha256": "91206b2eb5e8761760fcbdc6b4e6d04049ca7c09d93a08eae3f6b96a62d0feb9",
+      "archiveSha256": "fa379b8228dba47d519909bae732d688ef45282cc13e5193ca7031b90e2dfc3b"
+    }
+  ]
+}

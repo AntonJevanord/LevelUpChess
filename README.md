@@ -119,6 +119,12 @@ finishes. These research studies preserve the running roster; selected
 replacements would enter a separate panel with verified reuse of unchanged
 matchups.
 
+The [sideways extension](docs/v19-sideways-followup.md) adds L2 queens
+`QsDsN` / `QsDsNA` / `QsNsDsH`, rooks `RcfhN` / `RcsN`, and L3 queens
+`QsCsZ` / `QsHsCsZ` / `QsHsCsZG` in separate reference screens. Use
+`npm.cmd run balance:v19:sideways -- --help`; earlier follow-up folders
+retain their original command and definitions.
+
 ## Version 16: frozen references and playtest roster
 
 The playable closeout with UI fixes is tagged `v0.16.7`. Mixed-army experiments belong to version 17.

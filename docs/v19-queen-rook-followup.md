@@ -88,6 +88,10 @@ games**, 688 in total. Targets 16/32/64 schedule proportionally more games.
 The conditional fallbacks `QsNsDsH` and `QsNDH` are reserved for a later trial
 if the forward-jump queens remain too weak; they are not scheduled here.
 
+The later [sideways extension](v19-sideways-followup.md) now tests `QsNsDsH`
+in its own context, alongside two other sideways queens. `QsNDH` remains an
+optional future design; this original study keeps its definitions.
+
 ## Commands
 
 Wait for the current panels to finish, then pull `version_19`. Run the studies
