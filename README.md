@@ -125,6 +125,13 @@ The [sideways extension](docs/v19-sideways-followup.md) adds L2 queens
 `npm.cmd run balance:v19:sideways -- --help`; earlier follow-up folders
 retain their original command and definitions.
 
+The [minor-piece trials](docs/v19-minor-followup.md) compare six L1 bishop
+designs using two-square orthogonal jumps and seven L2 zebra-knight compounds
+against unchanged references and controls. Use
+`npm.cmd run balance:v19:minors -- --help`. The corrected forward design is
+`NfhZfAfG`, with lowercase `h`; full `NZ` / `NZA` are strength checks because
+their earlier L3 results were already strong.
+
 ## Version 16: frozen references and playtest roster
 
 The playable closeout with UI fixes is tagged `v0.16.7`. Mixed-army experiments belong to version 17.

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-v19-sideways-report-sources",
+  "reviewed": "2026-11-24",
+  "scope": "Two uploaded 64-opening reports only. The underlying checkpoint journals, source runtimes and preflight proofs were not supplied. Figures are retained as report-level evidence, without new replay, pooling or causal claims.",
+  "sources": [
+    {
+      "study": "level3",
+      "uploadedFileId": "file_000000007dbc820ab3f42d4bc7a84939",
+      "uploadedName": "panel-report.md",
+      "file": "experiments/balance/results/v19-sideways-001.level3.report.md.gz",
+      "bytes": 11675,
+      "sha256": "c0a137dd736b94abbb3932207adbcccd8fd4dd0e108bd66ea7bc9c054dccab1e",
+      "archiveSha256": "88e972f4e4c7e788c0007274c3cfda5dd1fc91e0f8a03bcee828d5413a44dcdb"
+    },
+    {
+      "study": "level2",
+      "uploadedFileId": "file_000000000a38821097f105d54debf675",
+      "uploadedName": "panel-report.md",
+      "file": "experiments/balance/results/v19-sideways-001.level2.report.md.gz",
+      "bytes": 12823,
+      "sha256": "b747a5f1588460842b45207df99ea0db5345d2017a43b64a2ef227936c66859c",
+      "archiveSha256": "a983d1072f02a11f4fe06f22644fabe3c5755610c7ec0e724d067f282faf8b27"
+    }
+  ]
+}
