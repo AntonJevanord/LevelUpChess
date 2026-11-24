@@ -209,6 +209,17 @@ const V19_PANEL_READY_LIBRARIES = Object.freeze(require('./designs-v19-panel-rea
     json: `src/playable-v19-level${tier.level}-current-profile.json`,
     ini: `variants/levelup-playable-v19-level${tier.level}-current.ini`,
   })));
+const V19_EXPANDED_LIBRARIES = Object.freeze(require('./designs-v19-expanded').TIERS
+  .map(tier => Object.freeze({
+    id: `v19-level${tier.level}-expanded`, name: `Level ${tier.level} roster · expanded`,
+    generation: CURRENT_PLAYABLE_GENERATION, edition: tier.level + 8,
+    rosterRevision: 'v19-005',
+    designIds: Object.freeze(tier.bodies.map(body => body.id)),
+    evaluation: Object.freeze({ pieceValues: Object.freeze(Object.fromEntries(tier.bodies.map(body =>
+      [body.id, Object.freeze({ ...body.prior })]))) }),
+    json: `src/playable-v19-level${tier.level}-expanded-profile.json`,
+    ini: `variants/levelup-playable-v19-level${tier.level}-expanded.ini`,
+  })));
 const PLAYABLE_LIBRARIES = Object.freeze([
   Object.freeze({ id: 'workshop', name: 'Rebalance workshop', designIds: PLAYABLE_DESIGN_IDS,
     json: 'src/playable-profile.json', ini: 'variants/levelup-playable.ini' }),
@@ -241,6 +252,7 @@ const PLAYABLE_LIBRARIES = Object.freeze([
   ...V19_REVISED_LIBRARIES,
   ...V19_CURRENT_LIBRARIES,
   ...V19_PANEL_READY_LIBRARIES,
+  ...V19_EXPANDED_LIBRARIES,
 ]);
 
-module.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, V18_CANDIDATES, V18_RESERVE_DESIGN_IDS, V19_LIBRARIES, V19_REVISED_LIBRARIES, V19_CURRENT_LIBRARIES, V19_PANEL_READY_LIBRARIES, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };
+module.exports = { PLAYABLE_DESIGN_IDS, REFERENCE_DESIGN_IDS, ALTERNATIVE_DESIGN_IDS, OFFICIAL_REFERENCE_DESIGN_IDS, RESERVE_DESIGN_IDS, V16_CANDIDATES, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, V18_CANDIDATES, V18_RESERVE_DESIGN_IDS, V19_LIBRARIES, V19_REVISED_LIBRARIES, V19_CURRENT_LIBRARIES, V19_PANEL_READY_LIBRARIES, V19_EXPANDED_LIBRARIES, CURRENT_PLAYABLE_GENERATION, PLAYABLE_LIBRARIES };

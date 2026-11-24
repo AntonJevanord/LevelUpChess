@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-report-only-source-archive",
+  "reviewed": "2026-11-24",
+  "scope": "Two uploaded partial minor-study reports: bishop batches through32 openings and knight batches through24 toward64-opening targets. Source journals were not supplied. User attributes error attempts to laptop sleep/power; that explanation is not an independent raw-history audit.",
+  "sources": [
+    {
+      "study": "level1",
+      "kind": "panel",
+      "uploadedFileId": "file_0000000025a481f48eaa5ccee97cf2ac",
+      "file": "experiments/balance/results/v19-minors-selection-001.level1.panel-report.md.gz",
+      "bytes": 11082,
+      "sha256": "644a5be657b670a46738e30dda4aa15558d273764929c166d60bfbc8c05551ab",
+      "archiveSha256": "952c5f2067592b5fb74ed5f86c1be13a7d78dd6f7eeb8e214104b720a12b7938"
+    },
+    {
+      "study": "level2",
+      "kind": "panel",
+      "uploadedFileId": "file_00000000d8ac820a95c9556f5fd334c4",
+      "file": "experiments/balance/results/v19-minors-selection-001.level2.panel-report.md.gz",
+      "bytes": 11453,
+      "sha256": "8b7995a9762e86e0405db1945932204c6c76cc9443bfeb26e47b6817b45c92d8",
+      "archiveSha256": "1036a905c660521a998b04aecbe77dea5f9b8c956ec0d8620a55d8531ca5f685"
+    }
+  ]
+}

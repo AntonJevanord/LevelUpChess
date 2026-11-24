@@ -28,7 +28,9 @@ function getPlayableProfiles() {
       // New editions can require broader capability checks without changing
       // a historical profile's probe inventory or recorded rule identity.
       return library.generation === 19 ? Object.freeze({ ...profile,
-        capabilityProbes: (library.rosterRevision === 'v19-004'
+        capabilityProbes: (library.rosterRevision === 'v19-005'
+          ? require('../src/v19-expanded-capability-probes')
+          : library.rosterRevision === 'v19-004'
           ? require('../src/v19-panel-ready-capability-probes')
           : library.rosterRevision === 'v19-003'
             ? require('../src/v19-current-capability-probes')

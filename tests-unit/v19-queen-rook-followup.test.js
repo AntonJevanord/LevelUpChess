@@ -96,7 +96,11 @@ test('the focused brackets use roster-004 references, fresh current controls and
     for (const reference of refs) assert.deepEqual(reference.prior, roster004.getTierRoster(tier).find(row => row.id === reference.id).prior);
     const audit = plan.getValueAudit(study);
     assert.deepEqual(audit.sources, [roster004.getRosterReceipt(), roster004.getValueReceipt()]);
-    for (const candidate of plan.candidates(study).filter(row => !row.control)) assert.equal(rootCatalog.getDesign(candidate.id), undefined);
+    for (const candidate of plan.candidates(study).filter(row => !row.control)) {
+      if (["rook.level2-no-tall-back-capture-knight@1"].includes(candidate.id)) assert.deepEqual(rootCatalog.getDesign(candidate.id),
+        require('../src/balance-designs-v19-queen-rook-followup').NEW_DEFINITIONS.find(row => row.id === candidate.id));
+      else assert.equal(rootCatalog.getDesign(candidate.id), undefined);
+    }
     const declaration = plan.getBatchDeclaration(study, 0), schedule = tools.makeSchedule(declaration.config);
     assert.equal(schedule.length, study === 'level2' ? 240 : 448);
     assert.equal(tools.createDesignRegistry(declaration.config).definitions.length <= 20, true);

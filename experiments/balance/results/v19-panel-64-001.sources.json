@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-report-only-source-archive",
+  "reviewed": "2026-11-24",
+  "scope": "Six uploaded completed roster-004 64-opening outcome/material reports only. Underlying run folders and journals remain on the user machine; these reports are retained as supplied, not replayed or refitted here.",
+  "sources": [
+    {
+      "study": "level3",
+      "kind": "panel",
+      "uploadedFileId": "file_000000003be4821086c942c5994f738d",
+      "file": "experiments/balance/results/v19-panel-64-001.level3.panel-report.md.gz",
+      "bytes": 17496,
+      "sha256": "785d5c6b6256c2d47188afd2b1da6c10ffe484b0317ab81cc703b29335d87700",
+      "archiveSha256": "c68deebfdace23f8d7895d55f3213e1543d8632ac3306dc699fec9030b6d2de9"
+    },
+    {
+      "study": "level2",
+      "kind": "panel",
+      "uploadedFileId": "file_0000000051ac820a93b47dc15762b994",
+      "file": "experiments/balance/results/v19-panel-64-001.level2.panel-report.md.gz",
+      "bytes": 18683,
+      "sha256": "10b738e88313e2089b3b78ed7ab72f0d7747d07ed1f8d1bda63ea07ba6992160",
+      "archiveSha256": "078612b6e88ea0d2a3750a3d8d6a8d8c360407b75b66ad090b42042baca508ce"
+    },
+    {
+      "study": "level1",
+      "kind": "panel",
+      "uploadedFileId": "file_00000000ae84820abd7dc78b628ddd64",
+      "file": "experiments/balance/results/v19-panel-64-001.level1.panel-report.md.gz",
+      "bytes": 17019,
+      "sha256": "927ab31fa478fc243a6e6311bc85af9078af2dea543c388981fc9a4178d53fa8",
+      "archiveSha256": "2a8577d9691ff2900433a4c10e1b1a5bd76b09d26e9459842140683cbabdfe89"
+    },
+    {
+      "study": "level1",
+      "kind": "material",
+      "uploadedFileId": "file_00000000f66c820a8bd86004a39c3f26",
+      "file": "experiments/balance/results/v19-panel-64-001.level1.material-report.md.gz",
+      "bytes": 2373,
+      "sha256": "86317050e46785400d5744cbc9eeaa180589ab8a86be652c69729b17c4a87da2",
+      "archiveSha256": "07d02796317354f25351fbf4260c4e07504c533a93c76c77eaee1f153d3a8991"
+    },
+    {
+      "study": "level2",
+      "kind": "material",
+      "uploadedFileId": "file_00000000192c820ab5e64d8285efc7b1",
+      "file": "experiments/balance/results/v19-panel-64-001.level2.material-report.md.gz",
+      "bytes": 2429,
+      "sha256": "181319d4998a4a35484cbe0891515bdebf67e98804c16006d14eca33350bca4e",
+      "archiveSha256": "7002d6c6c389fd8d8bf7d86f11fa624259a74e2f8138044976ddde6bafd1056b"
+    },
+    {
+      "study": "level3",
+      "kind": "material",
+      "uploadedFileId": "file_00000000ac04820aa55882fedc226bf4",
+      "file": "experiments/balance/results/v19-panel-64-001.level3.material-report.md.gz",
+      "bytes": 2355,
+      "sha256": "1d78259152a299d8cec744ba1c5e4ea005611e55c13052ce32db0ecb26064cf4",
+      "archiveSha256": "b2bbe519ad76ee82c9ca9a766afc17d3daef9936520df402a7300c49e6d34ffc"
+    }
+  ]
+}

@@ -1,9 +1,10 @@
 # Version 19
 
 Branch **`version_19`** starts from the version-18 closeout, **`v0.18.14`**.
-Pre-panel screening is complete. The accepted roster now enters playable tier
-libraries and separate same-tier round robins before cross-level experiments.
-All twenty-seven previously published libraries and their exact rules remain available.
+The accepted roster has playable tier libraries and separate same-tier round
+robins before cross-level experiments. Expanded roster 005 adds five tested
+alternatives alongside their original choices. Every previously published
+library and its exact rules remains available.
 
 ## Accepted roster
 
@@ -38,6 +39,20 @@ MG/EG search priors are frozen separately in the
 engine settings, not purchase prices or fitted material values. Existing
 research identities retain their tested movement and historical contexts.
 
+## Expanded alternatives
+
+The [expanded roster 005](v19-expanded-panels.md) adds `BD` beside BgB0 at L1;
+`NfhZ`, `RcsNcfN` and `QsDsNA` beside NDmW, RcN and QsN at L2; and
+`QsHsCsZG` beside Wraith at L3. Each alternative shares the tier, price and
+presentation color of its counterpart. The original choices remain available.
+
+The [completed original-panel reports](../experiments/balance/results/v19-panel-64-001.sources.json)
+and [partial minor-selection reports](../experiments/balance/results/v19-minors-selection-001.sources.json)
+retain their report-only provenance. BD's 55.47% uses 32 completed opening
+cases. The [final knight report](../experiments/balance/results/v19-minors-final-001.sources.json)
+now completes all 64: NfhZ scores 50.39%, with a conditional range of
+46.09%–54.69%. The expansion broadens playtesting beyond the fixed references.
+
 ## Switch and play on Windows
 
 Stop the local server, then run in the project folder:
@@ -50,9 +65,9 @@ npm.cmd ci
 npm.cmd start
 ```
 
-Under **Rules**, choose **Version 19 · Level 1 roster · current**, **Version 19 · Level 2
-roster · current** or **Version 19 · Level 3 roster · current**. They contain
-11, 12 and 12 upgrade designs. The L1 queen choices are green QfN and blue QfsN;
+Under **Rules**, choose **Version 19 · Level 1/2/3 roster · expanded** for
+12, 15 and 13 designs. The **current** libraries retain the original 11/12/12
+rosters. The L1 queen choices are green QfN and blue QfsN;
 the new orange L2 pawn moves and captures up to two clear squares forward,
 straight or diagonally, with no sideways/backward moves. Standard promotion
 remains Q/R/B/N; its quiet diagonal en-passant landing leaves the bypassed pawn.
@@ -71,7 +86,26 @@ empty target diagonally as a quiet move, leaving the bypassed pawn. Ranger's
 adjacent diagonal en-passant capture removes it. The piece descriptions retain
 these distinctions; notation was not silently changed during promotion.
 
-## Run the tier panels
+## Run expanded panels with reuse
+
+The separate expanded command requires `--reuse ORIGINAL_PANEL` when starting
+from the completed roster-004 tier evidence, or explicit `--fresh` for a full
+new collection. `balance:v19` continues to declare roster 004.
+
+```powershell
+npm.cmd run balance:v19:expanded -- --tier 1 --reuse balance-results/v19-level1-roster004 --out balance-results/v19-level1-expanded --openings 8 --jobs 1
+```
+
+The [expanded-panel guide](v19-expanded-panels.md) gives all three tier
+commands, source requirements and continuation. Reuse schedules only
+**176 / 624 / 192 new games** at eight openings. It copies the source evidence
+into the new campaign, so subsequent resume/report commands do not need the
+original source path. The combined matrix labels historical roster-004 and
+new roster-005 cells; it is not a uniform new engine context. Failed,
+truncated and unpaired old results remain unscored. No scored cloud campaign
+was started while preparing these commands.
+
+## Original roster-004 panels
 
 Fresh panel runs now use [roster revision 004](../experiments/designs/v19-roster-004.json)
 and its [value policy](../experiments/designs/v19-panel-values-004.json), including
@@ -139,6 +173,10 @@ Already-started owned runtimes retain their original behavior.
 
 ## Material estimates after a panel
 
+The command below remains for the original panel contexts. Retain those fits;
+the mixed-context expanded matrix is not accepted as a uniform material-fit
+source. Expanded valuation needs a separately declared analysis method.
+
 The full journals already contain the moves, results and exact profiles needed
 for offline replay. No extra engine games are needed to attempt a material fit.
 After a target finishes or the panel stops cleanly, use a new output folder:
@@ -179,6 +217,15 @@ placement or search-policy changes require new declarations; historical games
 are reused only after explicit compatibility checks. The
 [panel plan](version19-plan.md) reserves cross-level bridges and mixed armies
 for the next stage.
+
+## Puzzles from the games
+
+The inspected `chess-variant-puzzler` pipeline accepts exported FEN/EPD and
+custom variant INI files. Start with existing completed game journals and
+their original profiles; the later mixed-army study can broaden the motifs.
+An adapter and stronger solution validation are still planned, not run by the
+panels or build. See the [puzzle plan](variant-puzzle-plan.md) for profile
+preservation, MultiPV, unique-move checks and upstream integration details.
 
 ## Initial release checks
 

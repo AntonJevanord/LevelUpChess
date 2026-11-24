@@ -56,12 +56,13 @@ test.before(async () => {
 });
 test.after(() => { if (directory) fs.rmSync(directory, { recursive: true, force: true }); });
 
-test('nine research identities are immutable, distinct, and do not enter the playable catalog', () => {
+test('nine research identities stay immutable and only the selected rook enters the playable catalog', () => {
   assert.deepEqual(TRIALS.map(row => row.movement), ['QsNfD', 'QsNfDfH', 'RcsNcfN', 'QsCfC', 'QsZfZ', 'QZAG', 'QZH', 'QC', 'QZ']);
   assert.equal(NEW_DEFINITIONS.length, 9);
   const { getDesign } = require('../src/design-catalog');
   for (const definition of NEW_DEFINITIONS) {
-    assert.equal(getDesign(definition.id), undefined);
+    if (["rook.level2-no-tall-back-capture-knight@1"].includes(definition.id)) assert.deepEqual(getDesign(definition.id), definition);
+    else assert.equal(getDesign(definition.id), undefined);
     assert.equal(definition.roles.castlingRook, definition.family === 'rook');
     assert.equal(definition.placement, 'replace'); assert.ok(Object.isFrozen(definition));
     assert.ok(Object.isFrozen(definition.roles));

@@ -82,7 +82,8 @@ test('thirteen immutable research bodies preserve the confirmed lowercase knight
   assert.equal(new Set(NEW_DEFINITIONS.map(row => row.legacyType)).size, 13);
   const { getDesign } = require('../src/design-catalog');
   for (const definition of NEW_DEFINITIONS) {
-    assert.equal(getDesign(definition.id), undefined);
+    if (["bishop.level1-dabbaba@1","knight.level2-forward-zebra@1"].includes(definition.id)) assert.deepEqual(getDesign(definition.id), definition);
+    else assert.equal(getDesign(definition.id), undefined);
     assert.deepEqual(definition.roles, { pawn: false, castlingRook: false, enPassant: false });
     assert.ok(Object.isFrozen(definition)); assert.ok(Object.isFrozen(definition.roles));
     const probes = revisionProbes({ definitionsByLetter: { a: definition } });

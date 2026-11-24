@@ -38,10 +38,16 @@ const currentV19Profiles = [
   require('./playable-v19-level2-current-profile.json'),
 ];
 const panelReadyV19Profile = require('./playable-v19-level3-current-profile.json');
+const expandedV19Profiles = [
+  require('./playable-v19-level1-expanded-profile.json'),
+  require('./playable-v19-level2-expanded-profile.json'),
+  require('./playable-v19-level3-expanded-profile.json'),
+];
 const { TIERS: V19_TIERS } = require('./designs-v19-selected');
 const { TIERS: V19_REVISED_TIERS } = require('./designs-v19-revised');
 const { TIERS: V19_CURRENT_TIERS } = require('./designs-v19-current');
 const { TIERS: V19_PANEL_READY_TIERS } = require('./designs-v19-panel-ready');
+const { TIERS: V19_EXPANDED_TIERS } = require('./designs-v19-expanded');
 const { PLAYABLE_LIBRARIES: libraries, OFFICIAL_REFERENCE_DESIGN_IDS, V16_CANDIDATES, RESERVE_DESIGN_IDS, V17_CANDIDATES, V17_REVISED_PAWN_CANDIDATES, V17_SELECTED_PAWN_CANDIDATES, V17_ROSTER_CANDIDATES, V17_ROSTER_RESERVE_DESIGN_IDS, V17_CONFIRMED_CANDIDATES, V17_CONFIRMED_RESERVE_DESIGN_IDS, V17_RESERVE_DESIGN_IDS, V18_CANDIDATES, V18_RESERVE_DESIGN_IDS } = require('./playable-library');
 const { STANDARD_TYPES } = require('./design-catalog');
 const { pieceInfo } = require('./piece-catalog');
@@ -55,7 +61,7 @@ function freeze(value) {
 }
 
 const PLAYABLE_PROFILE = freeze(compiled);
-const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile, rosterProfile, confirmedProfile, selectedV18Profile, ...selectedV19Profiles, ...revisedV19Profiles, ...currentV19Profiles, panelReadyV19Profile]);
+const PLAYABLE_PROFILES = freeze([PLAYABLE_PROFILE, reference, alternatives, ...closeoutProfiles, ...currentProfiles, revisedPawnProfile, selectedPawnProfile, rosterProfile, confirmedProfile, selectedV18Profile, ...selectedV19Profiles, ...revisedV19Profiles, ...currentV19Profiles, panelReadyV19Profile, ...expandedV19Profiles]);
 const EXPERIMENTAL_VARIANT = PLAYABLE_PROFILE.variant;
 const EXPERIMENTAL_VARIANTS = freeze(PLAYABLE_PROFILES.map(profile => profile.variant));
 const PLAYABLE_LIBRARIES = freeze(libraries.map((library, index) => ({ id: library.id, name: library.name, variant: PLAYABLE_PROFILES[index].variant, ...(library.generation ? { generation: library.generation } : {}), ...(library.focusFamily ? { focusFamily: library.focusFamily } : {}), ...(library.edition ? { edition: library.edition } : {}), ...(library.superseded ? { superseded: true } : {}) })));
@@ -177,6 +183,11 @@ const metadata = {
   'queen.level2-camel-capture@1': ['Camel-capture queen', 'Normal queen moves. Also capture with camel jumps: three squares in one direction and one at right angles. These extra jumps require a capture.'],
   'knight.level3-nad@1': ['NAD knight', 'Normal knight jumps, plus two-square diagonal and orthogonal jumps, including captures. All jumps cross intervening pieces.'],
   'queen.wraith-side-through@1': ['Wraith', 'Normal queen moves. Hop over one piece to any empty square along a queen line before the next blocker. Hopping captures can land any clear distance beyond a sideways hurdle, or immediately beyond a diagonal hurdle. Vertical hops cannot capture.'],
+  'bishop.level1-dabbaba@1': ['Dabbaba bishop', 'Normal bishop moves, plus two-square orthogonal jumps, including captures. All moves stay on the bishop\'s starting square color.'],
+  'knight.level2-forward-zebra@1': ['Forward-zebra knight', 'Normal knight jumps. Also jump two files sideways and three ranks forward, or three files sideways and two ranks forward, including captures. All jumps cross intervening pieces.'],
+  'rook.level2-no-tall-back-capture-knight@1': ['Restricted Knight-capture rook', 'Normal rook moves. Also capture with knight jumps except those moving two ranks backward and one file sideways. The extra jumps require a capture and cross intervening pieces.'],
+  'queen.level2-side-knight-side-dabbaba-alfil@1': ['Sideways-diagonal queen', 'Normal queen moves. Also jump exactly two files sideways and zero, one or two ranks forward or backward, including captures and crossing intervening pieces.'],
+  'queen.level3-side-threeleap-camel-zebra-tripper@1': ['Long sideways-diagonal queen', 'Normal queen moves. Also jump exactly three files sideways and zero, one, two or three ranks forward or backward, including captures and crossing intervening pieces.'],
 };
 
 const additionalExperimentalIds = new Set(['pawn.bishop-step-current@1', 'pawn.rank-current@1',
@@ -270,6 +281,7 @@ const v19Presentation = new Map([
   ...revisedV19Profiles.map((profile, index) => [profile, V19_REVISED_TIERS[index + 1]]),
   ...currentV19Profiles.map((profile, index) => [profile, V19_CURRENT_TIERS[index]]),
   [panelReadyV19Profile, V19_PANEL_READY_TIERS[2]],
+  ...expandedV19Profiles.map((profile, index) => [profile, V19_EXPANDED_TIERS[index]]),
 ].map(([profile, tier]) => {
   const groups = new Set(), entries = {};
   for (const body of tier.bodies) {
@@ -283,6 +295,14 @@ const v19Presentation = new Map([
       ...(body.id === 'pawn.purple@13' ? { description: 'Move any clear distance orthogonally without capturing. Capture any clear distance diagonally forward, including an adjacent en-passant capture. Standard queen, rook, bishop or knight promotion.' } : {}),
       status: body.reference ? 'reference'
       : ['queen.purple@7', 'queen.wraith-side-through@1'].includes(body.id) ? 'exploration' : 'accepted' };
+  }
+  // Alternative colors belong to the selected library's presentation, not to
+  // allocated letters or immutable movement definitions. Original rows keep
+  // their existing palette; each new alternative takes its named anchor's.
+  for (const body of tier.bodies) if (body.alternativeTo) {
+    const anchor = entries[body.alternativeTo];
+    if (!anchor) throw new Error(`Missing presentation anchor for ${body.id}.`);
+    entries[body.id] = { ...entries[body.id], accent: anchor.accent, status: 'alternative', alternativeTo: body.alternativeTo };
   }
   return [profile.variant, entries];
 }));

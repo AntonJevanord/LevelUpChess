@@ -12,7 +12,7 @@ The side panel has **Game, Setup, Design and Files** tabs. Status and essential 
 
 Right-click for a circle or right-drag for an arrow; repeat to remove a mark, or press Escape to clear marks. **Draw** enables tap/drag annotation on touch screens. Design offers four piece styles, four board palettes and an annotation color, with preferences remembered locally. See the [interface guide](docs/interface-v18.md).
 
-The current roster allows a 1–9 point budget per side. Choose **Level 1/2/3 roster · current**: they contain 11, 12 and 12 designs, with one reserve grant per tier. All twenty-seven earlier libraries retain their rules. The [version-19 guide](docs/version19.md) gives the playable roster, Windows branch-switch instructions and panel commands. Historical family workshops remain selectable for earlier mixed-tier setups.
+The setup budget is 1–9 points per side. Choose **Level 1/2/3 roster · expanded** for 12, 15 and 13 designs, including five new alternatives with the colors of their original counterparts. The original **current** rosters and every earlier library retain their rules. The [version-19 guide](docs/version19.md) gives the roster, Windows branch-switch instructions and panel commands. Historical family workshops remain selectable for earlier mixed-tier setups.
 
 Select the king during setup to buy one nonroyal reserve guard. Starting the game keeps the ordinary royal king and places the guard in reserve. Click a reserve piece, then a highlighted empty square in your own half. A drop spends a turn and cannot give check; captured pieces disappear rather than refill reserves. All ordinary king safety and castling rules still apply.
 
@@ -53,6 +53,16 @@ Files contains **Save game**, **Load saved**, **Export PGN** and **Import PGN**.
 Browser saves belong to the current browser and site address. Use PGN when moving between direct-file and server play. New releases may require fresh saves. Checkmate, stalemate, repetition and the fifty-move rule end games automatically; experimental low-material limits are documented in the [rules guide](variants/README.md).
 
 ## Version 19: accepted roster and tier panels
+
+The [expanded roster 005](docs/v19-expanded-panels.md) adds **BD**, **NfhZ**,
+**RcsNcfN**, **QsDsNA** and **QsHsCsZG** alongside the original choices.
+For its panel, use `balance:v19:expanded --reuse ORIGINAL_PANEL` in a new
+folder: eight openings need **992 new games** across the three tiers, reusing
+the original roster-004 evidence. Explicit `--fresh` instead collects a full
+new panel. The `balance:v19` command below still declares roster 004.
+The [archived 64-opening reports](experiments/balance/results/v19-panel-64-001.sources.json)
+retain the supplied outcome/material summaries; reuse needs the actual local
+run folders and journals, not those reports alone.
 
 Branch **`version_19`** starts from the **`v0.18.14`** closeout. The final
 choices include L3 **NAD**, L2 **NDmW, QcC, BsR and fQ2**, and L1 **QfN/QfsN**.
@@ -131,6 +141,11 @@ against unchanged references and controls. Use
 `npm.cmd run balance:v19:minors -- --help`. The corrected forward design is
 `NfhZfAfG`, with lowercase `h`; full `NZ` / `NZA` are strength checks because
 their earlier L3 results were already strong.
+
+The [puzzle plan](docs/variant-puzzle-plan.md) can reuse completed game journals
+with their exact rules through `chess-variant-puzzler`. The exporter and a
+small validated puzzle pilot are planned; the balance runs and builds do not
+generate puzzles automatically.
 
 ## Version 16: frozen references and playtest roster
 

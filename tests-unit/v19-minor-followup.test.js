@@ -96,7 +96,11 @@ test('minor brackets preserve exact movements, current controls, reference budge
     assert.deepEqual(refs.map(row => row.id), roster004.getTierRoster(tier).filter(row => row.reference).map(row => row.id));
     for (const reference of refs) assert.deepEqual(reference.prior, roster004.getTierRoster(tier).find(row => row.id === reference.id).prior);
     assert.deepEqual(plan.getValueAudit(study).sources, [roster004.getRosterReceipt(), roster004.getValueReceipt()]);
-    for (const candidate of rows.filter(row => !row.control)) assert.equal(rootCatalog.getDesign(candidate.id), undefined);
+    for (const candidate of rows.filter(row => !row.control)) {
+      if (["bishop.level1-dabbaba@1","knight.level2-forward-zebra@1"].includes(candidate.id)) assert.deepEqual(rootCatalog.getDesign(candidate.id),
+        require('../src/balance-designs-v19-minor-followup').NEW_DEFINITIONS.find(row => row.id === candidate.id));
+      else assert.equal(rootCatalog.getDesign(candidate.id), undefined);
+    }
     const declaration = plan.getBatchDeclaration(study, 0), schedule = tools.makeSchedule(declaration.config);
     assert.equal(schedule.length, study === 'level1' ? 336 : 432);
     assert.equal(tools.createDesignRegistry(declaration.config).definitions.length, rows.length + refs.length);

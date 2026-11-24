@@ -60,12 +60,13 @@ test.before(async () => {
 });
 test.after(() => { if (directory) fs.rmSync(directory, { recursive: true, force: true }); });
 
-test('eight requested identities remain immutable research-only definitions', () => {
+test('eight requested identities stay immutable and only the selected queens enter the playable catalog', () => {
   assert.deepEqual(TRIALS.map(row => row.movement), ['QsDsN', 'QsDsNA', 'QsNsDsH', 'RcfhN', 'RcsN', 'QsCsZ', 'QsHsCsZ', 'QsHsCsZG']);
   assert.equal(NEW_DEFINITIONS.length, 8);
   const { getDesign } = require('../src/design-catalog');
   for (const definition of NEW_DEFINITIONS) {
-    assert.equal(getDesign(definition.id), undefined);
+    if (["queen.level2-side-knight-side-dabbaba-alfil@1","queen.level3-side-threeleap-camel-zebra-tripper@1"].includes(definition.id)) assert.deepEqual(getDesign(definition.id), definition);
+    else assert.equal(getDesign(definition.id), undefined);
     assert.equal(definition.roles.castlingRook, definition.family === 'rook');
     assert.equal(definition.placement, 'replace'); assert.ok(Object.isFrozen(definition));
     assert.ok(Object.isFrozen(definition.roles));

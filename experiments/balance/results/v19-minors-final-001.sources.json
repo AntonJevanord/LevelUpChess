@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-report-only-source-archive",
+  "reviewed": "2026-11-24",
+  "scope": "Finalized level-two zebra-knight follow-up report: 64 openings, 3456 finalized games and 1728 scored color pairs. Supersedes the earlier 24-opening knight checkpoint for result interpretation. Source journals were not supplied; no games or opening positions were independently replayed here.",
+  "sources": [
+    {
+      "study": "level2",
+      "kind": "panel",
+      "uploadedFileId": "file_000000007740820a81271ce5bd0d1ceb",
+      "file": "experiments/balance/results/v19-minors-final-001.level2.panel-report.md.gz",
+      "bytes": 14220,
+      "sha256": "09698b300f4076eb3515ae273f6a5a77c943bd50f04bd55873addef5e9441e3a",
+      "archiveSha256": "acc6a9f7ebc017b88aead47b6fdadf63599fa932be3eb150d3ccc1becb2bd15d"
+    }
+  ]
+}

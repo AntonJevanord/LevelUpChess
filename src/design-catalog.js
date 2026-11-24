@@ -176,6 +176,8 @@ const definitions = [
   ...require('./designs-v19-current').NEW_DEFINITIONS,
   // The complete panel-ready roster adds only the tested six-jump pawn.
   ...require('./designs-v19-panel-ready').NEW_DEFINITIONS,
+  // Expanded libraries add tested alternatives while retaining each original.
+  ...require('./designs-v19-expanded').NEW_DEFINITIONS,
 ];
 
 const DESIGNS = Object.freeze(Object.fromEntries(definitions.map(design => [design.id, design])));
