@@ -29,10 +29,38 @@ limit. One Skill-20 engine screens candidates at 320k nodes, retaining the
 source profile's original MG/EG priors. A bounded independent search then
 checks the tactic. A run may find fewer puzzles than requested.
 
-The bundled Windows engine is selected automatically. Other platforms use
+The bundled Windows **`fairy-stockfish-levelup_x86-64.exe`** engine is selected
+automatically. `--engine` takes precedence over `FAIRY_STOCKFISH_PATH`, which
+takes precedence over that Windows default. Other platforms use
 `--engine PATH` or `FAIRY_STOCKFISH_PATH`. Original roster-004 panels are also
 supported. Expanded panels already contain their copied historical evidence;
 duplicate games are counted once and retain their original profiles.
+
+### Correct the version-0.19.12 Windows engine selection
+
+Version 0.19.12 accidentally selected the old `largeboard` executable for
+puzzle commands. The [uploaded failure receipt](../experiments/puzzles/results/mining-engine-001.review.json)
+confirms that binary was used: 160 candidate decisions, no accepted puzzles.
+The exact move difference at the failed position was not saved.
+
+Version 0.19.13 selects the supported LevelUp engine and refuses the known
+legacy binary even if renamed. Keep the old puzzle folder unchanged and start
+fresh analysis with a new output name and the same source folders. For the
+reported mate-in-three/four run:
+
+```powershell
+git pull --ff-only
+npm.cmd run puzzles:mine -- --run balance-results/v19-level3-expanded --out puzzle-results/long-mates-levelup --engine .\stockfish\fairy-stockfish-levelup_x86-64.exe --goals mate --min-moves 3 --max-moves 4 --proof-nodes 1000000 --proof-ms 20000
+```
+
+Use your actual source folder name. Candidate screening repeats with the
+correct engine; the recorded matches are reused. Resume deliberately refuses
+to mix the old engine/code identity into the new analysis.
+
+Any future legal-move discrepancy stops analysis and writes
+**`native-rules-mismatch.json`** in the output folder. It contains the exact
+position, full prefix, piece profile, engine identity and both move lists for
+reproduction. An unverified candidate is never accepted as a puzzle.
 
 Check sources without creating output or starting searches:
 

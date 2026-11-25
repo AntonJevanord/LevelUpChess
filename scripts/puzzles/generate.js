@@ -8,13 +8,14 @@ const { isDeepStrictEqual } = require('node:util');
 const { UciEngine } = require('../balance/uci');
 const { renameWithRetrySync } = require('../balance/files');
 const { proveMate, positionKey, cancelled } = require('./mate-proof');
+const { nativeParity, mismatchMessage, assertCompatibleEngineHash } = require('./native-parity');
 const { getProfileSnapshot } = require('../../src/design-options');
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const STANDARD = new Set(['pawn', 'knight', 'bishop', 'rook', 'queen', 'king']);
 const FORMAT = 'levelup-panel-puzzle-generation-v1';
-const FILES = new Set(['generation.json', 'attempts.jsonl', 'puzzles.json', 'generation-report.md', '.puzzle-generation.lock']);
+const FILES = new Set(['generation.json', 'attempts.jsonl', 'puzzles.json', 'generation-report.md', 'native-rules-mismatch.json', '.puzzle-generation.lock']);
 const ANALYSIS_FILES = ['scripts/generate-puzzles.js', 'scripts/puzzles/generate.js', 'scripts/puzzles/mate-proof.js',
-  'scripts/puzzles/sources.js', 'src/puzzle-data.js', 'dist/rules-node.cjs'];
+  'scripts/puzzles/sources.js', 'scripts/puzzles/native-parity.js', 'src/puzzle-data.js', 'dist/rules-node.cjs'];
 const ROOT = path.resolve(__dirname, '../..');
 function latestCompleted(records) {
   const latest = new Map();
@@ -87,7 +88,7 @@ function assertOutput(sourceRoots, selected, resume) {
     if (resume) for (const name of fs.readdirSync(out)) {
       const file = path.join(out, name), stat = fs.lstatSync(file);
       if (stat.isSymbolicLink() || !stat.isFile()
-        || !(FILES.has(name) || /^(?:puzzles\.json|generation-report\.md)\.[a-f0-9-]+\.tmp$/.test(name))) throw new Error('Foreign or linked puzzle output.');
+        || !(FILES.has(name) || /^(?:puzzles\.json|generation-report\.md|native-rules-mismatch\.json)\.[a-f0-9-]+\.tmp$/.test(name))) throw new Error('Foreign or linked puzzle output.');
     }
   } else if (resume) throw new Error('The puzzle generation directory does not exist.');
   return out;
@@ -115,6 +116,7 @@ async function generate({ sources, out, resume = false, settings, enginePath, si
   sources.forEach(source => source.verify());
   out = assertOutput(sources.map(source => fs.realpathSync(source.root)), out, resume);
   const engineSha256 = sha(fs.readFileSync(enginePath));
+  assertCompatibleEngineHash(engineSha256);
   const identity = { format: FORMAT, sources: sourceReceipt(sources), engineSha256,
     analysis: ANALYSIS_FILES.map(file => ({ file, sha256: sha(fs.readFileSync(path.join(ROOT, file))) })) };
   let owner;
@@ -175,7 +177,17 @@ async function generate({ sources, out, resume = false, settings, enginePath, si
           const initialMoves = record.moves.slice(0, candidate.ply);
           const nativeMoves = await engine.perft({ fen: candidate.fen, signal });
           const board = candidate.rules.createBoard(candidate.fen);
-          try { if (!isDeepStrictEqual([...board.moves()].sort(), [...nativeMoves].sort())) throw new Error('Native and archived rules disagree at a puzzle candidate.'); }
+          try {
+            const parity = nativeParity({ nativeMoves, archivedMoves: board.moves(), fen: candidate.fen, profileHash: context.profile.hash });
+            if (!parity.equal) {
+              const details = { ...parity, candidateId: candidate.id, gameId: record.id, attempt: record.attempt, ply: candidate.ply,
+                variant: context.profile.variant, profile: snapshot, source: context.identity, analysisEngineSha256: engineSha256,
+                initialFen: record.startFen, initialMoves };
+              const file = path.join(out, 'native-rules-mismatch.json');
+              atomic(file, JSON.stringify(details, null, 2) + '\n');
+              throw new Error(mismatchMessage(details, file));
+            }
+          }
           finally { board.dispose(); }
           const search = await engine.search({ fen: record.startFen, moves: initialMoves, nodes: settings.nodes, signal });
           const score = search.scoreInfo?.score || search.info?.score;

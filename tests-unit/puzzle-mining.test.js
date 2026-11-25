@@ -9,6 +9,7 @@ const { createHash } = require('node:crypto');
 const { spawnSync } = require('node:child_process');
 const command = require('../scripts/mine-puzzles');
 const mining = require('../scripts/puzzles/mining');
+const { nativeParity } = require('../scripts/puzzles/native-parity');
 const model = require('../src/puzzle-data');
 const { getPlayableProfile, PLAYABLE_LIBRARIES } = require('../src/design-options');
 const { placementFromMap } = require('../src/profile-fen');
@@ -63,6 +64,17 @@ test('rounded mix quotas never turn unknown checks into exclusive puzzles or dis
   assert.equal(mining.selectMix(bank, 100, 20).selected.ordinary, 0);
 });
 
+test('native comparison preserves promotion suffixes and drops while treating legal inventories as sets', () => {
+  const moves = ['a7a8q', 'a7a8r', 'a7a8b', 'a7a8n', 'A@d4'];
+  const parity = nativeParity({ nativeMoves: moves, archivedMoves: [...moves].reverse().concat('a7a8n') });
+  assert.equal(parity.equal, true);
+  assert.equal(parity.nativeMoves.length, 5);
+  const missing = nativeParity({ nativeMoves: ['a7a8q'], archivedMoves: ['a7a8n', 'A@d4'] });
+  assert.equal(missing.equal, false); assert.deepEqual(missing.nativeOnly, ['a7a8q']);
+  assert.deepEqual(missing.archivedOnly, ['A@d4', 'a7a8n']);
+  assert.throws(() => nativeParity({ nativeMoves: ['bad'], archivedMoves: [] }), /legal-move inventory/);
+});
+
 class ScreenEngine {
   static starts = 0; static closes = 0;
   async start() { ScreenEngine.starts++; }
@@ -100,12 +112,37 @@ test('unknown relevance is withheld, native disagreement aborts and interruption
   const bad = path.join(root, 'bad');
   await assert.rejects(mining.mine({ ...dependencies(), out: bad, Engine: WrongEngine }), /disagree/);
   assert.equal(fs.existsSync(path.join(bad, '.puzzle-mining.lock')), false);
+  const diagnostic = JSON.parse(fs.readFileSync(path.join(bad, 'native-rules-mismatch.json')));
+  assert.equal(diagnostic.gameId, source.contexts[0].records[0].id);
+  assert.equal(diagnostic.ply, 1); assert.deepEqual(diagnostic.initialMoves, ['g8h8']);
+  assert.equal(diagnostic.profile.hash, profile.hash); assert.equal(diagnostic.analysisEngineSha256, sha(fs.readFileSync(process.execPath)));
+  assert.deepEqual(diagnostic.nativeOnly, []); assert.ok(diagnostic.archivedOnly.includes('a7g7'));
+  assert.equal(fs.existsSync(path.join(bad, 'candidates.jsonl')), false, 'the failed parity check must never be a completed candidate');
+  // The exact failing root can be reconstructed without the source folder.
+  const replay = rules.createBoard(diagnostic.initialFen);
+  try { for (const move of diagnostic.initialMoves) assert.ok(replay.push(move)); assert.equal(replay.fen(), diagnostic.fen); }
+  finally { replay.dispose(); }
+  const retry = await mining.mine({ ...dependencies(), out: bad, resume: true });
+  assert.equal(retry.pack.puzzles.length, 1, 'a transient mismatch can be retried under the identical runtime');
   const controller = new AbortController(), out = path.join(root, 'paused');
   const paused = await mining.mine({ ...dependencies(), out, signal: controller.signal,
     mateProof: async () => { controller.abort(); const error = new Error('stopped'); error.name = 'AbortError'; throw error; } });
   assert.equal(paused.stopped, true); assert.ok(fs.existsSync(path.join(out, 'puzzles.json')));
   const resumed = await mining.mine({ ...dependencies(), out, resume: true });
   assert.equal(resumed.pack.puzzles.length, 1);
+});
+
+test('known legacy engine analysis is rejected before either new output or an existing run can change', async () => {
+  const enginePath = path.resolve(__dirname, '../stockfish/fairy-stockfish-largeboard_x86-64.exe');
+  const out = path.join(root, 'legacy-engine');
+  await assert.rejects(mining.mine({ ...dependencies(), out, enginePath }), /legacy largeboard.*new output directory/);
+  assert.equal(fs.existsSync(out), false);
+  const existing = path.join(root, 'legacy-resume-guard');
+  await mining.mine({ ...dependencies(), out: existing });
+  const before = new Map(fs.readdirSync(existing).map(name => [name, fs.readFileSync(path.join(existing, name))]));
+  await assert.rejects(mining.mine({ ...dependencies(), out: existing, resume: true, enginePath }), /legacy largeboard/);
+  assert.deepEqual(fs.readdirSync(existing).sort(), [...before.keys()].sort());
+  for (const [name, bytes] of before) assert.deepEqual(fs.readFileSync(path.join(existing, name)), bytes);
 });
 
 test('long native PVs remain in the journal but only bounded hints reach the exhaustive prover', async () => {

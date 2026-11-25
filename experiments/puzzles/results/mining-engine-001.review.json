@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "kind": "uploaded-puzzle-mining-failure-review",
+  "reviewedOn": "2026-11-26",
+  "sources": [
+    {
+      "uploadedName": "mining.json",
+      "file": "mining-engine-001.mining.json.gz",
+      "rawSha256": "175f9fb7528a0d40a49ec34dce5af22a86658e1d73a2744ee02425573fa98676",
+      "rawBytes": 148084,
+      "gzipSha256": "7f87e1f070522a243fe74469c04dd9eb7ee0a806cfd9e93b452a65aa6bf2800d"
+    },
+    {
+      "uploadedName": "candidates.jsonl",
+      "file": "mining-engine-001.candidates.jsonl.gz",
+      "rawSha256": "6b0663dadb36ad44cfaa82f5c07f64ea112339f3789f7af0760c8f8872d125e5",
+      "rawBytes": 61602,
+      "gzipSha256": "4d853fefb64ef92c3e68fac99197db05a9dd34ebd5f496bb373c3509adb85e80"
+    }
+  ],
+  "originalOwnerHash": "630881025db02c7c76fcfb2d40a224c5e0db19bed62600a50504dab891af5d0b",
+  "analysisEngineSha256": "2fe12ff0fcad0295482cab7660e1fcc24259cebc4ef164839fb16c9f9cabfc99",
+  "legacyEngineFile": "stockfish/fairy-stockfish-largeboard_x86-64.exe",
+  "supportedEngineFile": "stockfish/fairy-stockfish-levelup_x86-64.exe",
+  "supportedEngineSha256": "848ad74c3fbc2684e57b42c581ee94e93e5ed832fb536846a37f9dddebbb8b16",
+  "sourceGameEngineHashes": [
+    "848ad74c3fbc2684e57b42c581ee94e93e5ed832fb536846a37f9dddebbb8b16"
+  ],
+  "candidateDecisions": 160,
+  "statuses": {
+    "rejected": 159,
+    "duplicate": 1
+  },
+  "reasons": {
+    "no-tactical-screen": 147,
+    "unproven": 9,
+    "too-short": 1,
+    "ambiguous": 2,
+    "duplicate-position": 1
+  },
+  "acceptedPuzzles": 0,
+  "reportedFailure": {
+    "gameId": "c15_herald-v-ranger_o11_v19-book-04_r1_w",
+    "ply": 67,
+    "candidateNumber": 161,
+    "exactFenAvailable": false
+  },
+  "finding": "The receipt identifies the legacy executable. The Windows puzzle resolver selected that executable instead of the supported LevelUp build. The specific move-set discrepancy is not reproducible from these two files because the failed candidate was not journaled.",
+  "recovery": "Keep original output untouched. Start a new puzzle output using the supported engine; prior rejected screening decisions are not reused across the engine change. No source game is recollected.",
+  "scope": "File and binary-identity inspection only; no new game, material fit, or full source-game audit."
+}

@@ -11,14 +11,16 @@ const { acquireLock } = require('../balance/storage');
 const { sourceReceipt, snapshotFor } = require('./generate');
 const { planMiningGames, candidatesForMiningGame } = require('./mining-sources');
 const { proveMate } = require('./mate-proof');
+const { nativeParity, mismatchMessage, assertCompatibleEngineHash } = require('./native-parity');
 const model = require('../../src/puzzle-data');
 
 const ROOT = path.resolve(__dirname, '../..');
 const FORMAT = 'levelup-puzzle-mining-v2';
-const FILES = new Set(['mining.json', 'candidates.jsonl', 'puzzles.json', 'mining-report.md', '.puzzle-mining.lock', '.puzzle-mining.lock.reclaim']);
+const FILES = new Set(['mining.json', 'candidates.jsonl', 'puzzles.json', 'mining-report.md', 'native-rules-mismatch.json', '.puzzle-mining.lock', '.puzzle-mining.lock.reclaim']);
 const ANALYSIS_FILES = ['scripts/mine-puzzles.js', 'scripts/puzzles/mining.js', 'scripts/puzzles/mining-sources.js',
   'scripts/puzzles/mate-proof.js', 'scripts/puzzles/material-proof.js', 'scripts/puzzles/variant-relevance.js',
   'scripts/puzzles/sources.js', 'scripts/puzzles/generate.js', 'scripts/balance/storage.js', 'scripts/balance/files.js', 'scripts/balance/uci.js',
+  'scripts/generate-puzzles.js', 'scripts/puzzles/native-parity.js',
   'src/puzzle-data.js', 'dist/rules-node.cjs'];
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const json = file => JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -43,7 +45,7 @@ function assertOutput(sources, selected, resume) {
   for (const name of fs.readdirSync(out)) {
     const file = path.join(out, name), item = fs.lstatSync(file);
     if (!resume || !item.isFile() || item.isSymbolicLink()
-      || !(FILES.has(name) || /^(?:puzzles\.json|mining-report\.md)\.[a-f0-9-]+\.tmp$/.test(name))) throw new Error('Use a new output directory or resume its original mining run.');
+      || !(FILES.has(name) || /^(?:puzzles\.json|mining-report\.md|native-rules-mismatch\.json)\.[a-f0-9-]+\.tmp$/.test(name))) throw new Error('Use a new output directory or resume its original mining run.');
   }
   return out;
 }
@@ -147,6 +149,7 @@ async function mine({ sources, out, resume = false, settings, enginePath, signal
     analysis: ANALYSIS_FILES.map(file => ({ file, sha256: sha(fs.readFileSync(path.join(ROOT, file))) })),
     privateRules: [require.resolve('ffish-es6'), path.join(path.dirname(require.resolve('ffish-es6')), 'ffish.wasm')]
       .map(file => ({ file: path.relative(ROOT, file).split(path.sep).join('/'), sha256: sha(fs.readFileSync(file)) })) };
+  assertCompatibleEngineHash(identity.engineSha256);
   let owner;
   if (resume) {
     owner = json(path.join(out, 'mining.json')); const { hash, ...payload } = owner;
@@ -192,6 +195,7 @@ async function mine({ sources, out, resume = false, settings, enginePath, signal
     return pack;
   }
   try {
+    log(`Native analysis engine: ${path.basename(enginePath)} (${identity.engineSha256.slice(0, 12)}).`);
     if (!resume) fs.writeFileSync(path.join(out, 'mining.json'), JSON.stringify(owner, null, 2) + '\n', { flag: 'wx' });
     rows = readJournal(out); const done = new Set(rows.map(row => row.id)), positions = new Set(rows.map(row => row.positionKey));
     temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'levelup-puzzle-mining-')); let activeProfile;
@@ -217,7 +221,17 @@ async function mine({ sources, out, resume = false, settings, enginePath, signal
           }
           log(`Mining candidate ${rows.length + 1}/${settings.maxPositions}: ${record.id}, ply ${candidate.ply}.`);
           const native = await engine.perft({ fen: candidate.fen, signal }), board = candidate.rules.createBoard(candidate.fen);
-          try { if (!isDeepStrictEqual([...native].sort(), [...board.moves()].sort())) throw new Error('Native and archived puzzle rules disagree.'); }
+          try {
+            const parity = nativeParity({ nativeMoves: native, archivedMoves: board.moves(), fen: candidate.fen, profileHash: context.profile.hash });
+            if (!parity.equal) {
+              const details = { ...parity, candidateId: candidate.id, gameId: record.id, attempt: record.attempt, ply: candidate.ply,
+                variant: context.profile.variant, profile: snapshotFor(context.profile), source: context.identity,
+                analysisEngineSha256: identity.engineSha256, initialFen: record.startFen, initialMoves: record.moves.slice(0, candidate.ply) };
+              const file = path.join(out, 'native-rules-mismatch.json');
+              atomic(file, JSON.stringify(details, null, 2) + '\n');
+              throw new Error(mismatchMessage(details, file));
+            }
+          }
           finally { board.dispose(); }
           const initialMoves = record.moves.slice(0, candidate.ply);
           const search = await engine.search({ fen: record.startFen, moves: initialMoves, nodes: settings.nodes, signal });

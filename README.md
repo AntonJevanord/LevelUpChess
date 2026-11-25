@@ -156,6 +156,10 @@ tactics, and tests whether upgraded movement matters. Material goals use a
 declared counting scale, separate from fitted piece values. Builds do not
 start mining or collect extra balance games.
 
+Windows puzzle commands use `fairy-stockfish-levelup_x86-64.exe`. If a
+0.19.12 run stopped with a native/archived-rules mismatch, retain its output
+and follow the [new-output recovery command](docs/puzzle-generation.md#correct-the-version-01912-windows-engine-selection).
+
 ## Version 16: frozen references and playtest roster
 
 The playable closeout with UI fixes is tagged `v0.16.7`. Mixed-army experiments belong to version 17.

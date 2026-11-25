@@ -94,6 +94,19 @@ test('bound-limited and alternative solutions are never exported, and native dis
   class WrongEngine extends ScreenEngine { async perft() { return []; } }
   await assert.rejects(generator.generate({ ...deps, sources: [source], out, Engine: WrongEngine, createGame }), /disagree/);
   assert.equal(fs.existsSync(path.join(out, '.puzzle-generation.lock')), false);
+  const details = JSON.parse(fs.readFileSync(path.join(out, 'native-rules-mismatch.json')));
+  assert.equal(details.gameId, record.id); assert.equal(details.ply, 1);
+  assert.equal(details.profile.hash, profile.hash); assert.equal(details.fen.split(' ')[1], 'w');
+  assert.deepEqual(details.nativeOnly, []); assert.ok(details.archivedOnly.includes('a7g7'));
+  const retry = await generator.generate({ ...deps, sources: [source], out, resume: true, createGame });
+  assert.equal(retry.pack.puzzles.length, 1);
+});
+
+test('legacy native analysis cannot create a pilot output', async () => {
+  const out = path.join(directory, 'legacy-refused');
+  await assert.rejects(generator.generate({ ...deps, sources: [source], out, createGame,
+    enginePath: path.resolve(__dirname, '../stockfish/fairy-stockfish-largeboard_x86-64.exe') }), /legacy largeboard/);
+  assert.equal(fs.existsSync(out), false);
 });
 test('cancellation preserves a resumable empty pack without accepting the interrupted proof', async () => {
   const out = path.join(directory, 'cancelled'), controller = new AbortController();

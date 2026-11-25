@@ -2,6 +2,9 @@
 'use strict';
 
 const path = require('node:path');
+const fs = require('node:fs');
+const { createHash } = require('node:crypto');
+const { assertCompatibleEngineHash, LEGACY_ENGINE_SHA256 } = require('./puzzles/native-parity');
 const { loadPuzzleSources } = require('./puzzles/sources');
 const { generate, planGames, assertOutput } = require('./puzzles/generate');
 const DEFAULTS = Object.freeze({ minMoves: 1, maxMoves: 2, maxGames: 200, maxPositions: 600,
@@ -73,10 +76,13 @@ function parseArgs(args) {
   if (options.check && (options.engine || customSettings)) throw new Error('--check uses source evidence only; omit engine and generation limits.');
   return options;
 }
-function resolveEngine(explicit) {
-  if (explicit || process.env.FAIRY_STOCKFISH_PATH) return path.resolve(explicit || process.env.FAIRY_STOCKFISH_PATH);
-  if (process.platform === 'win32') return path.resolve(__dirname, '../stockfish/fairy-stockfish-largeboard_x86-64.exe');
-  throw new Error('Set FAIRY_STOCKFISH_PATH or pass --engine for the compatible native executable.');
+function resolveEngine(explicit, { platform = process.platform, env = process.env, root = path.resolve(__dirname, '..') } = {}) {
+  const selected = explicit || env.FAIRY_STOCKFISH_PATH || (platform === 'win32' ? path.join(root, 'stockfish/fairy-stockfish-levelup_x86-64.exe') : null);
+  if (!selected) throw new Error('Set FAIRY_STOCKFISH_PATH or pass --engine for the compatible native executable.');
+  const engine = path.resolve(selected);
+  if (!fs.statSync(engine).isFile()) throw new Error('Select a native engine executable file.');
+  assertCompatibleEngineHash(createHash('sha256').update(fs.readFileSync(engine)).digest('hex'));
+  return engine;
 }
 async function main(args = process.argv.slice(2), dependencies = {}) {
   const options = parseArgs(args), log = dependencies.log || console.log;
@@ -105,4 +111,4 @@ async function main(args = process.argv.slice(2), dependencies = {}) {
   } finally { process.removeListener('SIGINT', abort); }
 }
 if (require.main === module) main().catch(error => { console.error(`Puzzle generation: ${error.message}`); process.exitCode = 1; });
-module.exports = { DEFAULTS, HELP, parseArgs, resolveEngine, main };
+module.exports = { DEFAULTS, HELP, parseArgs, resolveEngine, assertCompatibleEngineHash, LEGACY_ENGINE_SHA256, main };
