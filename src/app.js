@@ -12,6 +12,19 @@ import { createBoardAnnotations } from './board-annotations';
 import { createAppearancePreferences, renderPieceIcon } from './board-appearance';
 import { getPieceGuide } from './piece-guide';
 import { isEngineMode, canHumanMove, canRequestEngineMove } from './engine-play';
+import { createPuzzleMenu } from './puzzle-menu';
+import { createPuzzleSession } from './puzzle-session';
+import puzzleData from './puzzle-data';
+import puzzleExamples from './puzzle-examples.json';
+
+const { validatePuzzlePack, MAX_PACK_BYTES } = puzzleData;
+let puzzlePack = validatePuzzlePack(puzzleExamples);
+let puzzleMenu;
+let puzzleSession = null;
+let parkedGame = null;
+let navigationPaused = false;
+let puzzleFeedback = '';
+let puzzleRequest = 0;
 
 let game = new Chess();
 const board = document.querySelector('#board');
@@ -262,6 +275,7 @@ document.querySelector('#clear-black-army').onclick = () => clearArmySelections(
 document.querySelector('#clear-both-armies').onclick = () => clearArmySelections();
 
 function setSetupEditing(value) {
+  if (puzzleSession) return;
   editingSetup = value && usesBoardSetup();
   setupSquare = null;
   selected = null;
@@ -387,7 +401,7 @@ function renderPockets() {
       const caption = document.createElement('span');
       caption.textContent = ` ${info.name}${entry.count > 1 ? ` ×${entry.count}` : ''}`;
       button.append(icon, caption);
-      button.disabled = color !== game.turn() || buildingGame || isFinished() || !canPlay() || engineBusy || Boolean(pending) || !canHumanMove(opponent.value, game.turn(), humanSide.value) || inspectMode;
+      button.disabled = color !== game.turn() || buildingGame || isFinished() || !canPlay() || engineBusy || Boolean(pending) || !mayHumanPlay() || inspectMode;
       button.onclick = () => {
         if (button.disabled) return;
         selected = null;
@@ -420,6 +434,7 @@ let handledFlag = null;
 const isTimed = () => clock.control !== 'none';
 const isFinished = () => game.isGameOver() || Boolean(clock.expired);
 const canPlay = () => !isTimed() || clock.running;
+const mayHumanPlay = () => !navigationPaused && (puzzleSession ? puzzleSession.state().canMove : canHumanMove(opponent.value, game.turn(), humanSide.value));
 
 function timeoutResult() {
   if (!clock.expired) return null;
@@ -470,6 +485,15 @@ function pauseClocks(message = '') {
 
 
 function playMove(move) {
+  if (puzzleSession) {
+    const result = puzzleSession.tryMove(move);
+    puzzleFeedback = result.accepted ? '' : 'That move does not achieve the shortest forced mate. Try another move.';
+    selected = null;
+    selectedDrop = null;
+    boardAnnotations?.clear();
+    clearInspection();
+    return result.accepted ? result.moves[0] : null;
+  }
   if (!settleClock() || !canPlay()) return null;
   const color = game.turn();
   const result = game.move(move);
@@ -527,7 +551,7 @@ function engineMessage(message) {
 }
 
 function updateEngineButtons() {
-  const blocked = engineBusy || editingSetup || buildingGame || isFinished() || Boolean(pending);
+  const blocked = Boolean(puzzleSession) || navigationPaused || engineBusy || editingSetup || buildingGame || isFinished() || Boolean(pending);
   document.querySelector('#engine-retry').disabled = blocked || opponent.value === 'selfplay' && connected && !enginePaused;
   document.querySelector('#engine-retry').textContent = opponent.value === 'selfplay' ? (connected ? 'Start / Resume' : 'Connect and start') : connected ? 'Resume engine' : 'Connect engine';
   document.querySelector('#engine-cancel').disabled = !engineBusy && (enginePaused || !connected || isFinished());
@@ -547,6 +571,120 @@ function cancelEngine() {
   engineTimer = null;
   nextEngineAt = 0;
   selectedDrop = null;
+}
+
+function pauseForMenu() {
+  navigationPaused = true;
+  cancelEngine();
+  pauseClocks('Game paused. Resume the clock when ready.');
+  selected = null;
+  selectedDrop = null;
+  clearInspection();
+  render();
+}
+
+async function startPuzzle(puzzle) {
+  if (buildingGame || pending) throw new Error('Finish the current board action before opening a puzzle.');
+  const request = ++puzzleRequest;
+  const next = await createPuzzleSession(puzzlePack, puzzle.id);
+  if (request !== puzzleRequest) { next.dispose(); return; }
+  cancelEngine();
+  if (!parkedGame) parkedGame = { game, clock: clock.snapshot(), flipped, editingSetup,
+    tab: workspaceTabs.active, clockNotice, inspectMode };
+  puzzleSession?.dispose();
+  puzzleSession = next;
+  game = next.game;
+  editingSetup = false;
+  setupSquare = null;
+  selected = null;
+  selectedDrop = null;
+  inspectMode = false;
+  clearInspection();
+  drawingMode = false;
+  boardAnnotations?.setDrawing(false);
+  document.querySelector('#drawing-mode').setAttribute('aria-pressed', 'false');
+  boardAnnotations?.clear();
+  flipped = puzzle.solverColor === 'b';
+  clock.reset('none', game.turn());
+  handledFlag = null;
+  puzzleFeedback = '';
+  navigationPaused = false;
+  workspaceTabs.show('game');
+  render();
+  document.querySelector('#board').scrollIntoView({ block: 'nearest' });
+}
+
+function leavePuzzle() {
+  if (!puzzleSession || !parkedGame) return;
+  puzzleRequest++;
+  puzzleSession.dispose();
+  puzzleSession = null;
+  const previous = parkedGame;
+  parkedGame = null;
+  game = previous.game;
+  flipped = previous.flipped;
+  editingSetup = previous.editingSetup;
+  inspectMode = previous.inspectMode;
+  clock.restore(previous.clock, game.history().length);
+  clockNotice = 'Game restored. Resume the clock when ready.';
+  selected = null;
+  selectedDrop = null;
+  clearInspection();
+  boardAnnotations?.clear();
+  puzzleFeedback = '';
+  navigationPaused = false;
+  render();
+  workspaceTabs.show(previous.tab);
+  if (isEngineMode(opponent.value)) engineMessage('Game restored. Engine paused; resume when ready.');
+}
+
+async function retryPuzzle() {
+  const current = puzzleSession, request = ++puzzleRequest;
+  if (!current) return;
+  try {
+    await current.retry();
+    if (request !== puzzleRequest || current !== puzzleSession) return;
+    game = current.game;
+    selected = null;
+    selectedDrop = null;
+    clearInspection();
+    boardAnnotations?.clear();
+    puzzleFeedback = '';
+    render();
+  } catch (error) {
+    if (current === puzzleSession) { puzzleFeedback = error.message; render(); }
+  }
+}
+
+function importPuzzlePack(text) {
+  if (typeof text !== 'string' || text.length > MAX_PACK_BYTES) throw new Error('Choose a puzzle pack up to 20 MB.');
+  const incoming = validatePuzzlePack(text), puzzles = new Map(puzzlePack.puzzles.map(row => [row.id, row]));
+  for (const row of incoming.puzzles) {
+    if (puzzles.has(row.id) && JSON.stringify(puzzles.get(row.id)) !== JSON.stringify(row)) throw new Error('This pack conflicts with an existing puzzle ID.');
+    puzzles.set(row.id, row);
+  }
+  const merged = validatePuzzlePack({ schemaVersion: 1, format: 'levelup-puzzle-pack',
+    profiles: { ...puzzlePack.profiles, ...incoming.profiles }, puzzles: [...puzzles.values()] });
+  puzzlePack = merged;
+  return merged;
+}
+
+function renderPuzzleWorkspace() {
+  const active = Boolean(puzzleSession);
+  document.body.classList.toggle('puzzle-active', active);
+  for (const name of ['setup', 'files']) {
+    const tab = document.querySelector(`#panel-tab-${name}`);
+    tab.disabled = active;
+    tab.hidden = active;
+    document.querySelector(`#panel-${name}`).inert = active;
+  }
+  document.querySelector('#setup-toolbar').hidden = active || !usesBoardSetup();
+  document.querySelector('#undo').hidden = active;
+  document.querySelector('#new-game').hidden = active;
+  document.querySelector('.clock-controls').hidden = active;
+  updateEngineConfiguration();
+  if (active) document.querySelector('#engine-settings').hidden = true;
+  puzzleMenu?.renderSession(active ? { ...puzzleSession.state(), message: puzzleFeedback } : null);
 }
 
 async function engineFetch(route, options = {}) {
@@ -584,7 +722,7 @@ async function connectEngine({ run = opponent.value !== 'selfplay', step = false
 }
 
 async function maybeEngineMove() {
-  if (buildingGame) return;
+  if (buildingGame || puzzleSession || navigationPaused) return;
   if (!canRequestEngineMove({ opponent: opponent.value, turn: game.turn(), humanSide: humanSide.value,
     connected, busy: engineBusy, paused: enginePaused, pending: Boolean(pending), editingSetup,
     finished: isFinished(), canPlay: canPlay(), stepRequested: engineStepRequested })) return;
@@ -636,7 +774,7 @@ function updateEngineConfiguration() {
 }
 
 function beginEngine(step = false) {
-  if (editingSetup || buildingGame || engineBusy || pending || isFinished() || !isEngineMode(opponent.value)) return;
+  if (puzzleSession || navigationPaused || editingSetup || buildingGame || engineBusy || pending || isFinished() || !isEngineMode(opponent.value)) return;
   if (opponent.value === 'selfplay' && isTimed() && !clock.running) {
     clockNotice = '';
     clock.start(game.turn());
@@ -658,17 +796,21 @@ function render(focusSquare) {
   const files = [...'abcdefgh'];
   const ranks = [...'87654321'];
   if (flipped) { files.reverse(); ranks.reverse(); }
-  const mayMove = !editingSetup && !inspectMode && !engineBusy && canHumanMove(opponent.value, game.turn(), humanSide.value) && !isFinished() && canPlay();
+  const mayMove = !editingSetup && !inspectMode && !engineBusy && mayHumanPlay() && !isFinished() && canPlay();
   const legal = !mayMove ? [] : selectedDrop ? game.moves({ drop: selectedDrop, verbose: true }) : selected ? game.moves({ square: selected, verbose: true }) : [];
   const guideSquare = editingSetup ? null : inspectedSquare || selected;
   if (guideSquare) requestPieceGuide(guideSquare);
-  const quietGuide = new Set(pieceGuide?.quiet || []);
-  const captureGuide = new Set(pieceGuide?.capture || []);
-  const history = game.history({ verbose: true });
+  const quietGuide = new Set(inspectMode ? pieceGuide?.quiet || [] : legal.filter(move => !move.captured).map(move => move.to));
+  const captureGuide = new Set(inspectMode ? pieceGuide?.capture || [] : legal.filter(move => move.captured).map(move => move.to));
+  const jumpQuiet = new Set((inspectMode ? pieceGuide?.jumpQuiet : pieceGuide?.legalJumpQuiet) || []);
+  const jumpCapture = new Set((inspectMode ? pieceGuide?.jumpCapture : pieceGuide?.legalJumpCapture) || []);
+  const history = game.history({ verbose: true }).slice(puzzleSession ? puzzleSession.puzzle.initialMoves.length : 0);
   const last = history.at(-1);
   const displayProfile = editingSetup ? setupProfile() : game.profile;
   const displayInfo = type => displayProfile ? pieceInfoForProfile(displayProfile, type) : pieceInfo(type);
   board.classList.toggle('experimental-board', Boolean(displayProfile));
+  board.classList.toggle('inspect-board', inspectMode && !editingSetup);
+  document.querySelector('.guide-key').dataset.mode = inspectMode ? 'abilities' : 'legal';
   document.querySelector('.history-panel .panel-heading > span').textContent = game.profile ? 'PIECE · LEVEL' : 'SAN';
   board.replaceChildren();
   ranks.forEach((rank, row) => files.forEach((file, col) => {
@@ -681,6 +823,8 @@ function render(focusSquare) {
     button.dataset.legal = String(legal.some(move => move.to === square));
     button.dataset.quiet = String(quietGuide.has(square));
     button.dataset.capture = String(captureGuide.has(square));
+    const jumps = quietGuide.has(square) && jumpQuiet.has(square) || captureGuide.has(square) && jumpCapture.has(square);
+    button.dataset.jump = String(jumps);
     button.setAttribute('aria-label', `${square}${piece ? ` ${side(piece.color)} ${displayInfo(piece.type).name}` : ' empty'}`);
     button.setAttribute('aria-pressed', String((editingSetup ? setupSquare : guideSquare) === square));
     if ((editingSetup ? setupSquare : guideSquare) === square) button.classList.add('selected');
@@ -707,16 +851,24 @@ function render(focusSquare) {
     }
     const legalQuiet = legal.some(move => move.to === square && !move.captured);
     const legalCapture = legal.some(move => move.to === square && move.captured);
-    if (!piece && (quietGuide.has(square) || legalQuiet)) {
+    if (quietGuide.has(square) && (inspectMode || !piece)) {
       const marker = document.createElement('span');
       marker.className = 'move-marker ability-move-marker';
       marker.dataset.playable = String(legalQuiet);
       button.append(marker);
     }
-    if (captureGuide.has(square) || legalCapture) {
+    if (captureGuide.has(square)) {
       const marker = document.createElement('span');
-      marker.className = `ability-capture-marker${legalCapture ? ' capture-marker' : ''}${piece || legalCapture ? ' occupied-capture' : ''}`;
+      marker.className = `ability-capture-marker${!inspectMode ? ' capture-marker legal-capture-marker' : ''}${!inspectMode && (piece || legalCapture) ? ' occupied-capture' : ''}`;
       marker.dataset.playable = String(legalCapture);
+      button.append(marker);
+    }
+    if (jumps) {
+      const marker = document.createElement('span');
+      marker.className = 'jump-indicator';
+      marker.textContent = '↷';
+      marker.title = 'Jump or hop: crosses intervening pieces. Hops still need a hurdle.';
+      marker.setAttribute('aria-hidden', 'true');
       button.append(marker);
     }
     for (const [show, value, position] of [[col === 0, rank, 'rank'], [row === 7, file, 'file']]) {
@@ -747,17 +899,22 @@ function render(focusSquare) {
   if (clock.expired) status = timeoutResult().status;
   if (editingSetup) status = 'Build your army';
   document.querySelector('#status').textContent = status;
+  if (puzzleSession) document.querySelector('#status').textContent = puzzleSession.state().status === 'solved' ? 'Puzzle solved' : puzzleSession.state().status === 'revealed' ? 'Solution revealed' : `${side(game.turn())} to move · Puzzle`;
   const selectedPiece = guideSquare ? game.get(guideSquare) : null;
   const selectedDesign = selectedPiece ? designFor(selectedPiece.type) : null;
   const description = selectedDesign ? ` ${currentDesignOption(selectedDesign.id)?.description || ''}` : '';
   document.querySelector('#hint').textContent = editingSetup ? 'Click a starting piece to choose an upgrade. Start game when both armies are ready.'
     : selectedPiece ? `${side(selectedPiece.color)} ${infoFor(selectedPiece.type).name} on ${guideSquare}.${description}`
-      : isFinished() ? 'Start a new game or undo a move to keep playing.' : !canPlay() ? 'Start or resume the clock to continue playing.'
+      : puzzleSession && puzzleSession.state().status !== 'playing' ? 'Retry this puzzle or return to the puzzle library.'
+        : isFinished() ? 'Start a new game or undo a move to keep playing.' : !canPlay() ? 'Start or resume the clock to continue playing.'
         : selectedDrop ? `Drop your ${infoFor(selectedDrop).name} on a highlighted empty square in your half. The drop cannot give check.`
-          : 'Select either side’s piece to explore its movement and captures.';
-  document.querySelector('#piece-guide-status').textContent = guideError || (guideSquare && !pieceGuide ? 'Loading piece guide…'
-    : guideSquare ? `${inspectedSquare || inspectMode ? 'Inspecting only. ' : ''}Dots show movement; red rings show capture ability. The guide includes abilities unavailable because of check or pins; only legal moves can be played.`
-      : inspectMode ? 'Inspect mode: click any piece without making a move.' : 'Gray dot: move · red ring: capture · both: either.');
+          : 'Select a piece for legal moves. Use Inspect pieces to explore either army’s movement patterns.';
+  document.querySelector('#piece-guide-status').textContent = inspectMode
+    ? guideError || (guideSquare && !pieceGuide ? 'Loading movement pattern…' : guideSquare
+      ? 'Movement pattern: dots are moves; red rings are captures. Other pieces, check and pins are ignored. Hops still need a hurdle. No moves are played in Inspect.'
+      : 'Inspect mode: select any piece to see its movement pattern without blockers.')
+    : guideSquare && inspectedSquare ? 'Select a piece belonging to the side to move, or turn on Inspect pieces to explore this piece.'
+      : 'Only legal moves are shown: gray dots for moves and gray rings for captures.';
   document.querySelector('#inspect-mode').setAttribute('aria-pressed', String(inspectMode));
   document.querySelector('#drawing-mode').disabled = editingSetup;
   document.querySelector('#undo').disabled = editingSetup || history.length === 0;
@@ -793,9 +950,15 @@ function render(focusSquare) {
     item.append(text);
   }
   document.querySelector('#empty-history').hidden = history.length > 0;
+  document.querySelector('#empty-history').textContent = puzzleSession ? 'Your solution starts here.' : 'The opening is yours.';
   list.scrollTop = list.scrollHeight;
   if (focusSquare) board.querySelector(`[data-square="${focusSquare}"]`)?.focus({ preventScroll: true });
-  if (isEngineMode(opponent.value)) {
+  if (puzzleSession) {
+    const solver = puzzleSession.puzzle.solverColor;
+    for (const [selector, color] of [['#top-player', flipped ? 'w' : 'b'], ['#bottom-player', flipped ? 'b' : 'w']]) {
+      document.querySelector(selector).textContent = `${color === solver ? 'You' : 'Defense'} · ${side(color)}`;
+    }
+  } else if (isEngineMode(opponent.value)) {
     const topColor = flipped ? 'w' : 'b';
     const bottomColor = flipped ? 'b' : 'w';
     document.querySelector('#top-player').textContent = opponent.value !== 'selfplay' && topColor === humanSide.value ? `You · ${side(topColor)}` : `Fairy Stockfish · ${side(topColor)}`;
@@ -824,6 +987,7 @@ function render(focusSquare) {
   });
   updateClocks();
   updateEngineButtons();
+  renderPuzzleWorkspace();
   void maybeEngineMove();
 }
 
@@ -837,7 +1001,7 @@ function selectSquare(square) {
   settleClock();
   if (buildingGame || pending) return;
   const movable = !inspectMode && !engineBusy && !isFinished() && canPlay()
-    && canHumanMove(opponent.value, game.turn(), humanSide.value);
+    && mayHumanPlay();
   const moves = movable ? (selectedDrop ? game.moves({ drop: selectedDrop, verbose: true })
     : selected ? game.moves({ square: selected, verbose: true }) : []).filter(move => move.to === square) : [];
   if (moves.length) {
@@ -877,6 +1041,7 @@ function selectSquare(square) {
 
 promotion.addEventListener('cancel', () => { pending = null; });
 document.querySelector('#undo').onclick = () => {
+  if (puzzleSession) return;
   cancelEngine();
   pauseClocks();
   game.undo();
@@ -893,6 +1058,7 @@ document.querySelector('#undo').onclick = () => {
 };
 document.querySelector('#flip').onclick = () => { flipped = !flipped; render(); };
 async function newGame() {
+  if (puzzleSession) return;
   if (buildingGame || !updateSetup()) return;
   const request = ++replacementGeneration;
   const selectedMode = gameMode.value;
@@ -1189,6 +1355,17 @@ experimentalBudget.oninput = updateSetup;
 experimentalFamily.onchange = updateExperimentalFamily;
 for (const square of upgradeSquares) document.querySelector(`#upgrade-${square}`).onchange = updateSetup;
 workspaceTabs = createWorkspaceTabs(document);
+puzzleMenu = createPuzzleMenu({
+  onPause: pauseForMenu,
+  onResume: () => { navigationPaused = false; render(); },
+  onImport: importPuzzlePack,
+  onStart: startPuzzle,
+  onRetry: () => { void retryPuzzle(); },
+  onHint: () => { puzzleFeedback = ''; puzzleSession?.hint(); render(); },
+  onReveal: () => { puzzleFeedback = ''; puzzleSession?.reveal(); selected = null; selectedDrop = null; clearInspection(); boardAnnotations?.clear(); render(); },
+  onLeave: leavePuzzle,
+});
+puzzleMenu.setLibrary(puzzlePack);
 appearancePreferences = createAppearancePreferences({ document, onChange: () => {
   boardAnnotations?.render();
   render();

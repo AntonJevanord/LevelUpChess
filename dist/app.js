@@ -51274,11 +51274,11 @@
       function pieceSvgMarkup({ family, type, color = "w", style = "flat", level = 0 } = {}) {
         const selectedFamily = Object.hasOwn(SHAPES, family) ? family : FAMILIES[String(type || "").toLowerCase()] || "pawn";
         const selectedStyle = PIECE_STYLES.includes(style) && style !== "glow" ? style : "flat";
-        const side2 = color === "b" ? "black" : "white";
+        const side3 = color === "b" ? "black" : "white";
         const coin = selectedStyle === "medallion" ? '<circle class="piece-coin" cx="22.5" cy="22.5" r="20"/><circle class="piece-coin-rim" cx="22.5" cy="22.5" r="17.5"/>' : "";
         const transform = selectedStyle === "medallion" ? ' transform="translate(5.85 5.85) scale(.74)"' : "";
         const accent = Number.isInteger(level) && level > 0 ? '<path class="piece-accent" d="M12 41.8h21"/>' : "";
-        return `<svg class="piece-svg ${selectedStyle}-piece ${side2}-svg" viewBox="0 0 45 45" aria-hidden="true" focusable="false">${coin}<g class="piece-shape"${transform}>${SHAPES[selectedFamily]}</g>${accent}</svg>`;
+        return `<svg class="piece-svg ${selectedStyle}-piece ${side3}-svg" viewBox="0 0 45 45" aria-hidden="true" focusable="false">${coin}<g class="piece-shape"${transform}>${SHAPES[selectedFamily]}</g>${accent}</svg>`;
       }
       function renderPieceIcon2(element, { family, type, color = "w", symbol, level = 0, style } = {}) {
         if (!element) return;
@@ -51300,6 +51300,267 @@
         createAppearancePreferences: createAppearancePreferences2,
         pieceSvgMarkup,
         renderPieceIcon: renderPieceIcon2
+      };
+    }
+  });
+
+  // src/puzzle-data.js
+  var require_puzzle_data = __commonJS({
+    "src/puzzle-data.js"(exports, module) {
+      "use strict";
+      var { getDesign } = require_design_catalog();
+      var { getPlayableProfile: getPlayableProfile4, getProfileSnapshot: getProfileSnapshot3, validateProfileSnapshot: validateProfileSnapshot2, DESIGN_OPTIONS: DESIGN_OPTIONS2 } = require_design_options();
+      var { pieceMap: pieceMap2, placementFromMap: placementFromMap2, pocketLetters: pocketLetters2 } = require_profile_fen();
+      var FORMAT = "levelup-puzzle-pack";
+      var MAX_PACK_BYTES3 = 20 * 1024 * 1024;
+      var MAX_PUZZLES = 1e3;
+      var MAX_TREE_NODES = 1e4;
+      var MAX_SOLVER_MOVES = 8;
+      var STANDARD = Object.freeze({ p: "pawn", n: "knight", b: "bishop", r: "rook", q: "queen", k: "king" });
+      var STANDARD_LABELS = Object.freeze(Object.fromEntries(Object.values(STANDARD).map((id) => [id, id[0].toUpperCase() + id.slice(1)])));
+      var MOVE = /^(?:[a-h][1-8][a-h][1-8][a-z]?|[A-Z]@[a-h][1-8])$/;
+      var fail = (message) => {
+        throw new Error(`Puzzle pack: ${message}`);
+      };
+      var object = (value) => value && typeof value === "object" && !Array.isArray(value);
+      var unique = (values) => [...new Set(values)].sort();
+      function text(value, name, limit = 160) {
+        if (typeof value !== "string" || !value.trim() || value.length > limit || /[\0\r\n]/.test(value)) fail(`invalid ${name}.`);
+        return value;
+      }
+      function move(value) {
+        if (typeof value !== "string" || !MOVE.test(value)) fail("invalid solution move.");
+        return value;
+      }
+      function pieceIdForType(type, variant = "chess") {
+        const lower = String(type).toLowerCase();
+        if (STANDARD[lower]) return STANDARD[lower];
+        const profile = typeof variant === "string" ? getPlayableProfile4(variant) : variant;
+        const id = profile?.registry?.allocations.find((row) => row.letter === lower)?.id;
+        if (!id) fail(`unknown piece ${type}.`);
+        return id;
+      }
+      function pieceLabel2(id) {
+        return STANDARD_LABELS[id] || DESIGN_OPTIONS2.find((row) => row.id === id)?.name || getDesign(id)?.name || id;
+      }
+      function knownPiece(id, variant) {
+        if (Object.hasOwn(STANDARD_LABELS, id)) return true;
+        return getPlayableProfile4(variant)?.registry.definitions.some((row) => row.id === id) || false;
+      }
+      function validateTree(tree, remaining = MAX_SOLVER_MOVES, count = { value: 0 }) {
+        if (!object(tree) || remaining < 1 || ++count.value > MAX_TREE_NODES) fail("solution tree exceeds its supported bound.");
+        move(tree.move);
+        if (!Array.isArray(tree.replies) || tree.replies.length > 512) fail("invalid defender replies.");
+        const seen = /* @__PURE__ */ new Set();
+        for (const reply of tree.replies) {
+          if (!object(reply) || seen.has(move(reply.move))) fail("duplicate or invalid defender reply.");
+          seen.add(reply.move);
+          validateTree(reply.next, remaining - 1, count);
+        }
+        return tree;
+      }
+      function validatePuzzle(puzzle, profiles = {}) {
+        if (!object(puzzle)) fail("invalid puzzle.");
+        text(puzzle.id, "puzzle id", 160);
+        text(puzzle.title, "title");
+        if (puzzle.variant !== "chess") {
+          validateProfileSnapshot2(profiles[puzzle.variant], puzzle.variant);
+        }
+        if (typeof puzzle.variant !== "string" || !/^[a-z][a-z0-9_-]{0,100}$/.test(puzzle.variant)) fail("invalid variant.");
+        for (const key of ["initialFen", "fen"]) {
+          text(puzzle[key], key, 512);
+          pieceMap2(puzzle[key]);
+          if (puzzle[key].trim().split(/\s+/).length !== 6) fail("invalid position.");
+        }
+        if (!Array.isArray(puzzle.initialMoves) || puzzle.initialMoves.length > 800) fail("invalid source history.");
+        puzzle.initialMoves.forEach(move);
+        if (!["w", "b"].includes(puzzle.solverColor) || puzzle.fen.split(/\s+/)[1] !== puzzle.solverColor) fail("invalid solver color.");
+        if (!object(puzzle.goal) || puzzle.goal.type !== "mate" || !Number.isInteger(puzzle.goal.moves) || puzzle.goal.moves < 1 || puzzle.goal.moves > MAX_SOLVER_MOVES) fail("unsupported puzzle goal.");
+        validateTree(puzzle.solution, puzzle.goal.moves);
+        if (!object(puzzle.pieces) || puzzle.pieces.method !== "mate-tree-effects") fail("missing piece participation metadata.");
+        for (const key of ["present", "moved", "involved", "stationary"]) {
+          const ids = puzzle.pieces[key];
+          if (!Array.isArray(ids) || ids.length > 32 || unique(ids).length !== ids.length || ids.some((id) => typeof id !== "string" || !knownPiece(id, puzzle.variant))) fail(`invalid ${key} piece filters.`);
+        }
+        if (puzzle.pieces.moved.some((id) => !puzzle.pieces.involved.includes(id)) || puzzle.pieces.stationary.some((id) => !puzzle.pieces.involved.includes(id))) fail("inconsistent piece participation.");
+        if (!object(puzzle.provenance) || !["authored", "panel"].includes(puzzle.provenance.kind)) fail("missing puzzle provenance.");
+        return puzzle;
+      }
+      function validatePuzzlePack3(value) {
+        let pack = value;
+        if (typeof value === "string") {
+          if (value.length > MAX_PACK_BYTES3) fail("file is too large.");
+          try {
+            pack = JSON.parse(value);
+          } catch {
+            fail("file is not valid JSON.");
+          }
+        }
+        if (!object(pack) || pack.schemaVersion !== 1 || pack.format !== FORMAT || !object(pack.profiles) || !Array.isArray(pack.puzzles) || pack.puzzles.length > MAX_PUZZLES) fail("unsupported file format.");
+        for (const [variant, profile] of Object.entries(pack.profiles)) validateProfileSnapshot2(profile, variant);
+        const ids = /* @__PURE__ */ new Set();
+        for (const puzzle of pack.puzzles) {
+          validatePuzzle(puzzle, pack.profiles);
+          if (ids.has(puzzle.id)) fail("duplicate puzzle id.");
+          ids.add(puzzle.id);
+        }
+        return pack;
+      }
+      function filterPuzzles2(puzzles, { minMoves = 1, maxMoves = MAX_SOLVER_MOVES, involved = "", moved = "", present = "" } = {}) {
+        const minimum = minMoves === "" ? 1 : Number(minMoves), maximum = maxMoves === "" ? MAX_SOLVER_MOVES : Number(maxMoves);
+        if (!Number.isInteger(minimum) || !Number.isInteger(maximum) || minimum < 1 || maximum < minimum) return [];
+        const chosen = { involved, moved, present };
+        return puzzles.filter((puzzle) => puzzle.goal.moves >= minimum && puzzle.goal.moves <= maximum && Object.entries(chosen).every(([key, value]) => !value || (Array.isArray(value) ? value : [value]).every((id) => puzzle.pieces[key].includes(id))));
+      }
+      function uciOf2(value) {
+        return value.uci || (value.drop ? value.drop.toUpperCase() + "@" + value.to : value.from + value.to + (value.promotion || ""));
+      }
+      function requestForUci(uci) {
+        move(uci);
+        return uci[1] === "@" ? { drop: uci[0].toLowerCase(), to: uci.slice(2, 4) } : { from: uci.slice(0, 2), to: uci.slice(2, 4), ...uci[4] ? { promotion: uci[4] } : {} };
+      }
+      function playUci2(game2, uci) {
+        return game2.move(requestForUci(uci));
+      }
+      function legalUcis(game2) {
+        return game2.moves({ verbose: true }).map(uciOf2).sort();
+      }
+      async function createPuzzleGame2(puzzle, createGame) {
+        const game2 = await createGame(puzzle.initialFen, puzzle.variant);
+        try {
+          for (const uci of puzzle.initialMoves) {
+            if (game2.isGameOver()) fail("source history continues after game end.");
+            if (!playUci2(game2, uci)) fail("illegal source history.");
+          }
+          if (game2.fen() !== puzzle.fen || game2.turn() !== puzzle.solverColor || game2.isGameOver()) fail("source history does not reach the playable puzzle position.");
+          return game2;
+        } catch (error) {
+          game2.dispose?.();
+          throw error;
+        }
+      }
+      function inspectTree(game2, tree, solverColor, { onMove = () => {
+      }, count = { value: 0 } } = {}) {
+        if (++count.value > MAX_TREE_NODES || game2.turn() !== solverColor || game2.isGameOver()) fail("invalid or excessive solution tree.");
+        const planned = game2.moves({ verbose: true }).find((row) => uciOf2(row) === tree.move);
+        if (!planned) fail("solution contains an illegal solver move.");
+        const made = playUci2(game2, tree.move);
+        onMove(made, game2);
+        try {
+          if (game2.isCheckmate()) {
+            if (tree.replies.length) fail("solution continues after mate.");
+            return { moves: 1, leaves: 1, nodes: count.value };
+          }
+          if (game2.isGameOver()) fail("solution ends in a draw or the wrong result.");
+          const legal = legalUcis(game2), declared = tree.replies.map((row) => row.move).sort();
+          if (!legal.length || legal.length !== declared.length || legal.some((uci, index) => uci !== declared[index])) fail("solution omits or invents a legal defense.");
+          let longest = 0, leaves = 0;
+          for (const reply of tree.replies) {
+            const response = playUci2(game2, reply.move);
+            onMove(response, game2);
+            try {
+              const next = inspectTree(game2, reply.next, solverColor, { onMove, count });
+              longest = Math.max(longest, next.moves);
+              leaves += next.leaves;
+            } finally {
+              game2.undo();
+            }
+          }
+          return { moves: longest + 1, leaves, nodes: count.value };
+        } finally {
+          game2.undo();
+        }
+      }
+      async function replayPuzzle(puzzle, { createGame } = {}) {
+        if (typeof createGame !== "function") fail("rules replay requires a game factory.");
+        validateTree(puzzle.solution, puzzle.goal.moves);
+        const game2 = await createPuzzleGame2(puzzle, createGame);
+        try {
+          const proof = inspectTree(game2, puzzle.solution, puzzle.solverColor);
+          if (proof.moves !== puzzle.goal.moves) fail("declared solution length differs from the proven tree.");
+          return proof;
+        } finally {
+          game2.dispose?.();
+        }
+      }
+      async function derivePuzzlePieces2(puzzle, { createGame } = {}) {
+        if (typeof createGame !== "function") fail("piece tagging requires a game factory.");
+        validateTree(puzzle.solution, puzzle.goal.moves);
+        const game2 = await createPuzzleGame2(puzzle, createGame), moved = /* @__PURE__ */ new Set(), involved = /* @__PURE__ */ new Set();
+        const profile = puzzle.variant === "chess" ? void 0 : getPlayableProfile4(puzzle.variant);
+        const id = (type) => pieceIdForType(type, profile || "chess");
+        const root = pieceMap2(puzzle.fen);
+        const present = unique([...root.values(), ...pocketLetters2(puzzle.fen)].map(id));
+        try {
+          const proof = inspectTree(game2, puzzle.solution, puzzle.solverColor, { onMove(made, afterGame) {
+            moved.add(id(made.piece));
+            involved.add(id(made.piece));
+            if (made.captured) involved.add(id(made.captured));
+            if (made.promotion) involved.add(id(made.promotion));
+            if (/^O-O/.test(made.san)) {
+              const before = pieceMap2(made.before), after = pieceMap2(made.after || afterGame.fen());
+              for (const [square, type] of before) {
+                const color = type === type.toUpperCase() ? "w" : "b";
+                if (color === made.color && after.get(square) !== type) {
+                  moved.add(id(type));
+                  involved.add(id(type));
+                }
+              }
+            }
+          } });
+          if (proof.moves !== puzzle.goal.moves) fail("declared solution length differs from the proven tree.");
+        } finally {
+          game2.dispose?.();
+        }
+        involved.add("king");
+        const stationary = /* @__PURE__ */ new Set(), effects = [];
+        for (const [square, type] of root) {
+          const pieceId = id(type);
+          if (type.toLowerCase() === "k" || moved.has(pieceId)) continue;
+          const map = new Map(root);
+          map.delete(square);
+          if (Object.hasOwn(root, "pocket")) map.pocket = root.pocket;
+          const fields = puzzle.fen.split(" ");
+          fields[0] = placementFromMap2(map);
+          const castle = { a1: "Q", h1: "K", a8: "q", h8: "k" }[square];
+          if (castle) fields[2] = fields[2].replace(castle, "") || "-";
+          let counterfactual, changed = false;
+          try {
+            counterfactual = await createGame(fields.join(" "), puzzle.variant);
+            inspectTree(counterfactual, puzzle.solution, puzzle.solverColor);
+          } catch {
+            changed = true;
+          } finally {
+            counterfactual?.dispose?.();
+          }
+          if (changed) {
+            stationary.add(pieceId);
+            involved.add(pieceId);
+            effects.push({ id: pieceId, square, reason: "Removing this stationary unit changes the mating tree or its legal defenses." });
+          }
+        }
+        return { present, moved: unique([...moved]), involved: unique([...involved]), stationary: unique([...stationary]), method: "mate-tree-effects", effects };
+      }
+      module.exports = {
+        FORMAT,
+        MAX_PACK_BYTES: MAX_PACK_BYTES3,
+        MAX_PUZZLES,
+        MAX_TREE_NODES,
+        MAX_SOLVER_MOVES,
+        getProfileSnapshot: getProfileSnapshot3,
+        validatePuzzle,
+        validatePuzzlePack: validatePuzzlePack3,
+        filterPuzzles: filterPuzzles2,
+        pieceLabel: pieceLabel2,
+        pieceIdForType,
+        uciOf: uciOf2,
+        requestForUci,
+        playUci: playUci2,
+        legalUcis,
+        createPuzzleGame: createPuzzleGame2,
+        inspectTree,
+        replayPuzzle,
+        derivePuzzlePieces: derivePuzzlePieces2
       };
     }
   });
@@ -54583,15 +54844,15 @@
       s += "     a  b  c  d  e  f  g  h";
       return s;
     }
-    perft(depth) {
+    perft(depth2) {
       const moves = this._moves({ legal: false });
       let nodes = 0;
       const color = this._turn;
       for (let i = 0, len = moves.length; i < len; i++) {
         this._makeMove(moves[i]);
         if (!this._isKingAttacked(color)) {
-          if (depth - 1 > 0) {
-            nodes += this.perft(depth - 1);
+          if (depth2 - 1 > 0) {
+            nodes += this.perft(depth2 - 1);
           } else {
             nodes++;
           }
@@ -54736,12 +54997,12 @@
       });
     }
     setCastlingRights(color, rights) {
-      for (const side2 of [KING, QUEEN]) {
-        if (rights[side2] !== void 0) {
-          if (rights[side2]) {
-            this._castling[color] |= SIDES[side2];
+      for (const side3 of [KING, QUEEN]) {
+        if (rights[side3] !== void 0) {
+          if (rights[side3]) {
+            this._castling[color] |= SIDES[side3];
           } else {
-            this._castling[color] &= ~SIDES[side2];
+            this._castling[color] &= ~SIDES[side3];
           }
         }
       }
@@ -59744,11 +60005,11 @@
         for (const token of stripComments(body).split(/\s+/).filter(Boolean)) {
           if (/^\$\d+$/.test(token)) continue;
           if (result !== void 0) throw new Error("The PGN contains moves or text after its result.");
-          const number = token.match(/^(\d+)\.(\.\.)?/);
+          const number2 = token.match(/^(\d+)\.(\.\.)?/);
           let san = token;
-          if (number) {
-            if (Number(number[1]) !== Number(candidate.fen().split(" ")[5]) || Boolean(number[2]) !== (candidate.turn() === "b")) throw new Error("A PGN move number does not match the position.");
-            san = token.slice(number[0].length);
+          if (number2) {
+            if (Number(number2[1]) !== Number(candidate.fen().split(" ")[5]) || Boolean(number2[2]) !== (candidate.turn() === "b")) throw new Error("A PGN move number does not match the position.");
+            san = token.slice(number2[0].length);
             if (!san) continue;
           }
           if (RESULTS.has(san)) {
@@ -59909,7 +60170,7 @@
     let active = buttons.find((button) => button.getAttribute("aria-selected") === "true")?.dataset.panelTab || "game";
     function show(name, { focus = false } = {}) {
       const selected2 = buttons.find((button) => button.dataset.panelTab === name);
-      if (!selected2) return;
+      if (!selected2 || selected2.disabled || selected2.hidden) return;
       active = name;
       for (const button of buttons) {
         button.setAttribute("aria-selected", String(button === selected2));
@@ -59918,13 +60179,14 @@
       for (const panel of panels) panel.hidden = panel.dataset.panel !== name;
       if (focus) selected2.focus();
     }
-    for (const [index, button] of buttons.entries()) {
+    for (const button of buttons) {
       button.addEventListener("click", () => show(button.dataset.panelTab));
       button.addEventListener("keydown", (event) => {
-        const next = event.key === "ArrowRight" ? (index + 1) % buttons.length : event.key === "ArrowLeft" ? (index + buttons.length - 1) % buttons.length : event.key === "Home" ? 0 : event.key === "End" ? buttons.length - 1 : null;
+        const available = buttons.filter((item) => !item.disabled && !item.hidden), index = available.indexOf(button);
+        const next = event.key === "ArrowRight" ? (index + 1) % available.length : event.key === "ArrowLeft" ? (index + available.length - 1) % available.length : event.key === "Home" ? 0 : event.key === "End" ? available.length - 1 : null;
         if (next === null) return;
         event.preventDefault();
-        show(buttons[next].dataset.panelTab, { focus: true });
+        show(available[next].dataset.panelTab, { focus: true });
       });
     }
     show(active);
@@ -59946,9 +60208,14 @@
   var SQUARES = [..."abcdefgh"].flatMap((file2) => [..."12345678"].map((rank2) => file2 + rank2));
   var resultCache = /* @__PURE__ */ new Map();
   var activeEngine;
-  function inspectionConfig(variant = "chess") {
+  var activeJumpEngine;
+  function inspectionSource(variant) {
     const source = variant === "chess" ? "" : getPlayableProfile2(variant)?.config || legacyConfigs[variant];
     if (source === void 0) throw new Error("This ruleset has no piece guide.");
+    return source;
+  }
+  function inspectionConfig(variant = "chess") {
+    const source = inspectionSource(variant);
     if (/^\s*king\s*=\s*[^\r\n]*:/m.test(source)) throw new Error("This royal movement needs its own inspection profile.");
     const body = source.replace(/^\s*\[[^\]\r\n]+\]\s*$/m, "").replace(/^\s*king\s*=.*$/gm, "");
     return `[levelup-piece-guide:chess]
@@ -59963,21 +60230,27 @@ mustCapture = false
 pieceDrops = false
 `;
   }
-  async function inspectionEngine(variant) {
-    const config = inspectionConfig(variant);
-    if (!activeEngine || activeEngine.config !== config) {
+  async function inspectionEngine(variant, jumpConfig) {
+    const config = jumpConfig || inspectionConfig(variant);
+    const active = jumpConfig ? activeJumpEngine : activeEngine;
+    if (!active || active.config !== config) {
       const entry = { config };
       entry.promise = ffish_default({ wasmBinary: Uint8Array.from(atob(ffish_default2), (character) => character.charCodeAt(0)) }).then((engine) => {
         engine.loadVariantConfig(config);
         if (!engine.variants().split(" ").includes("levelup-piece-guide")) throw new Error("The piece inspection rules could not be loaded.");
         return engine;
       }).catch((error) => {
-        if (activeEngine === entry) activeEngine = void 0;
+        if (jumpConfig ? activeJumpEngine === entry : activeEngine === entry) {
+          if (jumpConfig) activeJumpEngine = void 0;
+          else activeEngine = void 0;
+        }
         throw error;
       });
-      activeEngine = entry;
+      if (jumpConfig) activeJumpEngine = entry;
+      else activeEngine = entry;
+      return entry.promise;
     }
-    return activeEngine.promise;
+    return active.promise;
   }
   function snapshot(value) {
     return {
@@ -59986,12 +60259,76 @@ pieceDrops = false
       capture: [...value.capture],
       legal: [...value.legal],
       legalQuiet: [...value.legalQuiet],
-      legalCapture: [...value.legalCapture]
+      legalCapture: [...value.legalCapture],
+      jumpQuiet: [...value.jumpQuiet],
+      jumpCapture: [...value.jumpCapture],
+      legalJumpQuiet: [...value.legalJumpQuiet],
+      legalJumpCapture: [...value.legalJumpCapture]
     };
+  }
+  function jumpingConfig(variant, type) {
+    const source = inspectionSource(variant);
+    const line = source.match(new RegExp(`^(\\s*[A-Za-z][A-Za-z0-9]*\\s*=\\s*${type}\\s*:)\\s*([a-z]*[A-Z][A-Za-z0-9]*)`, "m"));
+    const movement = line?.[2] || { p: "fmWfceFifmnD", n: "N", b: "B", r: "R", q: "Q", k: "K" }[type];
+    if (!movement) throw new Error("This piece has no inspectable movement definition.");
+    const components = movement.match(/[a-z]*[A-Z][0-9]*/g) || [];
+    if (components.join("") !== movement) throw new Error("This piece movement cannot be classified for jump marks.");
+    const jumps = components.filter((component) => {
+      const [, modifiers, atom] = component.match(/^([a-z]*)([A-Z])/);
+      return !modifiers.includes("n") && (/[gp]/.test(modifiers) || "ADNCHZG".includes(atom));
+    }).join("");
+    if (!jumps) return null;
+    if (jumps === movement) return inspectionConfig(variant);
+    if (!line) throw new Error("A mixed native movement needs an explicit inspection definition.");
+    return inspectionConfig(variant).replace(line[0], `${line[1]}${jumps}`);
   }
   function hasMove(board2, fen, from, to, capture) {
     board2.setFen(fen);
     return board2.legalMoves().split(" ").some((move) => move.startsWith(from + to) && board2.isCapture(move) === capture);
+  }
+  function hurdleSquares(from, to) {
+    const dx = to.charCodeAt(0) - from.charCodeAt(0), dy = Number(to[1]) - Number(from[1]);
+    if (dx && dy && Math.abs(dx) !== Math.abs(dy)) return [];
+    const distance = Math.max(Math.abs(dx), Math.abs(dy));
+    return Array.from({ length: Math.max(0, distance - 1) }, (_, i) => String.fromCharCode(from.charCodeAt(0) + Math.sign(dx) * (i + 1)) + (Number(from[1]) + Math.sign(dy) * (i + 1)));
+  }
+  function movementDiagram(engine, fen, square, piece) {
+    const original = pieceMap(fen), empty = /* @__PURE__ */ new Map([[square, original.get(square)]]);
+    const fields = fen.split(/\s+/);
+    const probeFen = (pieces) => `${placementFromMap(pieces)} ${piece.color} - - 0 ${fields[5] || 1}`;
+    const quiet = /* @__PURE__ */ new Set(), capture = /* @__PURE__ */ new Set();
+    const board2 = new engine.Board("levelup-piece-guide", probeFen(empty), false);
+    try {
+      const actual = board2.legalMoves().split(" ").filter((move) => move.startsWith(square));
+      const actualQuiet = new Set(actual.filter((move) => !board2.isCapture(move)).map((move) => move.slice(2, 4)));
+      for (const target of SQUARES) {
+        if (target === square) continue;
+        const pieces = new Map(empty);
+        if (actualQuiet.has(target)) quiet.add(target);
+        pieces.set(target, piece.color === "w" ? "p" : "P");
+        if (hasMove(board2, probeFen(pieces), square, target, true)) capture.add(target);
+        if (!quiet.has(target) || !capture.has(target)) for (const hurdle of hurdleSquares(square, target)) {
+          pieces.delete(target);
+          pieces.set(hurdle, piece.color === "w" ? "P" : "p");
+          if (!quiet.has(target) && hasMove(board2, probeFen(pieces), square, target, false)) quiet.add(target);
+          pieces.set(target, piece.color === "w" ? "p" : "P");
+          if (!capture.has(target) && hasMove(board2, probeFen(pieces), square, target, true)) capture.add(target);
+          pieces.delete(hurdle);
+          if (quiet.has(target) && capture.has(target)) break;
+        }
+      }
+      const actualFen = `${placementFromMap(new Map(original))} ${piece.color} - ${piece.color === fields[1] ? fields[3] : "-"} ${fields[4] || 0} ${fields[5] || 1}`;
+      board2.setFen(actualFen);
+      const actualMoves = board2.legalMoves().split(" ").filter((move) => move.startsWith(square));
+      return {
+        quiet,
+        capture,
+        currentQuiet: new Set(actualMoves.filter((move) => !board2.isCapture(move)).map((move) => move.slice(2, 4))),
+        currentCapture: new Set(actualMoves.filter((move) => board2.isCapture(move)).map((move) => move.slice(2, 4)))
+      };
+    } finally {
+      board2.delete();
+    }
   }
   async function getPieceGuide(game2, { square } = {}) {
     if (!/^[a-h][1-8]$/.test(square || "")) throw new Error("Choose a board square to inspect.");
@@ -60004,29 +60341,9 @@ pieceDrops = false
     const legalQuiet = new Set(moves.filter((move) => !move.captured).map((move) => move.to));
     const legalCapture = new Set(moves.filter((move) => move.captured).map((move) => move.to));
     const engine = await inspectionEngine(variant);
-    const original = pieceMap(fen);
-    original.pocket = "";
-    const fields = fen.split(/\s+/);
-    const probeFen = (pieces) => `${placementFromMap(pieces)} ${piece.color} - - 0 ${fields[5] || 1}`;
-    const quiet = /* @__PURE__ */ new Set(), capture = /* @__PURE__ */ new Set();
-    const board2 = new engine.Board("levelup-piece-guide", probeFen(original), false);
-    try {
-      const actual = board2.legalMoves().split(" ").filter((move) => move.startsWith(square));
-      const actualQuiet = new Set(actual.filter((move) => !board2.isCapture(move)).map((move) => move.slice(2, 4)));
-      const actualCapture = new Set(actual.filter((move) => board2.isCapture(move)).map((move) => move.slice(2, 4)));
-      for (const target of SQUARES) {
-        if (target === square) continue;
-        const occupant = original.get(target);
-        if (occupant && (occupant === occupant.toUpperCase() ? "w" : "b") === piece.color) continue;
-        const pieces = new Map(original);
-        pieces.delete(target);
-        if (occupant ? hasMove(board2, probeFen(pieces), square, target, false) : actualQuiet.has(target)) quiet.add(target);
-        pieces.set(target, piece.color === "w" ? "p" : "P");
-        if (occupant ? actualCapture.has(target) : hasMove(board2, probeFen(pieces), square, target, true)) capture.add(target);
-      }
-    } finally {
-      board2.delete();
-    }
+    const diagram = movementDiagram(engine, fen, square, piece), { quiet, capture } = diagram;
+    const config = jumpingConfig(variant, piece.type);
+    const jumps = !config ? { quiet: /* @__PURE__ */ new Set(), capture: /* @__PURE__ */ new Set(), currentQuiet: /* @__PURE__ */ new Set(), currentCapture: /* @__PURE__ */ new Set() } : config === inspectionConfig(variant) ? diagram : movementDiagram(await inspectionEngine(variant, config), fen, square, piece);
     for (const target of legalQuiet) quiet.add(target);
     for (const target of legalCapture) capture.add(target);
     const value = {
@@ -60036,11 +60353,16 @@ pieceDrops = false
       fen,
       variant,
       mode: "abilities",
+      ignoresBlockers: true,
       quiet: [...quiet].sort(),
       capture: [...capture].sort(),
       legal: [...new Set(moves.map((move) => move.to))].sort(),
       legalQuiet: [...legalQuiet].sort(),
-      legalCapture: [...legalCapture].sort()
+      legalCapture: [...legalCapture].sort(),
+      jumpQuiet: [...jumps.quiet].sort(),
+      jumpCapture: [...jumps.capture].sort(),
+      legalJumpQuiet: [...legalQuiet].filter((target) => jumps.currentQuiet.has(target)).sort(),
+      legalJumpCapture: [...legalCapture].filter((target) => jumps.currentCapture.has(target)).sort()
     };
     resultCache.set(key, value);
     if (resultCache.size > 96) resultCache.delete(resultCache.keys().next().value);
@@ -60049,6 +60371,821 @@ pieceDrops = false
 
   // src/app.js
   var import_engine_play2 = __toESM(require_engine_play());
+
+  // src/puzzle-menu.js
+  var import_puzzle_data = __toESM(require_puzzle_data());
+  var { filterPuzzles, pieceLabel, MAX_PACK_BYTES } = import_puzzle_data.default;
+  var CATEGORIES = ["involved", "moved", "present"];
+  var side = (color) => color === "b" ? "Black" : "White";
+  var number = (value) => value === "" ? void 0 : Number(value);
+  function createPuzzleMenu({
+    root = document,
+    onPause = () => {
+    },
+    onResume = () => {
+    },
+    onImport = async () => {
+    },
+    onStart = async () => {
+    },
+    onRetry = () => {
+    },
+    onHint = () => {
+    },
+    onReveal = () => {
+    },
+    onLeave = () => {
+    }
+  } = {}) {
+    const find = (selector) => root.querySelector(selector);
+    const main = find("#main-menu"), library = find("#puzzle-library");
+    const toolbar = find("#puzzle-toolbar"), list = find("#puzzle-list"), empty = find("#puzzle-empty");
+    const count = find("#puzzle-result-count"), error = find("#puzzle-filter-error");
+    const importStatus = find("#puzzle-import-status"), fileInput = find("#puzzle-pack-file");
+    let pack = { puzzles: [] }, session = null, opening = false, importing = false;
+    let menuActive = false;
+    function close({ resume = true, force = false } = {}) {
+      if (opening && !force) return;
+      main.close();
+      library.close();
+      const wasActive = menuActive;
+      menuActive = false;
+      if (resume && wasActive) onResume();
+    }
+    function open(dialog) {
+      if (!menuActive) {
+        onPause();
+        menuActive = true;
+      }
+      if (main.open && dialog !== main) main.close();
+      if (library.open && dialog !== library) library.close();
+      if (!dialog.open) dialog.showModal();
+    }
+    function showMain() {
+      find("#menu-play strong").textContent = session ? "Return to game" : "Play chess";
+      open(main);
+    }
+    function showLibrary() {
+      renderResults();
+      open(library);
+    }
+    function filters() {
+      return {
+        minMoves: number(find("#puzzle-min-moves").value),
+        maxMoves: number(find("#puzzle-max-moves").value),
+        ...Object.fromEntries(CATEGORIES.map((category) => [
+          category,
+          [...find(`#puzzle-filter-${category}`).querySelectorAll("input:checked")].map((input) => input.value)
+        ]))
+      };
+    }
+    function filtersError(value) {
+      for (const key of ["minMoves", "maxMoves"]) if (value[key] !== void 0 && (!Number.isSafeInteger(value[key]) || value[key] < 1 || value[key] > 50)) return "Choose a whole number from 1 to 50 for the solution length.";
+      return value.minMoves !== void 0 && value.maxMoves !== void 0 && value.minMoves > value.maxMoves ? "The minimum length must be no greater than the maximum." : "";
+    }
+    function pieceName(id) {
+      return pieceLabel(id);
+    }
+    function renderPieceFilters() {
+      const previous = filters();
+      const ids = [...new Set(pack.puzzles.flatMap((puzzle) => CATEGORIES.flatMap((category) => puzzle.pieces?.[category] || [])))];
+      ids.sort((a, b) => pieceName(a).localeCompare(pieceName(b)) || a.localeCompare(b));
+      for (const category of CATEGORIES) {
+        const container = find(`#puzzle-filter-${category}`);
+        container.replaceChildren();
+        for (const [index, id] of ids.entries()) {
+          const label = root.createElement("label"), input = root.createElement("input");
+          input.type = "checkbox";
+          input.value = id;
+          input.id = `puzzle-${category}-piece-${index}`;
+          input.checked = previous[category].includes(id);
+          const text = root.createElement("span");
+          text.textContent = pieceName(id);
+          label.append(input, text);
+          container.append(label);
+        }
+        if (!ids.length) {
+          const note = root.createElement("p");
+          note.textContent = "Available after loading puzzles.";
+          container.append(note);
+        }
+      }
+    }
+    function card(puzzle) {
+      const article = root.createElement("article");
+      article.className = "puzzle-card";
+      article.dataset.puzzleId = puzzle.id;
+      const heading = root.createElement("div");
+      heading.className = "puzzle-card-heading";
+      const title = root.createElement("h3");
+      title.textContent = puzzle.title || "Find the winning move";
+      const badge = root.createElement("span");
+      badge.className = "puzzle-length-badge";
+      badge.textContent = `Mate in ${puzzle.goal.moves}`;
+      heading.append(title, badge);
+      const turn = root.createElement("p");
+      turn.textContent = `${side(puzzle.solverColor)} to move${puzzle.provenance?.kind === "authored" ? " \xB7 Practice example" : ""}`;
+      const pieces = root.createElement("p");
+      pieces.className = "puzzle-pieces-summary";
+      pieces.textContent = (puzzle.pieces?.involved || []).map(pieceName).join(" \xB7 ") || "Find the tactic on the board.";
+      const button = root.createElement("button");
+      button.type = "button";
+      button.className = "primary";
+      button.textContent = "Start puzzle";
+      button.setAttribute("aria-label", `Start puzzle: ${title.textContent}`);
+      button.disabled = opening;
+      button.addEventListener("click", async () => {
+        if (opening) return;
+        opening = true;
+        error.textContent = "";
+        renderResults();
+        count.textContent = "Opening puzzle\u2026";
+        try {
+          await onStart(puzzle);
+          close({ resume: false, force: true });
+        } catch (reason) {
+          error.textContent = `This puzzle could not be opened. ${reason.message || reason}`;
+        } finally {
+          opening = false;
+          renderResults();
+        }
+      });
+      article.append(heading, turn, pieces, button);
+      return article;
+    }
+    function renderResults() {
+      find("#puzzle-library-close").disabled = opening;
+      fileInput.disabled = importing || opening;
+      const value = filters(), invalid = filtersError(value);
+      if (invalid) error.textContent = invalid;
+      for (const category of CATEGORIES) find(`#puzzle-${category}-count`).textContent = value[category].length ? `(${value[category].length})` : "";
+      const matches = invalid ? [] : filterPuzzles(pack.puzzles, value);
+      list.replaceChildren(...matches.map(card));
+      count.textContent = pack.puzzles.length ? `${matches.length} of ${pack.puzzles.length} puzzles` : "No puzzles loaded.";
+      empty.hidden = Boolean(matches.length);
+      if (pack.puzzles.length) {
+        empty.querySelector("h3").textContent = "No puzzles match these filters.";
+        empty.querySelector("p").textContent = "Try a wider solution length or clear a piece filter.";
+      } else {
+        empty.querySelector("h3").textContent = "Your next tactic is on its way.";
+        empty.querySelector("p").textContent = "Import a puzzle pack after generating puzzles from your completed games.";
+      }
+    }
+    function setLibrary(value) {
+      if (!value || !Array.isArray(value.puzzles)) throw new Error("A puzzle library requires validated puzzles.");
+      pack = value;
+      error.textContent = "";
+      renderPieceFilters();
+      renderResults();
+    }
+    function renderSession(value) {
+      session = value;
+      toolbar.hidden = !value;
+      if (!value) return;
+      toolbar.dataset.status = value.status;
+      find("#puzzle-title").textContent = value.title || "Find the winning move";
+      find("#puzzle-goal").textContent = `${side(value.solverColor)} to move \xB7 Mate in ${value.goal.moves} \xB7 ${value.solverMovesPlayed || 0}/${value.solverMovesTotal || value.goal.moves} moves`;
+      const base = value.status === "solved" ? "Puzzle solved. Nicely found." : value.status === "revealed" ? "Solution revealed. Retry to solve it yourself." : "Find the move that keeps the forced mate.";
+      const hint = typeof value.hint === "string" && value.hint ? `Hint: ${value.hint}` : "";
+      const solution = value.status === "revealed" && Array.isArray(value.solution) ? `Solution: ${value.solution.join(" ")}` : "";
+      find("#puzzle-feedback").textContent = value.message || value.feedback || [base, hint, solution].filter(Boolean).join(" ");
+      find("#puzzle-hint").disabled = value.status !== "playing";
+      find("#puzzle-reveal").disabled = value.status === "revealed";
+      const notes = find("#puzzle-piece-notes");
+      notes.replaceChildren();
+      const moved = new Set(value.pieces?.moved || []), stationary = new Set(value.pieces?.stationary || []);
+      for (const id of value.pieces?.involved || []) {
+        const item = root.createElement("li");
+        item.textContent = `${pieceName(id)}${stationary.has(id) ? " \u2014 involved without moving" : moved.has(id) ? " \u2014 moves in the solution" : " \u2014 takes part in the tactic"}`;
+        notes.append(item);
+      }
+      find("#puzzle-piece-details").hidden = !notes.children.length;
+    }
+    find("#open-menu").addEventListener("click", showMain);
+    find("#main-menu-close").addEventListener("click", () => close());
+    find("#puzzle-library-close").addEventListener("click", () => close());
+    find("#menu-puzzles").addEventListener("click", showLibrary);
+    find("#menu-play").addEventListener("click", () => {
+      if (session) {
+        onLeave();
+        close({ resume: false });
+      } else close();
+    });
+    for (const dialog of [main, library]) dialog.addEventListener("cancel", (event) => {
+      event.preventDefault();
+      close();
+    });
+    find("#puzzle-library-back").addEventListener("click", showLibrary);
+    find("#puzzle-retry").addEventListener("click", () => onRetry());
+    find("#puzzle-hint").addEventListener("click", () => onHint());
+    find("#puzzle-reveal").addEventListener("click", () => onReveal());
+    find("#puzzle-leave").addEventListener("click", () => onLeave());
+    find("#puzzle-filters").addEventListener("submit", (event) => event.preventDefault());
+    for (const name of ["input", "change"]) find("#puzzle-filters").addEventListener(name, (event) => {
+      if (event.target === fileInput) return;
+      error.textContent = "";
+      renderResults();
+    });
+    find("#puzzle-clear-filters").addEventListener("click", () => {
+      find("#puzzle-min-moves").value = "";
+      find("#puzzle-max-moves").value = "";
+      for (const input of find("#puzzle-filters").querySelectorAll("input[type=checkbox]")) input.checked = false;
+      error.textContent = "";
+      renderResults();
+    });
+    fileInput.addEventListener("change", async () => {
+      const file2 = fileInput.files?.[0];
+      if (!file2 || importing) return;
+      importing = true;
+      fileInput.disabled = true;
+      importStatus.classList.remove("error");
+      importStatus.textContent = `Loading ${file2.name}\u2026`;
+      try {
+        if (file2.size > MAX_PACK_BYTES) throw new Error(`Choose a pack no larger than ${MAX_PACK_BYTES / 1024 / 1024} MB.`);
+        const loaded = await onImport(await file2.text(), { name: file2.name });
+        if (loaded) setLibrary(loaded);
+        importStatus.textContent = `${file2.name} loaded. ${pack.puzzles.length} puzzles available.`;
+      } catch (reason) {
+        importStatus.classList.add("error");
+        importStatus.textContent = `Could not load this puzzle pack. ${reason.message || reason}`;
+      } finally {
+        importing = false;
+        fileInput.disabled = false;
+        fileInput.value = "";
+      }
+    });
+    renderPieceFilters();
+    renderResults();
+    return {
+      setLibrary,
+      showMain,
+      showLibrary,
+      close,
+      renderSession,
+      get isOpen() {
+        return menuActive;
+      },
+      get activePuzzle() {
+        return session?.id || null;
+      }
+    };
+  }
+
+  // src/puzzle-session.js
+  var import_puzzle_data2 = __toESM(require_puzzle_data());
+  var { validatePuzzlePack, derivePuzzlePieces, createPuzzleGame, playUci, uciOf } = import_puzzle_data2.default;
+  async function puzzleGameFactory(fen, variant) {
+    if (variant === "chess") return new Chess(fen);
+    await initVariantRules(variant);
+    return new VariantGame(fen, variant);
+  }
+  function depth(node2) {
+    return 1 + Math.max(0, ...node2.replies.map((reply) => depth(reply.next)));
+  }
+  async function createPuzzleSession(pack, puzzleId, { createGame = puzzleGameFactory } = {}) {
+    validatePuzzlePack(pack);
+    const puzzle = pack.puzzles.find((row) => row.id === puzzleId);
+    if (!puzzle) throw new Error("That puzzle is not in this library.");
+    const derived = await derivePuzzlePieces(puzzle, { createGame });
+    for (const key of ["present", "moved", "involved", "stationary"]) {
+      if (JSON.stringify([...derived[key]].sort()) !== JSON.stringify([...puzzle.pieces[key]].sort())) throw new Error("This puzzle has inconsistent piece participation tags.");
+    }
+    let game2 = await createPuzzleGame(puzzle, createGame), node2 = puzzle.solution;
+    let status = "playing", solverMovesPlayed = 0, shownHint = "", played = [], disposed = false, revision = 0, retrying = false;
+    const ensure = () => {
+      if (disposed) throw new Error("The puzzle session is closed.");
+    };
+    const state = () => ({
+      id: puzzle.id,
+      title: puzzle.title,
+      variant: puzzle.variant,
+      solverColor: puzzle.solverColor,
+      goal: { ...puzzle.goal },
+      status,
+      solverMovesPlayed,
+      solverMovesTotal: puzzle.goal.moves,
+      hint: shownHint,
+      solution: [...played],
+      pieces: puzzle.pieces,
+      provenance: puzzle.provenance,
+      canMove: !disposed && !retrying && status === "playing" && game2.turn() === puzzle.solverColor
+    });
+    function advance() {
+      const moves = [], solver = playUci(game2, node2.move);
+      moves.push(solver);
+      played.push(solver.san);
+      solverMovesPlayed++;
+      shownHint = "";
+      if (game2.isCheckmate()) {
+        status = "solved";
+        return moves;
+      }
+      const reply = [...node2.replies].sort((a, b) => depth(b.next) - depth(a.next) || a.move.localeCompare(b.move))[0];
+      const defense = playUci(game2, reply.move);
+      moves.push(defense);
+      played.push(defense.san);
+      node2 = reply.next;
+      return moves;
+    }
+    const session = {
+      get game() {
+        ensure();
+        return game2;
+      },
+      get puzzle() {
+        return puzzle;
+      },
+      state,
+      tryMove(request) {
+        ensure();
+        if (retrying || status !== "playing" || game2.turn() !== puzzle.solverColor) return { accepted: false, reason: retrying ? "The puzzle is restarting." : "This puzzle is finished.", moves: [], state: state() };
+        const legal = game2.moves({ verbose: true }).find((row) => typeof request === "string" ? uciOf(row) === request || row.san === request : (request?.drop ? row.drop === request.drop.toLowerCase() : row.from === request?.from) && row.to === request?.to && row.promotion === request?.promotion);
+        if (!legal) return { accepted: false, reason: "That move is not legal.", moves: [], state: state() };
+        if (uciOf(legal) !== node2.move) return { accepted: false, reason: "Try another move in the mating line.", moves: [], state: state() };
+        const moves = advance();
+        return { accepted: true, moves, state: state() };
+      },
+      async retry() {
+        ensure();
+        const operation = ++revision;
+        retrying = true;
+        try {
+          const replacement2 = await createPuzzleGame(puzzle, createGame);
+          if (disposed || operation !== revision) {
+            replacement2.dispose?.();
+            throw new Error("The puzzle restart was cancelled.");
+          }
+          game2.dispose?.();
+          game2 = replacement2;
+          node2 = puzzle.solution;
+          status = "playing";
+          solverMovesPlayed = 0;
+          shownHint = "";
+          played = [];
+        } finally {
+          if (operation === revision) retrying = false;
+        }
+        return state();
+      },
+      hint() {
+        ensure();
+        if (status === "playing") {
+          const move = game2.moves({ verbose: true }).find((row) => uciOf(row) === node2.move);
+          shownHint = `Try ${move.san}.`;
+        }
+        return state();
+      },
+      reveal() {
+        ensure();
+        const moves = [];
+        if (status === "playing") {
+          while (status === "playing") moves.push(...advance());
+          status = "revealed";
+          shownHint = "Solution shown. Retry to solve it yourself.";
+        }
+        return { moves, state: state() };
+      },
+      dispose() {
+        if (!disposed) {
+          revision++;
+          game2.dispose?.();
+          disposed = true;
+        }
+      }
+    };
+    return session;
+  }
+
+  // src/app.js
+  var import_puzzle_data3 = __toESM(require_puzzle_data());
+
+  // src/puzzle-examples.json
+  var puzzle_examples_default = {
+    schemaVersion: 1,
+    format: "levelup-puzzle-pack",
+    profiles: {
+      "levelup-design-4878712fe0f46ab8ce5a": {
+        schemaVersion: 1,
+        variant: "levelup-design-4878712fe0f46ab8ce5a",
+        hash: "bf684b948c6b0ee26948f1f138077d933a36e14cce681566f93781ee87d76082",
+        registryHash: "97ac12c1fefcb3c9e7d68041f6b2ad8bccffa4a7ebfc4eccb99c688ed7a4d4e3",
+        registry: {
+          schemaVersion: 1,
+          definitions: [
+            {
+              id: "bishop.purple@13",
+              family: "bishop",
+              level: 3,
+              revision: 13,
+              movement: "BsR2nsN",
+              legacyType: "m",
+              legacySlot: 22,
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              }
+            },
+            {
+              id: "bishop.vertical-blocked@1",
+              family: "bishop",
+              level: 3,
+              revision: 1,
+              movement: "BvW2vnN",
+              legacyType: "a",
+              legacySlot: 1,
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              inheritLegacyProbes: false
+            },
+            {
+              id: "king.grant-wd-level3@1",
+              family: "king",
+              level: 3,
+              revision: 1,
+              movement: "WD",
+              legacyType: "a",
+              legacySlot: 1,
+              placement: "reserve",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              inheritLegacyProbes: false
+            },
+            {
+              id: "knight.level3-nad@1",
+              family: "knight",
+              level: 3,
+              revision: 1,
+              movement: "NAD",
+              legacyType: "f",
+              legacySlot: 5,
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              inheritLegacyProbes: false
+            },
+            {
+              id: "knight.purple@3",
+              family: "knight",
+              level: 3,
+              revision: 3,
+              movement: "NC",
+              legacyType: "g",
+              legacySlot: 3,
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              }
+            },
+            {
+              id: "pawn.level3-six-knight@1",
+              family: "pawn",
+              level: 3,
+              revision: 1,
+              movement: "ifmnDfmWfceFsNfN",
+              legacyType: "g",
+              legacySlot: 6,
+              placement: "replace",
+              roles: {
+                pawn: true,
+                castlingRook: false,
+                enPassant: true
+              },
+              inheritLegacyProbes: false
+            },
+            {
+              id: "pawn.purple@13",
+              family: "pawn",
+              level: 3,
+              revision: 13,
+              movement: "mRcfB",
+              legacyType: "d",
+              legacySlot: 3,
+              placement: "replace",
+              roles: {
+                pawn: true,
+                castlingRook: false,
+                enPassant: true
+              },
+              inheritLegacyProbes: false
+            },
+            {
+              id: "pawn.queen-sideways@1",
+              family: "pawn",
+              level: 3,
+              revision: 1,
+              movement: "mQ2cfQ2",
+              legacyType: "a",
+              legacySlot: 1,
+              placement: "replace",
+              roles: {
+                pawn: true,
+                castlingRook: false,
+                enPassant: true
+              },
+              inheritLegacyProbes: false
+            },
+            {
+              id: "queen.level3-side-threeleap-camel-zebra-tripper@1",
+              family: "queen",
+              level: 3,
+              revision: 1,
+              movement: "QsHsCsZG",
+              legacyType: "i",
+              legacySlot: 8,
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              inheritLegacyProbes: false
+            },
+            {
+              id: "queen.purple@1",
+              family: "queen",
+              level: 3,
+              revision: 1,
+              movement: "QN",
+              legacyType: "u",
+              legacySlot: 8,
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              }
+            },
+            {
+              id: "queen.wraith-side-through@1",
+              family: "queen",
+              level: 3,
+              revision: 1,
+              movement: "QgmQ0gcBgcsR0",
+              placement: "replace",
+              legacyType: "a",
+              legacySlot: 1,
+              roles: {
+                pawn: false,
+                castlingRook: false,
+                enPassant: false
+              },
+              inheritLegacyProbes: false
+            },
+            {
+              id: "rook.cataphract-no-tall-back@1",
+              family: "rook",
+              level: 3,
+              revision: 1,
+              movement: "RsCfC",
+              legacyType: "a",
+              legacySlot: 1,
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: true,
+                enPassant: false
+              },
+              inheritLegacyProbes: false
+            },
+            {
+              id: "rook.purple@10",
+              family: "rook",
+              level: 3,
+              revision: 10,
+              movement: "RfB",
+              legacyType: "x",
+              legacySlot: 18,
+              placement: "replace",
+              roles: {
+                pawn: false,
+                castlingRook: true,
+                enPassant: false
+              }
+            }
+          ],
+          allocations: [
+            {
+              id: "bishop.purple@13",
+              letter: "m",
+              slot: 22
+            },
+            {
+              id: "bishop.vertical-blocked@1",
+              letter: "a",
+              slot: 1
+            },
+            {
+              id: "king.grant-wd-level3@1",
+              letter: "c",
+              slot: 2
+            },
+            {
+              id: "knight.level3-nad@1",
+              letter: "f",
+              slot: 5
+            },
+            {
+              id: "knight.purple@3",
+              letter: "g",
+              slot: 3
+            },
+            {
+              id: "pawn.level3-six-knight@1",
+              letter: "e",
+              slot: 6
+            },
+            {
+              id: "pawn.purple@13",
+              letter: "d",
+              slot: 4
+            },
+            {
+              id: "pawn.queen-sideways@1",
+              letter: "h",
+              slot: 7
+            },
+            {
+              id: "queen.level3-side-threeleap-camel-zebra-tripper@1",
+              letter: "i",
+              slot: 8
+            },
+            {
+              id: "queen.purple@1",
+              letter: "u",
+              slot: 9
+            },
+            {
+              id: "queen.wraith-side-through@1",
+              letter: "j",
+              slot: 10
+            },
+            {
+              id: "rook.cataphract-no-tall-back@1",
+              letter: "l",
+              slot: 11
+            },
+            {
+              id: "rook.purple@10",
+              letter: "x",
+              slot: 18
+            }
+          ],
+          hash: "97ac12c1fefcb3c9e7d68041f6b2ad8bccffa4a7ebfc4eccb99c688ed7a4d4e3"
+        },
+        config: "# Dynamic experiment profile. Meanings belong to the archived registry.\n[levelup-design-4878712fe0f46ab8ce5a:chess]\ncustomPiece1 = a:BvW2vnN\ncustomPiece2 = c:WD\ncustomPiece3 = g:NC\ncustomPiece4 = d:mRcfB\ncustomPiece5 = f:NAD\ncustomPiece6 = e:ifmnDfmWfceFsNfN\ncustomPiece7 = h:mQ2cfQ2\ncustomPiece8 = i:QsHsCsZG\ncustomPiece9 = u:QN\ncustomPiece10 = j:QgmQ0gcBgcsR0\ncustomPiece11 = l:RsCfC\ncustomPiece18 = x:RfB\ncustomPiece22 = m:BsR2nsN\npieceValueMg = m:1858 a:1742 c:563 f:1663 g:1663 e:762 d:762 h:418 i:3772 u:3738 j:3772 l:2240 x:1904\npieceValueEg = m:1903 a:1769 c:635 f:1877 g:1877 e:808 d:808 h:436 i:3470 u:3875 j:3470 l:2413 x:1932\npieceToCharTable = -\ncastlingRookPiece = rlx\ndoubleStepRegionWhite = *1 *2\ndoubleStepRegionBlack = *7 *8\npawnTypes = pdeh\nenPassantTypes = pdeh\npromotionPieceTypes = nbrq\n# Finite nonroyal king grants: deployment spends a turn; captures disappear.\ntwoBoards = false\npieceDrops = true\ncapturesToHand = false\nmustDrop = false\ndropChecks = false\ndropRegionWhite = *1 *2 *3 *4\ndropRegionBlack = *5 *6 *7 *8\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n"
+      }
+    },
+    puzzles: [
+      {
+        id: "authored-queen-net",
+        title: "A queen and king finish",
+        variant: "chess",
+        initialFen: "7k/8/5KQ1/8/8/8/8/8 w - - 0 1",
+        initialMoves: [],
+        fen: "7k/8/5KQ1/8/8/8/8/8 w - - 0 1",
+        solverColor: "w",
+        goal: {
+          type: "mate",
+          moves: 1
+        },
+        solution: {
+          move: "g6g7",
+          replies: []
+        },
+        provenance: {
+          kind: "authored",
+          description: "A deliberately composed example, not extracted from a balance game.",
+          verification: "Every legal move tested for mate in one under the declared rules."
+        },
+        pieces: {
+          present: [
+            "king",
+            "queen"
+          ],
+          moved: [
+            "queen"
+          ],
+          involved: [
+            "king",
+            "queen"
+          ],
+          stationary: [],
+          method: "mate-tree-effects",
+          effects: []
+        }
+      },
+      {
+        id: "authored-stationary-knight",
+        title: "The knight does not need to move",
+        variant: "chess",
+        initialFen: "7k/8/4N1Q1/8/8/8/8/K7 w - - 0 1",
+        initialMoves: [],
+        fen: "7k/8/4N1Q1/8/8/8/8/K7 w - - 0 1",
+        solverColor: "w",
+        goal: {
+          type: "mate",
+          moves: 1
+        },
+        solution: {
+          move: "g6g7",
+          replies: []
+        },
+        provenance: {
+          kind: "authored",
+          description: "A deliberately composed example, not extracted from a balance game.",
+          verification: "Every legal move tested for mate in one under the declared rules."
+        },
+        pieces: {
+          present: [
+            "king",
+            "knight",
+            "queen"
+          ],
+          moved: [
+            "queen"
+          ],
+          involved: [
+            "king",
+            "knight",
+            "queen"
+          ],
+          stationary: [
+            "knight"
+          ],
+          method: "mate-tree-effects",
+          effects: [
+            {
+              id: "knight",
+              square: "e6",
+              reason: "Removing this stationary unit changes the mating tree or its legal defenses."
+            }
+          ]
+        }
+      },
+      {
+        id: "authored-vanguard-finish",
+        title: "Vanguard\u2019s diagonal finish",
+        variant: "levelup-design-4878712fe0f46ab8ce5a",
+        initialFen: "7k/X7/5K2/8/8/8/8/8[] w - - 0 1",
+        initialMoves: [],
+        fen: "7k/X7/5K2/8/8/8/8/8[] w - - 0 1",
+        solverColor: "w",
+        goal: {
+          type: "mate",
+          moves: 1
+        },
+        solution: {
+          move: "a7g7",
+          replies: []
+        },
+        provenance: {
+          kind: "authored",
+          description: "A deliberately composed example, not extracted from a balance game.",
+          verification: "Every legal move tested for mate in one under the declared rules."
+        },
+        pieces: {
+          present: [
+            "king",
+            "rook.purple@10"
+          ],
+          moved: [
+            "rook.purple@10"
+          ],
+          involved: [
+            "king",
+            "rook.purple@10"
+          ],
+          stationary: [],
+          method: "mate-tree-effects",
+          effects: []
+        }
+      }
+    ]
+  };
+
+  // src/app.js
+  var { validatePuzzlePack: validatePuzzlePack2, MAX_PACK_BYTES: MAX_PACK_BYTES2 } = import_puzzle_data3.default;
+  var puzzlePack = validatePuzzlePack2(puzzle_examples_default);
+  var puzzleMenu;
+  var puzzleSession = null;
+  var parkedGame = null;
+  var navigationPaused = false;
+  var puzzleFeedback = "";
+  var puzzleRequest = 0;
   var game = new Chess();
   var board = document.querySelector("#board");
   var promotion = document.querySelector("#promotion");
@@ -60070,7 +61207,7 @@ pieceDrops = false
   var appearancePreferences;
   var drawingMode = false;
   var ALL_DESIGN_SLOTS = [...import_piece_catalog2.PIECE_SLOTS, { square: "e1", color: "w", family: "king" }, { square: "e8", color: "b", family: "king" }];
-  var side = (color) => color === "w" ? "White" : "Black";
+  var side2 = (color) => color === "w" ? "White" : "Black";
   var opponent = document.querySelector("#opponent");
   var humanSide = document.querySelector("#human-side");
   var difficulty = document.querySelector("#difficulty");
@@ -60121,7 +61258,7 @@ pieceDrops = false
       const description = document.createElement("p");
       select.id = `experimental-upgrade-${slot.square}`;
       label.htmlFor = select.id;
-      label.textContent = `${side(slot.color)} ${slot.square} ${family}`;
+      label.textContent = `${side2(slot.color)} ${slot.square} ${family}`;
       description.id = `experimental-description-${slot.square}`;
       description.className = "design-description";
       select.setAttribute("aria-describedby", description.id);
@@ -60189,7 +61326,7 @@ pieceDrops = false
       const select = document.createElement("select");
       select.id = `piece-upgrade-${slot.square}`;
       label.htmlFor = select.id;
-      label.textContent = `${side(slot.color)} ${slot.square} ${family}`;
+      label.textContent = `${side2(slot.color)} ${slot.square} ${family}`;
       import_piece_catalog2.PIECE_LEVELS[family].forEach((type, level) => {
         if (!type) return;
         const option = document.createElement("option");
@@ -60287,12 +61424,13 @@ pieceDrops = false
       document.querySelector(`#${prefix}-${slot.square}`).value = experimental ? "" : "0";
     }
     updateSetup();
-    armyResetStatus.textContent = `${color ? side(color) + " upgrades" : "Both armies\u2019 upgrades"} cleared. Choose your army, then start a New game to reset the board.`;
+    armyResetStatus.textContent = `${color ? side2(color) + " upgrades" : "Both armies\u2019 upgrades"} cleared. Choose your army, then start a New game to reset the board.`;
   }
   document.querySelector("#clear-white-army").onclick = () => clearArmySelections("w");
   document.querySelector("#clear-black-army").onclick = () => clearArmySelections("b");
   document.querySelector("#clear-both-armies").onclick = () => clearArmySelections();
   function setSetupEditing(value) {
+    if (puzzleSession) return;
     editingSetup = value && usesBoardSetup();
     setupSquare = null;
     selected = null;
@@ -60333,7 +61471,7 @@ pieceDrops = false
     document.querySelector("#save-game").disabled = editingSetup;
     if (!editingSetup) return;
     const slot = (0, import_design_setup2.designSlots)(setupProfile()).find((slot2) => slot2.square === setupSquare);
-    document.querySelector("#setup-piece-title").textContent = slot ? `${side(slot.color)} ${slot.family} \xB7 ${slot.square}` : "Choose a piece";
+    document.querySelector("#setup-piece-title").textContent = slot ? `${side2(slot.color)} ${slot.family} \xB7 ${slot.square}` : "Choose a piece";
     document.querySelector("#setup-picker-hint").textContent = slot?.family === "king" ? "Your royal king stays and keeps castling. The guard starts in reserve: drop on an empty square in your half, without giving check." : slot ? "Choose an upgrade or return this piece to standard." : "Click a starting piece on the board to see its upgrades.";
     const list = document.querySelector("#setup-upgrades");
     list.replaceChildren();
@@ -60380,10 +61518,10 @@ pieceDrops = false
       const container = document.querySelector(`#${id}`);
       container.replaceChildren();
       container.hidden = editingSetup || !game.profile?.roles.reserveTypes?.length;
-      container.setAttribute("aria-label", `${side(color)} reserves`);
+      container.setAttribute("aria-label", `${side2(color)} reserves`);
       if (container.hidden) continue;
       const label = document.createElement("span");
-      label.textContent = `${side(color)} reserve`;
+      label.textContent = `${side2(color)} reserve`;
       label.className = "pocket-label";
       container.append(label);
       const entries = pockets?.[color] || [];
@@ -60401,7 +61539,7 @@ pieceDrops = false
         button.dataset.pocketColor = color;
         button.dataset.pocketType = entry.type;
         button.dataset.accent = info.accent;
-        button.setAttribute("aria-label", `${side(color)} ${info.name}, ${entry.count} in reserve`);
+        button.setAttribute("aria-label", `${side2(color)} ${info.name}, ${entry.count} in reserve`);
         button.setAttribute("aria-pressed", String(selectedDrop === entry.type && color === game.turn()));
         button.title = info.description;
         const icon = document.createElement("span");
@@ -60410,7 +61548,7 @@ pieceDrops = false
         const caption = document.createElement("span");
         caption.textContent = ` ${info.name}${entry.count > 1 ? ` \xD7${entry.count}` : ""}`;
         button.append(icon, caption);
-        button.disabled = color !== game.turn() || buildingGame || isFinished() || !canPlay() || engineBusy || Boolean(pending) || !(0, import_engine_play2.canHumanMove)(opponent.value, game.turn(), humanSide.value) || inspectMode;
+        button.disabled = color !== game.turn() || buildingGame || isFinished() || !canPlay() || engineBusy || Boolean(pending) || !mayHumanPlay() || inspectMode;
         button.onclick = () => {
           if (button.disabled) return;
           selected = null;
@@ -60441,24 +61579,25 @@ pieceDrops = false
   var isTimed = () => clock.control !== "none";
   var isFinished = () => game.isGameOver() || Boolean(clock.expired);
   var canPlay = () => !isTimed() || clock.running;
+  var mayHumanPlay = () => !navigationPaused && (puzzleSession ? puzzleSession.state().canMove : (0, import_engine_play2.canHumanMove)(opponent.value, game.turn(), humanSide.value));
   function timeoutResult() {
     if (!clock.expired) return null;
     const winner = clock.expired === "w" ? "b" : "w";
     const canMate = game.board().flat().some((piece) => piece?.color === winner && piece.type !== "k") || Boolean(game.pockets?.()[winner]?.length);
-    return canMate ? { result: winner === "w" ? "1-0" : "0-1", status: `${side(winner)} wins on time` } : { result: "1/2-1/2", status: "Draw on time: opponent has only a king" };
+    return canMate ? { result: winner === "w" ? "1-0" : "0-1", status: `${side2(winner)} wins on time` } : { result: "1/2-1/2", status: "Draw on time: opponent has only a king" };
   }
   function updateClocks() {
     for (const [element, color] of [[clockTop, flipped ? "w" : "b"], [clockBottom, flipped ? "b" : "w"]]) {
       element.id = `${color === "w" ? "white" : "black"}-clock`;
       element.hidden = !isTimed();
       element.textContent = (0, import_clock2.formatClock)(clock.remaining[color]);
-      element.setAttribute("aria-label", `${side(color)} clock`);
+      element.setAttribute("aria-label", `${side2(color)} clock`);
       element.classList.toggle("active", clock.running && clock.active === color);
       element.classList.toggle("flagged", clock.expired === color);
     }
     clockToggle.disabled = editingSetup || !isTimed() || isFinished();
     clockToggle.textContent = clock.running ? "Pause clock" : clock.started ? "Resume clock" : "Start clock";
-    const message = !isTimed() ? "Untimed. No time limit." : clock.expired ? "Clock finished." : game.isGameOver() ? "Game finished. Clocks stopped." : clock.running ? `${side(clock.active)} clock running (${import_clock2.CLOCK_CONTROLS[clock.control].label}).` : clockNotice || (clock.started ? "Clocks paused. Resume clock to continue." : "Ready. Start clock to begin.");
+    const message = !isTimed() ? "Untimed. No time limit." : clock.expired ? "Clock finished." : game.isGameOver() ? "Game finished. Clocks stopped." : clock.running ? `${side2(clock.active)} clock running (${import_clock2.CLOCK_CONTROLS[clock.control].label}).` : clockNotice || (clock.started ? "Clocks paused. Resume clock to continue." : "Ready. Start clock to begin.");
     const status = document.querySelector("#clock-status");
     const text = message + (timeControl.value !== clock.control ? " New selection applies to the next game." : "");
     if (status.textContent !== text) status.textContent = text;
@@ -60488,6 +61627,15 @@ pieceDrops = false
     updateClocks();
   }
   function playMove(move) {
+    if (puzzleSession) {
+      const result2 = puzzleSession.tryMove(move);
+      puzzleFeedback = result2.accepted ? "" : "That move does not achieve the shortest forced mate. Try another move.";
+      selected = null;
+      selectedDrop = null;
+      boardAnnotations?.clear();
+      clearInspection();
+      return result2.accepted ? result2.moves[0] : null;
+    }
     if (!settleClock() || !canPlay()) return null;
     const color = game.turn();
     const result = game.move(move);
@@ -60543,7 +61691,7 @@ pieceDrops = false
     updateEngineButtons();
   }
   function updateEngineButtons() {
-    const blocked = engineBusy || editingSetup || buildingGame || isFinished() || Boolean(pending);
+    const blocked = Boolean(puzzleSession) || navigationPaused || engineBusy || editingSetup || buildingGame || isFinished() || Boolean(pending);
     document.querySelector("#engine-retry").disabled = blocked || opponent.value === "selfplay" && connected && !enginePaused;
     document.querySelector("#engine-retry").textContent = opponent.value === "selfplay" ? connected ? "Start / Resume" : "Connect and start" : connected ? "Resume engine" : "Connect engine";
     document.querySelector("#engine-cancel").disabled = !engineBusy && (enginePaused || !connected || isFinished());
@@ -60562,6 +61710,131 @@ pieceDrops = false
     engineTimer = null;
     nextEngineAt = 0;
     selectedDrop = null;
+  }
+  function pauseForMenu() {
+    navigationPaused = true;
+    cancelEngine();
+    pauseClocks("Game paused. Resume the clock when ready.");
+    selected = null;
+    selectedDrop = null;
+    clearInspection();
+    render();
+  }
+  async function startPuzzle(puzzle) {
+    if (buildingGame || pending) throw new Error("Finish the current board action before opening a puzzle.");
+    const request = ++puzzleRequest;
+    const next = await createPuzzleSession(puzzlePack, puzzle.id);
+    if (request !== puzzleRequest) {
+      next.dispose();
+      return;
+    }
+    cancelEngine();
+    if (!parkedGame) parkedGame = {
+      game,
+      clock: clock.snapshot(),
+      flipped,
+      editingSetup,
+      tab: workspaceTabs.active,
+      clockNotice,
+      inspectMode
+    };
+    puzzleSession?.dispose();
+    puzzleSession = next;
+    game = next.game;
+    editingSetup = false;
+    setupSquare = null;
+    selected = null;
+    selectedDrop = null;
+    inspectMode = false;
+    clearInspection();
+    drawingMode = false;
+    boardAnnotations?.setDrawing(false);
+    document.querySelector("#drawing-mode").setAttribute("aria-pressed", "false");
+    boardAnnotations?.clear();
+    flipped = puzzle.solverColor === "b";
+    clock.reset("none", game.turn());
+    handledFlag = null;
+    puzzleFeedback = "";
+    navigationPaused = false;
+    workspaceTabs.show("game");
+    render();
+    document.querySelector("#board").scrollIntoView({ block: "nearest" });
+  }
+  function leavePuzzle() {
+    if (!puzzleSession || !parkedGame) return;
+    puzzleRequest++;
+    puzzleSession.dispose();
+    puzzleSession = null;
+    const previous = parkedGame;
+    parkedGame = null;
+    game = previous.game;
+    flipped = previous.flipped;
+    editingSetup = previous.editingSetup;
+    inspectMode = previous.inspectMode;
+    clock.restore(previous.clock, game.history().length);
+    clockNotice = "Game restored. Resume the clock when ready.";
+    selected = null;
+    selectedDrop = null;
+    clearInspection();
+    boardAnnotations?.clear();
+    puzzleFeedback = "";
+    navigationPaused = false;
+    render();
+    workspaceTabs.show(previous.tab);
+    if ((0, import_engine_play2.isEngineMode)(opponent.value)) engineMessage("Game restored. Engine paused; resume when ready.");
+  }
+  async function retryPuzzle() {
+    const current = puzzleSession, request = ++puzzleRequest;
+    if (!current) return;
+    try {
+      await current.retry();
+      if (request !== puzzleRequest || current !== puzzleSession) return;
+      game = current.game;
+      selected = null;
+      selectedDrop = null;
+      clearInspection();
+      boardAnnotations?.clear();
+      puzzleFeedback = "";
+      render();
+    } catch (error) {
+      if (current === puzzleSession) {
+        puzzleFeedback = error.message;
+        render();
+      }
+    }
+  }
+  function importPuzzlePack(text) {
+    if (typeof text !== "string" || text.length > MAX_PACK_BYTES2) throw new Error("Choose a puzzle pack up to 20 MB.");
+    const incoming = validatePuzzlePack2(text), puzzles = new Map(puzzlePack.puzzles.map((row) => [row.id, row]));
+    for (const row of incoming.puzzles) {
+      if (puzzles.has(row.id) && JSON.stringify(puzzles.get(row.id)) !== JSON.stringify(row)) throw new Error("This pack conflicts with an existing puzzle ID.");
+      puzzles.set(row.id, row);
+    }
+    const merged = validatePuzzlePack2({
+      schemaVersion: 1,
+      format: "levelup-puzzle-pack",
+      profiles: { ...puzzlePack.profiles, ...incoming.profiles },
+      puzzles: [...puzzles.values()]
+    });
+    puzzlePack = merged;
+    return merged;
+  }
+  function renderPuzzleWorkspace() {
+    const active = Boolean(puzzleSession);
+    document.body.classList.toggle("puzzle-active", active);
+    for (const name of ["setup", "files"]) {
+      const tab = document.querySelector(`#panel-tab-${name}`);
+      tab.disabled = active;
+      tab.hidden = active;
+      document.querySelector(`#panel-${name}`).inert = active;
+    }
+    document.querySelector("#setup-toolbar").hidden = active || !usesBoardSetup();
+    document.querySelector("#undo").hidden = active;
+    document.querySelector("#new-game").hidden = active;
+    document.querySelector(".clock-controls").hidden = active;
+    updateEngineConfiguration();
+    if (active) document.querySelector("#engine-settings").hidden = true;
+    puzzleMenu?.renderSession(active ? { ...puzzleSession.state(), message: puzzleFeedback } : null);
   }
   async function engineFetch(route, options = {}) {
     if (location.protocol === "file:" || !/^https?:$/.test(location.protocol)) throw new Error("Engine play needs npm.cmd start. Open the address printed in your terminal.");
@@ -60598,7 +61871,7 @@ pieceDrops = false
     }
   }
   async function maybeEngineMove() {
-    if (buildingGame) return;
+    if (buildingGame || puzzleSession || navigationPaused) return;
     if (!(0, import_engine_play2.canRequestEngineMove)({
       opponent: opponent.value,
       turn: game.turn(),
@@ -60625,7 +61898,7 @@ pieceDrops = false
     engineController = new AbortController();
     const request = generation;
     const fen = game.fen();
-    engineMessage(`${side(game.turn())} \xB7 ${engineName} is thinking\u2026`);
+    engineMessage(`${side2(game.turn())} \xB7 ${engineName} is thinking\u2026`);
     try {
       const data = await engineFetch("/api/engine/move", {
         method: "POST",
@@ -60660,7 +61933,7 @@ pieceDrops = false
     document.querySelector("#engine-step").hidden = opponent.value !== "selfplay";
   }
   function beginEngine(step = false) {
-    if (editingSetup || buildingGame || engineBusy || pending || isFinished() || !(0, import_engine_play2.isEngineMode)(opponent.value)) return;
+    if (puzzleSession || navigationPaused || editingSetup || buildingGame || engineBusy || pending || isFinished() || !(0, import_engine_play2.isEngineMode)(opponent.value)) return;
     if (opponent.value === "selfplay" && isTimed() && !clock.running) {
       clockNotice = "";
       clock.start(game.turn());
@@ -60683,17 +61956,21 @@ pieceDrops = false
       files.reverse();
       ranks.reverse();
     }
-    const mayMove = !editingSetup && !inspectMode && !engineBusy && (0, import_engine_play2.canHumanMove)(opponent.value, game.turn(), humanSide.value) && !isFinished() && canPlay();
+    const mayMove = !editingSetup && !inspectMode && !engineBusy && mayHumanPlay() && !isFinished() && canPlay();
     const legal = !mayMove ? [] : selectedDrop ? game.moves({ drop: selectedDrop, verbose: true }) : selected ? game.moves({ square: selected, verbose: true }) : [];
     const guideSquare = editingSetup ? null : inspectedSquare || selected;
     if (guideSquare) requestPieceGuide(guideSquare);
-    const quietGuide = new Set(pieceGuide?.quiet || []);
-    const captureGuide = new Set(pieceGuide?.capture || []);
-    const history = game.history({ verbose: true });
+    const quietGuide = new Set(inspectMode ? pieceGuide?.quiet || [] : legal.filter((move) => !move.captured).map((move) => move.to));
+    const captureGuide = new Set(inspectMode ? pieceGuide?.capture || [] : legal.filter((move) => move.captured).map((move) => move.to));
+    const jumpQuiet = new Set((inspectMode ? pieceGuide?.jumpQuiet : pieceGuide?.legalJumpQuiet) || []);
+    const jumpCapture = new Set((inspectMode ? pieceGuide?.jumpCapture : pieceGuide?.legalJumpCapture) || []);
+    const history = game.history({ verbose: true }).slice(puzzleSession ? puzzleSession.puzzle.initialMoves.length : 0);
     const last = history.at(-1);
     const displayProfile = editingSetup ? setupProfile() : game.profile;
     const displayInfo = (type) => displayProfile ? (0, import_design_options4.pieceInfoForProfile)(displayProfile, type) : (0, import_piece_catalog2.pieceInfo)(type);
     board.classList.toggle("experimental-board", Boolean(displayProfile));
+    board.classList.toggle("inspect-board", inspectMode && !editingSetup);
+    document.querySelector(".guide-key").dataset.mode = inspectMode ? "abilities" : "legal";
     document.querySelector(".history-panel .panel-heading > span").textContent = game.profile ? "PIECE \xB7 LEVEL" : "SAN";
     board.replaceChildren();
     ranks.forEach((rank2, row) => files.forEach((file2, col) => {
@@ -60706,7 +61983,9 @@ pieceDrops = false
       button.dataset.legal = String(legal.some((move) => move.to === square));
       button.dataset.quiet = String(quietGuide.has(square));
       button.dataset.capture = String(captureGuide.has(square));
-      button.setAttribute("aria-label", `${square}${piece ? ` ${side(piece.color)} ${displayInfo(piece.type).name}` : " empty"}`);
+      const jumps = quietGuide.has(square) && jumpQuiet.has(square) || captureGuide.has(square) && jumpCapture.has(square);
+      button.dataset.jump = String(jumps);
+      button.setAttribute("aria-label", `${square}${piece ? ` ${side2(piece.color)} ${displayInfo(piece.type).name}` : " empty"}`);
       button.setAttribute("aria-pressed", String((editingSetup ? setupSquare : guideSquare) === square));
       if ((editingSetup ? setupSquare : guideSquare) === square) button.classList.add("selected");
       if (!editingSetup && last && [last.from, last.to].includes(square)) button.classList.add("last-move");
@@ -60732,16 +62011,24 @@ pieceDrops = false
       }
       const legalQuiet = legal.some((move) => move.to === square && !move.captured);
       const legalCapture = legal.some((move) => move.to === square && move.captured);
-      if (!piece && (quietGuide.has(square) || legalQuiet)) {
+      if (quietGuide.has(square) && (inspectMode || !piece)) {
         const marker = document.createElement("span");
         marker.className = "move-marker ability-move-marker";
         marker.dataset.playable = String(legalQuiet);
         button.append(marker);
       }
-      if (captureGuide.has(square) || legalCapture) {
+      if (captureGuide.has(square)) {
         const marker = document.createElement("span");
-        marker.className = `ability-capture-marker${legalCapture ? " capture-marker" : ""}${piece || legalCapture ? " occupied-capture" : ""}`;
+        marker.className = `ability-capture-marker${!inspectMode ? " capture-marker legal-capture-marker" : ""}${!inspectMode && (piece || legalCapture) ? " occupied-capture" : ""}`;
         marker.dataset.playable = String(legalCapture);
+        button.append(marker);
+      }
+      if (jumps) {
+        const marker = document.createElement("span");
+        marker.className = "jump-indicator";
+        marker.textContent = "\u21B7";
+        marker.title = "Jump or hop: crosses intervening pieces. Hops still need a hurdle.";
+        marker.setAttribute("aria-hidden", "true");
         button.append(marker);
       }
       for (const [show, value, position] of [[col === 0, rank2, "rank"], [row === 7, file2, "file"]]) {
@@ -60762,8 +62049,8 @@ pieceDrops = false
       board.append(button);
     }));
     boardAnnotations?.render();
-    let status = `${side(game.turn())} to move`;
-    if (game.isCheckmate()) status = `${side(game.turn() === "w" ? "b" : "w")} wins by checkmate`;
+    let status = `${side2(game.turn())} to move`;
+    if (game.isCheckmate()) status = `${side2(game.turn() === "w" ? "b" : "w")} wins by checkmate`;
     else if (game.isStalemate()) status = "Draw by stalemate";
     else if (game.isInsufficientMaterial()) status = "Draw: insufficient material";
     else if (game.isThreefoldRepetition()) status = "Draw by repetition";
@@ -60772,11 +62059,12 @@ pieceDrops = false
     if (clock.expired) status = timeoutResult().status;
     if (editingSetup) status = "Build your army";
     document.querySelector("#status").textContent = status;
+    if (puzzleSession) document.querySelector("#status").textContent = puzzleSession.state().status === "solved" ? "Puzzle solved" : puzzleSession.state().status === "revealed" ? "Solution revealed" : `${side2(game.turn())} to move \xB7 Puzzle`;
     const selectedPiece = guideSquare ? game.get(guideSquare) : null;
     const selectedDesign = selectedPiece ? designFor(selectedPiece.type) : null;
     const description = selectedDesign ? ` ${currentDesignOption(selectedDesign.id)?.description || ""}` : "";
-    document.querySelector("#hint").textContent = editingSetup ? "Click a starting piece to choose an upgrade. Start game when both armies are ready." : selectedPiece ? `${side(selectedPiece.color)} ${infoFor(selectedPiece.type).name} on ${guideSquare}.${description}` : isFinished() ? "Start a new game or undo a move to keep playing." : !canPlay() ? "Start or resume the clock to continue playing." : selectedDrop ? `Drop your ${infoFor(selectedDrop).name} on a highlighted empty square in your half. The drop cannot give check.` : "Select either side\u2019s piece to explore its movement and captures.";
-    document.querySelector("#piece-guide-status").textContent = guideError || (guideSquare && !pieceGuide ? "Loading piece guide\u2026" : guideSquare ? `${inspectedSquare || inspectMode ? "Inspecting only. " : ""}Dots show movement; red rings show capture ability. The guide includes abilities unavailable because of check or pins; only legal moves can be played.` : inspectMode ? "Inspect mode: click any piece without making a move." : "Gray dot: move \xB7 red ring: capture \xB7 both: either.");
+    document.querySelector("#hint").textContent = editingSetup ? "Click a starting piece to choose an upgrade. Start game when both armies are ready." : selectedPiece ? `${side2(selectedPiece.color)} ${infoFor(selectedPiece.type).name} on ${guideSquare}.${description}` : puzzleSession && puzzleSession.state().status !== "playing" ? "Retry this puzzle or return to the puzzle library." : isFinished() ? "Start a new game or undo a move to keep playing." : !canPlay() ? "Start or resume the clock to continue playing." : selectedDrop ? `Drop your ${infoFor(selectedDrop).name} on a highlighted empty square in your half. The drop cannot give check.` : "Select a piece for legal moves. Use Inspect pieces to explore either army\u2019s movement patterns.";
+    document.querySelector("#piece-guide-status").textContent = inspectMode ? guideError || (guideSquare && !pieceGuide ? "Loading movement pattern\u2026" : guideSquare ? "Movement pattern: dots are moves; red rings are captures. Other pieces, check and pins are ignored. Hops still need a hurdle. No moves are played in Inspect." : "Inspect mode: select any piece to see its movement pattern without blockers.") : guideSquare && inspectedSquare ? "Select a piece belonging to the side to move, or turn on Inspect pieces to explore this piece." : "Only legal moves are shown: gray dots for moves and gray rings for captures.";
     document.querySelector("#inspect-mode").setAttribute("aria-pressed", String(inspectMode));
     document.querySelector("#drawing-mode").disabled = editingSetup;
     document.querySelector("#undo").disabled = editingSetup || history.length === 0;
@@ -60805,20 +62093,26 @@ pieceDrops = false
       text.textContent = displaySan(move.san);
       if (game.profile) {
         const info = infoFor(move.piece);
-        const description2 = move.drop ? `${side(move.color)} drops ${info.name} on ${move.to}` : `${side(move.color)} ${info.name} from ${move.from} ${move.captured ? "captures on" : "to"} ${move.to}`;
+        const description2 = move.drop ? `${side2(move.color)} drops ${info.name} on ${move.to}` : `${side2(move.color)} ${info.name} from ${move.from} ${move.captured ? "captures on" : "to"} ${move.to}`;
         text.title = description2;
         text.setAttribute("aria-label", description2);
       }
       item.append(text);
     }
     document.querySelector("#empty-history").hidden = history.length > 0;
+    document.querySelector("#empty-history").textContent = puzzleSession ? "Your solution starts here." : "The opening is yours.";
     list.scrollTop = list.scrollHeight;
     if (focusSquare) board.querySelector(`[data-square="${focusSquare}"]`)?.focus({ preventScroll: true });
-    if ((0, import_engine_play2.isEngineMode)(opponent.value)) {
+    if (puzzleSession) {
+      const solver = puzzleSession.puzzle.solverColor;
+      for (const [selector, color] of [["#top-player", flipped ? "w" : "b"], ["#bottom-player", flipped ? "b" : "w"]]) {
+        document.querySelector(selector).textContent = `${color === solver ? "You" : "Defense"} \xB7 ${side2(color)}`;
+      }
+    } else if ((0, import_engine_play2.isEngineMode)(opponent.value)) {
       const topColor = flipped ? "w" : "b";
       const bottomColor = flipped ? "b" : "w";
-      document.querySelector("#top-player").textContent = opponent.value !== "selfplay" && topColor === humanSide.value ? `You \xB7 ${side(topColor)}` : `Fairy Stockfish \xB7 ${side(topColor)}`;
-      document.querySelector("#bottom-player").textContent = opponent.value !== "selfplay" && bottomColor === humanSide.value ? `You \xB7 ${side(bottomColor)}` : `Fairy Stockfish \xB7 ${side(bottomColor)}`;
+      document.querySelector("#top-player").textContent = opponent.value !== "selfplay" && topColor === humanSide.value ? `You \xB7 ${side2(topColor)}` : `Fairy Stockfish \xB7 ${side2(topColor)}`;
+      document.querySelector("#bottom-player").textContent = opponent.value !== "selfplay" && bottomColor === humanSide.value ? `You \xB7 ${side2(bottomColor)}` : `Fairy Stockfish \xB7 ${side2(bottomColor)}`;
     }
     document.querySelectorAll(".player .level").forEach((label, index) => {
       const color = index === 0 ? flipped ? "w" : "b" : flipped ? "b" : "w";
@@ -60826,8 +62120,8 @@ pieceDrops = false
         const draft = setupChoice();
         const spent = color === "w" ? draft.white : draft.black;
         label.textContent = `${spent}/${draft.budget} POINTS`;
-        label.title = `${side(color)} draft upgrade budget`;
-        label.setAttribute("aria-label", `${side(color)} draft army: ${spent} of ${draft.budget} points`);
+        label.title = `${side2(color)} draft upgrade budget`;
+        label.setAttribute("aria-label", `${side2(color)} draft army: ${spent} of ${draft.budget} points`);
         return;
       }
       label.removeAttribute("aria-label");
@@ -60843,6 +62137,7 @@ pieceDrops = false
     });
     updateClocks();
     updateEngineButtons();
+    renderPuzzleWorkspace();
     void maybeEngineMove();
   }
   function selectSquare(square) {
@@ -60854,7 +62149,7 @@ pieceDrops = false
     }
     settleClock();
     if (buildingGame || pending) return;
-    const movable = !inspectMode && !engineBusy && !isFinished() && canPlay() && (0, import_engine_play2.canHumanMove)(opponent.value, game.turn(), humanSide.value);
+    const movable = !inspectMode && !engineBusy && !isFinished() && canPlay() && mayHumanPlay();
     const moves = movable ? (selectedDrop ? game.moves({ drop: selectedDrop, verbose: true }) : selected ? game.moves({ square: selected, verbose: true }) : []).filter((move) => move.to === square) : [];
     if (moves.length) {
       if (moves.some((move) => move.promotion)) {
@@ -60900,6 +62195,7 @@ pieceDrops = false
     pending = null;
   });
   document.querySelector("#undo").onclick = () => {
+    if (puzzleSession) return;
     cancelEngine();
     pauseClocks();
     game.undo();
@@ -60922,6 +62218,7 @@ pieceDrops = false
     render();
   };
   async function newGame() {
+    if (puzzleSession) return;
     if (buildingGame || !updateSetup()) return;
     const request = ++replacementGeneration;
     const selectedMode = gameMode.value;
@@ -61259,6 +62556,34 @@ pieceDrops = false
   experimentalFamily.onchange = updateExperimentalFamily;
   for (const square of upgradeSquares) document.querySelector(`#upgrade-${square}`).onchange = updateSetup;
   workspaceTabs = createWorkspaceTabs(document);
+  puzzleMenu = createPuzzleMenu({
+    onPause: pauseForMenu,
+    onResume: () => {
+      navigationPaused = false;
+      render();
+    },
+    onImport: importPuzzlePack,
+    onStart: startPuzzle,
+    onRetry: () => {
+      void retryPuzzle();
+    },
+    onHint: () => {
+      puzzleFeedback = "";
+      puzzleSession?.hint();
+      render();
+    },
+    onReveal: () => {
+      puzzleFeedback = "";
+      puzzleSession?.reveal();
+      selected = null;
+      selectedDrop = null;
+      clearInspection();
+      boardAnnotations?.clear();
+      render();
+    },
+    onLeave: leavePuzzle
+  });
+  puzzleMenu.setLibrary(puzzlePack);
   appearancePreferences = (0, import_board_appearance.createAppearancePreferences)({ document, onChange: () => {
     boardAnnotations?.render();
     render();

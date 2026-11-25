@@ -1,0 +1,416 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-puzzle-pack",
+  "profiles": {
+    "levelup-design-4878712fe0f46ab8ce5a": {
+      "schemaVersion": 1,
+      "variant": "levelup-design-4878712fe0f46ab8ce5a",
+      "hash": "bf684b948c6b0ee26948f1f138077d933a36e14cce681566f93781ee87d76082",
+      "registryHash": "97ac12c1fefcb3c9e7d68041f6b2ad8bccffa4a7ebfc4eccb99c688ed7a4d4e3",
+      "registry": {
+        "schemaVersion": 1,
+        "definitions": [
+          {
+            "id": "bishop.purple@13",
+            "family": "bishop",
+            "level": 3,
+            "revision": 13,
+            "movement": "BsR2nsN",
+            "legacyType": "m",
+            "legacySlot": 22,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            }
+          },
+          {
+            "id": "bishop.vertical-blocked@1",
+            "family": "bishop",
+            "level": 3,
+            "revision": 1,
+            "movement": "BvW2vnN",
+            "legacyType": "a",
+            "legacySlot": 1,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "inheritLegacyProbes": false
+          },
+          {
+            "id": "king.grant-wd-level3@1",
+            "family": "king",
+            "level": 3,
+            "revision": 1,
+            "movement": "WD",
+            "legacyType": "a",
+            "legacySlot": 1,
+            "placement": "reserve",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "inheritLegacyProbes": false
+          },
+          {
+            "id": "knight.level3-nad@1",
+            "family": "knight",
+            "level": 3,
+            "revision": 1,
+            "movement": "NAD",
+            "legacyType": "f",
+            "legacySlot": 5,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "inheritLegacyProbes": false
+          },
+          {
+            "id": "knight.purple@3",
+            "family": "knight",
+            "level": 3,
+            "revision": 3,
+            "movement": "NC",
+            "legacyType": "g",
+            "legacySlot": 3,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            }
+          },
+          {
+            "id": "pawn.level3-six-knight@1",
+            "family": "pawn",
+            "level": 3,
+            "revision": 1,
+            "movement": "ifmnDfmWfceFsNfN",
+            "legacyType": "g",
+            "legacySlot": 6,
+            "placement": "replace",
+            "roles": {
+              "pawn": true,
+              "castlingRook": false,
+              "enPassant": true
+            },
+            "inheritLegacyProbes": false
+          },
+          {
+            "id": "pawn.purple@13",
+            "family": "pawn",
+            "level": 3,
+            "revision": 13,
+            "movement": "mRcfB",
+            "legacyType": "d",
+            "legacySlot": 3,
+            "placement": "replace",
+            "roles": {
+              "pawn": true,
+              "castlingRook": false,
+              "enPassant": true
+            },
+            "inheritLegacyProbes": false
+          },
+          {
+            "id": "pawn.queen-sideways@1",
+            "family": "pawn",
+            "level": 3,
+            "revision": 1,
+            "movement": "mQ2cfQ2",
+            "legacyType": "a",
+            "legacySlot": 1,
+            "placement": "replace",
+            "roles": {
+              "pawn": true,
+              "castlingRook": false,
+              "enPassant": true
+            },
+            "inheritLegacyProbes": false
+          },
+          {
+            "id": "queen.level3-side-threeleap-camel-zebra-tripper@1",
+            "family": "queen",
+            "level": 3,
+            "revision": 1,
+            "movement": "QsHsCsZG",
+            "legacyType": "i",
+            "legacySlot": 8,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "inheritLegacyProbes": false
+          },
+          {
+            "id": "queen.purple@1",
+            "family": "queen",
+            "level": 3,
+            "revision": 1,
+            "movement": "QN",
+            "legacyType": "u",
+            "legacySlot": 8,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            }
+          },
+          {
+            "id": "queen.wraith-side-through@1",
+            "family": "queen",
+            "level": 3,
+            "revision": 1,
+            "movement": "QgmQ0gcBgcsR0",
+            "placement": "replace",
+            "legacyType": "a",
+            "legacySlot": 1,
+            "roles": {
+              "pawn": false,
+              "castlingRook": false,
+              "enPassant": false
+            },
+            "inheritLegacyProbes": false
+          },
+          {
+            "id": "rook.cataphract-no-tall-back@1",
+            "family": "rook",
+            "level": 3,
+            "revision": 1,
+            "movement": "RsCfC",
+            "legacyType": "a",
+            "legacySlot": 1,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": true,
+              "enPassant": false
+            },
+            "inheritLegacyProbes": false
+          },
+          {
+            "id": "rook.purple@10",
+            "family": "rook",
+            "level": 3,
+            "revision": 10,
+            "movement": "RfB",
+            "legacyType": "x",
+            "legacySlot": 18,
+            "placement": "replace",
+            "roles": {
+              "pawn": false,
+              "castlingRook": true,
+              "enPassant": false
+            }
+          }
+        ],
+        "allocations": [
+          {
+            "id": "bishop.purple@13",
+            "letter": "m",
+            "slot": 22
+          },
+          {
+            "id": "bishop.vertical-blocked@1",
+            "letter": "a",
+            "slot": 1
+          },
+          {
+            "id": "king.grant-wd-level3@1",
+            "letter": "c",
+            "slot": 2
+          },
+          {
+            "id": "knight.level3-nad@1",
+            "letter": "f",
+            "slot": 5
+          },
+          {
+            "id": "knight.purple@3",
+            "letter": "g",
+            "slot": 3
+          },
+          {
+            "id": "pawn.level3-six-knight@1",
+            "letter": "e",
+            "slot": 6
+          },
+          {
+            "id": "pawn.purple@13",
+            "letter": "d",
+            "slot": 4
+          },
+          {
+            "id": "pawn.queen-sideways@1",
+            "letter": "h",
+            "slot": 7
+          },
+          {
+            "id": "queen.level3-side-threeleap-camel-zebra-tripper@1",
+            "letter": "i",
+            "slot": 8
+          },
+          {
+            "id": "queen.purple@1",
+            "letter": "u",
+            "slot": 9
+          },
+          {
+            "id": "queen.wraith-side-through@1",
+            "letter": "j",
+            "slot": 10
+          },
+          {
+            "id": "rook.cataphract-no-tall-back@1",
+            "letter": "l",
+            "slot": 11
+          },
+          {
+            "id": "rook.purple@10",
+            "letter": "x",
+            "slot": 18
+          }
+        ],
+        "hash": "97ac12c1fefcb3c9e7d68041f6b2ad8bccffa4a7ebfc4eccb99c688ed7a4d4e3"
+      },
+      "config": "# Dynamic experiment profile. Meanings belong to the archived registry.\n[levelup-design-4878712fe0f46ab8ce5a:chess]\ncustomPiece1 = a:BvW2vnN\ncustomPiece2 = c:WD\ncustomPiece3 = g:NC\ncustomPiece4 = d:mRcfB\ncustomPiece5 = f:NAD\ncustomPiece6 = e:ifmnDfmWfceFsNfN\ncustomPiece7 = h:mQ2cfQ2\ncustomPiece8 = i:QsHsCsZG\ncustomPiece9 = u:QN\ncustomPiece10 = j:QgmQ0gcBgcsR0\ncustomPiece11 = l:RsCfC\ncustomPiece18 = x:RfB\ncustomPiece22 = m:BsR2nsN\npieceValueMg = m:1858 a:1742 c:563 f:1663 g:1663 e:762 d:762 h:418 i:3772 u:3738 j:3772 l:2240 x:1904\npieceValueEg = m:1903 a:1769 c:635 f:1877 g:1877 e:808 d:808 h:436 i:3470 u:3875 j:3470 l:2413 x:1932\npieceToCharTable = -\ncastlingRookPiece = rlx\ndoubleStepRegionWhite = *1 *2\ndoubleStepRegionBlack = *7 *8\npawnTypes = pdeh\nenPassantTypes = pdeh\npromotionPieceTypes = nbrq\n# Finite nonroyal king grants: deployment spends a turn; captures disappear.\ntwoBoards = false\npieceDrops = true\ncapturesToHand = false\nmustDrop = false\ndropChecks = false\ndropRegionWhite = *1 *2 *3 *4\ndropRegionBlack = *5 *6 *7 *8\nstartFen = rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1\n"
+    }
+  },
+  "puzzles": [
+    {
+      "id": "authored-queen-net",
+      "title": "A queen and king finish",
+      "variant": "chess",
+      "initialFen": "7k/8/5KQ1/8/8/8/8/8 w - - 0 1",
+      "initialMoves": [],
+      "fen": "7k/8/5KQ1/8/8/8/8/8 w - - 0 1",
+      "solverColor": "w",
+      "goal": {
+        "type": "mate",
+        "moves": 1
+      },
+      "solution": {
+        "move": "g6g7",
+        "replies": []
+      },
+      "provenance": {
+        "kind": "authored",
+        "description": "A deliberately composed example, not extracted from a balance game.",
+        "verification": "Every legal move tested for mate in one under the declared rules."
+      },
+      "pieces": {
+        "present": [
+          "king",
+          "queen"
+        ],
+        "moved": [
+          "queen"
+        ],
+        "involved": [
+          "king",
+          "queen"
+        ],
+        "stationary": [],
+        "method": "mate-tree-effects",
+        "effects": []
+      }
+    },
+    {
+      "id": "authored-stationary-knight",
+      "title": "The knight does not need to move",
+      "variant": "chess",
+      "initialFen": "7k/8/4N1Q1/8/8/8/8/K7 w - - 0 1",
+      "initialMoves": [],
+      "fen": "7k/8/4N1Q1/8/8/8/8/K7 w - - 0 1",
+      "solverColor": "w",
+      "goal": {
+        "type": "mate",
+        "moves": 1
+      },
+      "solution": {
+        "move": "g6g7",
+        "replies": []
+      },
+      "provenance": {
+        "kind": "authored",
+        "description": "A deliberately composed example, not extracted from a balance game.",
+        "verification": "Every legal move tested for mate in one under the declared rules."
+      },
+      "pieces": {
+        "present": [
+          "king",
+          "knight",
+          "queen"
+        ],
+        "moved": [
+          "queen"
+        ],
+        "involved": [
+          "king",
+          "knight",
+          "queen"
+        ],
+        "stationary": [
+          "knight"
+        ],
+        "method": "mate-tree-effects",
+        "effects": [
+          {
+            "id": "knight",
+            "square": "e6",
+            "reason": "Removing this stationary unit changes the mating tree or its legal defenses."
+          }
+        ]
+      }
+    },
+    {
+      "id": "authored-vanguard-finish",
+      "title": "Vanguard’s diagonal finish",
+      "variant": "levelup-design-4878712fe0f46ab8ce5a",
+      "initialFen": "7k/X7/5K2/8/8/8/8/8[] w - - 0 1",
+      "initialMoves": [],
+      "fen": "7k/X7/5K2/8/8/8/8/8[] w - - 0 1",
+      "solverColor": "w",
+      "goal": {
+        "type": "mate",
+        "moves": 1
+      },
+      "solution": {
+        "move": "a7g7",
+        "replies": []
+      },
+      "provenance": {
+        "kind": "authored",
+        "description": "A deliberately composed example, not extracted from a balance game.",
+        "verification": "Every legal move tested for mate in one under the declared rules."
+      },
+      "pieces": {
+        "present": [
+          "king",
+          "rook.purple@10"
+        ],
+        "moved": [
+          "rook.purple@10"
+        ],
+        "involved": [
+          "king",
+          "rook.purple@10"
+        ],
+        "stationary": [],
+        "method": "mate-tree-effects",
+        "effects": []
+      }
+    }
+  ]
+}

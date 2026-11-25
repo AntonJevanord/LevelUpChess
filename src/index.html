@@ -8,11 +8,18 @@
   <script defer src="dist/app.js"></script>
 </head>
 <body>
-  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><span class="version">VERSION 19 / ARMY WORKSHOP</span></header>
+  <header><a class="brand" href="index.html">♞ <span>LEVELUP <strong>CHESS</strong></span></a><div class="header-navigation"><span class="version">VERSION 19 / ARMY WORKSHOP</span><button id="open-menu" type="button" aria-haspopup="dialog" aria-controls="main-menu">☰ Menu</button></div></header>
   <main>
     <section class="intro"><span class="eyebrow">EVERY GREAT GAME STARTS HERE</span><h1>Your next move.</h1><p>Build an army. Find your strategy.</p></section>
     <div class="game-layout">
       <section class="board-area" aria-label="Chess game">
+        <section id="puzzle-toolbar" class="puzzle-toolbar" aria-labelledby="puzzle-title" hidden>
+          <div class="puzzle-toolbar-heading"><div><span class="eyebrow">TACTICS LAB</span><h2 id="puzzle-title">Find the winning move</h2></div><button id="puzzle-library-back" type="button">Puzzle library</button></div>
+          <p id="puzzle-goal"></p>
+          <p id="puzzle-feedback" role="status" aria-live="polite"></p>
+          <div class="puzzle-play-actions" role="group" aria-label="Puzzle controls"><button id="puzzle-retry" type="button">Retry</button><button id="puzzle-hint" type="button">Hint</button><button id="puzzle-reveal" type="button">Show solution</button><button id="puzzle-leave" type="button">Return to game</button></div>
+          <details id="puzzle-piece-details"><summary>Pieces in this tactic</summary><p class="puzzle-participation-help">Pieces can help through an attack, defense or restriction without moving.</p><ul id="puzzle-piece-notes"></ul></details>
+        </section>
         <div id="setup-toolbar" class="setup-toolbar" hidden><div><strong>Build your army</strong><p id="setup-instructions">Click a starting piece to choose its upgrade.</p></div><button id="setup-mode" type="button" aria-pressed="false">Edit armies</button></div>
         <div class="player"><span class="avatar">♟</span><div><strong id="top-player">Black pieces</strong><small>Local player</small></div><span class="level">LEVEL 0</span><span id="black-clock" class="clock-display" hidden>00:00</span></div>
         <div id="pocket-top" class="pocket" hidden></div>
@@ -40,7 +47,7 @@
           <section id="panel-game" class="tab-panel" role="tabpanel" aria-labelledby="panel-tab-game" data-panel="game">
             <div class="board-tools" role="group" aria-label="Board tools"><button id="inspect-mode" type="button" aria-pressed="false">Inspect pieces</button><button id="drawing-mode" type="button" aria-pressed="false">Draw</button><button id="clear-annotations" type="button">Clear marks</button></div>
             <p id="piece-guide-status" class="engine-help" role="status" aria-live="polite">Inspect either side's pieces to explore their movement.</p>
-            <div class="guide-key" aria-label="Piece ability symbols"><span><i class="legend-move" aria-hidden="true"></i>Move</span><span><i class="legend-capture" aria-hidden="true"></i>Capture</span><span><i class="legend-both" aria-hidden="true"></i>Either</span></div>
+            <div class="guide-key" aria-label="Piece ability symbols"><span><i class="legend-move" aria-hidden="true"></i>Move</span><span><i class="legend-capture" aria-hidden="true"></i>Capture</span><span><i class="legend-both" aria-hidden="true"></i>Either</span><span title="Hops still need a hurdle."><i class="legend-jump" aria-hidden="true">↷</i>Jump / hop</span></div>
             <p class="annotation-help">Right-click for a circle. Right-drag for an arrow. Use Draw on touch screens; Escape clears marks.</p>
             <section class="history-panel"><div class="panel-heading"><h3>Move history</h3><span>SAN</span></div><p id="empty-history">The opening is yours.</p><ol id="history" aria-label="Move history"></ol></section>
           </section>
@@ -118,6 +125,26 @@
       </aside>
     </div>
   </main>
+  <dialog id="main-menu" class="main-menu" aria-labelledby="main-menu-title">
+    <div class="puzzle-dialog-heading"><div><span class="eyebrow">LEVELUP CHESS</span><h2 id="main-menu-title">Your next challenge.</h2></div><button id="main-menu-close" class="dialog-close" type="button" aria-label="Close menu">✕</button></div>
+    <p>Build your army, or find a tactic worth remembering.</p>
+    <div class="main-menu-choices"><button id="menu-play" type="button" class="menu-choice"><span class="menu-choice-icon" aria-hidden="true">♞</span><strong>Play chess</strong><span>Return to your board. Your game stays here.</span></button><button id="menu-puzzles" type="button" class="menu-choice"><span class="menu-choice-icon" aria-hidden="true">◇</span><strong>Puzzles</strong><span>Explore tactics with ordinary and upgraded pieces.</span></button></div>
+  </dialog>
+  <dialog id="puzzle-library" class="puzzle-library" aria-labelledby="puzzle-library-title">
+    <div class="puzzle-dialog-heading"><div><span class="eyebrow">FIND YOUR NEXT MOVE</span><h2 id="puzzle-library-title">Puzzle library</h2></div><button id="puzzle-library-close" class="dialog-close" type="button" aria-label="Close puzzle library">✕</button></div>
+    <p class="puzzle-library-intro">Choose a tactic by length and by the pieces that take part.</p>
+    <div class="puzzle-library-layout">
+      <form id="puzzle-filters" class="puzzle-filters" aria-label="Puzzle filters">
+        <fieldset class="puzzle-length-filter"><legend>Solution length</legend><p>Moves you make, excluding the replies.</p><div class="puzzle-length-inputs"><div><label for="puzzle-min-moves">Minimum</label><input id="puzzle-min-moves" type="number" min="1" max="50" step="1" placeholder="Any"></div><span aria-hidden="true">–</span><div><label for="puzzle-max-moves">Maximum</label><input id="puzzle-max-moves" type="number" min="1" max="50" step="1" placeholder="Any"></div></div></fieldset>
+        <details class="puzzle-piece-filter" open><summary>Pieces involved <span id="puzzle-involved-count"></span></summary><p>Includes stationary pieces that help the tactic. Match all checked pieces.</p><div id="puzzle-filter-involved" class="puzzle-piece-checks"></div></details>
+        <details class="puzzle-piece-filter"><summary>Pieces moved <span id="puzzle-moved-count"></span></summary><p>Only pieces that move in the solution. Match all checked pieces.</p><div id="puzzle-filter-moved" class="puzzle-piece-checks"></div></details>
+        <details class="puzzle-piece-filter"><summary>Pieces on the board <span id="puzzle-present-count"></span></summary><p>Includes pieces outside the tactic. Match all checked pieces.</p><div id="puzzle-filter-present" class="puzzle-piece-checks"></div></details>
+        <button id="puzzle-clear-filters" type="button">Clear filters</button>
+        <div class="puzzle-pack-import"><label for="puzzle-pack-file">Add a puzzle pack</label><p>Open a generated .json puzzle pack from your computer.</p><input id="puzzle-pack-file" type="file" accept=".json,application/json"><p id="puzzle-import-status" role="status" aria-live="polite"></p></div>
+      </form>
+      <section class="puzzle-library-results" aria-labelledby="puzzle-result-count"><p id="puzzle-result-count" role="status" aria-live="polite">No puzzles loaded.</p><p id="puzzle-filter-error" role="alert"></p><div id="puzzle-list" class="puzzle-list"></div><div id="puzzle-empty" class="puzzle-empty"><span aria-hidden="true">◇</span><h3>Your next tactic is on its way.</h3><p>Import a puzzle pack after generating puzzles from your completed games.</p></div></section>
+    </div>
+  </dialog>
   <dialog id="promotion"><h2>Choose your promotion</h2><p>Your pawn has earned a new role.</p><div id="promotion-options"></div></dialog>
   <dialog id="restart"><h2>Start a new game?</h2><p>This will clear the current board and move history.</p><div class="actions"><button id="cancel-restart">Keep playing</button><button id="confirm-restart" class="primary">Start new game</button></div></dialog>
   <dialog id="import-dialog" aria-labelledby="import-title">

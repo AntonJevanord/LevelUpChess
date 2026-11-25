@@ -6,11 +6,13 @@ Chess with upgradeable pieces. Build an army within a shared budget, then play l
 
 Download `index.html` and open it in Chrome, Edge or Firefox. It contains the board, styles and rules; two local players need no server or internet connection. Open the downloaded file directly if a chat preview restricts interaction.
 
-Select a piece and a legal destination. Gray dots show quiet movement, red rings show capture ability, and both appear when a piece can do either. The guide includes empty-square captures and abilities unavailable because of check or pins; only legal moves can be played. Click enemy pieces to inspect them, or enable **Inspect pieces** to prevent accidental moves. Arrow keys move focus; Enter or Space selects.
+Select a piece and a legal destination. Normal play shows only legal moves: gray dots for movement and gray rings for captures. **Inspect pieces** shows either army's complete movement pattern, ignoring blockers, pins and check: dots for movement, red rings for captures, and both for either. Inspect never plays a move. A small **↷** marks jumping or hopping destinations; hops still need a hurdle during play. Arrow keys move focus; Enter or Space selects.
 
 The side panel has **Game, Setup, Design and Files** tabs. Status and essential game controls stay visible across tabs. In Setup, choose a **Version 19 · Level 1, 2 or 3 roster** under Rules, then click a starting piece to choose an upgrade in the board's central ranks. Press **Start game** to apply the draft. **Edit armies** reopens setup; **Return to game** keeps the current game. **Clear White**, **Clear Black** and **Clear both** reset draft armies.
 
 Right-click for a circle or right-drag for an arrow; repeat to remove a mark, or press Escape to clear marks. **Draw** enables tap/drag annotation on touch screens. Design offers four piece styles, four board palettes and an annotation color, with preferences remembered locally. See the [interface guide](docs/interface-v18.md).
+
+**Menu → Puzzles** offers solution-length filters and separate lists for pieces involved, moved or present. Three authored practice examples are included. The [puzzle generator](docs/puzzle-generation.md) mines completed panel games into verified mate puzzles with exact piece profiles; import its `puzzles.json` in the menu. Your normal game stays paused while solving.
 
 The setup budget is 1–9 points per side. Choose **Level 1/2/3 roster · expanded** for 12, 15 and 13 designs, including five new alternatives with the colors of their original counterparts. The original **current** rosters and every earlier library retain their rules. The [version-19 guide](docs/version19.md) gives the roster, Windows branch-switch instructions and panel commands. Historical family workshops remain selectable for earlier mixed-tier setups.
 
@@ -142,10 +144,12 @@ against unchanged references and controls. Use
 `NfhZfAfG`, with lowercase `h`; full `NZ` / `NZA` are strength checks because
 their earlier L3 results were already strong.
 
-The [puzzle plan](docs/variant-puzzle-plan.md) can reuse completed game journals
-with their exact rules through `chess-variant-puzzler`. The exporter and a
-small validated puzzle pilot are planned; the balance runs and builds do not
-generate puzzles automatically.
+The [completed expanded-panel reports](docs/v19-expanded-panel-review.md)
+support all five alternatives for further playtesting. The separate
+[puzzle pilot](docs/puzzle-generation.md) is ready: use
+`npm.cmd run puzzles:generate -- --help` after the panels stop. It reuses exact
+game profiles and verifies complete mate trees without new dependencies or
+extra balance games. Builds do not start puzzle generation automatically.
 
 ## Version 16: frozen references and playtest roster
 

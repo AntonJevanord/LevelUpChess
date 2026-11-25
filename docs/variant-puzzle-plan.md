@@ -1,5 +1,10 @@
 # Puzzles from experiment games
 
+The first runnable implementation is now the [mate-puzzle pilot](puzzle-generation.md).
+It uses the existing native UCI engine for screening and an exhaustive bounded
+mate proof instead of adding the upstream Python processor. The sections
+below retain the upstream research and ideas for broader future puzzle types.
+
 Use completed game journals as the first source of puzzles. The expanded tier
 panels can produce single-upgrade tactics; the later mixed-army study will add
 interactions between upgrades. More variant pieces increase that coverage, but

@@ -30,6 +30,9 @@
 .ability-capture-marker{border:clamp(2px,.45vw,4px) solid #d64d4242;background:transparent}
 .ability-capture-marker.occupied-capture{inset:3%;width:auto;height:auto;border-width:clamp(5px,.65vw,6px)}
 .capture-marker{border-color:#d64d4242;background:transparent;pointer-events:none;z-index:0}
+.legal-capture-marker{border-color:#20392f42}
+.inspect-board .square:not(.selected) .piece{opacity:.36}
+.inspect-board .ability-move-marker,.inspect-board .ability-capture-marker{z-index:2}
 #board .square.inspected:not(.check){background:#e3c365}
 header{padding-top:18px;padding-bottom:18px}
 main{max-width:1120px;padding-top:24px}
@@ -78,6 +81,9 @@ main{max-width:1120px;padding-top:24px}
 .legend-move{background:#c4c9c645}
 .legend-capture{border:2px solid #e77a744d}
 .legend-both{background:#c4c9c645;border:2px solid #e77a744d}
+.guide-key[data-mode=legal] .legend-capture,.guide-key[data-mode=legal] .legend-both{border-color:#c4c9c645}
+.jump-indicator{position:absolute;left:51%;top:27%;display:grid;place-items:center;width:1.15em;height:1.15em;border-radius:50%;background:#fff1c9e8;color:#6b4716;font-size:clamp(10px,1.7vw,16px);line-height:1;pointer-events:none;z-index:3;font-weight:700}
+.guide-key .legend-jump{display:inline-grid;place-items:center;background:#fff1c9;color:#6b4716;font-size:12px;font-style:normal}
 .annotation-help{font-size:10px;line-height:1.6;margin-top:12px}
 .panel-controls{padding:13px 20px 18px;border-top:1px solid #ffffff12;flex-shrink:0;background:#1b2521}
 .panel-controls .actions{margin:9px 0 10px;gap:8px}

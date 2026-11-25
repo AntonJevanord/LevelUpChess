@@ -25,23 +25,33 @@ the existing game. The clear-army buttons reset draft selections.
 
 ## Read a piece's abilities
 
-Click either side's piece to see its movement guide:
+Normal selection shows only legal moves, using gray dots and gray capture
+rings. **Inspect pieces** switches to a movement diagram for either army:
 
 | Marker | Ability |
 | --- | --- |
 | Gray dot | Move without capturing |
 | Red ring | Capture |
 | Dot and ring | Move or capture |
+| Small ↷ | Jump or hop route |
 
-Capture-only rings also appear on empty squares. The guide follows blockers,
-jumps and the piece's movement rules, but ignores turn order, pins and check.
-Squares occupied by that piece's allies are omitted. **A marker is not a
-promise that the move is legal now**: the game still enforces whose turn it is,
-king safety and all other rules.
+Inspect ignores other pieces, turn order, pins and check. Occupied landing
+squares remain visible and capture-only rings also appear on empty squares.
+The selected piece keeps its square, direction and initial-rank rules.
+Hoppers show their pattern with a hypothetical hurdle; during normal play a
+hop requires a real one. Nonjumping knight legs and ordinary sliding paths do
+not receive jump marks.
 
-Normally, clicking a legal capture destination plays the capture. Turn on
-**Inspect pieces** when you want to examine pieces without making any move.
+Inspect never plays a move. Turn it off to return to legal-only selection.
 Inspection also works while watching the engine or while clocks are paused.
+
+## Puzzles
+
+Open **Menu → Puzzles** to filter by your solution-move count or pieces
+involved, moved and present. Involvement includes stationary supporting units.
+Import generated puzzle packs, solve with automatic replies, or use hint,
+retry and show solution. Your original game and clock stay paused and return
+when you leave puzzles. See [generation and verification](puzzle-generation.md).
 
 ## Draw on the board
 

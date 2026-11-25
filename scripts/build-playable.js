@@ -29,7 +29,7 @@ async function buildPlayable(root = path.resolve(__dirname, '..')) {
     legalComments: 'eof',
   });
   const template = fs.readFileSync(path.join(root, 'src/index.html'), 'utf8');
-  const css = ['styles.css', 'src/board-appearance.css']
+  const css = ['styles.css', 'src/board-appearance.css', 'src/puzzle-menu.css']
     .map(file => fs.readFileSync(path.join(root, file), 'utf8')).join('\n');
   const js = fs.readFileSync(path.join(root, 'dist/app.js'), 'utf8');
   const html = template

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-report-only-source-archive",
+  "reviewed": "2026-11-25",
+  "scope": "Three uploaded completed 64-opening expanded-roster composite outcome reports. They declare 7936 new games plus 23936 reused finalized cells. Original run folders and journals were not supplied here; report arithmetic was reviewed without an independent journal replay or new material fit.",
+  "sources": [
+    {
+      "study": "level3",
+      "kind": "panel",
+      "uploadedFileId": "file_00000000ea10821095bc6011c7d53e89",
+      "file": "experiments/balance/results/v19-expanded-64-001.level3.panel-report.md.gz",
+      "bytes": 16106,
+      "sha256": "5d731f6fcd7d354e01bd1fa7528336f63cbf936b19a43e8c7650532cfe1e6bf8",
+      "archiveSha256": "0118ed0f1a645275345ff778a96e4de13cd1aaa6e8f8b72f1d56169c463a2ba4"
+    },
+    {
+      "study": "level2",
+      "kind": "panel",
+      "uploadedFileId": "file_0000000075048210ba9e0ab173558f65",
+      "file": "experiments/balance/results/v19-expanded-64-001.level2.panel-report.md.gz",
+      "bytes": 20738,
+      "sha256": "819a328582a46d0d5352235a275d54e3a9550d427c506dc570f0d30300763aaa",
+      "archiveSha256": "25b006954ad92eaa75ede53da9194ef4a2821f84970d51947db84fa84a4d4473"
+    },
+    {
+      "study": "level1",
+      "kind": "panel",
+      "uploadedFileId": "file_000000006fb0820aa43123376a535282",
+      "file": "experiments/balance/results/v19-expanded-64-001.level1.panel-report.md.gz",
+      "bytes": 15472,
+      "sha256": "438387be25a4b4a0e1ef5f6989aa76e11603868c6f99c2d1c853a7b812078443",
+      "archiveSha256": "af74de739814abcc73757a8087b9963430b36e22409adcc096d5f89c6085e703"
+    }
+  ]
+}

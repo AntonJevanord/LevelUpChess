@@ -5,7 +5,7 @@ export function createWorkspaceTabs(root = document) {
   let active = buttons.find(button => button.getAttribute('aria-selected') === 'true')?.dataset.panelTab || 'game';
   function show(name, { focus = false } = {}) {
     const selected = buttons.find(button => button.dataset.panelTab === name);
-    if (!selected) return;
+    if (!selected || selected.disabled || selected.hidden) return;
     active = name;
     for (const button of buttons) {
       button.setAttribute('aria-selected', String(button === selected));
@@ -14,15 +14,16 @@ export function createWorkspaceTabs(root = document) {
     for (const panel of panels) panel.hidden = panel.dataset.panel !== name;
     if (focus) selected.focus();
   }
-  for (const [index, button] of buttons.entries()) {
+  for (const button of buttons) {
     button.addEventListener('click', () => show(button.dataset.panelTab));
     button.addEventListener('keydown', event => {
-      const next = event.key === 'ArrowRight' ? (index + 1) % buttons.length
-        : event.key === 'ArrowLeft' ? (index + buttons.length - 1) % buttons.length
-          : event.key === 'Home' ? 0 : event.key === 'End' ? buttons.length - 1 : null;
+      const available = buttons.filter(item => !item.disabled && !item.hidden), index = available.indexOf(button);
+      const next = event.key === 'ArrowRight' ? (index + 1) % available.length
+        : event.key === 'ArrowLeft' ? (index + available.length - 1) % available.length
+          : event.key === 'Home' ? 0 : event.key === 'End' ? available.length - 1 : null;
       if (next === null) return;
       event.preventDefault();
-      show(buttons[next].dataset.panelTab, { focus: true });
+      show(available[next].dataset.panelTab, { focus: true });
     });
   }
   show(active);

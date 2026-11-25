@@ -16,6 +16,7 @@ const { placementFromMap } = require('../src/profile-fen');
 const root = path.resolve(__dirname, '..');
 const index = PLAYABLE_LIBRARIES.findIndex(row => row.id === 'v18-roster-confirmed');
 const profile = getPlayableProfiles()[index];
+const expandedProfile = getPlayableProfiles()[PLAYABLE_LIBRARIES.findIndex(row => row.id === 'v19-level1-expanded')];
 const type = id => profile.registry.allocations.find(row => row.id === id).letter.toUpperCase();
 const reflect = square => square[0] + (9 - Number(square[1]));
 const swap = value => value === value.toUpperCase() ? value.toLowerCase() : value.toUpperCase();
@@ -38,6 +39,7 @@ test.before(async () => {
   await api.initVariantRules(profile.variant);
   await api.initVariantRules('levelup-knight');
   await api.initVariantRules('levelup-v5');
+  await api.initVariantRules(expandedProfile.variant);
 });
 test.after(() => { if (directory) fs.rmSync(directory, { recursive: true, force: true }); });
 
@@ -59,6 +61,18 @@ test('off-turn enemy pieces can be inspected without inventing real legal moves'
   const guide = await api.getPieceGuide(game, { square: 'd4' });
   assert.deepEqual(guide.quiet, ['d3']); assert.deepEqual(guide.capture, ['c3', 'e3']);
   assert.deepEqual(guide.legal, []); assert.equal(game.fen(), before); assert.deepEqual(game.history(), history);
+});
+
+test('a blocked home pawn still shows its initial two-step diagram without granting an actual move', async () => {
+  for (const black of [false, true]) {
+    const game = new Chess(fen({ a1: 'K', h7: 'k', d2: 'P', d3: 'P', c3: 'P' }, black));
+    const s = black ? reflect : square => square;
+    const guide = await api.getPieceGuide(game, { square: s('d2') });
+    assert.equal(guide.ignoresBlockers, true);
+    assert.deepEqual(guide.quiet, ['d3', 'd4'].map(s).sort());
+    assert.deepEqual(guide.capture, ['c3', 'e3'].map(s).sort());
+    assert.deepEqual(guide.legal, []);
+  }
 });
 
 test('pinned pieces retain their ability map while real king safety still restricts legal moves', async () => {
@@ -101,38 +115,44 @@ test('selected Knight pawn shows quiet tall jumps and capturing wide jumps acros
     includes(guide, 'quiet', ['c6', 'e6', 'b5', 'f5'].map(s));
     includes(guide, 'capture', ['b5', 'f5', 'c5', 'e5'].map(s));
     excludes(guide, 'capture', ['c6', 'e6', 'd5'].map(s));
-    excludes(guide, 'quiet', ['c2', 'e2', 'b3', 'f3', 'd5'].map(s));
+    includes(guide, 'quiet', ['d5'].map(s));
+    excludes(guide, 'quiet', ['c2', 'e2', 'b3', 'f3'].map(s));
+    excludes(guide, 'legalQuiet', ['d5'].map(s));
   }
 });
 
-test('Cataphract inspection preserves its six camel directions and occupied ray blockers', async t => {
+test('Cataphract inspection preserves its six camel directions while ignoring occupied rook-ray blockers', async t => {
   for (const black of [false, true]) {
     const game = variant(t, { h1: 'K', h7: 'k', d4: type('rook.cataphract-no-tall-back@1'), d5: 'P', d3: 'P', c4: 'P', e4: 'P' }, black);
     const s = black ? reflect : square => square;
     const guide = await api.getPieceGuide(game, { square: s('d4') });
     for (const key of ['quiet', 'capture']) {
       includes(guide, key, ['a3', 'g3', 'a5', 'g5', 'c7', 'e7'].map(s));
-      excludes(guide, key, ['c1', 'e1', 'd6', 'b4', 'd2', 'f4'].map(s));
+      includes(guide, key, ['d6', 'b4', 'd2', 'f4'].map(s));
+      excludes(guide, key, ['c1', 'e1'].map(s));
     }
+    excludes(guide, 'legal', ['d6', 'b4', 'd2', 'f4'].map(s));
   }
 });
 
-test('blocked knight paths and X-ray hurdles are interpreted by the existing rules engine', async t => {
+test('nonjumping knight legs and real X-ray hurdles do not obscure the movement diagram', async t => {
   const blocked = variant(t, { a1: 'K', h7: 'k', d4: type('bishop.purple@13'), e4: 'P' });
   const guide = await api.getPieceGuide(blocked, { square: 'd4' });
-  for (const key of ['quiet', 'capture']) { excludes(guide, key, ['f3', 'f5']); includes(guide, key, ['b3', 'b5']); }
+  for (const key of ['quiet', 'capture']) includes(guide, key, ['f3', 'f5', 'b3', 'b5']);
+  excludes(guide, 'legal', ['f3', 'f5']);
   const hopping = variant(t, { a1: 'K', h7: 'k', d4: type('queen.purple@7'), e5: 'P', g7: 'p' });
   const hop = await api.getPieceGuide(hopping, { square: 'd4' });
-  for (const key of ['quiet', 'capture']) { includes(hop, key, ['f6', 'g7']); excludes(hop, key, ['h8']); }
+  for (const key of ['quiet', 'capture']) includes(hop, key, ['f6', 'g7', 'h8']);
+  excludes(hop, 'legal', ['h8']);
 });
 
-test('friendly landing squares stay omitted and current enemy blockers still stop rays beyond them', async () => {
+test('friendly landing squares and destinations beyond current blockers remain visible only as abilities', async () => {
   const game = new Chess('7k/8/8/3p4/3R1P2/8/8/K7 w - - 0 1');
   const guide = await api.getPieceGuide(game, { square: 'd4' });
   for (const key of ['quiet', 'capture']) {
-    includes(guide, key, ['d5', 'e4']);
-    excludes(guide, key, ['d6', 'd7', 'f4', 'g4']);
+    includes(guide, key, ['d5', 'e4', 'd6', 'd7', 'f4', 'g4']);
   }
+  excludes(guide, 'legal', ['d6', 'd7', 'f4', 'g4']);
   assert.ok(!guide.legalQuiet.includes('d5'));
   includes(guide, 'legalCapture', ['d5']);
 });
@@ -145,10 +165,59 @@ test('ordinary king safety stays real while current castling and en passant rema
   const castlingGuide = await api.getPieceGuide(castles, { square: 'e1' });
   includes(castlingGuide, 'quiet', ['c1', 'g1']); includes(castlingGuide, 'legalQuiet', ['c1', 'g1']);
   excludes(castlingGuide, 'capture', ['c1', 'g1']);
+  assert.deepEqual(castlingGuide.jumpQuiet, []); assert.deepEqual(castlingGuide.legalJumpQuiet, []);
   const ep = new Chess('7k/8/8/3pP3/8/8/8/7K w - d6 0 1');
   const epGuide = await api.getPieceGuide(ep, { square: 'e5' });
   includes(epGuide, 'capture', ['d6']); includes(epGuide, 'legalCapture', ['d6']);
   assert.equal(ep.get('d5').type, 'p'); assert.equal(ep.history().length, 0);
+});
+
+test('jump annotations distinguish knight leaps and two-square jumps from ordinary rays and steps', async t => {
+  for (const black of [false, true]) {
+    const s = black ? reflect : square => square;
+    const knight = new Chess(fen({ a1: 'K', h7: 'k', d4: 'N', b5: 'p' }, black));
+    const knightGuide = await api.getPieceGuide(knight, { square: s('d4') });
+    for (const key of ['jumpQuiet', 'jumpCapture']) includes(knightGuide, key, ['b5', 'b3', 'c2', 'e6'].map(s));
+    includes(knightGuide, 'legalJumpCapture', ['b5'].map(s));
+    excludes(knightGuide, 'legalJumpQuiet', ['b5'].map(s));
+    const bdType = expandedProfile.registry.allocations.find(row => row.id === 'bishop.level1-dabbaba@1').letter.toUpperCase();
+    const bishop = variant(t, { a1: 'K', h7: 'k', d4: bdType, d6: 'p', f6: 'p' }, black, expandedProfile.variant);
+    const bishopGuide = await api.getPieceGuide(bishop, { square: s('d4') });
+    for (const key of ['jumpQuiet', 'jumpCapture']) {
+      includes(bishopGuide, key, ['d6', 'f4', 'd2', 'b4'].map(s));
+      excludes(bishopGuide, key, ['e5', 'f6', 'c3'].map(s));
+    }
+    includes(bishopGuide, 'legalJumpCapture', ['d6'].map(s));
+    includes(bishopGuide, 'legalCapture', ['f6'].map(s));
+    excludes(bishopGuide, 'legalJumpCapture', ['f6'].map(s));
+  }
+});
+
+test('nonjumping knight legs and one-step components never receive jump annotations', async t => {
+  const blocked = variant(t, { a1: 'K', h7: 'k', d4: type('bishop.purple@13'), e4: 'P' });
+  const guide = await api.getPieceGuide(blocked, { square: 'd4' });
+  includes(guide, 'quiet', ['f3', 'f5']);
+  assert.deepEqual(guide.jumpQuiet, []); assert.deepEqual(guide.jumpCapture, []);
+  const legacy = variant(t, { a1: 'K', h7: 'k', d4: 'E' }, false, 'levelup-knight');
+  const mixed = await api.getPieceGuide(legacy, { square: 'd4' });
+  includes(mixed, 'quiet', ['d5']); excludes(mixed, 'jumpQuiet', ['d5']);
+  includes(mixed, 'jumpQuiet', ['f5']); includes(mixed, 'jumpCapture', ['f5']);
+});
+
+test('capture-only leaps and hopping routes keep separate jump kinds and require real hurdles for legal tags', async t => {
+  const capturer = variant(t, { a1: 'K', h7: 'k', d4: 'I', c6: 'p' }, false, 'levelup-v5');
+  const captureGuide = await api.getPieceGuide(capturer, { square: 'd4' });
+  includes(captureGuide, 'jumpCapture', ['c6', 'e6']);
+  excludes(captureGuide, 'jumpQuiet', ['c6', 'e6']);
+  includes(captureGuide, 'legalJumpCapture', ['c6']);
+  const clear = variant(t, { a1: 'K', h7: 'k', d4: type('queen.purple@7') });
+  const clearGuide = await api.getPieceGuide(clear, { square: 'd4' });
+  includes(clearGuide, 'jumpQuiet', ['f6', 'h8']); includes(clearGuide, 'jumpCapture', ['f6', 'h8']);
+  includes(clearGuide, 'legalQuiet', ['f6']); excludes(clearGuide, 'legalJumpQuiet', ['f6']);
+  const hopper = variant(t, { a1: 'K', h7: 'k', d4: type('queen.purple@7'), e5: 'P', g7: 'p' });
+  const hoppingGuide = await api.getPieceGuide(hopper, { square: 'd4' });
+  includes(hoppingGuide, 'legalJumpQuiet', ['f6']); includes(hoppingGuide, 'legalJumpCapture', ['g7']);
+  excludes(hoppingGuide, 'legalJumpQuiet', ['h8']);
 });
 
 test('guide results are detached, all source positions stay unchanged and missing/invalid input is explicit', async () => {
@@ -156,8 +225,10 @@ test('guide results are detached, all source positions stay unchanged and missin
   const before = { fen: game.fen(), history: game.history(), pgn: game.pgn() };
   const first = await api.getPieceGuide(game, { square: 'g8' });
   first.quiet.length = 0;
+  first.jumpQuiet.length = 0;
   const cached = await api.getPieceGuide(game, { square: 'g8' });
   includes(cached, 'quiet', ['f6', 'h6']);
+  includes(cached, 'jumpQuiet', ['f6', 'h6']);
   assert.deepEqual({ fen: game.fen(), history: game.history(), pgn: game.pgn() }, before);
   assert.equal(await api.getPieceGuide(game, { square: 'a3' }), null);
   await assert.rejects(api.getPieceGuide(game, { square: 'a9' }), /board square/);

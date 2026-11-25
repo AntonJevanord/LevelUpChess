@@ -220,12 +220,13 @@ for the next stage.
 
 ## Puzzles from the games
 
-The inspected `chess-variant-puzzler` pipeline accepts exported FEN/EPD and
-custom variant INI files. Start with existing completed game journals and
-their original profiles; the later mixed-army study can broaden the motifs.
-An adapter and stronger solution validation are still planned, not run by the
-panels or build. See the [puzzle plan](variant-puzzle-plan.md) for profile
-preservation, MultiPV, unique-move checks and upstream integration details.
+The [mate-puzzle pilot](puzzle-generation.md) now reads completed original and
+expanded panel journals under their exact profiles. Native searches nominate
+candidates; exhaustive bounded legal-defense trees validate accepted puzzles.
+The playable **Menu → Puzzles** supports pack import, length/participation
+filters, hints, retry and return to the paused game. Generation is a separate
+command and never starts from a panel or build. The earlier
+[upstream review](variant-puzzle-plan.md) informs later non-mate puzzle work.
 
 ## Initial release checks
 

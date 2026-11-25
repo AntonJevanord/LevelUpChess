@@ -183,22 +183,22 @@ test('all piece styles and board/annotation preferences persist independently of
   await expect(square(page, 'a1').locator('.piece-level')).toHaveText('L3');
 });
 
-test('ability guides distinguish quiet and capture moves on empty squares without allowing illegal moves', async ({ page }) => {
+test('normal selection shows legal moves only and Inspect separates blocker-free movement and capture abilities', async ({ page }) => {
   await square(page, 'e2').click();
   await expect(square(page, 'e3')).toHaveAttribute('data-quiet', 'true');
   await expect(square(page, 'e3')).toHaveAttribute('data-capture', 'false');
   await expect(square(page, 'd3')).toHaveAttribute('data-quiet', 'false');
-  await expect(square(page, 'd3')).toHaveAttribute('data-capture', 'true');
+  await expect(square(page, 'd3')).toHaveAttribute('data-capture', 'false');
   await expect(square(page, 'd3')).toHaveAttribute('data-legal', 'false');
   await square(page, 'd3').click();
   await expect(square(page, 'e2')).toHaveAttribute('aria-label', 'e2 White pawn');
   await expect(page.locator('#history li')).toHaveCount(0);
   await square(page, 'b1').click();
   await expect(square(page, 'c3')).toHaveAttribute('data-quiet', 'true');
-  await expect(square(page, 'c3')).toHaveAttribute('data-capture', 'true');
+  await expect(square(page, 'c3')).toHaveAttribute('data-capture', 'false');
   await expect(square(page, 'c3')).toHaveAttribute('data-legal', 'true');
   await expect(square(page, 'c3').locator('.move-marker')).toHaveCount(1);
-  await expect(square(page, 'c3').locator('.ability-capture-marker')).toHaveCount(1);
+  await expect(square(page, 'c3').locator('.ability-capture-marker')).toHaveCount(0);
   await page.locator('#inspect-mode').click();
   await square(page, 'g8').click();
   await expect(square(page, 'f6')).toHaveAttribute('data-quiet', 'true');
@@ -212,11 +212,46 @@ test('ability guides distinguish quiet and capture moves on empty squares withou
 test('a pinned piece can be inspected without turning its ability guide into a legal move', async ({ page }) => {
   await importFen(page, '4r2k/8/8/8/8/8/4R3/4K3 w - - 0 1');
   await square(page, 'e2').click();
+  await expect(square(page, 'f2')).toHaveAttribute('data-quiet', 'false');
+  await expect(square(page, 'f2')).toHaveAttribute('data-legal', 'false');
+  await panel(page, 'game');
+  await page.locator('#inspect-mode').click();
+  await square(page, 'e2').click();
   await expect(square(page, 'f2')).toHaveAttribute('data-quiet', 'true');
   await expect(square(page, 'f2')).toHaveAttribute('data-legal', 'false');
   await square(page, 'f2').click();
   await expect(square(page, 'e2')).toHaveAttribute('aria-label', 'e2 White rook');
   await expect(page.locator('#status')).toHaveText('White to move');
+});
+
+test('Inspect shows rays behind friendly blockers while normal capture rings stay gray', async ({ page }) => {
+  await square(page, 'a1').click();
+  await expect(square(page, 'a4')).toHaveAttribute('data-quiet', 'false');
+  await page.locator('#inspect-mode').click();
+  await square(page, 'a1').click();
+  await expect(square(page, 'a2')).toHaveAttribute('data-quiet', 'true');
+  await expect(square(page, 'a8')).toHaveAttribute('data-capture', 'true');
+  await expect(square(page, 'a2').locator('.move-marker')).toHaveCount(1);
+  await expect(square(page, 'a8')).toHaveAttribute('data-legal', 'false');
+  await page.locator('#inspect-mode').click();
+  await importFen(page, '7k/8/8/8/4p3/3P4/8/K7 w - - 0 1');
+  await square(page, 'd3').click();
+  await expect(square(page, 'e4')).toHaveAttribute('data-legal', 'true');
+  await expect(square(page, 'e4').locator('.legal-capture-marker')).toHaveCount(1);
+  const color = await square(page, 'e4').locator('.legal-capture-marker').evaluate(el => getComputedStyle(el).borderTopColor);
+  const dot = await square(page, 'd4').locator('.move-marker').evaluate(el => getComputedStyle(el).backgroundColor);
+  expect(color).toBe(dot);
+});
+
+test('jump marks distinguish legal knight leaps from clear-path rook movement', async ({ page }) => {
+  await square(page, 'b1').click();
+  await expect(square(page, 'a3')).toHaveAttribute('data-jump', 'true');
+  await expect(square(page, 'a3').locator('.jump-indicator')).toHaveCount(1);
+  await expect(square(page, 'c3')).toHaveAttribute('data-jump', 'true');
+  await page.locator('#inspect-mode').click();
+  await square(page, 'a1').click();
+  await expect(square(page, 'a8')).toHaveAttribute('data-capture', 'true');
+  await expect(square(page, 'a8')).toHaveAttribute('data-jump', 'false');
 });
 
 test('self-play starts explicitly, runs serial requests and single-steps exactly one move while paused', async ({ page }) => {
