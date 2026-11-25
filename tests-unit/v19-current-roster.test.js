@@ -53,7 +53,7 @@ test('current profiles expose the selected choices at their declared costs and c
   assert.equal(queen.level, 1); assert.equal(queen.accent, 'blue'); assert.match(queen.description, /wide|two files/i);
   assert.ok(!getDesignOptions(profile(1).variant).some(option => option.id === 'queen.level1-tall-knight@1'));
   const pawn = getDesignOptions(profile(2).variant).find(option => option.id === PAWN);
-  assert.equal(pawn.level, 2); assert.equal(pawn.accent, 'orange'); assert.match(pawn.description, /two|2/);
+  assert.equal(pawn.level, 2); assert.equal(pawn.accent, 'yellow'); assert.match(pawn.description, /two|2/);
   const oldQueen = getPlayableProfile(PLAYABLE_LIBRARIES.find(row => row.id === 'v19-level1').variant);
   assert.ok(getDesignOptions(oldQueen.variant).some(option => option.id === 'queen.level1-tall-knight@1'));
   const oldPawn = getPlayableProfile(PLAYABLE_LIBRARIES.find(row => row.id === 'v19-level2-revised').variant);

@@ -30,11 +30,15 @@ function replayPosition(rules, initialFen, moves) {
 }
 
 async function proveMate({ rules, initialFen, initialMoves = [], fen, solverColor,
-  minMoves = 1, maxMoves = 2, nodeLimit = 50000, timeLimitMs = 5000, signal } = {}) {
+  minMoves = 1, maxMoves = 2, nodeLimit = 50000, timeLimitMs = 5000, signal,
+  preferredMoves = [], pv = [] } = {}) {
   if (!rules?.createBoard || !Array.isArray(initialMoves) || !Number.isInteger(minMoves) || !Number.isInteger(maxMoves)
-    || minMoves < 1 || maxMoves < minMoves || maxMoves > 3 || !Number.isSafeInteger(nodeLimit) || nodeLimit < 1
-    || !Number.isSafeInteger(timeLimitMs) || timeLimitMs < 1) throw new Error('Choose a valid bounded mate proof.');
+    || minMoves < 1 || maxMoves < minMoves || maxMoves > 5 || !Number.isSafeInteger(nodeLimit) || nodeLimit < 1
+    || !Number.isSafeInteger(timeLimitMs) || timeLimitMs < 1
+    || !Array.isArray(preferredMoves) || preferredMoves.length > 512 || preferredMoves.some(move => typeof move !== 'string')
+    || !Array.isArray(pv) || pv.length > 32 || pv.some(move => typeof move !== 'string')) throw new Error('Choose a valid bounded mate proof.');
   const root = replayPosition(rules, initialFen, initialMoves), started = Date.now();
+  const rootFen = root.board.fen(), hints = new Map();
   let nodes = 0;
   const check = async () => {
     if (signal?.aborted) throw cancelled();
@@ -43,13 +47,22 @@ async function proveMate({ rules, initialFen, initialMoves = [], fen, solverColo
     if (nodes % 128 === 0) { await yieldTurn(); if (signal?.aborted) throw cancelled(); }
   };
   const loss = () => ({ win: false, unique: false, tree: null, distance: null });
+  function orderedMoves(board) {
+    const current = board.fen(), moves = [...board.moves()];
+    const preferred = [...(hints.has(current) ? [hints.get(current)] : []), ...(current === rootFen ? preferredMoves : [])];
+    const order = new Map(); preferred.forEach((move, index) => { if (!order.has(move)) order.set(move, index); });
+    const pieces = pieceMap(current);
+    const tactical = move => (move.length === 5 ? 2 : 0) + (move[1] !== '@' && pieces.has(move.slice(2, 4)) ? 1 : 0);
+    return moves.sort((a, b) => (order.get(a) ?? Infinity) - (order.get(b) ?? Infinity)
+      || tactical(b) - tactical(a) || a.localeCompare(b));
+  }
   async function visit(board, keys, remaining) {
     await check();
     const outcome = board.outcome();
     if (outcome) return outcome.reason === 'checkmate' && outcome.result === (solverColor === 'w' ? '1-0' : '0-1')
       ? { win: true, unique: true, tree: null, distance: 0 } : loss();
     if (keys.filter(key => key === keys.at(-1)).length >= 3 || !remaining) return loss();
-    const moves = [...board.moves()].sort(), solverTurn = board.turn() === solverColor;
+    const moves = orderedMoves(board), solverTurn = board.turn() === solverColor;
     // Exact SAN is produced by the same rules through push/pop, including
     // custom checks. At the final solver ply only actual checkmates can win.
     if (solverTurn && remaining === 1) {
@@ -94,6 +107,19 @@ async function proveMate({ rules, initialFen, initialMoves = [], fen, solverColo
     return { win: true, unique, tree: unique ? { replies } : null, distance: longest + 1 };
   }
   try {
+    // PVs are hints only. Keep their legal prefix and ignore a stale or
+    // incompatible suffix; never prune an unlisted move from the exact proof.
+    if (pv.length) {
+      const preview = rules.createBoard(rootFen);
+      try {
+        for (const move of pv) {
+          if (signal?.aborted) throw cancelled();
+          if (preview.outcome() || !preview.moves().includes(move)) break;
+          hints.set(preview.fen(), move);
+          if (!preview.push(move)) break;
+        }
+      } finally { preview.dispose(); }
+    }
     if (fen !== undefined && root.board.fen() !== fen) throw new Error('Puzzle position differs from the replayed source history.');
     solverColor ||= root.board.turn();
     if (root.board.turn() !== solverColor || root.board.outcome()) throw new Error('Puzzle root must be a nonterminal solver turn.');

@@ -1,108 +1,152 @@
 # Puzzles from completed panels
 
-The playable **Menu → Puzzles** opens a library with minimum/maximum solution
-length and separate filters for pieces involved, pieces moved and pieces on
-the board. Length counts your moves, excluding the automatic replies. Checked
-piece filters must all match. Three clearly marked authored practice examples
-are included; they are not extracted experiment games.
+Open **Menu → Puzzles** to filter by solution length, goal, upgraded-ability
+relevance, and pieces involved, moved or present. Length counts your moves,
+excluding automatic replies. Checked piece filters must all match.
 
-A puzzle has its own board. Returning to the game restores the original
-position, orientation and paused clock. The engine stays paused until resumed.
-Puzzle play does not overwrite the browser save slot. Hint, retry and show
-solution are available. Imported packs are kept for this page session; retain
-the JSON file for later visits.
+Three authored practice examples are included. Imported packs stay available
+for the page session; keep their JSON files for later visits. Hint, retry and
+show solution are available. Returning to the game restores its position,
+orientation and paused clock without replacing your browser save.
 
-## Generate the first pack
+## Mine mates and material wins
 
-Stop the local server before updating, pull `version_19`, and restart the
-server to use the new menu. Run generation after all selected source panels
-and workers have stopped. Use the actual folder names on your computer:
+Pull `version_19`, restart the local server, and wait until all selected panel
+workers have stopped. Use the actual folder names on your computer:
 
 ```powershell
-npm.cmd run puzzles:generate -- --run balance-results/v19-level1-expanded --run balance-results/v19-level2-expanded --run balance-results/v19-level3-expanded --out puzzle-results/expanded-pilot
+npm.cmd run puzzles:mine -- --run balance-results/v19-level1-expanded --run balance-results/v19-level2-expanded --run balance-results/v19-level3-expanded --out puzzle-results/expanded-tactics
 ```
 
-The default pilot selects at most 200 distinct completed checkmate games,
-examines up to three late positions per game, and stops at 600 analyzed
-positions or 30 accepted puzzles. It searches for mate in one or two of your
-moves. This is a bounded pilot, not a scan of the entire archive.
+Import **puzzle-results/expanded-tactics/puzzles.json** through **Menu → Puzzles
+→ Add a puzzle pack**. The output also contains a report and resumable candidate
+journal. Builds do not start mining automatically.
 
-Import **puzzle-results/expanded-pilot/puzzles.json** through **Menu → Puzzles
-→ Add a puzzle pack**. A run can legitimately find fewer than 30 puzzles.
-Generation uses one native engine, 160k nodes per candidate screen and the
-original MG/EG search priors. The bundled Windows engine is selected
-automatically. Other platforms use `--engine PATH` or `FAIRY_STOCKFISH_PATH`.
+The defaults sample 400 distinct completed games, including draws, and examine
+up to 1,200 positions across both colors and the course of each game. They seek
+mate or a material gain in **two or three solver moves**, with a 30-puzzle pack
+limit. One Skill-20 engine screens candidates at 320k nodes, retaining the
+source profile's original MG/EG priors. A bounded independent search then
+checks the tactic. A run may find fewer puzzles than requested.
 
-Verify the sources without generating anything:
+The bundled Windows engine is selected automatically. Other platforms use
+`--engine PATH` or `FAIRY_STOCKFISH_PATH`. Original roster-004 panels are also
+supported. Expanded panels already contain their copied historical evidence;
+duplicate games are counted once and retain their original profiles.
+
+Check sources without creating output or starting searches:
 
 ```powershell
-npm.cmd run puzzles:generate -- --run balance-results/v19-level1-expanded --run balance-results/v19-level2-expanded --run balance-results/v19-level3-expanded --check
+npm.cmd run puzzles:mine -- --run balance-results/v19-level1-expanded --run balance-results/v19-level2-expanded --run balance-results/v19-level3-expanded --check
 ```
 
-Original roster-004 panels can also be supplied. Expanded panels already
-include their copied historical evidence; there is no need to list the old
-folders again. Duplicate source games do not gain additional weight.
+## Choose the puzzle mix
 
-## Stop, resume and change the bounds
+`--variant-share 90` targets **90% tactics requiring upgraded movement and 10%
+ordinary tactics**. The test replaces upgraded pieces with ordinary movement
+from the same family at the puzzle's starting position, then checks the same
+goal and move bound. An upgraded rook making an ordinary ladder mate belongs
+in the ordinary group. Stationary upgraded support can make a tactic exclusive
+even when that piece never moves.
 
-Ctrl+C pauses safely. Completed candidate decisions and accepted puzzles are
-retained; the interrupted position can be reconsidered on resume:
+This check is separate from the involved/moved/present tags. Work-limited
+checks, repeated pre-puzzle positions and positions containing reserve grants
+can remain **unknown**; those candidates are withheld. An ordinary king is not
+a fair replacement for every nonroyal grant.
+
+The exported pack uses the largest available mixture within its size limit,
+rounding quotas to whole puzzles. Its report shows the actual mix and any
+shortage. Unknown results are never relabeled to fill a quota, and verified
+overflow remains in the journal. Use `--variant-share 100` for exclusive tactics
+only, or `0` for ordinary tactics only.
+
+## Longer mates and material goals
+
+For a separate mate-in-three/four pack, allow more proof work:
 
 ```powershell
-npm.cmd run puzzles:generate -- --run balance-results/v19-level1-expanded --run balance-results/v19-level2-expanded --run balance-results/v19-level3-expanded --resume puzzle-results/expanded-pilot
+npm.cmd run puzzles:mine -- --run balance-results/v19-level3-expanded --out puzzle-results/long-mates --goals mate --min-moves 3 --max-moves 4 --proof-nodes 1000000 --proof-ms 20000
 ```
 
-Resume keeps the original sources, engine, generator and limits. To scan a
-larger selection, use a new output directory and explicit bounds, for example
-`--max-games 1000 --max-positions 3000 --max-puzzles 100 --max-moves 3`.
-Increasing mate depth can make exhaustive validation substantially slower.
-`--all-pieces` also permits tactics without an upgraded participant.
-`--help` lists all work limits. Keep the whole output folder for resume, and
-keep the source folders unchanged. Do not upgrade the generator during an
-unfinished puzzle run.
+The maximum supported bound is five solver moves. Exhaustive proof grows
+quickly; increasing it can leave many candidates unproven. A native mate score
+only nominates a candidate. The independent proof covers every legal defense
+and requires a unique solver move within the remaining bound at each turn.
+Slower winning moves outside that bound are not ruled out.
 
-## What is verified
+Mixed goals permit either type; they do not promise a fixed number of each.
+For a separate material pack:
 
-The loader checks owned runtime/manifest identities and refuses active source
-locks. Reused roster-004 and new roster-005 games keep their original profiles
-and letters. Each selected game is replayed through its recorded checkmate;
-forced opening plies are excluded. The full history before each candidate is
-preserved for repetition and draw checks. Sources are read only.
+```powershell
+npm.cmd run puzzles:mine -- --run balance-results/v19-level1-expanded --run balance-results/v19-level2-expanded --run balance-results/v19-level3-expanded --out puzzle-results/material-tactics --goals material
+```
 
-A native mate score only nominates a position. An independent bounded search
-checks every legal defense and requires one mating solver move within the
-remaining bound at each turn. Ambiguous, drawn, incompatible and work-limited
-candidates are rejected. Slower winning moves outside the stated mate bound
-are not ruled out. The browser replays the complete defense tree before play.
-This first pipeline makes mate puzzles, not material-gain or defensive puzzles,
-and does not assign a human difficulty rating.
+`--minimum-gain 200` requires a gain of at least two counting points.
+The declared **base-plus-level-v1**
+scale uses ordinary P=1, N/B=3, R=5 and Q=9, adds the upgrade level to a board
+piece's base value, and counts grants by their purchase level. These are puzzle
+counting assumptions, **not fitted material values or engine centipawn scores**.
 
-**Moved** includes both sides' moving pieces, castling rooks and drops across
-the solution tree. **Involved** also includes captured units, promotions, the
-target king and stationary units whose removal changes the mating tree or its
-legal defenses. This catches support, blocked escape squares and hopper
-hurdles without tagging every piece merely for being present. These tags
-describe piece types; they do not certify that an upgrade's extra ability was
-essential, or provide a complete tactical explanation.
+Material certificates cover all legal defenses during the solution and audit
+captures, promotions and check evasions for up to four settling plies. A
+conservative capture-threat probe also checks that a valuable attacked piece
+was not simply ignored. This is a bounded tactical goal, not a guarantee against
+every later quiet strategic threat. Unresolved exchanges and ambiguous lines
+are withheld. The browser replays the certificate before allowing play.
 
-The implementation uses the existing rules binding and native engine without
-new Python dependencies. The earlier [upstream research](variant-puzzle-plan.md)
-remains useful for later non-mate puzzle types. No extra balance games are
-generated or added to the experiment results.
+## Pause and resume
 
-## Validation
+Ctrl+C pauses safely. Keep the entire output directory and unchanged sources,
+then resume with the same source list:
 
-The release checks cover owned original/fresh/reused sources, complete mate
-trees, escape defenses, ambiguity/work limits, repetition, cancellation,
-resume, profile tampering and a real native-engine Vanguard mate fixture.
-That fixture is synthetic test data, not an experiment result. Browser checks
-cover filters, imports, solving, paused-clock restoration, saves and the
-legal/Inspect/jump displays. All 63 earlier rule/profile artifacts retain
-their original bytes. No puzzle extraction was run against the user's local
-games during implementation.
+```powershell
+npm.cmd run puzzles:mine -- --run balance-results/v19-level1-expanded --run balance-results/v19-level2-expanded --run balance-results/v19-level3-expanded --resume puzzle-results/expanded-tactics
+```
+
+Resume retains the original limits, engine and generator identity. Do not
+update the generator during an unfinished mining run. To change bounds, use a
+new output directory. `--help` lists game, position, pack and proof limits.
+Dead-process output locks can be reclaimed on resume. Exported packs stay
+within the browser's 20 MiB import limit; additional verified puzzles remain
+in the candidate journal.
+
+The earlier `puzzles:generate` command remains available for the late-game
+mate-in-one/two pilot. It does not enforce the new relevance mixture; use a new
+`puzzles:mine` output directory for the broader workflow.
+
+## Sources and participation
+
+Sources stay read only. The loader verifies owned manifests and runtimes,
+refuses active source locks, and replays each sampled game through its recorded
+result. Forced opening plies are excluded from candidate selection. Full
+pre-puzzle history is retained for repetition and draw checks.
+
+**Moved** covers both sides' actual solution moves, castling rooks and drops.
+**Involved** also includes captures, promotions, target kings and stationary
+units whose removal changes the tactic or legal defenses. Hypothetical
+material-audit moves do not count as pieces moved in the solution. These tags
+help filter puzzles; they are not complete tactical explanations.
 
 The [first uploaded pilot](../experiments/puzzles/results/pilot-001.review.json)
-contains 16 puzzles from 600 processed candidates: twelve mate-in-one and four
-mate-in-two. All supplied histories, defense trees and participation tags were
-replayed successfully without new engine searches. Human playtesting remains
-the next quality check.
+contains twelve mate-in-one and four mate-in-two puzzles. Its histories, trees
+and participation tags were replayed. A separate
+[movement-relevance audit](../experiments/puzzles/results/pilot-001.relevance.json)
+classified **11 exclusive, two ordinary and three unknown** tactics without
+new native searches or collected games. Human review remains useful for
+readability, interest and the quality of these labels.
+
+## Future positions from weaker play
+
+The current miner reuses completed panel games. A separate puzzle-only
+collector could broaden the supply with playing skills **4, 8, 12, 16 and 20**,
+including equal and mismatched opponents. A small starting batch would be
+three tier profiles × five skill bands × four games: **60 games**. Lower skill
+creates opportunities, but very weak play often produces simple hanging-piece
+tactics rather than deeper puzzles.
+
+Analysis and verification should remain at Skill 20. Record both playing
+skills, search budgets, engine identity, exact profiles and full histories;
+keep these games separate from balance evidence. Compare accepted interesting
+puzzles per engine-minute before scaling. This collector is a planned next
+step, not part of `puzzles:mine` yet. The pinned
+[upstream research](variant-puzzle-plan.md) remains useful for comparison.

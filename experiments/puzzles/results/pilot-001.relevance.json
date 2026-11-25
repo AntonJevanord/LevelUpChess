@@ -1,0 +1,681 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-puzzle-relevance-audit",
+  "reviewed": "2026-11-25",
+  "source": {
+    "file": "experiments/puzzles/results/pilot-001.puzzles.json.gz",
+    "sha256": "51e881460d470e4ee3113f51e78e2ef5a18ada8cb099df48ab17aef726f3fd73"
+  },
+  "method": "ordinary-movement-counterfactual-v1",
+  "bounds": {
+    "nodeLimit": 250000,
+    "timeLimitMs": 10000
+  },
+  "counts": {
+    "exclusive": 11,
+    "ordinary": 2,
+    "unknown": 3
+  },
+  "scope": "Counterfactual root movement comparison for the already validated uploaded pilot. No source games or native engine searches generated.",
+  "puzzles": [
+    {
+      "id": "panel-f1299e23b95405534206f8a6",
+      "goal": {
+        "type": "mate",
+        "moves": 1
+      },
+      "moved": [
+        "queen"
+      ],
+      "relevance": {
+        "schemaVersion": 1,
+        "method": "ordinary-movement-counterfactual-v1",
+        "historyPolicy": "Compare movement at the puzzle root with unchanged pieces, colors, pockets, castling/en-passant rights and halfmove clock. The upgraded-only pre-root move sequence is not replayed under ordinary movement; any repeated pre-root position makes the comparison inconclusive.",
+        "sourceProfileHash": "0c989d7026dc9a05682a2c9e71b739c5ade05e7f00c5430a24cc63773b884f66",
+        "alteredIds": [
+          "rook.orange@3"
+        ],
+        "changes": [
+          {
+            "id": "rook.orange@3",
+            "letter": "u",
+            "family": "rook",
+            "from": "RcN",
+            "to": "R"
+          }
+        ],
+        "baselineProfileHash": "83be0cb07bb30104969a7cbb9059dc499da23936fe237f92b096530703f909db",
+        "reservePolicy": "Custom king-family grants become nonroyal king-step pieces; the ordinary royal king is unchanged.",
+        "rulesImplementation": {
+          "package": "ffish-es6",
+          "version": "0.7.10",
+          "moduleSha256": "7816fc7f51614cb5b6128dc5173d0343b60dfc4e80583bb761e3a916f53d21ad",
+          "wasmSha256": "260b052e0b63150528c947c666675912be45126e227a07edce34360b39bf6483"
+        },
+        "classification": "ordinary",
+        "reason": "recorded-mating-tree-survives-demotion"
+      }
+    },
+    {
+      "id": "panel-efae55f4f3678a3ee5cbae88",
+      "goal": {
+        "type": "mate",
+        "moves": 1
+      },
+      "moved": [
+        "rook"
+      ],
+      "relevance": {
+        "schemaVersion": 1,
+        "method": "ordinary-movement-counterfactual-v1",
+        "historyPolicy": "Compare movement at the puzzle root with unchanged pieces, colors, pockets, castling/en-passant rights and halfmove clock. The upgraded-only pre-root move sequence is not replayed under ordinary movement; any repeated pre-root position makes the comparison inconclusive.",
+        "sourceProfileHash": "0c989d7026dc9a05682a2c9e71b739c5ade05e7f00c5430a24cc63773b884f66",
+        "alteredIds": [
+          "bishop.orange@3"
+        ],
+        "changes": [
+          {
+            "id": "bishop.orange@3",
+            "letter": "f",
+            "family": "bishop",
+            "from": "BsR",
+            "to": "B"
+          }
+        ],
+        "baselineProfileHash": "83be0cb07bb30104969a7cbb9059dc499da23936fe237f92b096530703f909db",
+        "reservePolicy": "Custom king-family grants become nonroyal king-step pieces; the ordinary royal king is unchanged.",
+        "rulesImplementation": {
+          "package": "ffish-es6",
+          "version": "0.7.10",
+          "moduleSha256": "7816fc7f51614cb5b6128dc5173d0343b60dfc4e80583bb761e3a916f53d21ad",
+          "wasmSha256": "260b052e0b63150528c947c666675912be45126e227a07edce34360b39bf6483"
+        },
+        "classification": "exclusive",
+        "reason": "ordinary-goal-exhaustively-refuted",
+        "proof": {
+          "status": "no-forced-mate",
+          "nodes": 42,
+          "elapsedMs": 10
+        }
+      }
+    },
+    {
+      "id": "panel-5c4fbdf3b2f3f6c767c23937",
+      "goal": {
+        "type": "mate",
+        "moves": 2
+      },
+      "moved": [
+        "bishop",
+        "pawn",
+        "rook.cataphract-no-tall-back@1"
+      ],
+      "relevance": {
+        "schemaVersion": 1,
+        "method": "ordinary-movement-counterfactual-v1",
+        "historyPolicy": "Compare movement at the puzzle root with unchanged pieces, colors, pockets, castling/en-passant rights and halfmove clock. The upgraded-only pre-root move sequence is not replayed under ordinary movement; any repeated pre-root position makes the comparison inconclusive.",
+        "sourceProfileHash": "6a36279ece0e287a02b0f54dfadbf61c82a3ef3a163457db4b076a50d3cda4be",
+        "alteredIds": [
+          "rook.cataphract-no-tall-back@1"
+        ],
+        "changes": [
+          {
+            "id": "rook.cataphract-no-tall-back@1",
+            "letter": "j",
+            "family": "rook",
+            "from": "RsCfC",
+            "to": "R"
+          }
+        ],
+        "baselineProfileHash": "d49342cd8b1a72be7e4806b07435c7b19338173b346adc469c33fd307c823afe",
+        "reservePolicy": "Custom king-family grants become nonroyal king-step pieces; the ordinary royal king is unchanged.",
+        "rulesImplementation": {
+          "package": "ffish-es6",
+          "version": "0.7.10",
+          "moduleSha256": "7816fc7f51614cb5b6128dc5173d0343b60dfc4e80583bb761e3a916f53d21ad",
+          "wasmSha256": "260b052e0b63150528c947c666675912be45126e227a07edce34360b39bf6483"
+        },
+        "classification": "exclusive",
+        "reason": "ordinary-goal-exhaustively-refuted",
+        "proof": {
+          "status": "no-forced-mate",
+          "nodes": 783,
+          "elapsedMs": 407
+        }
+      }
+    },
+    {
+      "id": "panel-603f9d18291cc2aaa78b8c18",
+      "goal": {
+        "type": "mate",
+        "moves": 1
+      },
+      "moved": [
+        "bishop"
+      ],
+      "relevance": {
+        "schemaVersion": 1,
+        "method": "ordinary-movement-counterfactual-v1",
+        "historyPolicy": "Compare movement at the puzzle root with unchanged pieces, colors, pockets, castling/en-passant rights and halfmove clock. The upgraded-only pre-root move sequence is not replayed under ordinary movement; any repeated pre-root position makes the comparison inconclusive.",
+        "sourceProfileHash": "6a36279ece0e287a02b0f54dfadbf61c82a3ef3a163457db4b076a50d3cda4be",
+        "alteredIds": [
+          "rook.cataphract-no-tall-back@1"
+        ],
+        "changes": [
+          {
+            "id": "rook.cataphract-no-tall-back@1",
+            "letter": "j",
+            "family": "rook",
+            "from": "RsCfC",
+            "to": "R"
+          }
+        ],
+        "baselineProfileHash": "d49342cd8b1a72be7e4806b07435c7b19338173b346adc469c33fd307c823afe",
+        "reservePolicy": "Custom king-family grants become nonroyal king-step pieces; the ordinary royal king is unchanged.",
+        "rulesImplementation": {
+          "package": "ffish-es6",
+          "version": "0.7.10",
+          "moduleSha256": "7816fc7f51614cb5b6128dc5173d0343b60dfc4e80583bb761e3a916f53d21ad",
+          "wasmSha256": "260b052e0b63150528c947c666675912be45126e227a07edce34360b39bf6483"
+        },
+        "classification": "exclusive",
+        "reason": "ordinary-goal-exhaustively-refuted",
+        "proof": {
+          "status": "no-forced-mate",
+          "nodes": 26,
+          "elapsedMs": 1
+        }
+      }
+    },
+    {
+      "id": "panel-517a7d96016cb4dfef410196",
+      "goal": {
+        "type": "mate",
+        "moves": 1
+      },
+      "moved": [
+        "queen.wraith-side-through@1"
+      ],
+      "relevance": {
+        "schemaVersion": 1,
+        "method": "ordinary-movement-counterfactual-v1",
+        "historyPolicy": "Compare movement at the puzzle root with unchanged pieces, colors, pockets, castling/en-passant rights and halfmove clock. The upgraded-only pre-root move sequence is not replayed under ordinary movement; any repeated pre-root position makes the comparison inconclusive.",
+        "sourceProfileHash": "6a36279ece0e287a02b0f54dfadbf61c82a3ef3a163457db4b076a50d3cda4be",
+        "alteredIds": [
+          "queen.wraith-side-through@1"
+        ],
+        "changes": [
+          {
+            "id": "queen.wraith-side-through@1",
+            "letter": "i",
+            "family": "queen",
+            "from": "QgmQ0gcBgcsR0",
+            "to": "Q"
+          }
+        ],
+        "baselineProfileHash": "d49342cd8b1a72be7e4806b07435c7b19338173b346adc469c33fd307c823afe",
+        "reservePolicy": "Custom king-family grants become nonroyal king-step pieces; the ordinary royal king is unchanged.",
+        "rulesImplementation": {
+          "package": "ffish-es6",
+          "version": "0.7.10",
+          "moduleSha256": "7816fc7f51614cb5b6128dc5173d0343b60dfc4e80583bb761e3a916f53d21ad",
+          "wasmSha256": "260b052e0b63150528c947c666675912be45126e227a07edce34360b39bf6483"
+        },
+        "classification": "ordinary",
+        "reason": "recorded-mating-tree-survives-demotion"
+      }
+    },
+    {
+      "id": "panel-177a6f83d1b0decf2c12fa12",
+      "goal": {
+        "type": "mate",
+        "moves": 1
+      },
+      "moved": [
+        "bishop.purple@13"
+      ],
+      "relevance": {
+        "schemaVersion": 1,
+        "method": "ordinary-movement-counterfactual-v1",
+        "historyPolicy": "Compare movement at the puzzle root with unchanged pieces, colors, pockets, castling/en-passant rights and halfmove clock. The upgraded-only pre-root move sequence is not replayed under ordinary movement; any repeated pre-root position makes the comparison inconclusive.",
+        "sourceProfileHash": "6a36279ece0e287a02b0f54dfadbf61c82a3ef3a163457db4b076a50d3cda4be",
+        "alteredIds": [
+          "bishop.purple@13"
+        ],
+        "changes": [
+          {
+            "id": "bishop.purple@13",
+            "letter": "m",
+            "family": "bishop",
+            "from": "BsR2nsN",
+            "to": "B"
+          }
+        ],
+        "baselineProfileHash": "d49342cd8b1a72be7e4806b07435c7b19338173b346adc469c33fd307c823afe",
+        "reservePolicy": "Custom king-family grants become nonroyal king-step pieces; the ordinary royal king is unchanged.",
+        "rulesImplementation": {
+          "package": "ffish-es6",
+          "version": "0.7.10",
+          "moduleSha256": "7816fc7f51614cb5b6128dc5173d0343b60dfc4e80583bb761e3a916f53d21ad",
+          "wasmSha256": "260b052e0b63150528c947c666675912be45126e227a07edce34360b39bf6483"
+        },
+        "classification": "exclusive",
+        "reason": "ordinary-goal-exhaustively-refuted",
+        "proof": {
+          "status": "no-forced-mate",
+          "nodes": 24,
+          "elapsedMs": 1
+        }
+      }
+    },
+    {
+      "id": "panel-3532c6296883a974a9090fc9",
+      "goal": {
+        "type": "mate",
+        "moves": 1
+      },
+      "moved": [
+        "bishop.purple@13"
+      ],
+      "relevance": {
+        "schemaVersion": 1,
+        "method": "ordinary-movement-counterfactual-v1",
+        "historyPolicy": "Compare movement at the puzzle root with unchanged pieces, colors, pockets, castling/en-passant rights and halfmove clock. The upgraded-only pre-root move sequence is not replayed under ordinary movement; any repeated pre-root position makes the comparison inconclusive.",
+        "sourceProfileHash": "6a36279ece0e287a02b0f54dfadbf61c82a3ef3a163457db4b076a50d3cda4be",
+        "alteredIds": [
+          "bishop.purple@13"
+        ],
+        "changes": [
+          {
+            "id": "bishop.purple@13",
+            "letter": "m",
+            "family": "bishop",
+            "from": "BsR2nsN",
+            "to": "B"
+          }
+        ],
+        "baselineProfileHash": "d49342cd8b1a72be7e4806b07435c7b19338173b346adc469c33fd307c823afe",
+        "reservePolicy": "Custom king-family grants become nonroyal king-step pieces; the ordinary royal king is unchanged.",
+        "rulesImplementation": {
+          "package": "ffish-es6",
+          "version": "0.7.10",
+          "moduleSha256": "7816fc7f51614cb5b6128dc5173d0343b60dfc4e80583bb761e3a916f53d21ad",
+          "wasmSha256": "260b052e0b63150528c947c666675912be45126e227a07edce34360b39bf6483"
+        },
+        "classification": "exclusive",
+        "reason": "ordinary-goal-exhaustively-refuted",
+        "proof": {
+          "status": "no-forced-mate",
+          "nodes": 37,
+          "elapsedMs": 2
+        }
+      }
+    },
+    {
+      "id": "panel-45983ce795357f2b86717c76",
+      "goal": {
+        "type": "mate",
+        "moves": 1
+      },
+      "moved": [
+        "queen"
+      ],
+      "relevance": {
+        "schemaVersion": 1,
+        "method": "ordinary-movement-counterfactual-v1",
+        "historyPolicy": "Compare movement at the puzzle root with unchanged pieces, colors, pockets, castling/en-passant rights and halfmove clock. The upgraded-only pre-root move sequence is not replayed under ordinary movement; any repeated pre-root position makes the comparison inconclusive.",
+        "sourceProfileHash": "be6b84260dd1d4eca130c661a839dc1f357414f6315fd8a027fe45a5d433d958",
+        "alteredIds": [
+          "queen.level2-camel-capture@1"
+        ],
+        "changes": [
+          {
+            "id": "queen.level2-camel-capture@1",
+            "letter": "l",
+            "family": "queen",
+            "from": "QcC",
+            "to": "Q"
+          }
+        ],
+        "baselineProfileHash": "13c3f21280173fef01123061aa34af967f435a477473162daf61429006716a69",
+        "reservePolicy": "Custom king-family grants become nonroyal king-step pieces; the ordinary royal king is unchanged.",
+        "rulesImplementation": {
+          "package": "ffish-es6",
+          "version": "0.7.10",
+          "moduleSha256": "7816fc7f51614cb5b6128dc5173d0343b60dfc4e80583bb761e3a916f53d21ad",
+          "wasmSha256": "260b052e0b63150528c947c666675912be45126e227a07edce34360b39bf6483"
+        },
+        "classification": "exclusive",
+        "reason": "ordinary-goal-exhaustively-refuted",
+        "proof": {
+          "status": "no-forced-mate",
+          "nodes": 49,
+          "elapsedMs": 5
+        }
+      }
+    },
+    {
+      "id": "panel-df844c18912db35900ff5192",
+      "goal": {
+        "type": "mate",
+        "moves": 2
+      },
+      "moved": [
+        "bishop.orange@3",
+        "queen",
+        "queen.level2-camel-capture@1"
+      ],
+      "relevance": {
+        "schemaVersion": 1,
+        "method": "ordinary-movement-counterfactual-v1",
+        "historyPolicy": "Compare movement at the puzzle root with unchanged pieces, colors, pockets, castling/en-passant rights and halfmove clock. The upgraded-only pre-root move sequence is not replayed under ordinary movement; any repeated pre-root position makes the comparison inconclusive.",
+        "sourceProfileHash": "be6b84260dd1d4eca130c661a839dc1f357414f6315fd8a027fe45a5d433d958",
+        "alteredIds": [
+          "bishop.orange@3",
+          "queen.level2-camel-capture@1"
+        ],
+        "changes": [
+          {
+            "id": "bishop.orange@3",
+            "letter": "f",
+            "family": "bishop",
+            "from": "BsR",
+            "to": "B"
+          },
+          {
+            "id": "queen.level2-camel-capture@1",
+            "letter": "l",
+            "family": "queen",
+            "from": "QcC",
+            "to": "Q"
+          }
+        ],
+        "baselineProfileHash": "13c3f21280173fef01123061aa34af967f435a477473162daf61429006716a69",
+        "reservePolicy": "Custom king-family grants become nonroyal king-step pieces; the ordinary royal king is unchanged.",
+        "rulesImplementation": {
+          "package": "ffish-es6",
+          "version": "0.7.10",
+          "moduleSha256": "7816fc7f51614cb5b6128dc5173d0343b60dfc4e80583bb761e3a916f53d21ad",
+          "wasmSha256": "260b052e0b63150528c947c666675912be45126e227a07edce34360b39bf6483"
+        },
+        "classification": "exclusive",
+        "reason": "ordinary-goal-exhaustively-refuted",
+        "proof": {
+          "status": "no-forced-mate",
+          "nodes": 1574,
+          "elapsedMs": 562
+        }
+      }
+    },
+    {
+      "id": "panel-36e32e887a18b94f04219cf0",
+      "goal": {
+        "type": "mate",
+        "moves": 1
+      },
+      "moved": [
+        "queen"
+      ],
+      "relevance": {
+        "schemaVersion": 1,
+        "method": "ordinary-movement-counterfactual-v1",
+        "historyPolicy": "Compare movement at the puzzle root with unchanged pieces, colors, pockets, castling/en-passant rights and halfmove clock. The upgraded-only pre-root move sequence is not replayed under ordinary movement; any repeated pre-root position makes the comparison inconclusive.",
+        "sourceProfileHash": "be6b84260dd1d4eca130c661a839dc1f357414f6315fd8a027fe45a5d433d958",
+        "alteredIds": [
+          "rook.orange@3"
+        ],
+        "changes": [
+          {
+            "id": "rook.orange@3",
+            "letter": "o",
+            "family": "rook",
+            "from": "RcN",
+            "to": "R"
+          }
+        ],
+        "baselineProfileHash": "13c3f21280173fef01123061aa34af967f435a477473162daf61429006716a69",
+        "reservePolicy": "Custom king-family grants become nonroyal king-step pieces; the ordinary royal king is unchanged.",
+        "rulesImplementation": {
+          "package": "ffish-es6",
+          "version": "0.7.10",
+          "moduleSha256": "7816fc7f51614cb5b6128dc5173d0343b60dfc4e80583bb761e3a916f53d21ad",
+          "wasmSha256": "260b052e0b63150528c947c666675912be45126e227a07edce34360b39bf6483"
+        },
+        "classification": "exclusive",
+        "reason": "ordinary-goal-exhaustively-refuted",
+        "proof": {
+          "status": "no-forced-mate",
+          "nodes": 43,
+          "elapsedMs": 2
+        }
+      }
+    },
+    {
+      "id": "panel-dffbaf64e074830636cd728c",
+      "goal": {
+        "type": "mate",
+        "moves": 1
+      },
+      "moved": [
+        "queen.level1-wide-forward-knight@1"
+      ],
+      "relevance": {
+        "schemaVersion": 1,
+        "method": "ordinary-movement-counterfactual-v1",
+        "historyPolicy": "Compare movement at the puzzle root with unchanged pieces, colors, pockets, castling/en-passant rights and halfmove clock. The upgraded-only pre-root move sequence is not replayed under ordinary movement; any repeated pre-root position makes the comparison inconclusive.",
+        "sourceProfileHash": "d3a9c172dc8caf547341a7f454cf671540aafd39a78f8815d91c8719ce6ced91",
+        "alteredIds": [
+          "queen.level1-wide-forward-knight@1"
+        ],
+        "changes": [
+          {
+            "id": "queen.level1-wide-forward-knight@1",
+            "letter": "j",
+            "family": "queen",
+            "from": "QfsN",
+            "to": "Q"
+          }
+        ],
+        "baselineProfileHash": "6945a3e4ae6ef5e1bfa47d9797e0317d4f97bb12a39ae3c757bcb2613dab603d",
+        "reservePolicy": "Custom king-family grants become nonroyal king-step pieces; the ordinary royal king is unchanged.",
+        "rulesImplementation": {
+          "package": "ffish-es6",
+          "version": "0.7.10",
+          "moduleSha256": "7816fc7f51614cb5b6128dc5173d0343b60dfc4e80583bb761e3a916f53d21ad",
+          "wasmSha256": "260b052e0b63150528c947c666675912be45126e227a07edce34360b39bf6483"
+        },
+        "classification": "exclusive",
+        "reason": "ordinary-goal-exhaustively-refuted",
+        "proof": {
+          "status": "no-forced-mate",
+          "nodes": 35,
+          "elapsedMs": 1
+        }
+      }
+    },
+    {
+      "id": "panel-f32146f216146c6856e9a6d3",
+      "goal": {
+        "type": "mate",
+        "moves": 2
+      },
+      "moved": [
+        "king",
+        "rook.ghost-diagonal-omni@1"
+      ],
+      "relevance": {
+        "schemaVersion": 1,
+        "method": "ordinary-movement-counterfactual-v1",
+        "historyPolicy": "Compare movement at the puzzle root with unchanged pieces, colors, pockets, castling/en-passant rights and halfmove clock. The upgraded-only pre-root move sequence is not replayed under ordinary movement; any repeated pre-root position makes the comparison inconclusive.",
+        "sourceProfileHash": "d3a9c172dc8caf547341a7f454cf671540aafd39a78f8815d91c8719ce6ced91",
+        "alteredIds": [
+          "rook.ghost-diagonal-omni@1"
+        ],
+        "changes": [
+          {
+            "id": "rook.ghost-diagonal-omni@1",
+            "letter": "m",
+            "family": "rook",
+            "from": "RmBgmQ0",
+            "to": "R"
+          }
+        ],
+        "baselineProfileHash": "6945a3e4ae6ef5e1bfa47d9797e0317d4f97bb12a39ae3c757bcb2613dab603d",
+        "reservePolicy": "Custom king-family grants become nonroyal king-step pieces; the ordinary royal king is unchanged.",
+        "classification": "unknown",
+        "reason": "repeated-position-in-source-history"
+      }
+    },
+    {
+      "id": "panel-2e42c22fe37fe316406911d9",
+      "goal": {
+        "type": "mate",
+        "moves": 1
+      },
+      "moved": [
+        "rook.ghost-diagonal-omni@1"
+      ],
+      "relevance": {
+        "schemaVersion": 1,
+        "method": "ordinary-movement-counterfactual-v1",
+        "historyPolicy": "Compare movement at the puzzle root with unchanged pieces, colors, pockets, castling/en-passant rights and halfmove clock. The upgraded-only pre-root move sequence is not replayed under ordinary movement; any repeated pre-root position makes the comparison inconclusive.",
+        "sourceProfileHash": "d3a9c172dc8caf547341a7f454cf671540aafd39a78f8815d91c8719ce6ced91",
+        "alteredIds": [
+          "rook.ghost-diagonal-omni@1"
+        ],
+        "changes": [
+          {
+            "id": "rook.ghost-diagonal-omni@1",
+            "letter": "m",
+            "family": "rook",
+            "from": "RmBgmQ0",
+            "to": "R"
+          }
+        ],
+        "baselineProfileHash": "6945a3e4ae6ef5e1bfa47d9797e0317d4f97bb12a39ae3c757bcb2613dab603d",
+        "reservePolicy": "Custom king-family grants become nonroyal king-step pieces; the ordinary royal king is unchanged.",
+        "classification": "unknown",
+        "reason": "repeated-position-in-source-history"
+      }
+    },
+    {
+      "id": "panel-ce6434a594d8146c0e1ee7ca",
+      "goal": {
+        "type": "mate",
+        "moves": 2
+      },
+      "moved": [
+        "king",
+        "queen.level1-wide-forward-knight@1"
+      ],
+      "relevance": {
+        "schemaVersion": 1,
+        "method": "ordinary-movement-counterfactual-v1",
+        "historyPolicy": "Compare movement at the puzzle root with unchanged pieces, colors, pockets, castling/en-passant rights and halfmove clock. The upgraded-only pre-root move sequence is not replayed under ordinary movement; any repeated pre-root position makes the comparison inconclusive.",
+        "sourceProfileHash": "d3a9c172dc8caf547341a7f454cf671540aafd39a78f8815d91c8719ce6ced91",
+        "alteredIds": [
+          "queen.level1-wide-forward-knight@1"
+        ],
+        "changes": [
+          {
+            "id": "queen.level1-wide-forward-knight@1",
+            "letter": "j",
+            "family": "queen",
+            "from": "QfsN",
+            "to": "Q"
+          }
+        ],
+        "baselineProfileHash": "6945a3e4ae6ef5e1bfa47d9797e0317d4f97bb12a39ae3c757bcb2613dab603d",
+        "reservePolicy": "Custom king-family grants become nonroyal king-step pieces; the ordinary royal king is unchanged.",
+        "rulesImplementation": {
+          "package": "ffish-es6",
+          "version": "0.7.10",
+          "moduleSha256": "7816fc7f51614cb5b6128dc5173d0343b60dfc4e80583bb761e3a916f53d21ad",
+          "wasmSha256": "260b052e0b63150528c947c666675912be45126e227a07edce34360b39bf6483"
+        },
+        "classification": "exclusive",
+        "reason": "ordinary-goal-exhaustively-refuted",
+        "proof": {
+          "status": "no-forced-mate",
+          "nodes": 851,
+          "elapsedMs": 440
+        }
+      }
+    },
+    {
+      "id": "panel-dc6f87b3363a3d9f341ef0f4",
+      "goal": {
+        "type": "mate",
+        "moves": 1
+      },
+      "moved": [
+        "queen.level1-wide-forward-knight@1"
+      ],
+      "relevance": {
+        "schemaVersion": 1,
+        "method": "ordinary-movement-counterfactual-v1",
+        "historyPolicy": "Compare movement at the puzzle root with unchanged pieces, colors, pockets, castling/en-passant rights and halfmove clock. The upgraded-only pre-root move sequence is not replayed under ordinary movement; any repeated pre-root position makes the comparison inconclusive.",
+        "sourceProfileHash": "d3a9c172dc8caf547341a7f454cf671540aafd39a78f8815d91c8719ce6ced91",
+        "alteredIds": [
+          "queen.level1-wide-forward-knight@1"
+        ],
+        "changes": [
+          {
+            "id": "queen.level1-wide-forward-knight@1",
+            "letter": "j",
+            "family": "queen",
+            "from": "QfsN",
+            "to": "Q"
+          }
+        ],
+        "baselineProfileHash": "6945a3e4ae6ef5e1bfa47d9797e0317d4f97bb12a39ae3c757bcb2613dab603d",
+        "reservePolicy": "Custom king-family grants become nonroyal king-step pieces; the ordinary royal king is unchanged.",
+        "rulesImplementation": {
+          "package": "ffish-es6",
+          "version": "0.7.10",
+          "moduleSha256": "7816fc7f51614cb5b6128dc5173d0343b60dfc4e80583bb761e3a916f53d21ad",
+          "wasmSha256": "260b052e0b63150528c947c666675912be45126e227a07edce34360b39bf6483"
+        },
+        "classification": "exclusive",
+        "reason": "ordinary-goal-exhaustively-refuted",
+        "proof": {
+          "status": "no-forced-mate",
+          "nodes": 28,
+          "elapsedMs": 1
+        }
+      }
+    },
+    {
+      "id": "panel-9411f84b60065f18835e7513",
+      "goal": {
+        "type": "mate",
+        "moves": 1
+      },
+      "moved": [
+        "rook.blue@3"
+      ],
+      "relevance": {
+        "schemaVersion": 1,
+        "method": "ordinary-movement-counterfactual-v1",
+        "historyPolicy": "Compare movement at the puzzle root with unchanged pieces, colors, pockets, castling/en-passant rights and halfmove clock. The upgraded-only pre-root move sequence is not replayed under ordinary movement; any repeated pre-root position makes the comparison inconclusive.",
+        "sourceProfileHash": "d3a9c172dc8caf547341a7f454cf671540aafd39a78f8815d91c8719ce6ced91",
+        "alteredIds": [
+          "rook.blue@3"
+        ],
+        "changes": [
+          {
+            "id": "rook.blue@3",
+            "letter": "l",
+            "family": "rook",
+            "from": "RceF",
+            "to": "R"
+          }
+        ],
+        "baselineProfileHash": "6945a3e4ae6ef5e1bfa47d9797e0317d4f97bb12a39ae3c757bcb2613dab603d",
+        "reservePolicy": "Custom king-family grants become nonroyal king-step pieces; the ordinary royal king is unchanged.",
+        "classification": "unknown",
+        "reason": "repeated-position-in-source-history"
+      }
+    }
+  ]
+}

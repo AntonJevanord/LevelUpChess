@@ -4,6 +4,7 @@ const { filterPuzzles, pieceLabel, MAX_PACK_BYTES } = puzzleData;
 const CATEGORIES = ['involved', 'moved', 'present'];
 const side = color => color === 'b' ? 'Black' : 'White';
 const number = value => value === '' ? undefined : Number(value);
+const goalLabel = goal => goal.type === 'material' ? `Win +${goal.minimumGain / 100}` : `Mate in ${goal.moves}`;
 
 /** Presentation only: the app owns the parked game, validated packs and
  * puzzle session. Opening a menu pauses its context; browsing never replaces
@@ -39,6 +40,7 @@ export function createPuzzleMenu({ root = document, onPause = () => {}, onResume
   function showLibrary() { renderResults(); open(library); }
   function filters() {
     return { minMoves: number(find('#puzzle-min-moves').value), maxMoves: number(find('#puzzle-max-moves').value),
+      goalType: find('#puzzle-goal-type').value, variantRelevance: find('#puzzle-variant-relevance').value,
       ...Object.fromEntries(CATEGORIES.map(category => [category,
         [...find(`#puzzle-filter-${category}`).querySelectorAll('input:checked')].map(input => input.value)])) };
   }
@@ -72,7 +74,7 @@ export function createPuzzleMenu({ root = document, onPause = () => {}, onResume
     const article = root.createElement('article'); article.className = 'puzzle-card'; article.dataset.puzzleId = puzzle.id;
     const heading = root.createElement('div'); heading.className = 'puzzle-card-heading';
     const title = root.createElement('h3'); title.textContent = puzzle.title || 'Find the winning move';
-    const badge = root.createElement('span'); badge.className = 'puzzle-length-badge'; badge.textContent = `Mate in ${puzzle.goal.moves}`;
+    const badge = root.createElement('span'); badge.className = 'puzzle-length-badge'; badge.textContent = goalLabel(puzzle.goal);
     heading.append(title, badge);
     const turn = root.createElement('p'); turn.textContent = `${side(puzzle.solverColor)} to move${puzzle.provenance?.kind === 'authored' ? ' · Practice example' : ''}`;
     const pieces = root.createElement('p'); pieces.className = 'puzzle-pieces-summary';
@@ -118,9 +120,9 @@ export function createPuzzleMenu({ root = document, onPause = () => {}, onResume
     if (!value) return;
     toolbar.dataset.status = value.status;
     find('#puzzle-title').textContent = value.title || 'Find the winning move';
-    find('#puzzle-goal').textContent = `${side(value.solverColor)} to move · Mate in ${value.goal.moves} · ${value.solverMovesPlayed || 0}/${value.solverMovesTotal || value.goal.moves} moves`;
+    find('#puzzle-goal').textContent = `${side(value.solverColor)} to move · ${value.goal.type === 'material' ? `Win at least ${value.goal.minimumGain / 100} material points` : goalLabel(value.goal)} · ${value.solverMovesPlayed || 0}/${value.solverMovesTotal || value.goal.moves} moves`;
     const base = value.status === 'solved' ? 'Puzzle solved. Nicely found.'
-      : value.status === 'revealed' ? 'Solution revealed. Retry to solve it yourself.' : 'Find the move that keeps the forced mate.';
+      : value.status === 'revealed' ? 'Solution revealed. Retry to solve it yourself.' : value.goal.type === 'material' ? 'Find the line that wins material and survives the tactical replies.' : 'Find the move that keeps the forced mate.';
     const hint = typeof value.hint === 'string' && value.hint ? `Hint: ${value.hint}` : '';
     const solution = value.status === 'revealed' && Array.isArray(value.solution) ? `Solution: ${value.solution.join(' ')}` : '';
     find('#puzzle-feedback').textContent = value.message || value.feedback || [base, hint, solution].filter(Boolean).join(' ');
@@ -157,6 +159,7 @@ export function createPuzzleMenu({ root = document, onPause = () => {}, onResume
   });
   find('#puzzle-clear-filters').addEventListener('click', () => {
     find('#puzzle-min-moves').value = ''; find('#puzzle-max-moves').value = '';
+    find('#puzzle-goal-type').value = 'any'; find('#puzzle-variant-relevance').value = 'any';
     for (const input of find('#puzzle-filters').querySelectorAll('input[type=checkbox]')) input.checked = false;
     error.textContent = ''; renderResults();
   });

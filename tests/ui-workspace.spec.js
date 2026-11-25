@@ -254,6 +254,31 @@ test('jump marks distinguish legal knight leaps from clear-path rook movement', 
   await expect(square(page, 'a8')).toHaveAttribute('data-jump', 'false');
 });
 
+test('Inspect uses medium-strength ability markers independently of the faded pieces', async ({ page }) => {
+  await square(page, 'b1').click();
+  const normalBefore = await square(page, 'c3').locator('.move-marker').evaluate(el => getComputedStyle(el).backgroundColor);
+  await page.locator('#inspect-mode').click();
+  await square(page, 'b1').click();
+  await expect(square(page, 'c3').locator('.ability-capture-marker')).toHaveCount(1);
+  const styles = await square(page, 'c3').evaluate(el => {
+    const move = getComputedStyle(el.querySelector('.ability-move-marker'));
+    const capture = getComputedStyle(el.querySelector('.ability-capture-marker'));
+    return { move: move.backgroundColor, capture: capture.borderTopColor, moveOpacity: move.opacity, captureOpacity: capture.opacity };
+  });
+  for (const color of [styles.move, styles.capture]) {
+    const alpha = Number(color.match(/,\s*([\d.]+)\)$/)?.[1]);
+    expect(alpha).toBeGreaterThan(0.55);
+    expect(alpha).toBeLessThan(0.75);
+  }
+  expect(styles.moveOpacity).toBe('1');
+  expect(styles.captureOpacity).toBe('1');
+  await expect(square(page, 'e2').locator('.piece')).toHaveCSS('opacity', '0.36');
+  await page.locator('#inspect-mode').click();
+  await square(page, 'b1').click();
+  const normalAfter = await square(page, 'c3').locator('.move-marker').evaluate(el => getComputedStyle(el).backgroundColor);
+  expect(normalAfter).toBe(normalBefore);
+});
+
 test('self-play starts explicitly, runs serial requests and single-steps exactly one move while paused', async ({ page }) => {
   let requests = 0, active = 0, maximumActive = 0;
   await page.route('**/api/engine/status', route => route.fulfill({ json: { name: 'Self-play test engine' } }));

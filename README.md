@@ -12,7 +12,7 @@ The side panel has **Game, Setup, Design and Files** tabs. Status and essential 
 
 Right-click for a circle or right-drag for an arrow; repeat to remove a mark, or press Escape to clear marks. **Draw** enables tap/drag annotation on touch screens. Design offers four piece styles, four board palettes and an annotation color, with preferences remembered locally. See the [interface guide](docs/interface-v18.md).
 
-**Menu → Puzzles** offers solution-length filters and separate lists for pieces involved, moved or present. Three authored practice examples are included. The [puzzle generator](docs/puzzle-generation.md) mines completed panel games into verified mate puzzles with exact piece profiles; import its `puzzles.json` in the menu. Your normal game stays paused while solving.
+**Menu → Puzzles** filters by solution length, mate/material goal, upgraded-ability relevance, and pieces involved, moved or present. Three authored practice examples are included. The [puzzle miner](docs/puzzle-generation.md) reuses completed panel games with exact profiles and targets a 90/10 mix of variant-specific and ordinary tactics; import its `puzzles.json` in the menu. Your normal game stays paused while solving.
 
 The setup budget is 1–9 points per side. Choose **Level 1/2/3 roster · expanded** for 12, 15 and 13 designs, including five new alternatives with the colors of their original counterparts. The original **current** rosters and every earlier library retain their rules. The [version-19 guide](docs/version19.md) gives the roster, Windows branch-switch instructions and panel commands. Historical family workshops remain selectable for earlier mixed-tier setups.
 
@@ -83,7 +83,7 @@ npm.cmd run balance:v19 -- --tier 2 --out balance-results/v19-level2-roster004 -
 npm.cmd run balance:v19 -- --tier 3 --out balance-results/v19-level3-roster004 --openings 16 --jobs 4
 ```
 
-These fresh panels use revision 004, including the purple **Six-jump pawn**
+These fresh panels use revision 004, including the **Six-jump pawn**
 `ifmnDfmWfceFsNfN` at L3 beside Herald and Ranger. Earlier panel folders retain
 their exact owned roster. Resume with `--resume DIRECTORY`;
 add `--openings 32` or `64` for total coverage. Reports retain completed
@@ -110,6 +110,9 @@ The [completed queen/pawn trials](docs/v19-selected-trials-review.md) add
 two-point L2 choice, retaining the fixed pawn references. These are design
 choices at recorded scores of 42.19% and 56.51%; published panel declarations
 and earlier game profiles retain their identities.
+
+The playable Six-jump pawn is now red like Herald; Forward-range pawn is yellow
+like the Knight pawn. Their movement, costs and archived profiles are unchanged.
 
 New runs [record the first post-opening engine score](docs/opening-evaluations.md)
 with each game and summarize it automatically in the panel/trial reports.
@@ -146,10 +149,12 @@ their earlier L3 results were already strong.
 
 The [completed expanded-panel reports](docs/v19-expanded-panel-review.md)
 support all five alternatives for further playtesting. The separate
-[puzzle pilot](docs/puzzle-generation.md) is ready: use
-`npm.cmd run puzzles:generate -- --help` after the panels stop. It reuses exact
-game profiles and verifies complete mate trees without new dependencies or
-extra balance games. Builds do not start puzzle generation automatically.
+[puzzle workflow](docs/puzzle-generation.md) is ready: use
+`npm.cmd run puzzles:mine -- --help` after the panels stop. It samples both
+colors throughout completed games, verifies longer mates and bounded material
+tactics, and tests whether upgraded movement matters. Material goals use a
+declared counting scale, separate from fitted piece values. Builds do not
+start mining or collect extra balance games.
 
 ## Version 16: frozen references and playtest roster
 

@@ -11,12 +11,12 @@ library and its exact rules remains available.
 The final choices are **NAD at L3**, and **NDmW, QcC and Free Boar BsR at L2**.
 Playable revision 003 keeps the green **Forward-tall queen `QfN`** and selects
 the blue **Wide-forward queen `QfsN`** as the second L1 queen. It also adds the
-two-point orange **Forward-range pawn `fQ2`** at L2 while retaining the frozen
+two-point yellow **Forward-range pawn `fQ2`** at L2 while retaining the frozen
 Knight/Rank pawn references. The [completed trial review](v19-selected-trials-review.md)
 records scores of 42.19% and 56.51%; the selection favors their clear movement
 identities rather than claiming exact balance. The L2 Bishop pawn remains in
 earlier libraries. Herald and the revised Wraith remain at L3.
-Revision 004 adds the purple three-point **Six-jump pawn**
+Revision 004 adds the red three-point **Six-jump pawn**
 `ifmnDfmWfceFsNfN` beside Herald and Ranger. It keeps ordinary pawn moves and
 captures, adds four wide knight jumps in both directions and two tall forward
 jumps, and retains standard promotion and adjacent diagonal en passant.

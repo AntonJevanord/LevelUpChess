@@ -50227,6 +50227,8 @@ var require_design_options = __commonJS({
         if (!anchor) throw new Error(`Missing presentation anchor for ${body.id}.`);
         entries[body.id] = { ...entries[body.id], accent: anchor.accent, status: "alternative", alternativeTo: body.alternativeTo };
       }
+      if (entries["pawn.level3-six-knight@1"]) entries["pawn.level3-six-knight@1"].accent = "red";
+      if (entries["pawn.level2-forward-queen-only@1"]) entries["pawn.level2-forward-queen-only@1"].accent = "yellow";
       return [profile.variant, entries];
     }));
     function optionInProfile(option, profile) {

@@ -44,13 +44,15 @@ not receive jump marks.
 
 Inspect never plays a move. Turn it off to return to legal-only selection.
 Inspection also works while watching the engine or while clocks are paused.
-Other piece icons are dimmed during Inspect; dots, rings and jump symbols stay
-opaque and are drawn above them. Normal-play marker opacity stays unchanged.
+Other piece icons are dimmed during Inspect. Dots and rings use a middle-ground
+opacity of about 63%, independent of the faded icons, and stay above them.
+Small jump symbols remain clear. Normal-play marker opacity stays unchanged.
 
 ## Puzzles
 
-Open **Menu → Puzzles** to filter by your solution-move count or pieces
-involved, moved and present. Involvement includes stationary supporting units.
+Open **Menu → Puzzles** to filter by solution-move count, mate/material goal,
+upgraded-ability relevance, or pieces involved, moved and present. Involvement
+includes stationary supporting units.
 Import generated puzzle packs, solve with automatic replies, or use hint,
 retry and show solution. Your original game and clock stay paused and return
 when you leave puzzles. See [generation and verification](puzzle-generation.md).
@@ -72,6 +74,10 @@ Design offers **Classic glow**, **Flat classic**, **Outline** and **Medallion**
 pieces, plus Sage, Blue, Walnut and Slate boards. Upgrade colors and level
 badges keep their meanings in every style. The annotation color controls both
 arrows and circles.
+
+The Six-jump pawn is red like Herald, and the Forward-range pawn is yellow
+like the Knight pawn. These presentation choices do not change their rules or
+archived experiment profiles.
 
 Appearance preferences are remembered locally, independently of game saves.
 These controls, artwork, drawing and piece guides work offline in the bundled

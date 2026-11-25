@@ -10,7 +10,7 @@ export async function puzzleGameFactory(fen, variant) {
   return new VariantGame(fen, variant);
 }
 
-function depth(node) { return 1 + Math.max(0, ...node.replies.map(reply => depth(reply.next))); }
+function depth(node) { return node ? 1 + Math.max(0, ...node.replies.map(reply => reply.next ? depth(reply.next) : 0)) : 0; }
 
 /** A puzzle has its own game. Keeping the live game outside this session lets
  * the application leave puzzles without replacing or saving over that game. */
@@ -38,6 +38,7 @@ export async function createPuzzleSession(pack, puzzleId, { createGame = puzzleG
     // other legal defense was already checked by the full tree replay.
     const reply = [...node.replies].sort((a, b) => depth(b.next) - depth(a.next) || a.move.localeCompare(b.move))[0];
     const defense = playUci(game, reply.move); moves.push(defense); played.push(defense.san); node = reply.next;
+    if (reply.leaf) status = 'solved';
     return moves;
   }
   const session = {
@@ -52,7 +53,7 @@ export async function createPuzzleSession(pack, puzzleId, { createGame = puzzleG
         : (request?.drop ? row.drop === request.drop.toLowerCase() : row.from === request?.from)
           && row.to === request?.to && row.promotion === request?.promotion);
       if (!legal) return { accepted: false, reason: 'That move is not legal.', moves: [], state: state() };
-      if (uciOf(legal) !== node.move) return { accepted: false, reason: 'Try another move in the mating line.', moves: [], state: state() };
+      if (uciOf(legal) !== node.move) return { accepted: false, reason: puzzle.goal.type === 'mate' ? 'Try another move in the mating line.' : 'Try another move that wins the required material.', moves: [], state: state() };
       const moves = advance();
       return { accepted: true, moves, state: state() };
     },

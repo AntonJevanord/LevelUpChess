@@ -487,7 +487,7 @@ function pauseClocks(message = '') {
 function playMove(move) {
   if (puzzleSession) {
     const result = puzzleSession.tryMove(move);
-    puzzleFeedback = result.accepted ? '' : 'That move does not achieve the shortest forced mate. Try another move.';
+    puzzleFeedback = result.accepted ? '' : result.reason || 'Try another move for this puzzle’s goal.';
     selected = null;
     selectedDrop = null;
     boardAnnotations?.clear();

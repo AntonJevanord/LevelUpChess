@@ -30,7 +30,7 @@ test('current setup offers the blue wide-forward queen and new two-point pawn wh
   await inPanel(page, 'setup', () => page.selectOption('#game-mode', profile(2).variant));
   await square(page, 'c2').click();
   for (const id of [PAWN, 'pawn.knight-tall-quiet@1', 'pawn.rank-current@1']) await expect(page.locator(`#setup-picker [data-upgrade-id="${id}"]`)).toContainText('2 pt');
-  await expect(page.locator(`#setup-picker [data-upgrade-id="${PAWN}"]`)).toHaveAttribute('data-accent', 'orange');
+  await expect(page.locator(`#setup-picker [data-upgrade-id="${PAWN}"]`)).toHaveAttribute('data-accent', 'yellow');
   await page.locator(`#setup-picker [data-upgrade-id="${PAWN}"]`).click();
   await expect(page.locator('#experimental-status')).toContainText('White 2/6');
 });

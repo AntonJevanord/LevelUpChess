@@ -18,12 +18,12 @@ async function importPosition(page, pieces) {
   if (await page.locator('#replace-dialog').isVisible()) await page.getByRole('button', { name: 'Replace game', exact: true }).click();
 }
 
-test('current L3 setup offers the purple six-jump pawn alongside Herald and Ranger for three points', async ({ page }) => {
+test('current L3 setup offers the red six-jump pawn alongside Herald and Ranger for three points', async ({ page }) => {
   await page.goto('http://127.0.0.1:4173');
   await inPanel(page, 'setup', () => page.selectOption('#game-mode', profile.variant));
   await square(page, 'c2').click();
   for (const id of [ID, 'pawn.queen-sideways@1', 'pawn.purple@13']) await expect(page.locator(`#setup-picker [data-upgrade-id="${id}"]`)).toContainText('3 pt');
-  await expect(page.locator(`#setup-picker [data-upgrade-id="${ID}"]`)).toHaveAttribute('data-accent', 'purple');
+  await expect(page.locator(`#setup-picker [data-upgrade-id="${ID}"]`)).toHaveAttribute('data-accent', 'red');
   await page.locator(`#setup-picker [data-upgrade-id="${ID}"]`).click();
   await expect(page.locator('#experimental-status')).toContainText('White 3/6');
 });

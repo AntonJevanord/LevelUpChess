@@ -36,14 +36,14 @@ test('the six-jump pawn enters a separate L3 edition while all earlier profiles 
   assert.equal(getDesign('pawn.level3-full-knight@1'), undefined);
 });
 
-test('the selected pawn is a three-point purple option beside Herald and Ranger under its actual mapped profile', () => {
+test('the selected pawn is a three-point red option beside Herald and Ranger under its actual mapped profile', () => {
   const value = profile(), options = getDesignOptions(value.variant);
   assert.ok(library() && !library().superseded);
   assert.equal(value.registry.definitions.length, 12);
   assert.deepEqual(value, getPlayableProfiles()[PLAYABLE_LIBRARIES.indexOf(library())]);
   assert.deepEqual(options.map(row => row.id).sort(), selected.getTierRoster(3).map(row => row.id).sort());
   const pawn = options.find(row => row.id === ID);
-  assert.equal(pawn.level, 3); assert.equal(pawn.accent, 'purple'); assert.match(pawn.description, /jump/i);
+  assert.equal(pawn.level, 3); assert.equal(pawn.accent, 'red'); assert.match(pawn.description, /jump/i);
   assert.deepEqual(value.evaluation.pieceValues[ID], { mg: 762, eg: 808 });
   assert.ok(value.capabilityProbes.some(row => row.name.includes(ID)));
   const old = PLAYABLE_LIBRARIES.find(row => row.id === 'v19-level3-revised');

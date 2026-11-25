@@ -2,6 +2,7 @@ const { test, expect } = require('@playwright/test');
 const { pathToFileURL } = require('node:url');
 const path = require('node:path');
 const examples = require('../src/puzzle-examples.json');
+const materialExample = require('../tests-unit/fixtures/material-puzzle-pack.json');
 const { pieceLabel } = require('../src/puzzle-data');
 const { inPanel } = require('./ui-panels');
 const url = process.env.TEST_FILE_URL ? pathToFileURL(path.resolve(__dirname, '../index.html')).href : process.env.TEST_BASE_URL || 'http://127.0.0.1:4173';
@@ -118,4 +119,49 @@ test('a valid imported pack adds a playable puzzle without replacing the origina
   await expect(page.locator('#puzzle-toolbar')).toHaveAttribute('data-status', 'solved');
   await page.locator('#puzzle-leave').click();
   await expect(page.locator('#board > .square > .piece')).toHaveCount(32);
+});
+
+test('material puzzles filter by goal and relevance, solve after the final defense, and support retry and reveal', async ({ page }) => {
+  const pack = JSON.parse(JSON.stringify(materialExample));
+  // Authored fixture metadata exercises the filter, independently of mining's
+  // engine-backed counterfactual receipts. All its pieces are ordinary.
+  pack.puzzles[0].relevance = { classification: 'ordinary', reason: 'Authored ordinary-chess test fixture.' };
+  await square(page, 'e2').click(); await square(page, 'e4').click();
+  await openLibrary(page);
+  await page.locator('#puzzle-pack-file').setInputFiles({ name: 'material.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(pack)) });
+  await expect(page.locator('#puzzle-import-status')).toContainText('loaded');
+  await page.selectOption('#puzzle-goal-type', 'material');
+  await expect(page.locator('.puzzle-card')).toHaveCount(1);
+  await expect(page.locator('.puzzle-length-badge')).toHaveText('Win +2');
+  await page.selectOption('#puzzle-variant-relevance', 'exclusive');
+  await expect(page.locator('.puzzle-card')).toHaveCount(0);
+  await page.selectOption('#puzzle-variant-relevance', 'ordinary');
+  await expect(page.locator('.puzzle-card')).toHaveCount(1);
+  await page.selectOption('#puzzle-goal-type', 'mate');
+  await expect(page.locator('.puzzle-card')).toHaveCount(0);
+  await page.locator('#puzzle-clear-filters').click();
+  await expect(page.locator('.puzzle-card')).toHaveCount(examples.puzzles.length + 1);
+  await page.locator('.puzzle-card[data-puzzle-id="synthetic-knight-fork-material"] button').click();
+  await expect(page.locator('#puzzle-goal')).toContainText('Win at least 2 material points');
+  await page.locator('#puzzle-hint').click();
+  await expect(page.locator('#puzzle-feedback')).toContainText('Nf6+');
+  await square(page, 'd5').click(); await square(page, 'b4').click();
+  await expect(square(page, 'd5')).toHaveAttribute('aria-label', 'd5 White knight');
+  await expect(page.locator('#puzzle-feedback')).toContainText('required material');
+  await square(page, 'd5').click(); await square(page, 'f6').click();
+  await expect(page.locator('#puzzle-toolbar')).toHaveAttribute('data-status', 'playing');
+  await expect(page.locator('#puzzle-goal')).toContainText('1/2 moves');
+  await square(page, 'f6').click(); await square(page, 'g4').click();
+  await expect(page.locator('#puzzle-toolbar')).toHaveAttribute('data-status', 'solved');
+  await expect(square(page, 'g4')).toHaveAttribute('aria-label', 'g4 White knight');
+  await expect(page.locator('#puzzle-goal')).toContainText('2/2 moves');
+  await page.locator('#puzzle-retry').click();
+  await expect(page.locator('#puzzle-toolbar')).toHaveAttribute('data-status', 'playing');
+  await expect(square(page, 'd5')).toHaveAttribute('aria-label', 'd5 White knight');
+  await page.locator('#puzzle-reveal').click();
+  await expect(page.locator('#puzzle-toolbar')).toHaveAttribute('data-status', 'revealed');
+  await expect(page.locator('#puzzle-feedback')).toContainText('Nxg4');
+  await page.locator('#puzzle-leave').click();
+  await expect(square(page, 'e4')).toHaveAttribute('aria-label', 'e4 White pawn');
+  await expect(page.locator('#status')).toHaveText('Black to move');
 });
