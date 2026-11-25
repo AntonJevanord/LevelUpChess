@@ -44,6 +44,8 @@ not receive jump marks.
 
 Inspect never plays a move. Turn it off to return to legal-only selection.
 Inspection also works while watching the engine or while clocks are paused.
+Other piece icons are dimmed during Inspect; dots, rings and jump symbols stay
+opaque and are drawn above them. Normal-play marker opacity stays unchanged.
 
 ## Puzzles
 

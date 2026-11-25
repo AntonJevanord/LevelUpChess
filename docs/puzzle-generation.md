@@ -100,3 +100,9 @@ cover filters, imports, solving, paused-clock restoration, saves and the
 legal/Inspect/jump displays. All 63 earlier rule/profile artifacts retain
 their original bytes. No puzzle extraction was run against the user's local
 games during implementation.
+
+The [first uploaded pilot](../experiments/puzzles/results/pilot-001.review.json)
+contains 16 puzzles from 600 processed candidates: twelve mate-in-one and four
+mate-in-two. All supplied histories, defense trees and participation tags were
+replayed successfully without new engine searches. Human playtesting remains
+the next quality check.

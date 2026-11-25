@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-puzzle-pilot-review",
+  "reviewed": "2026-11-25",
+  "sources": [
+    {
+      "uploadedFileId": "file_0000000012dc820a827d6e66baba3bb2",
+      "file": "experiments/puzzles/results/pilot-001.puzzles.json.gz",
+      "bytes": 105451,
+      "sha256": "51e881460d470e4ee3113f51e78e2ef5a18ada8cb099df48ab17aef726f3fd73",
+      "archiveSha256": "6f9451b0f7946e25c47099ee844eaa0b6ede0d5ab6c8b7f802cb1f27e63a87d0"
+    },
+    {
+      "uploadedFileId": "file_000000008c8c8210b80511164aa89d4d",
+      "file": "experiments/puzzles/results/pilot-001.generation-report.md",
+      "bytes": 825,
+      "sha256": "e7015e68502865c2555edfccb457dbb63b391d44cf5e1eb0a535c6803768421e",
+      "archiveSha256": "e7015e68502865c2555edfccb457dbb63b391d44cf5e1eb0a535c6803768421e"
+    }
+  ],
+  "generationReport": {
+    "selectedGames": 200,
+    "processedPositions": 600,
+    "acceptedPuzzles": 16
+  },
+  "replay": {
+    "puzzles": 16,
+    "mateInOne": 12,
+    "mateInTwo": 4,
+    "profiles": 4,
+    "solverNodes": 22,
+    "matingLeaves": 18,
+    "participationTagsMatch": true,
+    "newEngineSearches": 0,
+    "scope": "Uploaded profile snapshots validated against this playable build. Each supplied full pre-root history and complete legal-defense solution tree was replayed; present/moved/involved/stationary tags were rederived and compared. Original run folders were not supplied, and generation search/uniqueness certificates were not independently rerun."
+  }
+}

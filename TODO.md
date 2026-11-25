@@ -230,7 +230,9 @@ provide a screen for gross outliers; they do not establish precise balance.
 - [x] Implement the [bounded mate-puzzle pilot](docs/puzzle-generation.md) from verified inactive original/expanded sources: full source-game/history replay, native candidate screening, exhaustive legal-defense proof, original profiles/priors, durable candidate decisions, resume and Ctrl+C. Keep synthetic/native fixtures distinct from research evidence.
 - [x] Add Menu → Puzzles with authored examples, pack import, solver-move length and involved/moved/present piece filters, legal solution play, automatic defenses, hint/retry/reveal and return to the paused original game. Include stationary tactical-effect and castling-rook movement tags.
 - [x] Separate normal legal-only gray move/capture markers from blocker-free Inspect patterns; mark native jump/hop routes without labeling blocked knight legs or clear-path slides as jumps.
-- [ ] Run the first puzzle pilot against the completed local expanded panels; human-review extracted puzzles and involvement tags. Add non-mate motifs or variant-dense generation only after reviewing coverage.
+- [x] Review the [first uploaded puzzle pilot](experiments/puzzles/results/pilot-001.review.json): 16 accepted from 600 processed candidates, with twelve mate-in-one and four mate-in-two puzzles. Replay all supplied histories/defense trees and rederive participation tags; retain original files and distinguish this replay from new engine or uniqueness searches.
+- [x] Keep Inspect dots, capture rings, jump symbols and their legend opaque while dimming only other piece icons; preserve normal-play marker opacity.
+- [ ] Human-review the pilot puzzles and involvement tags. Add non-mate motifs or variant-dense generation only after reviewing coverage.
 - [ ] After the tier panels, declare a combined cross-level experiment with unequal-budget anchors and equal-budget mixed armies. Respect board capacity and the twenty-custom-type limit through per-group mappings; keep army Elo-like estimates separate from fitted material values.
 
 ## After reviewing these results
