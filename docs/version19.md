@@ -6,6 +6,11 @@ robins before cross-level experiments. Expanded roster 005 adds five tested
 alternatives alongside their original choices. Every previously published
 library and its exact rules remains available.
 
+The [compact public launch proposal](first-release-roster.md) selects eighteen
+candidate slots, with [public names](piece-names.md) and a three-wave path to
+36 upgrades. It is a planning layer; current libraries and research labels
+remain available while cross-level results and human playtesting guide selection.
+
 ## Accepted roster
 
 The final choices are **NAD at L3**, and **NDmW, QcC and Free Boar BsR at L2**.
@@ -68,7 +73,7 @@ npm.cmd start
 Under **Rules**, choose **Version 19 · Level 1/2/3 roster · expanded** for
 12, 15 and 13 designs. The **current** libraries retain the original 11/12/12
 rosters. The L1 queen choices are green QfN and blue QfsN;
-the new orange L2 pawn moves and captures up to two clear squares forward,
+the new yellow L2 pawn moves and captures up to two clear squares forward,
 straight or diagonally, with no sideways/backward moves. Standard promotion
 remains Q/R/B/N; its quiet diagonal en-passant landing leaves the bypassed pawn.
 Separate libraries keep each profile below the engine's

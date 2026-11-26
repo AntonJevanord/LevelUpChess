@@ -16,6 +16,12 @@ Right-click for a circle or right-drag for an arrow; repeat to remove a mark, or
 
 The setup budget is 1–9 points per side. Choose **Level 1/2/3 roster · expanded** for 12, 15 and 13 designs, including five new alternatives with the colors of their original counterparts. The original **current** rosters and every earlier library retain their rules. The [version-19 guide](docs/version19.md) gives the roster, Windows branch-switch instructions and panel commands. Historical family workshops remain selectable for earlier mixed-tier setups.
 
+The [first public roster proposal](docs/first-release-roster.md) narrows launch
+to eighteen upgrades, with three later waves reaching 36: two choices per tier
+for each board-piece family and one king grant at each cost from 1–6. The
+[name index](docs/piece-names.md) maps the proposed public names to exact designs;
+current playable labels and running experiments retain their identities.
+
 Select the king during setup to buy one nonroyal reserve guard. Starting the game keeps the ordinary royal king and places the guard in reserve. Click a reserve piece, then a highlighted empty square in your own half. A drop spends a turn and cannot give check; captured pieces disappear rather than refill reserves. All ordinary king safety and castling rules still apply.
 
 ## Play Fairy Stockfish

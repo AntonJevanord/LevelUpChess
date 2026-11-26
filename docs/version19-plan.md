@@ -87,6 +87,12 @@ the final roster and total before starting rather than imposing a 2,000-game cap
 
 ## Across levels
 
+The [compact launch proposal](first-release-roster.md) is the provisional
+selection target: one upgrade per family per level, including three grants.
+Use the cross-level results to review that subset and its named watch items;
+keep the full research roster and original reference baskets independently.
+Public names are presentation aliases, not new evidence identities.
+
 After the per-tier decisions, freeze a combined roster and ask two distinct
 questions: how much stronger are unequal-cost single upgrades, and how well do
 equal purchase budgets compete when distributed across different tiers?
