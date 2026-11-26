@@ -3,7 +3,7 @@
 These are the user's preferred public names mapped to exact research designs.
 They are presentation aliases for a future UI update. Current profiles, IDs,
 rules, research labels and running puzzle receipts remain unchanged.
-Names do not guarantee a slot in the [36-upgrade release plan](first-release-roster.md):
+Names do not guarantee a slot in the [release plan](first-release-roster.md):
 Jouster/Galloper and Pegasus/Hippogriff are competing knight alternatives.
 
 ## Display format
@@ -15,9 +15,11 @@ The ordinary family tells a new player which starting piece was upgraded;
 the name identifies its design; the level states its purchase cost. Upgrade
 color is supplemental and distinct from White/Black army ownership.
 
-Use **King grant — Warden · L3** for a reserve purchase and **White Warden
-grant · Level 3 · Yellow** after deployment. Do not label the deployed guard
-as a royal king. Level-4/5/6 grants use their actual numbered costs.
+Use **King grant — Warden · 3 points** for a reserve purchase and **White
+Warden grant · 3 points · Yellow** after deployment under the current research
+palette. Do not label the deployed guard as a royal king. A public grant's
+color may match its release theme independently of its cost; always display
+the actual numbered price, including future costs 7–9.
 
 Keep stable IDs in saves, profiles and analysis. A rename does not create a
 new movement revision. Historical reports keep their original labels; a name
@@ -26,9 +28,10 @@ the workshop, distinguish them explicitly, for example **Arbalest — full**
 and **Arbalest — restricted**.
 
 Colors below are the current expanded-library colors, not a proposed repaint.
-L1 uses green/blue, L2 yellow/orange and L3 red/purple. Grants retain their
-separate numbered color sequence: blue, green, yellow, orange, red, purple for
-costs 1–6. Text and badges must communicate level without relying on color.
+Board L1 uses green/blue, L2 yellow/orange and L3 red/purple. Historical grant
+colors follow their numbered sequence; public accents will be selected after
+the release grants are chosen. Text and badges must communicate level/cost
+without relying on color.
 
 ## Level 1
 
@@ -101,9 +104,11 @@ is currently an expanded playable option.
 
 ## King grants
 
-Keep one design at each numbered cost. Current candidates are:
+Keep one design at each numbered cost. Settle release packages at costs 1–6
+before choosing an initial trio, for example 1/3/6. Costs 7–9 are a later goal,
+bringing the catalogue to 39 upgrades. Historical movement candidates are:
 
-| Cost | Working name | Research ID | Movement | Color |
+| Cost | Working name | Research ID | Movement | Research color |
 | --- | --- | --- | --- | --- |
 | 1 | Pawn grant | `king.reserve-pawn@6` | `fWmfF` | Blue |
 | 2 | Bishop grant | `king.reserve-bishop@1` | `F` | Green |
@@ -111,7 +116,12 @@ Keep one design at each numbered cost. Current candidates are:
 | 4 | King grant | `king.reserve-king@1` | `K` | Orange |
 | 5 | Knight grant | `king.reserve-knight@1` | `KmN` | Red |
 | 6 | Queen grant | `king.reserve-queen@1` | `K2` | Purple |
+| 7 | Okapi grant | `king.reserve-okapi@1` | `NZ` | Teal |
+| 8 | Princess grant | `king.reserve-princess@1` | `KN` | Gold |
+| 9 | True Queen grant | `king.reserve-true-queen@1` | `Q` | Silver |
 
-Costs 4–6 are future candidates, not confirmed release designs. Public names
-for grants other than Warden remain open. Earlier workshops also retain costs
-7–9; those historical options are outside the proposed six-grant release plan.
+These are existing research identities, not locked release designs under new
+deployment rules. Public names for grants other than Warden remain open. The
+initial release need not include all costs 1–3; later waves can fill missing
+lower-cost grants while adding 7/8/9. Preserve the old reference rules and
+colors when testing separate release packages.

@@ -8,7 +8,10 @@ library and its exact rules remains available.
 
 The [compact public launch proposal](first-release-roster.md) selects eighteen
 candidate slots, with [public names](piece-names.md) and a three-wave path to
-36 upgrades. It is a planning layer; current libraries and research labels
+39 upgrades if each wave adds five board designs and two grants. Grant costs
+and [deployment rules](grant-deployment-options.md) are chosen separately:
+settle costs 1–6 before selecting the launch trio, then explore 7–9 later.
+It is a planning layer; current libraries and research labels
 remain available while cross-level results and human playtesting guide selection.
 
 ## Accepted roster

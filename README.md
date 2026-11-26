@@ -17,8 +17,11 @@ Right-click for a circle or right-drag for an arrow; repeat to remove a mark, or
 The setup budget is 1–9 points per side. Choose **Level 1/2/3 roster · expanded** for 12, 15 and 13 designs, including five new alternatives with the colors of their original counterparts. The original **current** rosters and every earlier library retain their rules. The [version-19 guide](docs/version19.md) gives the roster, Windows branch-switch instructions and panel commands. Historical family workshops remain selectable for earlier mixed-tier setups.
 
 The [first public roster proposal](docs/first-release-roster.md) narrows launch
-to eighteen upgrades, with three later waves reaching 36: two choices per tier
-for each board-piece family and one king grant at each cost from 1–6. The
+to fifteen board upgrades and three grants, whose costs may be 1/3/6 rather
+than 1/2/3. The long-term target is 39: two choices per tier for each board
+family and one grant at each cost from 1–9. Settle costs 1–6 under the
+[release deployment policy](docs/grant-deployment-options.md) before selecting
+the initial grants; existing reserve rules remain research references. The
 [name index](docs/piece-names.md) maps the proposed public names to exact designs;
 current playable labels and running experiments retain their identities.
 

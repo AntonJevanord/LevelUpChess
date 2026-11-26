@@ -88,7 +88,10 @@ the final roster and total before starting rather than imposing a 2,000-game cap
 ## Across levels
 
 The [compact launch proposal](first-release-roster.md) is the provisional
-selection target: one upgrade per family per level, including three grants.
+selection target: fifteen board designs across levels 1–3 and three grants
+selected after release costs 1–6 are settled. The grant trio need not cost
+1/2/3. A [new deployment policy](grant-deployment-options.md) is a separately
+tested context; existing grant references retain their own drop rules.
 Use the cross-level results to review that subset and its named watch items;
 keep the full research roster and original reference baskets independently.
 Public names are presentation aliases, not new evidence identities.

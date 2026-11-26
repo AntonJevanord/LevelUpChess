@@ -1,6 +1,8 @@
 # First public roster: proposal
 
-Start with **18 upgrades: one at each level for all six piece families**.
+Start with **18 upgrades: fifteen board designs and three king grants**.
+Board pieces get one choice at each of levels 1–3. The initial grants may have
+different costs, for example 1, 3 and 6, chosen after costs 1–6 are settled.
 Choose clear rules, useful counterplay and a manageable learning curve, then
 check the mixed armies. Keep the full research roster available for experiments.
 This document records a release proposal; it does not change playable rules,
@@ -15,11 +17,12 @@ engine priors, reference baskets or completed reports.
 | Bishop | **Abbot** | **Templar** | **Crusader** |
 | Rook | **Halberdier** | **Wayfarer — recommendation** | **Vanguard** |
 | Queen | **Huntress** | **Enchantress — recommendation** | **Amazon** |
-| King grant | Pawn grant `fWmfF` — provisional | Bishop grant `F` — provisional | Warden `WD` — provisional |
 
 The board choices follow the user's shortlist. L2 rook/queen are still design
-decisions; the three grant entries complete the eighteen slots and require
-explicit launch review. Upgrading a king purchases a nonroyal reserve piece;
+decisions. Three separately selected grants complete the eighteen slots;
+their launch costs need not be 1, 2 and 3. Choose a
+[release deployment policy](grant-deployment-options.md) and settle all six
+lower-cost grant packages before selecting that trio. Upgrading a king purchases a nonroyal reserve piece;
 the ordinary royal king retains its moves, check rules and castling.
 
 This set has a useful teaching sequence: extend pawn movement, combine familiar
@@ -64,7 +67,8 @@ evidence separate; no movement changes are approved by this launch proposal.
 - **Templar:** 57.45% across L2. Watch its coordination with Flanker and its
   contribution when several purchases share a budget.
 - **Warden:** 63.61% across L3, with a conditional 61.49%–65.72% range. Treat
-  its price/deployment strength as an open launch decision.
+  its price/deployment strength as an open launch decision. That result uses
+  the existing research drop policy; it does not predict a gated or rank-two version.
 
 These are reports from historical/new contexts, not a new uniform experiment.
 Their ranges omit engine/context bias. The launch subset has a different
@@ -89,26 +93,32 @@ engine sweep of every directional variation.
 
 ## Three release waves
 
-The user confirmed **one king grant per level, extending through level 6**.
-The eventual total is therefore **30 board upgrades + 6 grants = 36**:
-two alternatives at each of levels 1–3 for five board families, and one grant
-at each cost from 1–6.
+Keep **one king grant at each numbered cost**. Two board choices at each of
+levels 1–3 for five families produce thirty board upgrades. Six grants give
+an intermediate total of **36**; extending grants through cost 9 gives the
+new long-term target of **30 board upgrades + 9 grants = 39**.
 
-Each wave adds five board options and one higher-level grant. One possible
-allocation follows; the named candidates and release timing remain provisional.
+The launch trio need not contain the cheapest three grants. If it uses costs
+1/3/6, one possible schedule fills costs 2/4/5 while introducing 7/8/9. That
+makes **seven additions per wave**, rather than the earlier six. The named
+candidates and timing remain provisional.
 
-| Wave | Pawn alternative | Knight alternative | Bishop alternative | Rook alternative | Queen alternative | New king grant |
+| Wave | Pawn alternative | Knight alternative | Bishop alternative | Rook alternative | Queen alternative | New king grants |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | Squire L1 | Jouster or Galloper L2 | Inquisitor L3 | Phantom L1 | Matriarch L2 | L4 |
-| 2 | Herald L2 | Pegasus or Hippogriff L3 | Acolyte L1 | Arbalest L2 | Nemesis L3 | L5 |
-| 3 | Horseman L3 | Scout L1 | Prelate L2 | Cataphract L3 | Duchess L1 | L6 |
+| 1 | Squire L1 | Jouster or Galloper L2 | Inquisitor L3 | Phantom L1 | Matriarch L2 | Costs 2 and 7 |
+| 2 | Herald L2 | Pegasus or Hippogriff L3 | Acolyte L1 | Arbalest L2 | Nemesis L3 | Costs 4 and 8 |
+| 3 | Horseman L3 | Scout L1 | Prelate L2 | Cataphract L3 | Duchess L1 | Costs 5 and 9 |
 
 This rotates **2/2/1**, **1/2/2** and **2/1/2** board additions across levels
-1/2/3, alongside each higher-cost grant. It retains one new option per family
-in each wave without promising a second grant at the same level. Named
-candidates can be rearranged between waves after playtesting. Existing K,
-KmN and K2 grants are historical candidates for costs 4–6, not approved prices
-or release selections; validate them against equal-budget packages first.
+1/2/3, alongside two grant additions. There is still no second grant at the
+same cost. Alternatively, keep six additions per wave to reach 36, and add
+costs 7–9 afterward. Existing K/KmN/K2 and NZ/KN/Q grants are historical
+candidates for costs 4–9, not approved release prices or movements.
+Validate them under the selected deployment policy and equal-budget packages.
+
+Grant **purchase cost and display color are separate choices**. Select public
+accents to match the release palette after choosing the grant trio; show the
+actual cost as text/badge. Existing research colors and prices remain intact.
 
 There are more named knight candidates than slots: choose one L2 alternative
 to Nightrider and one L3 alternative to Unicorn. A public name does not promise
@@ -117,14 +127,17 @@ extra pawn/bishop/queen designs likewise retain their experimental identities.
 
 ## Implementation order
 
-1. Record [public names and stable design mappings](piece-names.md), then
-   resolve L2 rook/queen and launch grant choices through focused playtesting.
-2. Declare the mixed/cross-level launch-candidate experiment while retaining
+1. Record [public names and stable design mappings](piece-names.md). Compare
+   grant deployment policies in isolation, then select the release policy.
+2. Resolve L2 rook/queen and settle all grant packages at costs 1–6 through
+   focused playtesting and engine comparisons. Select the initial three grants
+   and their colors only after that review; develop costs 7–9 later.
+3. Declare the mixed/cross-level launch-candidate experiment while retaining
    the original reference definitions and all research libraries.
-3. After review, create a separate public roster and presentation aliases.
+4. After review, create a separate public roster and presentation aliases.
    Eighteen custom designs fit the current twenty-custom-type engine limit,
    allowing one combined launch library with all three levels.
-4. Keep later waves in a workshop until selected. The eventual 36-design
+5. Keep later waves in a workshop until selected. The eventual 39-design
    catalogue needs per-game/group allocation of active custom types; it cannot
    be loaded wholesale into a twenty-type profile.
 
