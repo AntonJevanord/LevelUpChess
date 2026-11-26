@@ -99,8 +99,8 @@ separate. Wraith retains its established name for
 
 **Hippogriff** is reserved for full zebra-knight `NZ`. This is research-only:
 `knight.level3-nz@1` and `knight.level2-zebra@1` are distinct tested identities
-at different prices. Select a release price before promoting either; neither
-is currently an expanded playable option.
+at different prices. The revised cross-level panel includes the L3 identity;
+neither is currently an expanded playable option or a confirmed release pick.
 
 ## King grants
 

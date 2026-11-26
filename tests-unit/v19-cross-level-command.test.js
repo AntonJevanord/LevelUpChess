@@ -5,6 +5,9 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const { EventEmitter } = require('node:events');
+const { createHash } = require('node:crypto');
+const { gunzipSync } = require('node:zlib');
+const { ensureResearchOverlay } = require('../scripts/balance/research-overlay');
 const command = require('../scripts/v19-cross-level');
 const { LEGACY_ENGINE_SHA256 } = require('../scripts/puzzles/native-parity');
 const identity = () => ({ engineSha256: 'a'.repeat(64), rulesBundleSha256: 'b'.repeat(64), runnerSha256: 'c'.repeat(64), runnerSources: [] });
@@ -139,6 +142,7 @@ test('runtime owner guards reject another experiment and retain initial jobs/ope
   await assert.rejects(command.main(['--out', f.root, '--jobs', '2', '--openings', '16'], { enginePath, ensure() { throw Error('synthetic interrupted copy'); }, log() {} }), /before any games started.*--resume/);
   const partial = JSON.parse(fs.readFileSync(path.join(f.root, command.OWNER)));
   assert.equal(partial.directory, null); assert.equal(partial.jobs, 2); assert.equal(partial.initialOpenings, 16);
+  assert.equal(partial.runtimeName, command.OVERLAY.name);
   assert.equal(fs.existsSync(path.join(f.root, command.LOCK)), false);
   let resumed;
   const directory = path.join(f.root, 'runtime', 'cross-level-panel-v19-test');
@@ -148,4 +152,73 @@ test('runtime owner guards reject another experiment and retain initial jobs/ope
   assert.equal(fs.existsSync(path.join(f.root, command.LOCK)), false);
   const invalid = { directory, entry: path.join(directory, command.OVERLAY.entryFile), manifest: { ...command.OVERLAY, name: 'different-experiment' } };
   await assert.rejects(command.main(['--check', '--rules-only'], { ensure: () => invalid, execute() { assert.fail('foreign runtime must not execute'); } }), /different owned runtime/);
+});
+
+test('new starts/checks select 002 and ambiguous pre-snapshot 001 setup never silently changes selection', async t => {
+  assert.equal(command.OVERLAY.name, 'cross-level-panel-v19-002');
+  assert.equal(command.OVERLAY.definitionFile, 'src/balance-designs-v19-cross-level-002.js');
+  const f = fixture(t), directory = path.join(f.root, 'runtime', 'synthetic-001');
+  const old = { directory, entry: path.join(directory, command.HISTORICAL_OVERLAY.entryFile),
+    manifest: { ...command.HISTORICAL_OVERLAY } };
+  assert.equal(command.requireCrossOverlay(old), old, 'owned 001 resume remains an allowed family');
+  assert.throws(() => command.requireCrossOverlay(old, { fresh: true }), /different owned runtime/);
+  await assert.rejects(command.main(['--check', '--rules-only'], { ensure: () => old, execute() { assert.fail('fresh checks cannot execute 001'); } }), /different owned runtime/);
+  const owner = { schemaVersion: 1, format: 'levelup-v19-cross-level-runtime-owner', study: 'cross-level', directory: null, jobs: 4, initialOpenings: 8 };
+  fs.writeFileSync(path.join(f.root, command.OWNER), JSON.stringify(owner));
+  await assert.rejects(command.main(['--resume', f.root], { enginePath: process.execPath, ensure() { assert.fail('unfrozen legacy setup must not be rebound'); } }), /older incomplete.*fresh output folder/);
+  assert.deepEqual(JSON.parse(fs.readFileSync(path.join(f.root, command.OWNER))), owner);
+  assert.equal(fs.existsSync(path.join(f.root, command.LOCK)), false);
+});
+
+test('current dispatcher reports an actual owned 001 campaign through its archived controller and unchanged 22,176-game plan', { timeout: 120000 }, async t => {
+  const f = fixture(t), root = path.resolve(__dirname, '..'), source = path.join(f.root, 'source-001');
+  fs.mkdirSync(source);
+  // Portable frozen controller fixture from commit 410bd9d. It is decompressed
+  // only into this temporary source tree, never over the current entry point.
+  const original = gunzipSync(fs.readFileSync(path.join(__dirname, 'fixtures/v19-cross-level-001-controller.cjs.gz')));
+  assert.equal(createHash('sha256').update(original).digest('hex'), '047f9617391a492708108f492c75280dcf34f6973d802cd234998cc762f65a4a');
+  for (const name of ['scripts', 'src', 'variants', 'experiments']) fs.cpSync(path.join(root, name), path.join(source, name), {
+    recursive: true, filter: selected => !selected.split(path.sep).includes('results'),
+  });
+  for (const name of ['package.json', 'dist/balance-rules.cjs', 'node_modules/chess.js/package.json', 'node_modules/chess.js/dist/cjs/chess.js', 'node_modules/chess.js/LICENSE']) {
+    const target = path.join(source, name); fs.mkdirSync(path.dirname(target), { recursive: true }); fs.copyFileSync(path.join(root, name), target);
+  }
+  fs.writeFileSync(path.join(source, 'scripts/v19-cross-level.js'), original);
+  const campaign = path.join(f.root, 'campaign-001'); fs.mkdirSync(campaign);
+  const overlay = ensureResearchOverlay({ ...command.HISTORICAL_OVERLAY, root: source, cacheDirectory: path.join(campaign, 'runtime') });
+  const owner = { schemaVersion: 1, format: 'levelup-v19-cross-level-runtime-owner', study: 'cross-level',
+    directory: path.relative(campaign, overlay.directory).split(path.sep).join('/'), jobs: 4, initialOpenings: 8,
+    manifestSha256: overlay.manifestSha256 };
+  fs.writeFileSync(path.join(campaign, command.OWNER), JSON.stringify(owner));
+  const archived = require(overlay.entry);
+  await assert.rejects(archived.runStudy(['--out', campaign], { enginePath: 'not-executed', identity,
+    overlaySha256: overlay.manifestSha256, log() {}, verifyOverlay() {},
+    check: async () => { throw Error('intentional no-game preview stop'); }, run() { assert.fail('no scored game may start'); } }), /intentional no-game preview stop/);
+  const before = fs.readFileSync(path.join(campaign, command.MANIFEST));
+  const manifest = JSON.parse(before); assert.equal(manifest.format, 'levelup-v19-cross-level-001');
+  const result = await command.main(['--report', campaign], { log() {} });
+  assert.equal(result.report.scheduledGames, 22176); assert.equal(result.report.cells.length, 1386);
+  assert.deepEqual(fs.readFileSync(path.join(campaign, command.MANIFEST)), before);
+  assert.deepEqual(JSON.parse(fs.readFileSync(path.join(campaign, command.OWNER))), owner);
+});
+
+test('fresh owned 002 main uses its default extended catalog and reports 18,656 scheduled games without starting one', { timeout: 120000 }, async t => {
+  const f = fixture(t); let overlay, checks = 0;
+  await assert.rejects(command.main(['--out', f.root], { enginePath: process.execPath, log() {},
+    ensure(settings) { overlay = ensureResearchOverlay(settings); return overlay; },
+    execute(args, settings) {
+      return require(overlay.entry).runStudy(args, { ...settings, identity,
+        check: async () => { checks++; throw Error('intentional 002 no-game preview stop'); },
+        run() { assert.fail('no scored game may start'); } });
+    } }), /intentional 002 no-game preview stop/);
+  assert.equal(checks, 1); assert.equal(overlay.manifest.name, command.OVERLAY.name);
+  const owner = JSON.parse(fs.readFileSync(path.join(f.root, command.OWNER)));
+  assert.equal(owner.runtimeName, 'cross-level-panel-v19-002');
+  const before = fs.readFileSync(path.join(f.root, command.MANIFEST));
+  assert.equal(JSON.parse(before).format, 'levelup-v19-cross-level-002');
+  const result = await command.main(['--report', f.root], { log() {} });
+  assert.equal(result.report.scheduledGames, 18656); assert.equal(result.report.cells.length, 1166);
+  assert.deepEqual(fs.readFileSync(path.join(f.root, command.MANIFEST)), before);
+  assert.deepEqual(JSON.parse(fs.readFileSync(path.join(f.root, command.OWNER))), owner);
+  assert.equal(fs.existsSync(path.join(f.root, command.LOCK)), false);
 });

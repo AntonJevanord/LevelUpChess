@@ -25,13 +25,14 @@ the initial grants; existing reserve rules remain research references. The
 [name index](docs/piece-names.md) maps the proposed public names to exact designs;
 current playable labels and running experiments retain their identities.
 
-The [cross-level panel](docs/v19-cross-level-panel.md) compares 126 L1+L2 teams
+The [cross-level panel](docs/v19-cross-level-panel.md) compares 106 L1+L2 teams
 with eleven L3 designs at 40k nodes. Grants and queen+queen teams are excluded;
 the full RcN rook, L2 reference Knight pawn and old L3 Herald are omitted.
-The first eight openings schedule 22,176 games:
+Wraith, Wide-knight queen and Hopping bishop are excluded; Hippogriff `NZ`
+joins L3. The first eight openings schedule 18,656 games:
 
 ```powershell
-npm.cmd run balance:v19:cross -- --out balance-results/v19-cross-level --openings 8 --jobs 3
+npm.cmd run balance:v19:cross -- --out balance-results/v19-cross-level-002 --openings 8 --jobs 3
 ```
 
 Use three workers alongside interactive playtesting, or four for a dedicated

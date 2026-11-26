@@ -182,17 +182,18 @@ Already-started owned runtimes retain their original behavior.
 ## Cross-level teams
 
 The [cross-level panel](v19-cross-level-panel.md) uses the selected board-only
-subset: eleven L1, twelve L2 and eleven L3 designs. It compares every legal
+subset: ten L1, eleven L2 and eleven L3 designs. It compares every legal
 L1+L2 team against every L3 design, leaving grants out while their release rules
 are explored. Queen+queen teams are unavailable in standard armies. It uses
 restricted Arbalest, omits the L2 reference Knight pawn and old L3 Herald, and
-retains all earlier libraries and outcomes.
+retains all earlier libraries and outcomes. Selection 002 excludes Wraith,
+the original Wide-knight queen and Hopping bishop, and includes Hippogriff `NZ`.
 
 ```powershell
-npm.cmd run balance:v19:cross -- --out balance-results/v19-cross-level --openings 8 --jobs 3
+npm.cmd run balance:v19:cross -- --out balance-results/v19-cross-level-002 --openings 8 --jobs 3
 ```
 
-This schedules 22,176 games at 40k nodes with both colors. Same-family pieces
+This schedules 18,656 games at 40k nodes with both colors. Same-family pieces
 share two ordinary starting homes with a declared rotation. Thirteen custom
 types per group fit the engine limit. Extend the same output to sixteen,
 32 or 64 total openings; keep the entire owned folder for resume and analysis.

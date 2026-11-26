@@ -7,27 +7,31 @@ runtime; existing tier panels, playable libraries and puzzle runs stay intact.
 
 ## Selection and size
 
-Start from immutable expanded roster 005, with the user's exclusions:
+Selection 002 starts from immutable expanded roster 005 and adds the previously
+tested L3 Hippogriff `NZ` (`knight.level3-nz@1`). It applies these exclusions:
 
 - Exclude all reserve grants while release deployment rules are explored.
 - Use restricted Arbalest `RcsNcfN`; exclude full `RcN` (`rook.orange@3`).
 - Exclude the L2 reference Knight pawn (`pawn.knight-tall-quiet@1`).
 - Exclude the old L3 queen-moving Herald (`pawn.queen-sideways@1`). Keep the
   L2 forward-range Herald `fQ2` and L3 Six-jump Horseman.
+- Exclude Wraith (`queen.wraith-side-through@1`), the original L2 Wide-knight
+  queen (`queen.level2-side-knight@1`) and Hopping bishop
+  (`bishop.hopper-full-range@1`). Keep Matriarch, Nemesis and Abbot.
 - Mark queen+queen packages **unavailable**: a standard army has one queen,
   upgrades do not stack and the experiment introduces no extra queens.
 
-There are **11 L1, 12 L2 and 11 L3 designs**. Of 132 possible L1+L2 pairs,
-six queen+queen pairs are unavailable. The remaining **126 teams × 11 L3
-opponents = 1,386 scheduled matchups**. The 66 unavailable matchup cells have
+There are **10 L1, 11 L2 and 11 L3 designs**. Of 110 possible L1+L2 pairs,
+four queen+queen pairs are unavailable. The remaining **106 teams × 11 L3
+opponents = 1,166 scheduled matchups**. The 44 unavailable matchup cells have
 no score and do not enter the denominator.
 
 | Total openings | Scheduled games, both colors |
 | ---: | ---: |
-| 8 | 22,176 |
-| 16 | 44,352 |
-| 32 | 88,704 |
-| 64 | 177,408 |
+| 8 | 18,656 |
+| 16 | 37,312 |
+| 32 | 74,624 |
+| 64 | 149,248 |
 
 These are new army comparisons. Earlier one-purchase tier games cannot fill
 their cells. Extending this cross-level run retains its own completed games
@@ -39,7 +43,7 @@ Use the project directory and a new output folder:
 
 ```powershell
 git pull --ff-only
-npm.cmd run balance:v19:cross -- --out balance-results/v19-cross-level --openings 8 --jobs 3
+npm.cmd run balance:v19:cross -- --out balance-results/v19-cross-level-002 --openings 8 --jobs 3
 ```
 
 The default target is eight total openings. Search uses **40,000 nodes,
@@ -68,21 +72,23 @@ pairs. Keep the entire run folder, including the private runtime and stage
 journals. The run does not extend beyond its requested target automatically.
 
 ```powershell
-npm.cmd run balance:v19:cross -- --resume balance-results/v19-cross-level
-npm.cmd run balance:v19:cross -- --resume balance-results/v19-cross-level --openings 16
-npm.cmd run balance:v19:cross -- --resume balance-results/v19-cross-level --openings 32
-npm.cmd run balance:v19:cross -- --resume balance-results/v19-cross-level --openings 64
+npm.cmd run balance:v19:cross -- --resume balance-results/v19-cross-level-002
+npm.cmd run balance:v19:cross -- --resume balance-results/v19-cross-level-002 --openings 16
+npm.cmd run balance:v19:cross -- --resume balance-results/v19-cross-level-002 --openings 32
+npm.cmd run balance:v19:cross -- --resume balance-results/v19-cross-level-002 --openings 64
 ```
 
 These targets are **totals**, not additional opening counts. Completed stages
 are verified and skipped; interrupted stages resume under their original
 engine, rules and worker identities. Changed movement, selection, priors or
 placement policy requires a new experiment declaration and output directory.
+Already-started selection-001 runs resume with their original roster. Use a
+fresh folder for selection 002; resuming an older run does not replace pieces.
 
 Offline reporting starts no games:
 
 ```powershell
-npm.cmd run balance:v19:cross -- --report balance-results/v19-cross-level
+npm.cmd run balance:v19:cross -- --report balance-results/v19-cross-level-002
 ```
 
 ## Placements and engine limits
@@ -103,6 +109,9 @@ opponents: **13 custom types**, below the engine's twenty-type limit. Letters
 may differ between groups; the archived semantic IDs, mappings, profiles and
 manual priors determine their meaning. Ordinary kings, castling, en passant
 and standard pawn promotions retain the declared piece rules.
+Hippogriff retains its earlier L3 trial's Unicorn search prior: MG 1663,
+EG 1877 in all six value tables. These are engine settings, not a measured
+material value or a claim that Hippogriff and Unicorn have equal strength.
 
 ## Read the results
 

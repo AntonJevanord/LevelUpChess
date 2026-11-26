@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "format": "levelup-v19-cross-level-selection",
+  "id": "v19-cross-level-selection-002",
+  "roster": {
+    "file": "experiments/designs/v19-roster-005.json",
+    "sha256": "d783c56718408dfe874f0ed2d57f4f73bcfe3323386d18dd6cf924a0abd1282a",
+    "id": "expanded-roster-v19-005"
+  },
+  "values": {
+    "file": "experiments/designs/v19-panel-values-005.json",
+    "sha256": "4bef262c4a6c4e9308c55056e47e759d23c82fb07e37347b0a54629174a57974",
+    "id": "expanded-search-priors-v19-005",
+    "policy": "Preserve each accepted body's tested applied MG/EG prior or exact matched family anchor, applying it to all six engine tables for both colors. These are engine search settings, not material estimates or upgrade purchase points."
+  },
+  "included": [
+    {
+      "level": 1,
+      "ids": [
+        "pawn.blue@5",
+        "pawn.blue@7",
+        "knight.positional-quiet-queen@1",
+        "knight.wazzap@1",
+        "bishop.level1-dabbaba@1",
+        "bishop.blue@3",
+        "rook.ghost-diagonal-omni@1",
+        "rook.blue@3",
+        "queen.level1-forward-knight@1",
+        "queen.level1-wide-forward-knight@1"
+      ]
+    },
+    {
+      "level": 2,
+      "ids": [
+        "pawn.rank-current@1",
+        "pawn.level2-forward-queen-only@1",
+        "knight.nightrider-level2@1",
+        "knight.level2-nd-quiet-orthogonal@1",
+        "knight.level2-forward-zebra@1",
+        "bishop.orange@2",
+        "bishop.orange@3",
+        "rook.orange@2",
+        "rook.level2-no-tall-back-capture-knight@1",
+        "queen.level2-side-knight-side-dabbaba-alfil@1",
+        "queen.level2-camel-capture@1"
+      ]
+    },
+    {
+      "level": 3,
+      "ids": [
+        "pawn.purple@13",
+        "pawn.level3-six-knight@1",
+        "knight.purple@3",
+        "knight.level3-nad@1",
+        "knight.level3-nz@1",
+        "bishop.vertical-blocked@1",
+        "bishop.purple@13",
+        "rook.purple@10",
+        "rook.cataphract-no-tall-back@1",
+        "queen.purple@1",
+        "queen.level3-side-threeleap-camel-zebra-tripper@1"
+      ]
+    }
+  ],
+  "exclusions": [
+    {
+      "scope": "all reserve grants",
+      "reason": "The user is experimenting with separate grant deployment rules; this collection is board-only."
+    },
+    {
+      "id": "rook.orange@3",
+      "reason": "Remove full Knight-capture rook RcN; retain the restricted Arbalest alternative."
+    },
+    {
+      "id": "pawn.knight-tall-quiet@1",
+      "reason": "Remove the older L2 Quiet-tall Knight pawn from this cross-level selection."
+    },
+    {
+      "id": "pawn.queen-sideways@1",
+      "reason": "Remove the older L3 queen-moving pawn previously labelled Herald; retain L2 fQ2 under the public name Herald."
+    },
+    {
+      "id": "bishop.hopper-full-range@1",
+      "reason": "Remove Hopping bishop; retain Abbot and Acolyte."
+    },
+    {
+      "id": "queen.level2-side-knight@1",
+      "reason": "Remove original Wide-knight queen; retain Matriarch and Enchantress."
+    },
+    {
+      "id": "queen.wraith-side-through@1",
+      "reason": "Remove Wraith; retain Amazon and Nemesis."
+    },
+    {
+      "scope": "L1 queen + L2 queen",
+      "reason": "A standard starting army has one queen. Mark these cells unavailable rather than replacing material or stacking upgrades."
+    }
+  ],
+  "aliases": {
+    "pawn.blue@5": "Strider",
+    "pawn.blue@7": "Squire",
+    "knight.wazzap@1": "Cavalier",
+    "knight.positional-quiet-queen@1": "Scout",
+    "bishop.blue@3": "Acolyte",
+    "bishop.level1-dabbaba@1": "Abbot",
+    "rook.blue@3": "Halberdier",
+    "rook.ghost-diagonal-omni@1": "Phantom",
+    "queen.level1-wide-forward-knight@1": "Duchess",
+    "queen.level1-forward-knight@1": "Huntress",
+    "pawn.level2-forward-queen-only@1": "Herald",
+    "pawn.rank-current@1": "Flanker",
+    "knight.nightrider-level2@1": "Nightrider",
+    "knight.level2-forward-zebra@1": "Jouster",
+    "knight.level2-nd-quiet-orthogonal@1": "Galloper",
+    "bishop.orange@3": "Templar",
+    "bishop.orange@2": "Prelate",
+    "rook.level2-no-tall-back-capture-knight@1": "Arbalest (restricted)",
+    "rook.orange@2": "Wayfarer",
+    "queen.level2-side-knight-side-dabbaba-alfil@1": "Matriarch",
+    "queen.level2-camel-capture@1": "Enchantress",
+    "pawn.purple@13": "Ranger",
+    "pawn.level3-six-knight@1": "Horseman",
+    "knight.purple@3": "Unicorn",
+    "knight.level3-nad@1": "Pegasus",
+    "bishop.purple@13": "Crusader",
+    "bishop.vertical-blocked@1": "Inquisitor",
+    "rook.cataphract-no-tall-back@1": "Cataphract",
+    "rook.purple@10": "Vanguard",
+    "queen.purple@1": "Amazon",
+    "queen.level3-side-threeleap-camel-zebra-tripper@1": "Nemesis",
+    "knight.level3-nz@1": "Hippogriff"
+  },
+  "protocol": {
+    "nodes": 40000,
+    "skill": 20,
+    "threads": 1,
+    "hashMb": 32,
+    "maxPlies": 400,
+    "openingTargets": [
+      8,
+      16,
+      32,
+      64
+    ],
+    "singleHomes": {
+      "pawn": "c2",
+      "knight": "b1",
+      "bishop": "c1",
+      "rook": "a1",
+      "queen": "d1"
+    },
+    "duplicateHomes": {
+      "pawn": [
+        "c2",
+        "e2"
+      ],
+      "knight": [
+        "b1",
+        "g1"
+      ],
+      "bishop": [
+        "c1",
+        "f1"
+      ],
+      "rook": [
+        "a1",
+        "h1"
+      ]
+    },
+    "placement": "Same-family L1/L2 placements rotate by (global opening index + eight-case batch index) modulo two, retaining both physical colors.",
+    "reuse": "New mixed armies only; no same-tier outcome is imported."
+  },
+  "previousSelection": {
+    "file": "experiments/designs/v19-cross-level-001.json",
+    "sha256": "392e9f5faff4ee7b923e5492cd3d1aebf089c53c5c24e8b93b8db067753e9896"
+  },
+  "additionalBodies": [
+    {
+      "key": "hippogriff",
+      "id": "knight.level3-nz@1",
+      "label": "Hippogriff",
+      "researchLabel": "Knight: zebra jumps",
+      "family": "knight",
+      "level": 3,
+      "movement": "NZ",
+      "placement": "replace",
+      "roles": {
+        "pawn": false,
+        "castlingRook": false,
+        "enPassant": false
+      },
+      "reference": false,
+      "prior": {
+        "mg": 1663,
+        "eg": 1877
+      },
+      "priorSource": "experiments/designs/official-references-v16.json",
+      "anchorId": "knight.purple@3",
+      "definitionSource": "src/balance-designs-v18-prepanel-level3.js",
+      "priorPolicy": "Retain the historical three-point NZ treatment's Unicorn anchor, 1663/1877, as documented by v18 prepanel-level3. This is a controlled search prior, not measured material strength."
+    }
+  ],
+  "additionalSources": [
+    {
+      "file": "src/balance-designs-v18-prepanel-level3.js",
+      "sha256": "8bbd33c39c6d67083767c6d8b8220723de12e9621c858ae6ce2ac34750f7d7ba"
+    },
+    {
+      "file": "experiments/designs/official-references-v16.json",
+      "sha256": "0448230163f090c49c7bfbd0bc96685affc3ba8c85018ddd139b42f0756de5ef"
+    },
+    {
+      "file": "scripts/balance/v18-screen-plan.js",
+      "sha256": "2d48ed9ac84543ce1e1d4ca1c0676956670cf2d3cf06697b837a231fac5eedaf"
+    }
+  ]
+}
