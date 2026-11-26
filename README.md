@@ -25,6 +25,19 @@ the initial grants; existing reserve rules remain research references. The
 [name index](docs/piece-names.md) maps the proposed public names to exact designs;
 current playable labels and running experiments retain their identities.
 
+The [cross-level panel](docs/v19-cross-level-panel.md) compares 126 L1+L2 teams
+with eleven L3 designs at 40k nodes. Grants and queen+queen teams are excluded;
+the full RcN rook, L2 reference Knight pawn and old L3 Herald are omitted.
+The first eight openings schedule 22,176 games:
+
+```powershell
+npm.cmd run balance:v19:cross -- --out balance-results/v19-cross-level --openings 8 --jobs 3
+```
+
+Use three workers alongside interactive playtesting, or four for a dedicated
+run. Resume the same folder with `--openings 16`, `32` or `64` for total
+coverage; completed games and intermediate reports are retained.
+
 Select the king during setup to buy one nonroyal reserve guard. Starting the game keeps the ordinary royal king and places the guard in reserve. Click a reserve piece, then a highlighted empty square in your own half. A drop spends a turn and cannot give check; captured pieces disappear rather than refill reserves. All ordinary king safety and castling rules still apply.
 
 ## Play Fairy Stockfish

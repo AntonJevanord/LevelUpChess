@@ -77,12 +77,12 @@ whole-roster scores. Grant material fitting currently excludes entire grant
 matchups; [outcomes and deployment](v19-material-estimates.md#reserve-grants)
 remain the primary evidence for grants.
 
-Use the planned cross-level panel to compare equal purchase budgets, including
-L1+L2 versus L3 and three L2 versus two L3, plus ordinary-army/unequal-budget
-anchors. Respect starting-square capacity and report partner and placement
-effects. Keep shared openings, color pairs and the 40k-node policy. Start with
-sixteen openings, then extend the unchanged declaration to 32/64 only when the
-remaining uncertainty could change a release decision.
+Start with the [L1+L2 versus L3 panel](v19-cross-level-panel.md), then consider
+three L2 versus two L3 and ordinary-army/unequal-budget anchors. Respect
+starting-square capacity and report partner and placement effects. Keep shared
+openings, color pairs and the 40k-node policy. Review the first eight openings,
+then sixteen; extend the unchanged declaration to 32/64 only when the remaining
+uncertainty could change a release decision.
 
 Human playtesting should record explanation mistakes, unexpected attacks,
 available counterplay, enjoyment and outcomes. Swap colors and keep opponent
@@ -132,8 +132,10 @@ extra pawn/bishop/queen designs likewise retain their experimental identities.
 2. Resolve L2 rook/queen and settle all grant packages at costs 1–6 through
    focused playtesting and engine comparisons. Select the initial three grants
    and their colors only after that review; develop costs 7–9 later.
-3. Declare the mixed/cross-level launch-candidate experiment while retaining
-   the original reference definitions and all research libraries.
+3. Use the [first board-only cross-level panel](v19-cross-level-panel.md) while
+   grant policy is explored. Later declare the grant-inclusive launch-candidate
+   comparisons under the selected release policy, retaining the original
+   reference definitions and all research libraries.
 4. After review, create a separate public roster and presentation aliases.
    Eighteen custom designs fit the current twenty-custom-type engine limit,
    allowing one combined launch library with all three levels.

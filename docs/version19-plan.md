@@ -118,6 +118,10 @@ values and mappings. Respect the limit in every compiled group while keeping
 results comparable through immutable definitions. Do not require one global
 letter map for every candidate across all tiers.
 
-Prepare and validate the concrete cross-level declaration only after the tier
-panels identify which pieces are being compared. None of these later panels
-starts automatically from the current alternatives commands.
+The first [concrete cross-level declaration](v19-cross-level-panel.md) now
+compares the selected grant-free L1+L2 teams with L3 board upgrades. It excludes
+queen+queen teams and the three superseded candidates named in that guide,
+rotates duplicate-family homes and uses thirteen-type group profiles. It has
+its own explicit command and does not start from a tier-panel completion.
+Unequal-cost anchors, larger mixed budgets and new release-grant policies
+remain separate declarations after this board-only review.
